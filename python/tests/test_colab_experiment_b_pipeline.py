@@ -400,6 +400,11 @@ class TestHardwareDeploymentBranching:
         assert cfg_cpu["quant_mode"] == "mock"
         assert cfg_cpu["tier"] == "CPU"
 
+        # Default probing without arguments should not raise
+        cfg_default = select_hardware_deployment_config()
+        assert "target_model" in cfg_default
+        assert "tier" in cfg_default
+
     def test_load_model_and_tokenizer_preserves_torch_dtype_with_quantization(self) -> None:
         """Verify load_model_and_tokenizer correctly injects torch_dtype into kwargs for 4bit and 8bit."""
         # Mock torch and transformers to inspect kwargs passed to AutoModelForCausalLM.from_pretrained

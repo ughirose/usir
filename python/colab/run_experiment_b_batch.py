@@ -723,11 +723,13 @@ def generate_single_sample_mock(
 
 
 def select_hardware_deployment_config(
-    vram_gb: float,
-    cuda_available: bool = True,
-    bf16_supported: bool = True,
+    vram_gb: float | None = None,
+    cuda_available: bool | None = None,
+    bf16_supported: bool | None = None,
 ) -> dict[str, Any]:
     """Select model, quantization mode, torch dtype, and batch size based on GPU hardware.
+
+    If parameters are omitted or None, GPU capabilities are automatically probed via PyTorch.
 
     Hardware tiers:
     - A100 (40GB/80GB, vram_gb >= 35.0): Qwen2.5-14B, bf16 (unquantized), batch_size=1
@@ -736,7 +738,32 @@ def select_hardware_deployment_config(
     - Low-VRAM (< 12GB): Qwen2.5-7B, 4bit, batch_size=1
     - No CUDA: mock_mode=True
     """
-    if not cuda_available or vram_gb <= 0.0:
+    if cuda_available is None:
+        cuda_available = bool(torch is not None and torch.cuda.is_available())
+    if not cuda_available:
+        return {
+            "target_model": "Qwen/Qwen2.5-7B-Instruct",
+            "quant_mode": "mock",
+            "load_in_4bit": False,
+            "load_in_8bit": False,
+            "torch_dtype": "float32",
+            "batch_size": 1,
+            "tier": "CPU",
+        }
+
+    if vram_gb is None:
+        if torch is not None and torch.cuda.is_available():
+            vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024 ** 3)
+        else:
+            vram_gb = 0.0
+
+    if bf16_supported is None:
+        if torch is not None and torch.cuda.is_available():
+            bf16_supported = bool(torch.cuda.is_bf16_supported())
+        else:
+            bf16_supported = False
+
+    if vram_gb <= 0.0:
         return {
             "target_model": "Qwen/Qwen2.5-7B-Instruct",
             "quant_mode": "mock",
