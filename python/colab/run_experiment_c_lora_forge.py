@@ -361,6 +361,7 @@ def run_experiment_c(
     iterations: int = 16,
     mock_mode: bool = True,
     force_restart: bool = False,
+    model_name_or_path: str = "Qwen/Qwen2.5-0.5B-Instruct",
 ) -> Dict[str, Any]:
     """Runs Experiment C: Table 3 Zero-Overhead Style-LoRA Forge Pipeline."""
     dataset_file = Path(dataset_path) if dataset_path else DEFAULT_DATASET_PATH
@@ -371,6 +372,60 @@ def run_experiment_c(
     dataset = load_preference_dataset(dataset_file)
     masterwork_texts = [c["text"] for c in CORPUS if c["phase"] != "V_Deadzone"]
     reference_features = [extract_usir_24d(t)["z_24d"] for t in masterwork_texts[:16]]
+
+    lora_telemetry: Dict[str, Any] = {"mode": "mock"}
+    if not mock_mode and TORCH_AVAILABLE and PEFT_AVAILABLE and torch.cuda.is_available():
+        try:
+            print(f"[LoRA Forge] Loading {model_name_or_path} on GPU and attaching PEFT LoRA adapter...")
+            tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True)
+            if tokenizer.pad_token is None:
+                tokenizer.pad_token = tokenizer.eos_token
+            base_model = AutoModelForCausalLM.from_pretrained(
+                model_name_or_path,
+                torch_dtype=torch.float16,
+                device_map="auto",
+                trust_remote_code=True,
+            )
+            peft_cfg = LoraConfig(
+                task_type=TaskType.CAUSAL_LM,
+                r=16,
+                lora_alpha=32,
+                lora_dropout=0.05,
+                target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+            )
+            peft_model = get_peft_model(base_model, peft_cfg)
+            peft_model.train()
+            optimizer = torch.optim.AdamW(peft_model.parameters(), lr=5e-5)
+            dpo_losses: list[float] = []
+            # Run 12 rapid DPO preference optimization steps on GPU
+            for step_i in range(min(12, len(dataset))):
+                pair = dataset[step_i]
+                c_enc = tokenizer(pair["prompt"] + "\n" + pair["chosen"], return_tensors="pt", truncation=True, max_length=256).to(peft_model.device)
+                r_enc = tokenizer(pair["prompt"] + "\n" + pair["rejected"], return_tensors="pt", truncation=True, max_length=256).to(peft_model.device)
+                optimizer.zero_grad()
+                out_c = peft_model(**c_enc, labels=c_enc["input_ids"])
+                out_r = peft_model(**r_enc, labels=r_enc["input_ids"])
+                # DPO-style margin loss weighted by USIR GRPO reward margin
+                margin_w = float(pair.get("reward_margin", 0.5))
+                loss = -F.logsigmoid(2.0 * margin_w * (out_r.loss - out_c.loss)) + 0.2 * out_c.loss
+                loss.backward()
+                optimizer.step()
+                dpo_losses.append(float(loss.item()))
+            peft_model.eval()
+            lora_telemetry = {
+                "mode": "real_gpu_peft_lora",
+                "model": model_name_or_path,
+                "gpu_device": torch.cuda.get_device_name(0),
+                "lora_rank": 16,
+                "lora_alpha": 32,
+                "dpo_steps": len(dpo_losses),
+                "initial_loss": dpo_losses[0] if dpo_losses else 0.0,
+                "final_loss": dpo_losses[-1] if dpo_losses else 0.0,
+            }
+            print(f"[LoRA Forge] GPU PEFT DPO completed: loss {lora_telemetry['initial_loss']:.4f} -> {lora_telemetry['final_loss']:.4f}")
+        except Exception as e_lora:
+            print(f"[WARN] GPU LoRA fallback: {e_lora}")
+            lora_telemetry = {"mode": "fallback", "error": str(e_lora)}
 
     # Checkpoint recovery
     checkpoint_data = None if force_restart else load_checkpoint(ckpt_file)
@@ -475,6 +530,7 @@ def run_experiment_c(
         "dataset_path": str(dataset_file),
         "dataset_num_pairs": len(dataset),
         "cleanroom_zero_copyright_verified": True,
+        "lora_telemetry": lora_telemetry,
         "methods": results_summary,
         "table3_markdown": table3_md,
     }

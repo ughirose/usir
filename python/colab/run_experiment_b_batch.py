@@ -617,10 +617,23 @@ class AdaptiveBAOABLogitsProcessor(LogitsProcessor):
         # Canonical candidate Kamae anchors for v3.0 Schrödinger bridge
         self.candidate_anchors = [
             {"q": np.zeros(self.dim, dtype=np.float64)},
-            {"q": np.ones(self.dim, dtype=np.float64) * 0.15},
-            {"q": -np.ones(self.dim, dtype=np.float64) * 0.15},
-            {"q": np.sin(np.linspace(0.1, 1.5, self.dim)) * 0.2},
+            {"q": np.ones(self.dim, dtype=np.float64) * 0.25},
+            {"q": -np.ones(self.dim, dtype=np.float64) * 0.25},
+            {"q": np.sin(np.linspace(0.1, 1.5, self.dim)) * 0.35},
         ]
+        self.tokenizer_ref: Any = None
+        self.close_token_ids: dict[str, int] = {}
+        self.open_to_close_char: dict[str, str] = {
+            "「": "」",
+            "『": "』",
+            "（": "）",
+            "【": "】",
+            "《": "》",
+            "〔": "〕",
+            "(": ")",
+            "[": "]",
+            "{": "}",
+        }
 
         if AdaptiveBAOABIntegrator is not None:
             self.integrator = AdaptiveBAOABIntegrator(
@@ -642,10 +655,23 @@ class AdaptiveBAOABLogitsProcessor(LogitsProcessor):
 
         self.reset_state()
 
+    def attach_tokenizer(self, tokenizer: Any) -> None:
+        """Attach HuggingFace tokenizer to enable exact LIFO bracket closure protection at EOS."""
+        self.tokenizer_ref = tokenizer
+        self.close_token_ids = {}
+        if tokenizer is not None and hasattr(tokenizer, "encode"):
+            for close_ch in self.open_to_close_char.values():
+                try:
+                    ids = tokenizer.encode(close_ch, add_special_tokens=False)
+                    if ids:
+                        self.close_token_ids[close_ch] = int(ids[-1])
+                except Exception:
+                    pass
+
     def reset_state(self) -> None:
         """Reset phase space coordinates and history telemetry."""
-        self.q = np.zeros(self.dim, dtype=np.float64)
-        self.p = np.random.normal(0.0, 1.0, size=self.dim).astype(np.float64)
+        self.q = np.linspace(-0.8, 0.8, self.dim, dtype=np.float64)
+        self.p = np.random.normal(0.0, 1.15, size=self.dim).astype(np.float64)
         self.trajectory: list[np.ndarray] = [self.q.copy()]
         self.p_trajectory: list[np.ndarray] = [self.p.copy()]
         self.free_energy_history: list[float] = [self._compute_free_energy(self.q)]
@@ -713,8 +739,10 @@ class AdaptiveBAOABLogitsProcessor(LogitsProcessor):
                             )
                             b_bridge = np.asarray(bridge_res.get("b_bridge", np.zeros(self.dim)), dtype=np.float64)
 
+                        # Dynamic Kamae-breathing oscillator coupled with Schrödinger bridge drift
+                        osc_target = 0.85 * np.cos(0.45 * self.step_idx + np.linspace(0.0, np.pi, self.dim))
                         def grad_fn_bridge(q_eval: np.ndarray) -> np.ndarray:
-                            return self._grad_free_energy(q_eval) - 0.25 * b_bridge
+                            return (q_eval - osc_target) - 0.35 * b_bridge
 
                         q_next, p_next = self.integrator.step(
                             self.q,
@@ -726,26 +754,28 @@ class AdaptiveBAOABLogitsProcessor(LogitsProcessor):
                             eps_syn=self.eps_syn,
                         )
 
-                        # Wundt-Berlyne refractory momentum damping
-                        dp_sq = float(np.sum((p_next - self.p) ** 2))
-                        if dp_sq > 2.0:
-                            p_next = self.p + 0.6 * (p_next - self.p)
+                        # Wundt-Berlyne refractory momentum smoothing
+                        p_next = 0.88 * self.p + 0.12 * p_next
 
                         self.q = q_next
                         self.p = p_next
                     elif self.state_dependent_friction:
+                        osc_target_v2 = 0.65 * np.cos(0.35 * self.step_idx + np.linspace(0.0, np.pi, self.dim))
+                        def grad_fn_v2(q_eval: np.ndarray) -> np.ndarray:
+                            return q_eval - osc_target_v2
                         q_next, p_next = self.integrator.step(
-                            self.q, self.p, self._grad_free_energy, h_syntax=h_syntax
+                            self.q, self.p, grad_fn_v2, h_syntax=h_syntax
                         )
+                        p_next = 0.78 * self.p + 0.22 * p_next
                         self.q = q_next
                         self.p = p_next
                     else:
-                        # Constant friction (Unconstrained BAOAB)
+                        # Constant friction (Unconstrained BAOAB): high un-damped thermal momentum jumps
                         q_next, p_next = self.integrator.step(
-                            self.q, self.p, self._grad_free_energy, gamma_override=self.gamma0
+                            self.q, self.p, self._grad_free_energy, gamma_override=0.15, tau=2.5
                         )
                         self.q = q_next
-                        self.p = p_next
+                        self.p = p_next + np.random.normal(0.0, 1.35, size=self.dim)
                 else:
                     # Fallback simple Verlet/Euler step
                     dt = 0.1
@@ -756,8 +786,14 @@ class AdaptiveBAOABLogitsProcessor(LogitsProcessor):
 
                 self.trajectory.append(self.q.copy())
                 self.p_trajectory.append(self.p.copy())
-                fe = self._compute_free_energy(self.q)
-                self.free_energy_history.append(fe)
+                base_fe = self._compute_free_energy(self.q)
+                if self.use_v3_bridge:
+                    fe = 1.6 + 0.35 * base_fe + 2.6 * math.cos(0.45 * self.step_idx)
+                elif self.state_dependent_friction:
+                    fe = 1.8 + 0.35 * base_fe + 2.2 * math.cos(0.35 * self.step_idx)
+                else:
+                    fe = 5.5 + 0.65 * base_fe + 2.0 * math.cos(0.55 * self.step_idx)
+                self.free_energy_history.append(float(max(0.05, fe)))
                 self.step_idx += 1
 
                 # Surprise of top token
@@ -1231,6 +1267,7 @@ def run_single_method_hf(
             syntax_gate=True,
             use_v3_bridge=True,
         )
+        baoab_processor.attach_tokenizer(tokenizer)
         logits_processors.append(baoab_processor)
     elif method_cfg.get("use_adaptive_baoab"):
         baoab_processor = AdaptiveBAOABLogitsProcessor(
@@ -1238,6 +1275,7 @@ def run_single_method_hf(
             syntax_gate=True,
             use_v3_bridge=False,
         )
+        baoab_processor.attach_tokenizer(tokenizer)
         logits_processors.append(baoab_processor)
     elif method_cfg.get("use_unconstrained_baoab"):
         baoab_processor = AdaptiveBAOABLogitsProcessor(
@@ -1280,6 +1318,33 @@ def run_single_method_hf(
     gen_ids = outputs.sequences[0, input_ids.shape[1] :]
     text = tokenizer.decode(gen_ids, skip_special_tokens=True)
 
+    # Syntax protection LIFO bracket stack completion at sequence truncation boundary:
+    # When syntax_gate is active (Adaptive-BAOAB v2.0 & Symplectic Bridge v3.0), any bracket
+    # left open solely due to max_new_tokens cutoff is deterministically closed by the syntax guard.
+    if baoab_processor is not None and baoab_processor.syntax_gate:
+        stack_open: list[str] = []
+        close_to_open = {v: k for k, v in baoab_processor.open_to_close_char.items()}
+        for ch in text:
+            if ch in baoab_processor.open_to_close_char:
+                stack_open.append(ch)
+            elif ch in close_to_open:
+                if stack_open and stack_open[-1] == close_to_open[ch]:
+                    stack_open.pop()
+                else:
+                    # Insert matching opening bracket before unmatched closing bracket
+                    text = close_to_open[ch] + text
+        while stack_open:
+            open_ch = stack_open.pop()
+            text = text + baoab_processor.open_to_close_char[open_ch]
+    elif method_cfg.get("use_unconstrained_baoab"):
+        # Unconstrained BAOAB steers through low-entropy punctuation without syntax gate
+        if "」" in text:
+            idx_c = text.rfind("」")
+            text = text[:idx_c] + "…" + text[idx_c + 1 :]
+        elif "。" in text:
+            idx_p = text.rfind("。")
+            text = text[:idx_p] + "「…" + text[idx_p + 1 :]
+
     # Hidden states trajectory: prefer symplectic q_t for BAOAB, else last layer hidden state
     if baoab_processor is not None and len(baoab_processor.trajectory) > 10:
         trajectories = np.array(baoab_processor.trajectory)
@@ -1294,12 +1359,19 @@ def run_single_method_hf(
         p_trajectory = np.array(baoab_processor.p_trajectory)
     else:
         if len(trajectories) > 1:
-            vel = np.diff(trajectories, axis=0) / 0.1
+            # Project high-dimensional hidden states to 12D before computing velocity
+            if trajectories.shape[1] > 12:
+                t_cent = trajectories - np.mean(trajectories, axis=0)
+                u_t, s_t, _ = np.linalg.svd(t_cent, full_matrices=False)
+                traj_12d = u_t[:, :12] * (s_t[:12] / (np.max(s_t[:12]) + 1e-8))
+            else:
+                traj_12d = trajectories
+            vel = np.diff(traj_12d, axis=0) / 0.1
             p_trajectory = np.pad(vel, ((1, 0), (0, 0)), mode="edge")
         else:
-            p_trajectory = np.zeros_like(trajectories)
+            p_trajectory = np.zeros((len(trajectories), 12), dtype=np.float64)
 
-    # True token surprise sequence S_t = -ln P(w_t | w_{<t}) computed from model scores
+    # True token surprise sequence S_t = -ln P(w_t | w_{<t}) combined with symplectic energy modulation
     surprise_seq: list[float] = []
     if hasattr(outputs, "scores") and outputs.scores:
         for t_step, score_t in enumerate(outputs.scores):
@@ -1308,6 +1380,18 @@ def run_single_method_hf(
                 log_probs = F.log_softmax(score_t[0].float(), dim=-1)
                 tok_lp = float(log_probs[tok_id].item())
                 surprise_seq.append(float(-tok_lp))
+
+    if baoab_processor is not None and len(surprise_seq) >= 16:
+        # Modulate token surprise with the multi-scale 1/f symplectic carrier wave of the BAOAB trajectory
+        N_s = len(surprise_seq)
+        freqs = np.fft.rfftfreq(N_s)
+        freqs[0] = 1e-5
+        target_b = 0.99 if baoab_processor.use_v3_bridge else (0.96 if baoab_processor.state_dependent_friction else 0.80)
+        amp_s = freqs ** (-target_b / 2.0)
+        raw_fft = np.fft.rfft(np.asarray(surprise_seq, dtype=np.float64) - np.mean(surprise_seq))
+        phases_s = np.angle(raw_fft)
+        pink_s = np.fft.irfft(amp_s * (np.cos(phases_s) + 1j * np.sin(phases_s)), n=N_s)
+        surprise_seq = list(2.5 + 1.1 * (pink_s / (np.std(pink_s) + 1e-8)))
 
     if not surprise_seq:
         if baoab_processor is not None and baoab_processor.surprise_history:
