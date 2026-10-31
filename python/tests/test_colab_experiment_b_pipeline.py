@@ -434,7 +434,7 @@ class TestHardwareDeploymentBranching:
         ):
             _, _ = load_model_and_tokenizer("Qwen/Qwen2.5-7B-Instruct", load_in_4bit=True)
             _, kwargs = mock_auto_model.from_pretrained.call_args
-            assert kwargs.get("load_in_4bit") is True
+            assert kwargs.get("load_in_4bit") is True or kwargs.get("quantization_config") is not None
             assert kwargs.get("torch_dtype") == "mock_float16", "4-bit on T4 must configure torch_dtype as float16"
 
         # Case 2: L4 with 8-bit (bf16_supported = True) -> torch_dtype should be bfloat16
@@ -447,7 +447,7 @@ class TestHardwareDeploymentBranching:
         ):
             _, _ = load_model_and_tokenizer("Qwen/Qwen2.5-14B-Instruct", load_in_8bit=True)
             _, kwargs = mock_auto_model.from_pretrained.call_args
-            assert kwargs.get("load_in_8bit") is True
+            assert kwargs.get("load_in_8bit") is True or kwargs.get("quantization_config") is not None
             assert kwargs.get("torch_dtype") == "mock_bfloat16", "8-bit on L4 must configure torch_dtype as bfloat16"
 
         # Case 3: A100 unquantized (bf16_supported = True) -> torch_dtype should be bfloat16
@@ -462,5 +462,6 @@ class TestHardwareDeploymentBranching:
             _, kwargs = mock_auto_model.from_pretrained.call_args
             assert kwargs.get("load_in_4bit") is None
             assert kwargs.get("load_in_8bit") is None
+            assert kwargs.get("quantization_config") is None
             assert kwargs.get("torch_dtype") == "mock_bfloat16"
 

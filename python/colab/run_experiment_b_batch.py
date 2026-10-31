@@ -51,6 +51,7 @@ try:
     from transformers import (
         AutoModelForCausalLM,
         AutoTokenizer,
+        BitsAndBytesConfig,
         LogitsProcessor,
         LogitsProcessorList,
         PreTrainedModel,
@@ -62,6 +63,7 @@ except ImportError:
     F = None
     AutoModelForCausalLM = None
     AutoTokenizer = None
+    BitsAndBytesConfig = None
     PreTrainedModel = Any
     PreTrainedTokenizer = Any
     TORCH_AVAILABLE = False
@@ -836,13 +838,8 @@ def load_model_and_tokenizer(
         "trust_remote_code": True,
     }
 
-    if load_in_4bit:
-        kwargs["load_in_4bit"] = True
-    elif load_in_8bit:
-        kwargs["load_in_8bit"] = True
-
     if torch_dtype != "auto":
-        kwargs["torch_dtype"] = getattr(torch, torch_dtype, torch.float16)
+        compute_dtype = getattr(torch, torch_dtype, torch.float16)
     else:
         # Note: T4 (Turing cc 7.5) has no native bfloat16 support; fall back to float16.
         # L4 (Ada Lovelace cc 8.9) and A100 (Ampere cc 8.0) support native bfloat16.
@@ -852,7 +849,26 @@ def load_model_and_tokenizer(
                 is_bf16 = torch.cuda.is_bf16_supported()
             except Exception:
                 is_bf16 = False
-        kwargs["torch_dtype"] = torch.bfloat16 if is_bf16 else torch.float16
+        compute_dtype = torch.bfloat16 if is_bf16 else torch.float16
+
+    kwargs["torch_dtype"] = compute_dtype
+
+    if load_in_4bit:
+        if BitsAndBytesConfig is not None:
+            kwargs["quantization_config"] = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_compute_dtype=compute_dtype,
+                bnb_4bit_quant_type="nf4",
+            )
+        else:
+            kwargs["load_in_4bit"] = True
+    elif load_in_8bit:
+        if BitsAndBytesConfig is not None:
+            kwargs["quantization_config"] = BitsAndBytesConfig(
+                load_in_8bit=True,
+            )
+        else:
+            kwargs["load_in_8bit"] = True
 
     print(f"Loading model: {model_name} with kwargs {kwargs}")
     model = AutoModelForCausalLM.from_pretrained(model_name, **kwargs)
