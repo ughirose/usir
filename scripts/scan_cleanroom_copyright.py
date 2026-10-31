@@ -135,6 +135,20 @@ AUTHOR_COPYRIGHT_STATUS = {
         "expires": "1966-12-31",
         "legal_note": "50-year term expired prior to 2018 amendment."
     },
+    "Mori_Ogai": {
+        "author": "森鴎外",
+        "death_year": 1922,
+        "status": "PUBLIC_DOMAIN",
+        "expires": "1972-12-31",
+        "legal_note": "50-year term expired prior to 2018 amendment."
+    },
+    "Hori_Tatsuo": {
+        "author": "堀辰雄",
+        "death_year": 1953,
+        "status": "PUBLIC_DOMAIN",
+        "expires": "2003-12-31",
+        "legal_note": "50-year term expired prior to 2018 amendment."
+    },
     "LLM_Slop": {
         "author": "Synthetic AI",
         "death_year": None,

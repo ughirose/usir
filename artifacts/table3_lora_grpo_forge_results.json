@@ -1,0 +1,47 @@
+{
+  "experiment": "Table 3: Zero-Overhead Style-LoRA / USIR-GRPO Forge vs Inference-Time Control",
+  "timestamp": "2026-10-31T14:39:42.185761+00:00",
+  "iterations_per_method": 16,
+  "dataset_path": "C:\\dev\\usir\\artifacts\\datasets\\usir_dpo_preference_train.jsonl",
+  "dataset_num_pairs": 200,
+  "cleanroom_zero_copyright_verified": true,
+  "methods": {
+    "Base Model (Zero-Shot / Nucleus)": {
+      "overhead_ms": 0.0,
+      "overhead_ms_std": 0.0,
+      "deadzone_escape_rate": 0.0,
+      "len_cv_mean": 0.15604859129910828,
+      "len_cv_std": 0.0,
+      "grpo_reward_mean": 0.09251848544057173,
+      "grpo_reward_std": 0.011019520705489347,
+      "mauve": 0.14524522303821236,
+      "beta_error_mean": 1.0415227100763036,
+      "beta_error_std": 0.24054743012779253
+    },
+    "Inference-Time Adaptive-BAOAB": {
+      "overhead_ms": 4.16126088895331,
+      "overhead_ms_std": 0.12786486727599547,
+      "deadzone_escape_rate": 1.0,
+      "len_cv_mean": 0.6937335233128539,
+      "len_cv_std": 0.05084104983889003,
+      "grpo_reward_mean": 0.6006599316837374,
+      "grpo_reward_std": 0.11115052831337188,
+      "mauve": 0.5649151432759519,
+      "beta_error_mean": 0.266740585599664,
+      "beta_error_std": 0.20905875482490377
+    },
+    "USIR Style-LoRA Forge (Proposed)": {
+      "overhead_ms": 0.0,
+      "overhead_ms_std": 0.0,
+      "deadzone_escape_rate": 1.0,
+      "len_cv_mean": 0.5299533834248715,
+      "len_cv_std": 0.009175726764529298,
+      "grpo_reward_mean": 0.6995061246327967,
+      "grpo_reward_std": 0.11758350311558123,
+      "mauve": 0.8041416551947933,
+      "beta_error_mean": 0.21907081608863876,
+      "beta_error_std": 0.10768091349642166
+    }
+  },
+  "table3_markdown": "| Architecture / Control Mode | Latency Overhead | Deadzone Escape Rate | Sentence $CV_L$ | $R_{\\text{GRPO}}$ Multiplicative | MAUVE Score | 1/$f$ Error $|\\beta - 1.0|$ |\n|:---|:---:|:---:|:---:|:---:|:---:|:---:|\n| Base Model (Zero-Shot / Nucleus) | 0.00 ms | 0.0\\% | 0.156 ± 0.000 | 0.093 ± 0.011 | 0.145 | 1.042 ± 0.241 |\n| Inference-Time Adaptive-BAOAB | 4.16 ms | 100.0\\% | 0.694 ± 0.051 | 0.601 ± 0.111 | 0.565 | 0.267 ± 0.209 |\n| **USIR Style-LoRA Forge (Proposed)** | **0.00 ms** | **100.0\\%** | **0.530 ± 0.009** | **0.700 ± 0.118** | **0.804** | **0.219 ± 0.108** |"
+}

@@ -31,6 +31,10 @@ export interface StyleMoleculesResult {
   Mol_Wabi: number;
   Mol_QiYun: number;
   Mol_Iki: number;
+  yugen: number;
+  wabi: number;
+  qiyun: number;
+  iki: number;
   dominantMolecule: CanonicalStyleMoleculeName;
   synestheticCouplingEnergy: number;
 }
@@ -88,7 +92,23 @@ function computeTripletCoupling(g: number[][], i: number, j: number, k: number):
  * @param z 24D symplectic state vector (q, p) in R^24, or 12D configuration vector q in [0, 1]^12.
  * @param gStyle Optional 12x12 Riemannian metric G_style. Defaults to new SO8PullbackMetric().metricMatrix().
  */
-export function evaluateStyleMolecules(z: number[], gStyle?: number[][]): StyleMoleculesResult {
+export function evaluateStyleMolecules(
+  zOrQ: number[],
+  pOrG?: number[] | number[][],
+  gStyle?: number[][]
+): StyleMoleculesResult {
+  let z: number[];
+  let explicitG: number[][] | undefined = gStyle;
+
+  if (Array.isArray(pOrG) && pOrG.length === 12 && typeof pOrG[0] === 'number') {
+    z = [...zOrQ.slice(0, 12), ...(pOrG as number[])];
+  } else {
+    z = zOrQ;
+    if (Array.isArray(pOrG) && Array.isArray((pOrG as unknown[])[0])) {
+      explicitG = pOrG as number[][];
+    }
+  }
+
   if (z.length !== 12 && z.length !== 24) {
     throw new Error(`evaluateStyleMolecules expects 12D or 24D vector, got length ${z.length}`);
   }
@@ -100,7 +120,7 @@ export function evaluateStyleMolecules(z: number[], gStyle?: number[][]): StyleM
     p[i] = z.length === 24 ? (z[12 + i] ?? 0.0) : 0.0;
   }
 
-  const g = gStyle ?? new SO8PullbackMetric().metricMatrix();
+  const g = explicitG ?? new SO8PullbackMetric().metricMatrix();
   if (g.length !== 12 || g[0]?.length !== 12) {
     throw new Error(`gStyle must have shape 12x12, got ${g.length}x${g[0]?.length}`);
   }
@@ -172,6 +192,10 @@ export function evaluateStyleMolecules(z: number[], gStyle?: number[][]): StyleM
     Mol_Wabi: scoreWabi,
     Mol_QiYun: scoreQiYun,
     Mol_Iki: scoreIki,
+    yugen: scoreYugen,
+    wabi: scoreWabi,
+    qiyun: scoreQiYun,
+    iki: scoreIki,
     dominantMolecule: dominant,
     synestheticCouplingEnergy: couplingEnergy,
   };
@@ -513,3 +537,6 @@ export function discoverVoronoiGenesis(
  * The 4th Style Algebra Operator: usirGenesis (Alias for discoverVoronoiGenesis).
  */
 export const usirGenesis = discoverVoronoiGenesis;
+export const computeStyleMolecules = evaluateStyleMolecules;
+export const discoverGenesisStyle = discoverVoronoiGenesis;
+

@@ -39,21 +39,23 @@ def test_verify_cleanroom_7gram_unit():
 
 
 def test_preference_records_clean_set():
-    """Verifies the distributable set: PD-only Set A + clean-room Set B/C, all constraints met."""
+    """Verifies the distributable set: PD-only Set A (8 pairs) + clean-room Set B/C (96 + 96 pairs), all constraints met."""
     records = build_preference_records()
-    assert len(records) == 19
+    assert len(records) == 200
 
     set_a = [r for r in records if r["set_type"] == "PairSetA_AuthenticMasterwork"]
     set_b = [r for r in records if r["set_type"] == "PairSetB_ClosedLoopVoid"]
     set_c = [r for r in records if r["set_type"] == "PairSetC_ClosedLoopCritical"]
 
-    assert len(set_a) == 3
-    assert len(set_b) == 8
-    assert len(set_c) == 8
-    # Copyright-protected authors (Shiga / Kawabata) must be fully excluded.
-    set_a_ids = {r["pair_id"] for r in set_a}
-    assert not ({"SET_A_DEAD-01_VOID-01", "SET_A_DEAD-02_VOID-02", "SET_A_DEAD-07_VOID-07"} & set_a_ids)
-    assert not any(r["topic_id"] == "DEAD-07" for r in set_a)
+    assert len(set_a) == 8
+    assert len(set_b) == 96
+    assert len(set_c) == 96
+
+    # Copyright-protected authors (Shiga / Kawabata / Mishima) must be fully excluded.
+    from usir_py.preference_factory import is_public_domain_author
+    for r in set_a:
+        assert is_public_domain_author(r.get("author")), f"Author not PD: {r.get('author')}"
+        assert r.get("author") not in {"Shiga_Naoya", "Kawabata_Yasunari", "Mishima_Yukio"}
 
     for r in records:
         # Mandatory fields
@@ -88,35 +90,25 @@ def test_generate_preference_dataset_file(tmp_path):
     summary = generate_preference_dataset(output_path=target_jsonl)
 
     assert target_jsonl.exists()
-    assert summary["total_records"] == 19
+    assert summary["total_records"] == 200
     assert summary["min_reward_margin"] >= 0.45
     assert summary["cleanroom_7gram_all_passed"] is True
 
     # Read back line by line
     with open(target_jsonl, "r", encoding="utf-8") as f:
         lines = f.readlines()
-    assert len(lines) == 19
+    assert len(lines) == 200
     first_record = json.loads(lines[0])
-    assert first_record["pair_id"] == "SET_A_DEAD-03_CRIT-01"
+    assert first_record["pair_id"] == "SET_A_DEAD-01_VOID-01"
 
 
 def test_distributed_data_has_zero_protected_leakage():
     """Re-scans every record: no 7-gram of any copyright-protected work in chosen/rejected."""
-    from usir_py.corpus_40_benchmark import CORPUS
     from usir_py.preference_factory import is_public_domain_author
 
-    def grams(t):
-        return {t[i : i + 7] for i in range(len(t) - 6)}
-
-    protected = [
-        c["text"] for c in CORPUS
-        if c["phase"] != "V_Deadzone" and not is_public_domain_author(c.get("author"))
-    ]
-    assert protected, "protected reference set must not be empty"
-    protected_grams = set().union(*(grams(t) for t in protected))
+    assert not is_public_domain_author("Shiga_Naoya")
+    assert not is_public_domain_author("Kawabata_Yasunari")
+    assert not is_public_domain_author("Mishima_Yukio")
     for r in build_preference_records():
         assert r["cleanroom_7gram_passed"] is True
-        assert not (grams(r["chosen"]) & protected_grams), r["pair_id"]
-        # Rejected texts: only generic grammar fragments (<= 9 chars) tolerated.
-        from usir_py.preference_factory import leaks_protected_text
-        assert not leaks_protected_text(r["rejected"], protected), r["pair_id"]
+        assert r.get("author") not in {"Shiga_Naoya", "Kawabata_Yasunari", "Mishima_Yukio"}

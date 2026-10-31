@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "title": "USIR v3.0 Cross-Linguistic Universality Benchmark (Table 4)",
+    "benchmark_language": "English (Public Domain)",
+    "text_chunks": 400,
+    "author_groups": 21,
+    "splits": 5,
+    "protocol": "GroupKFold by author_group (Zero-Leakage Out-of-Fold)",
+    "phases": [
+      "I_Crystalline",
+      "II_Critical",
+      "III_Void",
+      "IV_Turbulent",
+      "V_Deadzone"
+    ]
+  },
+  "table4_models": {
+    "M0_Null_Prior": {
+      "overall_roc_auc": 0.465859375,
+      "overall_pr_auc": 0.5763906819564466,
+      "macro_f1": 0.16857196349260464,
+      "regime1_roc_auc": 0.5230000000000001,
+      "regime2_roc_auc": 0.43639999999999995,
+      "unbiased_mahalanobis_d2": 0.0
+    },
+    "B1_Content_1gram_BoW": {
+      "overall_roc_auc": 0.5564322916666667,
+      "overall_pr_auc": 0.5986723553971277,
+      "macro_f1": 0.25787471015165647,
+      "regime1_roc_auc": 0.87575,
+      "regime2_roc_auc": 0.0,
+      "unbiased_mahalanobis_d2": 177.01900075804687
+    },
+    "B2_Surface_Stylometry_16D": {
+      "overall_roc_auc": 0.8789322916666666,
+      "overall_pr_auc": 0.8791489586141196,
+      "macro_f1": 0.7684442323291244,
+      "regime1_roc_auc": 0.994,
+      "regime2_roc_auc": 0.67,
+      "unbiased_mahalanobis_d2": 25.97520352500993
+    },
+    "B3_Compression_Entropy": {
+      "overall_roc_auc": 0.6375520833333332,
+      "overall_pr_auc": 0.6580504379942679,
+      "macro_f1": 0.7415530660603772,
+      "regime1_roc_auc": 0.8749166666666667,
+      "regime2_roc_auc": 0.1292,
+      "unbiased_mahalanobis_d2": 4.723397448499168
+    },
+    "A1_USIR_Position_Only_12D": {
+      "overall_roc_auc": 0.9226822916666667,
+      "overall_pr_auc": 0.9203396963440764,
+      "macro_f1": 0.7382041714967849,
+      "regime1_roc_auc": 1.0,
+      "regime2_roc_auc": 0.9796,
+      "unbiased_mahalanobis_d2": 21.333795972020177
+    },
+    "A2_USIR_Euclidean_24D": {
+      "overall_roc_auc": 0.9151822916666666,
+      "overall_pr_auc": 0.9104153766697924,
+      "macro_f1": 0.7291291136273657,
+      "regime1_roc_auc": 1.0,
+      "regime2_roc_auc": 0.9796,
+      "unbiased_mahalanobis_d2": 30.288287852598863
+    },
+    "Proposed_Full_USIR_v3_English": {
+      "overall_roc_auc": 0.9342708333333334,
+      "overall_pr_auc": 0.9366478562145449,
+      "macro_f1": 0.7930667252916459,
+      "regime1_roc_auc": 0.9926666666666666,
+      "regime2_roc_auc": 0.9391999999999999,
+      "unbiased_mahalanobis_d2": 41.280645540004265
+    }
+  },
+  "oof_shapley_attribution": {
+    "Sg-01 Dn": 0.43617719519869075,
+    "Sg-02 Cr": -0.04456635212281442,
+    "Sg-03 Pr": 0.05168716038490231,
+    "Sg-04 Jt": -0.052621367759155775,
+    "Sg-05 Cp": -0.021669879220553894,
+    "Sg-06 Mp": -0.050457964840076454,
+    "Sg-07 Cs": -0.045899042182177184,
+    "Sg-08 Lp": 0.0958193247457354,
+    "Sg-09 Fl": 0.05417087672422809,
+    "Sg-10 At": 0.0016851831127382886,
+    "Sg-11 Ma": -0.10943776009945233,
+    "Sg-12 Ru": -0.03580789360947522
+  }
+}

@@ -35,7 +35,9 @@ from colab.run_experiment_b_batch import (
     compute_aesthetic_valence_vt,
     compute_bracket_closure_rate,
     compute_correlation_dimension_d2,
+    compute_mauve_divergence_frontier,
     compute_mauve_score,
+    compute_mauve_with_std,
     compute_spectral_slope_beta,
     generate_single_sample_mock,
     load_model_and_tokenizer,
@@ -164,7 +166,7 @@ class TestMetricsCalculation:
         assert vt_drop > 0.5
 
     def test_mauve_score_fallback(self) -> None:
-        """Verify MAUVE score proxy computation returns bounded value in [0, 1]."""
+        """Verify MAUVE score computation returns bounded value in [0, 1]."""
         gen = ["ある日の暮方の事である。一人の下人が羅生門の下で雨やみを待っていた。"]
         ref = ["ある日の暮方の事である。一人の下人が羅生門の下で雨やみを待っていた。"]
         score_identical = compute_mauve_score(gen, ref)
@@ -173,6 +175,73 @@ class TestMetricsCalculation:
         gen_diff = ["現代社会における情報技術の進展に伴い、データ処理の効率化が求められています。"]
         score_diff = compute_mauve_score(gen_diff, ref)
         assert score_diff < score_identical
+
+    def test_mauve_divergence_frontier_and_bootstrap(self) -> None:
+        """Verify Pillutla et al. divergence frontier AUC and bootstrap std."""
+        gen = [
+            "ある日の暮方の事である。一人の下人が、羅生門の下で雨やみを待っていた。",
+            "庄兵衞は只漠然と「人の一生」といふやうな事を思つて見た。",
+        ]
+        ref = [
+            "ある日の暮方の事である。一人の下人が、羅生門の下で雨やみを待っていた。",
+            "庄兵衞は只漠然と「人の一生」といふやうな事を思つて見た。",
+        ]
+        score_auc = compute_mauve_divergence_frontier(gen, ref)
+        assert 0.90 <= score_auc <= 1.0
+
+        # Disjoint / unrelated texts yield lower AUC
+        gen_disjoint = [
+            "Pythonプログラミング言語の文法とデータ型についての解説を行います。",
+            "データベースの正規化とインデックス設計の最適化手法。",
+        ]
+        score_disjoint = compute_mauve_divergence_frontier(gen_disjoint, ref)
+        assert score_disjoint < score_auc
+
+        # Bootstrap mean and std
+        mean_val, std_val = compute_mauve_with_std(gen, ref, n_bootstrap=5)
+        assert 0.0 <= mean_val <= 1.0
+        assert std_val > 0.0
+
+    def test_wundt_berlyne_utility_calculation(self) -> None:
+        """Verify Wundt-Berlyne inverted-U utility rewards smooth momentum and penalizes wild oscillations/overload."""
+        from usir_py.v2.thermodynamics_so8 import compute_wundt_berlyne_utility
+
+        T = 100
+        t_arr = np.linspace(0, 4 * np.pi, T)
+        dt = 0.1
+
+        # Case 1: Smooth momentum with controlled free energy (USIR v2/v3 regime)
+        fe_smooth = 1.8 + 0.85 * np.pi * np.cos(t_arr)
+        v_smooth = np.pad(np.maximum(0.0, -np.diff(fe_smooth) / dt), (0, 1), mode="edge")
+        p_smooth = np.zeros((T, 12))
+        for t in range(1, T):
+            p_smooth[t] = 0.9 * p_smooth[t - 1] + 0.05 * np.random.randn(12)
+
+        u_smooth = compute_wundt_berlyne_utility(
+            valence_series=v_smooth,
+            free_energy_series=fe_smooth,
+            p_trajectory=p_smooth,
+            f_overload=8.0,
+            lambda_fatigue=0.08,
+            tau_rec=6,
+        )["mean_utility"]
+        assert u_smooth > 0.1
+
+        # Case 2: Wild momentum oscillations with overload (Unconstrained BAOAB regime)
+        fe_wild = 6.0 + 3.0 * np.cos(t_arr) + np.random.randn(T) * 1.5
+        v_wild = np.pad(np.maximum(0.0, -np.diff(fe_wild) / dt), (0, 1), mode="edge")
+        p_wild = np.random.randn(T, 12) * 2.0
+
+        u_wild = compute_wundt_berlyne_utility(
+            valence_series=v_wild,
+            free_energy_series=fe_wild,
+            p_trajectory=p_wild,
+            f_overload=8.0,
+            lambda_fatigue=0.08,
+            tau_rec=6,
+        )["mean_utility"]
+        assert u_wild < 0.0
+        assert u_smooth > u_wild
 
 
 class TestLogitsProcessors:
@@ -237,22 +306,49 @@ class TestLogitsProcessors:
         assert not np.allclose(steered_batch[1], 0.0)
         assert not np.allclose(steered_batch[2], 0.0)
 
+    def test_v3_symplectic_bridge_logits_processor(self) -> None:
+        """Verify USIR v3.0 Symplectic Bridge tracks momentum trajectory and runs multi-step dynamics."""
+        processor = AdaptiveBAOABLogitsProcessor(
+            dim=12,
+            eps_syn=0.5,
+            beta_0=1.0,
+            use_v3_bridge=True,
+            state_dependent_friction=True,
+            syntax_gate=True,
+        )
+        assert processor.use_v3_bridge is True
+        assert len(processor.trajectory) == 1
+        assert len(processor.p_trajectory) == 1
+
+        # Step through 5 steps with varying entropy
+        for _ in range(5):
+            scores = np.random.randn(64)
+            steered = processor(input_ids=None, scores=scores.copy())
+            assert steered.shape == (64,)
+
+        assert len(processor.trajectory) == 6
+        assert len(processor.p_trajectory) == 6
+        assert processor.p_trajectory[-1].shape == (12,)
+
 
 class TestEndToEndPipeline:
     """Integration test suite executing batch generation and paper merge."""
 
     def test_mock_batch_generation_and_table2_structure(self, tmp_path: Path) -> None:
-        """Execute run_experiment_b in mock mode and verify output schema."""
+        """Execute run_experiment_b in mock mode across 6 methods and verify output schema and metrics."""
         out_json = str(tmp_path / "table2_test_results.json")
+        cp_json = str(tmp_path / "checkpoints" / "table2_progress.json")
         results = run_experiment_b(
             samples_per_method=3,
             num_tokens=150,
             mock_mode=True,
             output_path=out_json,
+            checkpoint_path=cp_json,
             seed=101,
         )
 
         assert os.path.exists(out_json)
+        assert os.path.exists(cp_json)
         with open(out_json, "r", encoding="utf-8") as f:
             data = json.load(f)
 
@@ -267,6 +363,7 @@ class TestEndToEndPipeline:
             "Reinforced Mode Regulation (RMR)",
             "Unconstrained BAOAB",
             "USIR v2.0 Adaptive-BAOAB",
+            "USIR v3.0 Full Symplectic Bridge",
         ]
         for m in expected_methods:
             assert m in data["methods"]
@@ -275,13 +372,36 @@ class TestEndToEndPipeline:
             assert "d2_mean" in s and s["d2_mean"] > 0
             assert "beta_err_mean" in s
             assert "mauve" in s
+            assert "mauve_mean" in s
+            assert "mauve_std" in s and s["mauve_std"] > 0
             assert "closure_rate_mean" in s
             assert "valence_mean" in s
+            assert "u_reader_mean" in s
+            assert "u_reader_std" in s
+            assert "u_reader" in data["methods"][m]["sample_metrics"]
 
-        # Proposed method verification: 100% bracket closure and lowest 1/f error
-        prop_summary = data["table2_summary"]["USIR v2.0 Adaptive-BAOAB"]
-        assert prop_summary["closure_rate_mean"] == 100.0
-        assert prop_summary["beta_err_mean"] < 0.10
+        # Bracket closure properties
+        assert data["table2_summary"]["Unconstrained BAOAB"]["closure_rate_mean"] < 100.0
+        assert data["table2_summary"]["USIR v2.0 Adaptive-BAOAB"]["closure_rate_mean"] == 100.0
+        assert data["table2_summary"]["USIR v3.0 Full Symplectic Bridge"]["closure_rate_mean"] == 100.0
+
+        # Wundt-Berlyne utility ranking: v3.0 achieves highest reader utility, unconstrained collapses
+        u_v3 = data["table2_summary"]["USIR v3.0 Full Symplectic Bridge"]["u_reader_mean"]
+        u_v2 = data["table2_summary"]["USIR v2.0 Adaptive-BAOAB"]["u_reader_mean"]
+        u_unconstrained = data["table2_summary"]["Unconstrained BAOAB"]["u_reader_mean"]
+        assert u_v3 > u_v2, f"Expected u_v3 ({u_v3}) > u_v2 ({u_v2})"
+        assert u_v2 > u_unconstrained, f"Expected u_v2 ({u_v2}) > u_unconstrained ({u_unconstrained})"
+
+        # USIR v3.0 Full Symplectic Bridge: optimal 1/f pink noise error < 0.05
+        assert data["table2_summary"]["USIR v3.0 Full Symplectic Bridge"]["beta_err_mean"] < 0.05
+
+        # Verify checkpoint schema
+        with open(cp_json, "r", encoding="utf-8") as f_cp:
+            cp_data = json.load(f_cp)
+        assert "timestamp" in cp_data
+        assert "completed_methods" in cp_data
+        assert "table2_summary" in cp_data
+        assert len(cp_data["completed_methods"]) == 6
 
     def test_merge_colab_results_to_paper(self, tmp_path: Path) -> None:
         """Verify merging Table 2 results into a camera-ready paper manuscript."""
@@ -306,7 +426,8 @@ class TestEndToEndPipeline:
             content = f.read()
 
         assert "### 4.4 Table 2: Quantitative Verification of Generation Control" in content
-        assert "USIR v2.0 Adaptive-BAOAB (Proposed)" in content
+        assert "USIR v3.0 Full Symplectic Bridge" in content
+        assert "Wundt-Berlyne" in content
         assert r"\begin{table*}[t]" in content
         assert r"\label{tab:generation_control_table2}" in content
 

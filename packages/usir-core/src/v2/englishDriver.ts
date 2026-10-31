@@ -331,3 +331,19 @@ export function classifyEnglishPhase(text: string): string {
 
   return 'V_Deadzone';
 }
+
+export function analyzeEnglishStyle(text: string, useMca: boolean = false) {
+  const z_24d = extractUsir24dEnglish(text, useMca);
+  const phase = classifyEnglishPhase(text);
+  const signals = extractEnglishSignals(text);
+  const q = Array.from(z_24d.slice(0, 12));
+  const p = Array.from(z_24d.slice(12, 24));
+  return {
+    z_24d,
+    q,
+    p,
+    phase,
+    signals,
+  };
+}
+

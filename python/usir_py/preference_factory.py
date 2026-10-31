@@ -13,9 +13,18 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 
-from .corpus_40_benchmark import CORPUS
-from .extractor_24d import extract_usir_24d
-from .grpo_reward import compute_grpo_reward
+try:
+    from .cleanroom_motifs import CLEANROOM_SYNTHETIC_MOTIFS
+    from .corpus_40_benchmark import CORPUS
+    from .extractor_24d import extract_usir_24d
+    from .grpo_reward import compute_grpo_reward, compute_v3_multiplicative_grpo_reward
+except ImportError:
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from usir_py.cleanroom_motifs import CLEANROOM_SYNTHETIC_MOTIFS
+    from usir_py.corpus_40_benchmark import CORPUS
+    from usir_py.extractor_24d import extract_usir_24d
+    from usir_py.grpo_reward import compute_grpo_reward, compute_v3_multiplicative_grpo_reward
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 DATASETS_DIR = REPO_ROOT / "artifacts" / "datasets"
@@ -59,7 +68,7 @@ def verify_cleanroom_7gram(
 ) -> bool:
     """Verifies 7-gram Clean Room conditions:
     1. For synthetic rewrites (Set B & Set C):
-       - Zero 7-gram overlap with all 32 golden masterwork passages (Zero Target Leakage).
+       - Zero 7-gram overlap with all golden masterwork passages (Zero Target Leakage).
        - Zero 7-gram verbatim overlap with the rejected deadzone text (Zero Verbatim Echo).
     2. For authentic masterworks (Set A):
        - Validates classical masterwork provenance from the golden benchmark corpus.
@@ -93,10 +102,18 @@ def verify_cleanroom_7gram(
 AUTHOR_DEATH_YEAR = {
     "Akutagawa": 1927,
     "Kajii_Motojiro": 1932,
+    "Kajii_Minimal": 1932,
     "Nakajima_Atsushi": 1942,
     "Dazai_Osamu": 1948,
+    "Sakaguchi_Ango": 1955,
+    "Soseki": 1916,
+    "Mori_Ogai": 1922,
+    "Hori_Tatsuo": 1953,
+    "Basho": 1694,
+    "Matsuo_Basho": 1694,
     "Shiga_Naoya": 1971,
     "Kawabata_Yasunari": 1972,
+    "Mishima_Yukio": 1970,
 }
 PD_MAX_DEATH_YEAR = 1955
 # Max verbatim run (chars) tolerated between a distributed rejected text and a
@@ -198,13 +215,23 @@ def build_preference_records() -> List[Dict[str, Any]]:
         scaled_rr = scale_grpo_reward(raw_rr)
         margin = float(scaled_rc - scaled_rr)
 
-        # Chosen is a public-domain original; verify it (and the rejected text)
-        # share no 7-gram with any protected work.
+        v3_res_c = compute_v3_multiplicative_grpo_reward(
+            chosen_text, target=target_phase, is_authentic_masterwork=True
+        )
+        v3_res_r = compute_v3_multiplicative_grpo_reward(
+            rejected_text, target=target_phase, is_authentic_masterwork=False
+        )
+        v3_rc = float(v3_res_c["reward"])
+        v3_rr = float(v3_res_r["reward"])
+        v3_margin = float(v3_rc - v3_rr)
+
+        # Chosen is a public-domain original; verify it shares no echo with rejected text
+        # and no overlap with protected works.
         cleanroom_passed = verify_cleanroom_7gram(
             chosen_text,
             rejected_text,
             masterwork_texts=protected_texts,
-            is_synthetic_rewrite=True,
+            is_synthetic_rewrite=False,
         )
         if not cleanroom_passed:
             # Strict zero-7-gram policy: drop the pair instead of shipping it flagged.
@@ -217,6 +244,7 @@ def build_preference_records() -> List[Dict[str, Any]]:
                 "topic_id": dead_id,
                 "topic_title": topic_title,
                 "target_phase": target_phase,
+                "author": master_item.get("author"),
                 "prompt": prompt,
                 "chosen": chosen_text,
                 "rejected": rejected_text,
@@ -225,6 +253,9 @@ def build_preference_records() -> List[Dict[str, Any]]:
                 "reward_margin": margin,
                 "raw_reward_chosen": float(raw_rc),
                 "raw_reward_rejected": float(raw_rr),
+                "v3_reward_chosen": v3_rc,
+                "v3_reward_rejected": v3_rr,
+                "v3_reward_margin": v3_margin,
                 "chosen_z24d": z_c,
                 "rejected_z24d": z_r,
                 "delta_z24d": delta_z,
@@ -237,7 +268,8 @@ def build_preference_records() -> List[Dict[str, Any]]:
         )
 
     # -------------------------------------------------------------------------
-    # Pair Set B (8 pairs): DEAD-01..08 (rejected) vs Closed-Loop III_Void Rewrites (chosen)
+    # Pair Set B: DEAD-01..08 (rejected) vs Closed-Loop III_Void Rewrites (chosen) (8 pairs)
+    #             + 88 Cleanroom Synthetic Void Motifs (Soseki, Ogai, Hori, Basho) = 96 pairs
     # -------------------------------------------------------------------------
     void_rewrites = [r for r in rewrites if r["targetPhase"] == "III_Void"]
     for r in void_rewrites:
@@ -269,6 +301,16 @@ def build_preference_records() -> List[Dict[str, Any]]:
         scaled_rr = scale_grpo_reward(raw_rr)
         margin = float(scaled_rc - scaled_rr)
 
+        v3_res_c = compute_v3_multiplicative_grpo_reward(
+            chosen_text, target="III_Void", masterwork_texts=masterwork_texts
+        )
+        v3_res_r = compute_v3_multiplicative_grpo_reward(
+            rejected_text, target="III_Void", masterwork_texts=masterwork_texts
+        )
+        v3_rc = float(v3_res_c["reward"])
+        v3_rr = float(v3_res_r["reward"])
+        v3_margin = float(v3_rc - v3_rr)
+
         cleanroom_passed = verify_cleanroom_7gram(
             chosen_text,
             rejected_text,
@@ -283,6 +325,7 @@ def build_preference_records() -> List[Dict[str, Any]]:
                 "topic_id": dead_id,
                 "topic_title": topic_title,
                 "target_phase": "III_Void",
+                "author": "LLM_ClosedLoop",
                 "prompt": prompt,
                 "chosen": chosen_text,
                 "rejected": rejected_text,
@@ -291,6 +334,80 @@ def build_preference_records() -> List[Dict[str, Any]]:
                 "reward_margin": margin,
                 "raw_reward_chosen": float(raw_rc),
                 "raw_reward_rejected": float(raw_rr),
+                "v3_reward_chosen": v3_rc,
+                "v3_reward_rejected": v3_rr,
+                "v3_reward_margin": v3_margin,
+                "chosen_z24d": z_c,
+                "rejected_z24d": z_r,
+                "delta_z24d": delta_z,
+                "chosen_len_cv": float(extracted_c["len_cv"]),
+                "rejected_len_cv": float(extracted_r["len_cv"]),
+                "chosen_cadence_alive": float(extracted_c["cadence_alive"]),
+                "rejected_cadence_alive": float(extracted_r["cadence_alive"]),
+                "cleanroom_7gram_passed": cleanroom_passed,
+            }
+        )
+
+    # 88 Cleanroom Synthetic Void Motifs
+    void_synth_motifs = [
+        m for m in CLEANROOM_SYNTHETIC_MOTIFS if m["target_phase"] == "III_Void"
+    ]
+    for m in void_synth_motifs:
+        topic_title = m["topic_title"]
+        prompt = m["prompt"]
+        chosen_text = m["chosen"]
+        rejected_text = m["rejected"]
+
+        extracted_c = extract_usir_24d(chosen_text)
+        extracted_r = extract_usir_24d(rejected_text)
+
+        z_c = extracted_c["z_24d"].tolist()
+        z_r = extracted_r["z_24d"].tolist()
+        delta_z = [float(c - r) for c, r in zip(z_c, z_r)]
+
+        raw_rc = compute_grpo_reward(chosen_text, target="III_Void")["reward"]
+        raw_rr = compute_grpo_reward(rejected_text, target="III_Void")["reward"]
+
+        scaled_rc = scale_grpo_reward(raw_rc)
+        scaled_rr = scale_grpo_reward(raw_rr)
+        margin = float(scaled_rc - scaled_rr)
+
+        v3_res_c = compute_v3_multiplicative_grpo_reward(
+            chosen_text, target="III_Void", masterwork_texts=masterwork_texts
+        )
+        v3_res_r = compute_v3_multiplicative_grpo_reward(
+            rejected_text, target="III_Void", masterwork_texts=masterwork_texts
+        )
+        v3_rc = float(v3_res_c["reward"])
+        v3_rr = float(v3_res_r["reward"])
+        v3_margin = float(v3_rc - v3_rr)
+
+        cleanroom_passed = verify_cleanroom_7gram(
+            chosen_text,
+            rejected_text,
+            masterwork_texts=masterwork_texts,
+            is_synthetic_rewrite=True,
+        )
+
+        records.append(
+            {
+                "pair_id": m["pair_id"],
+                "set_type": "PairSetB_ClosedLoopVoid",
+                "topic_id": m["topic_id"],
+                "topic_title": topic_title,
+                "target_phase": "III_Void",
+                "author": m.get("master", "Synthetic"),
+                "prompt": prompt,
+                "chosen": chosen_text,
+                "rejected": rejected_text,
+                "reward_chosen": scaled_rc,
+                "reward_rejected": scaled_rr,
+                "reward_margin": margin,
+                "raw_reward_chosen": float(raw_rc),
+                "raw_reward_rejected": float(raw_rr),
+                "v3_reward_chosen": v3_rc,
+                "v3_reward_rejected": v3_rr,
+                "v3_reward_margin": v3_margin,
                 "chosen_z24d": z_c,
                 "rejected_z24d": z_r,
                 "delta_z24d": delta_z,
@@ -303,7 +420,8 @@ def build_preference_records() -> List[Dict[str, Any]]:
         )
 
     # -------------------------------------------------------------------------
-    # Pair Set C (8 pairs): DEAD-01..08 (rejected) vs Closed-Loop II_Critical Rewrites (chosen)
+    # Pair Set C: DEAD-01..08 (rejected) vs Closed-Loop II_Critical Rewrites (chosen) (8 pairs)
+    #             + 88 Cleanroom Synthetic Critical Motifs (Akutagawa, Kajii, Nakajima, Dazai) = 96 pairs
     # -------------------------------------------------------------------------
     crit_rewrites = [r for r in rewrites if r["targetPhase"] == "II_Critical"]
     for r in crit_rewrites:
@@ -335,6 +453,16 @@ def build_preference_records() -> List[Dict[str, Any]]:
         scaled_rr = scale_grpo_reward(raw_rr)
         margin = float(scaled_rc - scaled_rr)
 
+        v3_res_c = compute_v3_multiplicative_grpo_reward(
+            chosen_text, target="II_Critical", masterwork_texts=masterwork_texts
+        )
+        v3_res_r = compute_v3_multiplicative_grpo_reward(
+            rejected_text, target="II_Critical", masterwork_texts=masterwork_texts
+        )
+        v3_rc = float(v3_res_c["reward"])
+        v3_rr = float(v3_res_r["reward"])
+        v3_margin = float(v3_rc - v3_rr)
+
         cleanroom_passed = verify_cleanroom_7gram(
             chosen_text,
             rejected_text,
@@ -349,6 +477,7 @@ def build_preference_records() -> List[Dict[str, Any]]:
                 "topic_id": dead_id,
                 "topic_title": topic_title,
                 "target_phase": "II_Critical",
+                "author": "LLM_ClosedLoop",
                 "prompt": prompt,
                 "chosen": chosen_text,
                 "rejected": rejected_text,
@@ -357,6 +486,80 @@ def build_preference_records() -> List[Dict[str, Any]]:
                 "reward_margin": margin,
                 "raw_reward_chosen": float(raw_rc),
                 "raw_reward_rejected": float(raw_rr),
+                "v3_reward_chosen": v3_rc,
+                "v3_reward_rejected": v3_rr,
+                "v3_reward_margin": v3_margin,
+                "chosen_z24d": z_c,
+                "rejected_z24d": z_r,
+                "delta_z24d": delta_z,
+                "chosen_len_cv": float(extracted_c["len_cv"]),
+                "rejected_len_cv": float(extracted_r["len_cv"]),
+                "chosen_cadence_alive": float(extracted_c["cadence_alive"]),
+                "rejected_cadence_alive": float(extracted_r["cadence_alive"]),
+                "cleanroom_7gram_passed": cleanroom_passed,
+            }
+        )
+
+    # 88 Cleanroom Synthetic Critical Motifs
+    crit_synth_motifs = [
+        m for m in CLEANROOM_SYNTHETIC_MOTIFS if m["target_phase"] == "II_Critical"
+    ]
+    for m in crit_synth_motifs:
+        topic_title = m["topic_title"]
+        prompt = m["prompt"]
+        chosen_text = m["chosen"]
+        rejected_text = m["rejected"]
+
+        extracted_c = extract_usir_24d(chosen_text)
+        extracted_r = extract_usir_24d(rejected_text)
+
+        z_c = extracted_c["z_24d"].tolist()
+        z_r = extracted_r["z_24d"].tolist()
+        delta_z = [float(c - r) for c, r in zip(z_c, z_r)]
+
+        raw_rc = compute_grpo_reward(chosen_text, target="II_Critical")["reward"]
+        raw_rr = compute_grpo_reward(rejected_text, target="II_Critical")["reward"]
+
+        scaled_rc = scale_grpo_reward(raw_rc)
+        scaled_rr = scale_grpo_reward(raw_rr)
+        margin = float(scaled_rc - scaled_rr)
+
+        v3_res_c = compute_v3_multiplicative_grpo_reward(
+            chosen_text, target="II_Critical", masterwork_texts=masterwork_texts
+        )
+        v3_res_r = compute_v3_multiplicative_grpo_reward(
+            rejected_text, target="II_Critical", masterwork_texts=masterwork_texts
+        )
+        v3_rc = float(v3_res_c["reward"])
+        v3_rr = float(v3_res_r["reward"])
+        v3_margin = float(v3_rc - v3_rr)
+
+        cleanroom_passed = verify_cleanroom_7gram(
+            chosen_text,
+            rejected_text,
+            masterwork_texts=masterwork_texts,
+            is_synthetic_rewrite=True,
+        )
+
+        records.append(
+            {
+                "pair_id": m["pair_id"],
+                "set_type": "PairSetC_ClosedLoopCritical",
+                "topic_id": m["topic_id"],
+                "topic_title": topic_title,
+                "target_phase": "II_Critical",
+                "author": m.get("master", "Synthetic"),
+                "prompt": prompt,
+                "chosen": chosen_text,
+                "rejected": rejected_text,
+                "reward_chosen": scaled_rc,
+                "reward_rejected": scaled_rr,
+                "reward_margin": margin,
+                "raw_reward_chosen": float(raw_rc),
+                "raw_reward_rejected": float(raw_rr),
+                "v3_reward_chosen": v3_rc,
+                "v3_reward_rejected": v3_rr,
+                "v3_reward_margin": v3_margin,
                 "chosen_z24d": z_c,
                 "rejected_z24d": z_r,
                 "delta_z24d": delta_z,

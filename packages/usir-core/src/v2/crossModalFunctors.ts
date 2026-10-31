@@ -530,3 +530,17 @@ class ValueError extends Error {
     this.name = 'ValueError';
   }
 }
+
+export const transpileToMusic = (z: Float64Array | number[]): MusicTranspiledParams =>
+  transpileCrossModal(z, 'music') as MusicTranspiledParams;
+
+export const transpileToVisual = (z: Float64Array | number[]): DiffusionTranspiledParams =>
+  transpileCrossModal(z, 'diffusion') as DiffusionTranspiledParams;
+
+export const transpileToCssVariables = (z: Float64Array | number[]): UiCssTranspiledParams =>
+  transpileCrossModal(z, 'ui_css') as UiCssTranspiledParams;
+
+export const StyleToMusicFunctor = { transpile: transpileToMusic };
+export const StyleToVisualFunctor = { transpile: transpileToVisual };
+export const StyleToHapticFunctor = { transpile: transpileToCssVariables };
+
