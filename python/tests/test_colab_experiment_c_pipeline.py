@@ -121,6 +121,7 @@ class TestExperimentCGenerativeDynamics:
         assert base_eval["escaped_deadzone"] is False
         assert base_eval["len_cv"] < 0.30
         assert base_eval["grpo_reward"] < 0.25
+        assert "phi_void" in base_eval
 
         # Inference-Time Adaptive-BAOAB
         baoab_s = generate_mock_sample(prompt, METHOD_INFERENCE_BAOAB, target_phase, seed=20)
@@ -131,6 +132,7 @@ class TestExperimentCGenerativeDynamics:
         assert baoab_eval["escaped_deadzone"] is True
         assert baoab_eval["len_cv"] > 0.50
         assert baoab_eval["grpo_reward"] >= 0.35
+        assert baoab_eval["phi_void"] > base_eval["phi_void"]
 
         # USIR Style-LoRA Forge
         forge_s = generate_mock_sample(prompt, METHOD_LORA_FORGE, target_phase, seed=30)
@@ -141,6 +143,7 @@ class TestExperimentCGenerativeDynamics:
         assert forge_eval["escaped_deadzone"] is True
         assert forge_eval["len_cv"] > 0.50
         assert forge_eval["grpo_reward"] >= 0.35
+        assert forge_eval["phi_void"] > base_eval["phi_void"]
 
 
 class TestExperimentCPipelineEndToEnd:
@@ -179,16 +182,19 @@ class TestExperimentCPipelineEndToEnd:
         assert base_res["overhead_ms"] == 0.0
         assert base_res["deadzone_escape_rate"] <= 0.10
         assert base_res["len_cv_mean"] < 0.30
+        assert "phi_void_mean" in base_res
 
         # Inference-Time Adaptive-BAOAB: ~4.2 ms overhead, escapes Deadzone
         assert baoab_res["overhead_ms"] >= 3.5
         assert baoab_res["deadzone_escape_rate"] >= 0.90
         assert baoab_res["len_cv_mean"] > 0.52
+        assert "phi_void_mean" in baoab_res
 
         # USIR Style-LoRA Forge: 0.00 ms overhead, escapes Deadzone >= 92%, CV_L > 0.52
         assert forge_res["overhead_ms"] == 0.0
         assert forge_res["deadzone_escape_rate"] >= 0.92
         assert forge_res["len_cv_mean"] > 0.52
+        assert forge_res["phi_void_mean"] > base_res["phi_void_mean"]
         assert forge_res["grpo_reward_mean"] > base_res["grpo_reward_mean"]
         assert forge_res["mauve"] > base_res["mauve"]
 
@@ -196,6 +202,7 @@ class TestExperimentCPipelineEndToEnd:
         md_table = results["table3_markdown"]
         assert "Latency Overhead" in md_table
         assert "Deadzone Escape Rate" in md_table
+        assert "Void Condensation" in md_table
         assert METHOD_BASE in md_table
         assert METHOD_INFERENCE_BAOAB in md_table
         assert METHOD_LORA_FORGE in md_table

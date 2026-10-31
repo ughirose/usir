@@ -267,6 +267,9 @@ def evaluate_generation(
     len_cv = float(feats["len_cv"])
     cadence_alive = float(feats["cadence_alive"])
     z24 = feats["z_24d"]
+    q12 = feats["q"]
+    # Void Condensation Index phi_void: mean activity of Void family (Sg-03 Pr, Sg-07 Cs, Sg-11 Ma)
+    phi_void = float(np.mean([max(0.0, q12[2]), max(0.0, q12[6]), max(0.0, q12[10])]))
 
     # 4-factor multiplicative GRPO reward
     grpo_res = compute_v3_multiplicative_grpo_reward(
@@ -289,6 +292,7 @@ def evaluate_generation(
     return {
         "overhead_ms": overhead_ms,
         "len_cv": len_cv,
+        "phi_void": phi_void,
         "cadence_alive": cadence_alive,
         "grpo_reward": grpo_reward,
         "escaped_deadzone": escaped,
@@ -471,6 +475,7 @@ def run_experiment_c(
                 "target_phase": target_phase,
                 "overhead_ms": eval_res["overhead_ms"],
                 "len_cv": eval_res["len_cv"],
+                "phi_void": eval_res["phi_void"],
                 "cadence_alive": eval_res["cadence_alive"],
                 "grpo_reward": eval_res["grpo_reward"],
                 "escaped_deadzone": eval_res["escaped_deadzone"],
@@ -500,6 +505,7 @@ def run_experiment_c(
 
         overheads = [r["overhead_ms"] for r in runs]
         len_cvs = [r["len_cv"] for r in runs]
+        phi_voids = [r.get("phi_void", 0.0) for r in runs]
         grpo_rewards = [r["grpo_reward"] for r in runs]
         escapes = [1.0 if r["escaped_deadzone"] else 0.0 for r in runs]
         beta_errors = [r["beta_error"] for r in runs]
@@ -513,6 +519,8 @@ def run_experiment_c(
             "deadzone_escape_rate": float(np.mean(escapes)),
             "len_cv_mean": float(np.mean(len_cvs)),
             "len_cv_std": float(np.std(len_cvs)),
+            "phi_void_mean": float(np.mean(phi_voids)),
+            "phi_void_std": float(np.std(phi_voids)),
             "grpo_reward_mean": float(np.mean(grpo_rewards)),
             "grpo_reward_std": float(np.std(grpo_rewards)),
             "mauve": float(mauve_score),
@@ -546,8 +554,8 @@ def run_experiment_c(
 def format_table3_markdown(summary: Dict[str, Dict[str, float]]) -> str:
     """Formats Table 3 in camera-ready Markdown format."""
     lines = [
-        "| Architecture / Control Mode | Latency Overhead | Deadzone Escape Rate | Sentence $CV_L$ | $R_{\\text{GRPO}}$ Multiplicative | MAUVE Score | 1/$f$ Error $|\\beta - 1.0|$ |",
-        "|:---|:---:|:---:|:---:|:---:|:---:|:---:|",
+        "| Architecture / Control Mode | Latency Overhead | Deadzone Escape Rate | Sentence $CV_L$ | Void Condensation $\\phi_{\\text{void}}$ | $R_{\\text{GRPO}}$ Multiplicative | MAUVE Score | 1/$f$ Error $|\\beta - 1.0|$ |",
+        "|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|",
     ]
     for method, s in summary.items():
         is_forge = "Style-LoRA" in method
@@ -556,17 +564,18 @@ def format_table3_markdown(summary: Dict[str, Dict[str, float]]) -> str:
         oh_str = f"{s['overhead_ms']:.2f} ms"
         esc_str = f"{s['deadzone_escape_rate'] * 100:.1f}\\%"
         cv_str = f"{s['len_cv_mean']:.3f} ± {s['len_cv_std']:.3f}"
+        void_str = f"{s.get('phi_void_mean', 0.0):.3f} ± {s.get('phi_void_std', 0.0):.3f}"
         grpo_str = f"{s['grpo_reward_mean']:.3f} ± {s['grpo_reward_std']:.3f}"
         mauve_str = f"{s['mauve']:.3f}"
         beta_str = f"{s['beta_error_mean']:.3f} ± {s['beta_error_std']:.3f}"
 
         if is_forge:
             lines.append(
-                f"| {name_str} | **{oh_str}** | **{esc_str}** | **{cv_str}** | **{grpo_str}** | **{mauve_str}** | **{beta_str}** |"
+                f"| {name_str} | **{oh_str}** | **{esc_str}** | **{cv_str}** | **{void_str}** | **{grpo_str}** | **{mauve_str}** | **{beta_str}** |"
             )
         else:
             lines.append(
-                f"| {name_str} | {oh_str} | {esc_str} | {cv_str} | {grpo_str} | {mauve_str} | {beta_str} |"
+                f"| {name_str} | {oh_str} | {esc_str} | {cv_str} | {void_str} | {grpo_str} | {mauve_str} | {beta_str} |"
             )
 
     return "\n".join(lines)

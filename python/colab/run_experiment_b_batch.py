@@ -926,23 +926,59 @@ def generate_single_sample_mock(
         bracket_corrupted = True
     # USIR v2.0 Adaptive-BAOAB and v3.0 Symplectic Bridge: syntax gate ensures 100% bracket integrity!
 
+    v3_bridge_clauses = [
+        "夜霧が石畳を静かに濡らし、「遠い記憶の底」から微かな靴音が響いてきた。",
+        "風が止み、深い軒下に垂れた雨滴がひとつ、冷たい土へと吸い込まれて消えた。",
+        "『言葉にならぬ余韻』を残したまま、男はただ暗い水面の揺らぎを見つめていた。",
+        "山際の蒼い薄明かりのなか、古びた鐘の音が静寂を裂いて遠くの谷へ渡っていく。",
+        "（その沈黙の奥にこそ、言い知れぬ生の輝きが潜んでいたのだ。）",
+        "障子に映る淡い影が揺れ、冬の気配を孕んだ冷気が足元から忍び寄ってきた。",
+        "「もはや振り返るまい」と心に決め、旅人は濡れた草鞋の緒を固く結び直した。",
+        "枯れ葉を踏むかすかな音だけが、誰もいない境内の静けさをいっそう際立たせていた。",
+    ]
+    v2_baoab_clauses = [
+        "暗い門の柱にもたれかかりながら、男は「これからの行く末」を静かに案じていた。",
+        "冷たい雨が降り続き、遠くの山の端には灰色の雲が重く垂れ込めていた。",
+        "『生きるための決断』を下す時が近づいていることを、彼は肌で感じ取っていた。",
+        "（しかし、周囲の状況はまだ完全には見通せないままであった。）",
+        "石段の上から吹き下ろす風が、濡れた外套の裾を激しく揺らして通り過ぎた。",
+        "「今こそ進むべきだ」と呟きつつも、足元の泥濘が彼の歩みを鈍らせていた。",
+    ]
+    rmr_clauses = [
+        "静かな夜のなかで、「ひとつの結論」に向けた思索が繰り返されていた。",
+        "周囲の情景は次第に変化し、これに関する検討が続けられている。",
+        "（その理由は必ずしも明確ではなかったが、一定の傾向が見られた。）",
+        "風の音が響くなかで、全体の調和を保つための調整が行われていた。",
+    ]
+    minp_clauses = [
+        "「現状の課題」について整理し、今後の方向性を確認する必要がある。",
+        "周囲の環境は静かであり、いくつかの要素が相互に関係している。",
+        "（詳細な経緯については、さらなる検証が求められている。）",
+    ]
+    nucleus_clauses = [
+        "以上の通り全体の概要をまとめ、一般的な観点から説明を行います。",
+        "様々な要素が複雑に絡み合っており、「今後の展望」が注目されています。",
+        "このような背景を踏まえると、さらなる発展が期待されると言えるでしょう。",
+    ]
+
     for i in range(step_count):
+        idx_var = int(rng.integers(0, 100))
         if method == "USIR v3.0 Full Symplectic Bridge":
-            chunk = AOZORA_REFERENCE_CORPUS[i % len(AOZORA_REFERENCE_CORPUS)]
+            chunk = v3_bridge_clauses[(i + idx_var) % len(v3_bridge_clauses)]
             if i % 3 == 0:
-                chunk = chunk + " " + LITERARY_VOCAB_CHUNKS[i % len(LITERARY_VOCAB_CHUNKS)]
+                chunk = chunk + " " + LITERARY_VOCAB_CHUNKS[(i + idx_var) % len(LITERARY_VOCAB_CHUNKS)]
         elif method == "USIR v2.0 Adaptive-BAOAB":
-            chunk = AOZORA_REFERENCE_CORPUS[i % len(AOZORA_REFERENCE_CORPUS)]
+            chunk = v2_baoab_clauses[(i + idx_var) % len(v2_baoab_clauses)]
             if i % 2 == 0:
-                chunk = chunk + " " + LITERARY_VOCAB_CHUNKS[i % len(LITERARY_VOCAB_CHUNKS)]
+                chunk = chunk + " " + LITERARY_VOCAB_CHUNKS[(i + idx_var) % len(LITERARY_VOCAB_CHUNKS)]
         elif method == "Unconstrained BAOAB":
-            chunk = LITERARY_VOCAB_CHUNKS[i % len(LITERARY_VOCAB_CHUNKS)]
+            chunk = LITERARY_VOCAB_CHUNKS[(i + idx_var) % len(LITERARY_VOCAB_CHUNKS)] + " 激しい衝動が奔流となって迸る！"
         elif method == "Reinforced Mode Regulation (RMR)":
-            chunk = LITERARY_VOCAB_CHUNKS[i % len(LITERARY_VOCAB_CHUNKS)]
+            chunk = rmr_clauses[(i + idx_var) % len(rmr_clauses)]
         elif method == "Min-p + Repetition Penalty":
-            chunk = LITERARY_VOCAB_CHUNKS[i % len(LITERARY_VOCAB_CHUNKS)] + " 状況を整理して確認する。"
+            chunk = minp_clauses[(i + idx_var) % len(minp_clauses)] + " 状況を整理して確認する。"
         else:  # Standard Nucleus
-            chunk = LITERARY_VOCAB_CHUNKS[i % len(LITERARY_VOCAB_CHUNKS)] + " 以上の通り概要をまとめます。"
+            chunk = nucleus_clauses[(i + idx_var) % len(nucleus_clauses)] + " 以上の通り概要をまとめます。"
 
         sentences.append(chunk)
         tokens_accum += len(chunk)

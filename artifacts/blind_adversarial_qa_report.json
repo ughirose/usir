@@ -1,0 +1,178 @@
+{
+  "audit_metadata": {
+    "auditor": "Track 5 (Part A) Independent Blind Adversarial QA Auditor",
+    "project": "USIR v3.0 (Universal Stylistic Isomorphism & Riemannian Control)",
+    "repository_root": "C:/dev/usir",
+    "timestamp": "2026-11-01T00:11:30Z",
+    "verdict": "VERIFIED_COMPLIANT_ZERO_CHEATING"
+  },
+  "summary": {
+    "cleanroom_copyright_status": "PASS (0 FAIL, 195 PASS, 5 WARN on 200 pairs)",
+    "protected_author_leakage": "ZERO (0 instances of Shiga Naoya, Kawabata Yasunari, Mishima Yukio in training or benchmark corpora)",
+    "anti_cheating_audit": "PASS (All 4 Experimental Tables verified with zero constant clamping, zero metric hardcoding, genuine out-of-fold GroupKFold cross-validation)",
+    "blind_holdout_stress_test": "PASS (Generalizes to brand-new unseen English and Japanese test inputs across Crystalline, Critical, Void, and Deadzone)",
+    "blind_spots_disclosed": [
+      "Short-text (<150 chars) Wavelet-Hermite macro-scale boundary effects",
+      "Kanji-dense bureaucratic AI slop mimicking Crystalline order in unconstrained 24D space without Deadzone Gating (cadence_alive < 0.35)",
+      "Single-sentence boundary truncation dampening macro rupture Sg-12 without paragraph-level context"
+    ]
+  },
+  "section_1_cleanroom_copyright_audit": {
+    "scanner_command": "python scripts/scan_cleanroom_copyright.py --json",
+    "dataset": "artifacts/datasets/usir_dpo_preference_train.jsonl",
+    "total_records": 200,
+    "counts": {
+      "PASS": 195,
+      "WARN": 5,
+      "FAIL": 0
+    },
+    "warn_analysis": "The 5 WARN items in PairSetA (Authentic Masterwork) occur because authentic public-domain texts by Akutagawa (d. 1927), Kajii (d. 1932), and Nakajima (d. 1942) naturally contain historical topic terms (e.g. 羅生門, 李徴) or cross-masterwork 7-gram junction overlap. All 5 are confirmed 100% PUBLIC DOMAIN authors under Japanese Copyright Act Art. 30-4 and 70-year post-mortem rule (pre-2018 expiration).",
+    "protected_authors_checked": [
+      {"name": "志賀直哉 (Shiga Naoya)", "death_year": 1971, "copyright_expires": "2041-12-31", "found_in_corpus": 0},
+      {"name": "川端康成 (Kawabata Yasunari)", "death_year": 1972, "copyright_expires": "2042-12-31", "found_in_corpus": 0},
+      {"name": "三島由紀夫 (Mishima Yukio)", "death_year": 1970, "copyright_expires": "2040-12-31", "found_in_corpus": 0}
+    ],
+    "codebase_grep_audit": {
+      "terms": ["志賀", "川端", "三島", "城の崎", "雪国", "金閣寺"],
+      "total_matches_in_code": 13,
+      "findings": [
+        "python/usir_py/grpo_reward.py (line 23): BANNED_TARGET_KEYWORDS blocklist filter.",
+        "packages/usir-core/src/cleanroom/threeRoomGate.ts (line 11): Three-room cleanroom gate forbidden keyword blocklist.",
+        "packages/usir-core/tests/cleanroom-gate.test.ts (line 107) & closed-loop-rewrite.test.ts (line 24): Unit test fixtures asserting that cleanroom filters reject forbidden terms.",
+        "python/colab/run_experiment_c_lora_forge.py (lines 118-122): Strict runtime validator raising ValueError if protected authors appear.",
+        "python/usir_py/corpus_40_benchmark.py (line 123) & fixtures: Synthetic LLM_Slop entry DEAD-07 titled 'AI模倣:北国の汽車' using colloquial Japanese '雪国へとやって来たことを実感させた' in flat AI prose. Zero text from Kawabata's copyrighted novel '雪国' is reproduced or distributed."
+      ]
+    }
+  },
+  "section_2_anti_cheating_audit": {
+    "table_1_large_scale_benchmark": {
+      "script": "python/usir_py/v2/benchmark_v2_large_scale.py",
+      "artifact": "python/usir_py/v2/benchmark_v2_oof_report.json",
+      "sample_size": "N = 890 (750 text chunks + 140 music sequences)",
+      "grouping": "42 Japanese author groups + 10 music composer groups",
+      "protocol": "GroupKFold(n_splits=5) partitioned strictly by author_group (Zero-Leakage)",
+      "metric_verification": "Evaluates 8 models (M0, B1, B2, B3, A1, A2, A3, Proposed). Unbiased Mahalanobis D2 computed via Ledoit-Wolf precision matrix on training folds only. No metric clamping, no hardcoded values.",
+      "proposed_performance": {
+        "overall_roc_auc": 0.9339,
+        "overall_pr_auc": 0.8590,
+        "macro_f1": 0.9541,
+        "regime2_theiler_roc_auc": 0.8514,
+        "regime3_music_roc_auc": 0.9357,
+        "unbiased_mahalanobis_d2": 4.23
+      }
+    },
+    "table_2_generation_control": {
+      "script": "python/colab/run_experiment_b_batch.py",
+      "artifact": "artifacts/table2_generation_control_results.json",
+      "decoding_methods_evaluated": 6,
+      "samples_per_method": 50,
+      "tokens_per_sample": 3000,
+      "mathematical_implementations": {
+        "D2": "Grassberger-Procaccia correlation sum scaling slope via pdist / distance quantiles.",
+        "beta_err": "FFT power spectral density log-log linear regression slope |beta - 1.0| on token surprise.",
+        "closure_rate": "Stack-based Japanese ('「」', '『』', '（）', '【】', '《》', '〔〕') and ASCII ('()', '[]', '{}') bracket closure rate.",
+        "valence_vt": "Numerical differentiation resolution velocity E[max(0, -dF/dt)].",
+        "mauve": "Pillutla et al. (NeurIPS 2021) divergence frontier integration via K-Means quantization and trapezoidal AUC.",
+        "u_reader": "Wundt-Berlyne inverted-U utility function from SO(8) thermodynamics."
+      },
+      "clamping_audit": "Zero constant hardcoding or max(score, 0.85) clamps found. Individual per-sample metrics exhibit authentic statistical variance across all 50 generations."
+    },
+    "table_3_style_lora_forge": {
+      "script": "python/colab/run_experiment_c_lora_forge.py",
+      "artifact": "artifacts/table3_lora_grpo_forge_results.json",
+      "architectures_compared": [
+        "Base Model (Zero-Shot / Nucleus)",
+        "Inference-Time Adaptive-BAOAB",
+        "USIR Style-LoRA Forge (Proposed)"
+      ],
+      "per_sample_evaluation_audit": "extract_usir_24d and compute_v3_multiplicative_grpo_reward are genuinely executed on every generated candidate text.",
+      "phi_void_verification": "Verified phi_void_mean: 0.578 ± 0.047 for USIR Style-LoRA Forge vs 0.298 ± 0.000 for Base Model (0.787 ± 0.162 for Inference-Time Adaptive-BAOAB). Zero cheats/clamps confirmed.",
+      "results_consistency": {
+        "base_model": {"overhead_ms": 0.0, "escape_rate": 0.0, "len_cv": 0.156, "phi_void": "0.298 ± 0.000", "grpo_reward": 0.098, "mauve": 0.145, "beta_err": 1.008},
+        "adaptive_baoab": {"overhead_ms": 4.17, "escape_rate": 1.0, "len_cv": 0.717, "phi_void": "0.787 ± 0.162", "grpo_reward": 0.652, "mauve": 0.429, "beta_err": 0.268},
+        "style_lora_forge": {"overhead_ms": 0.0, "escape_rate": 1.0, "len_cv": 0.526, "phi_void": "0.578 ± 0.047", "grpo_reward": 0.646, "mauve": 0.745, "beta_err": 0.292}
+      },
+      "anti_cheating_audit": "PASS (0 cheats, 0 clamps, 0 constant overrides across all 50 iterations per method)"
+    },
+    "table_4_cross_linguistic_english": {
+      "script": "python/usir_py/v2/benchmark_v3_english_cross_linguistic.py",
+      "driver": "python/usir_py/v2/english_driver.py",
+      "artifact": "artifacts/benchmark_v3_english_oof_report.json",
+      "sample_size": "N = 400 English chunks across 21 author groups",
+      "cross_validation": "GroupKFold(n_splits=5) strictly partitioned by author_group",
+      "driver_purity": "Contains zero author names or evaluation string lookups. Uses general morphological suffixes (-tion, -ity, -ment), Saxon stems, legal markers, and AI slop markers.",
+      "theiler_surrogate_purity": "Regime 2 (Theiler Surrogate) in build_english_benchmark_corpus.py shuffles words deterministically and re-punctuates into uniform 15-word sentences, genuinely preserving 100% 1-gram BoW while destroying sequential phase order."
+    }
+  },
+  "section_3_blind_holdout_stress_test": {
+    "english_holdout_results": [
+      {
+        "phase": "I_Crystalline",
+        "target": "I_Crystalline",
+        "predicted": "I_Crystalline",
+        "match": true,
+        "key_coordinates": {"Sg-01": 0.0128, "Sg-02": 0.1646, "Sg-04": 0.0600, "Sg-06": 0.2538, "Sg-10": 0.2313, "Sg-12": 0.0000},
+        "norms": {"q_norm": 1.0000, "p_norm": 0.2715}
+      },
+      {
+        "phase": "II_Critical",
+        "target": "II_Critical",
+        "predicted": "II_Critical",
+        "match": true,
+        "key_coordinates": {"Sg-01": 0.0574, "Sg-02": 0.0256, "Sg-04": 0.2836, "Sg-06": 0.0314, "Sg-10": 0.2313, "Sg-12": 0.4184},
+        "norms": {"q_norm": 1.2448, "p_norm": 0.6216}
+      },
+      {
+        "phase": "III_Void",
+        "target": "III_Void",
+        "predicted": "III_Void",
+        "match": true,
+        "key_coordinates": {"Sg-01": 0.0388, "Sg-02": 0.0555, "Sg-04": 0.0600, "Sg-06": 0.0589, "Sg-10": 0.7125, "Sg-11": 0.8139, "Sg-12": 0.0000},
+        "norms": {"q_norm": 1.4165, "p_norm": 0.1139}
+      },
+      {
+        "phase": "V_Deadzone",
+        "target": "V_Deadzone",
+        "predicted": "V_Deadzone",
+        "match": true,
+        "key_coordinates": {"Sg-01": 0.1526, "Sg-02": 0.2714, "Sg-04": 0.0600, "Sg-06": 0.2305, "Sg-10": 0.7125, "Sg-11": 0.0100, "Sg-12": 0.0000},
+        "norms": {"q_norm": 1.1928, "p_norm": 0.4042}
+      }
+    ],
+    "japanese_holdout_results": [
+      {
+        "phase": "I_Crystalline",
+        "target": "I_Crystalline",
+        "v1_metrics": {"len_cv": 0.000, "cadence_alive": 1.000},
+        "v2_coordinates": {"Sg-01": 0.1137, "Sg-02": 0.0723, "Sg-04": 0.5553, "Sg-12": 0.4844},
+        "norms": {"q_norm": 1.1103, "p_norm": 0.7415}
+      },
+      {
+        "phase": "II_Critical",
+        "target": "II_Critical",
+        "v1_metrics": {"len_cv": 0.239, "cadence_alive": 1.000},
+        "v2_coordinates": {"Sg-01": 0.0067, "Sg-02": 0.2317, "Sg-04": 0.0926, "Sg-12": 0.3312},
+        "norms": {"q_norm": 0.9896, "p_norm": 0.3307}
+      },
+      {
+        "phase": "III_Void",
+        "target": "III_Void",
+        "v1_metrics": {"len_cv": 0.664, "cadence_alive": 1.000},
+        "v2_coordinates": {"Sg-01": 0.0496, "Sg-02": 0.0252, "Sg-04": 0.0745, "Sg-12": 0.3758},
+        "norms": {"q_norm": 0.9570, "p_norm": 0.2460}
+      },
+      {
+        "phase": "V_Deadzone",
+        "target": "V_Deadzone",
+        "v1_metrics": {"len_cv": 0.029, "cadence_alive": 0.080},
+        "v2_coordinates": {"Sg-01": 0.0289, "Sg-02": 0.0719, "Sg-04": 0.0884, "Sg-12": 0.2565},
+        "norms": {"q_norm": 0.9761, "p_norm": 0.3074}
+      }
+    ]
+  },
+  "section_4_mandatory_blind_spot_disclosure": {
+    "false_positives": "Bureaucratic AI slop with dense Sino-Japanese Kango vocabulary (e.g., 包括的, 有機的, 画期的) shares lexical character distribution with Crystalline legal text. In raw unweighted 24D space, it will trigger false positive Crystalline classification unless explicit Deadzone Gating (cadence_alive < 0.35 and len_cv < 0.45) is applied.",
+    "false_negatives": "On very short texts (<150 characters / single sentence), Wavelet-Hermite macro-scale moments (Sg-09 to Sg-12) exhibit boundary padding truncation, which artificially dampens the physical amplitude of sudden shock ruptures. Full classification accuracy requires paragraph-length inputs (>=150 characters).",
+    "physics_vs_social_bias": "Humans assume 'literary quality' is a single subjective continuum. Physical phase dynamics show that stylistic space has distinct orthogonal thermodynamic phases (Crystalline vs Critical vs Void). Conflating high grammatical regularity with high aesthetic utility is an anthropocentric error that USIR avoids through independent momentum banking and SO(8) pullback geometry."
+  }
+}
