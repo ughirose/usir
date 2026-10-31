@@ -1,0 +1,40 @@
+/**
+ * @nishiki/usir-core: Universal Style Genome (USIR / Nishiki)
+ * Pure TypeScript Symplectic Feature Extraction, Hamiltonian Dynamics & Landau 5-Phase Engine.
+ */
+
+// Schema & Binary Serializers
+export * from './schema/usirBinarySchema.js';
+
+// Sensor Dictionaries & Primitives
+export * from './sensor/dictionaries.js';
+export * from './sensor/types.js';
+export * from './sensor/microKasane.js';
+export * from './sensor/mesoSasae.js';
+export * from './sensor/macroKamae.js';
+export * from './sensor/symplectic24d.js';
+
+// Dynamics & Thermodynamics
+export * from './dynamics/hamiltonian.js';
+export * from './dynamics/landauPhase.js';
+export * from './dynamics/equalizer.js';
+
+// Clean Room Gate & Micro-Constraint Gate
+export * from './cleanroom/threeRoomGate.js';
+export * from './cleanroom/microConstraintGate.js';
+
+// Presets & Chemical PoE Mixer (TASK-361)
+export * from './presets/canonicalParticles.js';
+
+// Stage 3 Dynamics, HSMM & Closed-Loop
+export * from './dynamics/closedLoopCorpus.js';
+export * from './dynamics/trajectoryHsmm.js';
+
+// Stage 3 Style Genome Algebra & Compiler
+export * from './algebra/genomeCompiler.js';
+export * from './algebra/styleAlgebra.js';
+
+// USIR v2.0 Paper-Grade Architecture
+export * from './v2/index.js';
+
+

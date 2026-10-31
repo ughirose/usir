@@ -1,0 +1,35 @@
+export interface IntermediateSensorData {
+  text: string;
+  sents: string[];
+  M: number;
+  lengths: number[];
+  mean_len: number;
+  len_cv: number;
+  clause_counts: number[];
+  c_lens: number[];
+  c_cv: number;
+  exclam_rate: number;
+  formal_rate: number;
+  kanji_r: number[];
+  hira_r: number[];
+  wago_simplex_r: number[];
+  kango_compound_r: number[];
+  concrete_d: number[];
+  abstract_b: number[];
+  voiced_r: number[];
+  fig_rate: number[];
+  rhet_rate: number[];
+  void_op_rate: number[];
+  stem_sets: Set<string>[];
+  sluggish: number[];
+  brevity: number[];
+  kango_light: number[];
+  quietude: number;
+  slop_suppress: number[];
+  ent: number;
+  max_min_r: number;
+  cadence_alive: number;
+  abstract_b_mean: number;
+  sluggish_mean: number;
+  concrete_d_mean: number;
+}

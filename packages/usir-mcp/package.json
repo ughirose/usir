@@ -1,0 +1,25 @@
+{
+  "name": "@nishiki/usir-mcp",
+  "version": "0.1.0",
+  "description": "Universal Style Genome (USIR / Nishiki) Standalone MCP Server & CLI Style Audit Gate",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "usir-audit": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@nishiki/usir-core": "workspace:*",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

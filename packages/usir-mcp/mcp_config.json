@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "usir": {
+      "command": "node",
+      "args": ["packages/usir-mcp/dist/cli.js", "mcp-stdio"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}

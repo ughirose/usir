@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "text_chunks": 750,
+    "text_groups": 42,
+    "music_sequences": 140,
+    "music_groups": 10,
+    "total_benchmark_samples": 890,
+    "splits": 5,
+    "protocol": "GroupKFold by author_group (Zero-Leakage)"
+  },
+  "table1_models": {
+    "M0: Random Permutation Null": {
+      "overall_roc_auc": 0.5111021233569262,
+      "overall_pr_auc": 0.48110747135968635,
+      "macro_f1": 0.19876136489727927,
+      "regime1_roc_auc": 0.4660185185185185,
+      "regime2_roc_auc": 0.5268505747126437,
+      "regime3_music_roc_auc": 0.6171428571428572,
+      "unbiased_mahalanobis_d2": 0.0
+    },
+    "B1: 1-gram BoW / TF-IDF Logistic Regression": {
+      "overall_roc_auc": 0.8442972699696664,
+      "overall_pr_auc": 0.7429581403879351,
+      "macro_f1": 0.8536779129191909,
+      "regime1_roc_auc": 1.0,
+      "regime2_roc_auc": 0.49687356321839077,
+      "regime3_music_roc_auc": 0.5595918367346939,
+      "unbiased_mahalanobis_d2": 2.6669913161122367
+    },
+    "B2: Surface Stylometry 16D Baseline": {
+      "overall_roc_auc": 0.767530333670374,
+      "overall_pr_auc": 0.6576780077485069,
+      "macro_f1": 0.7857266545720332,
+      "regime1_roc_auc": 0.7076666666666667,
+      "regime2_roc_auc": 0.501264367816092,
+      "regime3_music_roc_auc": 0.5908163265306122,
+      "unbiased_mahalanobis_d2": 1.3599060054737784
+    },
+    "B3: Information Compression Baseline": {
+      "overall_roc_auc": 0.7181673407482306,
+      "overall_pr_auc": 0.6119385320795139,
+      "macro_f1": 0.6411355656313381,
+      "regime1_roc_auc": 0.6419814814814815,
+      "regime2_roc_auc": 0.5422068965517242,
+      "regime3_music_roc_auc": 0.6619387755102041,
+      "unbiased_mahalanobis_d2": 0.9960489509260523
+    },
+    "A1: Overdamped USIR v2.0 (12D Position q Only -- No Momentum p)": {
+      "overall_roc_auc": 0.8495197168857431,
+      "overall_pr_auc": 0.7737477176062836,
+      "macro_f1": 0.8929869473288881,
+      "regime1_roc_auc": 0.8403703703703703,
+      "regime2_roc_auc": 0.6381149425287356,
+      "regime3_music_roc_auc": 0.8430612244897959,
+      "unbiased_mahalanobis_d2": 2.1436501909246246
+    },
+    "A2: Euclidean USIR v2.0 (G_style = I_12 -- No SO(8) Pullback)": {
+      "overall_roc_auc": 0.8925025278058645,
+      "overall_pr_auc": 0.8183191848376101,
+      "macro_f1": 0.9329901259972676,
+      "regime1_roc_auc": 0.9035555555555554,
+      "regime2_roc_auc": 0.7470344827586207,
+      "regime3_music_roc_auc": 0.8665306122448979,
+      "unbiased_mahalanobis_d2": 2.743317886091595
+    },
+    "A3: No-MCA USIR v2.0 (Standard FFT -- No Poisson-Soliton Separation)": {
+      "overall_roc_auc": 0.9006066734074823,
+      "overall_pr_auc": 0.8422512058492613,
+      "macro_f1": 0.9366680690931801,
+      "regime1_roc_auc": 0.9234814814814815,
+      "regime2_roc_auc": 0.7523218390804598,
+      "regime3_music_roc_auc": 0.8636734693877551,
+      "unbiased_mahalanobis_d2": 2.7549912476937566
+    },
+    "Proposed: Full USIR v2.0 (24D Symplectic + Wavelet-Hermite + MCA + RQA + SO(8) + HTH Octree)": {
+      "overall_roc_auc": 0.9339079878665317,
+      "overall_pr_auc": 0.8590228652788497,
+      "macro_f1": 0.9541051684346199,
+      "regime1_roc_auc": 0.9843148148148149,
+      "regime2_roc_auc": 0.8514022988505747,
+      "regime3_music_roc_auc": 0.9357142857142857,
+      "unbiased_mahalanobis_d2": 4.229250272121616
+    }
+  },
+  "oof_shapley_attribution": {
+    "Sg-01 Dn": -0.01146134900899797,
+    "Sg-02 Cr": 0.0035874361488381513,
+    "Sg-03 Pr": 0.07900564696509878,
+    "Sg-04 Jt": 0.025357652553609018,
+    "Sg-05 Cp": 0.08504736479715304,
+    "Sg-06 Mp": 0.0009702060213759646,
+    "Sg-07 Cs": 0.11312451117462043,
+    "Sg-08 Lp": -0.019611654513520163,
+    "Sg-09 Fl": 0.22321908209527158,
+    "Sg-10 At": 0.17137155108372965,
+    "Sg-11 Ma": -0.12104651950253524,
+    "Sg-12 Ru": -0.1461970261352499
+  }
+}

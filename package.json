@@ -1,0 +1,20 @@
+{
+  "name": "usir-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Universal Style Genome (USIR / Nishiki) Monorepo",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "vitest run",
+    "test:core": "pnpm --filter @nishiki/usir-core test",
+    "test:mcp": "pnpm --filter @nishiki/usir-mcp test",
+    "test:bridges": "pnpm --filter @nishiki/usir-bridges test",
+    "test:py": "cd python && uv run pytest",
+    "test:all": "pnpm test && pnpm run test:py"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

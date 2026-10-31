@@ -1,0 +1,20 @@
+{
+  "name": "@nishiki/usir-bridges",
+  "version": "0.1.0",
+  "description": "Universal Style Genome (USIR / Nishiki) Ecosystem Adapters for Plotailor, WorldCraft, and Narrative-Nano",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@nishiki/usir-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

@@ -1,0 +1,22 @@
+[project]
+name = "usir-py"
+version = "0.1.0"
+description = "Universal Style Genome (USIR / Nishiki) Python Reference & Benchmark Suite"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26.0",
+    "scipy>=1.11.0",
+    "matplotlib>=3.8.0",
+    "pytest>=8.0.0",
+    "janome>=0.5.0",
+    "scikit-learn>=1.9.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
