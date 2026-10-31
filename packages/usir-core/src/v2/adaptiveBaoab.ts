@@ -14,6 +14,66 @@ export interface BAOABParams {
   epsilonSyn?: number;
 }
 
+export interface StepOptions {
+  enableMomentumBanking?: boolean;
+  etaRelease?: number;
+  epsSyn?: number;
+}
+
+/**
+ * MomentumBank: Energy storage and discharge reservoir.
+ * Conserves kinetic + elastic potential energy across syntactically constrained intervals.
+ * When H_syntax < epsilon_syn, suppressed momentum is banked into pBank.
+ * When H_syntax >= epsilon_syn, discharge_momentum releases a fraction eta_release into active momentum.
+ */
+export class MomentumBank {
+  public pBank: number[];
+  public readonly invMassDiag: number[];
+  public readonly dim: number;
+
+  constructor(dim = 12, invMassDiag?: number[]) {
+    this.dim = dim;
+    this.pBank = new Array<number>(dim).fill(0.0);
+    this.invMassDiag = invMassDiag ? [...invMassDiag] : new Array<number>(dim).fill(1.0);
+  }
+
+  public bankMomentum(deltaP: number[]): number {
+    for (let i = 0; i < this.dim; i++) {
+      this.pBank[i] = (this.pBank[i] ?? 0) + (deltaP[i] ?? 0);
+    }
+    return this.getEnergy();
+  }
+
+  public dischargeMomentum(etaRelease = 1.0): number[] {
+    const eta = Math.max(0.0, Math.min(1.0, etaRelease));
+    const released = new Array<number>(this.dim);
+    for (let i = 0; i < this.dim; i++) {
+      const p = this.pBank[i] ?? 0;
+      released[i] = eta * p;
+      this.pBank[i] = (1.0 - eta) * p;
+    }
+    return released;
+  }
+
+  public getEnergy(): number {
+    let e = 0.0;
+    for (let i = 0; i < this.dim; i++) {
+      const p = this.pBank[i] ?? 0;
+      const invM = this.invMassDiag[i] ?? 1.0;
+      e += 0.5 * p * invM * p;
+    }
+    return e;
+  }
+
+  public get energy(): number {
+    return this.getEnergy();
+  }
+
+  public reset(): void {
+    this.pBank.fill(0.0);
+  }
+}
+
 /**
  * 5-stage symmetric splitting integrator (B - A - O - A - B)
  * with syntax-entropy-dependent anisotropic friction Gamma_t(H_syntax).
@@ -30,6 +90,7 @@ export class AdaptiveBAOABIntegrator {
   public readonly gammaWall: number;
   public readonly tau: number;
   public readonly epsilonSyn: number;
+  public readonly momentumBank: MomentumBank;
 
   constructor(initialQ?: number[], initialP?: number[], params?: BAOABParams) {
     this.q = initialQ ? [...initialQ] : new Array<number>(12).fill(0.5);
@@ -41,6 +102,7 @@ export class AdaptiveBAOABIntegrator {
     this.gammaWall = params?.gammaWall ?? 100.0; // 1,000x brake
     this.tau = params?.tau ?? 1.0;
     this.epsilonSyn = params?.epsilonSyn ?? 0.6;
+    this.momentumBank = new MomentumBank(12, this.invMassDiag);
   }
 
   /**
@@ -58,7 +120,12 @@ export class AdaptiveBAOABIntegrator {
   /**
    * Executes one full B-A-O-A-B symmetric integration step.
    */
-  public step(gradV: number[], hSyntax: number, rng?: () => number): { q: number[]; p: number[] } {
+  public step(
+    gradV: number[],
+    hSyntax: number,
+    rng?: () => number,
+    options?: StepOptions
+  ): { q: number[]; p: number[] } {
     const halfDt = 0.5 * this.dt;
     const rand = rng ?? Math.random;
 
@@ -86,6 +153,30 @@ export class AdaptiveBAOABIntegrator {
       this.p[i] = thetaI * (this.p[i] ?? 0) + noiseScale * xi;
     }
 
+    // Momentum Banking Integration (Gap 4 Part A)
+    if (options?.enableMomentumBanking) {
+      const eps = options.epsSyn ?? this.epsilonSyn;
+      if (hSyntax < eps) {
+        // High friction brake suppresses momentum relative to baseline
+        const deltaP = new Array<number>(12);
+        for (let i = 0; i < 12; i++) {
+          const mi = this.massDiag[i] ?? 1.0;
+          const thetaBase = Math.exp(-this.dt * (this.gammaBase / mi));
+          const thetaActual = Math.exp(-this.dt * (gamma / mi));
+          deltaP[i] = Math.max(0.0, thetaBase - thetaActual) * (this.p[i] ?? 0);
+        }
+        this.momentumBank.bankMomentum(deltaP);
+      } else {
+        // High freedom narrative clause: discharge banked momentum into active p
+        if (this.momentumBank.getEnergy() > 1e-12) {
+          const pReleased = this.momentumBank.dischargeMomentum(options.etaRelease ?? 1.0);
+          for (let i = 0; i < 12; i++) {
+            this.p[i] = (this.p[i] ?? 0) + (pReleased[i] ?? 0);
+          }
+        }
+      }
+    }
+
     // Stage A2: q <- q + (dt/2) * M^(-1) * p
     for (let i = 0; i < 12; i++) {
       this.q[i] = (this.q[i] ?? 0) + halfDt * (this.invMassDiag[i] ?? 1.0) * (this.p[i] ?? 0);
@@ -97,6 +188,22 @@ export class AdaptiveBAOABIntegrator {
     }
 
     return { q: [...this.q], p: [...this.p] };
+  }
+
+  /**
+   * Convenience wrapper stepping with momentum banking enabled.
+   */
+  public stepWithBanking(
+    gradV: number[],
+    hSyntax: number,
+    options?: { etaRelease?: number; epsSyn?: number },
+    rng?: () => number
+  ): { q: number[]; p: number[] } {
+    return this.step(gradV, hSyntax, rng, {
+      enableMomentumBanking: true,
+      etaRelease: options?.etaRelease ?? 1.0,
+      epsSyn: options?.epsSyn,
+    });
   }
 
   /**
@@ -272,6 +379,177 @@ export class ClauseTwistedSMC {
       targetBridge,
     };
   }
+
+  /**
+   * Samples/selects optimal terminal predicate anchor minimizing Kamae distance
+   * and computes Schrödinger Bridge guidance drift and arrival potentials.
+   */
+  public sampleTerminalAnchorAndBridge(
+    targetKamae: number[],
+    candidateAnchors: TerminalAnchorCandidate[],
+    currentQ: number[],
+    t: number,
+    T: number,
+    dt = 0.1,
+    tau = 1.0,
+    intermediateCandidates?: (number[] | { q: number[] })[],
+    kamaeIndices: number[] = [9, 10, 11]
+  ): TerminalBridgeResult {
+    return sampleTerminalAnchorAndBridge(
+      targetKamae,
+      candidateAnchors,
+      currentQ,
+      t,
+      T,
+      this.metric,
+      dt,
+      tau,
+      intermediateCandidates,
+      kamaeIndices
+    );
+  }
+}
+
+export interface TerminalAnchorCandidate {
+  text?: string;
+  q: number[];
+  logprob?: number;
+  [key: string]: any;
+}
+
+export interface TerminalBridgeResult {
+  selectedAnchor: TerminalAnchorCandidate;
+  selectedIndex: number;
+  qEnd: number[];
+  bBridge: number[];
+  minDistance: number;
+  kamaeDistances: number[];
+  intermediatePotentials?: number[];
+  potentialFn: (qCand: number[]) => number;
+}
+
+/**
+ * Samples/selects optimal terminal predicate anchor minimizing Kamae Riemannian distance
+ * and computes Schrödinger Bridge guidance drift b_bridge and intermediate arrival log-potentials psi.
+ */
+export function sampleTerminalAnchorAndBridge(
+  targetKamae: number[],
+  candidateAnchors: TerminalAnchorCandidate[],
+  currentQ: number[],
+  t: number,
+  T: number,
+  metric?: SO8PullbackMetric,
+  dt = 0.1,
+  tau = 1.0,
+  intermediateCandidates?: (number[] | { q: number[] })[],
+  kamaeIndices: number[] = [9, 10, 11],
+  sample = false,
+  temperature = 1.0,
+  rng?: () => number
+): TerminalBridgeResult {
+  if (candidateAnchors.length === 0) {
+    throw new Error('candidateAnchors must contain at least 1 candidate anchor.');
+  }
+
+  const met = metric ?? new SO8PullbackMetric();
+  const G = met.metricMatrix();
+
+  const isFull12D = targetKamae.length === 12;
+  const targetSub = isFull12D ? kamaeIndices.map((idx) => targetKamae[idx] ?? 0) : targetKamae;
+
+  // Compute Riemannian distance for each candidate on Kamae subspace
+  const distances: number[] = [];
+  for (const c of candidateAnchors) {
+    if (c.q.length !== 12) {
+      throw new Error(`Candidate anchor q must be 12-dimensional, got ${c.q.length}`);
+    }
+    let distSq = 0;
+    for (let i = 0; i < kamaeIndices.length; i++) {
+      const idxI = kamaeIndices[i]!;
+      const diffI = (c.q[idxI] ?? 0) - (targetSub[i] ?? 0);
+      let rowSum = 0;
+      for (let j = 0; j < kamaeIndices.length; j++) {
+        const idxJ = kamaeIndices[j]!;
+        const diffJ = (c.q[idxJ] ?? 0) - (targetSub[j] ?? 0);
+        rowSum += (G[idxI]![idxJ] ?? 0) * diffJ;
+      }
+      distSq += diffI * rowSum;
+    }
+    distances.push(Math.sqrt(Math.max(0, distSq)));
+  }
+
+  let bestIdx = 0;
+  if (!sample || temperature <= 1e-6) {
+    let minDist = Infinity;
+    for (let i = 0; i < distances.length; i++) {
+      if (distances[i]! < minDist) {
+        minDist = distances[i]!;
+        bestIdx = i;
+      }
+    }
+  } else {
+    const rand = rng ?? Math.random;
+    const logits: number[] = [];
+    let maxLogit = -Infinity;
+    for (let i = 0; i < candidateAnchors.length; i++) {
+      const lp = candidateAnchors[i]!.logprob ?? 0.0;
+      const l = lp - distances[i]! / Math.max(1e-5, temperature);
+      logits.push(l);
+      if (l > maxLogit) maxLogit = l;
+    }
+    const expL = logits.map((l) => Math.exp(l - maxLogit));
+    const sumExp = expL.reduce((a, b) => a + b, 0) || 1.0;
+    const probs = expL.map((e) => e / sumExp);
+    const r = rand();
+    let cum = 0;
+    for (let i = 0; i < probs.length; i++) {
+      cum += probs[i]!;
+      if (r <= cum || i === probs.length - 1) {
+        bestIdx = i;
+        break;
+      }
+    }
+  }
+
+  const selectedAnchor = candidateAnchors[bestIdx]!;
+  const qEndStar = [...selectedAnchor.q];
+
+  // Schrödinger Bridge Guidance Drift: b_bridge = (q_end* - q_t) / (max(1, T - t) * dt)
+  const remainingSteps = Math.max(1, T - t);
+  const bBridge = new Array<number>(12);
+  for (let i = 0; i < 12; i++) {
+    bBridge[i] = ((qEndStar[i] ?? 0) - (currentQ[i] ?? 0)) / (remainingSteps * dt);
+  }
+
+  // Bridge potential function: psi_{T-t}(q_c; q_end^*) = - ||q_c - q_end^*||_G^2 / (2 * tau * remainingSteps)
+  const denom = 2.0 * tau * remainingSteps;
+  const potentialFn = (qCand: number[]): number => {
+    const diff = new Array<number>(12);
+    for (let i = 0; i < 12; i++) {
+      diff[i] = (qCand[i] ?? 0) - (qEndStar[i] ?? 0);
+    }
+    const quad = met.quadraticForm(diff);
+    return -quad / denom;
+  };
+
+  let intermediatePotentials: number[] | undefined;
+  if (intermediateCandidates) {
+    intermediatePotentials = intermediateCandidates.map((cand) => {
+      const qc = Array.isArray(cand) ? cand : cand.q;
+      return potentialFn(qc);
+    });
+  }
+
+  return {
+    selectedAnchor,
+    selectedIndex: bestIdx,
+    qEnd: qEndStar,
+    bBridge,
+    minDistance: distances[bestIdx]!,
+    kamaeDistances: distances,
+    intermediatePotentials,
+    potentialFn,
+  };
 }
 
 export interface CandidateToken {

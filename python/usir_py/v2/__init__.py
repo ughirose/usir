@@ -1,14 +1,42 @@
-"""USIR v2.0 Paper-Grade Architecture Package."""
+"""USIR v2.0 / v3.0 Paper-Grade Architecture Package."""
 
 from .adaptive_baoab import (
     AdaptiveBAOABIntegrator,
     ClauseTwistedSMC,
     JacobianLogitProjector,
+    MomentumBank,
+    sample_terminal_anchor_and_bridge,
+)
+from .cross_modal_functors import (
+    UiDomNode,
+    VisualSaccadePatch,
+    extract_ui_dom_24d,
+    extract_ui_dom_signals,
+    extract_visual_saccade_24d,
+    extract_visual_saccade_signals,
+    transpile_cross_modal,
+)
+from .english_driver import (
+    AI_SLOP_MARKERS,
+    ADVERB_ADJECTIVE_SUFFIXES,
+    APOPHATIC_NEGATIONS,
+    LATINATE_SUFFIXES,
+    LEGAL_MATH_MARKERS,
+    SAXON_CONCRETE_STEMS,
+    SHOCK_WORDS,
+    classify_english_phase,
+    count_syllables,
+    extract_clause_signals_english,
+    extract_english_signals,
+    extract_usir_24d_english,
+    split_english_clauses,
 )
 from .hth_lexicon import (
     CLOSED_ADVERSATIVE_CONJUNCTIONS,
     CLOSED_LOGICAL_MARKERS,
     CLOSED_NEGATION_MARKERS,
+    DUAL_SENSE_LEXICON,
+    DualSenseHthEntry,
     HTHEntry,
     HTHLexicon,
     MusicNoteEvent,
@@ -17,13 +45,33 @@ from .hth_lexicon import (
     compute_sensory_bridge,
     discrete_jump_distance,
     extract_music_functor_signals,
+    get_dual_sense_entry,
     lca_depth_30bit,
+    pack_30bit_octree,
+    pack_64bit_hth,
+    pack_lower32_sensory,
     poincare_hyperbolic_distance,
+    resolve_dual_sense_hth,
+    unpack_64bit_hth,
+    unpack_lower32_sensory,
+)
+from .style_chemistry import (
+    CHI2_24_095,
+    MOLECULE_TRIPLETS,
+    StyleMoleculesResult,
+    VoronoiGenesisResult,
+    discover_voronoi_genesis,
+    discoverVoronoiGenesis,
+    evaluate_style_molecules,
+    evaluateStyleMolecules,
+    usir_genesis,
+    usirGenesis,
 )
 from .thermodynamics_so8 import (
     HamiltonFristonResonance,
     KacMoreauYosidaThermodynamics,
     SO8PullbackMetric,
+    compute_wundt_berlyne_utility,
 )
 from .wavelet_hermite_encoder import (
     MCAResult,
@@ -31,20 +79,31 @@ from .wavelet_hermite_encoder import (
     WaveletDecompositionResult,
     WaveletHermiteEncoder,
     build_haar_orthonormal_matrix,
+    compute_logarithmic_scales,
     compute_rqa_metrics,
     extract_24d_v2,
     orthogonal_wavelet_decompose_1d,
+    renormalize_decimate_signals,
     solve_mca_fourier_soliton,
     wiener_hermite_polynomials,
 )
 
 __all__ = [
-    # Module 1
+    # Module 1: Zero-Leakage 128-bit Dual-Sense HTH
     "clz30",
     "lca_depth_30bit",
     "discrete_jump_distance",
     "poincare_hyperbolic_distance",
     "compute_sensory_bridge",
+    "pack_30bit_octree",
+    "pack_64bit_hth",
+    "unpack_64bit_hth",
+    "pack_lower32_sensory",
+    "unpack_lower32_sensory",
+    "get_dual_sense_entry",
+    "resolve_dual_sense_hth",
+    "DualSenseHthEntry",
+    "DUAL_SENSE_LEXICON",
     "CLOSED_NEGATION_MARKERS",
     "CLOSED_ADVERSATIVE_CONJUNCTIONS",
     "CLOSED_LOGICAL_MARKERS",
@@ -53,7 +112,7 @@ __all__ = [
     "MusicNoteEvent",
     "HTHLexicon",
     "extract_music_functor_signals",
-    # Module 2
+    # Module 2: Wavelet-Hermite, MCA, RQA & RG Decimation
     "WaveletDecompositionResult",
     "MCAResult",
     "RQAResult",
@@ -64,12 +123,50 @@ __all__ = [
     "compute_rqa_metrics",
     "WaveletHermiteEncoder",
     "extract_24d_v2",
-    # Module 3
+    "renormalize_decimate_signals",
+    "compute_logarithmic_scales",
+    # Module 3: SO(8) & Kac-Moreau-Yosida & Wundt-Berlyne
     "SO8PullbackMetric",
     "KacMoreauYosidaThermodynamics",
     "HamiltonFristonResonance",
-    # Module 4
+    "compute_wundt_berlyne_utility",
+    # Module 4: Adaptive-BAOAB, MomentumBank & Schrodinger Bridge
     "AdaptiveBAOABIntegrator",
     "ClauseTwistedSMC",
     "JacobianLogitProjector",
+    "MomentumBank",
+    "sample_terminal_anchor_and_bridge",
+    # Module 5: Style Chemistry & Genesis
+    "MOLECULE_TRIPLETS",
+    "CHI2_24_095",
+    "StyleMoleculesResult",
+    "VoronoiGenesisResult",
+    "evaluate_style_molecules",
+    "evaluateStyleMolecules",
+    "discover_voronoi_genesis",
+    "discoverVoronoiGenesis",
+    "usir_genesis",
+    "usirGenesis",
+    # Module 6: Cross-Modal Functors
+    "UiDomNode",
+    "VisualSaccadePatch",
+    "extract_ui_dom_signals",
+    "extract_ui_dom_24d",
+    "extract_visual_saccade_signals",
+    "extract_visual_saccade_24d",
+    "transpile_cross_modal",
+    # Module 7: English Stylistic Driver
+    "LATINATE_SUFFIXES",
+    "LEGAL_MATH_MARKERS",
+    "SAXON_CONCRETE_STEMS",
+    "ADVERB_ADJECTIVE_SUFFIXES",
+    "APOPHATIC_NEGATIONS",
+    "SHOCK_WORDS",
+    "AI_SLOP_MARKERS",
+    "count_syllables",
+    "split_english_clauses",
+    "extract_clause_signals_english",
+    "extract_english_signals",
+    "extract_usir_24d_english",
+    "classify_english_phase",
 ]

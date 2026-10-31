@@ -47,6 +47,52 @@ def discrete_jump_distance(h_u: int, h_v: int) -> float:
     return 1.0 - (lca_depth_30bit(h_u, h_v) / 10.0)
 
 
+def pack_30bit_octree(levels_10: List[int]) -> int:
+    """Pack 10 octal digits (each in 0..7) into a 30-bit unsigned integer (MSB = level 1)."""
+    code = 0
+    for lvl in range(min(10, len(levels_10))):
+        digit = int(levels_10[lvl]) & 0x7
+        shift = 3 * (9 - lvl)
+        code |= digit << shift
+    return code & 0x3FFFFFFF
+
+
+def pack_lower32_sensory(vec_8d: np.ndarray) -> int:
+    """Quantize 8D vector in [0, 1]^8 into 8 x 4-bit nibbles (lower 32 bits)."""
+    lower32 = 0
+    for d in range(8):
+        val = float(vec_8d[d]) if d < len(vec_8d) else 0.0
+        q = int(np.clip(np.round(val * 15.0), 0, 15))
+        lower32 |= (q & 0xF) << (4 * d)
+    return lower32 & 0xFFFFFFFF
+
+
+def unpack_lower32_sensory(lower32: int) -> np.ndarray:
+    """Unpack lower 32-bit integer into 8D float sensory vector in [0.0, 1.0]."""
+    vec = np.zeros(8, dtype=np.float64)
+    for d in range(8):
+        nibble = (int(lower32) >> (4 * d)) & 0xF
+        vec[d] = nibble / 15.0
+    return vec
+
+
+def pack_64bit_hth(pos_2bit: int, octree_30bit: int, lower32_sensory: int) -> int:
+    """Pack 2-bit POS + 30-bit Octree (upper 32 bits) and 8D 4-bit sensory vector (lower 32 bits)."""
+    upper32 = ((int(pos_2bit) & 0x3) << 30) | (int(octree_30bit) & 0x3FFFFFFF)
+    return ((upper32 & 0xFFFFFFFF) << 32) | (int(lower32_sensory) & 0xFFFFFFFF)
+
+
+def unpack_64bit_hth(hth_64: int) -> Tuple[int, int, np.ndarray]:
+    """Unpack 64-bit HTH into (pos_2bit, octree_30bit, sensory_8d)."""
+    h = int(hth_64)
+    upper32 = (h >> 32) & 0xFFFFFFFF
+    lower32 = h & 0xFFFFFFFF
+    pos_2bit = (upper32 >> 30) & 0x3
+    octree_30bit = upper32 & 0x3FFFFFFF
+    sensory_8d = unpack_lower32_sensory(lower32)
+    return pos_2bit, octree_30bit, sensory_8d
+
+
 # ==============================================================================
 # Data Structures
 # ==============================================================================
@@ -74,6 +120,166 @@ class HTHEntry:
             is_negated=self.is_negated,
             raw_hth_64=self.raw_hth_64,
         )
+
+
+@dataclass
+class DualSenseHthEntry:
+    """128-bit Dual-Sense HTH Entry containing Primary Physical and Secondary Abstract slots."""
+    word: str
+    primary_physical_hth: int          # 64-bit uint
+    secondary_abstract_hth: int        # 64-bit uint
+    primary_entry: HTHEntry
+    secondary_entry: HTHEntry
+
+
+def _make_dual_sense(
+    word: str,
+    pos_2bit: int,
+    pos_str: str,
+    pri_octree: int,
+    pri_sensory: List[float],
+    pri_concreteness: float,
+    sec_octree: int,
+    sec_sensory: List[float],
+    sec_concreteness: float,
+) -> DualSenseHthEntry:
+    pri_vec = np.array(pri_sensory, dtype=np.float64)
+    sec_vec = np.array(sec_sensory, dtype=np.float64)
+    pri_raw = pack_64bit_hth(pos_2bit, pri_octree, pack_lower32_sensory(pri_vec))
+    sec_raw = pack_64bit_hth(pos_2bit, sec_octree, pack_lower32_sensory(sec_vec))
+    pri_entry = HTHEntry(
+        token=word,
+        pos=pos_str,
+        h_code=pri_octree & 0x3FFFFFFF,
+        sensory_vector=pri_vec,
+        concreteness=pri_concreteness,
+        raw_hth_64=pri_raw,
+    )
+    sec_entry = HTHEntry(
+        token=word,
+        pos=pos_str,
+        h_code=sec_octree & 0x3FFFFFFF,
+        sensory_vector=sec_vec,
+        concreteness=sec_concreteness,
+        raw_hth_64=sec_raw,
+    )
+    return DualSenseHthEntry(
+        word=word,
+        primary_physical_hth=pri_raw,
+        secondary_abstract_hth=sec_raw,
+        primary_entry=pri_entry,
+        secondary_entry=sec_entry,
+    )
+
+
+# 20 canonical polysemous words with 128-bit Dual-Sense representation
+DUAL_SENSE_LEXICON: Dict[str, DualSenseHthEntry] = {
+    "冷たい": _make_dual_sense(
+        "冷たい", 2, "形容詞",
+        0x20049249, [0.3, 0.1, 0.9, 0.7, 0.2, 0.4, 0.0, 0.2], 0.85,
+        0x00049249, [0.1, 0.0, 0.1, 0.1, 0.0, 0.2, 0.8, 0.6], 0.22,
+    ),
+    "落とす": _make_dual_sense(
+        "落とす", 1, "動詞",
+        0x1836DB6D, [0.2, 0.4, 0.3, 0.2, 0.9, 0.5, 0.0, 0.1], 0.80,
+        0x00092492, [0.0, 0.0, 0.0, 0.1, 0.2, 0.2, 0.85, 0.4], 0.25,
+    ),
+    "走る": _make_dual_sense(
+        "走る", 1, "動詞",
+        0x183B6DB6, [0.3, 0.2, 0.4, 0.8, 0.95, 0.6, 0.0, 0.0], 0.88,
+        0x000DB6DB, [0.1, 0.0, 0.0, 0.0, 0.3, 0.3, 0.85, 0.2], 0.24,
+    ),
+    "深い": _make_dual_sense(
+        "深い", 2, "形容詞",
+        0x2004B6DB, [0.4, 0.1, 0.5, 0.3, 0.1, 0.9, 0.0, 0.4], 0.82,
+        0x0006DB6D, [0.0, 0.0, 0.0, 0.1, 0.0, 0.4, 0.9, 0.7], 0.20,
+    ),
+    "高い": _make_dual_sense(
+        "高い", 2, "形容詞",
+        0x08012492, [0.7, 0.1, 0.3, 0.2, 0.2, 0.95, 0.0, 0.1], 0.85,
+        0x08016DB6, [0.1, 0.0, 0.0, 0.0, 0.1, 0.3, 0.85, 0.2], 0.28,
+    ),
+    "重い": _make_dual_sense(
+        "重い", 2, "形容詞",
+        0x10024924, [0.2, 0.1, 0.8, 0.8, 0.7, 0.4, 0.0, 0.1], 0.86,
+        0x00004924, [0.0, 0.0, 0.1, 0.3, 0.0, 0.2, 0.85, 0.5], 0.25,
+    ),
+    "光る": _make_dual_sense(
+        "光る", 1, "動詞",
+        0x28052492, [0.98, 0.1, 0.2, 0.1, 0.3, 0.5, 0.0, 0.0], 0.90,
+        0x0000B6DB, [0.3, 0.0, 0.0, 0.0, 0.1, 0.2, 0.8, 0.3], 0.30,
+    ),
+    "闇": _make_dual_sense(
+        "闇", 0, "名詞",
+        0x28056DB6, [0.05, 0.1, 0.3, 0.4, 0.1, 0.7, 0.0, 0.85], 0.78,
+        0x00001249, [0.0, 0.0, 0.0, 0.2, 0.0, 0.2, 0.9, 0.6], 0.22,
+    ),
+    "切る": _make_dual_sense(
+        "切る", 1, "動詞",
+        0x1002B6DB, [0.4, 0.3, 0.85, 0.4, 0.9, 0.4, 0.0, 0.0], 0.89,
+        0x00009249, [0.0, 0.1, 0.0, 0.0, 0.3, 0.2, 0.85, 0.4], 0.26,
+    ),
+    "立つ": _make_dual_sense(
+        "立つ", 1, "動詞",
+        0x18032492, [0.3, 0.1, 0.5, 0.85, 0.6, 0.7, 0.0, 0.0], 0.84,
+        0x00002492, [0.0, 0.0, 0.0, 0.0, 0.1, 0.3, 0.95, 0.2], 0.18,
+    ),
+    "熱い": _make_dual_sense(
+        "熱い", 2, "形容詞",
+        0x20042492, [0.6, 0.1, 0.95, 0.8, 0.3, 0.3, 0.0, 0.1], 0.88,
+        0x38072492, [0.2, 0.1, 0.2, 0.5, 0.3, 0.1, 0.4, 0.3], 0.35,
+    ),
+    "甘い": _make_dual_sense(
+        "甘い", 2, "形容詞",
+        0x30062492, [0.3, 0.0, 0.4, 0.95, 0.1, 0.2, 0.0, 0.1], 0.82,
+        0x00006DB6, [0.0, 0.0, 0.0, 0.1, 0.0, 0.1, 0.85, 0.3], 0.21,
+    ),
+    "固い": _make_dual_sense(
+        "固い", 2, "形容詞",
+        0x10021249, [0.2, 0.1, 0.95, 0.5, 0.4, 0.5, 0.0, 0.0], 0.88,
+        0x00001249, [0.0, 0.0, 0.1, 0.1, 0.0, 0.2, 0.9, 0.2], 0.24,
+    ),
+    "開く": _make_dual_sense(
+        "開く", 1, "動詞",
+        0x0801B6DB, [0.5, 0.3, 0.6, 0.3, 0.7, 0.8, 0.0, 0.0], 0.85,
+        0x0000B6DB, [0.1, 0.1, 0.0, 0.0, 0.2, 0.3, 0.85, 0.2], 0.27,
+    ),
+    "閉じる": _make_dual_sense(
+        "閉じる", 1, "動詞",
+        0x08016DB6, [0.4, 0.3, 0.6, 0.3, 0.7, 0.8, 0.0, 0.2], 0.85,
+        0x00006DB6, [0.0, 0.0, 0.0, 0.0, 0.1, 0.2, 0.9, 0.4], 0.22,
+    ),
+    "浮かぶ": _make_dual_sense(
+        "浮かぶ", 1, "動詞",
+        0x20046DB6, [0.5, 0.1, 0.6, 0.3, 0.6, 0.7, 0.0, 0.3], 0.83,
+        0x00004924, [0.2, 0.0, 0.0, 0.2, 0.1, 0.3, 0.75, 0.5], 0.29,
+    ),
+    "沈む": _make_dual_sense(
+        "沈む", 1, "動詞",
+        0x20049249, [0.3, 0.1, 0.6, 0.3, 0.6, 0.7, 0.0, 0.6], 0.82,
+        0x38076DB6, [0.0, 0.0, 0.0, 0.3, 0.1, 0.2, 0.6, 0.75], 0.26,
+    ),
+    "揺れる": _make_dual_sense(
+        "揺れる", 1, "動詞",
+        0x18034924, [0.4, 0.2, 0.6, 0.7, 0.85, 0.6, 0.0, 0.1], 0.85,
+        0x000036DB, [0.1, 0.0, 0.0, 0.1, 0.3, 0.2, 0.85, 0.3], 0.26,
+    ),
+    "響く": _make_dual_sense(
+        "響く", 1, "動詞",
+        0x2805B6DB, [0.2, 0.95, 0.4, 0.5, 0.5, 0.7, 0.0, 0.2], 0.86,
+        0x0000B6DB, [0.0, 0.2, 0.0, 0.1, 0.2, 0.3, 0.85, 0.4], 0.27,
+    ),
+    "掴む": _make_dual_sense(
+        "掴む", 1, "動詞",
+        0x18039249, [0.3, 0.1, 0.95, 0.6, 0.9, 0.5, 0.0, 0.0], 0.89,
+        0x00009249, [0.0, 0.0, 0.0, 0.0, 0.2, 0.3, 0.9, 0.2], 0.23,
+    ),
+}
+
+
+def get_dual_sense_entry(word: str) -> Optional[DualSenseHthEntry]:
+    """Retrieve 128-bit DualSenseHthEntry for polysemous word if registered."""
+    return DUAL_SENSE_LEXICON.get(word)
 
 
 @dataclass
@@ -230,12 +436,18 @@ class HTHLexicon:
             return 4  # Radical 86: 火/灬 (Fire / Thermal / Burn)
         if 0x96E8 <= code <= 0x9740:
             return 4  # Radical 173: 雨 (Rain / Meteorological / Sky)
+        if 0x5C70 <= code <= 0x5DB0:
+            return 4  # Radical 46: 山 (Mountain / Topography)
+        if 0x77F3 <= code <= 0x7920:
+            return 2  # Radical 112: 石 (Stone / Rock / Mineral)
         if 0x6728 <= code <= 0x6C00:
             return 6  # Radical 75: 木 (Flora / Organic)
         if 0x8278 <= code <= 0x8660:
             return 6  # Radical 140: 艸/艹 & 142: 虫 (Plants / Insects)
         if 0x9B5A <= code <= 0x9CE0:
             return 6  # Radical 195: 魚 & 196: 鳥 (Fauna)
+        if 0x99AC <= code <= 0x9A6B:
+            return 6  # Radical 187: 馬 (Fauna / Equine)
         if 0x5FC3 <= code <= 0x61F0:
             return 7  # Radical 61: 心/忄 (Emotion / Affective)
         if 0x624B <= code <= 0x6520:
@@ -268,14 +480,22 @@ class HTHLexicon:
         cluster_id = (((oct1 * 8 + oct2) % self.num_nodes) + self.num_nodes) % self.num_nodes
         return cluster_id
 
-    def _compute_concreteness(self, sensory: np.ndarray) -> float:
+    def _compute_concreteness(self, sensory: np.ndarray, primary_octant: Optional[int] = None) -> float:
         """Compute concreteness C(u) in [0.0, 1.0] from 8D sensory vector.
         Physical axes (0..5: visual, auditory, tactile, somatic, kinematic, spatial).
         Abstract formal axis: 6. Apophatic axis: 7.
         """
         physical_energy = float(np.mean(sensory[0:6]))
         formal_penalty = float(sensory[6])
-        return float(np.clip(1.25 * physical_energy - 0.35 * formal_penalty, 0.05, 0.98))
+        base_c = float(np.clip(1.25 * physical_energy - 0.35 * formal_penalty, 0.05, 0.98))
+        if primary_octant is not None:
+            if primary_octant in (0, 1):
+                base_c = min(base_c, 0.48)
+            elif primary_octant == 7:
+                base_c = min(base_c, 0.50)
+            elif 2 <= primary_octant <= 6:
+                base_c = max(base_c, 0.55)
+        return base_c
 
     # --------------------------------------------------------------------------
     # OPEN-03: Onomatopoeia Sound-Symbolic Synthesis (\u03a8_mimetic)
@@ -418,10 +638,15 @@ class HTHLexicon:
         # Primary character determines the 30-bit octree code
         primary_idx = node_indices[0]
         h_code = self.octree_codes_30bit[primary_idx]
-        concreteness = self._compute_concreteness(mean_vec)
+        target_code = ord(target[0]) if target else 0x4E00
+        primary_oct = self.get_primary_octant_from_codepoint(target_code)
+        concreteness = self._compute_concreteness(mean_vec, primary_octant=primary_oct)
 
         # Check negative prefix (e.g. 非, 不, 無, 未)
         is_neg = target[0] in CLOSED_NEGATION_MARKERS if len(target) > 0 else False
+
+        pos_2bit = 0 if pos_major == "名詞" else 1 if pos_major == "動詞" else 2 if pos_major == "形容詞" else 3
+        raw_hth_64 = pack_64bit_hth(pos_2bit, h_code, pack_lower32_sensory(mean_vec))
 
         return HTHEntry(
             token=target,
@@ -431,6 +656,7 @@ class HTHLexicon:
             concreteness=concreteness,
             mimetic_immunity=False,
             is_negated=is_neg,
+            raw_hth_64=raw_hth_64,
         )
 
     # --------------------------------------------------------------------------
@@ -547,6 +773,80 @@ class HTHLexicon:
             inner = chunk_str[1:-1] if is_dia else chunk_str
             results.extend(self.analyze_clause(inner, is_dialogue=is_dia))
         return results
+
+    def get_concreteness(self, word: str) -> float:
+        """Get Octree concreteness C(u) in [0.0, 1.0] for a token or word."""
+        entry = self.lookup_token(word, word, "名詞", "*")
+        return float(entry.concreteness)
+
+    def resolve_dual_sense_hth(self, word: str, context_word: str) -> Dict[str, Any]:
+        """Resolve 128-bit dual-sense slot dynamically against context word concreteness."""
+        return resolve_dual_sense_hth(word, context_word, lexicon=self)
+
+
+# ==============================================================================
+# Gap 1: 128-bit Dual-Sense Resolution Function
+# ==============================================================================
+
+def resolve_dual_sense_hth(
+    word: str,
+    context_word: str,
+    lexicon: Optional[HTHLexicon] = None,
+) -> Dict[str, Any]:
+    """Dynamically resolve 128-bit DualSenseHthEntry based on context word concreteness C(u).
+    - When C(u) >= 0.52 (concrete noun context, e.g. 氷+冷たい, 瓦+落とす, 馬+走る),
+      selects primary_physical slot.
+    - When C(u) < 0.52 (abstract/institutional noun context, e.g. 制度/論理/態度/単位/計画+...),
+      selects secondary_abstract slot.
+    Returns:
+      selected_slot: "primary_physical" | "secondary_abstract"
+      selected_hth: 64-bit int
+      full_128bit: Tuple[int, int] (primary_64bit, secondary_64bit)
+      primary_64bit: 64-bit int
+      secondary_64bit: 64-bit int
+      context_concreteness: float
+      effective_sensory: 8D float ndarray
+      word: str
+      context_word: str
+    """
+    if lexicon is None:
+        lexicon = HTHLexicon()
+
+    c_u = lexicon.get_concreteness(context_word)
+    entry = get_dual_sense_entry(word)
+
+    if entry is not None:
+        if c_u >= 0.52:
+            selected_slot = "primary_physical"
+            selected_hth = entry.primary_physical_hth
+            effective_sensory = entry.primary_entry.sensory_vector.copy()
+        else:
+            selected_slot = "secondary_abstract"
+            selected_hth = entry.secondary_abstract_hth
+            effective_sensory = entry.secondary_entry.sensory_vector.copy()
+
+        pri_64 = entry.primary_physical_hth
+        sec_64 = entry.secondary_abstract_hth
+    else:
+        tok = lexicon.lookup_token(word, word, "名詞", "*")
+        packed = tok.raw_hth_64 if tok.raw_hth_64 else pack_64bit_hth(0, tok.h_code, pack_lower32_sensory(tok.sensory_vector))
+        selected_slot = "primary_physical" if c_u >= 0.52 else "secondary_abstract"
+        selected_hth = packed
+        pri_64 = packed
+        sec_64 = packed
+        effective_sensory = tok.sensory_vector.copy()
+
+    return {
+        "selected_slot": selected_slot,
+        "selected_hth": int(selected_hth),
+        "full_128bit": (int(pri_64), int(sec_64)),
+        "primary_64bit": int(pri_64),
+        "secondary_64bit": int(sec_64),
+        "context_concreteness": float(c_u),
+        "effective_sensory": effective_sensory,
+        "word": word,
+        "context_word": context_word,
+    }
 
 
 # ==============================================================================

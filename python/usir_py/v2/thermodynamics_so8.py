@@ -512,6 +512,30 @@ class HamiltonFristonResonance:
 
         return float(utility_gain - self.lambda_fatigue * fatigue)
 
+    def compute_wundt_berlyne_utility(
+        self,
+        valence_series: Sequence[float] | None = None,
+        free_energy_series: Sequence[float] | None = None,
+        p_trajectory: Sequence[np.ndarray | Sequence[float]] | None = None,
+        q_trajectory: Sequence[np.ndarray | Sequence[float]] | None = None,
+        f_overload: float | None = None,
+        lambda_fatigue: float | None = None,
+        tau_rec: int | None = None,
+    ) -> dict[str, object]:
+        r"""Compute Wundt-Berlyne utility over a sequence/trajectory using monitor parameters."""
+        return compute_wundt_berlyne_utility(
+            valence_series=valence_series,
+            free_energy_series=free_energy_series,
+            p_trajectory=p_trajectory,
+            q_trajectory=q_trajectory,
+            f_overload=self.f_overload if f_overload is None else float(f_overload),
+            lambda_fatigue=self.lambda_fatigue if lambda_fatigue is None else float(lambda_fatigue),
+            tau_rec=self.tau_rec if tau_rec is None else int(tau_rec),
+            thermo=self.thermo,
+            kappa_r=self.kappa_r,
+            mass_inv=self.mass_inv,
+        )
+
     @staticmethod
     def compute_spectral_equipartition(
         valence_series: np.ndarray | Sequence[float],
@@ -559,3 +583,138 @@ class HamiltonFristonResonance:
         p3 = p_micro / total_power
 
         return beta_hat, (p1, p2, p3)
+
+
+def compute_wundt_berlyne_utility(
+    valence_series: Sequence[float] | None = None,
+    free_energy_series: Sequence[float] | None = None,
+    p_trajectory: Sequence[np.ndarray | Sequence[float]] | None = None,
+    q_trajectory: Sequence[np.ndarray | Sequence[float]] | None = None,
+    f_overload: float = 10.0,
+    lambda_fatigue: float = 0.05,
+    tau_rec: int = 6,
+    thermo: KacMoreauYosidaThermodynamics | None = None,
+    kappa_r: float = 1.0,
+    mass_inv: np.ndarray | None = None,
+) -> dict[str, object]:
+    r"""Compute Wundt-Berlyne inverted-U aesthetic utility over a sequence/trajectory.
+
+    Mathematical Formulation:
+        U_{reader}(t) = V_t * exp(- F_t / F_{overload}) - lambda_{fatigue} * sum_{s=t-tau_{rec}+1}^t ||p_s - p_{s-1}||_2^2
+    where V_t = max(0, -dF_{reader}(t)/dt) is the surprise resolution spike,
+    F_t is the local/cumulative free energy load, and the refractory integral sums
+    momentum squared differences over window [t - tau_rec, t].
+
+    Args:
+        valence_series: Instantaneous reader valence spikes V_t (optional if q_trajectory provided).
+        free_energy_series: Style free energy values F_t (optional if q_trajectory provided).
+        p_trajectory: Sequence of 12D momentum vectors p_t.
+        q_trajectory: Sequence of 12D style vectors q_t (used to compute V_t, F_t if not given).
+        f_overload: Free energy overload cutoff scale F_{overload}.
+        lambda_fatigue: Refractory fatigue penalty coefficient lambda_{fatigue}.
+        tau_rec: Refractory window length tau_{rec} in sentences (default 6).
+        thermo: KacMoreauYosidaThermodynamics instance for computing V_t and F_t from q_trajectory.
+        kappa_r: Reader coupling constant kappa_r.
+        mass_inv: Inverse mass matrix M^{-1}.
+
+    Returns:
+        dict containing:
+            - 'utilities': 1D numpy array of U_{reader}(t)
+            - 'mean_utility': float mean reader utility
+            - 'cumulative_utility': float sum of reader utilities
+            - 'fatigue_penalties': 1D numpy array of refractory fatigue penalties
+            - 'gated_valences': 1D numpy array of overload-gated valences
+    """
+    if p_trajectory is None and q_trajectory is None:
+        raise ValueError("Must provide either p_trajectory or q_trajectory.")
+
+    if p_trajectory is not None:
+        p_arr = np.asarray(p_trajectory, dtype=np.float64)
+        if p_arr.ndim == 1:
+            p_arr = p_arr.reshape(1, -1)
+        T = p_arr.shape[0]
+    else:
+        q_arr = np.asarray(q_trajectory, dtype=np.float64)
+        T = q_arr.shape[0]
+        p_arr = np.zeros((T, 12), dtype=np.float64)
+
+    # Compute or extract valence and free energy series
+    if valence_series is not None:
+        v_arr = np.asarray(valence_series, dtype=np.float64).ravel()
+    elif q_trajectory is not None:
+        th = thermo if thermo is not None else KacMoreauYosidaThermodynamics()
+        m_inv = (
+            np.eye(12, dtype=np.float64)
+            if mass_inv is None
+            else np.asarray(mass_inv, dtype=np.float64)
+        )
+        v_arr = np.zeros(T, dtype=np.float64)
+        for t in range(T):
+            grad_f = th.moreau_yosida_gradient(q_trajectory[t])
+            vel = m_inv @ p_arr[t]
+            rate = float(np.dot(grad_f, vel))
+            v_arr[t] = max(0.0, -kappa_r * rate)
+    else:
+        v_arr = np.zeros(T, dtype=np.float64)
+
+    if free_energy_series is not None:
+        f_arr = np.asarray(free_energy_series, dtype=np.float64).ravel()
+    elif q_trajectory is not None:
+        th = thermo if thermo is not None else KacMoreauYosidaThermodynamics()
+        f_arr = np.zeros(T, dtype=np.float64)
+        for t in range(T):
+            yt = th.prox_lambda_psi(q_trajectory[t])
+            diff = yt - q_trajectory[t]
+            quad = float(diff.T @ th.G @ diff)
+            f_arr[t] = th.psi_q(yt) + (0.5 / th.lambda_reg) * quad
+    else:
+        f_arr = np.zeros(T, dtype=np.float64)
+
+    if len(v_arr) < T:
+        raise ValueError(f"valence_series length {len(v_arr)} is less than trajectory length {T}")
+    if len(f_arr) < T:
+        raise ValueError(
+            f"free_energy_series length {len(f_arr)} is less than trajectory length {T}"
+        )
+
+    utilities = np.zeros(T, dtype=np.float64)
+    fatigue_penalties = np.zeros(T, dtype=np.float64)
+    gated_valences = np.zeros(T, dtype=np.float64)
+
+    eff_tau_rec = max(1, int(tau_rec))
+    eff_f_overload = max(1e-5, float(f_overload))
+
+    for t in range(T):
+        # 1. Catharsis spike V_t (non-negative surprise resolution)
+        vt = max(0.0, float(v_arr[t]))
+        ft = max(0.0, float(f_arr[t]))
+
+        # 2. Overload cutoff gate: exp(- F_t / F_{overload})
+        gate = math.exp(-ft / eff_f_overload)
+        gated_v = vt * gate
+        gated_valences[t] = gated_v
+
+        # 3. Refractory fatigue integral over window [t - tau_rec, t]
+        # Sum of ||p_s - p_{s-1}||_2^2 for s in [max(1, t - tau_rec + 1), t]
+        fatigue = 0.0
+        start_s = max(1, t - eff_tau_rec + 1)
+        for s in range(start_s, t + 1):
+            diff_p = p_arr[s] - p_arr[s - 1]
+            fatigue += float(np.sum(diff_p**2))
+
+        fatigue_penalty = float(lambda_fatigue) * fatigue
+        fatigue_penalties[t] = fatigue_penalty
+
+        # 4. Net reader aesthetic utility
+        utilities[t] = gated_v - fatigue_penalty
+
+    mean_util = float(np.mean(utilities))
+    cum_util = float(np.sum(utilities))
+
+    return {
+        "utilities": utilities,
+        "mean_utility": mean_util,
+        "cumulative_utility": cum_util,
+        "fatigue_penalties": fatigue_penalties,
+        "gated_valences": gated_valences,
+    }

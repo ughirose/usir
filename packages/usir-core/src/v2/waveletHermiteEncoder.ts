@@ -56,6 +56,25 @@ export interface SymplecticStateResult {
   z: Float64Array; // 24D symplectic state [q, p]
 }
 
+export interface LogarithmicScalesResult {
+  m: number;
+  logM: number;
+  log_m: number;
+  scaleMicro: number;
+  scale_micro: number;
+  scaleMeso: number;
+  scale_meso: number;
+  scaleMacro: number;
+  scale_macro: number;
+  tertiles: [number, number, number];
+  microLevel: number;
+  micro_level: number;
+  mesoLevel: number;
+  meso_level: number;
+  macroLevel: number;
+  macro_level: number;
+}
+
 // ============================================================================
 // Constants & Closed Grammatical Sets
 // ============================================================================
@@ -132,6 +151,88 @@ export function padToPowerOf2(signal: Float64Array, minLen: number = 8): Float64
     filled += take;
   }
   return padded;
+}
+
+// ============================================================================
+// Gap 2: Logarithmic Self-Similar Renormalization & Multiscale Filters
+// ============================================================================
+
+export function computeLogarithmicScales(m: number): LogarithmicScalesResult {
+  const mClamped = Math.max(Math.floor(m), 2);
+  const logM = Math.log2(mClamped);
+  const scaleMicro = logM / 3.0;
+  const scaleMeso = (2.0 * logM) / 3.0;
+  const scaleMacro = logM;
+
+  const microLevel = Math.max(1, Math.round(scaleMicro));
+  const mesoLevel = Math.max(microLevel + 1, Math.round(scaleMeso));
+  const macroLevel = Math.max(mesoLevel + 1, Math.round(scaleMacro));
+
+  return {
+    m: Math.floor(m),
+    logM,
+    log_m: logM,
+    scaleMicro,
+    scale_micro: scaleMicro,
+    scaleMeso,
+    scale_meso: scaleMeso,
+    scaleMacro,
+    scale_macro: scaleMacro,
+    tertiles: [scaleMicro, scaleMeso, scaleMacro],
+    microLevel,
+    micro_level: microLevel,
+    mesoLevel,
+    meso_level: mesoLevel,
+    macroLevel,
+    macro_level: macroLevel,
+  };
+}
+
+export function renormalizeDecimateSignals(
+  signals: Float64Array[] | number[][],
+  maxLength: number = 1024
+): Float64Array[] {
+  let cur: Float64Array[] = signals.map((row) =>
+    row instanceof Float64Array ? new Float64Array(row) : new Float64Array(row)
+  );
+  if (cur.length === 0) return cur;
+  const numChannels = cur[0]!.length;
+
+  while (cur.length > maxLength) {
+    const m = cur.length;
+    const nPairs = Math.floor(m / 2);
+    const hasRem = m % 2 !== 0;
+    const nextSig: Float64Array[] = [];
+
+    for (let k = 0; k < nPairs; k++) {
+      const rowA = cur[2 * k]!;
+      const rowB = cur[2 * k + 1]!;
+      const rowOut = new Float64Array(numChannels);
+
+      if (numChannels >= 4) {
+        for (let c = 0; c < 3; c++) {
+          rowOut[c] = 0.5 * (rowA[c]! + rowB[c]!);
+        }
+        rowOut[3] = Math.max(rowA[3]!, rowB[3]!);
+        for (let c = 4; c < numChannels; c++) {
+          rowOut[c] = 0.5 * (rowA[c]! + rowB[c]!);
+        }
+      } else {
+        for (let c = 0; c < numChannels; c++) {
+          rowOut[c] = 0.5 * (rowA[c]! + rowB[c]!);
+        }
+      }
+      nextSig.push(rowOut);
+    }
+
+    if (hasRem) {
+      nextSig.push(new Float64Array(cur[m - 1]!));
+    }
+
+    cur = nextSig;
+  }
+
+  return cur;
 }
 
 // ============================================================================
@@ -599,15 +700,49 @@ export class WaveletHermiteEncoder {
     return targetClauses.map((c) => this.extractClauseSignals(c));
   }
 
+  public static computeLogarithmicScales(m: number): LogarithmicScalesResult {
+    return computeLogarithmicScales(m);
+  }
+
+  public computeLogarithmicScales(m: number): LogarithmicScalesResult {
+    return computeLogarithmicScales(m);
+  }
+
+  public static renormalizeDecimateSignals(
+    signals: Float64Array[] | number[][],
+    maxLength: number = 1024
+  ): Float64Array[] {
+    return renormalizeDecimateSignals(signals, maxLength);
+  }
+
+  public renormalizeDecimateSignals(
+    signals: Float64Array[] | number[][],
+    maxLength: number = 1024
+  ): Float64Array[] {
+    return renormalizeDecimateSignals(signals, maxLength);
+  }
+
   /**
    * OPEN-08: Ghost History Warm-Start with James-Stein shrinkage.
    */
-  public static applyOpen08GhostPadding(signals: number[][], minLen: number = 16, maxLen: number = 1024): Float64Array[] {
-    const m = signals.length;
+  public static applyOpen08GhostPadding(
+    rawSignals: number[][] | Float64Array[],
+    minLen: number = 16,
+    maxLen: number = 1024
+  ): Float64Array[] {
+    let signals: Float64Array[] | number[][] = rawSignals;
+    let m = signals.length;
     if (m === 0) {
       const neutral = new Float64Array([0.1, 0.5, 0.5, 0.0]);
       return Array.from({ length: minLen }, () => new Float64Array(neutral));
     }
+
+    // Gap 2: Renormalization group decimation if sequence exceeds maxLen
+    if (m > maxLen) {
+      signals = renormalizeDecimateSignals(signals, maxLen);
+      m = signals.length;
+    }
+
     let targetLen = minLen;
     while (targetLen < m && targetLen < maxLen) targetLen <<= 1;
 

@@ -34,7 +34,7 @@ export * from './dynamics/trajectoryHsmm.js';
 export * from './algebra/genomeCompiler.js';
 export * from './algebra/styleAlgebra.js';
 
-// USIR v2.0 Paper-Grade Architecture
+// USIR v2.0 / v3.0 Paper-Grade Architecture
 export * from './v2/index.js';
 
 

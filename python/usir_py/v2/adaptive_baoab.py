@@ -25,6 +25,73 @@ import numpy as np
 from .thermodynamics_so8 import SO8PullbackMetric
 
 
+class MomentumBank:
+    r"""Momentum banking reservoir for conserving kinetic and elastic potential energy across constrained intervals.
+
+    When syntax entropy is low (H_{syntax} < eps_{syn}) or syntactic/ontological constraints suppress momentum,
+    the unreleased momentum Delta p_{suppressed} is deposited into the MomentumBank, accumulating elastic energy:
+        E_{bank} = (1/2) p_{bank}^T M^{-1} p_{bank}
+    When a high-freedom narrative clause arrives (H_{syntax} >= eps_{syn}), discharge_momentum releases a fraction
+    eta_{release} in (0, 1] of p_{bank} back into active momentum p_t.
+    """
+
+    def __init__(
+        self,
+        dim: int = 12,
+        mass_matrix: np.ndarray | None = None,
+        inv_mass_matrix: np.ndarray | None = None,
+    ) -> None:
+        self.dim = int(dim)
+        self.p_bank = np.zeros(self.dim, dtype=np.float64)
+        if inv_mass_matrix is not None:
+            self.M_inv = np.asarray(inv_mass_matrix, dtype=np.float64)
+        elif mass_matrix is not None:
+            self.M_inv = np.linalg.inv(np.asarray(mass_matrix, dtype=np.float64))
+        else:
+            self.M_inv = np.eye(self.dim, dtype=np.float64)
+
+    def bank_momentum(self, delta_p: np.ndarray | Sequence[float]) -> float:
+        r"""Deposit suppressed momentum into the bank.
+
+        Args:
+            delta_p: Suppressed momentum vector Delta p in R^12.
+
+        Returns:
+            Current elastic energy E_{bank} = 0.5 * p_{bank}^T M^{-1} p_{bank}.
+        """
+        dp = np.asarray(delta_p, dtype=np.float64).ravel()
+        if dp.shape[0] != self.dim:
+            raise ValueError(f"delta_p must have shape ({self.dim},), got {dp.shape}")
+        self.p_bank += dp
+        return self.get_energy()
+
+    def discharge_momentum(self, eta_release: float = 1.0) -> np.ndarray:
+        r"""Discharge a fraction eta_release in (0, 1] of banked momentum back to active dynamics.
+
+        Args:
+            eta_release: Discharge fraction in (0.0, 1.0]. Default 1.0 (full discharge).
+
+        Returns:
+            Released momentum vector p_{released} in R^12.
+        """
+        eta = max(0.0, min(1.0, float(eta_release)))
+        released = eta * self.p_bank.copy()
+        self.p_bank = (1.0 - eta) * self.p_bank
+        return released
+
+    def get_energy(self) -> float:
+        r"""Compute stored elastic potential energy E_{bank} = (1/2) p_{bank}^T M^{-1} p_{bank}."""
+        return float(0.5 * (self.p_bank.T @ self.M_inv @ self.p_bank))
+
+    @property
+    def energy(self) -> float:
+        return self.get_energy()
+
+    def reset(self) -> None:
+        """Reset banked momentum to zero."""
+        self.p_bank.fill(0.0)
+
+
 class AdaptiveBAOABIntegrator:
     r"""5-stage symmetric splitting BAOAB integrator with state-dependent anisotropic friction.
 
@@ -82,6 +149,8 @@ class AdaptiveBAOABIntegrator:
         self.h0 = float(h0)
         self.gamma_min = float(gamma_min)
         self.gamma_max = float(gamma_max)
+        self.eps_syn = 0.6
+        self.bank = MomentumBank(dim=self.dim, inv_mass_matrix=self.M_inv)
 
     def compute_friction(
         self,
@@ -122,6 +191,9 @@ class AdaptiveBAOABIntegrator:
         dt: float = 0.1,
         tau: float = 1.0,
         rng: np.random.Generator | None = None,
+        enable_momentum_banking: bool = False,
+        eta_release: float = 1.0,
+        eps_syn: float | None = None,
     ) -> tuple[np.ndarray, np.ndarray]:
         """Perform one 5-stage BAOAB integration step.
 
@@ -134,6 +206,10 @@ class AdaptiveBAOABIntegrator:
             dt: Integration step size Delta t.
             tau: Thermodynamic temperature tau.
             rng: Optional numpy RandomGenerator.
+            enable_momentum_banking: If True, bank suppressed momentum when H_syntax < eps_syn,
+                                     and discharge banked momentum when H_syntax >= eps_syn.
+            eta_release: Fraction in (0, 1] of banked momentum to discharge.
+            eps_syn: Syntax entropy threshold (defaults to self.eps_syn = 0.6).
 
         Returns:
             (q_next, p_next): Next phase space coordinates in R^12 x R^12.
@@ -163,6 +239,7 @@ class AdaptiveBAOABIntegrator:
             xi = rng.normal(0.0, 1.0, size=self.dim)
             noise_term = sigma_noise * (self.M_sqrt @ xi)
             p_half_plus = theta * p_half_minus + noise_term
+            theta_diag = theta
         else:
             # Full matrix Ornstein-Uhlenbeck: Theta = expm(- Gamma * dt)
             import scipy.linalg
@@ -175,6 +252,21 @@ class AdaptiveBAOABIntegrator:
             xi = rng.normal(0.0, 1.0, size=self.dim)
             noise_term = math.sqrt(tau) * (sqrt_diff @ (self.M_sqrt @ xi))
             p_half_plus = Theta @ p_half_minus + noise_term
+            theta_diag = np.diag(Theta)
+
+        # Momentum Banking Integration (Gap 4 Part A)
+        if enable_momentum_banking and h_syntax is not None:
+            effective_eps = self.eps_syn if eps_syn is None else float(eps_syn)
+            if h_syntax < effective_eps:
+                # Syntax entropy is low: momentum is suppressed by high friction brake
+                theta_base = math.exp(-self.gamma0 * dt)
+                delta_p_suppressed = np.maximum(0.0, theta_base - theta_diag) * p_half_minus
+                self.bank.bank_momentum(delta_p_suppressed)
+            else:
+                # High-freedom narrative clause: discharge banked momentum into active dynamics
+                if self.bank.get_energy() > 1e-12:
+                    p_discharged = self.bank.discharge_momentum(eta_release)
+                    p_half_plus = p_half_plus + p_discharged
 
         # 4. Stage A: half-step position drift
         q_next = q_half + dt_half * (self.M_inv @ p_half_plus)
@@ -184,6 +276,32 @@ class AdaptiveBAOABIntegrator:
         p_next = p_half_plus - dt_half * grad_next
 
         return q_next, p_next
+
+    def step_with_banking(
+        self,
+        q: np.ndarray,
+        p: np.ndarray,
+        grad_fn: Callable[[np.ndarray], np.ndarray],
+        h_syntax: float,
+        dt: float = 0.1,
+        tau: float = 1.0,
+        eta_release: float = 1.0,
+        eps_syn: float | None = None,
+        rng: np.random.Generator | None = None,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """Step BAOAB with automatic momentum banking enabled."""
+        return self.step(
+            q=q,
+            p=p,
+            grad_fn=grad_fn,
+            h_syntax=h_syntax,
+            dt=dt,
+            tau=tau,
+            rng=rng,
+            enable_momentum_banking=True,
+            eta_release=eta_release,
+            eps_syn=eps_syn,
+        )
 
     def verify_invariant_momentum_measure(
         self,
@@ -242,6 +360,153 @@ class AdaptiveBAOABIntegrator:
         }
 
 
+def sample_terminal_anchor_and_bridge(
+    target_kamae: np.ndarray | Sequence[float],
+    candidate_anchors: Sequence[dict[str, object]],
+    current_q: np.ndarray | Sequence[float],
+    t: int,
+    T: int,
+    metric: SO8PullbackMetric | np.ndarray | None = None,
+    dt: float = 0.1,
+    tau: float = 1.0,
+    intermediate_candidates: Sequence[np.ndarray | dict[str, object]] | None = None,
+    kamae_indices: Sequence[int] = (9, 10, 11),
+    sample: bool = False,
+    temperature: float = 1.0,
+    rng: np.random.Generator | None = None,
+) -> dict[str, object]:
+    r"""Sample/select the optimal terminal predicate anchor W_{end}^* and compute Schrodinger Bridge guidance.
+
+    Mathematical Formulation:
+        1. Target Kamae (Sg-10..12, indices 9, 10, 11) Riemannian distance:
+               d_{kamae}^2(W_{end}^{(i)}, target) = (q_{end, kamae}^{(i)} - target)^T G_{kamae} (q_{end, kamae}^{(i)} - target)
+           The anchor W_{end}^* minimizing this Riemannian distance is pinned as the terminal boundary condition at T.
+        2. Schrodinger Bridge guidance drift:
+               b_{bridge}(q_t, t) = (q_{end}^* - q_t) / (max(1, T - t) * dt)
+        3. Terminal arrival log-probability (Bridge potential) for intermediate candidates q_c:
+               psi_{T-t}(q_c; q_{end}^*) = - ( (q_c - q_{end}^*)^T G_{style} (q_c - q_{end}^*) ) / (2 * tau * max(1, T - t))
+
+    Args:
+        target_kamae: 3D vector for Sg-10..12 (or full 12D target).
+        candidate_anchors: Sequence of candidate anchor dicts containing 'q' (12D array) and optional 'logprob'/'text'.
+        current_q: Current 12D style state q_t.
+        t: Current step index.
+        T: Horizon step index.
+        metric: SO8PullbackMetric or 12x12 metric matrix.
+        dt: Integration step size Delta t.
+        tau: Temperature parameter tau.
+        intermediate_candidates: Optional candidate clauses (12D arrays or dicts with 'q') to evaluate potentials for.
+        kamae_indices: Style dimension indices corresponding to Kamae (defaults to (9, 10, 11)).
+        sample: If True and temperature > 0, sample anchor stochastically via softmax over score.
+        temperature: Sampling temperature.
+        rng: Optional random generator.
+
+    Returns:
+        dict containing:
+            - 'selected_anchor': Selected anchor dict W_{end}^*
+            - 'selected_index': Index of selected anchor
+            - 'q_end': 12D numpy array of pinned terminal coordinates
+            - 'b_bridge': 12D Schrodinger Bridge guidance drift vector
+            - 'min_distance': Kamae Riemannian distance of the selected anchor
+            - 'kamae_distances': List of distances for all candidates
+            - 'intermediate_potentials': Potentials for intermediate candidates (if provided)
+            - 'potential_fn': Callable computing psi_{T-t}(q_c; q_{end}^*) for any q_c
+    """
+    if len(candidate_anchors) == 0:
+        raise ValueError("candidate_anchors must contain at least 1 candidate anchor.")
+
+    # Setup 12x12 Riemannian metric G
+    if metric is None:
+        so8 = SO8PullbackMetric()
+        G = so8.metric_matrix()
+    elif isinstance(metric, SO8PullbackMetric):
+        G = metric.metric_matrix()
+    elif isinstance(metric, np.ndarray):
+        G = np.asarray(metric, dtype=np.float64)
+    else:
+        raise TypeError(f"Invalid metric: {type(metric)}")
+
+    target_arr = np.asarray(target_kamae, dtype=np.float64).ravel()
+    kamae_idx_list = list(kamae_indices)
+
+    if target_arr.shape[0] == len(kamae_idx_list):
+        target_sub = target_arr
+        G_sub = G[np.ix_(kamae_idx_list, kamae_idx_list)]
+        sub_indices = kamae_idx_list
+    elif target_arr.shape[0] == 12:
+        target_sub = target_arr[kamae_idx_list]
+        G_sub = G[np.ix_(kamae_idx_list, kamae_idx_list)]
+        sub_indices = kamae_idx_list
+    else:
+        raise ValueError(
+            f"target_kamae must have length {len(kamae_idx_list)} or 12, got {target_arr.shape[0]}"
+        )
+
+    # Compute Kamae Riemannian distances
+    distances: list[float] = []
+    for c in candidate_anchors:
+        q_vec = np.asarray(c["q"], dtype=np.float64).ravel()
+        if q_vec.shape[0] != 12:
+            raise ValueError(f"Candidate anchor q must be 12-dimensional, got {q_vec.shape[0]}")
+        diff_sub = q_vec[sub_indices] - target_sub
+        dist_sq = float(diff_sub.T @ G_sub @ diff_sub)
+        dist = math.sqrt(max(0.0, dist_sq))
+        distances.append(dist)
+
+    if not sample or temperature <= 1e-6:
+        best_idx = int(np.argmin(distances))
+    else:
+        if rng is None:
+            rng = np.random.default_rng()
+        logprobs = np.array(
+            [float(c.get("logprob", c.get("llm_logprob", 0.0))) for c in candidate_anchors]
+        )
+        dist_penalty = np.array(distances) / max(1e-5, temperature)
+        logits = logprobs - dist_penalty
+        logits_shift = logits - np.max(logits)
+        exp_l = np.exp(logits_shift)
+        probs = exp_l / np.sum(exp_l)
+        best_idx = int(rng.choice(len(candidate_anchors), p=probs))
+
+    selected_anchor = candidate_anchors[best_idx]
+    q_end_star = np.asarray(selected_anchor["q"], dtype=np.float64).ravel().copy()
+
+    # Schrodinger Bridge Guidance Drift
+    remaining_steps = max(1, T - t)
+    q_t = np.asarray(current_q, dtype=np.float64).ravel()
+    b_bridge = (q_end_star - q_t) / (float(remaining_steps) * float(dt))
+
+    # Bridge potential function psi_{T-t}(q_c; q_end^*)
+    denom = 2.0 * float(tau) * float(remaining_steps)
+
+    def potential_fn(q_cand: np.ndarray | Sequence[float]) -> float:
+        qc = np.asarray(q_cand, dtype=np.float64).ravel()
+        diff = qc - q_end_star
+        return -float(diff.T @ G @ diff) / denom
+
+    # Intermediate candidate clause evaluation
+    intermediate_potentials: list[float] | None = None
+    if intermediate_candidates is not None:
+        intermediate_potentials = []
+        for cand in intermediate_candidates:
+            if isinstance(cand, dict):
+                qc = cand["q"]
+            else:
+                qc = cand
+            intermediate_potentials.append(potential_fn(qc))
+
+    return {
+        "selected_anchor": selected_anchor,
+        "selected_index": best_idx,
+        "q_end": q_end_star,
+        "b_bridge": b_bridge,
+        "min_distance": float(distances[best_idx]),
+        "kamae_distances": distances,
+        "intermediate_potentials": intermediate_potentials,
+        "potential_fn": potential_fn,
+    }
+
+
 class ClauseTwistedSMC:
     r"""Outer loop clause-level 4-particle Twisted Sequential Monte Carlo (SMC) controller.
 
@@ -289,6 +554,7 @@ class ClauseTwistedSMC:
         q_end: np.ndarray | None,
         t: int,
         T: int,
+        tau: float | None = None,
     ) -> float:
         r"""Compute terminal anchor guidance log potential:
 
@@ -301,7 +567,8 @@ class ClauseTwistedSMC:
         diff = np.asarray(q_cand, dtype=np.float64) - np.asarray(q_end, dtype=np.float64)
         dist_sq = float(diff.T @ self.G @ diff)
 
-        coeff = 1.0 / (2.0 * (self.sigma_bridge**2) * remaining_time)
+        eff_tau = (self.sigma_bridge**2) if tau is None else float(tau)
+        coeff = 1.0 / (2.0 * eff_tau * remaining_time)
         return -coeff * dist_sq
 
     def evaluate_particle_weights(
@@ -417,6 +684,38 @@ class ClauseTwistedSMC:
             "resampled": resampled,
             "resample_indices": resample_indices,
         }
+
+    def sample_terminal_anchor_and_bridge(
+        self,
+        target_kamae: np.ndarray | Sequence[float],
+        candidate_anchors: Sequence[dict[str, object]],
+        current_q: np.ndarray | Sequence[float],
+        t: int,
+        T: int,
+        dt: float = 0.1,
+        tau: float = 1.0,
+        intermediate_candidates: Sequence[np.ndarray | dict[str, object]] | None = None,
+        kamae_indices: Sequence[int] = (9, 10, 11),
+        sample: bool = False,
+        temperature: float = 1.0,
+        rng: np.random.Generator | None = None,
+    ) -> dict[str, object]:
+        """Sample/select the optimal terminal predicate anchor and compute Schrodinger bridge drift and potentials."""
+        return sample_terminal_anchor_and_bridge(
+            target_kamae=target_kamae,
+            candidate_anchors=candidate_anchors,
+            current_q=current_q,
+            t=t,
+            T=T,
+            metric=self.G,
+            dt=dt,
+            tau=tau,
+            intermediate_candidates=intermediate_candidates,
+            kamae_indices=kamae_indices,
+            sample=sample,
+            temperature=temperature,
+            rng=rng,
+        )
 
 
 class JacobianLogitProjector:

@@ -289,6 +289,76 @@ def compute_rqa_metrics(signal_1d: np.ndarray) -> RQAResult:
 
 
 # ==============================================================================
+# Gap 2: Logarithmic Self-Similar Renormalization & Multiscale Filters
+# ==============================================================================
+
+def compute_logarithmic_scales(m: int) -> Dict[str, Any]:
+    """Compute logarithmic tertile scales and dynamic wavelet filter levels
+    for arbitrary sequence length M (from short haiku M=3 to long novels M > 2000).
+    Tertiles: (1/3 log2 M, 2/3 log2 M, log2 M).
+    """
+    m_clamped = max(int(m), 2)
+    log_m = float(math.log2(m_clamped))
+    scale_micro = log_m / 3.0
+    scale_meso = 2.0 * log_m / 3.0
+    scale_macro = log_m
+
+    micro_level = max(1, int(round(scale_micro)))
+    meso_level = max(micro_level + 1, int(round(scale_meso)))
+    macro_level = max(meso_level + 1, int(round(scale_macro)))
+
+    return {
+        "m": int(m),
+        "log_m": log_m,
+        "scale_micro": scale_micro,
+        "scale_meso": scale_meso,
+        "scale_macro": scale_macro,
+        "tertiles": (scale_micro, scale_meso, scale_macro),
+        "micro_level": micro_level,
+        "meso_level": meso_level,
+        "macro_level": macro_level,
+    }
+
+
+def renormalize_decimate_signals(signals: np.ndarray, max_length: int = 1024) -> np.ndarray:
+    """Renormalization group 2-clause decimation for sequence length > max_length.
+    Repeatedly applies coarse-graining:
+      s~_k[0:3] = 0.5 * (s_{2k}[0:3] + s_{2k+1}[0:3])  (mean fields for Flux, Lattice, Void)
+      s~_k[3] = max(s_{2k}[3], s_{2k+1}[3])           (local peak/jump envelope for Shock)
+    until effective length <= max_length.
+    Preserves global narrative structure and return arch (Sg-10 At) for ultra-long sequences.
+    """
+    cur = np.asarray(signals, dtype=np.float64)
+    if cur.ndim == 1:
+        cur = cur[:, None]
+
+    while cur.shape[0] > max_length:
+        m = cur.shape[0]
+        n_pairs = m // 2
+        has_rem = (m % 2 != 0)
+        new_len = n_pairs + (1 if has_rem else 0)
+        next_sig = np.zeros((new_len, cur.shape[1]), dtype=np.float64)
+
+        even = cur[0 : 2 * n_pairs : 2]
+        odd = cur[1 : 2 * n_pairs : 2]
+
+        if cur.shape[1] >= 4:
+            next_sig[:n_pairs, :3] = 0.5 * (even[:, :3] + odd[:, :3])
+            next_sig[:n_pairs, 3] = np.maximum(even[:, 3], odd[:, 3])
+            if cur.shape[1] > 4:
+                next_sig[:n_pairs, 4:] = 0.5 * (even[:, 4:] + odd[:, 4:])
+        else:
+            next_sig[:n_pairs, :] = 0.5 * (even + odd)
+
+        if has_rem:
+            next_sig[-1, :] = cur[-1, :]
+
+        cur = next_sig
+
+    return cur
+
+
+# ==============================================================================
 # WaveletHermiteEncoder Class
 # ==============================================================================
 
@@ -454,12 +524,27 @@ class WaveletHermiteEncoder:
     # --------------------------------------------------------------------------
 
     @staticmethod
+    def compute_logarithmic_scales(m: int) -> Dict[str, Any]:
+        """Compute logarithmic tertile scales for sequence length m."""
+        return compute_logarithmic_scales(m)
+
+    @staticmethod
+    def renormalize_decimate_signals(signals: np.ndarray, max_length: int = 1024) -> np.ndarray:
+        """Apply renormalization group 2-clause decimation to signals."""
+        return renormalize_decimate_signals(signals, max_length=max_length)
+
+    @staticmethod
     def apply_open08_ghost_padding(signals: np.ndarray, min_len: int = 16, max_len: int = 1024) -> np.ndarray:
         """Apply OPEN-08 Ghost History Warm-Start with James-Stein shrinkage."""
         m = signals.shape[0]
         if m == 0:
             neutral = np.array([[0.1, 0.5, 0.5, 0.0]], dtype=np.float64)
             return np.repeat(neutral, min_len, axis=0)
+
+        # Gap 2: Renormalization group decimation if sequence exceeds max_len
+        if m > max_len:
+            signals = renormalize_decimate_signals(signals, max_length=max_len)
+            m = signals.shape[0]
 
         # Target length is nearest power of 2 in [min_len, max_len]
         target_len = max(min_len, min(max_len, 1 << int(math.ceil(math.log2(max(m, 1))))))

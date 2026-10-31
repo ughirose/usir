@@ -569,6 +569,18 @@ export class HamiltonFristonResonance {
   }
 
   /**
+   * Computes Wundt-Berlyne inverted-U aesthetic utility over a sequence/trajectory.
+   */
+  public static computeWundtBerlyneUtility(
+    valenceSeries: number[],
+    freeEnergySeries: number[],
+    pTrajectory: number[][],
+    options?: WundtBerlyneOptions
+  ): WundtBerlyneResult {
+    return computeWundtBerlyneUtility(valenceSeries, freeEnergySeries, pTrajectory, options);
+  }
+
+  /**
    * Computes 1/f^beta spectral slope beta using discrete power spectral density.
    */
   public static computeSpectralSlope(signal: number[]): { beta: number; r2: number } {
@@ -666,4 +678,92 @@ export class HamiltonFristonResonance {
       bandPowers: [w1, w2, w3],
     };
   }
+}
+
+export interface WundtBerlyneOptions {
+  fOverload?: number;
+  lambdaFatigue?: number;
+  tauRec?: number;
+}
+
+export interface WundtBerlyneResult {
+  utilities: number[];
+  meanUtility: number;
+  cumulativeUtility: number;
+  fatiguePenalties: number[];
+  gatedValences: number[];
+}
+
+/**
+ * Computes Wundt-Berlyne inverted-U aesthetic utility over a sequence/trajectory:
+ * U_{reader}(t) = V_t * exp(- F_t / F_{overload}) - lambda_{fatigue} * sum_{s=t-tau_{rec}+1}^t ||p_s - p_{s-1}||_2^2
+ */
+export function computeWundtBerlyneUtility(
+  valenceSeries: number[],
+  freeEnergySeries: number[],
+  pTrajectory: number[][],
+  options?: WundtBerlyneOptions
+): WundtBerlyneResult {
+  const T = pTrajectory.length;
+  if (T === 0) {
+    return {
+      utilities: [],
+      meanUtility: 0.0,
+      cumulativeUtility: 0.0,
+      fatiguePenalties: [],
+      gatedValences: [],
+    };
+  }
+
+  const fOverload = Math.max(1e-5, options?.fOverload ?? 10.0);
+  const lambdaFatigue = options?.lambdaFatigue ?? 0.05;
+  const tauRec = Math.max(1, options?.tauRec ?? 6);
+
+  const utilities = new Array<number>(T);
+  const fatiguePenalties = new Array<number>(T);
+  const gatedValences = new Array<number>(T);
+
+  let cumUtility = 0.0;
+
+  for (let t = 0; t < T; t++) {
+    // 1. Instantaneous catharsis valence V_t (non-negative surprise resolution)
+    const vt = Math.max(0.0, valenceSeries[t] ?? 0.0);
+    const ft = Math.max(0.0, freeEnergySeries[t] ?? 0.0);
+
+    // 2. Overload cutoff gate: exp(- F_t / F_{overload})
+    const gate = Math.exp(-ft / fOverload);
+    const gatedV = vt * gate;
+    gatedValences[t] = gatedV;
+
+    // 3. Refractory fatigue integral over window [t - tau_rec, t]
+    // sum_{s=max(1, t - tau_rec + 1)}^t ||p_s - p_{s-1}||_2^2
+    let fatigue = 0.0;
+    const startS = Math.max(1, t - tauRec + 1);
+    for (let s = startS; s <= t; s++) {
+      const ps = pTrajectory[s]!;
+      const psPrev = pTrajectory[s - 1]!;
+      let diffSq = 0.0;
+      for (let d = 0; d < 12; d++) {
+        const dP = (ps[d] ?? 0) - (psPrev[d] ?? 0);
+        diffSq += dP * dP;
+      }
+      fatigue += diffSq;
+    }
+
+    const fatiguePenalty = lambdaFatigue * fatigue;
+    fatiguePenalties[t] = fatiguePenalty;
+
+    // 4. Net reader aesthetic utility
+    const u = gatedV - fatiguePenalty;
+    utilities[t] = u;
+    cumUtility += u;
+  }
+
+  return {
+    utilities,
+    meanUtility: cumUtility / T,
+    cumulativeUtility: cumUtility,
+    fatiguePenalties,
+    gatedValences,
+  };
 }

@@ -50,6 +50,236 @@ export function discreteJumpDistance(hU: number, hV: number): number {
   return 1.0 - lcaDepth30Bit(hU, hV) / 10.0;
 }
 
+export function pack30bitOctree(levels10: number[]): number {
+  let code = 0;
+  for (let lvl = 0; lvl < Math.min(10, levels10.length); lvl++) {
+    const digit = (levels10[lvl] ?? 0) & 0x7;
+    const shift = 3 * (9 - lvl);
+    code |= digit << shift;
+  }
+  return (code & 0x3fffffff) >>> 0;
+}
+
+export function packLower32Sensory(vec8d: number[] | Float64Array): number {
+  let lower32 = 0;
+  for (let d = 0; d < 8; d++) {
+    const val = vec8d[d] ?? 0.0;
+    const q = Math.min(15, Math.max(0, Math.round(val * 15.0)));
+    lower32 |= (q & 0xf) << (4 * d);
+  }
+  return lower32 >>> 0;
+}
+
+export function unpackLower32Sensory(lower32: number): number[] {
+  const vec: number[] = new Array(8);
+  for (let d = 0; d < 8; d++) {
+    const nibble = (lower32 >>> (4 * d)) & 0xf;
+    vec[d] = nibble / 15.0;
+  }
+  return vec;
+}
+
+export function pack64bitHth(pos2bit: number, octree30bit: number, lower32Sensory: number): bigint {
+  const upper32 = BigInt(((pos2bit & 0x3) << 30) | (octree30bit & 0x3fffffff));
+  const lower = BigInt(lower32Sensory >>> 0);
+  return ((upper32 & 0xffffffffn) << 32n) | (lower & 0xffffffffn);
+}
+
+export function unpack64bitHth(hth64: bigint): { pos: number; octree30: number; sensory8d: number[] } {
+  const h = BigInt(hth64);
+  const upper32 = Number((h >> 32n) & 0xffffffffn);
+  const lower32 = Number(h & 0xffffffffn);
+  const pos = (upper32 >>> 30) & 0x3;
+  const octree30 = upper32 & 0x3fffffff;
+  const sensory8d = unpackLower32Sensory(lower32);
+  return { pos, octree30, sensory8d };
+}
+
+export interface DualSenseHthEntry {
+  word: string;
+  primary_physical_hth: bigint;
+  secondary_abstract_hth: bigint;
+  primaryPhysicalHth?: bigint;
+  secondaryAbstractHth?: bigint;
+  primary_entry: HTHEntry;
+  secondary_entry: HTHEntry;
+  primaryEntry?: HTHEntry;
+  secondaryEntry?: HTHEntry;
+}
+
+export interface DualSenseResolutionResult {
+  selectedSlot: 'primary_physical' | 'secondary_abstract';
+  selected_slot: 'primary_physical' | 'secondary_abstract';
+  selectedHth: bigint;
+  selected_hth: bigint;
+  full128bit: [bigint, bigint];
+  full_128bit: [bigint, bigint];
+  primary64bit: bigint;
+  primary_64bit: bigint;
+  secondary64bit: bigint;
+  secondary_64bit: bigint;
+  contextConcreteness: number;
+  context_concreteness: number;
+  effectiveSensory: number[];
+  effective_sensory: number[];
+  word: string;
+  contextWord: string;
+  context_word: string;
+}
+
+function _makeDualSense(
+  word: string,
+  pos2bit: number,
+  pos: number,
+  priOctree: number,
+  priSensory: number[],
+  priConcreteness: number,
+  secOctree: number,
+  secSensory: number[],
+  secConcreteness: number
+): DualSenseHthEntry {
+  const priRaw = pack64bitHth(pos2bit, priOctree, packLower32Sensory(priSensory));
+  const secRaw = pack64bitHth(pos2bit, secOctree, packLower32Sensory(secSensory));
+  const priEntry: HTHEntry = {
+    lemma: word,
+    pos,
+    octree30: priOctree & 0x3fffffff,
+    sensory8d: [...priSensory],
+    concreteness: priConcreteness,
+    clusterId: 0,
+    mimeticImmunity: false,
+    isMimetic: false,
+  };
+  const secEntry: HTHEntry = {
+    lemma: word,
+    pos,
+    octree30: secOctree & 0x3fffffff,
+    sensory8d: [...secSensory],
+    concreteness: secConcreteness,
+    clusterId: 0,
+    mimeticImmunity: false,
+    isMimetic: false,
+  };
+  return {
+    word,
+    primary_physical_hth: priRaw,
+    secondary_abstract_hth: secRaw,
+    primaryPhysicalHth: priRaw,
+    secondaryAbstractHth: secRaw,
+    primary_entry: priEntry,
+    secondary_entry: secEntry,
+    primaryEntry: priEntry,
+    secondaryEntry: secEntry,
+  };
+}
+
+export const DUAL_SENSE_LEXICON: Record<string, DualSenseHthEntry> = {
+  冷たい: _makeDualSense(
+    '冷たい', 2, 2,
+    0x20049249, [0.3, 0.1, 0.9, 0.7, 0.2, 0.4, 0.0, 0.2], 0.85,
+    0x00049249, [0.1, 0.0, 0.1, 0.1, 0.0, 0.2, 0.8, 0.6], 0.22
+  ),
+  落とす: _makeDualSense(
+    '落とす', 1, 1,
+    0x1836db6d, [0.2, 0.4, 0.3, 0.2, 0.9, 0.5, 0.0, 0.1], 0.80,
+    0x00092492, [0.0, 0.0, 0.0, 0.1, 0.2, 0.2, 0.85, 0.4], 0.25
+  ),
+  走る: _makeDualSense(
+    '走る', 1, 1,
+    0x183b6db6, [0.3, 0.2, 0.4, 0.8, 0.95, 0.6, 0.0, 0.0], 0.88,
+    0x000db6db, [0.1, 0.0, 0.0, 0.0, 0.3, 0.3, 0.85, 0.2], 0.24
+  ),
+  深い: _makeDualSense(
+    '深い', 2, 2,
+    0x2004b6db, [0.4, 0.1, 0.5, 0.3, 0.1, 0.9, 0.0, 0.4], 0.82,
+    0x0006db6d, [0.0, 0.0, 0.0, 0.1, 0.0, 0.4, 0.9, 0.7], 0.20
+  ),
+  高い: _makeDualSense(
+    '高い', 2, 2,
+    0x08012492, [0.7, 0.1, 0.3, 0.2, 0.2, 0.95, 0.0, 0.1], 0.85,
+    0x08016db6, [0.1, 0.0, 0.0, 0.0, 0.1, 0.3, 0.85, 0.2], 0.28
+  ),
+  重い: _makeDualSense(
+    '重い', 2, 2,
+    0x10024924, [0.2, 0.1, 0.8, 0.8, 0.7, 0.4, 0.0, 0.1], 0.86,
+    0x00004924, [0.0, 0.0, 0.1, 0.3, 0.0, 0.2, 0.85, 0.5], 0.25
+  ),
+  光る: _makeDualSense(
+    '光る', 1, 1,
+    0x28052492, [0.98, 0.1, 0.2, 0.1, 0.3, 0.5, 0.0, 0.0], 0.90,
+    0x0000b6db, [0.3, 0.0, 0.0, 0.0, 0.1, 0.2, 0.8, 0.3], 0.30
+  ),
+  闇: _makeDualSense(
+    '闇', 0, 0,
+    0x28056db6, [0.05, 0.1, 0.3, 0.4, 0.1, 0.7, 0.0, 0.85], 0.78,
+    0x00001249, [0.0, 0.0, 0.0, 0.2, 0.0, 0.2, 0.9, 0.6], 0.22
+  ),
+  切る: _makeDualSense(
+    '切る', 1, 1,
+    0x1002b6db, [0.4, 0.3, 0.85, 0.4, 0.9, 0.4, 0.0, 0.0], 0.89,
+    0x00009249, [0.0, 0.1, 0.0, 0.0, 0.3, 0.2, 0.85, 0.4], 0.26
+  ),
+  立つ: _makeDualSense(
+    '立つ', 1, 1,
+    0x18032492, [0.3, 0.1, 0.5, 0.85, 0.6, 0.7, 0.0, 0.0], 0.84,
+    0x00002492, [0.0, 0.0, 0.0, 0.0, 0.1, 0.3, 0.95, 0.2], 0.18
+  ),
+  熱い: _makeDualSense(
+    '熱い', 2, 2,
+    0x20042492, [0.6, 0.1, 0.95, 0.8, 0.3, 0.3, 0.0, 0.1], 0.88,
+    0x38072492, [0.2, 0.1, 0.2, 0.5, 0.3, 0.1, 0.4, 0.3], 0.35
+  ),
+  甘い: _makeDualSense(
+    '甘い', 2, 2,
+    0x30062492, [0.3, 0.0, 0.4, 0.95, 0.1, 0.2, 0.0, 0.1], 0.82,
+    0x00006db6, [0.0, 0.0, 0.0, 0.1, 0.0, 0.1, 0.85, 0.3], 0.21
+  ),
+  固い: _makeDualSense(
+    '固い', 2, 2,
+    0x10021249, [0.2, 0.1, 0.95, 0.5, 0.4, 0.5, 0.0, 0.0], 0.88,
+    0x00001249, [0.0, 0.0, 0.1, 0.1, 0.0, 0.2, 0.9, 0.2], 0.24
+  ),
+  開く: _makeDualSense(
+    '開く', 1, 1,
+    0x0801b6db, [0.5, 0.3, 0.6, 0.3, 0.7, 0.8, 0.0, 0.0], 0.85,
+    0x0000b6db, [0.1, 0.1, 0.0, 0.0, 0.2, 0.3, 0.85, 0.2], 0.27
+  ),
+  閉じる: _makeDualSense(
+    '閉じる', 1, 1,
+    0x08016db6, [0.4, 0.3, 0.6, 0.3, 0.7, 0.8, 0.0, 0.2], 0.85,
+    0x00006db6, [0.0, 0.0, 0.0, 0.0, 0.1, 0.2, 0.9, 0.4], 0.22
+  ),
+  浮かぶ: _makeDualSense(
+    '浮かぶ', 1, 1,
+    0x20046db6, [0.5, 0.1, 0.6, 0.3, 0.6, 0.7, 0.0, 0.3], 0.83,
+    0x00004924, [0.2, 0.0, 0.0, 0.2, 0.1, 0.3, 0.75, 0.5], 0.29
+  ),
+  沈む: _makeDualSense(
+    '沈む', 1, 1,
+    0x20049249, [0.3, 0.1, 0.6, 0.3, 0.6, 0.7, 0.0, 0.6], 0.82,
+    0x38076db6, [0.0, 0.0, 0.0, 0.3, 0.1, 0.2, 0.6, 0.75], 0.26
+  ),
+  揺れる: _makeDualSense(
+    '揺れる', 1, 1,
+    0x18034924, [0.4, 0.2, 0.6, 0.7, 0.85, 0.6, 0.0, 0.1], 0.85,
+    0x000036db, [0.1, 0.0, 0.0, 0.1, 0.3, 0.2, 0.85, 0.3], 0.26
+  ),
+  響く: _makeDualSense(
+    '響く', 1, 1,
+    0x2805b6db, [0.2, 0.95, 0.4, 0.5, 0.5, 0.7, 0.0, 0.2], 0.86,
+    0x0000b6db, [0.0, 0.2, 0.0, 0.1, 0.2, 0.3, 0.85, 0.4], 0.27
+  ),
+  掴む: _makeDualSense(
+    '掴む', 1, 1,
+    0x18039249, [0.3, 0.1, 0.95, 0.6, 0.9, 0.5, 0.0, 0.0], 0.89,
+    0x00009249, [0.0, 0.0, 0.0, 0.0, 0.2, 0.3, 0.9, 0.2], 0.23
+  ),
+};
+
+export function getDualSenseEntry(word: string): DualSenseHthEntry | undefined {
+  return DUAL_SENSE_LEXICON[word];
+}
+
 export function poincareHyperbolicDistance(u: HTHEntry, v: HTHEntry, tauTree: number = 0.0): number {
   const lca = lcaDepth30Bit(u.octree30, v.octree30);
   if (tauTree <= 1e-6) {
@@ -323,9 +553,12 @@ export class HTHLexicon {
     if (code >= 0x6c34 && code <= 0x7060) return 4; // Radical 85: 水/氵 (Water / Fluid / Stream)
     if (code >= 0x706b && code <= 0x7220) return 4; // Radical 86: 火/灬 (Fire / Thermal / Burn)
     if (code >= 0x96e8 && code <= 0x9740) return 4; // Radical 173: 雨 (Rain / Meteorological / Sky)
+    if (code >= 0x5c70 && code <= 0x5db0) return 4; // Radical 46: 山 (Mountain / Topography)
+    if (code >= 0x77f3 && code <= 0x7920) return 2; // Radical 112: 石 (Stone / Rock / Mineral)
     if (code >= 0x6728 && code <= 0x6c00) return 6; // Radical 75: 木 (Flora / Organic)
     if (code >= 0x8278 && code <= 0x8660) return 6; // Radical 140: 艸/艹 & 142: 虫 (Plants / Insects)
     if (code >= 0x9b5a && code <= 0x9ce0) return 6; // Radical 195: 魚 & 196: 鳥 (Fauna)
+    if (code >= 0x99ac && code <= 0x9a6b) return 6; // Radical 187: 馬 (Fauna / Equine)
     if (code >= 0x5fc3 && code <= 0x61f0) return 7; // Radical 61: 心/忄 (Emotion / Affective)
     if (code >= 0x624b && code <= 0x6520) return 3; // Radical 64: 手/扌 (Hand / Action / Kinetic)
     if (code >= 0x8d70 && code <= 0x8f50) return 3; // Radical 156/162: 走/辵/辶 (Motion / Walk / Run)
@@ -481,6 +714,73 @@ export class HTHLexicon {
       alternationCount: alternations,
     };
   }
+
+  public getConcreteness(word: string): number {
+    const entry = this.lookup(word);
+    return entry.concreteness;
+  }
+
+  public resolveDualSenseHth(word: string, contextWord: string): DualSenseResolutionResult {
+    return resolveDualSenseHth(word, contextWord, this);
+  }
+}
+
+export function resolveDualSenseHth(
+  word: string,
+  contextWord: string,
+  lexicon?: HTHLexicon
+): DualSenseResolutionResult {
+  const lex = lexicon ?? new HTHLexicon();
+  const cU = lex.getConcreteness(contextWord);
+  const entry = DUAL_SENSE_LEXICON[word];
+
+  let selectedSlot: 'primary_physical' | 'secondary_abstract';
+  let selectedHth: bigint;
+  let pri64: bigint;
+  let sec64: bigint;
+  let effectiveSensory: number[];
+
+  if (entry) {
+    if (cU >= 0.52) {
+      selectedSlot = 'primary_physical';
+      selectedHth = entry.primary_physical_hth;
+      effectiveSensory = [...entry.primary_entry.sensory8d];
+    } else {
+      selectedSlot = 'secondary_abstract';
+      selectedHth = entry.secondary_abstract_hth;
+      effectiveSensory = [...entry.secondary_entry.sensory8d];
+    }
+    pri64 = entry.primary_physical_hth;
+    sec64 = entry.secondary_abstract_hth;
+  } else {
+    const tok = lex.lookup(word);
+    const packed = pack64bitHth(tok.pos, tok.octree30, packLower32Sensory(tok.sensory8d));
+    selectedSlot = cU >= 0.52 ? 'primary_physical' : 'secondary_abstract';
+    selectedHth = packed;
+    pri64 = packed;
+    sec64 = packed;
+    effectiveSensory = [...tok.sensory8d];
+  }
+
+  return {
+    selectedSlot,
+    selected_slot: selectedSlot,
+    selectedHth,
+    selected_hth: selectedHth,
+    full128bit: [pri64, sec64],
+    full_128bit: [pri64, sec64],
+    primary64bit: pri64,
+    primary_64bit: pri64,
+    secondary64bit: sec64,
+    secondary_64bit: sec64,
+    contextConcreteness: cU,
+    context_concreteness: cU,
+    effectiveSensory,
+    effective_sensory: effectiveSensory,
+    word,
+    contextWord,
+    context_word: contextWord,
+  };
 }
 
 export function extractMusicFunctorSignals(notes: MusicNoteEvent[]): number[][] {

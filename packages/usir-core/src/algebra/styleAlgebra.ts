@@ -1,9 +1,10 @@
 /**
- * @nishiki/usir-core: Style Algebra Operators (TASK-364 / Step 3B)
- * Implements the 3 canonical operators on the USIR Symplectic Manifold:
+ * @nishiki/usir-core: Style Algebra Operators (TASK-364 / Step 3B & Gap 5)
+ * Implements the 4 canonical operators on the USIR Symplectic Manifold:
  * 1. Anti-Slop Orthogonal Projection (projectOutSlopSubspace)
  * 2. Riemannian / Cholesky Geodesic Interpolation (interpolateGeodesic)
  * 3. Cross-Genre Register Transposition (transposeStyleRegister)
+ * 4. Unexplored Style Discovery (discoverVoronoiGenesis / usirGenesis)
  */
 
 import {
@@ -348,3 +349,20 @@ export function transposeStyleRegister(
     transpositionPrompt: promptLines.join('\n'),
   };
 }
+
+// =============================================================================
+// OPERATOR ④: UNEXPLORED STYLE DISCOVERY (USIR-GENESIS / VORONOI VOID)
+// & CANONICAL STYLE CHEMISTRY MOLECULES
+// =============================================================================
+
+export {
+  evaluateStyleMolecules,
+  discoverVoronoiGenesis,
+  usirGenesis,
+  CHI2_24_095,
+  type StyleMoleculesResult,
+  type CanonicalStyleMoleculeName,
+  type VoronoiGenesisResult,
+  type VoronoiGenesisOptions,
+} from '../v2/styleChemistry.js';
+
