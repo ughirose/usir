@@ -215,9 +215,16 @@ def run_experiment_on_domain(
             proc_v4.register_tokenizer_punctuation(tok)
 
             llm_fwd_candidates = []
-            for _ in range(4):
-                out_f = model.generate(**inp, logits_processor=[proc_v4], max_new_tokens=45, do_sample=True, temperature=0.8)
-                f_text = tok.decode(out_f[0], skip_special_tokens=True)
+            out_f = model.generate(
+                **inp,
+                logits_processor=[proc_v4],
+                max_new_tokens=40,
+                do_sample=True,
+                temperature=0.8,
+                num_return_sequences=2,
+            )
+            for seq in out_f:
+                f_text = tok.decode(seq, skip_special_tokens=True)
                 continuation = f_text[len(anchors.x_0):].strip()
                 parts = [p.strip() for p in re.split(r'([。！？\n]+)', continuation) if p.strip()]
                 if parts:
@@ -235,9 +242,15 @@ def run_experiment_on_domain(
 
             inp_b = tok(bwd_prompt, return_tensors="pt").to(model.device)
             llm_bwd_candidates = []
-            for _ in range(4):
-                out_b = model.generate(**inp_b, max_new_tokens=40, do_sample=True, temperature=0.8)
-                b_raw = tok.decode(out_b[0], skip_special_tokens=True)
+            out_b = model.generate(
+                **inp_b,
+                max_new_tokens=35,
+                do_sample=True,
+                temperature=0.8,
+                num_return_sequences=2,
+            )
+            for seq in out_b:
+                b_raw = tok.decode(seq, skip_special_tokens=True)
                 b_clean = b_raw[len(bwd_prompt):].strip()
                 b_parts = [p.strip() for p in re.split(r'([。！？\n]+)', b_clean) if p.strip()]
                 if b_parts:
@@ -250,7 +263,7 @@ def run_experiment_on_domain(
                 anchors,
                 forward_candidates=llm_fwd_candidates,
                 backward_candidates=llm_bwd_candidates,
-                k_candidates=4,
+                k_candidates=2,
             )
             v4_collision_text = bridge_res_v4.welded_text
         except Exception as e:
