@@ -422,7 +422,7 @@ def run_experiment_on_domain(
         model, tok = get_transformers_model()
         inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
         inp_len_v = inp["input_ids"].shape[-1]
-        out = model.generate(**inp, max_new_tokens=450, do_sample=True, temperature=0.75)
+        out = model.generate(**inp, max_new_tokens=260, do_sample=True, temperature=0.75)
         vanilla_text = anchors.x_0 + tok.decode(out[0][inp_len_v:], skip_special_tokens=True)
     elif tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
         prompt = f"{anchors.x_0}\nこの導入から続く段落（450〜650文字、6〜8文）を自然な日本語で執筆してください。"
@@ -448,7 +448,7 @@ def run_experiment_on_domain(
         proc_v3.register_tokenizer_punctuation(tok)
         inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
         inp_len_v3 = inp["input_ids"].shape[-1]
-        out_v3 = model.generate(**inp, logits_processor=[proc_v3], max_new_tokens=450, do_sample=True, temperature=0.7)
+        out_v3 = model.generate(**inp, logits_processor=[proc_v3], max_new_tokens=260, do_sample=True, temperature=0.7)
         v3_forward_text = anchors.x_0 + tok.decode(out_v3[0][inp_len_v3:], skip_special_tokens=True)
     elif tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
         prompt = f"{anchors.x_0}\n文節の推移を意識し、平板な表現を排して続く段落（450〜650文字）を執筆してください。"
@@ -478,7 +478,7 @@ def run_experiment_on_domain(
         out_fwd = model.generate(
             **inp_f,
             logits_processor=[proc_v4],
-            max_new_tokens=220,
+            max_new_tokens=160,
             do_sample=True,
             temperature=0.75,
             num_return_sequences=2,
@@ -504,7 +504,7 @@ def run_experiment_on_domain(
         inp_len_b = inp_b["input_ids"].shape[-1]
         out_bwd = model.generate(
             **inp_b,
-            max_new_tokens=180,
+            max_new_tokens=140,
             do_sample=True,
             temperature=0.75,
             num_return_sequences=2,
