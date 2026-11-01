@@ -379,13 +379,24 @@ def run_experiment_on_domain(
     if tier_info["tier"] == "Tier_1_GPU_Transformers":
         try:
             model, tok = get_transformers_model()
-            p_goal = f"冒頭：「{x_0}」\nこの文章が着地すべき結論または最終情景（1文）："
+            system_goal = "あなたは文章の結びの一文を考案するプロの執筆者です。解説や見出しは一切書かず、文章を着地させる決定的な結びの一文（25〜40文字）のみを出力してください。"
+            if hasattr(tok, "apply_chat_template") and tok.chat_template:
+                msg_g = [
+                    {"role": "system", "content": system_goal},
+                    {"role": "user", "content": f"冒頭文：「{x_0}」\nこの文章を着地させる決定的な結びの一文のみを書いてください。"},
+                ]
+                p_goal = tok.apply_chat_template(msg_g, tokenize=False, add_generation_prompt=True)
+            else:
+                p_goal = f"冒頭：「{x_0}」\n結びの一文："
+
             inp_g = tok(p_goal, return_tensors="pt").to(model.device)
-            out_g = model.generate(**inp_g, max_new_tokens=40, do_sample=True, temperature=0.8, num_return_sequences=4)
+            out_g = model.generate(**inp_g, max_new_tokens=50, do_sample=True, temperature=0.7, num_return_sequences=4)
             candidate_goals = []
             for seq in out_g:
-                g_text = tok.decode(seq, skip_special_tokens=True)[len(p_goal):].strip()
-                g_parts = [p.strip() + "。" for p in re.split(r'[。！？\n]+', g_text) if len(p.strip()) >= 5]
+                raw_g = tok.decode(seq, skip_special_tokens=True)
+                g_text = raw_g[len(p_goal):].strip() if raw_g.startswith(p_goal) else raw_g.split("<|im_start|>assistant")[-1].replace("<|im_end|>", "").strip()
+                g_text = re.sub(r'^[#*\s\d.：:]+', '', g_text)
+                g_parts = [p.strip() + "。" for p in re.split(r'[。！？\n]+', g_text) if len(p.strip()) >= 6]
                 if g_parts:
                     candidate_goals.append(g_parts[0])
         except Exception:
@@ -474,17 +485,20 @@ def run_experiment_on_domain(
             f_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', f_text) if len(s.strip()) >= 5]
             llm_fwd_candidates.append(f_steps if f_steps else [anchors.x_0, "冷たい静寂の中で事態が進展していく。"])
 
-        if domain == "novel":
-            bwd_prompt = f"情景：「{optimal_x_T}」\nこの情景の直前に起きた描写（3〜4文）："
-        elif domain == "article":
-            bwd_prompt = f"命題：「{optimal_x_T}」\nこの主張を導く直前の論拠（3〜4文）："
+        system_bwd = "あなたは文章の接続展開を執筆するプロの小説家・論説家です。見出し、箇条書き、解説、挨拶は一切書かず、指定された結びの一文に直結する直前の地の文（2〜3文、80〜150字）のみを出力してください。"
+        if hasattr(tok, "apply_chat_template") and tok.chat_template:
+            msg_b = [
+                {"role": "system", "content": system_bwd},
+                {"role": "user", "content": f"結びの一文：「{optimal_x_T}」\nこの結びに直接繋がる直前の展開文（地の文のみ）を執筆してください。"},
+            ]
+            bwd_prompt = tok.apply_chat_template(msg_b, tokenize=False, add_generation_prompt=True)
         else:
-            bwd_prompt = f"結論：「{optimal_x_T}」\nこの結論に至る直前の推論（3〜4文）："
+            bwd_prompt = f"結び：「{optimal_x_T}」\n直前の展開："
 
         inp_b = tok(bwd_prompt, return_tensors="pt").to(model.device)
         out_bwd = model.generate(
             **inp_b,
-            max_new_tokens=200,
+            max_new_tokens=180,
             do_sample=True,
             temperature=0.75,
             num_return_sequences=2,
@@ -492,9 +506,11 @@ def run_experiment_on_domain(
         llm_bwd_candidates = []
         for seq in out_bwd:
             b_raw = tok.decode(seq, skip_special_tokens=True)
-            b_clean = b_raw[len(bwd_prompt):].strip()
-            b_clean = re.sub(r'^(情景|命題|結論|この主張|この結論|この情景)[^：:\n]*[：:\n]+', '', b_clean).strip()
-            b_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', b_clean) if len(s.strip()) >= 5]
+            b_clean = b_raw[len(bwd_prompt):].strip() if b_raw.startswith(bwd_prompt) else b_raw.split("<|im_start|>assistant")[-1].replace("<|im_end|>", "").strip()
+            # Clean away any markdown headings or bullet prefixes
+            b_clean = re.sub(r'^(情景|命題|結論|この主張|この結論|この情景|解説|分析)[^：:\n]*[：:\n]+', '', b_clean).strip()
+            b_clean = re.sub(r'^[#*\s\d.：:]+', '', b_clean).strip()
+            b_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', b_clean) if len(s.strip()) >= 5 and not s.strip().startswith('#')]
             llm_bwd_candidates.append(b_steps + [optimal_x_T] if b_steps else ["前提条件の整合性を確認し、", optimal_x_T])
 
         bridge_res_v4 = solve_bidirectional_collision_bridge(
