@@ -791,29 +791,33 @@ def generate_experiment_report_markdown(
             f"{sd.get('rho_grpo_vs_quality', 0):.4f} (p={p_g_sd:.2e}) | {_verdict(p_d_sd, p_c_sd, p_g_sd)} |"
         )
 
+    r_nov = next((r for r in results if r["domain"] == "novel"), results[0])
+    r_art = next((r for r in results if r["domain"] == "article"), results[0])
+    r_cot = next((r for r in results if r["domain"] == "cot_reasoning"), results[0])
+
     lines.extend([
         "",
         "---",
         "",
         "## 4. 段落スケール生成文の質的比較（実例抜粋）",
         "",
-        f"### ドメイン 1: 文芸・情景描写 (novel-01: {results[0]['theme']})",
-        f"- **Vanilla Unidirectional (無制約ドラフト / {results[0]['methods']['vanilla_unidirectional']['text_length']}字)**:",
-        f"  > {results[0]['methods']['vanilla_unidirectional']['text']}",
-        f"- **v4.0 Bidirectional Collision (内生シュレディンガー・ブリッジ / {results[0]['methods']['usir_v4_bidirectional_collision']['text_length']}字)**:",
-        f"  > {results[0]['methods']['usir_v4_bidirectional_collision']['text']}",
+        f"### ドメイン 1: 文芸・情景描写 (novel-01: {r_nov['theme']})",
+        f"- **Vanilla Unidirectional (無制約ドラフト / {r_nov['methods']['vanilla_unidirectional']['text_length']}字)**:",
+        f"  > {r_nov['methods']['vanilla_unidirectional']['text']}",
+        f"- **v4.0 Bidirectional Collision (内生シュレディンガー・ブリッジ / {r_nov['methods']['usir_v4_bidirectional_collision']['text_length']}字)**:",
+        f"  > {r_nov['methods']['usir_v4_bidirectional_collision']['text']}",
         "",
-        f"### ドメイン 2: 論説・note記事 (article-01: {results[10]['theme']})",
-        f"- **Vanilla Unidirectional (無制約ドラフト / {results[10]['methods']['vanilla_unidirectional']['text_length']}字)**:",
-        f"  > {results[10]['methods']['vanilla_unidirectional']['text']}",
-        f"- **v4.0 Bidirectional Collision (内生シュレディンガー・ブリッジ / {results[10]['methods']['usir_v4_bidirectional_collision']['text_length']}字)**:",
-        f"  > {results[10]['methods']['usir_v4_bidirectional_collision']['text']}",
+        f"### ドメイン 2: 論説・note記事 (article-01: {r_art['theme']})",
+        f"- **Vanilla Unidirectional (無制約ドラフト / {r_art['methods']['vanilla_unidirectional']['text_length']}字)**:",
+        f"  > {r_art['methods']['vanilla_unidirectional']['text']}",
+        f"- **v4.0 Bidirectional Collision (内生シュレディンガー・ブリッジ / {r_art['methods']['usir_v4_bidirectional_collision']['text_length']}字)**:",
+        f"  > {r_art['methods']['usir_v4_bidirectional_collision']['text']}",
         "",
-        f"### ドメイン 3: 推論・定理証明 (cot-01: {results[20]['theme']})",
-        f"- **Vanilla Unidirectional (無制約ドラフト / {results[20]['methods']['vanilla_unidirectional']['text_length']}字)**:",
-        f"  > {results[20]['methods']['vanilla_unidirectional']['text']}",
-        f"- **v4.0 Bidirectional Collision (内生シュレディンガー・ブリッジ / {results[20]['methods']['usir_v4_bidirectional_collision']['text_length']}字)**:",
-        f"  > {results[20]['methods']['usir_v4_bidirectional_collision']['text']}",
+        f"### ドメイン 3: 推論・定理証明 (cot-01: {r_cot['theme']})",
+        f"- **Vanilla Unidirectional (無制約ドラフト / {r_cot['methods']['vanilla_unidirectional']['text_length']}字)**:",
+        f"  > {r_cot['methods']['vanilla_unidirectional']['text']}",
+        f"- **v4.0 Bidirectional Collision (内生シュレディンガー・ブリッジ / {r_cot['methods']['usir_v4_bidirectional_collision']['text_length']}字)**:",
+        f"  > {r_cot['methods']['usir_v4_bidirectional_collision']['text']}",
         "",
         "---",
         "",

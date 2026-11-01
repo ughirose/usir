@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>USIR v4.0 Blind Evaluation Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f1f5f9; color: #0f172a; margin: 0; padding: 24px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.header { background: #1e293b; color: #f8fafc; padding: 24px; border-radius: 8px; margin-bottom: 24px; }
+.btn { background: #2563eb; color: #ffffff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.btn:hover { background: #1d4ed8; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 style="margin: 0 0 8px 0; font-size: 24px;">USIR v4.0 Blind Evaluation Sheet</h1>
+        <p style="margin: 0; color: #94a3b8; font-size: 14px;">ブラインド比較検証用スタンドアロン台帳 &bull; 各手法の同一性を伏せた状態で客観評価を実施してください。</p>
+        <button class="btn" onclick="toggleReveal()" style="margin-top: 16px;">正解手法を表示 / 非表示 (Reveal All)</button>
+    </div>
+    
+        <div class="eval-card" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 24px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="font-size: 14px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Instance 01 &bull; novel</div>
+            <h3 style="margin: 0 0 12px 0; font-size: 18px; color: #0f172a;">文芸・情景描写（峠道）</h3>
+            <div style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; color: #334155;">
+                <strong>Prompt (x<sub>0</sub>):</strong> 風雪の峠道と廃屋の灯りの気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+        
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample A</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">666 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">風雪の峠道と廃屋の灯りの気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。その冷たさは、一層深く沈み込み、心の底から響き渡る。雪が静かに降り注ぐ中、足元が雪だるまのように固まる。雪が積もれば、地面が薄く広がり、視界が狭くなる。寒さは人間の体温を奪うようにして、体全体を包み込む。
+彼女は手に汗握った拳で、小さな石を手探りで拾い上げる。石は小さな砂漠の一部であり、それらの砂漠は世界の歴史を刻む力を持つ。それは古代文明から現代まで、そして未来へ続く長い時間を象徴する存在である。彼女の手は寒々とした光景の中で、石を拾い上げては置く。その動作は冷静で慎重であり、しかし同時に情熱的なものでもあった。
+彼女は雪の中を歩き続け、次第に周囲の環境は厳しさを増している。雪が積もると、道路は険しくなるし、雪崩や滑落事故につながる可能性がある。しかし彼女はその困難を乗り越えて前進する。彼女の目は前方に向いており、決意と覚悟の色が浮かぶ。
+彼女の名はナタリー・コールマン。1970年生まれのアメリカ出身の映画監督兼脚本家。彼女の作品には常にユーモラスで冒険的な要素があり、特に「ハートフル・トゥー」シリーズは世界的に高く評価される人気作となった。彼女の監督した映画は、様々なジャンルをカバーしており、アクション映画からファンタジー映画、ミステリーやドキュメンタリーなど、多岐にわたる内容を展開している。彼女の作品は多くの人々に愛され、世界中で観客を魅了している。彼女の監督した作品は、「ハートフル・トゥー」「アンドロイド」といった著名な作品</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: usir_v3_forward_only<br>R_GRPO: 0.0010 &bull; D_3phase: 9.494
+                        </div>
+                    </div>
+                </div>
+            
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample B</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">692 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">風雪の峠道と廃屋の灯りの気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。その寒さは、まるで夜明け前の露水のように、地面に広がる。そして、この寒冷な空気に包まれた中で、彼は静かに息を吐き出す。彼は、何年もの間、この地域の山々を巡り続けているという。しかし、今日のような厳しい状況には、彼の体は慣れない。それは、彼が長い間この地で生活してきた結果だ。それでも、彼はここへやってきた。彼は、明日の光を待つために、今日も立ち続ける決意があった。
+彼は、この山々の麓で生まれた者であり、彼らの歴史から学んだ者である。そして、彼の心は、この土地の深く奥深い秘密に触れることを求めていた。彼は、この地を愛し、その美しさと豊かな自然と共に、その歴史と伝統を大切にしていた。しかし、ある日、彼は気づいた。彼の目には、この地域の未来を見通す視線が浮かんでいる。それは、人間の存在が持つ力と知恵の光であり、それらはこの地域を生き残る唯一の道を探している。そして、彼は、その光の道を探るため、ここに来たのだ。
+
+彼は、自分の足で這い上がる。その足元に、数々の壁や障壁がある。だが、彼はそれを越え、進む。それは、彼の人生が象徴されるべきものだった。彼は、困難を乗り越えることで成長する。そして、その経験は、彼の意志力を高め、その信念を強化した。彼は、今、ここに立っている。彼の背中に、未来への希望が宿っている。それは、彼の前に進むために必要なものだ。そして、彼はそれを信じている。彼は、明日を信じて、今日を生きる覚悟を決めたのだ。
+
+この話は、彼の人生の一部であり、その人生のすべてが、この地域の未来に</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: vanilla_unidirectional<br>R_GRPO: 0.0003 &bull; D_3phase: 5.244
+                        </div>
+                    </div>
+                </div>
+            
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample C</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">554 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">風雪の峠道と廃屋の灯りの気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。その冷たさを越えて、彼は一歩踏み出そうとした。その瞬間…… 紙屑が落ちる。雨のように降り注ぐ風が、紙屑を吸収する。そして彼は静寂の中で、何時間も経過した後、目覚めをした。息づいた息で、彼は口から小さな声を漏らし出した。「もう少し待って… まだ終わらないんだよ」 「あーっ。」 「やめて… 逃げろ。」 「やるよ。変わらぬものを探せ。」 「逃げるのも、変わらないものだよ。」 「だから… 逃げるしかないんだよ。」 「うん」 壇の頂上に立つ彼の姿は、遠くまで見えなかった。江戸時代に築かれ、現在も残っている山岳病院である本郷山岳病院（本郷市）の歴史は、その。冬の夜深く、雪の降り続く街に、彼女は立ち尽くしていた。彼女の手には、小さな灯籠が握られていた。それは往々にして、寒さに耐え忍び、人々の心を暖める光となったものだった。彼女の足元から雪が落ちてき、薄い衣類が濡れ始めた。それでも、彼女の眼は燃えている。その灯籠の光は、彼女を温かい気持ちにさせていた。彼女はその灯籠を見つめながら、一歩踏み出した。そして、そこから新しい希望が芽生えたのかと感じた。その厳寒の中、心も体も息づく灯火が残る廃屋の前で、新たな希望が芽生える気配を感じた。</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: usir_v4_bidirectional_collision<br>R_GRPO: 0.0005 &bull; D_3phase: 7.914
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        
+        <div class="eval-card" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 24px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="font-size: 14px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Instance 02 &bull; article</div>
+            <h3 style="margin: 0 0 12px 0; font-size: 18px; color: #0f172a;">論説・組織論（非同期コミュニケーション）</h3>
+            <div style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; color: #334155;">
+                <strong>Prompt (x<sub>0</sub>):</strong> リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定と明確に乖離している。
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+        
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample A</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">807 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定と明確に乖離している。従ってそのような状況を改善するためには、組織全体が理解し得るコミュニケーションモデルを開発することが求められる。しかし、これらの研究では組織全体が理解できる「共通の言語」の存在を前提としている。これに対応したコミュニケーションモデルを設計することは非常に困難である。さらに組織全体が理解できない言語を持つ場合、組織全体の意思決定は不可能になる可能性がある。この問題を解決するために、2018年に我々は「知識共有の新しいモデル」（KWM）を開発しました。KWMは知識共有のプロセスを「知識の移動」と表現します。これは単純な情報提供だけでなく、異なる視点から新たな視野や視覚的な洞察を得ることも含まれます。また、「知識の移動」は知識の価値を向上させることも含みます。KWMは、知的資産を共有することを通じて組織全体が理解できる共通の言語を作り出すことを可能にする新しい視点で。これまでのリアルタイムでのコミュニケーションを前提とする仕事スタイルから、今後はリモートワークやオンラインセミナーなど、物理的な場所ではなく、遠隔地でも業務を進められる環境へと移行しています。しかし、こうした変化は企業にとっても大きな挑戦となりつつあります。従来のスキルセットでは対応できない新しいタスクや問題が生じ、チームの cohesive性や効率性が低下する恐れがあります。「しかしながら、同時に新しい機会も生まれています。リモートワークを通じて得られた情報共有の手段や、より効果的なデジタルツールの導入により、従来よりも多くの作業を迅速かつ正確に行うことが可能となります。また、異なる地域や文化的背景を持つ人々が一堂に会すること。これからのリモート環境で成功を収めることへの挑戦と新たな可能性について議論します。</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: usir_v4_bidirectional_collision<br>R_GRPO: 0.0009 &bull; D_3phase: 2.764
+                        </div>
+                    </div>
+                </div>
+            
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample B</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">410 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定と明確に乖離している。従って、「オンライン・コラボレーション」が既存の方法よりも効果的に機能する可能性があるという主張は、現実的なものではなくなります。
+また、その一方で「オンライン・コラボレーション」という言葉自体が、その実態を理解しにくいものとして認識されるようになっています。これは「オンライン・コラボレーション」が既存の方法よりも効果的であるという主張を否定することにつながるためです。
+しかし、これらの問題点はこの分野で最も重要な課題の一つであり、その解決策は企業にとって非常に重要です。そのためには「オンライン・コラボレーション」の概念をより具体的なものにする必要があります。それにより、「オンライン・コラボレーション」の効果性を理解しやすくなり、その結果として会社全体が更なる成長を遂げる可能性があります。</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: usir_v3_forward_only<br>R_GRPO: 0.0128 &bull; D_3phase: 1.901
+                        </div>
+                    </div>
+                </div>
+            
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample C</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">829 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定と明確に乖離している。これにより、従業員が情報を共有するための最も効果的な方法を見つけるために、企業は新たな視点を提供しなければならない。
+2021年のテクノロジーの進歩とその影響
+この記事では、テクノロジーの進歩とその影響について考察します。特に、デジタルトランスフォーメーションの推進、新型コロナウイルス感染症(COVID-19)のパンデミックへの対応、そしてAI（人工知能）やブロックチェーンなどの最新技術がどのように企業や人々の生活に影響を与えたかを詳しく解説します。
+ビジネスパーソン向けの新しい視点
+ビジネスパーソンとして、これらの最新のテクノロジーがどのように変革をもたらし、どのように彼らのライフスタイルや仕事方法を革新させているのかを理解することが重要です。以下に、具体的な例を挙げてみましょう。
+
+### 1. デジタルトランスフォーメーションとAI
+
+デジタルトランスフォーメーション（DX）は、ビジネスの各領域で迅速かつ効率的に成長を遂げるための重要なツールです。これは、AIやIoT（モノのインターネット）など、新しいテクノロジーを活用して生産性と競争力を向上させる過程です。
+
+#### AIによる自動化と業務改革
+
+AIの導入は、多くの業務プロセスを自動化することで時間とコストを節約します。例えば、AIがデータ分析を行い、予期せぬ問題を早期に発見できるようになります。これにより、従業員の負担を軽減し、より効率的な業務環境を形成することができます。
+
+#### オンラインサービスの普及
+
+AIはオンラインサービスの普及にも大きく貢献しています。スマートフォンやタブレットなど、さまざまなデバイスから利用可能になることで、ユーザーはいつでもどこでも必要な情報にアクセスできます。
+
+### 2. 新しいコミュニケーションツール</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: vanilla_unidirectional<br>R_GRPO: 0.0002 &bull; D_3phase: 5.717
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        
+        <div class="eval-card" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 24px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="font-size: 14px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Instance 03 &bull; cot_reasoning</div>
+            <h3 style="margin: 0 0 12px 0; font-size: 18px; color: #0f172a;">推論・解析学（一様収束微分保存定理）</h3>
+            <div style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; color: #334155;">
+                <strong>Prompt (x<sub>0</sub>):</strong> 前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+        
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample A</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">487 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。 ここでは、「ある特定の点での導関数が存在し、その値が一定である」という束縛条件について説明します。
+
+### 結果
+「連続関数列$\{f_n\}$」が「$[a,b]$」上に一様収束すると仮定する場合、以下のような結果が得られます：
+
+1. 「ある特定の点 $c \in [a, b]$ を選ぶ」という束縛条件は成立します。
+2. 「その点$c$における導関数$f'_n(c)$が一定である」という束縛条件も成立します。
+
+### 要件
+- 「連続」: $\forall x \in [a,b], \exists f(x) : \mathbb{R}$
+- 「一様収束」: $\forall \epsilon >0, \exists N \in \mathbb{N}, \forall n,m \geq N, |f_n(x) - f_m(x)| < \epsilon$
+
+### 備考
+- 「連続関数列」は「関数列」として解釈される。
+- 「$c$」は「特定の</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: usir_v3_forward_only<br>R_GRPO: 0.0000 &bull; D_3phase: 39.585
+                        </div>
+                    </div>
+                </div>
+            
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample B</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">598 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。問題文: 以下のような関数列を考える。$\{f_n\}$は有界閉区間[a, b]上で連続な関数列とする。また,$\forall n \in \mathbb{N}$に対して、$|f_n(x)| < M$が成り立つ。ここでMは定数である。さらに，$\lim_{n \to \infty} f_n(x) = L$が成り立つとする。このとき，$\lim_{n \to \infty} f'_n(x)$も存在し，$L' = L$となることを示せ。1. 関数列$\{f_n\}$は有界閉区間$a, b。特に、時間軸上での微分可能な状態変数を対象とする場合、微分可能性の保存定理は非常に有用な理論であり、実際の問題解決においても重要な役割を果たす。しかし、この定理はしばしば抽象的なモデルや理想的な状況でしか適用できない場合がある。「なぜなら、定理の成立にはいくつかの前提条件が必要であるため、これらの条件が満たされていない場合、その結果として期待通りの動作を見せる保証がないからだ。例えば、システムが完全に連続的ではなく、または時間的に非線形な特性を持つ場合など。結論：具体的な初期条件と束縛条件の選択により、一様収束性が維持される微分可能性の保存定理の適用範囲が明確に限定され、その結果、。</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: usir_v4_bidirectional_collision<br>R_GRPO: 0.0005 &bull; D_3phase: 7.470
+                        </div>
+                    </div>
+                </div>
+            
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample C</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">496 chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。 一様収束：$x_n \to x$, $y_n \to y$ を満たすとき、$\lim_{n\to\infty} f(x_n, y_n) = f(x,y)$ シリーズ：$\sum a_n$が級数であるとき、$\sum a_n$が有限な和を持つことを言う。微分可能性：関数$f:U\to V$がUに含まれる点$p$で微分可能であるとき、$\forall\varepsilon>0,\exists\delta>0:\left|x-p\right|<\delta \Rightarrow \left|\frac{f(p+h)-f(p)}{h}-f'(p)\right|<\varepsilon$を満たす。 結果：微分可能性の保存定理は以下の通りです：「関数$f:U\to V$がUに含まれる点$p$で微分可能ならば、$V$上の連続関数列$\{g_n\}$が$p$で一致的に微分可能となるようにしてから、$\{g_n\}$が$p$で一致的に微分可能となるようにしてから、$\{g_n\</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: vanilla_unidirectional<br>R_GRPO: 0.0000 &bull; D_3phase: 26.412
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        
+</div>
+<script>
+let revealed = false;
+function toggleReveal() {
+    revealed = !revealed;
+    const targets = document.querySelectorAll('.reveal-target');
+    targets.forEach(t => t.style.display = revealed ? 'block' : 'none');
+}
+</script>
+</body>
+</html>
