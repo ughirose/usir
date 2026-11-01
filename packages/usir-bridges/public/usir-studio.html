@@ -163,6 +163,42 @@
       </svg>
       <div id="usir-sinkhole-alerts"></div>
 
+      <!-- v4.0 Bidirectional Schrödinger Bridge & Geodesic Inspector -->
+      <div id="usir-v4-bridge-panel" class="panel-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h4 style="margin: 0; color: #38bdf8;">⚡ v4.0 Bidirectional Schrödinger Bridge (Meet-in-the-Middle)</h4>
+          <span id="bridge-status-badge" class="badge">Bridge: Active</span>
+        </div>
+        <div style="display: flex; gap: 8px; margin-bottom: 6px; font-size: 11px;">
+          <div style="flex: 1; background: #111827; padding: 6px; border-radius: 4px; border-left: 3px solid #38bdf8;">
+            <div style="color: #38bdf8; font-weight: bold;">Forward Wave (ψ: Left-to-Right)</div>
+            <div id="bridge-fwd-anchor" style="font-size: 10px; color: #94a3b8; margin-top: 2px;">Anchor x_0: 始点知覚</div>
+          </div>
+          <div style="display: flex; align-items: center; font-weight: bold; color: #fbbf24;">⚡ 衝突 ⚡</div>
+          <div style="flex: 1; background: #111827; padding: 6px; border-radius: 4px; border-right: 3px solid #a855f7; text-align: right;">
+            <div style="color: #a855f7; font-weight: bold;">Backward Wave (φ: Right-to-Left)</div>
+            <div id="bridge-bwd-anchor" style="font-size: 10px; color: #94a3b8; margin-top: 2px;">Anchor x_T: 終端帰結</div>
+          </div>
+        </div>
+        <canvas id="bridge-wave-canvas" width="400" height="70" style="width: 100%; height: 70px; background: #07080c; border: 1px solid #334155; border-radius: 4px; margin-bottom: 6px;"></canvas>
+        <div id="bridge-action-metric" style="font-size: 11px; color: #e2e8f0; margin-bottom: 4px;">Action Integral S_collision: -- | Coupling M_bridge: --</div>
+        <div id="bridge-welded-preview" style="font-size: 10px; color: #94a3b8; font-style: italic; background: #111827; padding: 4px 6px; border-radius: 4px;"></div>
+      </div>
+
+      <!-- v4.0 Semantic Geodesic Curvature & Brownian Motion Inspector -->
+      <div id="geodesic-curvature-inspector" class="panel-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h4 style="margin: 0; color: #10b981;">🔬 Geodesic Curvature & Brownian Motion Inspector</h4>
+          <button id="btn-inspect-v3-vs-v4" onclick="USIRStudio.compareV3VsV4('Sample-01')">⚖️ v3.0 vs v4.0 比較検証</button>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; font-size: 11px; margin-bottom: 6px;">
+          <div style="background: #111827; padding: 4px 6px; border-radius: 4px;">平均曲率 κ_sem: <strong id="geodesic-mean-curvature" style="color: #38bdf8;">--</strong></div>
+          <div style="background: #111827; padding: 4px 6px; border-radius: 4px;">ブラウン拡散比 η: <strong id="geodesic-brownian-ratio" style="color: #f59e0b;">--</strong></div>
+          <div style="background: #111827; padding: 4px 6px; border-radius: 4px;">小道具カタログ化: <strong id="geodesic-catalog-warning" style="color: #10b981;">正常</strong></div>
+        </div>
+        <div id="v3-v4-comparison-view" style="font-size: 10px; background: #111827; padding: 6px; border-radius: 4px; border: 1px solid #1e293b;"></div>
+      </div>
+
       <!-- Paragraph-Synchronized Multimodal Storyboard Table -->
       <div class="panel-box">
         <h4 style="margin-bottom: 4px; color: #38bdf8;">Paragraph-Synchronized Multimodal Storyboard Table</h4>
@@ -249,6 +285,8 @@ var USIRCore = (() => {
     DEADZONE_MU: () => DEADZONE_MU,
     DEFAULT_DEADZONE_CENTROID_24D: () => DEFAULT_DEADZONE_CENTROID_24D,
     DEFAULT_EQUALIZER_GAINS: () => DEFAULT_EQUALIZER_GAINS,
+    DEFAULT_MU_CRIT: () => DEFAULT_MU_CRIT,
+    DEFAULT_SIGMA_CRIT_DIAG: () => DEFAULT_SIGMA_CRIT_DIAG,
     DUAL_SENSE_LEXICON: () => DUAL_SENSE_LEXICON,
     FACT_SYNONYMS: () => FACT_SYNONYMS,
     FEATURE_NAMES_24D: () => FEATURE_NAMES_24D,
@@ -264,6 +302,7 @@ var USIRCore = (() => {
     LEGAL_MATH_MARKERS: () => LEGAL_MATH_MARKERS,
     LIGHTNING_RUPTURE_MU: () => LIGHTNING_RUPTURE_MU,
     META_GOODHART_TERMS: () => META_GOODHART_TERMS,
+    MODERN_LOANWORDS: () => MODERN_LOANWORDS,
     MODERN_LOANWORD_DICTIONARY: () => MODERN_LOANWORD_DICTIONARY,
     MOLECULE_TRIPLETS: () => MOLECULE_TRIPLETS,
     MomentumBank: () => MomentumBank,
@@ -313,6 +352,7 @@ var USIRCore = (() => {
     compileIterativeFeedbackPrompt: () => compileIterativeFeedbackPrompt,
     compileStyleGenomeToTierM: () => compileStyleGenomeToTierM,
     computeCholeskyEnergy: () => computeCholeskyEnergy,
+    computeCollisionAction: () => computeCollisionAction,
     computeCrc32: () => computeCrc32,
     computeEstimatedDropoffRisk: () => computeEstimatedDropoffRisk,
     computeHamiltonian: () => computeHamiltonian,
@@ -320,12 +360,16 @@ var USIRCore = (() => {
     computeMacroKamae: () => computeMacroKamae,
     computeMesoSasae: () => computeMesoSasae,
     computeMicroKasane: () => computeMicroKasane,
+    computeMultiplicativeGrpoReward: () => computeMultiplicativeGrpoReward,
     computePackedCholesky24d: () => computePackedCholesky24d,
+    computePunctuationRatioGate: () => computePunctuationRatioGate,
     computeRedlineDiffAndRoi: () => computeRedlineDiffAndRoi,
     computeRedlineTokens: () => computeRedlineTokens,
     computeRhythmBarcode: () => computeRhythmBarcode,
     computeRqaMetrics: () => computeRqaMetrics,
+    computeSemanticGeodesicCurvature: () => computeSemanticGeodesicCurvature,
     computeStyleMolecules: () => computeStyleMolecules,
+    computeThreePhaseQdaDistance: () => computeThreePhaseQdaDistance,
     computeWundtBerlyneUtility: () => computeWundtBerlyneUtility,
     countMoras: () => countMoras,
     countSensoryChars: () => countSensoryChars,
@@ -344,6 +388,7 @@ var USIRCore = (() => {
     discoverGenesisStyle: () => discoverGenesisStyle,
     discoverVoronoiGenesis: () => discoverVoronoiGenesis,
     discreteJumpDistance: () => discreteJumpDistance,
+    embedSentenceUnit: () => embedSentenceUnit,
     emitCleanTierM: () => emitCleanTierM,
     emitCleanTierS: () => emitCleanTierS,
     encodeTierM: () => encodeTierM,
@@ -385,6 +430,7 @@ var USIRCore = (() => {
     packLower32Sensory: () => packLower32Sensory,
     packTrajectoryToTierM: () => packTrajectoryToTierM,
     padToPowerOf2: () => padToPowerOf2,
+    pinBoundaryAnchors: () => pinBoundaryAnchors,
     poincareHyperbolicDistance: () => poincareHyperbolicDistance,
     precisionMatrixFromPackedCholesky24d: () => precisionMatrixFromPackedCholesky24d,
     predictPhase: () => predictPhase,
@@ -395,7 +441,9 @@ var USIRCore = (() => {
     runLoocv: () => runLoocv,
     runMicroConstraintGate: () => runMicroConstraintGate,
     sampleTerminalAnchorAndBridge: () => sampleTerminalAnchorAndBridge,
+    solveBidirectionalCollisionBridge: () => solveBidirectionalCollisionBridge,
     splitEnglishClauses: () => splitEnglishClauses,
+    splitIntoTrajectoryUnits: () => splitIntoTrajectoryUnits,
     splitSentences: () => splitSentences,
     stdPop: () => stdPop,
     steerPhaseRewrite: () => steerPhaseRewrite,
@@ -7988,6 +8036,848 @@ var USIRCore = (() => {
       scorePenalty,
       violations: uniqueViolations,
       summary
+    };
+  }
+
+  // packages/usir-core/dist/dynamics/manifoldGeodesic.js
+  var MODERN_LOANWORDS = [
+    "\u731B\u30B9\u30D4\u30FC\u30C9",
+    "\u30B9\u30D4\u30FC\u30C9",
+    "\u30B7\u30B9\u30C6\u30E0",
+    "\u30EC\u30D9\u30EB",
+    "\u30B9\u30C8\u30EC\u30B9",
+    "\u30BF\u30A4\u30DF\u30F3\u30B0",
+    "\u30A4\u30E1\u30FC\u30B8",
+    "\u30E1\u30EA\u30C3\u30C8",
+    "\u30C7\u30E1\u30EA\u30C3\u30C8",
+    "\u30D7\u30ED\u30BB\u30B9",
+    "\u30A8\u30CD\u30EB\u30AE\u30FC",
+    "\u30D1\u30FC\u30BB\u30F3\u30C8",
+    "\u30A2\u30D7\u30ED\u30FC\u30C1",
+    "\u30B3\u30DF\u30C3\u30C8",
+    "\u30E2\u30C1\u30D9\u30FC\u30B7\u30E7\u30F3",
+    "\u30D7\u30ED\u30B8\u30A7\u30AF\u30C8",
+    "\u30BF\u30FC\u30B2\u30C3\u30C8",
+    "\u30B7\u30C1\u30E5\u30A8\u30FC\u30B7\u30E7\u30F3",
+    "\u30D7\u30E9\u30A4\u30C9",
+    "\u30EA\u30A2\u30EB",
+    "\u30AF\u30AA\u30EA\u30C6\u30A3",
+    "\u30C6\u30F3\u30B7\u30E7\u30F3",
+    "\u30EA\u30BB\u30C3\u30C8",
+    "\u30B9\u30DA\u30C3\u30AF",
+    "\u30EB\u30FC\u30C6\u30A3\u30F3",
+    "\u30BB\u30F3\u30B9",
+    "\u30E2\u30C1\u30D9",
+    "\u30B3\u30B9\u30D1",
+    "\u30A2\u30D4\u30FC\u30EB",
+    "\u30EA\u30A2\u30EA\u30C6\u30A3"
+  ];
+  var DEFAULT_MU_CRIT = [
+    0.7322,
+    0.4407,
+    0.4809,
+    0.4138,
+    0.5065,
+    0.5728,
+    0.3453,
+    0.4347,
+    0.8135,
+    0.4921,
+    0.495,
+    0.2874,
+    0.6799,
+    0.2786,
+    0.8667,
+    0.5809,
+    1.1885,
+    0.2388,
+    0.8104,
+    0.8804,
+    1.0254,
+    0.6898,
+    0.2779,
+    1.1467
+  ];
+  var DEFAULT_SIGMA_CRIT_DIAG = [
+    0.1191,
+    0.2424,
+    0.2523,
+    0.254,
+    0.2011,
+    0.265,
+    0.1953,
+    0.2068,
+    0.2594,
+    0.2036,
+    0.3272,
+    0.2984,
+    0.4864,
+    0.1204,
+    0.387,
+    0.2511,
+    0.4628,
+    0.1505,
+    0.3519,
+    0.358,
+    0.4813,
+    0.3384,
+    0.1495,
+    0.5067
+  ];
+  function computeThreePhaseQdaDistance(z, options) {
+    const gammaFreeze = options?.gamma_freeze ?? 12;
+    const gammaChaos = options?.gamma_chaos ?? 12;
+    const sigmaLow = options?.sigma_crit_low ?? 0.35;
+    const sigmaHigh = options?.sigma_crit_high ?? 1.25;
+    let zVec;
+    let calcSigmaNorm;
+    if (typeof z === "string") {
+      const extracted = extractUsir24d(z);
+      zVec = extracted.z_24d;
+      let sumP2 = 0;
+      for (const p of extracted.p)
+        sumP2 += p * p;
+      calcSigmaNorm = Math.sqrt(sumP2);
+    } else if (Array.isArray(z)) {
+      zVec = [...z];
+      if (zVec.length >= 24) {
+        let sumP2 = 0;
+        for (let i = 12; i < 24; i++)
+          sumP2 += (zVec[i] ?? 0) ** 2;
+        calcSigmaNorm = Math.sqrt(sumP2);
+      } else {
+        calcSigmaNorm = 0.5;
+      }
+    } else {
+      zVec = [...z.z_24d];
+      let sumP2 = 0;
+      for (const p of z.p)
+        sumP2 += p * p;
+      calcSigmaNorm = Math.sqrt(sumP2);
+    }
+    if (options?.sigma_norm !== void 0) {
+      calcSigmaNorm = options.sigma_norm;
+    }
+    const targetMu = options?.mu_crit ?? DEFAULT_MU_CRIT;
+    const invCov = options?.sigma_crit_inv ?? DEFAULT_SIGMA_CRIT_DIAG.map((s) => 1 / (s * s));
+    let dMahalSum = 0;
+    for (let i = 0; i < 24; i++) {
+      const diff = (zVec[i] ?? 0) - (targetMu[i] ?? 0);
+      const inv = invCov[i] ?? 50;
+      dMahalSum += diff * diff * inv;
+    }
+    const dMahalanobis = dMahalSum / 24;
+    const freezeDefect = Math.max(0, sigmaLow - calcSigmaNorm);
+    const penaltyFreeze = gammaFreeze * freezeDefect ** 2;
+    const chaosExcess = Math.max(0, calcSigmaNorm - sigmaHigh);
+    const penaltyChaos = gammaChaos * chaosExcess ** 2;
+    const totalD3Phase = dMahalanobis + penaltyFreeze + penaltyChaos;
+    let regime = "Phase_II_Critical";
+    if (freezeDefect > 0.05) {
+      regime = "Phase_I_Deadzone";
+    } else if (chaosExcess > 0.05) {
+      regime = "Phase_III_Chaos";
+    }
+    return {
+      d_3phase: totalD3Phase,
+      d_mahalanobis: dMahalanobis,
+      penalty_freeze: penaltyFreeze,
+      penalty_chaos: penaltyChaos,
+      sigma_norm: calcSigmaNorm,
+      phase_regime: regime,
+      is_healthy_critical: freezeDefect === 0 && chaosExcess === 0
+    };
+  }
+  function splitIntoTrajectoryUnits(text) {
+    const rawSents = text.split(/[。！？!?\n]+/).map((s) => s.trim()).filter((s) => s.length >= 2);
+    if (rawSents.length >= 3)
+      return rawSents;
+    const clauses = text.split(/[、,;；]+/).map((c) => c.trim()).filter((c) => c.length >= 3);
+    if (clauses.length >= 3)
+      return clauses;
+    const stride = Math.max(10, Math.floor(text.length / 5));
+    const chunks = [];
+    for (let i = 0; i < text.length; i += stride) {
+      const chunk = text.slice(i, i + stride).trim();
+      if (chunk.length >= 3)
+        chunks.push(chunk);
+    }
+    return chunks;
+  }
+  function embedSentenceUnit(sentence, dim = 24) {
+    const vec = new Array(dim).fill(0);
+    if (!sentence)
+      return vec;
+    const L = Math.max(sentence.length, 1);
+    let sensoryHits = 0;
+    for (let i = 0; i < sentence.length; i++) {
+      const cp = sentence.charCodeAt(i);
+      for (let j = 0; j < PHYSICAL_SENSE_INTERVALS.length; j++) {
+        const interval = PHYSICAL_SENSE_INTERVALS[j];
+        if (cp >= interval[0] && cp <= interval[1]) {
+          sensoryHits++;
+          break;
+        }
+      }
+    }
+    vec[0] = Math.min(1, sensoryHits / L * 4);
+    let abstCount = 0;
+    for (const f of HARD_AI_CLICHE_FRAMES) {
+      if (sentence.includes(f))
+        abstCount++;
+    }
+    vec[1] = Math.min(1, abstCount / Math.max(L / 20, 1));
+    let kanjiCount = 0;
+    for (let i = 0; i < sentence.length; i++) {
+      const cp = sentence.charCodeAt(i);
+      if (cp >= 19968 && cp <= 40959)
+        kanjiCount++;
+    }
+    vec[2] = kanjiCount / L;
+    vec[3] = Math.min(1, L / 50);
+    const commaCount = (sentence.match(/、/g) || []).length;
+    vec[4] = Math.min(1, commaCount / 3);
+    const exclamCount = (sentence.match(/[！!？?]/g) || []).length;
+    vec[5] = Math.min(1, exclamCount / 1.5);
+    const stems = sentence.match(/[\u4e00-\u9fff]+/g) || [];
+    for (const stem of stems) {
+      let h = 2166136261;
+      for (let i = 0; i < stem.length; i++) {
+        h = Math.imul(h ^ stem.charCodeAt(i), 16777619);
+      }
+      for (let k = 6; k < dim; k++) {
+        const bit = h >>> k - 6 & 1;
+        const sign = bit === 1 ? 1 : -0.5;
+        const weight = stem.length / 3;
+        vec[k] = (vec[k] ?? 0) + sign * weight;
+      }
+    }
+    let sumSq = 0;
+    for (let i = 0; i < dim; i++)
+      sumSq += (vec[i] ?? 0) ** 2;
+    const norm = Math.sqrt(sumSq);
+    if (norm > 1e-6) {
+      for (let i = 0; i < dim; i++)
+        vec[i] = (vec[i] ?? 0) / norm;
+    }
+    return vec;
+  }
+  function computeSemanticGeodesicCurvature(textOrUnits, options) {
+    const units = typeof textOrUnits === "string" ? splitIntoTrajectoryUnits(textOrUnits) : [...textOrUnits];
+    const alphaKappa = options?.alpha_kappa ?? 1.8;
+    const alphaBrownian = options?.alpha_brownian ?? 1.2;
+    let diffs;
+    if (options?.embeddings) {
+      const rawE = options.embeddings;
+      if (rawE.length >= 2) {
+        diffs = [];
+        for (let i = 0; i < rawE.length - 1; i++) {
+          const d = [];
+          for (let j = 0; j < (rawE[i]?.length ?? 0); j++) {
+            d.push((rawE[i + 1]?.[j] ?? 0) - (rawE[i]?.[j] ?? 0));
+          }
+          diffs.push(d);
+        }
+      } else {
+        diffs = rawE;
+      }
+    } else {
+      if (units.length < 2) {
+        return {
+          curvatures: [],
+          mean_curvature: 0,
+          max_curvature: 0,
+          mean_torsion: 0,
+          brownian_ratio: 1,
+          m_geodesic: 1,
+          is_brownian_catalog: false,
+          units_count: units.length
+        };
+      }
+      diffs = units.map((u) => embedSentenceUnit(u));
+    }
+    const diffNorms = [];
+    for (const d of diffs) {
+      let s = 0;
+      for (const v of d)
+        s += v * v;
+      diffNorms.push(Math.sqrt(s));
+    }
+    const curvatures = [];
+    const torsions = [];
+    for (let i = 0; i < diffs.length - 1; i++) {
+      const v1 = diffs[i];
+      const v2 = diffs[i + 1];
+      const n1 = diffNorms[i] ?? 0;
+      const n2 = diffNorms[i + 1] ?? 0;
+      if (n1 > 1e-7 && n2 > 1e-7) {
+        let dot = 0;
+        for (let j = 0; j < v1.length; j++)
+          dot += (v1[j] ?? 0) * (v2[j] ?? 0);
+        let cos = dot / (n1 * n2);
+        cos = Math.max(-1, Math.min(1, cos));
+        curvatures.push(1 - cos);
+      } else {
+        curvatures.push(0);
+      }
+    }
+    for (let i = 0; i < diffs.length - 2; i++) {
+      const v1 = diffs[i];
+      const v2 = diffs[i + 1];
+      const v3 = diffs[i + 2];
+      let dotV2 = 0;
+      for (const x of v2)
+        dotV2 += x * x;
+      const denomV2 = dotV2 + 1e-7;
+      let dotV1V2 = 0;
+      let dotV3V2 = 0;
+      for (let j = 0; j < v1.length; j++) {
+        dotV1V2 += (v1[j] ?? 0) * (v2[j] ?? 0);
+        dotV3V2 += (v3[j] ?? 0) * (v2[j] ?? 0);
+      }
+      const n1 = v1.map((x, j) => x - dotV1V2 / denomV2 * (v2[j] ?? 0));
+      const n2 = v3.map((x, j) => x - dotV3V2 / denomV2 * (v2[j] ?? 0));
+      let lenN1 = 0;
+      let lenN2 = 0;
+      let dotN = 0;
+      for (let j = 0; j < n1.length; j++) {
+        lenN1 += (n1[j] ?? 0) ** 2;
+        lenN2 += (n2[j] ?? 0) ** 2;
+        dotN += (n1[j] ?? 0) * (n2[j] ?? 0);
+      }
+      lenN1 = Math.sqrt(lenN1);
+      lenN2 = Math.sqrt(lenN2);
+      if (lenN1 > 1e-7 && lenN2 > 1e-7) {
+        let cosTau = dotN / (lenN1 * lenN2);
+        cosTau = Math.max(-1, Math.min(1, cosTau));
+        torsions.push(1 - cosTau);
+      } else {
+        torsions.push(0);
+      }
+    }
+    const meanCurv = curvatures.length > 0 ? curvatures.reduce((a, b) => a + b, 0) / curvatures.length : 0;
+    const maxCurv = curvatures.length > 0 ? Math.max(...curvatures) : 0;
+    const meanTor = torsions.length > 0 ? torsions.reduce((a, b) => a + b, 0) / torsions.length : 0;
+    let sumStepsSq = 0;
+    for (const n of diffNorms)
+      sumStepsSq += n * n;
+    const dim = diffs[0]?.length ?? 24;
+    const netStepVec = new Array(dim).fill(0);
+    for (const d of diffs) {
+      for (let j = 0; j < dim; j++) {
+        netStepVec[j] = (netStepVec[j] ?? 0) + (d[j] ?? 0);
+      }
+    }
+    let netDispSq = 0;
+    for (const x of netStepVec)
+      netDispSq += x * x;
+    netDispSq += 1e-5;
+    const brownianRatio = diffs.length * sumStepsSq / netDispSq;
+    const brownianExcess = Math.max(0, brownianRatio - 1.5);
+    const exponent = -(alphaKappa * meanCurv + alphaBrownian * brownianExcess);
+    const mGeodesic = Math.max(0, Math.min(1, Math.exp(exponent)));
+    const isBrownianCatalog = brownianRatio > 2 || meanCurv > 0.5;
+    return {
+      curvatures,
+      mean_curvature: meanCurv,
+      max_curvature: maxCurv,
+      mean_torsion: meanTor,
+      brownian_ratio: brownianRatio,
+      m_geodesic: mGeodesic,
+      is_brownian_catalog: isBrownianCatalog,
+      units_count: units.length
+    };
+  }
+  function computePunctuationRatioGate(text) {
+    if (!text)
+      return 0;
+    const L = text.length;
+    const matches = text.match(/[、。！？!?,.]/g);
+    const punctCount = matches ? matches.length : 0;
+    const ratio = punctCount / L;
+    if (ratio < 0.01)
+      return 0;
+    if (ratio > 0.12)
+      return 0;
+    if (ratio < 0.015) {
+      return (ratio - 0.01) / 5e-3;
+    }
+    if (ratio > 0.08) {
+      return Math.max(0, (0.12 - ratio) / 0.04);
+    }
+    return 1;
+  }
+  function computeMultiplicativeGrpoReward(text, options) {
+    if (!text || text.trim().length === 0) {
+      return {
+        reward: 0,
+        m_syntax: 0,
+        m_geodesic: 0,
+        m_bridge: 0,
+        m_cleanroom: 0,
+        d_3phase: 99,
+        d_mahalanobis: 99,
+        penalty_freeze: 0,
+        penalty_chaos: 0,
+        sigma_norm: 0,
+        phase_regime: "Phase_I_Deadzone",
+        brownian_ratio: 99,
+        mean_curvature: 2,
+        is_brownian_catalog: true,
+        exp_barrier: 0,
+        is_rejected: true
+      };
+    }
+    const punctGate = computePunctuationRatioGate(text);
+    let mSyntax = 0;
+    if (punctGate > 0) {
+      const bracketPairs = {
+        "\u300C": "\u300D",
+        "\u300E": "\u300F",
+        "\uFF08": "\uFF09",
+        "\u3010": "\u3011",
+        "\u300A": "\u300B",
+        "(": ")",
+        "[": "]",
+        "{": "}"
+      };
+      const openBrackets = new Set(Object.keys(bracketPairs));
+      const closeBrackets = new Map(Object.entries(bracketPairs).map(([k, v]) => [v, k]));
+      const stack = [];
+      let matched = 0;
+      let unmatched = 0;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (openBrackets.has(ch)) {
+          stack.push(ch);
+        } else if (closeBrackets.has(ch)) {
+          const exp = closeBrackets.get(ch);
+          if (stack.length > 0 && stack[stack.length - 1] === exp) {
+            stack.pop();
+            matched++;
+          } else {
+            unmatched++;
+          }
+        }
+      }
+      unmatched += stack.length;
+      const totB = 2 * matched + unmatched;
+      const bScore = totB === 0 ? 1 : 2 * matched / totB;
+      let repPen = 0;
+      if (text.length >= 16) {
+        for (let i = 0; i < text.length - 10; i++) {
+          const quad = text.slice(i, i + 5);
+          const count = (text.match(new RegExp(quad.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length;
+          if (count >= 4) {
+            repPen = 0.5;
+            break;
+          }
+        }
+      }
+      mSyntax = Math.max(0, Math.min(1, punctGate * bScore * (1 - repPen)));
+    }
+    const geodesicRes = computeSemanticGeodesicCurvature(text);
+    const mGeodesic = geodesicRes.m_geodesic;
+    let mBridge = 1;
+    if (options?.x_0 !== void 0 || options?.x_T !== void 0) {
+      const units = splitIntoTrajectoryUnits(text);
+      if (units.length > 0) {
+        const tipFwd = embedSentenceUnit(units[0]);
+        const tipBwd = embedSentenceUnit(units[units.length - 1]);
+        let cos0 = 1;
+        if (options?.x_0 !== void 0) {
+          const vec0 = typeof options.x_0 === "string" ? embedSentenceUnit(options.x_0) : options.x_0;
+          let dot = 0, n0 = 0, nf = 0;
+          for (let j = 0; j < tipFwd.length; j++) {
+            dot += (tipFwd[j] ?? 0) * (vec0[j] ?? 0);
+            n0 += (vec0[j] ?? 0) ** 2;
+            nf += (tipFwd[j] ?? 0) ** 2;
+          }
+          cos0 = Math.max(0, Math.min(1, dot / (Math.sqrt(nf) * Math.sqrt(n0) + 1e-7)));
+        }
+        let cosT = 1;
+        if (options?.x_T !== void 0) {
+          const vecT = typeof options.x_T === "string" ? embedSentenceUnit(options.x_T) : options.x_T;
+          let dot = 0, nT = 0, nb = 0;
+          for (let j = 0; j < tipBwd.length; j++) {
+            dot += (tipBwd[j] ?? 0) * (vecT[j] ?? 0);
+            nT += (vecT[j] ?? 0) ** 2;
+            nb += (tipBwd[j] ?? 0) ** 2;
+          }
+          cosT = Math.max(0, Math.min(1, dot / (Math.sqrt(nb) * Math.sqrt(nT) + 1e-7)));
+        }
+        mBridge = Math.max(0, Math.min(1, 0.5 * (cos0 + cosT)));
+      }
+    }
+    let mCleanroom = 1;
+    if (!options?.is_authentic_masterwork) {
+      let bannedHits = 0;
+      for (const w of BANNED_TARGET_KEYWORDS)
+        if (text.includes(w))
+          bannedHits++;
+      let metaHits = 0;
+      for (const m of META_GOODHART_TERMS)
+        if (text.includes(m))
+          metaHits++;
+      let loanHits = 0;
+      for (const lw of MODERN_LOANWORDS)
+        if (text.includes(lw))
+          loanHits++;
+      let clicheHits = 0;
+      for (const c of HARD_AI_CLICHE_FRAMES)
+        if (text.includes(c))
+          clicheHits++;
+      const totalV = bannedHits * 3 + metaHits * 3 + loanHits + clicheHits;
+      if (totalV > 0) {
+        mCleanroom = Math.max(0.05, 0.2 ** Math.min(totalV, 3));
+      }
+    }
+    const qdaRes = computeThreePhaseQdaDistance(text);
+    const alphaM = options?.alpha_metric ?? 1;
+    const expBarrier = Math.exp(-0.5 * (qdaRes.d_3phase / Math.max(alphaM, 0.1)));
+    const rawReward = mSyntax * mGeodesic * mBridge * mCleanroom * expBarrier;
+    const reward = Math.max(0, Math.min(1, rawReward));
+    const isRejected = reward < 5e-3 || mSyntax < 0.1 || mGeodesic < 0.1;
+    return {
+      reward,
+      m_syntax: mSyntax,
+      m_geodesic: mGeodesic,
+      m_bridge: mBridge,
+      m_cleanroom: mCleanroom,
+      d_3phase: qdaRes.d_3phase,
+      d_mahalanobis: qdaRes.d_mahalanobis,
+      penalty_freeze: qdaRes.penalty_freeze,
+      penalty_chaos: qdaRes.penalty_chaos,
+      sigma_norm: qdaRes.sigma_norm,
+      phase_regime: qdaRes.phase_regime,
+      brownian_ratio: geodesicRes.brownian_ratio,
+      mean_curvature: geodesicRes.mean_curvature,
+      is_brownian_catalog: geodesicRes.is_brownian_catalog,
+      exp_barrier: expBarrier,
+      is_rejected: isRejected
+    };
+  }
+
+  // packages/usir-core/dist/dynamics/bidirectionalBridge.js
+  var DOMAIN_PRESETS = {
+    novel: { kamae_target: [0.55, 0.6, 0.45] },
+    article: { kamae_target: [0.7, 0.4, 0.35] },
+    cot_reasoning: { kamae_target: [0.85, 0.2, 0.25] }
+  };
+  function pinBoundaryAnchors(theme, domain = "novel", options) {
+    const preset = DOMAIN_PRESETS[domain] ?? DOMAIN_PRESETS.novel;
+    let x_0;
+    if (options?.custom_start) {
+      x_0 = options.custom_start;
+    } else {
+      if (domain === "novel") {
+        x_0 = `${theme}\u306E\u6C17\u914D\u304C\u6F02\u3044\u3001\u5F35\u308A\u8A70\u3081\u305F\u51B7\u6C17\u304C\u6307\u5148\u3092\u304B\u3059\u304B\u306B\u51CD\u3089\u305B\u3066\u3044\u305F\u3002`;
+      } else if (domain === "article") {
+        x_0 = `${theme}\u306B\u95A2\u3059\u308B\u6700\u65B0\u306E\u89B3\u6E2C\u30C7\u30FC\u30BF\u306F\u3001\u5F93\u6765\u306E\u60F3\u5B9A\u3068\u660E\u78BA\u306B\u4E56\u96E2\u3057\u3066\u3044\u308B\u3002`;
+      } else {
+        x_0 = `\u524D\u63D0\uFF1A\u554F\u984C\u8A2D\u5B9A\u300C${theme}\u300D\u306B\u304A\u3051\u308B\u521D\u671F\u6761\u4EF6\u304A\u3088\u3073\u675F\u7E1B\u6761\u4EF6\u3092\u78BA\u5B9A\u3059\u308B\u3002`;
+      }
+    }
+    let x_T;
+    if (options?.custom_end) {
+      x_T = options.custom_end;
+    } else {
+      if (domain === "novel") {
+        x_T = `\u5FAE\u304B\u306A\u8ECB\u307F\u3068\u3068\u3082\u306B\u8F2A\u90ED\u304C\u6C88\u307F\u3001\u3042\u3068\u306B\u51B7\u305F\u3044\u6C88\u9ED9\u3060\u3051\u304C\u6B8B\u3063\u305F\u3002`;
+      } else if (domain === "article") {
+        x_T = `\u3057\u305F\u304C\u3063\u3066\u3001\u672C\u8CEA\u7684\u306A\u7AF6\u4E89\u512A\u4F4D\u306F\u69CB\u9020\u306E\u975E\u5BFE\u79F0\u6027\u3068\u540C\u671F\u30B3\u30B9\u30C8\u306E\u524A\u6E1B\u306B\u5E30\u7740\u3059\u308B\u3002`;
+      } else {
+        x_T = `\u7D50\u8AD6\uFF1A\u3059\u3079\u3066\u306E\u80CC\u7406\u6761\u4EF6\u304C\u6392\u9664\u3055\u308C\u3001\u76EE\u6A19\u547D\u984C\u304C\u552F\u4E00\u7121\u4E8C\u306B\u8A3C\u660E\u3055\u308C\u305F\u3002`;
+      }
+    }
+    const q_start = embedSentenceUnit(x_0);
+    const q_end = embedSentenceUnit(x_T);
+    const kamae_coords = options?.target_state ? options.target_state.slice(9, 12) : preset.kamae_target;
+    return {
+      domain,
+      theme,
+      x_0,
+      x_T,
+      q_start,
+      q_end,
+      kamae_coords,
+      metadata: { preset: domain }
+    };
+  }
+  function generateDeterministicRollouts(anchors, kCandidates = 4) {
+    const domain = anchors.domain;
+    const fwdWaves = [];
+    const bwdWaves = [];
+    let fwdVariations;
+    let bwdVariations;
+    if (domain === "novel") {
+      fwdVariations = [
+        [
+          anchors.x_0,
+          "\u571F\u9593\u306E\u8E0F\u307F\u77F3\u306B\u51B7\u305F\u3044\u96E8\u6EF4\u304C\u843D\u3061\u3001\u5FAE\u304B\u306A\u98DB\u6CAB\u3092\u4E0A\u3052\u305F\u3002",
+          "\u8584\u6697\u3044\u4F5C\u696D\u53F0\u306E\u5965\u3067\u3001\u4F7F\u3044\u8FBC\u307E\u308C\u305F\u9244\u306E\u9053\u5177\u304C\u920D\u3044\u5149\u3092\u8FD4\u3057\u3066\u3044\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u677F\u58C1\u306E\u9699\u9593\u304B\u3089\u5439\u304D\u8FBC\u3080\u98A8\u304C\u3001\u540A\u308B\u3055\u308C\u305F\u88F8\u96FB\u7403\u306E\u5098\u3092\u304B\u3059\u304B\u306B\u63FA\u3089\u3057\u305F\u3002",
+          "\u8001\u4EBA\u306F\u7121\u8A00\u306E\u307E\u307E\u6307\u5148\u3092\u52D5\u304B\u3057\u3001\u6FE1\u308C\u305F\u7C98\u571F\u306E\u56FA\u3055\u3092\u614E\u91CD\u306B\u78BA\u304B\u3081\u3066\u3044\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u9060\u3044\u8C37\u5E95\u306E\u5DDD\u97F3\u304C\u95C7\u3092\u629C\u3051\u3066\u97FF\u304D\u3001\u4F5C\u696D\u5834\u306E\u9759\u5BC2\u3092\u969B\u7ACB\u305F\u305B\u3066\u3044\u305F\u3002",
+          "\u524A\u308A\u5C51\u306E\u7A4D\u3082\u3063\u305F\u8F46\u8F64\u306E\u8EF8\u306B\u624B\u3092\u6DFB\u3048\u3001\u4F4E\u304F\u8ECB\u3080\u611F\u89E6\u3092\u638C\u3067\u6E2C\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u6E7F\u3063\u305F\u6749\u306E\u9999\u308A\u304C\u6E80\u3061\u308B\u4E2D\u3001\u5C0F\u3055\u306A\u85AA\u30B9\u30C8\u30FC\u30D6\u304C\u8D64\u3044\u706B\u306E\u7C89\u3092\u6563\u3089\u3057\u305F\u3002",
+          "\u4E7E\u3044\u305F\u571F\u58C1\u306B\u8001\u4EBA\u306E\u5F71\u304C\u5927\u304D\u304F\u63FA\u308C\u3001\u4F5C\u696D\u306E\u7DCA\u5F35\u304C\u9AD8\u307E\u3063\u3066\u3044\u304F\u3002"
+        ]
+      ];
+      bwdVariations = [
+        [
+          "\u7AAF\u306E\u6249\u304C\u91CD\u304F\u9589\u3058\u3089\u308C\u3001\u711A\u53E3\u304B\u3089\u6F0F\u308C\u308B\u4F59\u71B1\u304C\u5F90\u3005\u306B\u93AE\u307E\u3063\u3066\u3044\u304F\u3002",
+          "\u624B\u5165\u308C\u3092\u7D42\u3048\u305F\u9053\u5177\u304C\u5143\u306E\u6728\u7BB1\u3078\u9759\u304B\u306B\u53CE\u3081\u3089\u308C\u305F\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u6307\u5148\u306B\u4F1D\u308F\u308B\u571F\u306E\u62B5\u6297\u304C\u5747\u4E00\u306B\u306A\u308A\u3001\u8F46\u8F64\u306E\u56DE\u8EE2\u304C\u7DE9\u3084\u304B\u306B\u901F\u5EA6\u3092\u843D\u3068\u3057\u305F\u3002",
+          "\u7814\u304E\u6F84\u307E\u3055\u308C\u305F\u5203\u5148\u304C\u6700\u5F8C\u306E\u4F59\u5206\u306A\u524A\u308A\u5C51\u3092\u524A\u304E\u843D\u3068\u3059\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u591C\u96E8\u306E\u97F3\u304C\u9060\u3056\u304B\u308A\u3001\u5C71\u88FE\u306E\u591C\u9727\u304C\u5EFA\u7269\u306E\u5C4B\u6839\u3092\u767D\u304F\u5305\u307F\u8FBC\u3093\u3067\u3044\u305F\u3002",
+          "\u7537\u306F\u9769\u624B\u888B\u3092\u5916\u3057\u3001\u51B7\u3048\u5207\u3063\u305F\u6307\u5148\u3092\u606F\u3067\u6E29\u3081\u305F\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u8DEF\u5730\u306E\u5916\u706F\u304C\u4E00\u77AC\u77AC\u304D\u3001\u95C7\u306E\u5965\u3078\u3068\u9577\u3044\u5F71\u3092\u5F15\u3044\u3066\u6D88\u3048\u305F\u3002",
+          "\u5E8A\u306B\u843D\u3061\u305F\u91D1\u5C5E\u7247\u3092\u9774\u5E95\u3067\u6383\u304D\u96C6\u3081\u3001\u4F5C\u696D\u306E\u5B8C\u4E86\u3092\u78BA\u304B\u3081\u308B\u3002",
+          anchors.x_T
+        ]
+      ];
+    } else if (domain === "article") {
+      fwdVariations = [
+        [
+          anchors.x_0,
+          "\u73FE\u5834\u306E\u30D2\u30A2\u30EA\u30F3\u30B0\u8ABF\u67FB\u3067\u306F\u300178%\u306E\u56DE\u7B54\u8005\u304C\u540C\u4E00\u306E\u60C5\u5831\u4F1D\u9054\u7D4C\u8DEF\u306B\u304A\u3051\u308B\u6EDE\u7559\u3092\u6307\u6458\u3057\u3066\u3044\u308B\u3002",
+          "\u3053\u306E\u6570\u5024\u306F\u5358\u306A\u308B\u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3\u4E0D\u8DB3\u3067\u306F\u306A\u304F\u3001\u696D\u52D9\u30D7\u30ED\u30BB\u30B9\u306E\u69CB\u9020\u7684\u4E0D\u5168\u3092\u793A\u5506\u3059\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u904E\u53BB3\u5E74\u9593\u306E\u6642\u7CFB\u5217\u63A8\u79FB\u3092\u7CBE\u67FB\u3059\u308B\u3068\u3001\u7D44\u7E54\u898F\u6A21\u306E\u62E1\u5927\u306B\u53CD\u6BD4\u4F8B\u3057\u3066\u610F\u601D\u6C7A\u5B9A\u901F\u5EA6\u304C\u4F4E\u4E0B\u3057\u3066\u3044\u305F\u3002",
+          "\u968E\u5C64\u578B\u627F\u8A8D\u30D5\u30ED\u30FC\u306E\u5404\u30CE\u30FC\u30C9\u306B\u304A\u3044\u3066\u3001\u60C5\u5831\u306E\u975E\u5BFE\u79F0\u6027\u304C\u6307\u6570\u95A2\u6570\u7684\u306B\u5897\u5927\u3057\u3066\u3044\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u521D\u671F\u6295\u8CC7\u3068\u904B\u7528\u4FDD\u5B88\u30B3\u30B9\u30C8\u306E\u5BFE\u6BD4\u5206\u6790\u304B\u3089\u3001\u65E2\u5B58\u30B7\u30B9\u30C6\u30E0\u306E\u30B5\u30F3\u30AF\u30B3\u30B9\u30C8\u304C\u5909\u9769\u3092\u963B\u3093\u3067\u3044\u308B\u5B9F\u614B\u304C\u6D6E\u304D\u5F6B\u308A\u3068\u306A\u3063\u305F\u3002",
+          "\u73FE\u5834\u306E\u6697\u9ED9\u77E5\u304C\u30B7\u30B9\u30C6\u30E0\u3078\u9084\u5143\u3055\u308C\u305A\u3001\u5C5E\u4EBA\u7684\u306A\u8CA0\u8377\u306E\u504F\u5728\u304C\u5E38\u614B\u5316\u3057\u3066\u3044\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u5148\u884C\u4E8B\u4F8B\u306E\u30D9\u30F3\u30C1\u30DE\u30FC\u30AF\u6BD4\u8F03\u306B\u3088\u308C\u3070\u3001\u90E8\u5206\u6700\u9069\u3092\u7E70\u308A\u8FD4\u3057\u305F\u7D44\u7E54\u307B\u3069\u5168\u4F53\u6700\u9069\u5316\u306E\u969C\u58C1\u304C\u9AD8\u3044\u3002",
+          "\u5C40\u6240\u7684\u306A\u81EA\u52D5\u5316\u30C4\u30FC\u30EB\u5C0E\u5165\u304C\u3001\u304B\u3048\u3063\u3066\u90E8\u7F72\u9593\u306E\u65AD\u7D76\u3092\u6DF1\u523B\u5316\u3055\u305B\u3066\u3044\u308B\u3002"
+        ]
+      ];
+      bwdVariations = [
+        [
+          "\u3053\u306E\u5236\u5EA6\u8A2D\u8A08\u306B\u3088\u308A\u3001\u5404\u30B9\u30C6\u30FC\u30AF\u30DB\u30EB\u30C0\u30FC\u306E\u81EA\u5F8B\u7684\u30A4\u30F3\u30BB\u30F3\u30C6\u30A3\u30D6\u304C\u5B8C\u5168\u306B\u5408\u81F4\u3059\u308B\u3002",
+          "\u4E2D\u9593\u8ABF\u6574\u30B3\u30B9\u30C8\u3092\u7269\u7406\u7684\u306B\u6392\u9664\u3057\u305F\u975E\u540C\u671F\u60C5\u5831\u6D41\u901A\u57FA\u76E4\u304C\u4E0D\u53EF\u6B20\u3068\u306A\u308B\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u5B9F\u8A3C\u5B9F\u9A13\u306E\u7D50\u679C\u306F\u3001\u30D7\u30ED\u30BB\u30B9\u306E\u8131\u4E2D\u5FC3\u5316\u304C\u5E73\u5747\u30EA\u30FC\u30C9\u30BF\u30A4\u30E0\u309242%\u77ED\u7E2E\u3059\u308B\u3053\u3068\u3092\u5B9F\u8A3C\u3057\u305F\u3002",
+          "\u3057\u305F\u304C\u3063\u3066\u3001\u8A55\u4FA1\u6307\u6A19\u3092\u6D3B\u52D5\u91CF\u304B\u3089\u30A2\u30A6\u30C8\u30AB\u30E0\u306E\u518D\u73FE\u6027\u3078\u3068\u8EE2\u63DB\u3057\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u5C40\u6240\u7684\u306A\u5BFE\u75C7\u7642\u6CD5\u3092\u6392\u3057\u3001\u30A2\u30FC\u30AD\u30C6\u30AF\u30C1\u30E3\u30EC\u30D9\u30EB\u3067\u306E\u8CAC\u4EFB\u5206\u96E2\u3092\u65AD\u884C\u3059\u308B\u3053\u3068\u304C\u552F\u4E00\u306E\u89E3\u3067\u3042\u308B\u3002",
+          "\u30C7\u30FC\u30BF\u306E\u5358\u4E00\u4FE1\u983C\u6E90\uFF08SSOT\uFF09\u3092\u78BA\u7ACB\u3057\u3001\u610F\u601D\u6C7A\u5B9A\u306E\u691C\u8A3C\u53EF\u80FD\u6027\u3092\u62C5\u4FDD\u3059\u308B\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u4EE5\u4E0A\u306E\u6BD4\u8F03\u691C\u8A3C\u304B\u3089\u5C0E\u304B\u308C\u308B\u7D50\u8AD6\u306F\u3001\u30B9\u30B1\u30FC\u30E9\u30D3\u30EA\u30C6\u30A3\u306E\u9650\u754C\u3092\u7A81\u7834\u3059\u308B\u65B0\u6A19\u6E96\u3092\u63D0\u793A\u3057\u3066\u3044\u308B\u3002",
+          "\u6301\u7D9A\u53EF\u80FD\u306A\u904B\u7528\u4F53\u5236\u3078\u306E\u79FB\u884C\u30ED\u30FC\u30C9\u30DE\u30C3\u30D7\u3092\u7B56\u5B9A\u3057\u3001\u6BB5\u968E\u7684\u79FB\u884C\u3092\u5B8C\u4E86\u3059\u308B customer\u3002",
+          anchors.x_T
+        ]
+      ];
+    } else {
+      fwdVariations = [
+        [
+          anchors.x_0,
+          "\u30B9\u30C6\u30C3\u30D71\uFF08\u9806\u65B9\u5411\u6F14\u7E79\uFF09\uFF1A\u521D\u671F\u72B6\u614BS_0\u306B\u5BFE\u3057\u3066\u4E0D\u5909\u91CF\u4FDD\u5B58\u5247\u3092\u9069\u7528\u3057\u3001\u72B6\u614B\u7A7A\u9593\u306E\u6709\u754C\u6027\u3092\u5C0E\u51FA\u3059\u308B\u3002",
+          "\u30B9\u30C6\u30C3\u30D72\uFF08\u5883\u754C\u6761\u4EF6\uFF09\uFF1A\u5909\u6570x\u306E\u5B9A\u7FA9\u57DF\u306B\u304A\u3051\u308B\u9023\u7D9A\u6027\u306B\u3088\u308A\u3001\u7279\u7570\u70B9\u8FD1\u508D\u3067\u306E\u767A\u6563\u304C\u6392\u9664\u3055\u308C\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u30B9\u30C6\u30C3\u30D71\uFF08\u6F14\u7E79\u5C55\u958B\uFF09\uFF1A\u88DC\u984C1.1\u306B\u3088\u308A\u3001\u7FA4G\u306E\u6B63\u898F\u90E8\u5206\u7FA4H\u306B\u5BFE\u3059\u308B\u6E96\u540C\u578B\u5199\u50CFPhi\u306E\u6838Ker(Phi)\u3092\u6C7A\u5B9A\u3059\u308B\u3002",
+          "\u30B9\u30C6\u30C3\u30D72\uFF08\u540C\u578B\u5BFE\u5FDC\uFF09\uFF1A\u6E96\u540C\u578B\u5B9A\u7406\u3092\u9069\u7528\u3059\u308B\u3068\u3001\u5270\u4F59\u7FA4G/Ker(Phi)\u3068\u50CFIm(Phi)\u306E\u9593\u306B\u81EA\u7136\u306A\u540C\u578B\u304C\u6210\u7ACB\u3059\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u30B9\u30C6\u30C3\u30D71\uFF08\u5E30\u7D0D\u7684\u57FA\u5E95\uFF09\uFF1A\u57FA\u5E95\u30B1\u30FC\u30B9n=1\u306B\u304A\u3044\u3066\u4E0D\u7B49\u5F0F\u304C\u81EA\u660E\u306B\u6210\u7ACB\u3059\u308B\u3053\u3068\u3092\u78BA\u8A8D\u3059\u308B\u3002",
+          "\u30B9\u30C6\u30C3\u30D72\uFF08\u5E30\u7D0D\u7684\u4EEE\u5B9A\uFF09\uFF1An=k\u3067\u306E\u6210\u7ACB\u3092\u4EEE\u5B9A\u3057\u3001n=k+1\u3067\u306E\u5C55\u958B\u9805\u306E\u5DEE\u5206\u8A55\u4FA1\u5F0F\u3092\u5C0E\u51FA\u3059\u308B\u3002"
+        ],
+        [
+          anchors.x_0,
+          "\u30B9\u30C6\u30C3\u30D71\uFF08\u5BFE\u79F0\u6027\u89E3\u6790\uFF09\uFF1A\u30CF\u30DF\u30EB\u30C8\u30F3\u7CFB\u306E\u6642\u9593\u53CD\u8EE2\u5BFE\u79F0\u6027\u306B\u3088\u308A\u3001\u4F4D\u76F8\u7A7A\u9593\u306E\u4F53\u7A4D\u4FDD\u5B58\u5247\uFF08\u30EA\u30A6\u30F4\u30A3\u30EB\u306E\u5B9A\u7406\uFF09\u304C\u6210\u308A\u7ACB\u3064\u3002",
+          "\u30B9\u30C6\u30C3\u30D72\uFF08\u30A8\u30CD\u30EB\u30AE\u30FC\u9762\uFF09\uFF1A\u904B\u52D5\u65B9\u7A0B\u5F0F\u306E\u7B2C\u4E00\u7A4D\u5206\u3088\u308A\u3001\u89E3\u8ECC\u9053\u306F\u30B3\u30F3\u30D1\u30AF\u30C8\u306A\u30A8\u30CD\u30EB\u30AE\u30FC\u66F2\u9762\u4E0A\u306B\u62D8\u675F\u3055\u308C\u308B\u3002"
+        ]
+      ];
+      bwdVariations = [
+        [
+          "\u30B9\u30C6\u30C3\u30D7N-1\uFF08\u9006\u65B9\u5411\u9006\u7B97\uFF09\uFF1A\u76EE\u6A19\u7D50\u8AD6\u304C\u6210\u308A\u7ACB\u3064\u305F\u3081\u306E\u5FC5\u8981\u5341\u5206\u6761\u4EF6\u3068\u3057\u3066\u3001\u4E2D\u9593\u88DC\u984CL_mid\u306E\u6210\u7ACB\u304C\u8981\u6C42\u3055\u308C\u308B\u3002",
+          "\u30B9\u30C6\u30C3\u30D7N\uFF08\u6574\u5408\u6EB6\u63A5\uFF09\uFF1A\u9806\u65B9\u5411\u306E\u6709\u754C\u6027\u8A55\u4FA1\u3068\u9006\u65B9\u5411\u306E\u5FC5\u8981\u6761\u4EF6\u304C\u4E2D\u9593\u70B9\u306B\u304A\u3044\u3066\u5B8C\u5168\u306B\u4E00\u81F4\u3059\u308B\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u30B9\u30C6\u30C3\u30D7N-1\uFF08\u30B4\u30FC\u30EB\u9006\u7B97\uFF09\uFF1A\u6700\u7D42\u4E3B\u5F35\u306E\u5BFE\u5076\u3092\u4EEE\u5B9A\u3057\u305F\u969B\u3001\u6975\u5C0F\u53CD\u4F8B\u306E\u5B58\u5728\u304C\u76F4\u524D\u306E\u540C\u578B\u69CB\u9020\u3068\u77DB\u76FE\u3059\u308B\u3002",
+          "\u30B9\u30C6\u30C3\u30D7N\uFF08\u80CC\u7406\u5B8C\u4E86\uFF09\uFF1A\u3088\u3063\u3066\u53CD\u4F8B\u306F\u5B58\u5728\u305B\u305A\u3001\u4E2D\u9593\u72B6\u614B\u3067\u306E\u6574\u5408\u6027\u304C\u6570\u5B66\u7684\u306B\u4FDD\u8A3C\u3055\u308C\u308B\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u30B9\u30C6\u30C3\u30D7N-1\uFF08\u76EE\u6A19\u5230\u9054\u6761\u4EF6\uFF09\uFF1Ak+1\u3067\u306E\u5DEE\u5206\u4E0A\u9650\u304C\u6B63\u3067\u3042\u308B\u3053\u3068\u3092\u793A\u3059\u305F\u3081\u3001\u4E2D\u9593\u4E0D\u7B49\u5F0F\u306E\u7E2E\u5C0F\u5199\u50CF\u6027\u3092\u691C\u8A3C\u3059\u308B\u3002",
+          "\u30B9\u30C6\u30C3\u30D7N\uFF08\u7D71\u5408\u8A3C\u660E\uFF09\uFF1A\u4E21\u65B9\u5411\u306E\u5883\u754C\u304C\u4E00\u70B9\u306B\u53CE\u675F\u3057\u3001\u3059\u3079\u3066\u306E\u81EA\u7136\u6570n\u306B\u5BFE\u3059\u308B\u547D\u984C\u304C\u5B8C\u7D50\u3059\u308B\u3002",
+          anchors.x_T
+        ],
+        [
+          "\u30B9\u30C6\u30C3\u30D7N-1\uFF08\u7D42\u7AEF\u30A2\u30C8\u30E9\u30AF\u30BF\u30FC\uFF09\uFF1A\u76EE\u6A19\u7D42\u7AEF\u72B6\u614B\u3078\u306E\u6F38\u8FD1\u5B89\u5B9A\u6027\u306F\u3001\u30EA\u30A2\u30D7\u30CE\u30D5\u95A2\u6570\u306E\u8CA0\u5B9A\u5024\u6027\u306B\u3088\u3063\u3066\u5B9A\u307E\u308B\u3002",
+          "\u30B9\u30C6\u30C3\u30D7N\uFF08\u4E0D\u5909\u591A\u69D8\u4F53\u7D50\u5408\uFF09\uFF1A\u9806\u65B9\u5411\u8ECC\u9053\u3068\u9006\u65B9\u5411\u968F\u4F34\u8ECC\u9053\u304C\u4E2D\u9593\u8D85\u66F2\u9762\u4E0A\u3067\u6A2A\u65AD\u7684\u306B\u885D\u7A81\u30FB\u63A5\u7D9A\u3059\u308B\u3002",
+          anchors.x_T
+        ]
+      ];
+    }
+    const K = Math.min(kCandidates, fwdVariations.length);
+    for (let i = 0; i < K; i++) {
+      const steps = fwdVariations[i];
+      const tipVec = embedSentenceUnit(steps[steps.length - 1]);
+      const prevVec = embedSentenceUnit(steps[steps.length - 2]);
+      const dirVec = tipVec.map((v, idx) => v - (prevVec[idx] ?? 0));
+      let norm = 0;
+      for (const v of dirVec)
+        norm += v * v;
+      norm = Math.sqrt(norm);
+      const normalizedDir = norm > 1e-7 ? dirVec.map((v) => v / norm) : dirVec;
+      fwdWaves.push({ wave_id: i, direction: "forward", steps, tip_vector: tipVec, direction_vector: normalizedDir });
+    }
+    for (let j = 0; j < K; j++) {
+      const steps = bwdVariations[j];
+      const tipVec = embedSentenceUnit(steps[0]);
+      const nextVec = embedSentenceUnit(steps[1]);
+      const dirVec = nextVec.map((v, idx) => v - (tipVec[idx] ?? 0));
+      let norm = 0;
+      for (const v of dirVec)
+        norm += v * v;
+      norm = Math.sqrt(norm);
+      const normalizedDir = norm > 1e-7 ? dirVec.map((v) => v / norm) : dirVec;
+      bwdWaves.push({ wave_id: j, direction: "backward", steps, tip_vector: tipVec, direction_vector: normalizedDir });
+    }
+    return [fwdWaves, bwdWaves];
+  }
+  function computeCollisionAction(fwdWave, bwdWave, beta = 0.5) {
+    const tipFwd = fwdWave.tip_vector;
+    const tipBwd = bwdWave.tip_vector;
+    let distL2Sq = 0;
+    let dotDir = 0;
+    for (let i = 0; i < tipFwd.length; i++) {
+      const d = (tipFwd[i] ?? 0) - (tipBwd[i] ?? 0);
+      distL2Sq += d * d;
+      dotDir += (fwdWave.direction_vector[i] ?? 0) * (bwdWave.direction_vector[i] ?? 0);
+    }
+    const distL2 = Math.sqrt(distL2Sq);
+    const dirCurvature = 1 - Math.max(-1, Math.min(1, dotDir));
+    const dGeodesic = distL2 * 1.5 + dirCurvature * 0.8;
+    const stepFwdLast = fwdWave.steps[fwdWave.steps.length - 1] ?? "";
+    const stepBwdFirst = bwdWave.steps[0] ?? "";
+    const stemsFwd = new Set(stepFwdLast.match(/[\u4e00-\u9fff]+/g) || []);
+    const stemsBwd = new Set(stepBwdFirst.match(/[\u4e00-\u9fff]+/g) || []);
+    let intersect = 0;
+    for (const s of stemsFwd) {
+      if (stemsBwd.has(s))
+        intersect++;
+    }
+    const union = (/* @__PURE__ */ new Set([...stemsFwd, ...stemsBwd])).size;
+    const jaccard = union > 0 ? intersect / union : 0.2;
+    const dCausal = (1 - jaccard) * 1.2;
+    const weldedText = fwdWave.steps.join("") + bwdWave.steps.join("");
+    const qdaRes = computeThreePhaseQdaDistance(weldedText);
+    const d3Phase = qdaRes.d_3phase;
+    const sTotal = dGeodesic + dCausal + 0.5 * beta * d3Phase;
+    return [sTotal, dGeodesic, dCausal, d3Phase];
+  }
+  function solveBidirectionalCollisionBridge(anchors, options) {
+    const beta = options?.beta ?? 0.5;
+    const lambdaBridge = options?.lambda_bridge ?? 0.8;
+    const kCandidates = options?.k_candidates ?? 4;
+    let fwdWaves;
+    let bwdWaves;
+    if (options?.forward_candidates && options?.backward_candidates) {
+      fwdWaves = [];
+      bwdWaves = [];
+      for (let i = 0; i < Math.min(kCandidates, options.forward_candidates.length); i++) {
+        const steps = options.forward_candidates[i];
+        const tipVec = embedSentenceUnit(steps[steps.length - 1]);
+        const prevVec = steps.length >= 2 ? embedSentenceUnit(steps[steps.length - 2]) : tipVec;
+        const dirVec = tipVec.map((v, idx) => v - (prevVec[idx] ?? 0));
+        let norm = 0;
+        for (const v of dirVec)
+          norm += v * v;
+        norm = Math.sqrt(norm);
+        const normalizedDir = norm > 1e-7 ? dirVec.map((v) => v / norm) : dirVec;
+        fwdWaves.push({ wave_id: i, direction: "forward", steps, tip_vector: tipVec, direction_vector: normalizedDir });
+      }
+      for (let j = 0; j < Math.min(kCandidates, options.backward_candidates.length); j++) {
+        const steps = options.backward_candidates[j];
+        const tipVec = embedSentenceUnit(steps[0]);
+        const nextVec = steps.length >= 2 ? embedSentenceUnit(steps[1]) : tipVec;
+        const dirVec = nextVec.map((v, idx) => v - (tipVec[idx] ?? 0));
+        let norm = 0;
+        for (const v of dirVec)
+          norm += v * v;
+        norm = Math.sqrt(norm);
+        const normalizedDir = norm > 1e-7 ? dirVec.map((v) => v / norm) : dirVec;
+        bwdWaves.push({ wave_id: j, direction: "backward", steps, tip_vector: tipVec, direction_vector: normalizedDir });
+      }
+    } else {
+      [fwdWaves, bwdWaves] = generateDeterministicRollouts(anchors, kCandidates);
+    }
+    const Kfwd = fwdWaves.length;
+    const Kbwd = bwdWaves.length;
+    const actionMatrix = [];
+    let bestAction = Infinity;
+    let bestPair = [0, 0];
+    let bestComponents = [0, 0, 0];
+    for (let i = 0; i < Kfwd; i++) {
+      const row = [];
+      for (let j = 0; j < Kbwd; j++) {
+        const [sTot, dGeo, dCau, d3ph] = computeCollisionAction(fwdWaves[i], bwdWaves[j], beta);
+        row.push(sTot);
+        if (sTot < bestAction) {
+          bestAction = sTot;
+          bestPair = [i, j];
+          bestComponents = [dGeo, dCau, d3ph];
+        }
+      }
+      actionMatrix.push(row);
+    }
+    const optFwd = fwdWaves[bestPair[0]];
+    const optBwd = bwdWaves[bestPair[1]];
+    const weldedTrajectory = [...optFwd.steps, ...optBwd.steps];
+    const weldedText = weldedTrajectory.join("");
+    const mBridge = Math.max(0, Math.min(1, Math.exp(-lambdaBridge * bestAction)));
+    return {
+      domain: anchors.domain,
+      anchors,
+      optimal_pair: bestPair,
+      min_action: bestAction,
+      welded_trajectory: weldedTrajectory,
+      welded_text: weldedText,
+      m_bridge: mBridge,
+      d_geodesic: bestComponents[0],
+      d_causal: bestComponents[1],
+      d_3phase: bestComponents[2],
+      forward_waves: fwdWaves,
+      backward_waves: bwdWaves,
+      collision_matrix: actionMatrix
     };
   }
 
@@ -23386,11 +24276,22 @@ Ensure 100% of facts are intact. Output ONLY the polished final Japanese text.`
       state.redlineResult = redlineResult;
     }
 
+    let geodesic = null;
+    let bridge = null;
+    if (core.computeSemanticGeodesicCurvature) {
+      geodesic = core.computeSemanticGeodesicCurvature(text);
+    }
+    if (core.pinBoundaryAnchors && core.solveBidirectionalCollisionBridge) {
+      const domain = state.useCaseId === 'case_2_essay' ? 'article' : (state.useCaseId === 'case_3_b2b_proposal' ? 'cot_reasoning' : 'novel');
+      const anchors = core.pinBoundaryAnchors(state.presetId || 'USIR Theme', domain);
+      bridge = core.solveBidirectionalCollisionBridge(anchors, { k_candidates: 3 });
+    }
+
     const result = {
       text, targetPhase, gains, language, metrics, classification, microGate,
       trajectoryWave, hsmm, sinkholes, directives, modulatedQ,
       tierSHex: toHex(tierS), rewrittenPreview, rewrittenMetrics,
-      molecules, crossModal, redlineResult
+      molecules, crossModal, redlineResult, geodesic, bridge
     };
 
     state.text = text;
@@ -23475,6 +24376,128 @@ Ensure 100% of facts are intact. Output ONLY the polished final Japanese text.`
     if (res.redlineResult) {
       renderRedlineAndRoiDOM(res.redlineResult);
     }
+
+    if (res.geodesic) {
+      renderGeodesicDOM(res.geodesic);
+    }
+    if (res.bridge) {
+      renderBridgeDOM(res.bridge);
+    }
+  }
+
+  function renderGeodesicDOM(geo) {
+    if (typeof document === 'undefined' || !document.getElementById || !geo) return;
+    const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+    setTxt('geodesic-mean-curvature', geo.mean_curvature.toFixed(3));
+    setTxt('geodesic-brownian-ratio', geo.brownian_ratio.toFixed(2));
+    const warnEl = document.getElementById('geodesic-catalog-warning');
+    if (warnEl) {
+      if (geo.is_brownian_catalog) {
+        warnEl.textContent = '⚠️ 小道具乱射・カタログ化検知 (Brownian Jump)';
+        warnEl.style.color = '#ef4444';
+      } else {
+        warnEl.textContent = '正常 (Cohesive Geodesic Arc)';
+        warnEl.style.color = '#10b981';
+      }
+    }
+  }
+
+  function renderBridgeDOM(bridge) {
+    if (typeof document === 'undefined' || !document.getElementById || !bridge) return;
+    const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+    setTxt('bridge-status-badge', 'Bridge: 衝突溶接完了 (M=' + bridge.m_bridge.toFixed(2) + ')');
+    setTxt('bridge-fwd-anchor', 'Anchor x_0: ' + bridge.anchors.x_0.slice(0, 32) + '...');
+    setTxt('bridge-bwd-anchor', 'Anchor x_T: ' + bridge.anchors.x_T.slice(0, 32) + '...');
+    setTxt('bridge-action-metric', 'Action Integral S_collision: ' + bridge.min_action.toFixed(3) + ' | Coupling M_bridge: ' + bridge.m_bridge.toFixed(3) + ' | Pair: (' + bridge.optimal_pair[0] + ', ' + bridge.optimal_pair[1] + ')');
+    setTxt('bridge-welded-preview', 'Welded: ' + bridge.welded_text.slice(0, 140) + '...');
+
+    renderBridgeCanvas(bridge);
+  }
+
+  function renderBridgeCanvas(bridge) {
+    if (typeof document === 'undefined' || !document.getElementById) return;
+    const canvas = document.getElementById('bridge-wave-canvas');
+    if (!canvas || typeof canvas.getContext !== 'function') return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const w = canvas.width || 400;
+    const h = canvas.height || 70;
+    ctx.clearRect(0, 0, w, h);
+
+    // Left Forward Wave (Blue)
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(10, h / 2);
+    for (let x = 10; x <= w / 2; x += 10) {
+      const y = h / 2 + Math.sin((x / 20) + (bridge.optimal_pair ? bridge.optimal_pair[0] : 0)) * 18;
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Right Backward Wave (Purple)
+    ctx.strokeStyle = '#c084fc';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(w - 10, h / 2);
+    for (let x = w - 10; x >= w / 2; x -= 10) {
+      const y = h / 2 + Math.sin(((w - x) / 20) + (bridge.optimal_pair ? bridge.optimal_pair[1] : 0)) * 18;
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Center Collision Point (Gold spark)
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  const CLASSIC_V3_SAMPLES = {
+    'Sample-01': {
+      title: '雨夜の湯治場と老陶工',
+      v3Text: '障子を細く開けると、冷えた杉の匂いが雨とともに流れ込んできた。軒先から落ちる水滴が、土間の踏み石に一つ、また一つと鈍い音を立てて砕ける。谷底の湯治場は暮れ果てて、人の声はもう途絶えていた。渡り廊下の突き当たり、裸電球の傘の下に、削り屑の積もった轆轤が据えてある。濡れた粘土を指先で受ける老人は、こちらへ眼もくれず、ただ掌の重みを測るように背を丸めていた。水を含んだ灰色の土が、指の隙間から細くせり上がる。窯の焚口から漏れる微かな熱気だけが、乾いた板壁の節穴を赤く染めていた。言葉はなかった。ただ、轆轤の軸が軋むかすかな擦過音と、山を滑り降りてくる夜雨の気配ばかりが、薄暗い作業場を満たしていた。',
+      domain: 'novel',
+    },
+    'Sample-02': {
+      title: '未明の時計工房と解体',
+      v3Text: '午前三時。路地の外灯が消え、硝子窓に青白い霜が降りた。解体台の白木には、研ぎ澄まされた鋼のピンセットと、油壺が三つ。銀の裏蓋を刃先でこじ開けた瞬間、乾いた金属の匂いが鼻孔を突いた。露わになった脱進機は、生き物の心臓のように細かく痙攣している。針が止まった。ルビーの軸受けに噛み込んだ微細な真鍮粉を、極細の豚毛で払う。息を止める。ピンセットの先端が微かに滑れば、渦巻く極細のヒゲゼンマイは一瞬で弾け、二度と戻らぬ銀の屑と化すのだ。カチリ、と小さな歯が噛み合った。再び規則的な鼓動が冷たい指先に伝わったとき、東の空がわずかに白み、凍りついた瓦屋根が青く光った。',
+      domain: 'novel',
+    },
+    'Sample-03': {
+      title: '深夜の埠頭と夜の積荷',
+      v3Text: '潮風が塩の粉を吹きつけ、鉄扉の錆が赤い鱗となって剥がれ落ちた。第三突堤。吊り上げられた木箱の下で、濡れた麻縄が軋む。合図はない。男は湿った煙草の吸殻を靴底で踏み消し、革手袋の留め金を締めた。クレーンの太いワイヤーが唸りを上げ、油の浮いた黒い水面に長い飛沫を散らす。荷台の幌が跳ね上げられ、番号のない角材の束が無言で滑り込んだ。ディーゼル機関の低い振動が、足元のコンクリートを震わせる。時計を見る。三分の遅れ。闇の奥でヘッドライトが二度瞬き、黒い大型車は泥跳ねを上げて埠頭を滑り去った。あとに残ったのは、重油の焦げた臭いと、岸壁を叩く冷たい波頭の音だけだった。',
+      domain: 'novel',
+    },
+  };
+
+  function compareV3VsV4(sampleKey = 'Sample-01') {
+    const sample = CLASSIC_V3_SAMPLES[sampleKey] || CLASSIC_V3_SAMPLES['Sample-01'];
+    if (!core) return null;
+
+    const geoV3 = core.computeSemanticGeodesicCurvature(sample.v3Text);
+    const anchors = core.pinBoundaryAnchors(sample.title, sample.domain);
+    const bridge = core.solveBidirectionalCollisionBridge(anchors, { k_candidates: 4 });
+    const geoV4 = core.computeSemanticGeodesicCurvature(bridge.welded_text);
+
+    renderGeodesicDOM(geoV4);
+    renderBridgeDOM(bridge);
+
+    const compEl = document.getElementById('v3-v4-comparison-view');
+    if (compEl) {
+      compEl.innerHTML =
+        '<table style="width: 100%; border-collapse: collapse; font-size: 10px;">' +
+        '<thead><tr style="border-bottom: 1px solid #334155;"><th style="text-align: left; padding: 3px;">世代</th><th style="padding: 3px;">平均曲率 κ</th><th style="padding: 3px;">ブラウン比 η</th><th style="padding: 3px;">判定</th></tr></thead>' +
+        '<tbody>' +
+        '<tr style="color: #f87171;"><td style="padding: 3px;">v3.0 片方向 (旧)</td><td style="text-align: center;">' + geoV3.mean_curvature.toFixed(3) + '</td><td style="text-align: center;">' + geoV3.brownian_ratio.toFixed(2) + '</td><td>⚠️ 小道具カタログ化</td></tr>' +
+        '<tr style="color: #34d399; font-weight: bold;"><td style="padding: 3px;">v4.0 双方向 (新)</td><td style="text-align: center;">' + geoV4.mean_curvature.toFixed(3) + '</td><td style="text-align: center;">' + geoV4.brownian_ratio.toFixed(2) + '</td><td>⚡ 中央衝突溶接</td></tr>' +
+        '</tbody></table>';
+    }
+
+    return { sample, geoV3, geoV4, bridge };
   }
 
   function renderRedlineAndRoiDOM(diff) {
@@ -23776,6 +24799,18 @@ Ensure 100% of facts are intact. Output ONLY the polished final Japanese text.`
     PRESETS, ELEMENT_META, analyzeText, loadPreset, setGains, setTargetPhase,
     loadUseCase, runIterativeRewrite, triggerGenesis, playAudio, stopAudio, downloadMidi,
     renderCinemaPreview, renderStoryboard, setMode, transpileCurrentState,
+    planBidirectionalBridge: (theme, domain) => {
+      const a = core.pinBoundaryAnchors(theme, domain || 'novel');
+      const b = core.solveBidirectionalCollisionBridge(a, { k_candidates: 4 });
+      renderBridgeDOM(b);
+      return b;
+    },
+    inspectGeodesicCurvature: (text) => {
+      const g = core.computeSemanticGeodesicCurvature(text);
+      renderGeodesicDOM(g);
+      return g;
+    },
+    compareV3VsV4,
     getState: () => state,
     runMicroGate: (t, phase) => core.runMicroConstraintGate(t, { targetPhase: phase || state.targetPhase })
   };

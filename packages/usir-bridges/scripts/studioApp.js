@@ -91,11 +91,22 @@
       state.redlineResult = redlineResult;
     }
 
+    let geodesic = null;
+    let bridge = null;
+    if (core.computeSemanticGeodesicCurvature) {
+      geodesic = core.computeSemanticGeodesicCurvature(text);
+    }
+    if (core.pinBoundaryAnchors && core.solveBidirectionalCollisionBridge) {
+      const domain = state.useCaseId === 'case_2_essay' ? 'article' : (state.useCaseId === 'case_3_b2b_proposal' ? 'cot_reasoning' : 'novel');
+      const anchors = core.pinBoundaryAnchors(state.presetId || 'USIR Theme', domain);
+      bridge = core.solveBidirectionalCollisionBridge(anchors, { k_candidates: 3 });
+    }
+
     const result = {
       text, targetPhase, gains, language, metrics, classification, microGate,
       trajectoryWave, hsmm, sinkholes, directives, modulatedQ,
       tierSHex: toHex(tierS), rewrittenPreview, rewrittenMetrics,
-      molecules, crossModal, redlineResult
+      molecules, crossModal, redlineResult, geodesic, bridge
     };
 
     state.text = text;
@@ -180,6 +191,128 @@
     if (res.redlineResult) {
       renderRedlineAndRoiDOM(res.redlineResult);
     }
+
+    if (res.geodesic) {
+      renderGeodesicDOM(res.geodesic);
+    }
+    if (res.bridge) {
+      renderBridgeDOM(res.bridge);
+    }
+  }
+
+  function renderGeodesicDOM(geo) {
+    if (typeof document === 'undefined' || !document.getElementById || !geo) return;
+    const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+    setTxt('geodesic-mean-curvature', geo.mean_curvature.toFixed(3));
+    setTxt('geodesic-brownian-ratio', geo.brownian_ratio.toFixed(2));
+    const warnEl = document.getElementById('geodesic-catalog-warning');
+    if (warnEl) {
+      if (geo.is_brownian_catalog) {
+        warnEl.textContent = '⚠️ 小道具乱射・カタログ化検知 (Brownian Jump)';
+        warnEl.style.color = '#ef4444';
+      } else {
+        warnEl.textContent = '正常 (Cohesive Geodesic Arc)';
+        warnEl.style.color = '#10b981';
+      }
+    }
+  }
+
+  function renderBridgeDOM(bridge) {
+    if (typeof document === 'undefined' || !document.getElementById || !bridge) return;
+    const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+    setTxt('bridge-status-badge', 'Bridge: 衝突溶接完了 (M=' + bridge.m_bridge.toFixed(2) + ')');
+    setTxt('bridge-fwd-anchor', 'Anchor x_0: ' + bridge.anchors.x_0.slice(0, 32) + '...');
+    setTxt('bridge-bwd-anchor', 'Anchor x_T: ' + bridge.anchors.x_T.slice(0, 32) + '...');
+    setTxt('bridge-action-metric', 'Action Integral S_collision: ' + bridge.min_action.toFixed(3) + ' | Coupling M_bridge: ' + bridge.m_bridge.toFixed(3) + ' | Pair: (' + bridge.optimal_pair[0] + ', ' + bridge.optimal_pair[1] + ')');
+    setTxt('bridge-welded-preview', 'Welded: ' + bridge.welded_text.slice(0, 140) + '...');
+
+    renderBridgeCanvas(bridge);
+  }
+
+  function renderBridgeCanvas(bridge) {
+    if (typeof document === 'undefined' || !document.getElementById) return;
+    const canvas = document.getElementById('bridge-wave-canvas');
+    if (!canvas || typeof canvas.getContext !== 'function') return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const w = canvas.width || 400;
+    const h = canvas.height || 70;
+    ctx.clearRect(0, 0, w, h);
+
+    // Left Forward Wave (Blue)
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(10, h / 2);
+    for (let x = 10; x <= w / 2; x += 10) {
+      const y = h / 2 + Math.sin((x / 20) + (bridge.optimal_pair ? bridge.optimal_pair[0] : 0)) * 18;
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Right Backward Wave (Purple)
+    ctx.strokeStyle = '#c084fc';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(w - 10, h / 2);
+    for (let x = w - 10; x >= w / 2; x -= 10) {
+      const y = h / 2 + Math.sin(((w - x) / 20) + (bridge.optimal_pair ? bridge.optimal_pair[1] : 0)) * 18;
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Center Collision Point (Gold spark)
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  const CLASSIC_V3_SAMPLES = {
+    'Sample-01': {
+      title: '雨夜の湯治場と老陶工',
+      v3Text: '障子を細く開けると、冷えた杉の匂いが雨とともに流れ込んできた。軒先から落ちる水滴が、土間の踏み石に一つ、また一つと鈍い音を立てて砕ける。谷底の湯治場は暮れ果てて、人の声はもう途絶えていた。渡り廊下の突き当たり、裸電球の傘の下に、削り屑の積もった轆轤が据えてある。濡れた粘土を指先で受ける老人は、こちらへ眼もくれず、ただ掌の重みを測るように背を丸めていた。水を含んだ灰色の土が、指の隙間から細くせり上がる。窯の焚口から漏れる微かな熱気だけが、乾いた板壁の節穴を赤く染めていた。言葉はなかった。ただ、轆轤の軸が軋むかすかな擦過音と、山を滑り降りてくる夜雨の気配ばかりが、薄暗い作業場を満たしていた。',
+      domain: 'novel',
+    },
+    'Sample-02': {
+      title: '未明の時計工房と解体',
+      v3Text: '午前三時。路地の外灯が消え、硝子窓に青白い霜が降りた。解体台の白木には、研ぎ澄まされた鋼のピンセットと、油壺が三つ。銀の裏蓋を刃先でこじ開けた瞬間、乾いた金属の匂いが鼻孔を突いた。露わになった脱進機は、生き物の心臓のように細かく痙攣している。針が止まった。ルビーの軸受けに噛み込んだ微細な真鍮粉を、極細の豚毛で払う。息を止める。ピンセットの先端が微かに滑れば、渦巻く極細のヒゲゼンマイは一瞬で弾け、二度と戻らぬ銀の屑と化すのだ。カチリ、と小さな歯が噛み合った。再び規則的な鼓動が冷たい指先に伝わったとき、東の空がわずかに白み、凍りついた瓦屋根が青く光った。',
+      domain: 'novel',
+    },
+    'Sample-03': {
+      title: '深夜の埠頭と夜の積荷',
+      v3Text: '潮風が塩の粉を吹きつけ、鉄扉の錆が赤い鱗となって剥がれ落ちた。第三突堤。吊り上げられた木箱の下で、濡れた麻縄が軋む。合図はない。男は湿った煙草の吸殻を靴底で踏み消し、革手袋の留め金を締めた。クレーンの太いワイヤーが唸りを上げ、油の浮いた黒い水面に長い飛沫を散らす。荷台の幌が跳ね上げられ、番号のない角材の束が無言で滑り込んだ。ディーゼル機関の低い振動が、足元のコンクリートを震わせる。時計を見る。三分の遅れ。闇の奥でヘッドライトが二度瞬き、黒い大型車は泥跳ねを上げて埠頭を滑り去った。あとに残ったのは、重油の焦げた臭いと、岸壁を叩く冷たい波頭の音だけだった。',
+      domain: 'novel',
+    },
+  };
+
+  function compareV3VsV4(sampleKey = 'Sample-01') {
+    const sample = CLASSIC_V3_SAMPLES[sampleKey] || CLASSIC_V3_SAMPLES['Sample-01'];
+    if (!core) return null;
+
+    const geoV3 = core.computeSemanticGeodesicCurvature(sample.v3Text);
+    const anchors = core.pinBoundaryAnchors(sample.title, sample.domain);
+    const bridge = core.solveBidirectionalCollisionBridge(anchors, { k_candidates: 4 });
+    const geoV4 = core.computeSemanticGeodesicCurvature(bridge.welded_text);
+
+    renderGeodesicDOM(geoV4);
+    renderBridgeDOM(bridge);
+
+    const compEl = document.getElementById('v3-v4-comparison-view');
+    if (compEl) {
+      compEl.innerHTML =
+        '<table style="width: 100%; border-collapse: collapse; font-size: 10px;">' +
+        '<thead><tr style="border-bottom: 1px solid #334155;"><th style="text-align: left; padding: 3px;">世代</th><th style="padding: 3px;">平均曲率 κ</th><th style="padding: 3px;">ブラウン比 η</th><th style="padding: 3px;">判定</th></tr></thead>' +
+        '<tbody>' +
+        '<tr style="color: #f87171;"><td style="padding: 3px;">v3.0 片方向 (旧)</td><td style="text-align: center;">' + geoV3.mean_curvature.toFixed(3) + '</td><td style="text-align: center;">' + geoV3.brownian_ratio.toFixed(2) + '</td><td>⚠️ 小道具カタログ化</td></tr>' +
+        '<tr style="color: #34d399; font-weight: bold;"><td style="padding: 3px;">v4.0 双方向 (新)</td><td style="text-align: center;">' + geoV4.mean_curvature.toFixed(3) + '</td><td style="text-align: center;">' + geoV4.brownian_ratio.toFixed(2) + '</td><td>⚡ 中央衝突溶接</td></tr>' +
+        '</tbody></table>';
+    }
+
+    return { sample, geoV3, geoV4, bridge };
   }
 
   function renderRedlineAndRoiDOM(diff) {
@@ -481,6 +614,18 @@
     PRESETS, ELEMENT_META, analyzeText, loadPreset, setGains, setTargetPhase,
     loadUseCase, runIterativeRewrite, triggerGenesis, playAudio, stopAudio, downloadMidi,
     renderCinemaPreview, renderStoryboard, setMode, transpileCurrentState,
+    planBidirectionalBridge: (theme, domain) => {
+      const a = core.pinBoundaryAnchors(theme, domain || 'novel');
+      const b = core.solveBidirectionalCollisionBridge(a, { k_candidates: 4 });
+      renderBridgeDOM(b);
+      return b;
+    },
+    inspectGeodesicCurvature: (text) => {
+      const g = core.computeSemanticGeodesicCurvature(text);
+      renderGeodesicDOM(g);
+      return g;
+    },
+    compareV3VsV4,
     getState: () => state,
     runMicroGate: (t, phase) => core.runMicroConstraintGate(t, { targetPhase: phase || state.targetPhase })
   };

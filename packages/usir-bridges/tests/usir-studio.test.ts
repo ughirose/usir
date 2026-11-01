@@ -80,6 +80,19 @@ describe('Stage 4 & v3.0: USIR Studio Interactive Web GUI, Chemistry & Ecosystem
     expect(html).toContain('id="btn-stop-audio"');
     expect(html).toContain('id="btn-download-midi"');
     expect(html).toContain('id="multimodal-storyboard-table"');
+
+    // v4.0 Bidirectional Bridge & Geodesic Curvature Inspector
+    expect(html).toContain('id="usir-v4-bridge-panel"');
+    expect(html).toContain('id="bridge-wave-canvas"');
+    expect(html).toContain('id="bridge-action-metric"');
+    expect(html).toContain('id="bridge-status-badge"');
+    expect(html).toContain('id="bridge-welded-preview"');
+    expect(html).toContain('id="geodesic-curvature-inspector"');
+    expect(html).toContain('id="geodesic-mean-curvature"');
+    expect(html).toContain('id="geodesic-brownian-ratio"');
+    expect(html).toContain('id="geodesic-catalog-warning"');
+    expect(html).toContain('id="btn-inspect-v3-vs-v4"');
+    expect(html).toContain('id="v3-v4-comparison-view"');
   });
 
   function setupStudioVM() {
@@ -436,4 +449,40 @@ describe('Stage 4 & v3.0: USIR Studio Interactive Web GUI, Chemistry & Ecosystem
     expect(rewriteResult.finalText.length).toBeGreaterThan(20);
     expect(rewriteResult.redlineResult.factRetentionRate).toBe(1.0);
   });
+
+  it('integrates USIR v4.0 Bidirectional Schrödinger Bridge and Geodesic Curvature Inspector in Studio', () => {
+    const { studio, elements } = setupStudioVM();
+
+    // 1. Plan bidirectional bridge
+    const bridge = studio.planBidirectionalBridge('山あいの宿', 'novel');
+    expect(bridge).toBeDefined();
+    expect(bridge.min_action).toBeGreaterThan(0);
+    expect(bridge.welded_text.length).toBeGreaterThan(20);
+    expect(elements.get('bridge-status-badge')?.textContent).toContain('Bridge: 衝突溶接完了');
+    expect(elements.get('bridge-action-metric')?.textContent).toContain('Action Integral S_collision:');
+    expect(elements.get('bridge-welded-preview')?.textContent).toContain('Welded:');
+
+    // 2. Inspect geodesic curvature
+    const sampleNovel = '障子を細く開けると、冷えた杉の匂いが雨とともに流れ込んできた。軒先から落ちる水滴が、土間の踏み石に一つ、また一つと鈍い音を立てて砕ける。谷底の湯治場は暮れ果てて、人の声はもう途絶えていた。渡り廊下の突き当たり、裸電球の傘の下に、削り屑の積もった轆轤が据えてある。濡れた粘土を指先で受ける老人は、こちらへ眼もくれず、ただ掌の重みを測るように背を丸めていた。水を含んだ灰色の土が、指の隙間から細くせり上がる。窯の焚口から漏れる微かな熱気だけが、乾いた板壁の節穴を赤く染めていた。言葉はなかった。ただ、轆轤の軸が軋むかすかな擦過音と、山を滑り降りてくる夜雨の気配ばかりが、薄暗い作業場を満たしていた。';
+    const geo = studio.inspectGeodesicCurvature(sampleNovel);
+    expect(geo).toBeDefined();
+    expect(geo.mean_curvature).toBeGreaterThan(0);
+    expect(geo.brownian_ratio).toBeGreaterThan(0);
+    expect(elements.get('geodesic-mean-curvature')?.textContent).toBe(geo.mean_curvature.toFixed(3));
+    expect(elements.get('geodesic-brownian-ratio')?.textContent).toBe(geo.brownian_ratio.toFixed(2));
+    expect(elements.get('geodesic-catalog-warning')?.textContent).toBeDefined();
+
+    // 3. Compare v3.0 vs v4.0
+    const comp = studio.compareV3VsV4('Sample-01');
+    expect(comp).toBeDefined();
+    expect(comp.geoV3).toBeDefined();
+    expect(comp.geoV4).toBeDefined();
+    expect(comp.bridge).toBeDefined();
+    const compTable = elements.get('v3-v4-comparison-view')?.innerHTML || '';
+    expect(compTable).toContain('v3.0 片方向 (旧)');
+    expect(compTable).toContain('v4.0 双方向 (新)');
+    expect(compTable).toContain('小道具カタログ化');
+    expect(compTable).toContain('中央衝突溶接');
+  });
 });
+
