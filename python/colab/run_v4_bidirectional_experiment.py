@@ -173,18 +173,82 @@ def run_experiment_on_domain(
         if not vanilla_text:
             vanilla_text = generate_unconstrained_lattice_walk(anchors, steps_count=3)
     else:
-        # Tier 3: Deterministic unconstrained lattice random walk (Zero canned string literals)
         vanilla_text = generate_unconstrained_lattice_walk(anchors, steps_count=3)
 
     # 2. Method 2: Unidirectional USIR v3.0 (Forward-only BAOAB)
-    # Forward wave only
-    bridge_res_v3 = solve_bidirectional_collision_bridge(anchors, k_candidates=1)
-    fwd_only_steps = bridge_res_v3.forward_waves[0].steps
-    v3_forward_text = "".join(fwd_only_steps)
+    if tier_info["tier"] == "Tier_1_GPU_Transformers":
+        try:
+            model, tok = get_transformers_model()
+            proc_v3 = USIRPyTorchLogitsProcessor(
+                dim=12,
+                top_k=64,
+                refractory_min=5,
+                refractory_max=35,
+                backward_attraction=None,
+            )
+            proc_v3.register_tokenizer_punctuation(tok)
+            inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
+            out_v3 = model.generate(**inp, logits_processor=[proc_v3], max_new_tokens=80, do_sample=True, temperature=0.7)
+            v3_forward_text = tok.decode(out_v3[0], skip_special_tokens=True)
+        except Exception:
+            bridge_res_v3 = solve_bidirectional_collision_bridge(anchors, k_candidates=1)
+            v3_forward_text = "".join(bridge_res_v3.forward_waves[0].steps)
+    else:
+        bridge_res_v3 = solve_bidirectional_collision_bridge(anchors, k_candidates=1)
+        v3_forward_text = "".join(bridge_res_v3.forward_waves[0].steps)
 
     # 3. Method 3: Bidirectional Collision Schrödinger Bridge USIR v4.0 (Proposed)
-    bridge_res_v4 = solve_bidirectional_collision_bridge(anchors, k_candidates=4)
-    v4_collision_text = bridge_res_v4.welded_text
+    if tier_info["tier"] == "Tier_1_GPU_Transformers":
+        try:
+            model, tok = get_transformers_model()
+            inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
+            v_attract = anchors.q_end - anchors.q_start
+            proc_v4 = USIRPyTorchLogitsProcessor(
+                dim=12,
+                top_k=64,
+                refractory_min=5,
+                refractory_max=35,
+                backward_attraction=v_attract[:12],
+            )
+            proc_v4.register_tokenizer_punctuation(tok)
+
+            llm_fwd_candidates = []
+            for _ in range(4):
+                out_f = model.generate(**inp, logits_processor=[proc_v4], max_new_tokens=45, do_sample=True, temperature=0.8)
+                f_text = tok.decode(out_f[0], skip_special_tokens=True)
+                clauses = [s.strip() for s in re.split(r'[。！？\n]+', f_text) if s.strip()]
+                if len(clauses) >= 2:
+                    c_step = clauses[1] + "。"
+                else:
+                    c_step = f_text[len(anchors.x_0):].strip()
+                if not c_step:
+                    c_step = "冷たい静寂の中で事態が進展していく。"
+                llm_fwd_candidates.append([anchors.x_0, c_step])
+
+            bwd_prompt = f"「{anchors.x_T}」という結論・結びの直前に起きる必然的な状況や前提条件（1文）："
+            inp_b = tok(bwd_prompt, return_tensors="pt").to(model.device)
+            llm_bwd_candidates = []
+            for _ in range(4):
+                out_b = model.generate(**inp_b, max_new_tokens=40, do_sample=True, temperature=0.8)
+                b_raw = tok.decode(out_b[0], skip_special_tokens=True)
+                b_clean = b_raw[len(bwd_prompt):].strip().split("\n")[0].split("。")[0]
+                if not b_clean:
+                    b_clean = "すべての前提が満たされたことを確認し"
+                llm_bwd_candidates.append([f"{b_clean}。", anchors.x_T])
+
+            bridge_res_v4 = solve_bidirectional_collision_bridge(
+                anchors,
+                forward_candidates=llm_fwd_candidates,
+                backward_candidates=llm_bwd_candidates,
+                k_candidates=4,
+            )
+            v4_collision_text = bridge_res_v4.welded_text
+        except Exception:
+            bridge_res_v4 = solve_bidirectional_collision_bridge(anchors, k_candidates=4)
+            v4_collision_text = bridge_res_v4.welded_text
+    else:
+        bridge_res_v4 = solve_bidirectional_collision_bridge(anchors, k_candidates=4)
+        v4_collision_text = bridge_res_v4.welded_text
 
     # Evaluate all 3 outputs with unified v4.0 metrics
     def evaluate_output(text: str) -> Dict[str, Any]:

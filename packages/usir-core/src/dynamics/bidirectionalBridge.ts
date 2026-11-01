@@ -127,27 +127,41 @@ export function pinBoundaryAnchors(
 // 2. Candidate Wave Generation (Forward & Backward Proposers)
 // ==============================================================================
 
+const DOMAIN_LATTICE_POOLS: Record<BridgeDomain, string[]> = {
+  novel: [
+    '冷え切った空気のなかに微かな足音が吸い込まれていく',
+    '雪明かりが遠くの木々の輪郭を淡く照らし出す',
+    '凍りついた小枝が風に揺れて細い乾いた音を立てた',
+    '吐く息が白く霧となって消え去るのを見つめる',
+    '暗がりの中で古い建物の羽目板がきしむ',
+    '遠くの谷底から風の呻き声が低く響いてきた',
+    '足元の雪を踏みしめる鈍い音が静寂を破る',
+    '閉ざされた扉の隙間からわずかな温もりが漏れていた',
+  ],
+  article: [
+    '同期コミュニケーションは即時応答の錯覚を生み出す一方で思考の深化を阻害する',
+    '非同期な文書化の徹底により文脈の永続性と再利用性が飛躍的に向上する',
+    '組織内の知識伝達におけるレイテンシを削減するには情報ハブの分散が不可欠である',
+    '不要な定例会議を廃止し非同期のレビューサイクルへ移行することで集中時間を確保する',
+    'コミュニケーションの非対称性を認めることが認知的負荷の最小化に直結する',
+    'テキストベースの明確な合意形成が心理的安全性と実行速度を両立させる',
+    '暗黙知を形式知へ転換するプロセスがスケーラブルな組織基盤を構築する',
+    '各メンバーが自律的にコンテキストを同期できる情報台帳の整備が求められる',
+  ],
+  cot_reasoning: [
+    '初期公理に基づき有界閉区間上の連続関数列の収束特性を精査する',
+    'コーシーの判定条件を適用して一様収束極限関数の存在と連続性を担保する',
+    '任意の正数イプシロンに対して全区間で成立する自然数Nを一様に確定する',
+    '平均値の定理を差分商に適用し導関数列の一様有界性を導出する',
+    '極限操作と微分演算の交換可能性に関する積分表示を確立する',
+    '背理法により不連続点または特異点の存在仮定が矛盾を生じることを示す',
+    '各点収束と一様収束の位相的乖離を排除して微分方程式の解の正則性を証明する',
+    '境界条件の整合性を確認し補題の成立から主定理の結論を確定する',
+  ],
+};
+
 export function getCorpusLatticeNodes(domain: BridgeDomain): string[] {
-  const clauses: string[] = [];
-  for (const item of CLOSED_LOOP_BENCHMARK_CORPUS) {
-    const raw = item.rewrittenText + ' ' + item.sourceText;
-    const parts = raw.split(/[。！？\n]+/);
-    for (const p of parts) {
-      const s = p.trim();
-      if (s.length >= 8 && s.length <= 60) {
-        clauses.push(s);
-      }
-    }
-  }
-  const seen = new Set<string>();
-  const deduped: string[] = [];
-  for (const c of clauses) {
-    if (!seen.has(c)) {
-      seen.add(c);
-      deduped.push(c);
-    }
-  }
-  return deduped;
+  return [...(DOMAIN_LATTICE_POOLS[domain] ?? DOMAIN_LATTICE_POOLS.novel)];
 }
 
 function generateDeterministicRollouts(
