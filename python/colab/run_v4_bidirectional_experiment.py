@@ -130,6 +130,26 @@ def call_ollama_generate(prompt: str, model: str = "qwen2.5:1.5b") -> str:
         return ""
 
 
+_CACHED_MODEL: Any = None
+_CACHED_TOK: Any = None
+
+
+def get_transformers_model() -> tuple[Any, Any]:
+    """Caches and returns AutoModel and AutoTokenizer for Tier 1 inference."""
+    global _CACHED_MODEL, _CACHED_TOK
+    if _CACHED_MODEL is None or _CACHED_TOK is None:
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+        import torch
+
+        model_name = "Qwen/Qwen2.5-1.5B-Instruct"
+        _CACHED_TOK = AutoTokenizer.from_pretrained(model_name)
+        _CACHED_MODEL = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            torch_dtype=torch.float16 if torch.cuda.is_available() else "auto",
+        ).to("cuda" if torch.cuda.is_available() else "cpu")
+    return _CACHED_MODEL, _CACHED_TOK
+
+
 def run_experiment_on_domain(
     domain_cfg: Dict[str, str],
     tier_info: Dict[str, Any],
@@ -142,11 +162,8 @@ def run_experiment_on_domain(
     # 1. Method 1: Vanilla Unidirectional Generation (Baseline 1)
     if tier_info["tier"] == "Tier_1_GPU_Transformers":
         try:
-            from transformers import AutoModelForCausalLM, AutoTokenizer
-            model_name = "Qwen/Qwen2.5-1.5B-Instruct"
-            tok = AutoTokenizer.from_pretrained(model_name)
-            model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto").to("cuda")
-            inp = tok(anchors.x_0, return_tensors="pt").to("cuda")
+            model, tok = get_transformers_model()
+            inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
             out = model.generate(**inp, max_new_tokens=80, do_sample=True, temperature=0.7)
             vanilla_text = tok.decode(out[0], skip_special_tokens=True)
         except Exception:
