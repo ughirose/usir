@@ -20,8 +20,10 @@ import argparse
 import json
 import os
 from pathlib import Path
+import re
 import sys
 import time
+import traceback
 import urllib.request
 from typing import Any, Dict, List, Optional
 
@@ -216,25 +218,33 @@ def run_experiment_on_domain(
             for _ in range(4):
                 out_f = model.generate(**inp, logits_processor=[proc_v4], max_new_tokens=45, do_sample=True, temperature=0.8)
                 f_text = tok.decode(out_f[0], skip_special_tokens=True)
-                clauses = [s.strip() for s in re.split(r'[。！？\n]+', f_text) if s.strip()]
-                if len(clauses) >= 2:
-                    c_step = clauses[1] + "。"
+                continuation = f_text[len(anchors.x_0):].strip()
+                parts = [p.strip() for p in re.split(r'([。！？\n]+)', continuation) if p.strip()]
+                if parts:
+                    fwd_step = "".join(parts[:2])
                 else:
-                    c_step = f_text[len(anchors.x_0):].strip()
-                if not c_step:
-                    c_step = "冷たい静寂の中で事態が進展していく。"
-                llm_fwd_candidates.append([anchors.x_0, c_step])
+                    fwd_step = "冷たい静寂の中で事態が進展していく。"
+                llm_fwd_candidates.append([anchors.x_0, fwd_step])
 
-            bwd_prompt = f"「{anchors.x_T}」という結論・結びの直前に起きる必然的な状況や前提条件（1文）："
+            if domain == "novel":
+                bwd_prompt = f"情景：「{anchors.x_T}」\nこの情景の直前に起きた描写（1文）："
+            elif domain == "article":
+                bwd_prompt = f"命題：「{anchors.x_T}」\nこの主張を導く直前の論拠（1文）："
+            else:
+                bwd_prompt = f"結論：「{anchors.x_T}」\nこの結論に至る直前の推論（1文）："
+
             inp_b = tok(bwd_prompt, return_tensors="pt").to(model.device)
             llm_bwd_candidates = []
             for _ in range(4):
                 out_b = model.generate(**inp_b, max_new_tokens=40, do_sample=True, temperature=0.8)
                 b_raw = tok.decode(out_b[0], skip_special_tokens=True)
-                b_clean = b_raw[len(bwd_prompt):].strip().split("\n")[0].split("。")[0]
-                if not b_clean:
-                    b_clean = "すべての前提が満たされたことを確認し"
-                llm_bwd_candidates.append([f"{b_clean}。", anchors.x_T])
+                b_clean = b_raw[len(bwd_prompt):].strip()
+                b_parts = [p.strip() for p in re.split(r'([。！？\n]+)', b_clean) if p.strip()]
+                if b_parts:
+                    bwd_step = "".join(b_parts[:2])
+                else:
+                    bwd_step = "前提条件の整合性を確認し、"
+                llm_bwd_candidates.append([bwd_step, anchors.x_T])
 
             bridge_res_v4 = solve_bidirectional_collision_bridge(
                 anchors,
@@ -243,7 +253,8 @@ def run_experiment_on_domain(
                 k_candidates=4,
             )
             v4_collision_text = bridge_res_v4.welded_text
-        except Exception:
+        except Exception as e:
+            traceback.print_exc()
             bridge_res_v4 = solve_bidirectional_collision_bridge(anchors, k_candidates=4)
             v4_collision_text = bridge_res_v4.welded_text
     else:
