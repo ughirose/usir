@@ -173,7 +173,7 @@ def get_transformers_model() -> tuple[Any, Any]:
         from transformers import AutoModelForCausalLM, AutoTokenizer
         import torch
 
-        model_name = "Qwen/Qwen2.5-1.5B-Instruct"
+        model_name = os.environ.get("USIR_MODEL_NAME", "Qwen/Qwen2.5-1.5B-Instruct")
         _CACHED_TOK = AutoTokenizer.from_pretrained(model_name)
         _CACHED_MODEL = AutoModelForCausalLM.from_pretrained(
             model_name,
