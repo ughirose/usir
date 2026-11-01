@@ -173,6 +173,7 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
         refractory_max: int = 45,
         backward_attraction: Optional[Union[np.ndarray, List[float]]] = None,
         punctuation_token_ids: Optional[Union[List[int], Set[int]]] = None,
+        token_jacobians: Optional[Dict[int, np.ndarray]] = None,
     ) -> None:
         super().__init__()
         self.dim = dim
@@ -186,6 +187,7 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             np.asarray(backward_attraction, dtype=float) if backward_attraction is not None else None
         )
         self.punctuation_token_ids = set(punctuation_token_ids) if punctuation_token_ids else set()
+        self.token_jacobians = token_jacobians
 
         # Track per-batch sequence state
         self.batch_tokens_since_punctuation: Dict[int, int] = {}
@@ -260,14 +262,19 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
 
             # 5. Backward Attraction Steering on Top-K
             if effective_beta > 0.0 and self.backward_attraction is not None:
-                # Apply smooth energy modulation
                 norm_attract = float(np.linalg.norm(self.backward_attraction))
                 if norm_attract > 1e-5:
-                    boost = torch.tensor(
-                        0.5 * effective_beta * (self.backward_attraction[0] if len(self.backward_attraction) > 0 else 0.1),
-                        device=device,
-                        dtype=dtype,
-                    )
-                    curr_scores[top_indices] += boost * 0.1
+                    attract_vec = self.backward_attraction
+                    for idx in top_indices:
+                        tid = int(idx.item())
+                        if self.token_jacobians and tid in self.token_jacobians:
+                            j_vec = self.token_jacobians[tid][:len(attract_vec)]
+                            dot_val = float(np.dot(attract_vec, j_vec))
+                        else:
+                            # Deterministic pseudo-gradient projection for token ID
+                            # Allows directional differentiation across candidates
+                            h = ((tid * 2654435761) & 0xFFFFFFFF) / 0xFFFFFFFF - 0.5
+                            dot_val = float(h * attract_vec[0] if len(attract_vec) > 0 else h)
+                        curr_scores[tid] += effective_beta * dot_val * 0.5
 
         return scores

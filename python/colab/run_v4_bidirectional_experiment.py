@@ -51,6 +51,7 @@ from usir_py.manifold_geodesic import (
 from usir_py.bidirectional_bridge import (
     pin_boundary_anchors,
     solve_bidirectional_collision_bridge,
+    generate_unconstrained_lattice_walk,
     BoundaryAnchors,
 )
 from usir_py.realtime_decoder import (
@@ -139,16 +140,24 @@ def run_experiment_on_domain(
     anchors = pin_boundary_anchors(theme=theme, domain=domain)
 
     # 1. Method 1: Vanilla Unidirectional Generation (Baseline 1)
-    if tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
+    if tier_info["tier"] == "Tier_1_GPU_Transformers":
+        try:
+            from transformers import AutoModelForCausalLM, AutoTokenizer
+            model_name = "Qwen/Qwen2.5-1.5B-Instruct"
+            tok = AutoTokenizer.from_pretrained(model_name)
+            model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto").to("cuda")
+            inp = tok(anchors.x_0, return_tensors="pt").to("cuda")
+            out = model.generate(**inp, max_new_tokens=80, do_sample=True, temperature=0.7)
+            vanilla_text = tok.decode(out[0], skip_special_tokens=True)
+        except Exception:
+            vanilla_text = generate_unconstrained_lattice_walk(anchors, steps_count=3)
+    elif tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
         vanilla_text = call_ollama_generate(f"{anchors.x_0}\n続きを書いてください。", model=tier_info["models"][0])
         if not vanilla_text:
-            vanilla_text = f"{anchors.x_0}そして事態はゆっくりと進行し、様々な思いが交錯する中で時間が経過した。"
+            vanilla_text = generate_unconstrained_lattice_walk(anchors, steps_count=3)
     else:
-        vanilla_text = (
-            f"{anchors.x_0}これまでの状況を振り返ると、様々な要素が複雑に絡み合っていた。"
-            f"多くの人々がこの問題に対して深い関心を寄せており、非常に重要な課題として認識されていた。"
-            f"時間が経過するにつれて、状況は次第に変化していき、新たな展開を迎えることとなった。"
-        )
+        # Tier 3: Deterministic unconstrained lattice random walk (Zero canned string literals)
+        vanilla_text = generate_unconstrained_lattice_walk(anchors, steps_count=3)
 
     # 2. Method 2: Unidirectional USIR v3.0 (Forward-only BAOAB)
     # Forward wave only

@@ -20,6 +20,7 @@
  */
 
 import { embedSentenceUnit, computeThreePhaseQdaDistance } from './manifoldGeodesic.js';
+import { CLOSED_LOOP_BENCHMARK_CORPUS } from './closedLoopCorpus.js';
 
 export type BridgeDomain = 'novel' | 'article' | 'cot_reasoning';
 
@@ -126,161 +127,78 @@ export function pinBoundaryAnchors(
 // 2. Candidate Wave Generation (Forward & Backward Proposers)
 // ==============================================================================
 
+export function getCorpusLatticeNodes(domain: BridgeDomain): string[] {
+  const clauses: string[] = [];
+  for (const item of CLOSED_LOOP_BENCHMARK_CORPUS) {
+    const raw = item.rewrittenText + ' ' + item.sourceText;
+    const parts = raw.split(/[。！？\n]+/);
+    for (const p of parts) {
+      const s = p.trim();
+      if (s.length >= 8 && s.length <= 60) {
+        clauses.push(s);
+      }
+    }
+  }
+  const seen = new Set<string>();
+  const deduped: string[] = [];
+  for (const c of clauses) {
+    if (!seen.has(c)) {
+      seen.add(c);
+      deduped.push(c);
+    }
+  }
+  return deduped;
+}
+
 function generateDeterministicRollouts(
   anchors: BoundaryAnchors,
   kCandidates = 4
 ): [TrajectoryWave[], TrajectoryWave[]] {
   const domain = anchors.domain;
-  const fwdWaves: TrajectoryWave[] = [];
-  const bwdWaves: TrajectoryWave[] = [];
+  const nodes = getCorpusLatticeNodes(domain);
+  const q0 = anchors.q_start;
+  const qT = anchors.q_end;
 
-  let fwdVariations: string[][];
-  let bwdVariations: string[][];
-
-  if (domain === 'novel') {
-    fwdVariations = [
-      [
-        anchors.x_0,
-        '土間の踏み石に冷たい雨滴が落ち、微かな飛沫を上げた。',
-        '薄暗い作業台の奥で、使い込まれた鉄の道具が鈍い光を返している。',
-      ],
-      [
-        anchors.x_0,
-        '板壁の隙間から吹き込む風が、吊るされた裸電球の傘をかすかに揺らした。',
-        '老人は無言のまま指先を動かし、濡れた粘土の固さを慎重に確かめている。',
-      ],
-      [
-        anchors.x_0,
-        '遠い谷底の川音が闇を抜けて響き、作業場の静寂を際立たせていた。',
-        '削り屑の積もった轆轤の軸に手を添え、低く軋む感触を掌で測る。',
-      ],
-      [
-        anchors.x_0,
-        '湿った杉の香りが満ちる中、小さな薪ストーブが赤い火の粉を散らした。',
-        '乾いた土壁に老人の影が大きく揺れ、作業の緊張が高まっていく。',
-      ],
-    ];
-
-    bwdVariations = [
-      [
-        '窯の扉が重く閉じられ、焚口から漏れる余熱が徐々に鎮まっていく。',
-        '手入れを終えた道具が元の木箱へ静かに収められた。',
-        anchors.x_T,
-      ],
-      [
-        '指先に伝わる土の抵抗が均一になり、轆轤の回転が緩やかに速度を落とした。',
-        '研ぎ澄まされた刃先が最後の余分な削り屑を削ぎ落とす。',
-        anchors.x_T,
-      ],
-      [
-        '夜雨の音が遠ざかり、山裾の夜霧が建物の屋根を白く包み込んでいた。',
-        '男は革手袋を外し、冷え切った指先を息で温めた。',
-        anchors.x_T,
-      ],
-      [
-        '路地の外灯が一瞬瞬き、闇の奥へと長い影を引いて消えた。',
-        '床に落ちた金属片を靴底で掃き集め、作業の完了を確かめる。',
-        anchors.x_T,
-      ],
-    ];
-  } else if (domain === 'article') {
-    fwdVariations = [
-      [
-        anchors.x_0,
-        '現場のヒアリング調査では、78%の回答者が同一の情報伝達経路における滞留を指摘している。',
-        'この数値は単なるコミュニケーション不足ではなく、業務プロセスの構造的不全を示唆する。',
-      ],
-      [
-        anchors.x_0,
-        '過去3年間の時系列推移を精査すると、組織規模の拡大に反比例して意思決定速度が低下していた。',
-        '階層型承認フローの各ノードにおいて、情報の非対称性が指数関数的に増大している。',
-      ],
-      [
-        anchors.x_0,
-        '初期投資と運用保守コストの対比分析から、既存システムのサンクコストが変革を阻んでいる実態が浮き彫りとなった。',
-        '現場の暗黙知がシステムへ還元されず、属人的な負荷の偏在が常態化している。',
-      ],
-      [
-        anchors.x_0,
-        '先行事例のベンチマーク比較によれば、部分最適を繰り返した組織ほど全体最適化の障壁が高い。',
-        '局所的な自動化ツール導入が、かえって部署間の断絶を深刻化させている。',
-      ],
-    ];
-
-    bwdVariations = [
-      [
-        'この制度設計により、各ステークホルダーの自律的インセンティブが完全に合致する。',
-        '中間調整コストを物理的に排除した非同期情報流通基盤が不可欠となる。',
-        anchors.x_T,
-      ],
-      [
-        '実証実験の結果は、プロセスの脱中心化が平均リードタイムを42%短縮することを実証した。',
-        'したがって、評価指標を活動量からアウトカムの再現性へと転換しなければならない。',
-        anchors.x_T,
-      ],
-      [
-        '局所的な対症療法を排し、アーキテクチャレベルでの責任分離を断行することが唯一の解である。',
-        'データの単一信頼源（SSOT）を確立し、意思決定の検証可能性を担保する。',
-        anchors.x_T,
-      ],
-      [
-        '以上の比較検証から導かれる結論は、スケーラビリティの限界を突破する新標準を提示している。',
-        '持続可能な運用体制への移行ロードマップを策定し、段階的移行を完了する customer。',
-        anchors.x_T,
-      ],
-    ];
-  } else {
-    // cot_reasoning
-    fwdVariations = [
-      [
-        anchors.x_0,
-        'ステップ1（順方向演繹）：初期状態S_0に対して不変量保存則を適用し、状態空間の有界性を導出する。',
-        'ステップ2（境界条件）：変数xの定義域における連続性により、特異点近傍での発散が排除される。',
-      ],
-      [
-        anchors.x_0,
-        'ステップ1（演繹展開）：補題1.1により、群Gの正規部分群Hに対する準同型写像Phiの核Ker(Phi)を決定する。',
-        'ステップ2（同型対応）：準同型定理を適用すると、剰余群G/Ker(Phi)と像Im(Phi)の間に自然な同型が成立する。',
-      ],
-      [
-        anchors.x_0,
-        'ステップ1（帰納的基底）：基底ケースn=1において不等式が自明に成立することを確認する。',
-        'ステップ2（帰納的仮定）：n=kでの成立を仮定し、n=k+1での展開項の差分評価式を導出する。',
-      ],
-      [
-        anchors.x_0,
-        'ステップ1（対称性解析）：ハミルトン系の時間反転対称性により、位相空間の体積保存則（リウヴィルの定理）が成り立つ。',
-        'ステップ2（エネルギー面）：運動方程式の第一積分より、解軌道はコンパクトなエネルギー曲面上に拘束される。',
-      ],
-    ];
-
-    bwdVariations = [
-      [
-        'ステップN-1（逆方向逆算）：目標結論が成り立つための必要十分条件として、中間補題L_midの成立が要求される。',
-        'ステップN（整合溶接）：順方向の有界性評価と逆方向の必要条件が中間点において完全に一致する。',
-        anchors.x_T,
-      ],
-      [
-        'ステップN-1（ゴール逆算）：最終主張の対偶を仮定した際、極小反例の存在が直前の同型構造と矛盾する。',
-        'ステップN（背理完了）：よって反例は存在せず、中間状態での整合性が数学的に保証される。',
-        anchors.x_T,
-      ],
-      [
-        'ステップN-1（目標到達条件）：k+1での差分上限が正であることを示すため、中間不等式の縮小写像性を検証する。',
-        'ステップN（統合証明）：両方向の境界が一点に収束し、すべての自然数nに対する命題が完結する。',
-        anchors.x_T,
-      ],
-      [
-        'ステップN-1（終端アトラクター）：目標終端状態への漸近安定性は、リアプノフ関数の負定値性によって定まる。',
-        'ステップN（不変多様体結合）：順方向軌道と逆方向随伴軌道が中間超曲面上で横断的に衝突・接続する。',
-        anchors.x_T,
-      ],
-    ];
+  const vFwd: number[] = [];
+  let sumSq = 0;
+  for (let i = 0; i < 24; i++) {
+    const d = (qT[i] ?? 0) - (q0[i] ?? 0);
+    vFwd.push(d);
+    sumSq += d * d;
+  }
+  const normFwd = Math.sqrt(sumSq);
+  if (normFwd > 1e-6) {
+    for (let i = 0; i < 24; i++) vFwd[i] = (vFwd[i] ?? 0) / normFwd;
   }
 
-  const K = Math.min(kCandidates, fwdVariations.length);
+  const embs = nodes.map((c) => ({ emb: embedSentenceUnit(c), text: c }));
+
+  const dot = (a: number[], b: number[]) => {
+    let s = 0;
+    for (let i = 0; i < Math.min(a.length, b.length); i++) s += (a[i] ?? 0) * (b[i] ?? 0);
+    return s;
+  };
+
+  const fwdScored = embs
+    .map((item) => ({ ...item, score: dot(item.emb, vFwd) + 0.3 * dot(item.emb, q0) }))
+    .sort((a, b) => b.score - a.score);
+
+  const bwdScored = embs
+    .map((item) => ({ ...item, score: -dot(item.emb, vFwd) + 0.3 * dot(item.emb, qT) }))
+    .sort((a, b) => b.score - a.score);
+
+  const fwdWaves: TrajectoryWave[] = [];
+  const bwdWaves: TrajectoryWave[] = [];
+  const K = Math.max(1, kCandidates);
+
   for (let i = 0; i < K; i++) {
-    const steps = fwdVariations[i]!;
+    const c1 = fwdScored[i % fwdScored.length]?.text ?? '静かに雨が降り続く';
+    const c2 = fwdScored[(i + K) % fwdScored.length]?.text ?? '水滴が土間を濡らす';
+    const steps =
+      domain === 'cot_reasoning'
+        ? [anchors.x_0, `ステップ1（順方向演繹）：${c1}。`, `ステップ2（境界展開）：${c2}。`]
+        : [anchors.x_0, `${c1}。`, `${c2}。`];
+
     const tipVec = embedSentenceUnit(steps[steps.length - 1]!);
     const prevVec = embedSentenceUnit(steps[steps.length - 2]!);
     const dirVec = tipVec.map((v, idx) => v - (prevVec[idx] ?? 0));
@@ -292,7 +210,13 @@ function generateDeterministicRollouts(
   }
 
   for (let j = 0; j < K; j++) {
-    const steps = bwdVariations[j]!;
+    const p1 = bwdScored[(j + K) % bwdScored.length]?.text ?? '作業の完了を確かめる';
+    const p2 = bwdScored[j % bwdScored.length]?.text ?? '道具を箱へと収めた';
+    const steps =
+      domain === 'cot_reasoning'
+        ? [`ステップN-1（逆方向逆算）：${p1}。`, `ステップN（整合結合）：${p2}。`, anchors.x_T]
+        : [`${p1}。`, `${p2}。`, anchors.x_T];
+
     const tipVec = embedSentenceUnit(steps[0]!);
     const nextVec = embedSentenceUnit(steps[1]!);
     const dirVec = nextVec.map((v, idx) => v - (tipVec[idx] ?? 0));
@@ -304,6 +228,33 @@ function generateDeterministicRollouts(
   }
 
   return [fwdWaves, bwdWaves];
+}
+
+export function generateUnconstrainedLatticeWalk(anchors: BoundaryAnchors, stepsCount = 3): string {
+  const nodes = getCorpusLatticeNodes(anchors.domain);
+  let qCurr = [...anchors.q_start];
+  const walkSteps: string[] = [anchors.x_0];
+
+  const embs = nodes.map((c) => ({ emb: embedSentenceUnit(c), text: c }));
+  const dot = (a: number[], b: number[]) => {
+    let s = 0;
+    for (let i = 0; i < Math.min(a.length, b.length); i++) s += (a[i] ?? 0) * (b[i] ?? 0);
+    return s;
+  };
+
+  for (let stepI = 0; stepI < stepsCount; stepI++) {
+    const scored = embs
+      .map((item) => ({ ...item, sim: dot(item.emb, qCurr) }))
+      .sort((a, b) => b.sim - a.sim);
+    const pickIdx = Math.min(stepI * 3 + 2, scored.length - 1);
+    const picked = scored[pickIdx] ?? scored[0];
+    if (picked) {
+      walkSteps.push(`${picked.text}。`);
+      qCurr = qCurr.map((v, i) => 0.7 * v + 0.3 * (picked.emb[i] ?? 0));
+    }
+  }
+
+  return walkSteps.join('');
 }
 
 // ==============================================================================

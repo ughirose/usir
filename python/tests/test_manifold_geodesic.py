@@ -207,3 +207,20 @@ def test_multiplicative_grpo_reward_healthy_passage():
     assert reward_dict["m_geodesic"] > 0.3
     assert reward_dict["reward"] > 0.0
     assert not reward_dict["is_rejected"]
+
+
+def test_explicit_embeddings_parity():
+    """Verify that passing explicit step embeddings yields identical results to automatic embedding."""
+    from usir_py.manifold_geodesic import _embed_sentence_unit, _split_into_trajectory_units
+
+    text = "静寂な山林に霧が立ち込める。冷たい風が梢を抜けていく。足元の苔が静かに息づいていた。"
+    units = _split_into_trajectory_units(text)
+    auto_res = compute_semantic_geodesic_curvature(units)
+
+    explicit_embs = np.vstack([_embed_sentence_unit(u) for u in units])
+    exp_res = compute_semantic_geodesic_curvature(units, embeddings=explicit_embs)
+
+    assert pytest.approx(auto_res["mean_curvature"], abs=1e-6) == exp_res["mean_curvature"]
+    assert pytest.approx(auto_res["brownian_ratio"], abs=1e-6) == exp_res["brownian_ratio"]
+    assert pytest.approx(auto_res["m_geodesic"], abs=1e-6) == exp_res["m_geodesic"]
+

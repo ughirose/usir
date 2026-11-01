@@ -88,9 +88,9 @@ def compute_three_phase_qda_distance(
 
     diff = z_vec - target_mu
     if inv_cov.ndim == 1:
-        d_mahalanobis = float(np.sum((diff ** 2) * inv_cov) / 24.0)
+        d_mahalanobis = float(0.5 * np.sum((diff ** 2) * inv_cov) / 24.0)
     else:
-        d_mahalanobis = float(diff.T @ inv_cov @ diff / 24.0)
+        d_mahalanobis = float(0.5 * (diff.T @ inv_cov @ diff) / 24.0)
 
     # Freeze barrier penalty (Left wall)
     freeze_defect = max(0.0, sigma_crit_low - calc_sigma_norm)
@@ -208,6 +208,7 @@ def compute_semantic_geodesic_curvature(
     embeddings: Optional[np.ndarray] = None,
     alpha_kappa: float = 1.8,
     alpha_brownian: float = 1.2,
+    is_coordinates: bool = False,
 ) -> Dict[str, Any]:
     r"""Computes semantic space trajectory geodesic curvature, torsion, and Brownian diffusion.
 
@@ -230,8 +231,8 @@ def compute_semantic_geodesic_curvature(
     if embeddings is not None:
         raw_e = np.asarray(embeddings, dtype=float)
         M = raw_e.shape[0]
-        if raw_e.ndim == 2 and M >= 2:
-            # If coordinates are given directly, steps are consecutive differences
+        if is_coordinates and raw_e.ndim == 2 and M >= 2:
+            # If coordinates are explicitly given, steps are consecutive differences
             diffs = raw_e[1:] - raw_e[:-1]
         else:
             diffs = raw_e

@@ -64,4 +64,4 @@ const html = templateHtml.replace('<!-- SCRIPT_INJECTIONS -->', () => scriptInje
 const outDir = path.join(repoRoot, 'packages/usir-bridges/public');
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, 'usir-studio.html'), html, 'utf-8');
-console.log('Generated USIR Studio v3.1 successfully (' + html.length + ' bytes).');
+console.log('Generated USIR Studio v4.0 successfully (' + html.length + ' bytes).');

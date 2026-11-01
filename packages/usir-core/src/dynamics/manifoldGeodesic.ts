@@ -138,7 +138,7 @@ export function computeThreePhaseQdaDistance(
     const inv = invCov[i] ?? 50.0;
     dMahalSum += diff * diff * inv;
   }
-  const dMahalanobis = dMahalSum / 24.0;
+  const dMahalanobis = (0.5 * dMahalSum) / 24.0;
 
   // Freeze barrier penalty (Left wall)
   const freezeDefect = Math.max(0.0, sigmaLow - calcSigmaNorm);
@@ -272,6 +272,7 @@ export function computeSemanticGeodesicCurvature(
     embeddings?: number[][];
     alpha_kappa?: number;
     alpha_brownian?: number;
+    is_coordinates?: boolean;
   }
 ): SemanticGeodesicResult {
   const units = typeof textOrUnits === 'string' ? splitIntoTrajectoryUnits(textOrUnits) : [...textOrUnits];
@@ -281,7 +282,7 @@ export function computeSemanticGeodesicCurvature(
   let diffs: number[][];
   if (options?.embeddings) {
     const rawE = options.embeddings;
-    if (rawE.length >= 2) {
+    if (options.is_coordinates && rawE.length >= 2) {
       diffs = [];
       for (let i = 0; i < rawE.length - 1; i++) {
         const d: number[] = [];

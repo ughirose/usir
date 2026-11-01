@@ -76,6 +76,33 @@ def test_logits_stepper_clause_step_momentum_reset():
     assert stepper.tokens_since_punctuation == 0
 
 
+def test_logits_stepper_backward_bridge_attraction():
+    """Verify that backward bridge attraction steers candidate logits along Jacobian direction."""
+    attract = np.zeros(12, dtype=float)
+    attract[0] = 1.0  # Target direction in dimension 0
+
+    stepper = LogitsStepper(
+        top_k=5,
+        eps_syn=0.1,
+        beta_steer=1.0,
+        refractory_min=2,
+        backward_attraction=attract,
+    )
+    stepper.tokens_since_punctuation = 10  # within healthy window
+
+    logits = np.array([2.0, 2.0, 2.0, 2.0, 2.0] + [0.0] * 95, dtype=float)
+    # Token 0 aligns with attraction (+1.0), Token 1 opposes attraction (-1.0)
+    token_jacobians = {
+        0: np.array([1.0] + [0.0] * 11),
+        1: np.array([-1.0] + [0.0] * 11),
+    }
+
+    steered, telemetry = stepper.steer_logits(logits, token_jacobians=token_jacobians)
+    assert not telemetry["bypassed"]
+    assert steered[0] > logits[0]
+    assert steered[1] < logits[1]
+
+
 # ==============================================================================
 # 2. USIRPyTorchLogitsProcessor Tests
 # ==============================================================================

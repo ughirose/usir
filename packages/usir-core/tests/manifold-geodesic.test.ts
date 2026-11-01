@@ -4,6 +4,8 @@ import {
   computeSemanticGeodesicCurvature,
   computePunctuationRatioGate,
   computeMultiplicativeGrpoReward,
+  embedSentenceUnit,
+  splitIntoTrajectoryUnits,
 } from '../src/dynamics/manifoldGeodesic.js';
 
 describe('USIR v4.0 Manifold Geodesic & 3-Phase QDA Engine (TS)', () => {
@@ -107,5 +109,18 @@ describe('USIR v4.0 Manifold Geodesic & 3-Phase QDA Engine (TS)', () => {
     expect(rewardDict.m_geodesic).toBeGreaterThan(0.3);
     expect(rewardDict.reward).toBeGreaterThan(0.0);
     expect(rewardDict.is_rejected).toBe(false);
+  });
+
+  it('verifies explicit embeddings parity with automatic unit embeddings', () => {
+    const text = '静寂な山林に霧が立ち込める。冷たい風が梢を抜けていく。足元の苔が静かに息づいていた。';
+    const units = splitIntoTrajectoryUnits(text);
+    const autoRes = computeSemanticGeodesicCurvature(units);
+
+    const explicitEmbs = units.map((u) => embedSentenceUnit(u));
+    const expRes = computeSemanticGeodesicCurvature(units, { embeddings: explicitEmbs });
+
+    expect(Math.abs(autoRes.mean_curvature - expRes.mean_curvature)).toBeLessThan(1e-6);
+    expect(Math.abs(autoRes.brownian_ratio - expRes.brownian_ratio)).toBeLessThan(1e-6);
+    expect(Math.abs(autoRes.m_geodesic - expRes.m_geodesic)).toBeLessThan(1e-6);
   });
 });
