@@ -48,6 +48,38 @@ describe('Stage 4 & v3.0: USIR Studio Interactive Web GUI, Chemistry & Ecosystem
     expect(html).toContain('id="cm-music-summary"');
     expect(html).toContain('id="cm-visual-summary"');
     expect(html).toContain('id="cm-live-ui-card"');
+
+    // v3.1 Pre-Sales Showcase UI & Multimodal Studio Elements
+    expect(html).toContain('id="btn-mode-instant"');
+    expect(html).toContain('id="btn-mode-live"');
+    expect(html).toContain('id="input-ai-endpoint"');
+    expect(html).toContain('id="input-ai-model"');
+    expect(html).toContain('id="btn-run-rewrite"');
+    expect(html).toContain('id="usir-iteration-progress"');
+    expect(html).toContain('id="progress-iter-1"');
+    expect(html).toContain('id="progress-iter-2"');
+    expect(html).toContain('id="progress-iter-3"');
+    expect(html).toContain('id="btn-case-1"');
+    expect(html).toContain('id="btn-case-2"');
+    expect(html).toContain('id="btn-case-3"');
+    expect(html).toContain('id="usir-roi-scorecard"');
+    expect(html).toContain('id="roi-dropoff-risk"');
+    expect(html).toContain('id="roi-slop-reduction"');
+    expect(html).toContain('id="roi-clarity-gain"');
+    expect(html).toContain('id="roi-fact-retention"');
+    expect(html).toContain('id="usir-rhythm-barcode"');
+    expect(html).toContain('id="barcode-before"');
+    expect(html).toContain('id="barcode-after"');
+    expect(html).toContain('id="usir-redline-panel"');
+    expect(html).toContain('id="usir-redline-html"');
+    expect(html).toContain('id="genesis-style-name"');
+    expect(html).toContain('id="genesis-prose"');
+    expect(html).toContain('id="cinematic-shader-canvas"');
+    expect(html).toContain('id="btn-play-before"');
+    expect(html).toContain('id="btn-play-after"');
+    expect(html).toContain('id="btn-stop-audio"');
+    expect(html).toContain('id="btn-download-midi"');
+    expect(html).toContain('id="multimodal-storyboard-table"');
   });
 
   function setupStudioVM() {
@@ -63,12 +95,19 @@ describe('Stage 4 & v3.0: USIR Studio Interactive Web GUI, Chemistry & Ecosystem
       Float64Array,
       DataView,
       ArrayBuffer,
+      Buffer,
       Math,
       JSON,
       Map,
       Set,
       console,
       document: {
+        createElement: (tag: string) => ({
+          tagName: tag,
+          href: '',
+          download: '',
+          click: () => {},
+        }),
         getElementById: (id: string) => {
           if (!elements.has(id)) {
             const styles: Record<string, string> = {};
@@ -78,6 +117,11 @@ describe('Stage 4 & v3.0: USIR Studio Interactive Web GUI, Chemistry & Ecosystem
               innerHTML: '',
               value: '',
               points: '',
+              getContext: () => ({
+                fillRect: () => {}, strokeRect: () => {}, beginPath: () => {},
+                moveTo: () => {}, lineTo: () => {}, stroke: () => {}, fill: () => {},
+                arc: () => {}, clearRect: () => {}, save: () => {}, restore: () => {}
+              }),
               style: {
                 ...styles,
                 cssText: '',
@@ -261,5 +305,135 @@ describe('Stage 4 & v3.0: USIR Studio Interactive Web GUI, Chemistry & Ecosystem
     const customJa = studio.analyzeText('山路を登りながら、こう考えた。智に働けば角が立つ。情に棹させば流される。');
     expect(customJa.language).toBe('ja');
     expect(elements.get('usir-lang-badge')?.textContent).toBe('JA (Japanese)');
+  });
+
+  it('loads the 3 Pre-Sales Showcase use cases, computes redline diff, and renders ROI scorecard & rhythm barcode', () => {
+    const { studio, elements } = setupStudioVM();
+
+    // 1. Case 1: 文芸・物語［北国の汽車］ (Phase III: Void)
+    const case1 = studio.loadUseCase('case_1_literary', 'III_Void');
+    expect(case1).toBeDefined();
+    expect(case1.variant.mode).toBe('III_Void');
+    expect(case1.redlineResult.factRetentionRate).toBe(1.0);
+    expect(case1.redlineResult.roiMetrics.slopReductionRatio).toBeGreaterThan(0.70);
+    expect(case1.redlineResult.roiMetrics.estimatedDropoffRiskAfter).toBeLessThan(case1.redlineResult.roiMetrics.estimatedDropoffRiskBefore);
+
+    const redlineHtml = elements.get('usir-redline-html')?.innerHTML || '';
+    expect(redlineHtml).toContain('usir-redline-del');
+    expect(redlineHtml).toContain('usir-redline-ins');
+
+    const roiRisk = elements.get('roi-dropoff-risk')?.textContent || '';
+    expect(roiRisk).toContain('% →');
+    const roiSlop = elements.get('roi-slop-reduction')?.textContent || '';
+    expect(roiSlop).toContain('削減');
+    const roiFacts = elements.get('roi-fact-retention')?.textContent || '';
+    expect(roiFacts).toContain('100% 保持');
+
+    // 2. Case 2: note・エッセイ［なぜ会議は長引くのか］ (Phase II: Critical)
+    const case2 = studio.loadUseCase('case_2_essay', 'II_Critical');
+    expect(case2).toBeDefined();
+    expect(case2.variant.mode).toBe('II_Critical');
+    expect(case2.redlineResult.factRetentionRate).toBe(1.0);
+    expect(case2.redlineResult.roiMetrics.clarityAndImpactGain).toBeGreaterThan(1.0);
+
+    // 3. Case 3: B2B 提案書［クラウド基盤 SLA 99.99%］ (Phase I: Crystalline)
+    const case3 = studio.loadUseCase('case_3_b2b_proposal', 'I_Crystalline');
+    expect(case3).toBeDefined();
+    expect(case3.variant.mode).toBe('I_Crystalline');
+    expect(case3.redlineResult.factRetentionRate).toBe(1.0);
+    expect(case3.variant.afterText).toContain('SLA 99.99%');
+    expect(case3.variant.afterText).toContain('42%');
+    expect(case3.variant.afterText).toContain('6ヶ月');
+  });
+
+  it('executes Voronoi Genesis style synthesis with dynamic naming, prose generation, and 24D mapping', () => {
+    const { studio, elements } = setupStudioVM();
+
+    const genesis = studio.triggerGenesis(1);
+    expect(genesis).toBeDefined();
+    expect(genesis.artifact).toBeDefined();
+    expect(genesis.artifact.styleNameJa).toContain('【未踏様式 #01:');
+    expect(genesis.artifact.generatedProseJa.length).toBeGreaterThan(20);
+    expect(genesis.artifact.hamiltonianDirective.targetCvL).toBeGreaterThan(0.2);
+
+    expect(elements.get('genesis-style-name')?.textContent).toContain('【未踏様式 #01:');
+    expect(elements.get('genesis-prose')?.textContent).toContain(genesis.artifact.generatedProseJa);
+
+    const directive = elements.get('usir-genesis-directive')?.textContent || '';
+    expect(directive).toContain('[USIR-GENESIS SYNTHESIZED HAMILTONIAN DIRECTIVE]');
+    expect(directive).toContain('Uncharted Voronoi Coordinate');
+  });
+
+  it('synthesizes Web Audio polyphonic compositions and exports Standard MIDI (.mid) binary', () => {
+    const { studio, elements } = setupStudioVM();
+
+    // 1. Before audio (AI Deadzone arpeggio)
+    const compBefore = studio.playAudio('before');
+    expect(compBefore).toBeDefined();
+    expect(compBefore.mode).toBe('V_Deadzone');
+    expect(compBefore.restRatio).toBe(0.0);
+    expect(compBefore.stats.velocityStd).toBe(0.0);
+    expect(compBefore.tracks.length).toBeGreaterThanOrEqual(1);
+
+    // 2. After audio (24D dynamical synth)
+    studio.loadUseCase('case_1_literary', 'III_Void');
+    const compAfter = studio.playAudio('after');
+    expect(compAfter).toBeDefined();
+    expect(compAfter.tracks.length).toBeGreaterThanOrEqual(1);
+
+    // 3. Stop Audio
+    studio.stopAudio();
+    expect(elements.get('audio-status-label')?.textContent).toBe('Audio: Stopped');
+
+    // 4. Download MIDI binary
+    const midiDataUri = studio.downloadMidi(compAfter);
+    expect(midiDataUri).toBeDefined();
+    expect(midiDataUri.startsWith('data:audio/midi;base64,')).toBe(true);
+
+    // Decode base64 to check SMF header 'MThd'
+    const b64 = midiDataUri.replace('data:audio/midi;base64,', '');
+    const midiBuf = Buffer.from(b64, 'base64');
+    expect(midiBuf.subarray(0, 4).toString('ascii')).toBe('MThd');
+    expect(midiBuf.length).toBeGreaterThan(50);
+  });
+
+  it('renders 60fps cinematic preview canvas and synchronizes 4-column multimodal storyboard table', () => {
+    const { studio, elements } = setupStudioVM();
+
+    studio.loadUseCase('case_1_literary', 'III_Void');
+
+    // Canvas frame rendering
+    const canvas = elements.get('cinematic-shader-canvas');
+    expect(canvas).toBeDefined();
+    expect(typeof studio.renderCinemaPreview).toBe('function');
+    studio.renderCinemaPreview([0.5, 0.5, 0.5]);
+
+    // Storyboard Table DOM
+    const sbTableHtml = elements.get('multimodal-storyboard-table')?.innerHTML || '';
+    expect(sbTableHtml).toContain('storyboard-table');
+    expect(sbTableHtml).toContain('Scene / Text');
+    expect(sbTableHtml).toContain('Music Cue');
+    expect(sbTableHtml).toContain('Image Prompt');
+    expect(sbTableHtml).toContain('Video Script');
+    expect(sbTableHtml).toContain('btn-play-cue');
+  });
+
+  it('supports Instant Demo mode and 3-iteration closed-loop rewrite with telemetry and fallback', async () => {
+    const { studio, elements } = setupStudioVM();
+
+    studio.setMode('instant');
+    expect(studio.getState().mode).toBe('instant');
+
+    studio.setMode('live');
+    expect(studio.getState().mode).toBe('live');
+
+    studio.loadUseCase('case_3_b2b_proposal', 'I_Crystalline');
+    const rewriteResult = await studio.runIterativeRewrite({ isLive: false });
+
+    expect(rewriteResult).toBeDefined();
+    expect(rewriteResult.iterationLogs.length).toBe(3);
+    expect(rewriteResult.z24Trajectory.length).toBe(4);
+    expect(rewriteResult.finalText.length).toBeGreaterThan(20);
+    expect(rewriteResult.redlineResult.factRetentionRate).toBe(1.0);
   });
 });

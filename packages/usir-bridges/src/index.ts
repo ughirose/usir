@@ -11,3 +11,14 @@ export * from './worldcraftHarmonic.js';
 
 // Narrative-Nano Lock-Free SPSC Ring Buffer Bridge
 export * from './nanoRingBuffer.js';
+
+// Multimodal Audio, Voronoi Genesis & SMF MIDI Binary Encoder (Workstream 2)
+export * from './multimodalAudioVideo.js';
+
+// 60fps Cinematic Visual Simulator & Multimodal Storyboard Timeline (Workstream 3)
+export * from './cinematicStoryboard.js';
+
+// Live AI Rewrite Connector & Iterative Closed-Loop Tuning (Workstream 4)
+export * from './liveAiConnector.js';
+
+

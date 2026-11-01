@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>USIR Studio v3.1 — Pre-Sales Showcase & Multimodal Generative Studio</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0b0f17; color: #e2e8f0; font-family: system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    #top-presales-bar { background: #0f172a; border-bottom: 1px solid #1e293b; padding: 8px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; }
+    .bar-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .studio-panes { display: flex; flex: 1; height: calc(100vh - 54px); overflow: hidden; }
+    #left-pane { width: 28%; padding: 14px; border-right: 1px solid #1e293b; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+    #center-pane { width: 47%; padding: 14px; border-right: 1px solid #1e293b; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+    #usir-docked-drawer { width: 25%; padding: 14px; background: #0f172a; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+    textarea { width: 100%; min-height: 110px; flex: 1; background: #111827; color: #f8fafc; border: 1px solid #334155; padding: 8px; border-radius: 6px; font-family: monospace; font-size: 11px; }
+    input, select { background: #111827; color: #f8fafc; border: 1px solid #334155; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
+    .preset-bar { display: flex; flex-wrap: wrap; gap: 4px; }
+    button { background: #1e293b; color: #38bdf8; border: 1px solid #334155; padding: 5px 9px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+    button:hover { background: #334155; }
+    button.active { background: #0284c7; color: #ffffff; border-color: #38bdf8; }
+    .badge { padding: 3px 6px; border-radius: 4px; background: #1e293b; font-size: 11px; font-family: monospace; display: inline-block; }
+    .sinkhole-alert { background: #450a0a; color: #fca5a5; padding: 6px; border: 1px solid #ef4444; border-radius: 4px; font-size: 11px; }
+    .sinkhole-ok { background: #064e3b; color: #6ee7b7; padding: 6px; border: 1px solid #10b981; border-radius: 4px; font-size: 11px; }
+    pre { background: #090d16; padding: 6px; border-radius: 4px; font-size: 11px; white-space: pre-wrap; max-height: 140px; overflow-y: auto; border: 1px solid #1e293b; font-family: monospace; }
+    .panel-box { background: #0d1424; border: 1px solid #1e293b; border-radius: 6px; padding: 8px; font-size: 11px; }
+    .molecule-meter { background: #111827; border: 1px solid #1e293b; border-radius: 4px; padding: 4px 6px; font-size: 11px; margin-top: 3px; }
+    #cm-live-ui-card { background: #1e293b; border: 1px solid #475569; padding: 10px; border-radius: 6px; font-size: 11px; }
+    .usir-redline-del { color: #f87171; background: rgba(239, 68, 68, 0.2); text-decoration: line-through; padding: 1px 2px; border-radius: 2px; }
+    .usir-redline-ins { color: #34d399; background: rgba(16, 185, 129, 0.2); text-decoration: none; font-weight: bold; padding: 1px 2px; border-radius: 2px; }
+    .progress-step { padding: 2px 6px; border-radius: 3px; background: #1e293b; color: #94a3b8; }
+    .progress-step.done { background: #065f46; color: #6ee7b7; }
+    .progress-step.current { background: #1e40af; color: #93c5fd; }
+    .storyboard-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 6px; }
+    .storyboard-table th, .storyboard-table td { border: 1px solid #334155; padding: 6px; vertical-align: top; }
+    .storyboard-table th { background: #1e293b; color: #93c5fd; text-align: left; }
+    .rhythm-bar-container { display: flex; align-items: flex-end; gap: 3px; height: 28px; background: #111827; padding: 4px; border-radius: 4px; margin-top: 3px; }
+    .rhythm-bar { flex: 1; border-radius: 2px; min-width: 4px; }
+  </style>
+</head>
+<body>
+  <header id="top-presales-bar">
+    <div class="bar-group">
+      <span style="font-weight: bold; color: #38bdf8;">USIR Studio v3.1</span>
+      <button id="btn-mode-instant" class="active" onclick="USIRStudio.setMode('instant')">✨ Instant Demo</button>
+      <button id="btn-mode-live" onclick="USIRStudio.setMode('live')">⚡ Live AI (Ollama)</button>
+      <input id="input-ai-endpoint" value="http://localhost:11434/api/generate" style="width: 140px;" placeholder="Endpoint" />
+      <input id="input-ai-model" value="llama3" style="width: 60px;" placeholder="Model" />
+      <button id="btn-run-rewrite" onclick="USIRStudio.runIterativeRewrite()">🚀 3-Iteration 調律実行</button>
+    </div>
+    <div class="bar-group">
+      <button id="btn-case-1" onclick="USIRStudio.loadUseCase('case_1_literary')">Case 1: 文芸・物語</button>
+      <button id="btn-case-2" onclick="USIRStudio.loadUseCase('case_2_essay')">Case 2: note・エッセイ</button>
+      <button id="btn-case-3" onclick="USIRStudio.loadUseCase('case_3_b2b_proposal')">Case 3: B2B 提案書</button>
+      <select id="select-target-phase" onchange="USIRStudio.setTargetPhase(this.value)">
+        <option value="III_Void">① Phase III: 超流動ヴォイド相［間］</option>
+        <option value="II_Critical">② Phase II: 自己組織化臨界相</option>
+        <option value="I_Crystalline">③ Phase I: 結晶秩序相［ビジネス・論理］</option>
+        <option value="Genesis">④ Genesis: ボロノイ未踏様式</option>
+      </select>
+    </div>
+    <div id="usir-iteration-progress" class="bar-group">
+      <span id="progress-iter-1" class="progress-step done">Iter 1: Slop & Fact</span> →
+      <span id="progress-iter-2" class="progress-step done">Iter 2: Cadence & Void</span> →
+      <span id="progress-iter-3" class="progress-step done">Iter 3: Kamae & Gate</span>
+    </div>
+  </header>
+
+  <main class="studio-panes">
+    <section id="left-pane">
+      <h3>Presets & Editor</h3>
+      <div class="preset-bar">
+        <button data-preset-id="VOID-03" onclick="USIRStudio.loadPreset('VOID-03')">夏目漱石：草枕 [VOID-03]</button>
+        <button data-preset-id="CRIT-05" onclick="USIRStudio.loadPreset('CRIT-05')">梶井基次郎：桜の樹の下には [CRIT-05]</button>
+        <button data-preset-id="CRYS-01" onclick="USIRStudio.loadPreset('CRYS-01')">民法条文 [CRYS-01]</button>
+        <button data-preset-id="DEAD-01" onclick="USIRStudio.loadPreset('DEAD-01')">AI模倣スロップ [DEAD-01]</button>
+        <button data-preset-id="HYBRID-5P" onclick="USIRStudio.loadPreset('HYBRID-5P')">5段落ハイブリッド長文 [中だるみ混入デモ]</button>
+        <button data-preset-id="EN-HEMINGWAY-VOID" onclick="USIRStudio.loadPreset('EN-HEMINGWAY-VOID')">Hemingway: Big Two-Hearted River [EN-HEMINGWAY-VOID]</button>
+      </div>
+      <div>
+        <span id="usir-lang-badge" class="badge">JA (Japanese)</span>
+        <span id="usir-cv-badge" class="badge">CV_L: --</span>
+        <span id="usir-cadence-badge" class="badge">Alive: --</span>
+      </div>
+      <textarea id="usir-editor" oninput="USIRStudio.analyzeText(this.value)"></textarea>
+
+      <!-- Pre-Sales ROI Scorecard -->
+      <div id="usir-roi-scorecard" class="panel-box">
+        <h4 style="margin-bottom: 4px; color: #38bdf8;">Pre-Sales ROI Scorecard</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+          <div>離脱リスク: <strong id="roi-dropoff-risk" style="color: #f59e0b;">68.0% → 11.2%</strong></div>
+          <div>スロップ削減: <strong id="roi-slop-reduction" style="color: #10b981;">100.0% 削減</strong></div>
+          <div>明瞭度向上: <strong id="roi-clarity-gain" style="color: #38bdf8;">2.85x 向上</strong></div>
+          <div>事実保持率: <strong id="roi-fact-retention" style="color: #6ee7b7;">100% 保持</strong></div>
+        </div>
+      </div>
+
+      <!-- Sentence Length Rhythm Barcode -->
+      <div id="usir-rhythm-barcode" class="panel-box">
+        <h4 style="margin-bottom: 2px;">Sentence Length Rhythm Barcode</h4>
+        <div style="font-size: 10px; color: #94a3b8;">Before (単調・機械的スロップ):</div>
+        <div id="barcode-before" class="rhythm-bar-container"></div>
+        <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">After (有機的ソリトン・破調・間):</div>
+        <div id="barcode-after" class="rhythm-bar-container"></div>
+      </div>
+
+      <div id="usir-chemistry-panel" class="panel-box">
+        <h4 style="margin-bottom: 4px;">Style Chemistry (4 Aesthetic Molecules)</h4>
+        <div id="mol-yugen" class="molecule-meter">幽玄 (Yugen): --</div>
+        <div id="mol-wabi" class="molecule-meter">侘び (Wabi): --</div>
+        <div id="mol-qiyun" class="molecule-meter">気韻生動 (QiYun): --</div>
+        <div id="mol-iki" class="molecule-meter">粋 (Iki): --</div>
+      </div>
+    </section>
+
+    <section id="center-pane">
+      <h3>5-Phase State Diagram & Voronoi Genesis</h3>
+      <svg id="usir-phase-map" viewBox="0 0 400 200" width="100%" height="200">
+        <rect width="400" height="200" fill="#090d16" stroke="#334155" />
+        <circle id="particle-porcelain" cx="80" cy="150" r="5" fill="#e2e8f0" />
+        <circle id="particle-amber" cx="260" cy="85" r="5" fill="#f59e0b" />
+        <circle id="particle-obsidian" cx="120" cy="35" r="5" fill="#38bdf8" />
+        <circle id="particle-lightning" cx="340" cy="130" r="5" fill="#a855f7" />
+        <circle id="usir-live-point" cx="200" cy="100" r="7" fill="#10b981" />
+        <polygon id="genesis-star-marker" points="200,90 203,97 210,97 205,101 207,108 200,104 193,108 195,101 190,97 197,97" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" style="display: none;" />
+      </svg>
+
+      <div id="usir-genesis-panel" class="panel-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+          <h4 style="margin: 0; color: #fbbf24;">✨ Uncharted Voronoi Genesis (usir-genesis)</h4>
+          <button id="btn-usir-genesis" onclick="USIRStudio.triggerGenesis()">✨ Discover Uncharted Style</button>
+        </div>
+        <div id="genesis-style-name" style="font-weight: bold; color: #fbbf24; margin-bottom: 2px;"></div>
+        <div id="genesis-prose" style="font-style: italic; color: #cbd5e1; margin-bottom: 4px;"></div>
+        <pre id="usir-genesis-directive">[Click 'Discover Uncharted Style' to compute Voronoi void within χ²(24, 0.95)]</pre>
+      </div>
+
+      <!-- Before / After Redline Diff Panel -->
+      <div id="usir-redline-panel" class="panel-box">
+        <h4 style="margin-bottom: 4px; color: #38bdf8;">Before / After 赤ペン添削ハイライト (Redline Diff)</h4>
+        <div id="usir-redline-html" style="line-height: 1.6; background: #111827; padding: 8px; border-radius: 4px; max-height: 140px; overflow-y: auto;"></div>
+      </div>
+
+      <!-- 60fps Cinematic Preview Canvas & Synthesizer Bar -->
+      <div class="panel-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+          <h4 style="margin: 0; color: #a855f7;">60fps Cinematic Visual Simulator & Web Audio</h4>
+          <div class="bar-group">
+            <button id="btn-play-before" onclick="USIRStudio.playAudio('before')">🔊 Before (Deadzone)</button>
+            <button id="btn-play-after" onclick="USIRStudio.playAudio('after')">🎵 After (24D Synth)</button>
+            <button id="btn-stop-audio" onclick="USIRStudio.stopAudio()">⏹ Stop</button>
+            <button id="btn-download-midi" onclick="USIRStudio.downloadMidi()">💾 Download .mid</button>
+            <span id="audio-status-label" class="badge">Audio: Ready</span>
+          </div>
+        </div>
+        <canvas id="cinematic-shader-canvas" width="400" height="150" style="width: 100%; height: 150px; background: #07080c; border: 1px solid #334155; border-radius: 4px;"></canvas>
+        <canvas id="cinema-preview-canvas" width="400" height="150" style="display: none;"></canvas>
+      </div>
+
+      <!-- 3-Mode HSMM Trajectory Oscilloscope -->
+      <h3>3-Mode HSMM Trajectory Oscilloscope (序:0 / 破:1 / 間:2)</h3>
+      <svg id="usir-hsmm-oscilloscope" viewBox="0 0 400 100" width="100%" height="100">
+        <rect width="400" height="100" fill="#090d16" stroke="#334155" />
+      </svg>
+      <div id="usir-sinkhole-alerts"></div>
+
+      <!-- Paragraph-Synchronized Multimodal Storyboard Table -->
+      <div class="panel-box">
+        <h4 style="margin-bottom: 4px; color: #38bdf8;">Paragraph-Synchronized Multimodal Storyboard Table</h4>
+        <div id="multimodal-storyboard-table"></div>
+      </div>
+    </section>
+
+    <aside id="usir-docked-drawer" style="width: 25%;" data-placement="right-detail-drawer" data-allow-popup-modal="false" data-auto-interrupt-typing="false">
+      <h3>Docked Atelier Equalizer</h3>
+      <div id="usir-phase-badge" class="badge">--</div>
+      <div id="usir-micro-gate-badge" class="badge">--</div>
+      <div id="usir-spectrum-bars">
+        <div data-element="Sg-01">Sg-01 Gr</div><div data-element="Sg-02">Sg-02 Cr</div><div data-element="Sg-03">Sg-03 Pr</div><div data-element="Sg-04">Sg-04 Jt</div>
+        <div data-element="Sg-05">Sg-05 Cp</div><div data-element="Sg-06">Sg-06 Sy</div><div data-element="Sg-07">Sg-07 Cs</div><div data-element="Sg-08">Sg-08 Lp</div>
+        <div data-element="Sg-09">Sg-09 Dy</div><div data-element="Sg-10">Sg-10 At</div><div data-element="Sg-11">Sg-11 Ma</div><div data-element="Sg-12">Sg-12 Ru</div>
+      </div>
+      <div>
+        <label>Flux <input id="slider-flux" type="range" min="0" max="2" step="0.05" value="1" /></label>
+        <label>Lattice <input id="slider-lattice" type="range" min="0" max="2" step="0.05" value="1" /></label>
+        <label>Void <input id="slider-void" type="range" min="0" max="2" step="0.05" value="1" /></label>
+        <label>Shock <input id="slider-shock" type="range" min="0" max="2" step="0.05" value="1" /></label>
+      </div>
+      <button id="btn-copy-prompt">Copy Hamiltonian Prompt</button>
+      <button id="btn-preview-transition">Preview Closed-Loop Phase Transition</button>
+      <pre id="usir-compiled-prompt"></pre>
+      <pre id="usir-tiers-hex"></pre>
+      <div id="usir-cross-modal-panel">
+        <h4 style="margin-bottom: 4px; font-size: 11px;">Cross-Modal Synesthetic Transpiler</h4>
+        <div style="font-size: 10px; margin-bottom: 2px;">🎵 Music Generative Parameters:</div>
+        <div id="cm-music-summary" class="badge">BPM: -- | Dissonance: -- | Rest: --</div>
+        <div style="font-size: 10px; margin-top: 6px; margin-bottom: 2px;">🎨 Visual Diffusion Parameters:</div>
+        <div id="cm-visual-summary" class="badge">CFG: -- | Detail: -- | Space: --</div>
+        <div style="font-size: 10px; margin-top: 6px; margin-bottom: 2px;">🖥️ Live UI CSS Morphing Card:</div>
+        <div id="cm-live-ui-card">
+          Live Synesthetic UI Preview Card
+        </div>
+      </div>
+    </aside>
+  </main>
+  <!-- SCRIPT_INJECTIONS -->
+</body>
+</html>
