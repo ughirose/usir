@@ -73,6 +73,7 @@ class CollisionBridgeResult:
     forward_waves: List[TrajectoryWave]
     backward_waves: List[TrajectoryWave]
     collision_matrix: np.ndarray
+    infilling_step: Optional[str] = None
 
 
 @dataclass
@@ -456,6 +457,8 @@ def solve_bidirectional_collision_bridge(
     anchors: BoundaryAnchors,
     forward_candidates: Optional[List[List[str]]] = None,
     backward_candidates: Optional[List[List[str]]] = None,
+    infilling_step: Optional[str] = None,
+    infill_generator: Optional[Callable[[str, str], str]] = None,
     beta: float = 0.5,
     lambda_bridge: float = 0.8,
     k_candidates: int = 4,
@@ -514,11 +517,19 @@ def solve_bidirectional_collision_bridge(
                 best_pair = (i, j)
                 best_components = (d_geo, d_cau, d_3ph)
 
-    # Weld the optimal forward and backward waves
+    # Weld the optimal forward and backward waves with true midpoint infilling bridge
     opt_fwd = fwd_waves[best_pair[0]]
     opt_bwd = bwd_waves[best_pair[1]]
 
-    welded_trajectory: List[str] = list(opt_fwd.steps) + list(opt_bwd.steps)
+    actual_infill = infilling_step
+    if actual_infill is None and infill_generator is not None:
+        actual_infill = infill_generator(opt_fwd.steps[-1], opt_bwd.steps[0])
+
+    if actual_infill and actual_infill.strip():
+        welded_trajectory: List[str] = list(opt_fwd.steps) + [actual_infill.strip()] + list(opt_bwd.steps)
+    else:
+        welded_trajectory: List[str] = list(opt_fwd.steps) + list(opt_bwd.steps)
+
     welded_text = "".join(welded_trajectory)
 
     # Bridge multiplier M_bridge in [0, 1]
@@ -538,4 +549,5 @@ def solve_bidirectional_collision_bridge(
         forward_waves=fwd_waves,
         backward_waves=bwd_waves,
         collision_matrix=action_matrix,
+        infilling_step=actual_infill,
     )

@@ -112,6 +112,14 @@ EXPERIMENT_DOMAINS: List[Dict[str, str]] = [
 ]
 
 
+def extract_complete_sentences(text: str, min_len: int = 6) -> List[str]:
+    """Extracts only fully-terminated sentences (ending with 。, ！, or ？).
+    Discards incomplete fragments caused by token limits.
+    """
+    matches = re.findall(r'[^。！？\r\n]+[。！？]', text)
+    return [m.strip() for m in matches if len(m.strip()) >= min_len]
+
+
 def detect_execution_tier() -> Dict[str, Any]:
     """Auto-detects GPU + transformers, Local Ollama, or Offline CI fallback."""
     # Check Tier 1: GPU + PyTorch
@@ -422,8 +430,10 @@ def run_experiment_on_domain(
         model, tok = get_transformers_model()
         inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
         inp_len_v = inp["input_ids"].shape[-1]
-        out = model.generate(**inp, max_new_tokens=260, do_sample=True, temperature=0.75)
-        vanilla_text = anchors.x_0 + tok.decode(out[0][inp_len_v:], skip_special_tokens=True)
+        out = model.generate(**inp, max_new_tokens=360, do_sample=True, temperature=0.75)
+        raw_v = tok.decode(out[0][inp_len_v:], skip_special_tokens=True)
+        v_sents = extract_complete_sentences(raw_v)
+        vanilla_text = anchors.x_0 + "".join(v_sents)
     elif tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
         prompt = f"{anchors.x_0}\nこの導入から続く段落（450〜650文字、6〜8文）を自然な日本語で執筆してください。"
         vanilla_text = call_ollama_generate(prompt, model=tier_info["models"][0])
@@ -448,8 +458,10 @@ def run_experiment_on_domain(
         proc_v3.register_tokenizer_punctuation(tok)
         inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
         inp_len_v3 = inp["input_ids"].shape[-1]
-        out_v3 = model.generate(**inp, logits_processor=[proc_v3], max_new_tokens=260, do_sample=True, temperature=0.7)
-        v3_forward_text = anchors.x_0 + tok.decode(out_v3[0][inp_len_v3:], skip_special_tokens=True)
+        out_v3 = model.generate(**inp, logits_processor=[proc_v3], max_new_tokens=360, do_sample=True, temperature=0.7)
+        raw_v3 = tok.decode(out_v3[0][inp_len_v3:], skip_special_tokens=True)
+        v3_sents = extract_complete_sentences(raw_v3)
+        v3_forward_text = anchors.x_0 + "".join(v3_sents)
     elif tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
         prompt = f"{anchors.x_0}\n文節の推移を意識し、平板な表現を排して続く段落（450〜650文字）を執筆してください。"
         v3_forward_text = call_ollama_generate(prompt, model=tier_info["models"][0])
@@ -478,7 +490,7 @@ def run_experiment_on_domain(
         out_fwd = model.generate(
             **inp_f,
             logits_processor=[proc_v4],
-            max_new_tokens=160,
+            max_new_tokens=220,
             do_sample=True,
             temperature=0.75,
             num_return_sequences=2,
@@ -487,7 +499,7 @@ def run_experiment_on_domain(
         for seq in out_fwd:
             gen_tokens_f = seq[inp_len_f:]
             f_text = tok.decode(gen_tokens_f, skip_special_tokens=True).strip()
-            f_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', f_text) if len(s.strip()) >= 5]
+            f_steps = extract_complete_sentences(f_text)
             llm_fwd_candidates.append([anchors.x_0] + f_steps if f_steps else [anchors.x_0, "冷たい静寂の中で事態が進展していく。"])
 
         system_bwd = "あなたは文章の接続展開を執筆するプロの小説家・論説家です。見出し、箇条書き、解説、挨拶は一切書かず、指定された結びの一文に直結する直前の地の文（2〜3文、80〜150字）のみを出力してください。"
@@ -504,7 +516,7 @@ def run_experiment_on_domain(
         inp_len_b = inp_b["input_ids"].shape[-1]
         out_bwd = model.generate(
             **inp_b,
-            max_new_tokens=140,
+            max_new_tokens=180,
             do_sample=True,
             temperature=0.75,
             num_return_sequences=2,
@@ -516,13 +528,36 @@ def run_experiment_on_domain(
             # Clean away any markdown headings or bullet prefixes
             b_clean = re.sub(r'^(情景|命題|結論|この主張|この結論|この情景|解説|分析)[^：:\n]*[：:\n]+', '', b_clean).strip()
             b_clean = re.sub(r'^[#*\s\d.：:\-「」]+', '', b_clean).strip()
-            b_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', b_clean) if len(s.strip()) >= 5 and not s.strip().startswith('#')]
+            b_steps = extract_complete_sentences(b_clean)
             llm_bwd_candidates.append(b_steps + [optimal_x_T] if b_steps else ["前提条件の整合性を確認し、", optimal_x_T])
+
+        # Define midpoint infilling generator
+        def generate_midpoint_infill(fwd_last: str, bwd_first: str) -> str:
+            """Generates natural bridging infilling connecting forward wave tip to backward wave tip."""
+            sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。見出しや解説は一切書かず、前文から後文へ自然に繋がる接続文（地の文のみ、1〜2文、40〜90字）のみを出力してください。"
+            user_msg = f"前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へスムーズに繋ぐ接続文（地の文のみ）を書いてください。"
+            if hasattr(tok, "apply_chat_template") and tok.chat_template:
+                p_inf = tok.apply_chat_template([
+                    {"role": "system", "content": sys_inf},
+                    {"role": "user", "content": user_msg},
+                ], tokenize=False, add_generation_prompt=True)
+            else:
+                p_inf = f"前文：{fwd_last}\n後文：{bwd_first}\n接続文："
+
+            inp_inf = tok(p_inf, return_tensors="pt").to(model.device)
+            inp_len_inf = inp_inf["input_ids"].shape[-1]
+            out_inf = model.generate(**inp_inf, max_new_tokens=100, do_sample=True, temperature=0.7)
+            raw_inf = tok.decode(out_inf[0][inp_len_inf:], skip_special_tokens=True).strip()
+            raw_inf = re.sub(r'^(接続文|解説|補間)[^：:\n]*[：:\n]+', '', raw_inf).strip()
+            raw_inf = re.sub(r'^[#*\s\d.：:\-「」]+', '', raw_inf).strip()
+            sents = extract_complete_sentences(raw_inf)
+            return "".join(sents) if sents else ""
 
         bridge_res_v4 = solve_bidirectional_collision_bridge(
             anchors,
             forward_candidates=llm_fwd_candidates,
             backward_candidates=llm_bwd_candidates,
+            infill_generator=generate_midpoint_infill,
             k_candidates=2,
         )
         v4_collision_text = bridge_res_v4.welded_text

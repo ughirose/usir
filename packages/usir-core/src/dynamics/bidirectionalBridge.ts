@@ -57,6 +57,7 @@ export interface CollisionBridgeResult {
   forward_waves: TrajectoryWave[];
   backward_waves: TrajectoryWave[];
   collision_matrix: number[][];
+  infilling_step?: string;
 }
 
 export interface TensorBridgeResult {
@@ -427,6 +428,8 @@ export function solveBidirectionalCollisionBridge(
   options?: {
     forward_candidates?: string[][];
     backward_candidates?: string[][];
+    infilling_step?: string;
+    infill_generator?: (fwdLast: string, bwdFirst: string) => string;
     beta?: number;
     lambda_bridge?: number;
     k_candidates?: number;
@@ -502,7 +505,15 @@ export function solveBidirectionalCollisionBridge(
 
   const optFwd = fwdWaves[bestPair[0]]!;
   const optBwd = bwdWaves[bestPair[1]]!;
-  const weldedTrajectory = [...optFwd.steps, ...optBwd.steps];
+
+  let actualInfill = options?.infilling_step;
+  if (actualInfill === undefined && options?.infill_generator) {
+    actualInfill = options.infill_generator(optFwd.steps[optFwd.steps.length - 1]!, optBwd.steps[0]!);
+  }
+
+  const weldedTrajectory = actualInfill && actualInfill.trim().length > 0
+    ? [...optFwd.steps, actualInfill.trim(), ...optBwd.steps]
+    : [...optFwd.steps, ...optBwd.steps];
   const weldedText = weldedTrajectory.join('');
   const mBridge = Math.max(0.0, Math.min(1.0, Math.exp(-lambdaBridge * bestAction)));
 
@@ -520,5 +531,6 @@ export function solveBidirectionalCollisionBridge(
     forward_waves: fwdWaves,
     backward_waves: bwdWaves,
     collision_matrix: actionMatrix,
+    infilling_step: actualInfill,
   };
 }
