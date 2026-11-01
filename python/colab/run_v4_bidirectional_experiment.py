@@ -228,7 +228,7 @@ def run_experiment_on_domain(
                 continuation = f_text[len(anchors.x_0):].strip()
                 parts = [p.strip() for p in re.split(r'([。！？\n]+)', continuation) if p.strip()]
                 if parts:
-                    fwd_step = "".join(parts[:2])
+                    fwd_step = "".join(parts[:2]).rstrip('」』') + "。"
                 else:
                     fwd_step = "冷たい静寂の中で事態が進展していく。"
                 llm_fwd_candidates.append([anchors.x_0, fwd_step])
@@ -252,9 +252,12 @@ def run_experiment_on_domain(
             for seq in out_b:
                 b_raw = tok.decode(seq, skip_special_tokens=True)
                 b_clean = b_raw[len(bwd_prompt):].strip()
+                # Strip any echoing of the prompt instruction
+                b_clean = re.sub(r'^(情景|命題|結論|この主張|この結論|この情景)[^：:\n]*[：:\n]+', '', b_clean).strip()
+                b_clean = re.sub(r'^[「『]', '', b_clean).strip()
                 b_parts = [p.strip() for p in re.split(r'([。！？\n]+)', b_clean) if p.strip()]
                 if b_parts:
-                    bwd_step = "".join(b_parts[:2])
+                    bwd_step = "".join(b_parts[:2]).rstrip('」』') + "。"
                 else:
                     bwd_step = "前提条件の整合性を確認し、"
                 llm_bwd_candidates.append([bwd_step, anchors.x_T])
