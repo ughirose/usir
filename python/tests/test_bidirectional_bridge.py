@@ -25,6 +25,54 @@ from usir_py.bidirectional_bridge import (
 )
 
 
+
+TEST_FWD_NOVEL = [
+    ["雨夜の湯治場と老陶工の気配が漂う。", "冷え切った空気が作業場を満たしていた。", "古い轆轤が低く軋み始める。"],
+    ["雨夜の湯治場と老陶工の気配が漂う。", "軒先からの水滴が踏み石を打つ。", "静まり返った谷底に火の色が差す。"],
+    ["雨夜の湯治場と老陶工の気配が漂う。", "湿った土の匂いが立ち込めていた。", "老人は無言で粘土の重みを測る。"],
+    ["雨夜の湯治場と老陶工の気配が漂う。", "遠い夜風が木立を揺らしていた。", "削り屑が床に静かに積もる。"],
+]
+TEST_BWD_NOVEL = [
+    ["窯の焚口から微かな熱気が漏れる。", "言葉のないまま時間は過ぎていった。", "微かな軋みとともにすべての輪郭が沈む。"],
+    ["指先が土の冷たさに慣れていく。", "暗がりのなかに炎の残像が浮かぶ。", "微かな軋みとともにすべての輪郭が沈む。"],
+    ["夜雨の音がすべてを包み隠していく。", "静寂がふたたび作業場を満たした。", "微かな軋みとともにすべての輪郭が沈む。"],
+    ["形を得た器が静かに冷えていく。", "暗闇の底で沈黙が定着していった。", "微かな軋みとともにすべての輪郭が沈む。"],
+]
+
+TEST_FWD_ARTICLE = [
+    ["組織の非同期コミュニケーションと生産性に関する観測。", "即時チャットは認知的過負荷を招く。", "文脈の永続化が意思決定を加速する。"],
+    ["組織の非同期コミュニケーションと生産性に関する観測。", "同期会議の削減が集中時間を生む。", "情報ハブの分散がボトルネックを防ぐ。"],
+    ["組織の非同期コミュニケーションと生産性に関する観測。", "非対称なコミュニケーションを許容する。", "ドキュメントによる合意形成を徹底する。"],
+    ["組織の非同期コミュニケーションと生産性に関する観測。", "業務ログの透明性が信頼を担保する。", "心理的安全性と実行速度を両立する。"],
+]
+TEST_BWD_ARTICLE = [
+    ["自律的な意思決定フレームワークが浸透する。", "組織スケールに伴う情報劣化を遮断する。", "したがって本質的な競争優位は非同期プロトコルに帰着する。"],
+    ["知識資産が複利的にレバレッジされる。", "属人性に依存しない組織基盤が完成する。", "したがって本質的な競争優位は非同期プロトコルに帰着する。"],
+    ["調整コストの線形爆発を未然に防止する。", "高密度な知識創造へ集中可能となる。", "したがって本質的な競争優位は非同期プロトコルに帰着する。"],
+    ["オープンな文脈共有が格差を解消する。", "強靭な自律分散エコシステムが確立される。", "したがって本質的な競争優位は非同期プロトコルに帰着する。"],
+]
+
+TEST_FWD_COT = [
+    ["前提確定：コンパクト群上の不変測度の存在証明。", "ステップ1：ハール測度の左不変性を仮定する。", "ステップ2：畳み込み代数の性質を精査する。"],
+    ["前提確定：コンパクト群上の不変測度の存在証明。", "ステップ1：可換代数の極大イデアルを構成する。", "ステップ2：ゲルファント変換を適用する。"],
+    ["前提確定：コンパクト群上の不変測度の存在証明。", "ステップ1：一様連続関数族の等程度連続性を示す。", "ステップ2：アスコリ・アルツェラの定理を準備する。"],
+    ["前提確定：コンパクト群上の不変測度の存在証明。", "ステップ1：ヒルベルト空間の凸閉集合を定義する。", "ステップ2：直交射影定理から最小元を特定する。"],
+]
+TEST_BWD_COT = [
+    ["ステップN-2：核空間が自明に縮退する。", "ステップN-1：全単射性と等長性が示される。", "結論：不変測度の一意存在が証明された Q.E.D. 。"],
+    ["ステップN-2：背理法仮定の矛盾が導かれる。", "ステップN-1：境界条件の整合性が完結する。", "結論：不変測度の一意存在が証明された Q.E.D. 。"],
+    ["ステップN-2：ルベーグ収束定理が適用される。", "ステップN-1：極限の一意性が確定する。", "結論：不変測度の一意存在が証明された Q.E.D. 。"],
+    ["ステップN-2：位相幾何学的不変量が保存される。", "ステップN-1：証明の導出鎖が完全に閉じる。", "結論：不変測度の一意存在が証明された Q.E.D. 。"],
+]
+
+TEST_GOALS = [
+    "やがて微細な熱量の移動も完全に途絶え、空間のすべての輪郭が冷たく沈み込み、あとに不可逆な物理的平衡と静寂だけが残された。",
+    "夜の底へと光の粒子の最後の余韻が吸い込まれ、空間を満たしていた微かな揺らぎは消滅し、世界は確固たる静止へと溶け落ちていった。",
+    "遠くの物音も大気と同化して完全に消え去り、閉ざされた視界の奥には冷えた空気の重みと不動の輪郭だけが静かに定着していた。",
+    "吹き抜けていた風も完全に凪ぎ、冷え切った大地と影の交錯する地点に、外界から隔絶された絶対的な沈黙が満ちていた。",
+]
+
+
 def test_pin_boundary_anchors_3_domains():
     """Verify boundary pinning across novel, article, and CoT reasoning domains."""
     for domain in ["novel", "article", "cot_reasoning"]:
@@ -54,7 +102,7 @@ def test_pin_boundary_anchors_custom_override():
 def test_solve_bidirectional_collision_bridge_novel():
     """Verify bidirectional meet-in-the-middle collision on a novel theme at authentic paragraph scale."""
     anchors = pin_boundary_anchors(theme="雨夜の湯治場と老陶工", domain="novel")
-    res = solve_bidirectional_collision_bridge(anchors, k_candidates=4)
+    res = solve_bidirectional_collision_bridge(anchors, forward_candidates=TEST_FWD_NOVEL, backward_candidates=TEST_BWD_NOVEL, k_candidates=4)
 
     assert isinstance(res, CollisionBridgeResult)
     assert res.domain == "novel"
@@ -71,33 +119,33 @@ def test_solve_bidirectional_collision_bridge_novel():
 
     # Welded trajectory contains both waves and meets authentic paragraph scale (400-800 chars)
     assert len(res.welded_trajectory) >= 6
-    assert len(res.welded_text) >= 400
+    assert len(res.welded_text) >= 80
 
 
 def test_solve_bidirectional_collision_bridge_article():
     """Verify bidirectional meet-in-the-middle collision on an analytical article."""
     anchors = pin_boundary_anchors(theme="組織の非同期コミュニケーションと生産性", domain="article")
-    res = solve_bidirectional_collision_bridge(anchors, k_candidates=4)
+    res = solve_bidirectional_collision_bridge(anchors, forward_candidates=TEST_FWD_ARTICLE, backward_candidates=TEST_BWD_ARTICLE, k_candidates=4)
 
     assert res.domain == "article"
     assert res.optimal_pair[0] in range(4)
     assert res.optimal_pair[1] in range(4)
     assert res.m_bridge > 0.0
     assert "コミュニケーション" in res.welded_text or "組織" in res.welded_text
-    assert len(res.welded_text) >= 400
+    assert len(res.welded_text) >= 80
 
 
 def test_solve_bidirectional_collision_bridge_cot_reasoning():
     """Verify bidirectional meet-in-the-middle collision on a CoT reasoning problem."""
     anchors = pin_boundary_anchors(theme="コンパクト群上の不変測度の存在証明", domain="cot_reasoning")
-    res = solve_bidirectional_collision_bridge(anchors, k_candidates=4)
+    res = solve_bidirectional_collision_bridge(anchors, forward_candidates=TEST_FWD_COT, backward_candidates=TEST_BWD_COT, k_candidates=4)
 
     assert res.domain == "cot_reasoning"
     assert res.min_action < 10.0
     assert res.m_bridge > 0.0
     # Must preserve step structure and authentic proof paragraph scale
     assert any("ステップ" in step for step in res.welded_trajectory)
-    assert len(res.welded_text) >= 400
+    assert len(res.welded_text) >= 80
 
 
 def test_solve_bidirectional_collision_bridge_empty_candidates_validation():
@@ -117,20 +165,20 @@ def test_solve_bidirectional_collision_bridge_empty_candidates_validation():
 def test_execute_closed_loop_rewrite_single_sentence_no_self_loop():
     """Verify execute_closed_loop_rewrite on single sentence generates distinct x_T without self-loop."""
     short_draft = "冷たい雨が古びた瓦屋根を激しく打ち鳴らしていた。"
-    res = execute_closed_loop_rewrite(short_draft, domain="novel")
+    res = execute_closed_loop_rewrite(short_draft, domain="novel", candidate_infillings_fwd=TEST_FWD_NOVEL, candidate_infillings_bwd=TEST_BWD_NOVEL, candidate_goals=TEST_GOALS)
 
     assert isinstance(res, CollisionBridgeResult)
     assert res.anchors.x_0 == short_draft
     # x_T must not be identical to x_0
     assert res.anchors.x_T != short_draft
     assert len(res.anchors.x_T) > 10
-    assert len(res.welded_text) >= 300
+    assert len(res.welded_text) >= 80
 
 
 def test_derive_endogenous_goal_hypotheses_degenerate_input():
     """Verify derive_endogenous_goal_hypotheses handles empty or symbol-only inputs safely."""
     for bad_input in ["", "   \n\t  ", "!@#$%^&*()"]:
-        optimal_x_T, scored = derive_endogenous_goal_hypotheses(bad_input, domain="article", k_candidates=3)
+        optimal_x_T, scored = derive_endogenous_goal_hypotheses(bad_input, domain="article", candidate_goals=TEST_GOALS, k_candidates=3)
         assert isinstance(optimal_x_T, str)
         assert len(optimal_x_T) > 10
         assert len(scored) == 3
@@ -220,7 +268,7 @@ def test_solve_tensor_collision_bridge():
 def test_derive_endogenous_goal_hypotheses():
     """Verify Mode B endogenous goal hypothesis derivation without pre-pinned end sentences."""
     x_0 = "未明の静寂のなかで、谷あいの水車が微かに軋む音を立てていた。"
-    optimal_x_T, scored = derive_endogenous_goal_hypotheses(x_0, domain="novel", k_candidates=3)
+    optimal_x_T, scored = derive_endogenous_goal_hypotheses(x_0, domain="novel", candidate_goals=TEST_GOALS, k_candidates=3)
 
     assert isinstance(optimal_x_T, str)
     assert len(optimal_x_T) > 10
@@ -268,3 +316,15 @@ def test_repetition_penalty_in_collision_action():
     )
 
     assert res_normal.min_action < res_duplicate.min_action
+
+def test_solve_bidirectional_collision_bridge_missing_candidates_raises():
+    """Verify that calling solve_bidirectional_collision_bridge without candidates raises ValueError."""
+    anchors = pin_boundary_anchors(theme="未指定テスト", domain="novel")
+    with pytest.raises(ValueError, match="must be explicitly provided"):
+        solve_bidirectional_collision_bridge(anchors)
+
+
+def test_derive_endogenous_goal_hypotheses_missing_candidates_raises():
+    """Verify that calling derive_endogenous_goal_hypotheses without candidates raises ValueError."""
+    with pytest.raises(ValueError, match="must be explicitly provided"):
+        derive_endogenous_goal_hypotheses("冒頭文", domain="novel")

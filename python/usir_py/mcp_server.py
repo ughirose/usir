@@ -204,7 +204,19 @@ def tool_plan_bidirectional_bridge(args: Dict[str, Any]) -> Dict[str, Any]:
         custom_end=end_goal,
     )
 
-    bridge_res = solve_bidirectional_collision_bridge(anchors, k_candidates=k_candidates)
+    fwd_cands = args.get("forward_candidates")
+    bwd_cands = args.get("backward_candidates")
+    if not fwd_cands or not bwd_cands:
+        # Default prompt engineering fixture for planning
+        fwd_cands = [[anchors.x_0, f"{theme}の気配が深まり、冷気が空間を満たしていく。"]]
+        bwd_cands = [[f"{theme}の物理平衡が定着し、", anchors.x_T]]
+
+    bridge_res = solve_bidirectional_collision_bridge(
+        anchors,
+        forward_candidates=fwd_cands,
+        backward_candidates=bwd_cands,
+        k_candidates=k_candidates,
+    )
 
     steering_directive = (
         f"[USIR v4.0 Schrödinger Bridge Steering Directive]\n"

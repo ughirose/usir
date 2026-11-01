@@ -55,8 +55,6 @@ from usir_py.manifold_geodesic import (
 from usir_py.bidirectional_bridge import (
     pin_boundary_anchors,
     solve_bidirectional_collision_bridge,
-    generate_unconstrained_lattice_walk,
-    generate_unconstrained_forward_rollout,
     derive_endogenous_goal_hypotheses,
     execute_closed_loop_rewrite,
     BoundaryAnchors,
@@ -338,6 +336,29 @@ def compute_physical_quality_correlations(
     }
 
 
+
+TIER3_CI_FIXTURES: Dict[str, Dict[str, Any]] = {
+    "novel": {
+        "vanilla": "雨夜の湯治場と老陶工の気配が漂い、冷気が指先を凍らせていた。軒先から落ちる水滴が踏み石を叩き、古い轆轤が低く軋み始める。",
+        "v3": "雨夜の湯治場と老陶工の気配が漂い、冷気が指先を凍らせていた。削り屑が床に静かに積もり、窯の焚口から微かな熱気が漏れる。",
+        "fwd_cands": [["雨夜の湯治場と老陶工の気配が漂う。", "軒先からの水滴が踏み石を打つ。"]],
+        "bwd_cands": [["窯の焚口から微かな熱気が漏れる。", "微かな軋みとともにすべての輪郭が沈む。"]],
+    },
+    "article": {
+        "vanilla": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。",
+        "v3": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。",
+        "fwd_cands": [["組織の非同期コミュニケーションと生産性に関する観測。", "同期会議の削減が集中時間を生む。"]],
+        "bwd_cands": [["自律的な意思決定フレームワークが浸透する。", "したがって本質的な競争優位は非同期プロトコルに帰着する。"]],
+    },
+    "cot_reasoning": {
+        "vanilla": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。",
+        "v3": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。",
+        "fwd_cands": [["前提確定：コンパクト群上の不変測度の存在証明。", "ステップ1：ハール測度の左不変性を仮定する。"]],
+        "bwd_cands": [["ステップN-1：全単射性と等長性が示される。", "結論：不変測度の一意存在が証明された Q.E.D. 。"]],
+    },
+}
+
+
 def run_experiment_on_domain(
     domain_cfg: Dict[str, str],
     tier_info: Dict[str, Any],
@@ -354,88 +375,163 @@ def run_experiment_on_domain(
         x_0 = f"前提：問題設定「{theme}」における初期条件および束縛条件を確定する。"
 
     # Endogenous Goal Derivation (Mode B: No manually pre-pinned x_T)
-    optimal_x_T, scored_goals = derive_endogenous_goal_hypotheses(x_0, domain=domain, k_candidates=4)
-    anchors = pin_boundary_anchors(theme=theme, domain=domain, custom_start=x_0, custom_end=optimal_x_T)
-
-    # --------------------------------------------------------------------------
-    # 1. Method 1: Vanilla Unidirectional Generation (Baseline 1, 400-800 chars)
-    # --------------------------------------------------------------------------
+    candidate_goals = None
     if tier_info["tier"] == "Tier_1_GPU_Transformers":
         try:
             model, tok = get_transformers_model()
-            inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
-            out = model.generate(**inp, max_new_tokens=450, do_sample=True, temperature=0.75)
-            vanilla_text = tok.decode(out[0], skip_special_tokens=True)
+            p_goal = f"冒頭：「{x_0}」\nこの文章が着地すべき結論または最終情景（1文）："
+            inp_g = tok(p_goal, return_tensors="pt").to(model.device)
+            out_g = model.generate(**inp_g, max_new_tokens=40, do_sample=True, temperature=0.8, num_return_sequences=4)
+            candidate_goals = []
+            for seq in out_g:
+                g_text = tok.decode(seq, skip_special_tokens=True)[len(p_goal):].strip()
+                g_parts = [p.strip() + "。" for p in re.split(r'[。！？\n]+', g_text) if len(p.strip()) >= 5]
+                if g_parts:
+                    candidate_goals.append(g_parts[0])
         except Exception:
-            vanilla_text = generate_unconstrained_forward_rollout(anchors, steps_count=6)
+            pass
+
+    if not candidate_goals:
+        ci_fix = TIER3_CI_FIXTURES.get(domain, TIER3_CI_FIXTURES["novel"])
+        candidate_goals = [
+            f"{theme}の物理的平衡と静寂が定着した。",
+            f"したがって本質的な競争優位は非同期プロトコルに帰着する。",
+            f"目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+        ]
+
+    optimal_x_T, scored_goals = derive_endogenous_goal_hypotheses(x_0, domain=domain, candidate_goals=candidate_goals, k_candidates=len(candidate_goals))
+    anchors = pin_boundary_anchors(theme=theme, domain=domain, custom_start=x_0, custom_end=optimal_x_T)
+
+    # --------------------------------------------------------------------------
+        # --------------------------------------------------------------------------
+    # 1. Method 1: Vanilla Unidirectional Generation (Baseline 1, 400-800 chars)
+    # --------------------------------------------------------------------------
+    if tier_info["tier"] == "Tier_1_GPU_Transformers":
+        model, tok = get_transformers_model()
+        inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
+        out = model.generate(**inp, max_new_tokens=450, do_sample=True, temperature=0.75)
+        vanilla_text = tok.decode(out[0], skip_special_tokens=True)
     elif tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
         prompt = f"{anchors.x_0}\nこの導入から続く段落（450〜650文字、6〜8文）を自然な日本語で執筆してください。"
         vanilla_text = call_ollama_generate(prompt, model=tier_info["models"][0])
-        if not vanilla_text or len(vanilla_text) < 300:
-            vanilla_text = generate_unconstrained_forward_rollout(anchors, steps_count=6)
+        if not vanilla_text or len(vanilla_text) < 100:
+            raise RuntimeError("Ollama generation returned empty or truncated response.")
     else:
-        vanilla_text = generate_unconstrained_forward_rollout(anchors, steps_count=6)
+        ci_fix = TIER3_CI_FIXTURES.get(domain, TIER3_CI_FIXTURES["novel"])
+        vanilla_text = ci_fix["vanilla"]
 
     # --------------------------------------------------------------------------
     # 2. Method 2: Unidirectional USIR v3.0 (Forward-only BAOAB, 400-800 chars)
     # --------------------------------------------------------------------------
     if tier_info["tier"] == "Tier_1_GPU_Transformers":
-        try:
-            model, tok = get_transformers_model()
-            proc_v3 = USIRPyTorchLogitsProcessor(
-                dim=12,
-                top_k=64,
-                refractory_min=5,
-                refractory_max=35,
-                backward_attraction=None,
-            )
-            proc_v3.register_tokenizer_punctuation(tok)
-            inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
-            out_v3 = model.generate(**inp, logits_processor=[proc_v3], max_new_tokens=450, do_sample=True, temperature=0.7)
-            v3_forward_text = tok.decode(out_v3[0], skip_special_tokens=True)
-        except Exception:
-            v3_forward_text = ""
+        model, tok = get_transformers_model()
+        proc_v3 = USIRPyTorchLogitsProcessor(
+            dim=12,
+            top_k=64,
+            refractory_min=5,
+            refractory_max=35,
+            backward_attraction=None,
+        )
+        proc_v3.register_tokenizer_punctuation(tok)
+        inp = tok(anchors.x_0, return_tensors="pt").to(model.device)
+        out_v3 = model.generate(**inp, logits_processor=[proc_v3], max_new_tokens=450, do_sample=True, temperature=0.7)
+        v3_forward_text = tok.decode(out_v3[0], skip_special_tokens=True)
+    elif tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
+        prompt = f"{anchors.x_0}\n文節の推移を意識し、平板な表現を排して続く段落（450〜650文字）を執筆してください。"
+        v3_forward_text = call_ollama_generate(prompt, model=tier_info["models"][0])
+        if not v3_forward_text or len(v3_forward_text) < 100:
+            raise RuntimeError("Ollama generation for v3.0 returned empty response.")
     else:
-        v3_forward_text = ""
-
-    if not v3_forward_text or len(v3_forward_text) < 300:
-        if domain == "novel":
-            v3_clauses = [
-                anchors.x_0,
-                f"足元に広がる{theme}の静けさのなかで、冷え切った空気の粒子が指先をかすかに凍らせていく。",
-                "雪明かりが遠くの木々の輪郭を淡く照らし出し、暗がりの中にわずかに残る温もりの痕跡を探す。",
-                "凍りついた小枝が風に揺れて細い乾いた音を立て、吐く息が白く霧となって消え去るのを見つめる。",
-                "周囲の空間は変わり映えせず、暗がりの中で古い木造の羽目板が低いきしみ音を立てていた。",
-                "遠くの谷底から風の呻き声が低く響いてきたが、不可逆な境界線へと到達することなく静寂が漂う。",
-                "閉ざされた視界の隙間からかすかな光彩が漏れていたものの、世界は未だ中途の漂流にとどまっていた。",
-            ]
-        elif domain == "article":
-            v3_clauses = [
-                anchors.x_0,
-                "組織内の知識伝達におけるレイテンシを削減するには、まず情報ハブの疎結合化と分散化が不可欠となる。",
-                "不要な定例会議を廃止し非同期のレビューサイクルへ移行することで、深い思考時間と集中時間を確保する。",
-                "コミュニケーションの非対称性を認める制度設計が、作業記憶の細片化と認知的負荷の最小化に直結する。",
-                "テキストベースの明確な合意形成と台帳の透明性が、現場の心理的安全性と実行速度を同時に両立させる。",
-                "各メンバーが自律的にコンテキストを同期できる情報台帳の整備が求められるが、全体構造への統合は未完である。",
-                "局所的なプロトコル改善の試みは前進を見せるものの、依然として組織全体の一貫した着地点には至っていない。",
-            ]
-        else:  # cot_reasoning
-            v3_clauses = [
-                anchors.x_0,
-                f"ステップ1：初期公理に基づき、問題「{theme}」における有界閉区間上の連続関数列の収束特性を精査する。",
-                "ステップ2：コーシーの判定条件を適用して一様収束極限関数の存在を担保し、ノルムの連続性を確認する。",
-                "ステップ3：任意の正数イプシロンに対して全区間で成立する自然数Nを一様に確定し、弱収束性を議論する。",
-                "ステップ4：平均値の定理を差分商に適用し、導関数列の一様有界性と局所有界な性質を慎重に導出する。",
-                "ステップ5：極限操作と微分演算の交換可能性に関する積分表示を確立するが、境界での特異性が課題として残る。",
-                "ステップ6：局所的な補題の導出は完了したものの、随伴境界条件との完全な衝突整合性は未確定のままである。",
-            ]
-        v3_forward_text = "".join(v3_clauses)
+        ci_fix = TIER3_CI_FIXTURES.get(domain, TIER3_CI_FIXTURES["novel"])
+        v3_forward_text = ci_fix["v3"]
 
     # --------------------------------------------------------------------------
     # 3. Method 3: Bidirectional Collision Schrödinger Bridge USIR v4.0 (Proposed)
     # --------------------------------------------------------------------------
-    bridge_res_v4 = solve_bidirectional_collision_bridge(anchors, k_candidates=4)
-    v4_collision_text = bridge_res_v4.welded_text
+    if tier_info["tier"] == "Tier_1_GPU_Transformers":
+        model, tok = get_transformers_model()
+        inp_f = tok(anchors.x_0, return_tensors="pt").to(model.device)
+        v_attract = anchors.q_end - anchors.q_start
+        proc_v4 = USIRPyTorchLogitsProcessor(
+            dim=12,
+            top_k=64,
+            refractory_min=5,
+            refractory_max=35,
+            backward_attraction=v_attract[:12],
+        )
+        proc_v4.register_tokenizer_punctuation(tok)
+        out_fwd = model.generate(
+            **inp_f,
+            logits_processor=[proc_v4],
+            max_new_tokens=220,
+            do_sample=True,
+            temperature=0.75,
+            num_return_sequences=2,
+        )
+        llm_fwd_candidates = []
+        for seq in out_fwd:
+            f_text = tok.decode(seq, skip_special_tokens=True)
+            f_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', f_text) if len(s.strip()) >= 5]
+            llm_fwd_candidates.append(f_steps if f_steps else [anchors.x_0, "冷たい静寂の中で事態が進展していく。"])
+
+        if domain == "novel":
+            bwd_prompt = f"情景：「{optimal_x_T}」\nこの情景の直前に起きた描写（3〜4文）："
+        elif domain == "article":
+            bwd_prompt = f"命題：「{optimal_x_T}」\nこの主張を導く直前の論拠（3〜4文）："
+        else:
+            bwd_prompt = f"結論：「{optimal_x_T}」\nこの結論に至る直前の推論（3〜4文）："
+
+        inp_b = tok(bwd_prompt, return_tensors="pt").to(model.device)
+        out_bwd = model.generate(
+            **inp_b,
+            max_new_tokens=200,
+            do_sample=True,
+            temperature=0.75,
+            num_return_sequences=2,
+        )
+        llm_bwd_candidates = []
+        for seq in out_bwd:
+            b_raw = tok.decode(seq, skip_special_tokens=True)
+            b_clean = b_raw[len(bwd_prompt):].strip()
+            b_clean = re.sub(r'^(情景|命題|結論|この主張|この結論|この情景)[^：:\n]*[：:\n]+', '', b_clean).strip()
+            b_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', b_clean) if len(s.strip()) >= 5]
+            llm_bwd_candidates.append(b_steps + [optimal_x_T] if b_steps else ["前提条件の整合性を確認し、", optimal_x_T])
+
+        bridge_res_v4 = solve_bidirectional_collision_bridge(
+            anchors,
+            forward_candidates=llm_fwd_candidates,
+            backward_candidates=llm_bwd_candidates,
+            k_candidates=2,
+        )
+        v4_collision_text = bridge_res_v4.welded_text
+    elif tier_info["tier"] == "Tier_2_Local_Ollama" and tier_info.get("models"):
+        # Ollama rollout
+        fwd_p = f"{anchors.x_0}\nこの導入に続く展開（3〜4文）を執筆してください。"
+        f_resp = call_ollama_generate(fwd_p, model=tier_info["models"][0])
+        f_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', f_resp) if len(s.strip()) >= 5]
+        llm_fwd = [[anchors.x_0] + f_steps]
+
+        bwd_p = f"着地命題：「{optimal_x_T}」\nこの着地に必然的に至る直前の展開（3〜4文）を執筆してください。"
+        b_resp = call_ollama_generate(bwd_p, model=tier_info["models"][0])
+        b_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', b_resp) if len(s.strip()) >= 5]
+        llm_bwd = [b_steps + [optimal_x_T]]
+
+        bridge_res_v4 = solve_bidirectional_collision_bridge(
+            anchors,
+            forward_candidates=llm_fwd,
+            backward_candidates=llm_bwd,
+            k_candidates=1,
+        )
+        v4_collision_text = bridge_res_v4.welded_text
+    else:
+        ci_fix = TIER3_CI_FIXTURES.get(domain, TIER3_CI_FIXTURES["novel"])
+        bridge_res_v4 = solve_bidirectional_collision_bridge(
+            anchors,
+            forward_candidates=ci_fix["fwd_cands"],
+            backward_candidates=ci_fix["bwd_cands"],
+            k_candidates=1,
+        )
+        v4_collision_text = bridge_res_v4.welded_text
 
     # Evaluate all 3 outputs with physical metrics AND automated blind judge
     def evaluate_output(text: str) -> Dict[str, Any]:
@@ -805,11 +901,162 @@ def main() -> None:
     with open(rep_path, "w", encoding="utf-8") as f:
         f.write(report_md)
 
+        generate_blind_evaluation_sheet(results, output_dir=str(rep_path.parent))
     if not args.quiet:
         print(f"\nSaved structured JSON to : {out_path}")
         print(f"Saved Markdown report to  : {rep_path}")
         print("USIR v4.0 Scaled Experiment Pipeline Completed Cleanly.")
 
 
+
+def generate_blind_evaluation_sheet(experiment_results: List[Dict[str, Any]], output_dir: str = "artifacts") -> Tuple[str, str]:
+    """Generates standalone blind evaluation sheets (HTML and Markdown) for objective human / external review.
+    
+    Randomly shuffles method identities (Method A, B, C) per test instance so reviewers
+    can evaluate narrative flow, logical cohesion, and absence of slop completely blind.
+    Provides interactive Reveal functionality in the HTML artifact.
+    """
+    import random
+    os.makedirs(output_dir, exist_ok=True)
+    rng = random.Random(42)  # Deterministic shuffle for reproducibility
+
+    md_lines = [
+        "# USIR v4.0 Blind Evaluation Sheet (Human & External LLM Quality Audit)",
+        "",
+        "> **Review Protocol**:",
+        "> 1. Read each sample blinded without knowing which system produced it (Method A, B, or C).",
+        "> 2. Grade each sample on 4 axes: Coherence (1-5), Logic (1-5), Style (1-5), and Absence of Slop (1-5).",
+        "> 3. Check the Reveal key at the end of this document to inspect the ground truth method mapping.",
+        "",
+        "---",
+        "",
+    ]
+
+    html_cards = []
+    reveal_table_rows = []
+
+    for idx, r in enumerate(experiment_results):
+        d_name = r["domain"]
+        theme = r.get("theme", f"Theme {idx+1}")
+        title = r.get("title", theme)
+        x_0 = r.get("anchors", {}).get("x_0", "")
+
+        methods = list(r["methods"].keys())
+        shuffled = list(methods)
+        rng.shuffle(shuffled)
+        label_map = {m: chr(ord('A') + i) for i, m in enumerate(shuffled)}
+        reverse_map = {label: m for m, label in label_map.items()}
+
+        md_lines.append(f"## Instance {idx+1:02d}: [{d_name}] {title}")
+        md_lines.append(f"**Prompt ($x_0$)**: {x_0}\n")
+
+        card_html = f"""
+        <div class="eval-card" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 24px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="font-size: 14px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Instance {idx+1:02d} &bull; {d_name}</div>
+            <h3 style="margin: 0 0 12px 0; font-size: 18px; color: #0f172a;">{title}</h3>
+            <div style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; color: #334155;">
+                <strong>Prompt (x<sub>0</sub>):</strong> {x_0}
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+        """
+
+        for label in sorted(reverse_map.keys()):
+            m_key = reverse_map[label]
+            m_data = r["methods"][m_key]
+            text = m_data.get("text", "")
+            char_len = len(text)
+            r_grpo = m_data.get("r_grpo", 0.0)
+            d_3ph = m_data.get("d_3phase", 0.0)
+
+            md_lines.append(f"### Sample {label} ({char_len} chars)")
+            md_lines.append(f"> {text}\n")
+
+            card_html += f"""
+                <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: bold; font-size: 16px; color: #1e293b;">Sample {label}</span>
+                            <span style="font-size: 12px; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 12px;">{char_len} chars</span>
+                        </div>
+                        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0 0 12px 0; text-align: justify;">{text}</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 6px; font-weight: 600;">Human Evaluation Score (1-5):</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; text-align: center;">
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Coherence<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Logic<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">Style<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                            <label style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;">No Slop<br><input type="number" min="1" max="5" style="width: 32px; text-align: center; margin-top: 2px;"></label>
+                        </div>
+                        <div class="reveal-target" style="display: none; margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 4px; font-size: 12px; color: #0369a1; font-weight: bold;">
+                            Method: {m_key}<br>R_GRPO: {r_grpo:.4f} &bull; D_3phase: {d_3ph:.3f}
+                        </div>
+                    </div>
+                </div>
+            """
+
+            reveal_table_rows.append(f"| Instance {idx+1:02d} | Sample {label} | `{m_key}` | {char_len} | {d_3ph:.3f} | {r_grpo:.4f} |")
+
+        card_html += """
+            </div>
+        </div>
+        """
+        html_cards.append(card_html)
+        md_lines.append("")
+
+    md_lines.append("## Reveal Key (Ground Truth Method Mapping)")
+    md_lines.append("| Instance | Blind Label | Ground Truth Method | Length | D_3phase | R_GRPO |")
+    md_lines.append("| :--- | :---: | :--- | :---: | :---: | :---: |")
+    md_lines.extend(reveal_table_rows)
+
+    md_path = os.path.join(output_dir, "blind_evaluation_sheet.md")
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(md_lines))
+
+    html_content = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>USIR v4.0 Blind Evaluation Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f1f5f9; color: #0f172a; margin: 0; padding: 24px; }}
+.container {{ max-width: 1200px; margin: 0 auto; }}
+.header {{ background: #1e293b; color: #f8fafc; padding: 24px; border-radius: 8px; margin-bottom: 24px; }}
+.btn {{ background: #2563eb; color: #ffffff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; }}
+.btn:hover {{ background: #1d4ed8; }}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 style="margin: 0 0 8px 0; font-size: 24px;">USIR v4.0 Blind Evaluation Sheet</h1>
+        <p style="margin: 0; color: #94a3b8; font-size: 14px;">ブラインド比較検証用スタンドアロン台帳 &bull; 各手法の同一性を伏せた状態で客観評価を実施してください。</p>
+        <button class="btn" onclick="toggleReveal()" style="margin-top: 16px;">正解手法を表示 / 非表示 (Reveal All)</button>
+    </div>
+    {"".join(html_cards)}
+</div>
+<script>
+let revealed = false;
+function toggleReveal() {{
+    revealed = !revealed;
+    const targets = document.querySelectorAll('.reveal-target');
+    targets.forEach(t => t.style.display = revealed ? 'block' : 'none');
+}}
+</script>
+</body>
+</html>
+"""
+    html_path = os.path.join(output_dir, "blind_evaluation_sheet.html")
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(html_content)
+
+    print(f"Blind evaluation sheets generated: {md_path} and {html_path}")
+    return md_path, html_path
+
+
 if __name__ == "__main__":
     main()
+
+
+
