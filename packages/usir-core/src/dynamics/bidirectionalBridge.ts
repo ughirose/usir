@@ -443,9 +443,7 @@ export const META_LEAK_MARKERS: readonly string[] = [
 export const CJK_ARTIFACT_PATTERNS: readonly string[] = [
   '是恒',
   '且有界',
-  '若',
   '则',
-  '与',
   '为',
   '这个',
   '们',
@@ -460,13 +458,20 @@ export const CJK_ARTIFACT_PATTERNS: readonly string[] = [
   '无法',
   '达成',
   '漸漸',
-  '穿透',
   '濡濕',
-  '映射',
   '訴說',
   '濕滑',
-  '晨光',
   '`$$',
+];
+
+// Targeted Chinese grammatical syntax patterns (avoids false positives on standard Japanese like 若者, 若い, 寄与, 与える)
+export const CHINESE_GRAMMAR_REGEXES: readonly RegExp[] = [
+  /若.+?则/,
+  /若[\s\$a-zA-Z0-9]/,
+  /若(?:且|存在|任意|满足|非)/,
+  /[\$a-zA-Z0-9]\s*与\s*[\$a-zA-Z0-9]/,
+  /\$\s*与/,
+  /与(?:此|之|其)/,
 ];
 
 function extractKanjiStems(text: string): Set<string> {
@@ -498,6 +503,9 @@ function hasMetaOrCjkLeak(text: string): boolean {
   for (const p of CJK_ARTIFACT_PATTERNS) {
     if (text.includes(p)) return true;
   }
+  for (const r of CHINESE_GRAMMAR_REGEXES) {
+    if (r.test(text)) return true;
+  }
   const kanjiCount = (text.match(/[\u4e00-\u9fff]/g) || []).length;
   if (kanjiCount >= 5 && !/[\u3040-\u30ff]/.test(text)) {
     return true;
@@ -510,16 +518,20 @@ export function sanitizeWaveSteps(
   x_0?: string,
   x_T?: string
 ): string[] {
+  const validSteps = steps.map(s => s.trim()).filter(s => s.length > 0);
+  if (validSteps.length === 0) return [];
+
   const cleanSteps: string[] = [];
   const seenStems: Set<string>[] = [];
+  const normX0 = x_0 ? x_0.trim() : undefined;
   const normXT = x_T ? x_T.trim() : undefined;
+  const stemsX0 = normX0 ? extractKanjiStems(normX0) : new Set<string>();
   const stemsXT = normXT ? extractKanjiStems(normXT) : new Set<string>();
-  const nSteps = steps.length;
+  const nSteps = validSteps.length;
 
   for (let idx = 0; idx < nSteps; idx++) {
-    const s = steps[idx]!.trim();
-    if (!s) continue;
-    const isX0 = idx === 0 && x_0 !== undefined && s === x_0.trim();
+    const s = validSteps[idx]!;
+    const isX0 = idx === 0 && normX0 !== undefined && s === normX0;
     const isXT = idx === nSteps - 1 && normXT !== undefined && s === normXT;
     const isBoundary = isX0 || isXT;
     if (!isBoundary && hasMetaOrCjkLeak(s)) {
@@ -535,13 +547,44 @@ export function sanitizeWaveSteps(
           isDup = true;
           break;
         }
-        if (stemsS.size === 0 && compute5GramOverlap(s, prevS) >= 0.50) {
+        if (compute5GramOverlap(s, prevS) >= 0.50) {
           isDup = true;
           break;
         }
       }
-      if (!isDup && normXT && (s === normXT || sCore === normXT.replace(/[。！？!?]+$/, ''))) {
-        isDup = true;
+      // Subsequent step (idx > 0) echoing starting anchor x_0
+      if (!isDup && idx > 0 && normX0) {
+        if (s === normX0 || sCore === normX0.replace(/[。！？!?]+$/, '')) {
+          isDup = true;
+        } else if (compute5GramOverlap(s, normX0) >= 0.50) {
+          isDup = true;
+        } else if (stemsS.size > 0 && stemsX0.size > 0) {
+          let inter0 = 0;
+          for (const st of stemsS) {
+            if (stemsX0.has(st)) inter0++;
+          }
+          const uLen0 = new Set([...stemsS, ...stemsX0]).size;
+          if (uLen0 > 0 && inter0 / uLen0 >= 0.50) {
+            isDup = true;
+          }
+        }
+      }
+      // Preceding step (idx < nSteps - 1) echoing terminal anchor x_T
+      if (!isDup && idx < nSteps - 1 && normXT) {
+        if (s === normXT || sCore === normXT.replace(/[。！？!?]+$/, '')) {
+          isDup = true;
+        } else if (compute5GramOverlap(s, normXT) >= 0.50) {
+          isDup = true;
+        } else if (stemsS.size > 0 && stemsXT.size > 0) {
+          let interT = 0;
+          for (const st of stemsS) {
+            if (stemsXT.has(st)) interT++;
+          }
+          const uLenT = new Set([...stemsS, ...stemsXT]).size;
+          if (uLenT > 0 && interT / uLenT >= 0.50) {
+            isDup = true;
+          }
+        }
       }
       if (!isDup && stemsS.size > 0) {
         for (const prevStems of seenStems) {
@@ -557,16 +600,6 @@ export function sanitizeWaveSteps(
             }
           }
         }
-        if (!isDup && stemsXT.size > 0) {
-          let interT = 0;
-          for (const st of stemsS) {
-            if (stemsXT.has(st)) interT++;
-          }
-          const uLenT = new Set([...stemsS, ...stemsXT]).size;
-          if (uLenT > 0 && interT / uLenT >= 0.50) {
-            isDup = true;
-          }
-        }
       }
     }
     if (!isDup) {
@@ -575,9 +608,9 @@ export function sanitizeWaveSteps(
     }
   }
 
-  if (cleanSteps.length === 0 && steps.length > 0) {
-    const last = steps[steps.length - 1]!.trim();
-    return [normXT !== undefined && last === normXT ? last : steps[0]!.trim()];
+  if (cleanSteps.length === 0 && validSteps.length > 0) {
+    const last = validSteps[validSteps.length - 1]!;
+    return [normXT !== undefined && last === normXT ? last : validSteps[0]!];
   }
   return cleanSteps;
 }

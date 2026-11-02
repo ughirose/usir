@@ -452,9 +452,7 @@ META_LEAK_MARKERS: List[str] = [
 CJK_ARTIFACT_PATTERNS: List[str] = [
     "是恒",
     "且有界",
-    "若",
     "则",
-    "与",
     "为",
     "这个",
     "们",
@@ -469,13 +467,20 @@ CJK_ARTIFACT_PATTERNS: List[str] = [
     "无法",
     "达成",
     "漸漸",
-    "穿透",
     "濡濕",
-    "映射",
     "訴說",
     "濕滑",
-    "晨光",
     "`$$",
+]
+
+# Targeted Chinese grammatical syntax patterns (avoids false positives on standard Japanese like 若者, 若い, 寄与, 与える)
+CHINESE_GRAMMAR_REGEXES: List[str] = [
+    r'若.+?则',
+    r'若[\s\$a-zA-Z0-9]',
+    r'若(?:且|存在|任意|满足|非)',
+    r'[\$a-zA-Z0-9]\s*与\s*[\$a-zA-Z0-9]',
+    r'\$\s*与',
+    r'与(?:此|之|其)',
 ]
 
 
@@ -505,6 +510,9 @@ def _has_meta_or_cjk_leak(text: str) -> bool:
     for p in CJK_ARTIFACT_PATTERNS:
         if p in text:
             return True
+    for pat in CHINESE_GRAMMAR_REGEXES:
+        if re.search(pat, text):
+            return True
     if len(re.findall(r'[\u4e00-\u9fff]', text)) >= 5 and not re.search(r'[\u3040-\u30ff]', text):
         return True
     return False
@@ -519,19 +527,23 @@ def sanitize_wave_steps(
     1. Removes sentences containing prompt meta-leaks or Chinese CJK artifacts.
     2. Deduplicates subsequent sentences whose Kanji stem Jaccard similarity >= 0.50
        (or verbatim / 5-gram overlap >= 0.50 when Kanji stems are absent)
-       with any earlier step in the wave or with boundary anchors x_0 / x_T.
+       with any earlier step in the wave or with boundary anchors x_0 / x_T
+       (while preserving boundary anchors x_0 and x_T themselves).
     """
+    valid_steps = [s.strip() for s in steps if s and s.strip()]
+    if not valid_steps:
+        return []
+
     clean_steps: List[str] = []
     seen_stems: List[Set[str]] = []
+    norm_x0 = x_0.strip() if x_0 else None
     norm_xT = x_T.strip() if x_T else None
+    stems_x0 = _extract_kanji_stems(norm_x0) if norm_x0 else set()
     stems_xT = _extract_kanji_stems(norm_xT) if norm_xT else set()
-    n_steps = len(steps)
+    n_steps = len(valid_steps)
 
-    for idx, step in enumerate(steps):
-        s = step.strip()
-        if not s:
-            continue
-        is_x0 = idx == 0 and x_0 is not None and s == x_0.strip()
+    for idx, s in enumerate(valid_steps):
+        is_x0 = idx == 0 and norm_x0 is not None and s == norm_x0
         is_xT = idx == n_steps - 1 and norm_xT is not None and s == norm_xT
         is_boundary = is_x0 or is_xT
         if not is_boundary and _has_meta_or_cjk_leak(s):
@@ -545,11 +557,29 @@ def sanitize_wave_steps(
                 if s == prev_s or s_core == prev_s.rstrip("。！？!?"):
                     is_dup = True
                     break
-                if not stems_s and _compute_5gram_overlap(s, prev_s) >= 0.50:
+                if _compute_5gram_overlap(s, prev_s) >= 0.50:
                     is_dup = True
                     break
-            if not is_dup and norm_xT and (s == norm_xT or s_core == norm_xT.rstrip("。！？!?")):
-                is_dup = True
+            # Subsequent step (idx > 0) echoing starting anchor x_0
+            if not is_dup and idx > 0 and norm_x0:
+                if s == norm_x0 or s_core == norm_x0.rstrip("。！？!?"):
+                    is_dup = True
+                elif _compute_5gram_overlap(s, norm_x0) >= 0.50:
+                    is_dup = True
+                elif stems_s and stems_x0:
+                    u_len_0 = len(stems_s | stems_x0)
+                    if u_len_0 > 0 and (len(stems_s & stems_x0) / float(u_len_0)) >= 0.50:
+                        is_dup = True
+            # Preceding step (idx < n_steps - 1) echoing terminal anchor x_T
+            if not is_dup and idx < n_steps - 1 and norm_xT:
+                if s == norm_xT or s_core == norm_xT.rstrip("。！？!?"):
+                    is_dup = True
+                elif _compute_5gram_overlap(s, norm_xT) >= 0.50:
+                    is_dup = True
+                elif stems_s and stems_xT:
+                    u_len_T = len(stems_s | stems_xT)
+                    if u_len_T > 0 and (len(stems_s & stems_xT) / float(u_len_T)) >= 0.50:
+                        is_dup = True
             if not is_dup and stems_s:
                 for prev_stems in seen_stems:
                     if prev_stems:
@@ -557,16 +587,12 @@ def sanitize_wave_steps(
                         if u_len > 0 and (len(stems_s & prev_stems) / float(u_len)) >= 0.50:
                             is_dup = True
                             break
-                if not is_dup and stems_xT:
-                    u_len_T = len(stems_s | stems_xT)
-                    if u_len_T > 0 and (len(stems_s & stems_xT) / float(u_len_T)) >= 0.50:
-                        is_dup = True
         if not is_dup:
             clean_steps.append(s)
             seen_stems.append(stems_s)
 
-    if not clean_steps and steps:
-        return [steps[-1].strip() if (norm_xT and steps[-1].strip() == norm_xT) else steps[0].strip()]
+    if not clean_steps and valid_steps:
+        return [valid_steps[-1] if (norm_xT and valid_steps[-1] == norm_xT) else valid_steps[0]]
     return clean_steps
 
 

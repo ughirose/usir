@@ -39,12 +39,13 @@ except ImportError:
 # Canonical Japanese and punctuation characters for refractory period gating
 PUNCTUATION_CHARS: Set[str] = {"、", "。", "！", "？", "!", "?", ",", ".", "…", "—", "」", "』"}
 
-# Chinese simplified/traditional function words, non-Japanese CJK variants, and markdown backquote tokens to suppress at logits level
+# Chinese simplified function words, non-Japanese CJK variants, and markdown backquote tokens to suppress at logits level
+# Note: Standard Japanese Joyo kanji (e.g. 希, 著, 据, 与, 若, 訴, 説) are strictly preserved.
 BANNED_CJK_AND_META_CHARS: Set[str] = {
-    "是", "恒", "且", "若", "则", "与", "为", "这", "个", "们",
+    "是", "恒", "且", "则", "为", "这", "个", "们",
     "设", "闭", "紧", "测", "军", "团", "态", "识", "证", "义",
-    "单", "达", "处", "满", "据", "须", "尔", "希", "并", "濕",
-    "訴", "說", "著", "，", "`", "```",
+    "单", "达", "处", "满", "须", "尔", "并", "濕",
+    "诉", "说", "，", "`", "```",
     "假设", "是一个", "根据", "必须", "满足", "其中", "处于", "无法", "达成", "晨光",
 }
 
@@ -290,21 +291,25 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             )
 
         embed_w = self._embed_weight if self._embed_weight is not None else self.embedding_weight
+        if embed_w is not None and embed_w.device != device:
+            embed_w = embed_w.to(device=device)
+            self._embed_weight = embed_w
+
         bridge_dir = self._bridge_dir_tensor if self._bridge_dir_tensor is not None else self.v_bridge
         if bridge_dir is not None and bridge_dir.device != device:
             bridge_dir = F.normalize(bridge_dir.to(device=device, dtype=torch.float32), dim=-1)
             self._bridge_dir_tensor = bridge_dir
 
+        # Suppress banned Chinese function words & markdown backticks across vocabulary (vectorized across batch)
+        if self._banned_tensor is not None and self._banned_tensor.numel() > 0:
+            valid_banned = self._banned_tensor[self._banned_tensor < scores.shape[-1]]
+            if valid_banned.numel() > 0:
+                scores[..., valid_banned] -= 100.0
+
         # Process each sequence in the batch with 100% vectorized GPU tensor ops
         for b in range(batch_size):
             curr_scores = scores[b] if is_2d else scores
             curr_input = input_ids[b] if input_ids is not None and input_ids.ndim == 2 else input_ids
-
-            # Suppress banned Chinese function words & markdown backticks across vocabulary
-            if self._banned_tensor is not None and self._banned_tensor.numel() > 0:
-                valid_banned = self._banned_tensor[self._banned_tensor < curr_scores.shape[-1]]
-                if valid_banned.numel() > 0:
-                    curr_scores[valid_banned] -= 100.0
 
             # Update tokens_since_punctuation based on last generated token
             if curr_input is not None and len(curr_input) > 0:

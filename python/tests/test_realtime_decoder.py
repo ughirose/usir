@@ -208,6 +208,23 @@ def test_pytorch_logits_processor_cjk_and_backtick_masking():
     assert out[0, 21] <= -95.0
 
 
+def test_pytorch_logits_processor_preserves_japanese_joyo_kanji():
+    """Verify Japanese Joyo kanji (希望, 著しい, 据える, 与える, 若い) are strictly NOT banned."""
+    from usir_py.realtime_decoder import BANNED_CJK_AND_META_CHARS
+
+    joyo_kanji = ["希", "著", "据", "与", "若", "訴", "説", "湿"]
+    for j in joyo_kanji:
+        assert j not in BANNED_CJK_AND_META_CHARS, f"Fatal regression: Joyo kanji '{j}' must not be banned!"
+
+    # Verify Chinese simplified counterparts are properly targeted
+    assert "诉" in BANNED_CJK_AND_META_CHARS
+    assert "说" in BANNED_CJK_AND_META_CHARS
+    assert "设" in BANNED_CJK_AND_META_CHARS
+    assert "闭" in BANNED_CJK_AND_META_CHARS
+    assert "为" in BANNED_CJK_AND_META_CHARS
+    assert "则" in BANNED_CJK_AND_META_CHARS
+
+
 @pytest.mark.skipif(not TORCH_AVAILABLE, reason="PyTorch not available")
 def test_pytorch_logits_processor_topk_exceeds_vocab_size():
     """Verify USIRPyTorchLogitsProcessor safely clamps top_k when top_k > vocab_size."""

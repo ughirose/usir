@@ -17,23 +17,23 @@ This document provides immediate state handoff for USIR v4.0 remediation. It tra
 | File | Key Changes | Status |
 |---|---|---|
 | `packages/usir-core/src/dynamics/manifoldGeodesic.ts` | Added `DOMAIN_QDA_PROFILES` with relaxed CoT $\sigma_{\text{crit}}^{\text{high}} = 2.65$ | Verified |
-| `packages/usir-core/src/dynamics/bidirectionalBridge.ts` | Implemented `sanitizeWaveSteps`, `hasMetaOrCjkLeak`, Kanji stem Jaccard $\ge 0.50$ filter, `domain` prop in `computeThreePhaseQdaDistance` | Verified |
-| `packages/usir-core/tests/bidirectional-bridge.test.ts` | Unit tests for `sanitizeWaveSteps`, Jaccard deduplication, and non-Kanji echo gates | Passed (16/16) |
+| `packages/usir-core/src/dynamics/bidirectionalBridge.ts` | Implemented `sanitizeWaveSteps`, `hasMetaOrCjkLeak`, Kanji stem Jaccard $\ge 0.50$ filter, `domain` prop in `computeThreePhaseQdaDistance`, eliminated Japanese Joyo false positive leaks, whitespace & anchor positional resilience | Verified |
+| `packages/usir-core/tests/bidirectional-bridge.test.ts` | Unit tests for `sanitizeWaveSteps`, Jaccard deduplication, Japanese preservation, whitespace resilience, and non-Kanji echo gates | Passed (18/18) |
 | `packages/usir-core/tests/manifold-geodesic.test.ts` | Unit tests for domain-specific QDA profiles | Passed (10/10) |
 | `python/usir_py/manifold_geodesic.py` | Python `DOMAIN_QDA_PROFILES` for novel, article, cot_reasoning | Verified |
-| `python/usir_py/bidirectional_bridge.py` | Python `sanitize_wave_steps`, `_has_meta_or_cjk_leak`, Jaccard stem deduplication, passing `domain=anchors.domain` | Verified |
-| `python/usir_py/realtime_decoder.py` | Fully vectorized `USIRPyTorchLogitsProcessor.__call__` via GPU tensor operations, CJK & backtick $-100.0$ suppression | Verified |
+| `python/usir_py/bidirectional_bridge.py` | Python `sanitize_wave_steps`, `_has_meta_or_cjk_leak`, Jaccard stem deduplication, passing `domain=anchors.domain`, eliminated Japanese Joyo false positive leaks, whitespace & anchor positional resilience | Verified |
+| `python/usir_py/realtime_decoder.py` | Fully vectorized `USIRPyTorchLogitsProcessor.__call__` via GPU tensor operations, batch-vectorized CJK suppression, device synchronization for `embed_w`, restored Japanese Joyo kanji (`希`, `著`, `据`, `与`, `若`) | Verified |
 | `python/usir_py/mcp_server.py` | Passed `domain=domain` to `compute_three_phase_qda_distance` and `compute_multiplicative_grpo_reward` | Verified |
 | `python/tests/test_manifold_geodesic.py` | Domain-conditioned QDA tests | Passed |
-| `python/tests/test_bidirectional_bridge.py` | `sanitize_wave_steps` Kanji stem Jaccard and CJK filtering tests | Passed |
-| `python/tests/test_realtime_decoder.py` | Vectorized processor, CJK masking, and domain runner tests | Passed |
+| `python/tests/test_bidirectional_bridge.py` | `sanitize_wave_steps` Kanji stem Jaccard, CJK grammar filtering, Japanese preservation, and whitespace resilience tests | Passed (22/22) |
+| `python/tests/test_realtime_decoder.py` | Vectorized processor, Joyo kanji preservation, CJK masking, and domain runner tests | Passed |
 | `python/colab/run_v4_bidirectional_experiment.py` | Upgraded to `Qwen2.5-3B-Instruct`, phase-split forward/backward prompts, setting drift penalty in judge | Verified |
 
 ---
 
 ## 3. Verification State & Colab T4 Authentic Results
-- **TypeScript Vitest**: `pnpm test` -> **26/26 test files passed, 281/281 tests passed**.
-- **Python Pytest**: `uv run pytest tests/` -> **168 passed, 4 skipped**.
+- **TypeScript Vitest**: `pnpm test` -> **26/26 test files passed, 283/283 tests passed (0 failed)**.
+- **Python Pytest**: `uv run pytest tests/` -> **171 passed, 4 skipped (0 failed)**.
 - **Harness Gate**: `python scripts/harness.py test` -> **EXIT 0 (All gates passed)**.
 - **Cleanroom Copyright Audit**: `python scripts/scan_cleanroom_copyright.py` -> **195 PASS, 5 WARN (authentic masterworks), 0 FAIL**.
 - **Google Colab Tesla T4 GPU Execution**: `python scripts/run_colab_benchmark.py` (Completed in 1466.2s):

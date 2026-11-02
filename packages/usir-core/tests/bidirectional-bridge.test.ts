@@ -309,4 +309,49 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
     const cleaned = sanitizeWaveSteps(rawSteps, x0, xT);
     expect(cleaned).toEqual([x0, 'そよかぜがまどをかすかにゆらしていく。', xT]);
   });
+
+  it('preserves valid Japanese with 若者, 若い, 若干, 寄与, 与える while pruning Chinese grammar leaks', () => {
+    const x0 = '夜明け前の空が静かに白んでいた。';
+    const xT = '新しい一日が始まった。';
+
+    const rawSteps = [
+      x0,
+      '若者たちは雪の中を静かに歩き始めた。',
+      '若い頃の記憶が鮮やかに蘇る。',
+      'この研究の成果は今後の科学技術の発展に大きく寄与する。',
+      '彼に新しい役割を与えることで組織の活性化を図る。',
+      '若 $x \\in S$ 则 $f(x) > 0$ である。', // Chinese grammar leak
+      '空間 $V$ 与 $W$ の直和分解を考える。', // Chinese grammar leak
+      xT,
+    ];
+    const cleaned = sanitizeWaveSteps(rawSteps, x0, xT);
+    expect(cleaned).toContain('若者たちは雪の中を静かに歩き始めた。');
+    expect(cleaned).toContain('この研究の成果は今後の科学技術の発展に大きく寄与する。');
+    expect(cleaned).toContain('彼に新しい役割を与えることで組織の活性化を図る。');
+    expect(cleaned.some(s => s.includes('若 $x'))).toBe(false);
+    expect(cleaned.some(s => s.includes('与 $W'))).toBe(false);
+  });
+
+  it('handles boundary whitespace resiliently and prunes intermediate steps echoing x_0', () => {
+    const x0 = '国境の長いトンネルを抜けると雪国であった。';
+    const xT = '夜の底が白くなった。';
+
+    // 1. Whitespace resilience
+    const stepsWithWs = ['  ', x0, '鳥が静かに歌っていた。', xT, '   '];
+    const cleanedWs = sanitizeWaveSteps(stepsWithWs, x0, xT);
+    expect(cleanedWs).toEqual([x0, '鳥が静かに歌っていた。', xT]);
+
+    // 2. Intermediate step echoing x_0 must be pruned
+    const trajectoryWithX0Echo = [
+      x0,
+      '信号所の手前で列車が止まった。',
+      '長いトンネルを抜けると雪国であった。', // 5-gram and stem match with x0 at idx > 0
+      xT,
+    ];
+    const cleanedEcho = sanitizeWaveSteps(trajectoryWithX0Echo, x0, xT);
+    expect(cleanedEcho.length).toBe(3);
+    expect(cleanedEcho[0]).toBe(x0);
+    expect(cleanedEcho[1]).toBe('信号所の手前で列車が止まった。');
+    expect(cleanedEcho[2]).toBe(xT);
+  });
 });

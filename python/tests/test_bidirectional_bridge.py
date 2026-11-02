@@ -432,3 +432,56 @@ def test_sanitize_wave_steps_non_kanji_and_zero_kana_cjk():
     ]
     cleaned = sanitize_wave_steps(raw_steps, x_0=x0, x_T=xT)
     assert cleaned == [x0, "そよかぜがまどをかすかにゆらしていく。", xT]
+
+
+def test_sanitize_wave_steps_preserves_japanese_words_and_prunes_chinese_grammar():
+    """Verify standard Japanese with 若者, 若い, 若干, 寄与, 与える is preserved while Chinese grammar is pruned."""
+    from usir_py.bidirectional_bridge import _has_meta_or_cjk_leak
+
+    # Valid Japanese sentences must NEVER be flagged as leaks
+    valid_japanese = [
+        "若者たちは雪の中を静かに歩き始めた。",
+        "若い頃の記憶が鮮やかに蘇る。",
+        "若干の修正を論文に加え、精度を向上させた。",
+        "この研究の成果は今後の科学技術の発展に大きく寄与する。",
+        "彼に新しい役割を与えることで組織の活性化を図る。",
+        "給与明細を確認し、今後の計画を立てる。",
+        "老若男女が集まる広場に温かい光が差した。",
+    ]
+    for s in valid_japanese:
+        assert not _has_meta_or_cjk_leak(s), f"False positive leak detected on valid Japanese: {s}"
+
+    # Chinese grammar leak sentences MUST be flagged as leaks
+    chinese_grammar_leaks = [
+        r"若 $x \in S$ 则 $f(x) > 0$ である。",
+        r"\text{若} \quad f_{N(x)}(x) \to f(x) \text{ 则必然成立}。",
+        r"若且仅当 $n \to \infty$ の極限が存在する。",
+        r"空間 $V$ 与 $W$ の直和分解を考える。",
+        r"与其相反的是、別の境界条件が課される。",
+    ]
+    for s in chinese_grammar_leaks:
+        assert _has_meta_or_cjk_leak(s), f"Failed to detect Chinese grammar leak: {s}"
+
+
+def test_sanitize_wave_steps_boundary_whitespace_and_x0_echo_dedup():
+    """Verify sanitize_wave_steps is resilient to whitespace and prunes intermediate steps echoing x_0."""
+    x0 = "国境の長いトンネルを抜けると雪国であった。"
+    xT = "夜の底が白くなった。"
+
+    # 1. Trailing and leading whitespace resilience
+    steps_with_ws = ["  ", x0, "鳥が静かに歌っていた。", xT, "   "]
+    cleaned_ws = sanitize_wave_steps(steps_with_ws, x_0=x0, x_T=xT)
+    assert cleaned_ws == [x0, "鳥が静かに歌っていた。", xT], f"Unexpected cleaned steps: {cleaned_ws}"
+
+    # 2. Intermediate step echoing x_0 must be pruned against x_0 anchor
+    trajectory_with_x0_echo = [
+        x0,
+        "信号所の手前で列車が止まった。",
+        "長いトンネルを抜けると雪国であった。",  # 5-gram and stem match with x0 at idx > 0
+        xT,
+    ]
+    cleaned_echo = sanitize_wave_steps(trajectory_with_x0_echo, x_0=x0, x_T=xT)
+    assert len(cleaned_echo) == 3
+    assert cleaned_echo[0] == x0
+    assert cleaned_echo[1] == "信号所の手前で列車が止まった。"
+    assert cleaned_echo[2] == xT
