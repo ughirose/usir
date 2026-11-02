@@ -79,6 +79,32 @@ export const DEFAULT_SIGMA_CRIT_DIAG: readonly number[] = [
   0.4864, 0.1204, 0.3870, 0.2511, 0.4628, 0.1505, 0.3519, 0.3580, 0.4813, 0.3384, 0.1495, 0.5067,
 ];
 
+export const DOMAIN_QDA_PROFILES: Record<string, { mu_crit: readonly number[]; sigma_crit_low: number; sigma_crit_high: number }> = {
+  novel: {
+    mu_crit: DEFAULT_MU_CRIT,
+    sigma_crit_low: 0.35,
+    sigma_crit_high: 1.25,
+  },
+  article: {
+    mu_crit: [
+      ...DEFAULT_MU_CRIT.slice(0, 9),
+      0.70, 0.40, 0.35,
+      ...DEFAULT_MU_CRIT.slice(12),
+    ],
+    sigma_crit_low: 0.30,
+    sigma_crit_high: 1.40,
+  },
+  cot_reasoning: {
+    mu_crit: [
+      ...DEFAULT_MU_CRIT.slice(0, 9),
+      0.85, 0.20, 0.25,
+      ...DEFAULT_MU_CRIT.slice(12),
+    ],
+    sigma_crit_low: 0.25,
+    sigma_crit_high: 1.85,
+  },
+};
+
 // ==============================================================================
 // 1. 3-Phase QDA Asymmetric Double-Well Barrier Functional
 // ==============================================================================
@@ -86,6 +112,7 @@ export const DEFAULT_SIGMA_CRIT_DIAG: readonly number[] = [
 export function computeThreePhaseQdaDistance(
   z: number[] | Usir24dResult | string,
   options?: {
+    domain?: string;
     mu_crit?: number[];
     sigma_crit_inv?: number[];
     sigma_norm?: number;
@@ -95,10 +122,12 @@ export function computeThreePhaseQdaDistance(
     sigma_crit_high?: number;
   }
 ): ThreePhaseQdaResult {
+  const domain = options?.domain ?? 'novel';
+  const profile = DOMAIN_QDA_PROFILES[domain] ?? DOMAIN_QDA_PROFILES.novel!;
   const gammaFreeze = options?.gamma_freeze ?? 12.0;
   const gammaChaos = options?.gamma_chaos ?? 12.0;
-  const sigmaLow = options?.sigma_crit_low ?? 0.35;
-  const sigmaHigh = options?.sigma_crit_high ?? 1.25;
+  const sigmaLow = options?.sigma_crit_low ?? profile.sigma_crit_low;
+  const sigmaHigh = options?.sigma_crit_high ?? profile.sigma_crit_high;
 
   let zVec: number[];
   let calcSigmaNorm: number;
@@ -129,7 +158,7 @@ export function computeThreePhaseQdaDistance(
     calcSigmaNorm = options.sigma_norm;
   }
 
-  const targetMu = options?.mu_crit ?? DEFAULT_MU_CRIT;
+  const targetMu = options?.mu_crit ?? profile.mu_crit;
   const invCov = options?.sigma_crit_inv ?? DEFAULT_SIGMA_CRIT_DIAG.map((s) => 1.0 / (s * s));
 
   let dMahalSum = 0;
@@ -444,6 +473,7 @@ export function computeMultiplicativeGrpoReward(
   options?: {
     x_0?: string | number[];
     x_T?: string | number[];
+    domain?: string;
     is_authentic_masterwork?: boolean;
     alpha_metric?: number;
   }
@@ -574,7 +604,7 @@ export function computeMultiplicativeGrpoReward(
   }
 
   // 5. 3-Phase QDA Barrier Distance
-  const qdaRes = computeThreePhaseQdaDistance(text);
+  const qdaRes = computeThreePhaseQdaDistance(text, { domain: options?.domain });
   const alphaM = options?.alpha_metric ?? 1.0;
   const expBarrier = Math.exp(-0.5 * (qdaRes.d_3phase / Math.max(alphaM, 0.1)));
 

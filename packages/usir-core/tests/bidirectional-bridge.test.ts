@@ -6,6 +6,7 @@ import {
   deriveEndogenousGoalHypotheses,
   executeClosedLoopRewrite,
   computeTrajectoryRepetitionPenalty,
+  sanitizeWaveSteps,
 } from '../src/dynamics/bidirectionalBridge.js';
 
 
@@ -266,4 +267,31 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
     expect(optimal_x_T).not.toContain('重要な基盤');
     expect(scored_candidates[0]!.score).toBeLessThan(scored_candidates[1]!.score);
   });
+
+  it('sanitizes wave steps by stripping kanji stem paraphrases (Jaccard >= 0.50), meta-leaks, and CJK tokens', () => {
+    const x0 = '風雪の峠道と廃屋の灯りの気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。';
+    const xT = '微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙だけが残った。';
+    const rawSteps = [
+      x0,
+      'それは雪国の伝統であり、またそれは現代の世界でも、我々の生活を支える力となる。',
+      'それらは、雪国の伝統であり、現代の世界にもその力を支えている。',
+      'この展開文は、冒頭文で示された状況を補強する。',
+      '函数列是恒正且有界である。',
+      '囲炉裏の残り火が暗がりで静かに揺れていた。',
+      xT,
+    ];
+    const cleaned = sanitizeWaveSteps(rawSteps, x0, xT);
+    expect(cleaned.length).toBe(4);
+    expect(cleaned[0]).toBe(x0);
+    expect(cleaned[1]).toContain('それは雪国の伝統であり');
+    expect(cleaned[2]).toContain('囲炉裏の残り火');
+    expect(cleaned[3]).toBe(xT);
+
+    const penParaphrase = computeTrajectoryRepetitionPenalty([
+      'それは雪国の伝統であり、またそれは現代の世界でも、我々の生活を支える力となる。',
+      'それらは、雪国の伝統であり、現代の世界にもその力を支えている。',
+    ]);
+    expect(penParaphrase).toBeGreaterThanOrEqual(6.0);
+  });
 });
+

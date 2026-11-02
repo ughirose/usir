@@ -60,6 +60,27 @@ def test_qda_healthy_critical_well():
     assert res["is_healthy_critical"]
 
 
+def test_domain_conditioned_three_phase_qda():
+    """Verify domain-specific volatility bounds and target centroids across novel, article, and cot_reasoning."""
+    # Momentum sigma_norm = sqrt(12 * 0.45^2) ~ 1.5588
+    # In novel (high=1.25) and article (high=1.40), this triggers Chaos penalty.
+    # In cot_reasoning (high=1.85), high symbol/formula variance is accommodated without Chaos penalty.
+    z_cot_state = np.zeros(24)
+    z_cot_state[9:12] = np.array([0.85, 0.20, 0.25])
+    z_cot_state[12:24] = 0.45
+
+    res_novel = compute_three_phase_qda_distance(z_cot_state, domain="novel")
+    res_article = compute_three_phase_qda_distance(z_cot_state, domain="article")
+    res_cot = compute_three_phase_qda_distance(z_cot_state, domain="cot_reasoning")
+
+    assert res_novel["penalty_chaos"] > 0.0
+    assert res_novel["phase_regime"] == "Phase_III_Chaos"
+    assert res_article["penalty_chaos"] > 0.0
+    assert res_cot["penalty_chaos"] == 0.0
+    assert res_cot["phase_regime"] == "Phase_II_Critical"
+    assert res_cot["d_3phase"] < res_novel["d_3phase"]
+
+
 # ==============================================================================
 # 2. Semantic Geodesic Curvature & Brownian Motion Detector Tests
 # ==============================================================================

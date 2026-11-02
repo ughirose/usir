@@ -184,6 +184,30 @@ def test_pytorch_logits_processor_register_bridge_embeddings():
     assert steered[0, 4] < scores[0, 4]
 
 
+@pytest.mark.skipif(not TORCH_AVAILABLE, reason="PyTorch not available")
+def test_pytorch_logits_processor_cjk_and_backtick_masking():
+    """Verify register_tokenizer_punctuation identifies CJK/backtick tokens and masks them by -100.0."""
+    processor = USIRPyTorchLogitsProcessor(top_k=10, eps_syn=0.1, refractory_min=2)
+
+    class MockTokenizer:
+        def encode(self, text, add_special_tokens=False):
+            mapping = {"。": [10], "是": [20], "`": [21]}
+            return mapping.get(text, [])
+
+    processor.register_tokenizer_punctuation(MockTokenizer())
+    assert 10 in processor.punctuation_token_ids
+    assert 20 in processor.banned_cjk_token_ids
+    assert 21 in processor.banned_cjk_token_ids
+
+    scores = torch.zeros(1, 30)
+    scores[0, 20] = 5.0
+    scores[0, 21] = 4.0
+    input_ids = torch.tensor([[1, 2, 3]])
+    out = processor(input_ids, scores.clone())
+    assert out[0, 20] <= -95.0
+    assert out[0, 21] <= -95.0
+
+
 # ==============================================================================
 # 3. Experiment Runner & Auto-Detection Tests
 # ==============================================================================

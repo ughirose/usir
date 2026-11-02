@@ -298,7 +298,7 @@ def derive_endogenous_goal_hypotheses(
 
         # 3-Phase QDA of joint boundary
         joint_text = f"{safe_x0} {c}"
-        qda_res = compute_three_phase_qda_distance(joint_text)
+        qda_res = compute_three_phase_qda_distance(joint_text, domain=domain)
         d_3ph = qda_res["d_3phase"]
 
         # Geodesic reachability (penalize trivial tautology <0.25 and disconnected leap >2.8)
@@ -433,15 +433,114 @@ def _compute_5gram_overlap(s_a: str, s_b: str) -> float:
     return float(len(g_a & g_b)) / float(denom)
 
 
+META_LEAK_MARKERS: List[str] = [
+    "この展開文は",
+    "冒頭文で",
+    "結びの一文",
+    "この記事では",
+    "この講座では",
+    "本研究の目的は",
+    "解答例：",
+    "規則：",
+    "構文：",
+]
+
+CJK_ARTIFACT_PATTERNS: List[str] = [
+    "是恒",
+    "且有界",
+    "若",
+    "则",
+    "与",
+    "为",
+    "这个",
+    "们",
+]
+
+
+def _extract_kanji_stems(text: str) -> Set[str]:
+    """Extracts 2+ char kanji stems (fallback to 1+ char kanji tokens if fewer than 2)."""
+    stems = set(re.findall(r'[\u4e00-\u9fff]{2,}', text))
+    if len(stems) < 2:
+        stems |= set(re.findall(r'[\u4e00-\u9fff]+', text))
+    return stems
+
+
+def _compute_stem_jaccard(s_a: str, s_b: str) -> float:
+    stems_a = _extract_kanji_stems(s_a)
+    stems_b = _extract_kanji_stems(s_b)
+    if not stems_a or not stems_b:
+        return 0.0
+    union_len = len(stems_a | stems_b)
+    if union_len == 0:
+        return 0.0
+    return float(len(stems_a & stems_b)) / float(union_len)
+
+
+def _has_meta_or_cjk_leak(text: str) -> bool:
+    for m in META_LEAK_MARKERS:
+        if m in text:
+            return True
+    for p in CJK_ARTIFACT_PATTERNS:
+        if p in text:
+            return True
+    return False
+
+
+def sanitize_wave_steps(
+    steps: List[str],
+    x_0: Optional[str] = None,
+    x_T: Optional[str] = None,
+) -> List[str]:
+    """Normalizes and sanitizes wave trajectory steps:
+    1. Removes sentences containing prompt meta-leaks or Chinese CJK artifacts.
+    2. Deduplicates subsequent sentences whose Kanji stem Jaccard similarity >= 0.50
+       with any earlier step in the wave (preserving boundary anchors x_0 and x_T).
+    """
+    clean_steps: List[str] = []
+    seen_stems: List[Set[str]] = []
+
+    for idx, step in enumerate(steps):
+        s = step.strip()
+        if not s:
+            continue
+        is_boundary = (x_0 is not None and s == x_0.strip()) or (x_T is not None and s == x_T.strip())
+        if not is_boundary and _has_meta_or_cjk_leak(s):
+            continue
+
+        stems_s = _extract_kanji_stems(s)
+        is_dup = False
+        if not is_boundary and stems_s:
+            for prev_stems in seen_stems:
+                if prev_stems:
+                    u_len = len(stems_s | prev_stems)
+                    if u_len > 0 and (len(stems_s & prev_stems) / float(u_len)) >= 0.50:
+                        is_dup = True
+                        break
+        if not is_dup:
+            clean_steps.append(s)
+            seen_stems.append(stems_s)
+
+    if not clean_steps and steps:
+        return [steps[0].strip()]
+    return clean_steps
+
+
 def compute_trajectory_repetition_penalty(steps: List[str]) -> float:
     """Inspects all sentence pairs (s_a, s_b) (a < b) across the trajectory:
     1. Prefix Anti-Echo: +4.0 penalty per pair sharing >= 5 leading non-punctuation characters.
     2. 5-gram Overlap Gate: +8.0 * (Overlap - 0.35) when asymmetric 5-gram inclusion > 0.35.
+    3. Kanji Stem Jaccard Gate: +6.0 penalty per pair with Kanji stem Jaccard >= 0.50.
+    4. Meta-leak / CJK Artifact Penalty: +6.0 penalty per contaminated sentence.
     """
     penalty = 0.0
     n = len(steps)
     norm_prefixes = [_normalize_for_prefix(s) for s in steps]
     grams_list = [_char_5grams(s) for s in steps]
+    stems_list = [_extract_kanji_stems(s) for s in steps]
+
+    for s in steps:
+        if _has_meta_or_cjk_leak(s):
+            penalty += 6.0
 
     for a in range(n):
         for b in range(a + 1, n):
@@ -458,6 +557,13 @@ def compute_trajectory_repetition_penalty(steps: List[str]) -> float:
                     overlap = float(len(ga & gb)) / float(denom)
                     if overlap > 0.35:
                         penalty += 8.0 * (overlap - 0.35)
+
+            sa = stems_list[a]
+            sb = stems_list[b]
+            if sa and sb:
+                u_len = len(sa | sb)
+                if u_len > 0 and (len(sa & sb) / float(u_len)) >= 0.50:
+                    penalty += 6.0
     return float(penalty)
 
 
@@ -478,14 +584,16 @@ def _split_infill_sentences(text: str) -> List[str]:
 
 def _deduplicate_infill_sentences(infill_text: str, existing_steps: List[str]) -> List[str]:
     """Splits infill text into sentences and immediately removes any sentence that has
-    5-gram overlap >= 0.40 or matching first 5 non-punctuation chars with any existing step
-    (or previously accepted infill sentences).
+    5-gram overlap >= 0.40, Kanji stem Jaccard >= 0.50, meta/CJK leaks, or matching first 5
+    non-punctuation chars with any existing step (or previously accepted infill sentences).
     """
     candidates = _split_infill_sentences(infill_text)
     existing_Pool = list(existing_steps)
     clean_sents: List[str] = []
 
     for cand in candidates:
+        if _has_meta_or_cjk_leak(cand):
+            continue
         p_cand = _normalize_for_prefix(cand)
         is_dup = False
         for ex in existing_Pool:
@@ -499,6 +607,9 @@ def _deduplicate_infill_sentences(infill_text: str, existing_steps: List[str]) -
             if _compute_5gram_overlap(cand, ex) >= 0.40:
                 is_dup = True
                 break
+            if _compute_stem_jaccard(cand, ex) >= 0.50:
+                is_dup = True
+                break
         if not is_dup:
             clean_sents.append(cand)
             existing_Pool.append(cand)
@@ -509,6 +620,7 @@ def compute_collision_action(
     fwd_wave: TrajectoryWave,
     bwd_wave: TrajectoryWave,
     beta: float = 0.5,
+    domain: str = "novel",
 ) -> Tuple[float, float, float, float]:
     r"""Computes the collision action integral:
 
@@ -561,7 +673,7 @@ def compute_collision_action(
 
     # 3. 3-Phase QDA of welded sequence
     welded_text = "".join(combined_steps)
-    qda_res = compute_three_phase_qda_distance(welded_text)
+    qda_res = compute_three_phase_qda_distance(welded_text, domain=domain)
     d_3phase = qda_res["d_3phase"]
 
     # Total Action
@@ -608,16 +720,18 @@ def solve_bidirectional_collision_bridge(
         fwd_waves: List[TrajectoryWave] = []
         bwd_waves: List[TrajectoryWave] = []
         for i, steps in enumerate(valid_fwd[:k_candidates]):
-            fwd_waves.append(_build_forward_wave(i, steps))
+            clean_f = sanitize_wave_steps(steps, x_0=anchors.x_0, x_T=anchors.x_T)
+            fwd_waves.append(_build_forward_wave(i, clean_f))
 
         for j, steps in enumerate(valid_bwd[:k_candidates]):
-            tip_vec = _embed_sentence_unit(steps[0])
-            next_vec = _embed_sentence_unit(steps[1]) if len(steps) >= 2 else tip_vec
+            clean_b = sanitize_wave_steps(steps, x_0=anchors.x_0, x_T=anchors.x_T)
+            tip_vec = _embed_sentence_unit(clean_b[0])
+            next_vec = _embed_sentence_unit(clean_b[1]) if len(clean_b) >= 2 else tip_vec
             dir_vec = next_vec - tip_vec
             norm = np.linalg.norm(dir_vec)
             if norm > 1e-7:
                 dir_vec = dir_vec / norm
-            bwd_waves.append(TrajectoryWave(wave_id=j, direction="backward", steps=steps, tip_vector=tip_vec, direction_vector=dir_vec))
+            bwd_waves.append(TrajectoryWave(wave_id=j, direction="backward", steps=clean_b, tip_vector=tip_vec, direction_vector=dir_vec))
     else:
         raise ValueError("forward_candidates and backward_candidates must be explicitly provided. Hardcoded text generation is strictly banned.")
 
@@ -631,7 +745,9 @@ def solve_bidirectional_collision_bridge(
 
     for i in range(K_fwd):
         for j in range(K_bwd):
-            s_tot, d_geo, d_cau, d_3ph = compute_collision_action(fwd_waves[i], bwd_waves[j], beta=beta)
+            s_tot, d_geo, d_cau, d_3ph = compute_collision_action(
+                fwd_waves[i], bwd_waves[j], beta=beta, domain=anchors.domain
+            )
             action_matrix[i, j] = s_tot
             if s_tot < best_action:
                 best_action = s_tot
@@ -653,7 +769,9 @@ def solve_bidirectional_collision_bridge(
     if clean_infill_sents:
         # Compare direct welding action vs infilled welding action
         infilled_fwd_wave = _build_forward_wave(opt_fwd.wave_id, list(opt_fwd.steps) + clean_infill_sents)
-        s_infilled, d_geo_inf, d_cau_inf, d_3ph_inf = compute_collision_action(infilled_fwd_wave, opt_bwd, beta=beta)
+        s_infilled, d_geo_inf, d_cau_inf, d_3ph_inf = compute_collision_action(
+            infilled_fwd_wave, opt_bwd, beta=beta, domain=anchors.domain
+        )
         # Also evaluate trajectory-level geodesic curvature improvement
         curv_direct = compute_semantic_geodesic_curvature("".join(existing_steps))["mean_curvature"]
         infilled_steps = list(opt_fwd.steps) + clean_infill_sents + list(opt_bwd.steps)
@@ -665,11 +783,11 @@ def solve_bidirectional_collision_bridge(
         d_causal_direct = best_components[1]
         if s_infilled_aug < s_direct_aug or d_causal_direct > 0.65:
             accepted_infill = "".join(clean_infill_sents)
-            welded_trajectory = infilled_steps
+            welded_trajectory = sanitize_wave_steps(infilled_steps, x_0=anchors.x_0, x_T=anchors.x_T)
         else:
-            welded_trajectory = existing_steps
+            welded_trajectory = sanitize_wave_steps(existing_steps, x_0=anchors.x_0, x_T=anchors.x_T)
     else:
-        welded_trajectory = existing_steps
+        welded_trajectory = sanitize_wave_steps(existing_steps, x_0=anchors.x_0, x_T=anchors.x_T)
 
     welded_text = "".join(welded_trajectory)
 

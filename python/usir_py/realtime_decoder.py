@@ -39,6 +39,10 @@ except ImportError:
 # Canonical Japanese and punctuation characters for refractory period gating
 PUNCTUATION_CHARS: Set[str] = {"、", "。", "！", "？", "!", "?", ",", ".", "…", "—", "」", "』"}
 
+# Chinese simplified function words and markdown backquote tokens to suppress at logits level
+BANNED_CJK_AND_META_CHARS: Set[str] = {"是", "恒", "且", "若", "则", "与", "为", "这", "个", "们", "`", "```"}
+
+
 
 class LogitsStepper:
     """General-purpose standalone Logits Stepper for Top-K candidate reweighting,
@@ -187,9 +191,14 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             np.asarray(backward_attraction, dtype=float) if backward_attraction is not None else None
         )
         self.punctuation_token_ids = set(punctuation_token_ids) if punctuation_token_ids else set()
+        self.banned_cjk_token_ids: Set[int] = set()
         self.token_jacobians = token_jacobians
         self.embedding_weight: Optional[Any] = None
+        self._embed_weight: Optional[Any] = None
         self.v_bridge: Optional[Any] = None
+        self._bridge_dir_tensor: Optional[Any] = None
+        self._punct_tensor: Optional[Any] = None
+        self._banned_tensor: Optional[Any] = None
 
         # Track per-batch sequence state
         self.batch_tokens_since_punctuation: Dict[int, int] = {}
@@ -204,6 +213,7 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             if emb_layer is None or not hasattr(emb_layer, "weight"):
                 return
             self.embedding_weight = emb_layer.weight
+            self._embed_weight = emb_layer.weight
 
             device = self.embedding_weight.device
             ids_0 = tokenizer.encode(x_0, add_special_tokens=False)
@@ -222,11 +232,12 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             norm = torch.norm(diff, p=2)
             if norm > 1e-7:
                 self.v_bridge = diff / norm
+                self._bridge_dir_tensor = self.v_bridge
         except Exception:
             pass
 
     def register_tokenizer_punctuation(self, tokenizer: Any) -> None:
-        """Auto-detects and registers punctuation token IDs from HuggingFace tokenizer."""
+        """Auto-detects and registers punctuation token IDs and banned CJK/meta token IDs from HuggingFace tokenizer."""
         for punct in PUNCTUATION_CHARS:
             try:
                 ids = tokenizer.encode(punct, add_special_tokens=False)
@@ -234,6 +245,15 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
                     self.punctuation_token_ids.add(tid)
             except Exception:
                 pass
+        for bad_tok in BANNED_CJK_AND_META_CHARS:
+            try:
+                ids = tokenizer.encode(bad_tok, add_special_tokens=False)
+                for tid in ids:
+                    self.banned_cjk_token_ids.add(tid)
+            except Exception:
+                pass
+        self._punct_tensor = None
+        self._banned_tensor = None
 
     def __call__(self, input_ids: Any, scores: Any) -> Any:
         """Called at each generation step by HuggingFace generate()."""
@@ -243,14 +263,39 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             return scores
 
         device = scores.device
-        dtype = scores.dtype
         is_2d = scores.ndim == 2
         batch_size = scores.shape[0] if is_2d else 1
 
-        # Process each sequence in the batch
+        # Cache punctuation and banned CJK/meta 1D tensors on target device
+        if self.punctuation_token_ids and (
+            self._punct_tensor is None or self._punct_tensor.device != device
+        ):
+            self._punct_tensor = torch.tensor(
+                sorted(self.punctuation_token_ids), dtype=torch.long, device=device
+            )
+        if self.banned_cjk_token_ids and (
+            self._banned_tensor is None or self._banned_tensor.device != device
+        ):
+            self._banned_tensor = torch.tensor(
+                sorted(self.banned_cjk_token_ids), dtype=torch.long, device=device
+            )
+
+        embed_w = self._embed_weight if self._embed_weight is not None else self.embedding_weight
+        bridge_dir = self._bridge_dir_tensor if self._bridge_dir_tensor is not None else self.v_bridge
+        if bridge_dir is not None and bridge_dir.device != device:
+            bridge_dir = F.normalize(bridge_dir.to(device=device, dtype=torch.float32), dim=-1)
+            self._bridge_dir_tensor = bridge_dir
+
+        # Process each sequence in the batch with 100% vectorized GPU tensor ops
         for b in range(batch_size):
             curr_scores = scores[b] if is_2d else scores
             curr_input = input_ids[b] if input_ids is not None and input_ids.ndim == 2 else input_ids
+
+            # Suppress banned Chinese function words & markdown backticks across vocabulary
+            if self._banned_tensor is not None and self._banned_tensor.numel() > 0:
+                valid_banned = self._banned_tensor[self._banned_tensor < curr_scores.shape[-1]]
+                if valid_banned.numel() > 0:
+                    curr_scores[valid_banned] -= 100.0
 
             # Update tokens_since_punctuation based on last generated token
             if curr_input is not None and len(curr_input) > 0:
@@ -278,39 +323,24 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             else:
                 effective_beta = self.beta_steer * min(1.0, (h_llm - self.eps_syn) / self.eps_syn)
 
-            # 4. Refractory Period Gating
+            # 4. Vectorized Refractory Period Gating on Top-K
             is_refractory_blocked = tokens_since_punct < self.refractory_min
             is_refractory_forced = tokens_since_punct > self.refractory_max
 
-            if is_refractory_blocked or is_refractory_forced:
-                # Find punctuation tokens within top-K
-                for idx in top_indices:
-                    tid = int(idx.item())
-                    if tid in self.punctuation_token_ids:
-                        if is_refractory_blocked:
-                            curr_scores[tid] -= 1000.0
-                        elif is_refractory_forced:
-                            curr_scores[tid] += 3.5
+            if (is_refractory_blocked or is_refractory_forced) and self._punct_tensor is not None:
+                is_punct_mask = torch.isin(top_indices, self._punct_tensor)
+                if is_refractory_blocked:
+                    top_scores = torch.where(is_punct_mask, top_scores - 1000.0, top_scores)
+                elif is_refractory_forced:
+                    top_scores = torch.where(is_punct_mask, top_scores + 3.5, top_scores)
 
-            # 5. Backward Attraction Steering on Top-K
-            if effective_beta > 0.0:
-                if self.v_bridge is not None and self.embedding_weight is not None:
-                    # True embedding-space bridge attraction
-                    top_emb = self.embedding_weight[top_indices].to(device=device, dtype=torch.float32)
-                    v_b = self.v_bridge.to(device=device, dtype=torch.float32)
-                    top_norm = torch.norm(top_emb, p=2, dim=-1).clamp(min=1e-7)
-                    v_norm = torch.norm(v_b, p=2).clamp(min=1e-7)
-                    cos_sims = torch.matmul(top_emb, v_b) / (top_norm * v_norm)
-                    curr_scores[top_indices] += (effective_beta * cos_sims * 0.5).to(dtype=curr_scores.dtype)
-                elif self.backward_attraction is not None:
-                    norm_attract = float(np.linalg.norm(self.backward_attraction))
-                    if norm_attract > 1e-5:
-                        attract_vec = self.backward_attraction
-                        for idx in top_indices:
-                            tid = int(idx.item())
-                            if self.token_jacobians and tid in self.token_jacobians:
-                                j_vec = self.token_jacobians[tid][:len(attract_vec)]
-                                dot_val = float(np.dot(attract_vec, j_vec))
-                                curr_scores[tid] += effective_beta * dot_val * 0.5
+            # 5. Vectorized Backward Attraction Steering on Top-K via single torch.mv
+            if effective_beta > 0.0 and bridge_dir is not None and embed_w is not None:
+                top_embs = F.normalize(embed_w[top_indices].float(), dim=-1)
+                cos_sims = torch.mv(top_embs, bridge_dir)
+                top_scores = top_scores + (effective_beta * cos_sims * 0.5).to(dtype=top_scores.dtype)
+
+            curr_scores[top_indices] = top_scores
 
         return scores
+

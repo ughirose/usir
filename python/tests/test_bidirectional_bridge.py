@@ -19,6 +19,7 @@ from usir_py.bidirectional_bridge import (
     compute_collision_action,
     compute_trajectory_repetition_penalty,
     pin_boundary_anchors,
+    sanitize_wave_steps,
     solve_bidirectional_collision_bridge,
     solve_tensor_collision_bridge,
     derive_endogenous_goal_hypotheses,
@@ -386,4 +387,33 @@ def test_cot_meta_poem_conclusion_rejection():
     assert "Q.E.D." in optimal_x_T
     assert "重要な基盤" not in optimal_x_T
     assert rankings[0]["score"] < rankings[1]["score"]
+
+
+def test_sanitize_wave_steps_and_kanji_stem_jaccard():
+    """Verify sanitize_wave_steps strips kanji stem paraphrases (Jaccard >= 0.50), meta-leaks, and CJK tokens."""
+    x0 = "風雪の峠道と廃屋の灯りの気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。"
+    xT = "微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙だけが残った。"
+    raw_steps = [
+        x0,
+        "それは雪国の伝統であり、またそれは現代の世界でも、我々の生活を支える力となる。",
+        "それらは、雪国の伝統であり、現代の世界にもその力を支えている。",  # Jaccard >= 0.50 paraphrase
+        "この展開文は、冒頭文で示された状況を補強する。",  # Meta-leak
+        "函数列是恒正且有界である。",  # CJK artifact
+        "囲炉裏の残り火が暗がりで静かに揺れていた。",
+        xT,
+    ]
+    cleaned = sanitize_wave_steps(raw_steps, x_0=x0, x_T=xT)
+    assert len(cleaned) == 4
+    assert cleaned[0] == x0
+    assert "それは雪国の伝統であり" in cleaned[1]
+    assert "囲炉裏の残り火" in cleaned[2]
+    assert cleaned[3] == xT
+
+    # Also verify compute_trajectory_repetition_penalty penalizes stem Jaccard >= 0.50 by +6.0
+    pen_paraphrase = compute_trajectory_repetition_penalty([
+        "それは雪国の伝統であり、またそれは現代の世界でも、我々の生活を支える力となる。",
+        "それらは、雪国の伝統であり、現代の世界にもその力を支えている。",
+    ])
+    assert pen_paraphrase >= 6.0
+
 

@@ -38,6 +38,30 @@ _SIGMA_CRIT_DIAG = _FEATURE_STD.copy()
 _SIGMA_CRIT_DIAG[_SIGMA_CRIT_DIAG < 1e-4] = 1e-4
 _SIGMA_CRIT_INV = 1.0 / (_SIGMA_CRIT_DIAG ** 2)
 
+# Domain-conditioned 3-Phase QDA target profiles
+_MU_ARTICLE = _MU_CRIT.copy()
+_MU_ARTICLE[9:12] = np.array([0.70, 0.40, 0.35])
+_MU_COT = _MU_CRIT.copy()
+_MU_COT[9:12] = np.array([0.85, 0.20, 0.25])
+
+DOMAIN_QDA_PROFILES: Dict[str, Dict[str, Any]] = {
+    "novel": {
+        "mu_crit": _MU_CRIT,
+        "sigma_crit_low": 0.35,
+        "sigma_crit_high": 1.25,
+    },
+    "article": {
+        "mu_crit": _MU_ARTICLE,
+        "sigma_crit_low": 0.30,
+        "sigma_crit_high": 1.40,
+    },
+    "cot_reasoning": {
+        "mu_crit": _MU_COT,
+        "sigma_crit_low": 0.25,
+        "sigma_crit_high": 1.85,
+    },
+}
+
 
 # ==============================================================================
 # 1. 3-Phase QDA Asymmetric Double-Well Barrier Functional
@@ -45,24 +69,29 @@ _SIGMA_CRIT_INV = 1.0 / (_SIGMA_CRIT_DIAG ** 2)
 
 def compute_three_phase_qda_distance(
     z: Union[np.ndarray, List[float], Dict[str, Any], str],
+    domain: str = "novel",
     mu_crit: Optional[np.ndarray] = None,
     sigma_crit_inv: Optional[np.ndarray] = None,
     sigma_norm: Optional[float] = None,
     gamma_freeze: float = 12.0,
     gamma_chaos: float = 12.0,
-    sigma_crit_low: float = 0.35,
-    sigma_crit_high: float = 1.25,
+    sigma_crit_low: Optional[float] = None,
+    sigma_crit_high: Optional[float] = None,
 ) -> Dict[str, Any]:
-    r"""Computes the 3-phase QDA asymmetric double-well barrier distance functional:
+    r"""Computes the domain-conditioned 3-phase QDA asymmetric double-well barrier distance functional:
 
-    \mathcal{D}_{\text{3-phase}}(\mathbf{z}) =
-        \frac{1}{2}(\mathbf{z} - \boldsymbol{\mu}_{\text{crit}}^*)^\top
-        \Sigma_{\text{crit}}^{-1} (\mathbf{z} - \boldsymbol{\mu}_{\text{crit}}^*)
+    \mathcal{D}_{\text{3-phase}}(\mathbf{z}; \text{domain}) =
+        \frac{1}{2}(\mathbf{z} - \boldsymbol{\mu}_{\text{crit}}^{(\text{domain})})^\top
+        \Sigma_{\text{crit}}^{-1} (\mathbf{z} - \boldsymbol{\mu}_{\text{crit}}^{(\text{domain})})
         + \gamma_{\text{freeze}} \max(0, \sigma_{\text{crit}}^{\text{low}} - \|\boldsymbol{\sigma}\|_2)^2
         + \gamma_{\text{chaos}} \max(0, \|\boldsymbol{\sigma}\|_2 - \sigma_{\text{crit}}^{\text{high}})^2
 
     Rejects both Phase I Deadzone (under-excited freeze) and Phase III Chaos (purple prose / punctuation spam).
     """
+    profile = DOMAIN_QDA_PROFILES.get(domain, DOMAIN_QDA_PROFILES["novel"])
+    eff_sigma_low = float(sigma_crit_low) if sigma_crit_low is not None else float(profile["sigma_crit_low"])
+    eff_sigma_high = float(sigma_crit_high) if sigma_crit_high is not None else float(profile["sigma_crit_high"])
+
     if isinstance(z, str):
         extracted = extract_usir_24d(z)
         z_vec = np.asarray(extracted["z_24d"], dtype=float)
@@ -83,7 +112,7 @@ def compute_three_phase_qda_distance(
     if sigma_norm is not None:
         calc_sigma_norm = float(sigma_norm)
 
-    target_mu = _MU_CRIT if mu_crit is None else np.asarray(mu_crit, dtype=float)
+    target_mu = np.asarray(profile["mu_crit"], dtype=float) if mu_crit is None else np.asarray(mu_crit, dtype=float)
     inv_cov = _SIGMA_CRIT_INV if sigma_crit_inv is None else np.asarray(sigma_crit_inv, dtype=float)
 
     diff = z_vec - target_mu
@@ -93,11 +122,11 @@ def compute_three_phase_qda_distance(
         d_mahalanobis = float(0.5 * (diff.T @ inv_cov @ diff) / 24.0)
 
     # Freeze barrier penalty (Left wall)
-    freeze_defect = max(0.0, sigma_crit_low - calc_sigma_norm)
+    freeze_defect = max(0.0, eff_sigma_low - calc_sigma_norm)
     penalty_freeze = gamma_freeze * (freeze_defect ** 2)
 
     # Chaos barrier penalty (Right wall)
-    chaos_excess = max(0.0, calc_sigma_norm - sigma_crit_high)
+    chaos_excess = max(0.0, calc_sigma_norm - eff_sigma_high)
     penalty_chaos = gamma_chaos * (chaos_excess ** 2)
 
     total_d_3phase = float(d_mahalanobis + penalty_freeze + penalty_chaos)
@@ -354,6 +383,7 @@ def compute_multiplicative_grpo_reward(
     text: str,
     x_0: Optional[Union[str, np.ndarray]] = None,
     x_T: Optional[Union[str, np.ndarray]] = None,
+    domain: str = "novel",
     target: str = "CRITICAL",
     is_authentic_masterwork: bool = False,
     masterwork_texts: Optional[List[str]] = None,
@@ -454,7 +484,7 @@ def compute_multiplicative_grpo_reward(
     )
 
     # 5. 3-Phase QDA Asymmetric Barrier Distance
-    qda_res = compute_three_phase_qda_distance(text)
+    qda_res = compute_three_phase_qda_distance(text, domain=domain)
     d_3phase = qda_res["d_3phase"]
     exp_barrier = float(math.exp(-0.5 * (d_3phase / max(alpha_metric, 0.1))))
 

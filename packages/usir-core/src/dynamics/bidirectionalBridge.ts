@@ -283,7 +283,7 @@ export function deriveEndogenousGoalHypotheses(
     const kamaeDiff = Math.sqrt(kamaeDiffSq);
 
     const jointText = `${safeX0} ${c}`;
-    const qda = computeThreePhaseQdaDistance(jointText);
+    const qda = computeThreePhaseQdaDistance(jointText, { domain });
 
     let reachDistSq = 0;
     for (let i = 0; i < qc.length; i++) {
@@ -422,11 +422,118 @@ function compute5GramOverlap(sA: string, sB: string): number {
   return inter / denom;
 }
 
+export const META_LEAK_MARKERS: readonly string[] = [
+  'この展開文は',
+  '冒頭文で',
+  '結びの一文',
+  'この記事では',
+  'この講座では',
+  '本研究の目的は',
+  '解答例：',
+  '規則：',
+  '構文：',
+];
+
+export const CJK_ARTIFACT_PATTERNS: readonly string[] = [
+  '是恒',
+  '且有界',
+  '若',
+  '则',
+  '与',
+  '为',
+  '这个',
+  '们',
+];
+
+function extractKanjiStems(text: string): Set<string> {
+  const stems = new Set<string>(text.match(/[\u4e00-\u9fff]{2,}/g) || []);
+  if (stems.size < 2) {
+    for (const s of text.match(/[\u4e00-\u9fff]+/g) || []) {
+      stems.add(s);
+    }
+  }
+  return stems;
+}
+
+function computeStemJaccard(sA: string, sB: string): number {
+  const stemsA = extractKanjiStems(sA);
+  const stemsB = extractKanjiStems(sB);
+  if (stemsA.size === 0 || stemsB.size === 0) return 0.0;
+  let inter = 0;
+  for (const s of stemsA) {
+    if (stemsB.has(s)) inter++;
+  }
+  const unionLen = new Set([...stemsA, ...stemsB]).size;
+  return unionLen > 0 ? inter / unionLen : 0.0;
+}
+
+function hasMetaOrCjkLeak(text: string): boolean {
+  for (const m of META_LEAK_MARKERS) {
+    if (text.includes(m)) return true;
+  }
+  for (const p of CJK_ARTIFACT_PATTERNS) {
+    if (text.includes(p)) return true;
+  }
+  return false;
+}
+
+export function sanitizeWaveSteps(
+  steps: string[],
+  x_0?: string,
+  x_T?: string
+): string[] {
+  const cleanSteps: string[] = [];
+  const seenStems: Set<string>[] = [];
+
+  for (const step of steps) {
+    const s = step.trim();
+    if (!s) continue;
+    const isBoundary = (x_0 !== undefined && s === x_0.trim()) || (x_T !== undefined && s === x_T.trim());
+    if (!isBoundary && hasMetaOrCjkLeak(s)) {
+      continue;
+    }
+
+    const stemsS = extractKanjiStems(s);
+    let isDup = false;
+    if (!isBoundary && stemsS.size > 0) {
+      for (const prevStems of seenStems) {
+        if (prevStems.size > 0) {
+          let inter = 0;
+          for (const st of stemsS) {
+            if (prevStems.has(st)) inter++;
+          }
+          const uLen = new Set([...stemsS, ...prevStems]).size;
+          if (uLen > 0 && inter / uLen >= 0.50) {
+            isDup = true;
+            break;
+          }
+        }
+      }
+    }
+    if (!isDup) {
+      cleanSteps.push(s);
+      seenStems.push(stemsS);
+    }
+  }
+
+  if (cleanSteps.length === 0 && steps.length > 0) {
+    return [steps[0]!.trim()];
+  }
+  return cleanSteps;
+}
+
 export function computeTrajectoryRepetitionPenalty(steps: string[]): number {
   let penalty = 0.0;
   const n = steps.length;
   const normPrefixes = steps.map(s => normalizeForPrefix(s));
   const gramsList = steps.map(s => char5Grams(s));
+  const stemsList = steps.map(s => extractKanjiStems(s));
+
+  for (const s of steps) {
+    if (hasMetaOrCjkLeak(s)) {
+      penalty += 6.0;
+    }
+  }
 
   for (let a = 0; a < n; a++) {
     for (let b = a + 1; b < n; b++) {
@@ -449,6 +556,19 @@ export function computeTrajectoryRepetitionPenalty(steps: string[]): number {
           if (overlap > 0.35) {
             penalty += 8.0 * (overlap - 0.35);
           }
+        }
+      }
+
+      const sa = stemsList[a]!;
+      const sb = stemsList[b]!;
+      if (sa.size > 0 && sb.size > 0) {
+        let inter = 0;
+        for (const st of sa) {
+          if (sb.has(st)) inter++;
+        }
+        const uLen = new Set([...sa, ...sb]).size;
+        if (uLen > 0 && inter / uLen >= 0.50) {
+          penalty += 6.0;
         }
       }
     }
@@ -475,6 +595,7 @@ function deduplicateInfillSentences(infillText: string, existingSteps: string[])
   const cleanSents: string[] = [];
 
   for (const cand of candidates) {
+    if (hasMetaOrCjkLeak(cand)) continue;
     const pCand = normalizeForPrefix(cand);
     let isDup = false;
     for (const ex of existingPool) {
@@ -488,6 +609,10 @@ function deduplicateInfillSentences(infillText: string, existingSteps: string[])
         break;
       }
       if (compute5GramOverlap(cand, ex) >= 0.40) {
+        isDup = true;
+        break;
+      }
+      if (computeStemJaccard(cand, ex) >= 0.50) {
         isDup = true;
         break;
       }
@@ -514,7 +639,8 @@ function buildForwardWave(waveId: number, steps: string[]): TrajectoryWave {
 export function computeCollisionAction(
   fwdWave: TrajectoryWave,
   bwdWave: TrajectoryWave,
-  beta = 0.5
+  beta = 0.5,
+  domain: BridgeDomain = 'novel'
 ): [number, number, number, number] {
   const tipFwd = fwdWave.tip_vector;
   const tipBwd = bwdWave.tip_vector;
@@ -567,7 +693,7 @@ export function computeCollisionAction(
 
   // 3. 3-Phase QDA of welded sequence
   const weldedText = combinedSteps.join('');
-  const qdaRes = computeThreePhaseQdaDistance(weldedText);
+  const qdaRes = computeThreePhaseQdaDistance(weldedText, { domain });
   const d3Phase = qdaRes.d_3phase;
 
   const sTotal = dGeodesic + dCausal + 0.5 * beta * d3Phase;
@@ -607,7 +733,7 @@ export function solveBidirectionalCollisionBridge(
     fwdWaves = [];
     bwdWaves = [];
     for (let i = 0; i < Math.min(kCandidates, validFwd.length); i++) {
-      const steps = validFwd[i]!;
+      const steps = sanitizeWaveSteps(validFwd[i]!, anchors.x_0, anchors.x_T);
       const tipVec = embedSentenceUnit(steps[steps.length - 1]!);
       const prevVec = steps.length >= 2 ? embedSentenceUnit(steps[steps.length - 2]!) : tipVec;
       const dirVec = tipVec.map((v, idx) => v - (prevVec[idx] ?? 0));
@@ -618,7 +744,7 @@ export function solveBidirectionalCollisionBridge(
       fwdWaves.push({ wave_id: i, direction: 'forward', steps, tip_vector: tipVec, direction_vector: normalizedDir });
     }
     for (let j = 0; j < Math.min(kCandidates, validBwd.length); j++) {
-      const steps = validBwd[j]!;
+      const steps = sanitizeWaveSteps(validBwd[j]!, anchors.x_0, anchors.x_T);
       const tipVec = embedSentenceUnit(steps[0]!);
       const nextVec = steps.length >= 2 ? embedSentenceUnit(steps[1]!) : tipVec;
       const dirVec = nextVec.map((v, idx) => v - (tipVec[idx] ?? 0));
@@ -643,7 +769,7 @@ export function solveBidirectionalCollisionBridge(
   for (let i = 0; i < Kfwd; i++) {
     const row: number[] = [];
     for (let j = 0; j < Kbwd; j++) {
-      const [sTot, dGeo, dCau, d3ph] = computeCollisionAction(fwdWaves[i]!, bwdWaves[j]!, beta);
+      const [sTot, dGeo, dCau, d3ph] = computeCollisionAction(fwdWaves[i]!, bwdWaves[j]!, beta, anchors.domain);
       row.push(sTot);
       if (sTot < bestAction) {
         bestAction = sTot;
@@ -670,7 +796,7 @@ export function solveBidirectionalCollisionBridge(
 
   if (cleanInfillSents.length > 0) {
     const infilledFwdWave = buildForwardWave(optFwd.wave_id, [...optFwd.steps, ...cleanInfillSents]);
-    const [sInfilled] = computeCollisionAction(infilledFwdWave, optBwd, beta);
+    const [sInfilled] = computeCollisionAction(infilledFwdWave, optBwd, beta, anchors.domain);
     const curvDirect = computeSemanticGeodesicCurvature(existingSteps.join('')).mean_curvature;
     const infilledSteps = [...optFwd.steps, ...cleanInfillSents, ...optBwd.steps];
     const curvInfilled = computeSemanticGeodesicCurvature(infilledSteps.join('')).mean_curvature;
@@ -681,12 +807,12 @@ export function solveBidirectionalCollisionBridge(
     const dCausalDirect = bestComponents[1];
     if (sInfilledAug < sDirectAug || dCausalDirect > 0.65) {
       acceptedInfill = cleanInfillSents.join('');
-      weldedTrajectory = infilledSteps;
+      weldedTrajectory = sanitizeWaveSteps(infilledSteps, anchors.x_0, anchors.x_T);
     } else {
-      weldedTrajectory = existingSteps;
+      weldedTrajectory = sanitizeWaveSteps(existingSteps, anchors.x_0, anchors.x_T);
     }
   } else {
-    weldedTrajectory = existingSteps;
+    weldedTrajectory = sanitizeWaveSteps(existingSteps, anchors.x_0, anchors.x_T);
   }
 
   const weldedText = weldedTrajectory.join('');

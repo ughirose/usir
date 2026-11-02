@@ -182,12 +182,20 @@ def get_transformers_model() -> tuple[Any, Any]:
         from transformers import AutoModelForCausalLM, AutoTokenizer
         import torch
 
-        model_name = os.environ.get("USIR_MODEL_NAME", "Qwen/Qwen2.5-1.5B-Instruct")
-        _CACHED_TOK = AutoTokenizer.from_pretrained(model_name)
-        _CACHED_MODEL = AutoModelForCausalLM.from_pretrained(
-            model_name,
-            torch_dtype=torch.float16 if torch.cuda.is_available() else "auto",
-        ).to("cuda" if torch.cuda.is_available() else "cpu")
+        model_name = os.environ.get("USIR_MODEL_NAME", "Qwen/Qwen2.5-3B-Instruct")
+        try:
+            _CACHED_TOK = AutoTokenizer.from_pretrained(model_name)
+            _CACHED_MODEL = AutoModelForCausalLM.from_pretrained(
+                model_name,
+                torch_dtype=torch.float16 if torch.cuda.is_available() else "auto",
+            ).to("cuda" if torch.cuda.is_available() else "cpu")
+        except Exception:
+            fallback_name = "Qwen/Qwen2.5-1.5B-Instruct"
+            _CACHED_TOK = AutoTokenizer.from_pretrained(fallback_name)
+            _CACHED_MODEL = AutoModelForCausalLM.from_pretrained(
+                fallback_name,
+                torch_dtype=torch.float16 if torch.cuda.is_available() else "auto",
+            ).to("cuda" if torch.cuda.is_available() else "cpu")
     return _CACHED_MODEL, _CACHED_TOK
 
 
@@ -268,34 +276,62 @@ def evaluate_llm_judge(
     s_logic = 1.6 + 1.8 * mono_ratio + 0.8 * (pen_conn / 5.0) + logic_density
     s_logic = float(np.clip(s_logic, 1.0, 5.0))
 
-    # 3. Structural Sophistication: length CV and punctuation rhythm
+    # 3. Structural Sophistication: length CV, punctuation rhythm, and domain 3-phase QDA stability
     lens = [len(u) for u in units]
     mean_len = float(np.mean(lens))
     std_len = float(np.std(lens))
     cv_l = std_len / (mean_len + 1e-7)
     if 0.30 <= cv_l <= 0.70:
-        s_struct = 4.0 + 1.0 * (1.0 - abs(cv_l - 0.50) / 0.25)
+        s_struct = 4.2 + 0.8 * (1.0 - abs(cv_l - 0.50) / 0.25)
     elif cv_l < 0.15:
-        s_struct = 1.5
+        s_struct = 2.0
     else:
-        s_struct = max(2.0, 4.0 - abs(cv_l - 0.50) * 3.0)
-    s_struct = float(np.clip(s_struct, 1.0, 5.0))
+        s_struct = max(2.2, 4.2 - abs(cv_l - 0.50) * 2.5)
+    qda_eval = compute_three_phase_qda_distance(text, domain=domain)
+    d3_pen = min(2.0, 0.45 * float(qda_eval["d_3phase"]))
+    s_struct = float(np.clip(s_struct - d3_pen, 1.0, 5.0))
 
-    # 4. Absence of Slop & Repetition
+    # 4. Absence of Slop, Repetition, Setting Drift, and CJK / Meta Contamination
     ngrams = [text[i:i + 5] for i in range(len(text) - 5)]
     unique_ratio = len(set(ngrams)) / float(max(1, len(ngrams)))
-    stem_sets = [set(re.findall(r'[\u4e00-\u9fff]+', u)) for u in units]
+    stem_sets = [set(re.findall(r'[\u4e00-\u9fff]{2,}', u)) or set(re.findall(r'[\u4e00-\u9fff]+', u)) for u in units]
     dup_pen = 0.0
     for i in range(len(stem_sets)):
-        for j in range(i + 2, len(stem_sets)):
+        for j in range(i + 1, len(stem_sets)):
             if stem_sets[i] and stem_sets[j]:
                 jacc = len(stem_sets[i] & stem_sets[j]) / float(len(stem_sets[i] | stem_sets[j]))
-                if jacc > 0.40:
-                    dup_pen += 0.8
+                if jacc >= 0.50:
+                    dup_pen += 1.2
+                elif jacc > 0.40 and j >= i + 2:
+                    dup_pen += 0.6
+
+    # Setting Drift penalty: mid-passage sentences diverging sharply from x_0 semantic anchor
+    e_x0 = _embed_sentence_unit(prompt) if prompt else embs[0]
+    n_x0 = float(np.linalg.norm(e_x0))
+    drift_pen = 0.0
+    if len(embs) >= 3 and n_x0 > 1e-7:
+        mid_sims = [
+            float(np.dot(embs[k], e_x0) / (float(np.linalg.norm(embs[k])) * n_x0 + 1e-7))
+            for k in range(1, len(embs) - 1)
+        ]
+        min_mid_sim = min(mid_sims) if mid_sims else 0.5
+        if min_mid_sim < 0.15:
+            drift_pen += (0.15 - min_mid_sim) * 3.5
+
+    # Chinese CJK function word / backtick / prompt meta-leak penalty
+    meta_cjk_terms = [
+        "この展開文は", "冒頭文で", "結びの一文", "この記事では", "この講座では",
+        "本研究の目的は", "解答例：", "規則：", "構文：",
+        "是恒", "且有界", "若", "则", "与", "为", "这个", "们", "`$$",
+    ]
+    leak_hits = sum(text.count(t) for t in meta_cjk_terms)
+    leak_pen = leak_hits * 1.5
+
     cliches = ["といえるだろう", "にほかならない", "が求められている", "注目を集めている", "重要な課題である"]
     cliche_count = sum(text.count(c) for c in cliches)
 
-    s_clean = float(np.clip(5.0 * unique_ratio - dup_pen - 0.4 * cliche_count, 1.0, 5.0))
+    s_flow = float(np.clip(s_flow - 0.5 * drift_pen, 1.0, 5.0))
+    s_clean = float(np.clip(5.0 * unique_ratio - dup_pen - drift_pen - leak_pen - 0.4 * cliche_count, 1.0, 5.0))
 
     total_score = float(np.clip(s_flow + s_logic + s_struct + s_clean, 4.0, 20.0))
     normalized_quality = float((total_score - 4.0) / 16.0 * 100.0)
@@ -505,8 +541,6 @@ def run_experiment_on_domain(
     # --------------------------------------------------------------------------
     if tier_info["tier"] == "Tier_1_GPU_Transformers":
         model, tok = get_transformers_model()
-        inp_f = tok(anchors.x_0, return_tensors="pt").to(model.device)
-        inp_len_f = inp_f["input_ids"].shape[-1]
         v_attract = anchors.q_end - anchors.q_start
         proc_v4 = USIRPyTorchLogitsProcessor(
             dim=12,
@@ -517,12 +551,30 @@ def run_experiment_on_domain(
         )
         proc_v4.register_tokenizer_punctuation(tok)
         proc_v4.register_bridge_embeddings(model, tok, anchors.x_0, optimal_x_T)
+
+        if domain == "cot_reasoning":
+            sys_fwd = "あなたは定理証明の前半ステップを記述する数理科学者です。冒頭文の直後の論理の第一歩（2〜3文）のみを書き、結論を先取りしたりメタ解説を入れたりしないでください。中国語簡体字やバッククォートは絶対に使用しないでください。"
+            usr_fwd = f"証明テーマ：「{theme}」\n開始文：「{anchors.x_0}」\nこの開始文の直後に続く論理導出の第一歩（2〜3文、地の文のみ）を記述してください。"
+        else:
+            sys_fwd = "あなたは文章の前半部のみを執筆する作家・論説家です。冒頭文の直後の場面・論理の第一歩（2〜3文）のみを書き、時間を翌朝に進めたり結論を先取りしたりしないこと（会話文の乱発や唐突な登場人物の追加を禁ずる）。見出しや解説は一切書かず地の文のみを出力してください。"
+            usr_fwd = f"テーマ：「{theme}」\n開始文：「{anchors.x_0}」\nこの開始文の直後の場面・論理の第一歩（2〜3文、地の文のみ）を執筆してください。"
+
+        if hasattr(tok, "apply_chat_template") and tok.chat_template:
+            fwd_prompt = tok.apply_chat_template([
+                {"role": "system", "content": sys_fwd},
+                {"role": "user", "content": usr_fwd},
+            ], tokenize=False, add_generation_prompt=True)
+        else:
+            fwd_prompt = f"{anchors.x_0}"
+
+        inp_f = tok(fwd_prompt, return_tensors="pt").to(model.device)
+        inp_len_f = inp_f["input_ids"].shape[-1]
         out_fwd = model.generate(
             **inp_f,
             logits_processor=[proc_v4],
-            max_new_tokens=220,
+            max_new_tokens=160,
             do_sample=True,
-            temperature=0.75,
+            temperature=0.72,
             num_return_sequences=2,
         )
         chat_slop = ["説明してください", "覚えておいてください", "始めましょう", "確認してください", "問題:", "file.txt"]
@@ -530,16 +582,18 @@ def run_experiment_on_domain(
         for seq in out_fwd:
             gen_tokens_f = seq[inp_len_f:]
             f_text = tok.decode(gen_tokens_f, skip_special_tokens=True).strip()
+            f_text = re.sub(r'^[#*\s\d.：:\-「」]+', '', f_text).strip()
             f_steps = extract_complete_sentences(f_text)
-            f_steps = [s for s in f_steps if not any(cs in s for cs in chat_slop)]
+            f_steps = [s for s in f_steps if not any(cs in s for cs in chat_slop) and s != anchors.x_0][:3]
             llm_fwd_candidates.append([anchors.x_0] + f_steps if f_steps else [anchors.x_0, "冷たい静寂の中で事態が進展していく。"])
 
-        system_bwd = "あなたは文章の接続展開を執筆するプロの小説家・論説家です。見出し、箇条書き、解説、挨拶は一切書かず、直前の文や冒頭文と同じ接続詞や同一の文頭表現（先頭5文字以上の反復）を排し、指定された結びの一文に直結する直前の地の文（2〜3文、80〜150字）のみを出力してください。"
+        s_fwd_last = llm_fwd_candidates[0][-1]
+        system_bwd = "あなたは文章の後半接続を執筆するプロの作家・論説家です。『冒頭文』『展開文』『結びの一文』『この記事では』というメタ単語を出力に含めることを厳禁とします。前段の文から最終文へ同一の視点・時間帯のまま直結する2文（地の文のみ、60〜130字）のみを生成してください。会話文や新たな登場人物の追加を禁じます。"
         if domain == "cot_reasoning":
-            system_bwd = "あなたは厳密な定理証明を執筆する数理科学者です。『重要な定理』『社会や科学技術への影響』『モデル化』『物理現象』といったメタ解説・意義ポエムは絶対に書かず、数式記号（$, =, \\lim など）を用いた厳密な論理導出ステップのみを出力してください。見出しや箇条書きは不要です。"
-            user_msg_bwd = f"証明テーマ：「{theme}」\n前提：「{anchors.x_0}」\n最終証明命題：「{optimal_x_T}」\n前提から最終証明命題へと論理的・演繹的に繋ぐ直前の導出ステップ（数式記号を用い、メタ解説や意義ポエムを排した純粋な数理展開の地の文のみ、2〜3文、80〜150字）を記述してください。"
+            system_bwd = "あなたは厳密な定理証明を執筆する数理科学者です。『冒頭文』『展開文』『結びの一文』『重要な定理』『社会や科学技術への影響』『モデル化』というメタ単語を出力に含めることを厳禁とし、前段ステップから最終命題へ同一の論理空間のまま直結する2文（数式記号を含む地の文のみ、60〜140字）のみを出力してください。"
+            user_msg_bwd = f"証明テーマ：「{theme}」\n前段の文：「{s_fwd_last}」\n最終文：「{optimal_x_T}」\n前段の文から最終文へ直結する中間導出の2文（地の文のみ、メタ単語厳禁）を記述してください。"
         else:
-            user_msg_bwd = f"テーマ：「{theme}」\n冒頭文：「{anchors.x_0}」\n結びの一文：「{optimal_x_T}」\n冒頭文の文脈から結びの一文へと向かう直前の展開文（地の文のみ、2〜3文、80〜150字）を執筆してください。"
+            user_msg_bwd = f"テーマ：「{theme}」\n前段の文：「{s_fwd_last}」\n最終文：「{optimal_x_T}」\n前段の文から最終文へ同一の視点・時間帯のまま直結する2文（地の文のみ、メタ単語厳禁）を執筆してください。"
         if hasattr(tok, "apply_chat_template") and tok.chat_template:
             msg_b = [
                 {"role": "system", "content": system_bwd},
@@ -547,15 +601,16 @@ def run_experiment_on_domain(
             ]
             bwd_prompt = tok.apply_chat_template(msg_b, tokenize=False, add_generation_prompt=True)
         else:
-            bwd_prompt = f"テーマ：{theme}\n冒頭：{anchors.x_0}\n結び：{optimal_x_T}\n直前の展開："
+            bwd_prompt = f"テーマ：{theme}\n前段：{s_fwd_last}\n最終文：{optimal_x_T}\n接続する2文："
 
         inp_b = tok(bwd_prompt, return_tensors="pt").to(model.device)
         inp_len_b = inp_b["input_ids"].shape[-1]
         out_bwd = model.generate(
             **inp_b,
-            max_new_tokens=180,
+            logits_processor=[proc_v4],
+            max_new_tokens=160,
             do_sample=True,
-            temperature=0.75,
+            temperature=0.72,
             num_return_sequences=2,
         )
         llm_bwd_candidates = []
@@ -568,32 +623,33 @@ def run_experiment_on_domain(
             b_clean = re.sub(r'(?m)^#{1,6}\s*.*$', '', b_clean).strip()
             b_steps = extract_complete_sentences(b_clean)
             b_steps = [s for s in b_steps if not any(cs in s for cs in chat_slop)]
-            if b_steps and (b_steps[0] == anchors.x_0 or b_steps[0].startswith(anchors.x_0[:10])):
+            if b_steps and (b_steps[0] == anchors.x_0 or b_steps[0].startswith(anchors.x_0[:10]) or b_steps[0] == s_fwd_last):
                 b_steps = b_steps[1:]
             if b_steps and (b_steps[-1] == optimal_x_T or b_steps[-1].endswith(optimal_x_T[-10:])):
                 b_steps = b_steps[:-1]
+            b_steps = b_steps[:2]
             llm_bwd_candidates.append(b_steps + [optimal_x_T] if b_steps else ["前提条件の整合性を確認し、", optimal_x_T])
 
         # Define midpoint infilling generator
         def generate_midpoint_infill(fwd_last: str, bwd_first: str) -> str:
             """Generates natural bridging infilling connecting forward wave tip to backward wave tip."""
-            sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。見出しや解説は一切書かず、前文から後文へ自然に繋がる接続文（地の文のみ、1〜2文、40〜90字）のみを出力してください。直前文と同一の文頭表現を避けてください。"
+            sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。『冒頭文』『展開文』『結びの一文』といったメタ単語や見出しは一切書かず、前文から後文へ同一視点のまま自然に繋がる接続文（地の文のみ、1〜2文、40〜90字）のみを出力してください。"
             if domain == "cot_reasoning":
-                sys_inf = "あなたは定理証明の中間導出を担当する論理学者です。『重要な定理』『社会や科学技術への影響』『モデル化』『物理現象』といったメタ解説・意義ポエムは一切書かず、数式記号を用いた論理導出文のみを出力してください。"
-                user_msg = f"証明テーマ：「{theme}」\n前提：「{anchors.x_0}」\n結び：「{optimal_x_T}」\n前段ステップ：「{fwd_last}」\n後段ステップ：「{bwd_first}」\n前段から後段へ論理的・数式的に繋ぐ導出ステップ文（数式記号を含む地の文のみ、1〜2文）を書いてください。"
+                sys_inf = "あなたは定理証明の中間導出を担当する論理学者です。『冒頭文』『展開文』『結びの一文』『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説は一切書かず、数式記号を用いた論理導出文のみを出力してください。"
+                user_msg = f"証明テーマ：「{theme}」\n前段ステップ：「{fwd_last}」\n後段ステップ：「{bwd_first}」\n前段から後段へ論理的・数式的に繋ぐ導出ステップ文（数式記号を含む地の文のみ、1〜2文）を書いてください。"
             else:
-                user_msg = f"テーマ：「{theme}」\n冒頭文：「{anchors.x_0}」\n結びの一文：「{optimal_x_T}」\n前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へスムーズかつ論理的に繋ぐ接続文（地の文のみ、1〜2文）を書いてください。"
+                user_msg = f"テーマ：「{theme}」\n前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へ同一視点・時間帯のままスムーズに繋ぐ接続文（地の文のみ、1〜2文）を書いてください。"
             if hasattr(tok, "apply_chat_template") and tok.chat_template:
                 p_inf = tok.apply_chat_template([
                     {"role": "system", "content": sys_inf},
                     {"role": "user", "content": user_msg},
                 ], tokenize=False, add_generation_prompt=True)
             else:
-                p_inf = f"テーマ：{theme}\n冒頭：{anchors.x_0}\n結び：{optimal_x_T}\n前文：{fwd_last}\n後文：{bwd_first}\n接続文："
+                p_inf = f"テーマ：{theme}\n前文：{fwd_last}\n後文：{bwd_first}\n接続文："
 
             inp_inf = tok(p_inf, return_tensors="pt").to(model.device)
             inp_len_inf = inp_inf["input_ids"].shape[-1]
-            out_inf = model.generate(**inp_inf, max_new_tokens=100, do_sample=True, temperature=0.7)
+            out_inf = model.generate(**inp_inf, logits_processor=[proc_v4], max_new_tokens=100, do_sample=True, temperature=0.7)
             raw_inf = tok.decode(out_inf[0][inp_len_inf:], skip_special_tokens=True).strip()
             raw_inf = re.sub(r'^(接続文|解説|補間|問題)[^：:\n]*[：:\n]+', '', raw_inf).strip()
             raw_inf = re.sub(r'^[#*\s\d.：:\-「」]+', '', raw_inf).strip()
@@ -643,8 +699,8 @@ def run_experiment_on_domain(
     def evaluate_output(text: str) -> Dict[str, Any]:
         ext = extract_usir_24d(text)
         geodesic = compute_semantic_geodesic_curvature(text)
-        qda = compute_three_phase_qda_distance(text)
-        grpo = compute_multiplicative_grpo_reward(text, x_0=anchors.x_0, x_T=optimal_x_T)
+        qda = compute_three_phase_qda_distance(text, domain=domain)
+        grpo = compute_multiplicative_grpo_reward(text, x_0=anchors.x_0, x_T=optimal_x_T, domain=domain)
         judge = evaluate_llm_judge(text, domain=domain, prompt=anchors.x_0, target_conclusion=optimal_x_T)
         return {
             "text": text,
