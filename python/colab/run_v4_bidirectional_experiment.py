@@ -918,7 +918,7 @@ def generate_experiment_report_markdown(
         "",
         "### 3. 社会的先入観と物理的事実の乖離",
         "- **「単一の大域的物理スコアが万能の知覚指標となる」という神話の崩壊**:",
-        fr"  - 3ドメインを統合した全N={ov.get('n_samples', n_trials)}の横断相関では、$\rho(\mathcal{D}_{{\text{{3-phase}}}}, \mathcal{{Q}}) = {ov.get('rho_d_3phase_vs_quality', 0.0):.3f}$ (p={p_d_ov:.2e})、$\rho(R_{{\text{{GRPO}}}}, \mathcal{{Q}}) = {ov.get('rho_grpo_vs_quality', 0.0):.3f}$ (p={p_g_ov:.2e}) となり、大域的な一様相関は消失した。",
+        fr"  - 3ドメインを統合した全N={ov.get('n_samples', n_trials)}の横断相関では、$\rho(\mathcal{{D}}_{{\text{{3-phase}}}}, \mathcal{{Q}}) = {ov.get('rho_d_3phase_vs_quality', 0.0):.3f}$ (p={p_d_ov:.2e})、$\rho(R_{{\text{{GRPO}}}}, \mathcal{{Q}}) = {ov.get('rho_grpo_vs_quality', 0.0):.3f}$ (p={p_g_ov:.2e}) となり、大域的な一様相関は消失した。",
         "  - この物理的原因は、文芸（許容ブラウン運動比が高く曲率変化が劇的）と論説（構造秩序が重視される）と定理証明（厳密なステップ遷移）で、基礎となる構文力学多様体のスケールが根本的に異なるためである。",
         "- **ドメイン局所における物理的接地の二重構造**:",
         fr"  - 論説ドメインでは、秩序脱落度 $\mathcal{{D}}_{{\text{{3-phase}}}}$ の低減が品質向上と相関（$\rho = {by_d.get('article', {}).get('rho_d_3phase_vs_quality', 0.0):.3f}, p={by_d.get('article', {}).get('p_val_d_3phase', 1.0):.2e}$）。構造的規律が文章価値を決定する。",
