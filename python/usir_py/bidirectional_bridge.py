@@ -317,8 +317,12 @@ def derive_endogenous_goal_hypotheses(
             if jacc_x0 > 0.45:
                 tautology_penalty += 3.0
 
-        # (b) CoT domain math/logic bonus and meta-explanation poem penalty
+        # (b) CoT domain math/logic bonus, meta-poem penalty, and CJK/unbalanced-formula penalty
         domain_penalty = 0.0
+        if _has_meta_or_cjk_leak(c):
+            domain_penalty += 10.0
+        if c.count("$") % 2 != 0:
+            domain_penalty += 8.0
         if domain == "cot_reasoning":
             math_hits = sum(1 for m in cot_math_markers if m in c)
             if math_hits > 0:
@@ -454,6 +458,24 @@ CJK_ARTIFACT_PATTERNS: List[str] = [
     "为",
     "这个",
     "们",
+    "是一个",
+    "假设",
+    "存在一个",
+    "根据",
+    "必须",
+    "满足",
+    "其中",
+    "处于",
+    "无法",
+    "达成",
+    "漸漸",
+    "穿透",
+    "濡濕",
+    "映射",
+    "訴說",
+    "濕滑",
+    "晨光",
+    "`$$",
 ]
 
 
@@ -483,6 +505,8 @@ def _has_meta_or_cjk_leak(text: str) -> bool:
     for p in CJK_ARTIFACT_PATTERNS:
         if p in text:
             return True
+    if len(re.findall(r'[\u4e00-\u9fff]', text)) >= 5 and not re.search(r'[\u3040-\u30ff]', text):
+        return True
     return False
 
 
@@ -494,42 +518,55 @@ def sanitize_wave_steps(
     """Normalizes and sanitizes wave trajectory steps:
     1. Removes sentences containing prompt meta-leaks or Chinese CJK artifacts.
     2. Deduplicates subsequent sentences whose Kanji stem Jaccard similarity >= 0.50
-       with any earlier step in the wave or with boundary anchors x_0 / x_T
-       (while preserving boundary anchors x_0 and x_T themselves).
+       (or verbatim / 5-gram overlap >= 0.50 when Kanji stems are absent)
+       with any earlier step in the wave or with boundary anchors x_0 / x_T.
     """
     clean_steps: List[str] = []
     seen_stems: List[Set[str]] = []
-    stems_xT = _extract_kanji_stems(x_T.strip()) if x_T else set()
+    norm_xT = x_T.strip() if x_T else None
+    stems_xT = _extract_kanji_stems(norm_xT) if norm_xT else set()
+    n_steps = len(steps)
 
     for idx, step in enumerate(steps):
         s = step.strip()
         if not s:
             continue
-        is_x0 = x_0 is not None and s == x_0.strip()
-        is_xT = x_T is not None and s == x_T.strip()
+        is_x0 = idx == 0 and x_0 is not None and s == x_0.strip()
+        is_xT = idx == n_steps - 1 and norm_xT is not None and s == norm_xT
         is_boundary = is_x0 or is_xT
         if not is_boundary and _has_meta_or_cjk_leak(s):
             continue
 
         stems_s = _extract_kanji_stems(s)
         is_dup = False
-        if not is_boundary and stems_s:
-            for prev_stems in seen_stems:
-                if prev_stems:
-                    u_len = len(stems_s | prev_stems)
-                    if u_len > 0 and (len(stems_s & prev_stems) / float(u_len)) >= 0.50:
-                        is_dup = True
-                        break
-            if not is_dup and stems_xT:
-                u_len_T = len(stems_s | stems_xT)
-                if u_len_T > 0 and (len(stems_s & stems_xT) / float(u_len_T)) >= 0.50:
+        if not is_boundary:
+            s_core = s.rstrip("。！？!?")
+            for prev_s in clean_steps:
+                if s == prev_s or s_core == prev_s.rstrip("。！？!?"):
                     is_dup = True
+                    break
+                if not stems_s and _compute_5gram_overlap(s, prev_s) >= 0.50:
+                    is_dup = True
+                    break
+            if not is_dup and norm_xT and (s == norm_xT or s_core == norm_xT.rstrip("。！？!?")):
+                is_dup = True
+            if not is_dup and stems_s:
+                for prev_stems in seen_stems:
+                    if prev_stems:
+                        u_len = len(stems_s | prev_stems)
+                        if u_len > 0 and (len(stems_s & prev_stems) / float(u_len)) >= 0.50:
+                            is_dup = True
+                            break
+                if not is_dup and stems_xT:
+                    u_len_T = len(stems_s | stems_xT)
+                    if u_len_T > 0 and (len(stems_s & stems_xT) / float(u_len_T)) >= 0.50:
+                        is_dup = True
         if not is_dup:
             clean_steps.append(s)
             seen_stems.append(stems_s)
 
     if not clean_steps and steps:
-        return [steps[-1].strip() if (x_T and steps[-1].strip() == x_T.strip()) else steps[0].strip()]
+        return [steps[-1].strip() if (norm_xT and steps[-1].strip() == norm_xT) else steps[0].strip()]
     return clean_steps
 
 
@@ -789,7 +826,7 @@ def solve_bidirectional_collision_bridge(
         s_infilled_aug = s_infilled + 0.5 * curv_infilled
 
         d_causal_direct = best_components[1]
-        if s_infilled_aug < s_direct_aug or d_causal_direct > 0.65:
+        if s_infilled_aug < s_direct_aug or d_causal_direct > 0.65 or len(existing_steps) < 4:
             accepted_infill = "".join(clean_infill_sents)
             welded_trajectory = sanitize_wave_steps(infilled_steps, x_0=anchors.x_0, x_T=anchors.x_T)
         else:

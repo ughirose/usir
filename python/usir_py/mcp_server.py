@@ -155,9 +155,9 @@ def tool_audit_v4_manifold(args: Dict[str, Any]) -> Dict[str, Any]:
     x_T = args.get("x_T")
 
     extracted = extract_usir_24d(text)
-    qda_res = compute_three_phase_qda_distance(text)
+    qda_res = compute_three_phase_qda_distance(text, domain=domain)
     geodesic_res = compute_semantic_geodesic_curvature(text)
-    grpo_res = compute_multiplicative_grpo_reward(text, x_0=x_0, x_T=x_T)
+    grpo_res = compute_multiplicative_grpo_reward(text, x_0=x_0, x_T=x_T, domain=domain)
 
     return {
         "domain": domain,
@@ -260,7 +260,7 @@ def tool_verify_cot_collision(args: Dict[str, Any]) -> Dict[str, Any]:
         lines = [s.strip() for s in reasoning_text.split("。") if len(s.strip()) >= 5]
 
     geodesic_res = compute_semantic_geodesic_curvature(lines)
-    qda_res = compute_three_phase_qda_distance(reasoning_text)
+    qda_res = compute_three_phase_qda_distance(reasoning_text, domain="cot_reasoning")
 
     # Check forward alignment from problem_statement
     fwd_score = 1.0

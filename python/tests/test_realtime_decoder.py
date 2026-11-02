@@ -208,8 +208,20 @@ def test_pytorch_logits_processor_cjk_and_backtick_masking():
     assert out[0, 21] <= -95.0
 
 
+@pytest.mark.skipif(not TORCH_AVAILABLE, reason="PyTorch not available")
+def test_pytorch_logits_processor_topk_exceeds_vocab_size():
+    """Verify USIRPyTorchLogitsProcessor safely clamps top_k when top_k > vocab_size."""
+    processor = USIRPyTorchLogitsProcessor(top_k=128, refractory_min=2)
+    scores = torch.randn(2, 16)  # vocab_size = 16 < top_k = 128
+    input_ids = torch.tensor([[1, 2, 3], [4, 5, 6]])
+    out = processor(input_ids, scores.clone())
+    assert out.shape == (2, 16)
+    assert torch.isfinite(out).all()
+
+
 # ==============================================================================
 # 3. Experiment Runner & Auto-Detection Tests
+
 # ==============================================================================
 
 def test_detect_execution_tier():

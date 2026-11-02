@@ -417,3 +417,18 @@ def test_sanitize_wave_steps_and_kanji_stem_jaccard():
     assert pen_paraphrase >= 6.0
 
 
+def test_sanitize_wave_steps_non_kanji_and_zero_kana_cjk():
+    """Verify sanitize_wave_steps deduplicates non-kanji sentences and strips zero-kana Chinese sentences."""
+    x0 = "あかりがしずかにゆれていた。"
+    xT = "そしてすべてがしずまりかえった。"
+    raw_steps = [
+        x0,
+        "そよかぜがまどをかすかにゆらしていく。",
+        "そよかぜがまどをかすかにゆらしていく。",  # Non-kanji verbatim duplicate
+        "假设在希尔伯特空间 (H) 中，(M) 是一个闭部分空间。",  # Simplified Chinese leak
+        "晨光漸漸穿透，濡濕石板映射黎明前寂寥。",  # Zero-kana Traditional Chinese leak
+        x0,  # Intermediate copy of x0 must not bypass deduplication as boundary
+        xT,
+    ]
+    cleaned = sanitize_wave_steps(raw_steps, x_0=x0, x_T=xT)
+    assert cleaned == [x0, "そよかぜがまどをかすかにゆらしていく。", xT]

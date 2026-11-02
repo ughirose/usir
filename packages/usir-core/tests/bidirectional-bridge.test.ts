@@ -293,5 +293,20 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
     ]);
     expect(penParaphrase).toBeGreaterThanOrEqual(6.0);
   });
-});
 
+  it('deduplicates non-kanji sentences and strips zero-kana Chinese sentences in sanitizeWaveSteps', () => {
+    const x0 = 'あかりがしずかにゆれていた。';
+    const xT = 'そしてすべてがしずまりかえった。';
+    const rawSteps = [
+      x0,
+      'そよかぜがまどをかすかにゆらしていく。',
+      'そよかぜがまどをかすかにゆらしていく。',
+      '假设在希尔伯特空间 (H) 中，(M) 是一个闭部分空间。',
+      '晨光漸漸穿透，濡濕石板映射黎明前寂寥。',
+      x0,
+      xT,
+    ];
+    const cleaned = sanitizeWaveSteps(rawSteps, x0, xT);
+    expect(cleaned).toEqual([x0, 'そよかぜがまどをかすかにゆらしていく。', xT]);
+  });
+});

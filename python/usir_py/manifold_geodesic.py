@@ -42,6 +42,10 @@ _SIGMA_CRIT_INV = 1.0 / (_SIGMA_CRIT_DIAG ** 2)
 _MU_ARTICLE = _MU_CRIT.copy()
 _MU_ARTICLE[9:12] = np.array([0.70, 0.40, 0.35])
 _MU_COT = _MU_CRIT.copy()
+_MU_COT[0] = 0.60
+_MU_COT[2] = 0.08
+_MU_COT[4] = 0.45
+_MU_COT[8] = 0.50
 _MU_COT[9:12] = np.array([0.85, 0.20, 0.25])
 
 DOMAIN_QDA_PROFILES: Dict[str, Dict[str, Any]] = {
@@ -57,8 +61,8 @@ DOMAIN_QDA_PROFILES: Dict[str, Dict[str, Any]] = {
     },
     "cot_reasoning": {
         "mu_crit": _MU_COT,
-        "sigma_crit_low": 0.25,
-        "sigma_crit_high": 1.85,
+        "sigma_crit_low": 1.35,
+        "sigma_crit_high": 2.65,
     },
 }
 

@@ -39,8 +39,14 @@ except ImportError:
 # Canonical Japanese and punctuation characters for refractory period gating
 PUNCTUATION_CHARS: Set[str] = {"、", "。", "！", "？", "!", "?", ",", ".", "…", "—", "」", "』"}
 
-# Chinese simplified function words and markdown backquote tokens to suppress at logits level
-BANNED_CJK_AND_META_CHARS: Set[str] = {"是", "恒", "且", "若", "则", "与", "为", "这", "个", "们", "`", "```"}
+# Chinese simplified/traditional function words, non-Japanese CJK variants, and markdown backquote tokens to suppress at logits level
+BANNED_CJK_AND_META_CHARS: Set[str] = {
+    "是", "恒", "且", "若", "则", "与", "为", "这", "个", "们",
+    "设", "闭", "紧", "测", "军", "团", "态", "识", "证", "义",
+    "单", "达", "处", "满", "据", "须", "尔", "希", "并", "濕",
+    "訴", "說", "著", "，", "`", "```",
+    "假设", "是一个", "根据", "必须", "满足", "其中", "处于", "无法", "达成", "晨光",
+}
 
 
 
@@ -248,8 +254,11 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
         for bad_tok in BANNED_CJK_AND_META_CHARS:
             try:
                 ids = tokenizer.encode(bad_tok, add_special_tokens=False)
-                for tid in ids:
-                    self.banned_cjk_token_ids.add(tid)
+                if len(bad_tok) == 1 or bad_tok == "```":
+                    for tid in ids:
+                        self.banned_cjk_token_ids.add(tid)
+                elif len(ids) == 1:
+                    self.banned_cjk_token_ids.add(ids[0])
             except Exception:
                 pass
         self._punct_tensor = None

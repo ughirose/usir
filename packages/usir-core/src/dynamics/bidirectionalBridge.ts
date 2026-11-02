@@ -310,8 +310,14 @@ export function deriveEndogenousGoalHypotheses(
       }
     }
 
-    // (b) CoT domain math/logic bonus and meta-explanation poem penalty
+    // (b) CoT domain math/logic bonus, meta-poem penalty, and CJK/unbalanced-formula penalty
     let domainPenalty = 0.0;
+    if (hasMetaOrCjkLeak(c)) {
+      domainPenalty += 10.0;
+    }
+    if ((c.match(/\$/g) || []).length % 2 !== 0) {
+      domainPenalty += 8.0;
+    }
     if (domain === 'cot_reasoning') {
       let mathHits = 0;
       for (const m of cotMathMarkers) {
@@ -443,6 +449,24 @@ export const CJK_ARTIFACT_PATTERNS: readonly string[] = [
   '为',
   '这个',
   '们',
+  '是一个',
+  '假设',
+  '存在一个',
+  '根据',
+  '必须',
+  '满足',
+  '其中',
+  '处于',
+  '无法',
+  '达成',
+  '漸漸',
+  '穿透',
+  '濡濕',
+  '映射',
+  '訴說',
+  '濕滑',
+  '晨光',
+  '`$$',
 ];
 
 function extractKanjiStems(text: string): Set<string> {
@@ -474,6 +498,10 @@ function hasMetaOrCjkLeak(text: string): boolean {
   for (const p of CJK_ARTIFACT_PATTERNS) {
     if (text.includes(p)) return true;
   }
+  const kanjiCount = (text.match(/[\u4e00-\u9fff]/g) || []).length;
+  if (kanjiCount >= 5 && !/[\u3040-\u30ff]/.test(text)) {
+    return true;
+  }
   return false;
 }
 
@@ -484,13 +512,15 @@ export function sanitizeWaveSteps(
 ): string[] {
   const cleanSteps: string[] = [];
   const seenStems: Set<string>[] = [];
-  const stemsXT = x_T ? extractKanjiStems(x_T.trim()) : new Set<string>();
+  const normXT = x_T ? x_T.trim() : undefined;
+  const stemsXT = normXT ? extractKanjiStems(normXT) : new Set<string>();
+  const nSteps = steps.length;
 
-  for (const step of steps) {
-    const s = step.trim();
+  for (let idx = 0; idx < nSteps; idx++) {
+    const s = steps[idx]!.trim();
     if (!s) continue;
-    const isX0 = x_0 !== undefined && s === x_0.trim();
-    const isXT = x_T !== undefined && s === x_T.trim();
+    const isX0 = idx === 0 && x_0 !== undefined && s === x_0.trim();
+    const isXT = idx === nSteps - 1 && normXT !== undefined && s === normXT;
     const isBoundary = isX0 || isXT;
     if (!isBoundary && hasMetaOrCjkLeak(s)) {
       continue;
@@ -498,28 +528,44 @@ export function sanitizeWaveSteps(
 
     const stemsS = extractKanjiStems(s);
     let isDup = false;
-    if (!isBoundary && stemsS.size > 0) {
-      for (const prevStems of seenStems) {
-        if (prevStems.size > 0) {
-          let inter = 0;
-          for (const st of stemsS) {
-            if (prevStems.has(st)) inter++;
-          }
-          const uLen = new Set([...stemsS, ...prevStems]).size;
-          if (uLen > 0 && inter / uLen >= 0.50) {
-            isDup = true;
-            break;
-          }
+    if (!isBoundary) {
+      const sCore = s.replace(/[。！？!?]+$/, '');
+      for (const prevS of cleanSteps) {
+        if (s === prevS || sCore === prevS.replace(/[。！？!?]+$/, '')) {
+          isDup = true;
+          break;
+        }
+        if (stemsS.size === 0 && compute5GramOverlap(s, prevS) >= 0.50) {
+          isDup = true;
+          break;
         }
       }
-      if (!isDup && stemsXT.size > 0) {
-        let interT = 0;
-        for (const st of stemsS) {
-          if (stemsXT.has(st)) interT++;
+      if (!isDup && normXT && (s === normXT || sCore === normXT.replace(/[。！？!?]+$/, ''))) {
+        isDup = true;
+      }
+      if (!isDup && stemsS.size > 0) {
+        for (const prevStems of seenStems) {
+          if (prevStems.size > 0) {
+            let inter = 0;
+            for (const st of stemsS) {
+              if (prevStems.has(st)) inter++;
+            }
+            const uLen = new Set([...stemsS, ...prevStems]).size;
+            if (uLen > 0 && inter / uLen >= 0.50) {
+              isDup = true;
+              break;
+            }
+          }
         }
-        const uLenT = new Set([...stemsS, ...stemsXT]).size;
-        if (uLenT > 0 && interT / uLenT >= 0.50) {
-          isDup = true;
+        if (!isDup && stemsXT.size > 0) {
+          let interT = 0;
+          for (const st of stemsS) {
+            if (stemsXT.has(st)) interT++;
+          }
+          const uLenT = new Set([...stemsS, ...stemsXT]).size;
+          if (uLenT > 0 && interT / uLenT >= 0.50) {
+            isDup = true;
+          }
         }
       }
     }
@@ -531,7 +577,7 @@ export function sanitizeWaveSteps(
 
   if (cleanSteps.length === 0 && steps.length > 0) {
     const last = steps[steps.length - 1]!.trim();
-    return [x_T !== undefined && last === x_T.trim() ? last : steps[0]!.trim()];
+    return [normXT !== undefined && last === normXT ? last : steps[0]!.trim()];
   }
   return cleanSteps;
 }
@@ -819,7 +865,7 @@ export function solveBidirectionalCollisionBridge(
     const sInfilledAug = sInfilled + 0.5 * curvInfilled;
 
     const dCausalDirect = bestComponents[1];
-    if (sInfilledAug < sDirectAug || dCausalDirect > 0.65) {
+    if (sInfilledAug < sDirectAug || dCausalDirect > 0.65 || existingSteps.length < 4) {
       acceptedInfill = cleanInfillSents.join('');
       weldedTrajectory = sanitizeWaveSteps(infilledSteps, anchors.x_0, anchors.x_T);
     } else {

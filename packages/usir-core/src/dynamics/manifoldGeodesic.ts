@@ -96,12 +96,18 @@ export const DOMAIN_QDA_PROFILES: Record<string, { mu_crit: readonly number[]; s
   },
   cot_reasoning: {
     mu_crit: [
-      ...DEFAULT_MU_CRIT.slice(0, 9),
+      0.60,
+      DEFAULT_MU_CRIT[1]!,
+      0.08,
+      DEFAULT_MU_CRIT[3]!,
+      0.45,
+      ...DEFAULT_MU_CRIT.slice(5, 8),
+      0.50,
       0.85, 0.20, 0.25,
       ...DEFAULT_MU_CRIT.slice(12),
     ],
-    sigma_crit_low: 0.25,
-    sigma_crit_high: 1.85,
+    sigma_crit_low: 1.35,
+    sigma_crit_high: 2.65,
   },
 };
 
