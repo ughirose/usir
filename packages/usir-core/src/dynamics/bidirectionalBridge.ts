@@ -1009,7 +1009,15 @@ export function solveBidirectionalCollisionBridge(
       const dLanding = Math.sqrt(distSqT);
 
       const pRep = computeTrajectoryRepetitionPenalty(candSteps);
-      const sFull = d3Phase + 0.8 * dWaypoint + 1.2 * dLanding + pRep;
+
+      // Paragraph scale underflow penalty (scale enforcement: 400+ chars)
+      const lCand = candText.length;
+      let pLen = 0.0;
+      if (lCand < 400) {
+        pLen = 4.0 * Math.pow(Math.max(0.0, (400.0 - lCand) / 100.0), 2);
+      }
+
+      const sFull = d3Phase + 0.8 * dWaypoint + 1.2 * dLanding + pRep + pLen;
 
       if (sFull < bestFullAction) {
         bestFullAction = sFull;

@@ -958,7 +958,13 @@ def solve_bidirectional_collision_bridge(
 
             p_rep = compute_trajectory_repetition_penalty(steps_Y)
 
-            s_full = float(d_3phase + 0.8 * d_waypoint + 1.2 * d_landing + p_rep)
+            # Paragraph scale underflow penalty (scale enforcement: 400+ chars)
+            L_cand = len(text_Y)
+            p_len = 0.0
+            if L_cand < 400:
+                p_len = 4.0 * max(0.0, (400.0 - float(L_cand)) / 100.0) ** 2
+
+            s_full = float(d_3phase + 0.8 * d_waypoint + 1.2 * d_landing + p_rep + p_len)
 
             if s_full < best_full_action:
                 best_full_action = s_full
