@@ -437,6 +437,20 @@ def run_experiment_on_domain(
     domain_cfg: Dict[str, str],
     tier_info: Dict[str, Any],
 ) -> Dict[str, Any]:
+    if TORCH_AVAILABLE and tier_info.get("tier") == "Tier_1_GPU_Transformers":
+        import torch
+        ctx = torch.inference_mode()
+    else:
+        import contextlib
+        ctx = contextlib.nullcontext()
+    with ctx:
+        return _run_experiment_on_domain_impl(domain_cfg, tier_info)
+
+
+def _run_experiment_on_domain_impl(
+    domain_cfg: Dict[str, str],
+    tier_info: Dict[str, Any],
+) -> Dict[str, Any]:
     domain = domain_cfg["domain"]
     theme = domain_cfg["theme"]
 
@@ -768,6 +782,7 @@ def run_experiment_on_domain(
         }
 
     return {
+        "id": domain_cfg["id"],
         "domain": domain,
         "theme": theme,
         "title": domain_cfg["title"],
@@ -1065,12 +1080,32 @@ def main() -> None:
         print(f"Benchmark Suite  : {len(suite)} instances (Scale: 400-800 chars / 5-8 sentences)")
         print("=" * 80)
 
+    checkpoint_path = Path(args.out).with_suffix(".checkpoint.json")
+    tmp_checkpoint = Path("/tmp/v4_checkpoint.json")
     results: List[Dict[str, Any]] = []
+
+    for p in [checkpoint_path, tmp_checkpoint]:
+        if p.exists() and not results:
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    chk_data = json.load(f)
+                    results = chk_data.get("results", [])
+                    if not args.quiet and results:
+                        print(f"Resumed {len(results)} completed instances from {p}")
+            except Exception:
+                pass
+
+    completed_ids = {r.get("id") or r.get("title") for r in results}
     for idx, domain_cfg in enumerate(suite):
+        if domain_cfg["id"] in completed_ids:
+            if not args.quiet:
+                print(f"[{idx + 1:02d}/{len(suite)}] Skipping {domain_cfg['id']} (already completed in checkpoint)")
+            continue
         if not args.quiet:
             print(f"[{idx + 1:02d}/{len(suite)}] Running {domain_cfg['id']} ({domain_cfg['domain']}): {domain_cfg['title']}")
         res = run_experiment_on_domain(domain_cfg, tier_info)
         results.append(res)
+        completed_ids.add(domain_cfg["id"])
         if not args.quiet:
             v_grpo = res["methods"]["vanilla_unidirectional"]["r_grpo"]
             v_q = res["methods"]["vanilla_unidirectional"]["judge_evaluation"]["normalized_quality"]
@@ -1081,6 +1116,15 @@ def main() -> None:
             print(f"    Vanilla -> R_GRPO: {v_grpo:.4f} | Judge Quality: {v_q:.1f}/100")
             print(f"    v3.0    -> R_GRPO: {v3_grpo:.4f} | Judge Quality: {v3_q:.1f}/100")
             print(f"    v4.0 Bi -> R_GRPO: {v4_grpo:.4f} | Judge Quality: {v4_q:.1f}/100 (Action: {res['collision_stats']['min_action']:.3f})")
+
+        chk_payload = {"results": results}
+        for chk_p in [checkpoint_path, tmp_checkpoint]:
+            try:
+                chk_p.parent.mkdir(parents=True, exist_ok=True)
+                with open(chk_p, "w", encoding="utf-8") as f:
+                    json.dump(chk_payload, f, ensure_ascii=False)
+            except Exception:
+                pass
 
     # Compute Spearman rank correlations
     correlations = compute_physical_quality_correlations(results)

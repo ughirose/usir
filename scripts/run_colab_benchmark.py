@@ -48,10 +48,26 @@ import tarfile
 import base64
 
 print("=== 1. PREPARING REPOSITORY ===", flush=True)
+chk_tmp = "/tmp/v4_checkpoint.json"
+chk_dest = "usir/artifacts/v4_bidirectional_experiment_results.json.checkpoint.json"
+saved_chk = None
+if os.path.exists(chk_dest):
+    with open(chk_dest, "rb") as f:
+        saved_chk = f.read()
+elif os.path.exists(chk_tmp):
+    with open(chk_tmp, "rb") as f:
+        saved_chk = f.read()
+
 if os.path.exists("usir"):
     subprocess.run(["rm", "-rf", "usir"], check=True)
 
 subprocess.run(["git", "clone", "https://github.com/ughirose/usir.git"], check=True)
+
+if saved_chk:
+    os.makedirs(os.path.dirname(chk_dest), exist_ok=True)
+    with open(chk_dest, "wb") as f:
+        f.write(saved_chk)
+    print(f"Preserved checkpoint restored ({len(saved_chk)} bytes)", flush=True)
 
 res_rev = subprocess.run(["git", "-C", "usir", "rev-parse", "HEAD"], check=True, capture_output=True, text=True)
 head_commit = res_rev.stdout.strip()
@@ -166,10 +182,37 @@ def execute_with_live_streaming(
         except websocket.WebSocketTimeoutException:
             continue
         except websocket.WebSocketConnectionClosedException as e:
+            sys.stderr.write(f"\n[colab-exec] Connection closed: {e}. Attempting reconnect...\n")
+            sys.stderr.flush()
+            reconnect_success = False
+            for retry in range(1, 16):
+                time.sleep(3)
+                try:
+                    ws = websocket.create_connection(
+                        ws_url,
+                        header=[
+                            f"X-Colab-Runtime-Proxy-Token: {proxy_token}",
+                            "X-Colab-Client-Agent: vscode",
+                        ],
+                        timeout=timeout,
+                        ping_interval=20,
+                        ping_timeout=10,
+                    )
+                    sys.stderr.write(f"[colab-exec] Reconnected to kernel (attempt {retry})\n")
+                    sys.stderr.flush()
+                    reconnect_success = True
+                    break
+                except Exception as rec_err:
+                    sys.stderr.write(f"[colab-exec] Reconnect attempt {retry} failed: {rec_err}\n")
+                    sys.stderr.flush()
+            if reconnect_success:
+                continue
             stderr_buf.write(f"\n[colab-exec] Connection lost: {e}\n")
             had_error = True
             break
         except Exception as e:
+            sys.stderr.write(f"\n[colab-exec] Unexpected WebSocket error: {e}\n")
+            sys.stderr.flush()
             stderr_buf.write(f"\n[colab-exec] Unexpected WebSocket error: {e}\n")
             had_error = True
             break
@@ -319,6 +362,8 @@ def main() -> int:
 
         if exit_code != 0:
             print(f"ERROR: Execution failed with exit code {exit_code}")
+            if stderr:
+                print(f"STDERR:\n{stderr}")
             return 1
 
         # Extract base64 artifacts
