@@ -464,6 +464,24 @@ export const CJK_ARTIFACT_PATTERNS: readonly string[] = [
   '訴說',
   '濕滑',
   '`$$',
+  '首先',
+  '注意到',
+  '基于',
+  '由于',
+  '从而',
+  '可得',
+  '因此可以',
+  '使得',
+  '至此',
+  '可以写作',
+  '假定',
+  '初照下',
+  '断定',
+  '不动点',
+  '由前期提',
+  '代表素数',
+  '序列中',
+  '我们',
 ];
 
 // Targeted Chinese grammatical syntax patterns (avoids false positives on standard Japanese like 若者, 若い, 寄与, 与える)
@@ -477,6 +495,16 @@ export const CHINESE_GRAMMAR_REGEXES: readonly RegExp[] = [
   /(?:^|[、,。．！？\s\n])\s*令\s*[\$a-zA-Z\\]/,
   /在\s*(?:[^\s。、]|\s*\$[^\$]+\$\s*){2,25}上/,
   /第[一二三四五六七八九十百]+[步歩]/,
+  /首先[、，\s]/,
+  /从而[、，\s]/,
+  /由于[、，\s]/,
+  /基于[、，\s]/,
+  /由此[、，\s]/,
+  /假定[、，\s\$]/,
+  /注意到[、，\s]/,
+  /在\s*B\(H\)/,
+  /[，、]从而/,
+  /[，、]由于/,
 ];
 
 function extractKanjiStems(text: string): Set<string> {
@@ -1010,14 +1038,17 @@ export function solveBidirectionalCollisionBridge(
 
       const pRep = computeTrajectoryRepetitionPenalty(candSteps);
 
-      // Paragraph scale underflow penalty (scale enforcement: 400+ chars)
+      // Paragraph scale barrier penalty (two-sided enforcement: 400-650 chars)
       const lCand = candText.length;
       let pLen = 0.0;
       if (lCand < 400) {
-        pLen = 4.0 * Math.pow(Math.max(0.0, (400.0 - lCand) / 100.0), 2);
+        pLen = 8.0 * Math.pow(Math.max(0.0, (400.0 - lCand) / 100.0), 2);
+      } else if (lCand > 650) {
+        pLen = 8.0 * Math.pow(Math.max(0.0, (lCand - 650.0) / 100.0), 2);
       }
 
-      const sFull = d3Phase + 0.8 * dWaypoint + 1.2 * dLanding + pRep + pLen;
+      const pLeak = hasMetaOrCjkLeak(candText) ? 50.0 : 0.0;
+      const sFull = d3Phase + 0.8 * dWaypoint + 1.2 * dLanding + pRep + pLen + pLeak;
 
       if (sFull < bestFullAction) {
         bestFullAction = sFull;

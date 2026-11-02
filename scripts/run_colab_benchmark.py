@@ -48,26 +48,17 @@ import tarfile
 import base64
 
 print("=== 1. PREPARING REPOSITORY ===", flush=True)
-chk_tmp = "/tmp/v4_checkpoint.json"
-chk_dest = "usir/artifacts/v4_bidirectional_experiment_results.json.checkpoint.json"
-saved_chk = None
-if os.path.exists(chk_dest):
-    with open(chk_dest, "rb") as f:
-        saved_chk = f.read()
-elif os.path.exists(chk_tmp):
-    with open(chk_tmp, "rb") as f:
-        saved_chk = f.read()
+if os.path.exists("/tmp/v4_checkpoint.json"):
+    try:
+        os.remove("/tmp/v4_checkpoint.json")
+        print("Removed stale /tmp/v4_checkpoint.json", flush=True)
+    except Exception:
+        pass
 
 if os.path.exists("usir"):
     subprocess.run(["rm", "-rf", "usir"], check=True)
 
 subprocess.run(["git", "clone", "https://github.com/ughirose/usir.git"], check=True)
-
-if saved_chk:
-    os.makedirs(os.path.dirname(chk_dest), exist_ok=True)
-    with open(chk_dest, "wb") as f:
-        f.write(saved_chk)
-    print(f"Preserved checkpoint restored ({len(saved_chk)} bytes)", flush=True)
 
 res_rev = subprocess.run(["git", "-C", "usir", "rev-parse", "HEAD"], check=True, capture_output=True, text=True)
 head_commit = res_rev.stdout.strip()

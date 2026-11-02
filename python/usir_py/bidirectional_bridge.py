@@ -473,6 +473,24 @@ CJK_ARTIFACT_PATTERNS: List[str] = [
     "訴說",
     "濕滑",
     "`$$",
+    "首先",
+    "注意到",
+    "基于",
+    "由于",
+    "从而",
+    "可得",
+    "因此可以",
+    "使得",
+    "至此",
+    "可以写作",
+    "假定",
+    "初照下",
+    "断定",
+    "不动点",
+    "由前期提",
+    "代表素数",
+    "序列中",
+    "我们",
 ]
 
 # Targeted Chinese grammatical syntax patterns (avoids false positives on standard Japanese like 若者, 若い, 寄与, 与える)
@@ -486,6 +504,16 @@ CHINESE_GRAMMAR_REGEXES: List[str] = [
     r'(?:^|[、,。．！？\s\n])\s*令\s*[\$a-zA-Z\\]',
     r'在\s*(?:[^\s。、]|\s*\$[^\$]+\$\s*){2,25}上',
     r'第[一二三四五六七八九十百]+[步歩]',
+    r'首先[、，\s]',
+    r'从而[、，\s]',
+    r'由于[、，\s]',
+    r'基于[、，\s]',
+    r'由此[、，\s]',
+    r'假定[、，\s\$]',
+    r'注意到[、，\s]',
+    r'在\s*B\(H\)',
+    r'[，、]从而',
+    r'[，、]由于',
 ]
 
 
@@ -958,13 +986,17 @@ def solve_bidirectional_collision_bridge(
 
             p_rep = compute_trajectory_repetition_penalty(steps_Y)
 
-            # Paragraph scale underflow penalty (scale enforcement: 400+ chars)
+            # Paragraph scale barrier penalty (two-sided enforcement: 400-650 chars)
             L_cand = len(text_Y)
             p_len = 0.0
             if L_cand < 400:
-                p_len = 4.0 * max(0.0, (400.0 - float(L_cand)) / 100.0) ** 2
+                p_len = 8.0 * max(0.0, (400.0 - float(L_cand)) / 100.0) ** 2
+            elif L_cand > 650:
+                p_len = 8.0 * max(0.0, (float(L_cand) - 650.0) / 100.0) ** 2
 
-            s_full = float(d_3phase + 0.8 * d_waypoint + 1.2 * d_landing + p_rep + p_len)
+            p_leak = 50.0 if _has_meta_or_cjk_leak(text_Y) else 0.0
+
+            s_full = float(d_3phase + 0.8 * d_waypoint + 1.2 * d_landing + p_rep + p_len + p_leak)
 
             if s_full < best_full_action:
                 best_full_action = s_full

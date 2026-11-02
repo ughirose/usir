@@ -510,7 +510,7 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
     const anchors = pinBoundaryAnchors('雨夜の湯治場と老陶工', 'novel');
     const mockGen = (): string[] => ['', '   ', '\n\n'];
 
-    expect(() => {
+      expect(() => {
       solveBidirectionalCollisionBridge(anchors, {
         forward_candidates: TEST_FWD_NOVEL,
         backward_candidates: TEST_BWD_NOVEL,
@@ -518,5 +518,69 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
         k_candidates: 2,
       });
     }).toThrow('empty or degenerate');
+  });
+
+  it('penalizes and bypasses continuous rollout candidates with Chinese CJK/grammar leaks', () => {
+    const anchors = pinBoundaryAnchors('雨夜の湯治場と老陶工', 'novel');
+
+    const candLeak =
+      anchors.x_0 +
+      ' ' +
+      'まず作業場を確認する。首先注意到，在任一空间中存在一个封闭的子空间。轩先からの雨垂れが静かに響く。' +
+      '冷たい風が夜の闇を深めていった。'.repeat(12) +
+      anchors.x_T;
+
+    const candClean =
+      anchors.x_0 +
+      ' ' +
+      '軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。' +
+      '作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。' +
+      '削り屑が濡れた板張りの床へと静かに積もり、窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。' +
+      '手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のないまま沈黙の時間がゆっくりと沈殿していった。' +
+      '火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。' +
+      anchors.x_T;
+
+    const mockGen = (): string[] => [candLeak, candClean];
+
+    const res = solveBidirectionalCollisionBridge(anchors, {
+      forward_candidates: TEST_FWD_NOVEL,
+      backward_candidates: TEST_BWD_NOVEL,
+      continuous_rollout_generator: mockGen,
+      k_candidates: 2,
+    });
+    expect(res.welded_text).toBe(candClean);
+  });
+
+  it('penalizes both underflow (<400) and overflow (>650) to enforce 400-650 scale', () => {
+    const anchors = pinBoundaryAnchors('雨夜の湯治場と老陶工', 'novel');
+
+    const candUnderflow = anchors.x_0 + ' 短い展開です。' + anchors.x_T;
+    expect(candUnderflow.length).toBeLessThan(400);
+
+    const candOverflow = anchors.x_0 + ' ' + '雪の降る夜の長い長い静寂が村全体を深く深く包み込んでいた。'.repeat(20) + anchors.x_T;
+    expect(candOverflow.length).toBeGreaterThan(650);
+
+    const candPerfect =
+      anchors.x_0 +
+      ' ' +
+      '軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。' +
+      '作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。' +
+      '削り屑が濡れた板張りの床へと静かに積もり、窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。' +
+      '手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のないまま沈黙の時間がゆっくりと沈殿していった。' +
+      'やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。' +
+      '火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。' +
+      anchors.x_T;
+    expect(candPerfect.length).toBeGreaterThanOrEqual(400);
+    expect(candPerfect.length).toBeLessThanOrEqual(650);
+
+    const mockGen = (): string[] => [candUnderflow, candOverflow, candPerfect];
+
+    const res = solveBidirectionalCollisionBridge(anchors, {
+      forward_candidates: TEST_FWD_NOVEL,
+      backward_candidates: TEST_BWD_NOVEL,
+      continuous_rollout_generator: mockGen,
+      k_candidates: 2,
+    });
+    expect(res.welded_text).toBe(candPerfect);
   });
 });

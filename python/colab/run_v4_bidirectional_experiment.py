@@ -465,6 +465,7 @@ TIER3_CI_FIXTURES: Dict[str, Dict[str, Any]] = {
             "情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。"
             "非同期化は単なるツール変更ではない。"
             "それは組織の知的代謝プロセスの根本的な再設計を意味している。"
+            "組織の自律的な学習能力が維持され、持続的な成長基盤が確立される。"
             "このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。"
             "したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。"
         ),
@@ -756,34 +757,48 @@ def _run_experiment_on_domain_impl(
             """Generates K=3 continuous, single-pass paragraph rollouts connecting x_0 -> x_mid -> x_T."""
             if domain == "cot_reasoning":
                 sys_roll = (
-                    "あなたは厳密な定理証明を論理的に展開する数理科学者です。"
-                    "『冒頭文』『展開文』『結びの一文』といったメタ解説や見出しを排し、"
-                    "開始の前提から中間核の論理導出を経て最終証明結論に至る、"
-                    "一気通貫の完全な長編段落（6〜8文、450〜650字、数式記号を含む地の文のみ）を執筆してください。"
-                    "中国語簡体字やバッククォートは絶対に使用しないでください。"
+                    "あなたは厳密な定理証明を論理的に展開する日本人の理論数学者です。"
+                    "必ず自然で流暢な現代日本語（「である」「が成り立つ」「が存在する」「により導かれる」）の地の文のみで記述してください。"
+                    "中国語の語彙や表現（首先、注意到、令、由于、从而、基于、可得、我们、满足、假定、由此等）や簡体字、および見出し・バッククォートは絶対に使用しないでください。"
+                    "開始の前提から中間転換核の論理導出を経て最終証明結論に至る、一気通貫の完全な段落（420〜560字、数式記号を含む日本語地の文のみ）を執筆してください。"
                 )
                 usr_roll = (
                     f"証明テーマ：「{theme}」\n"
                     f"開始前提：「{x_0_in}」\n"
                     f"中間転換核：「{x_mid_in}」\n"
                     f"最終証明目標：「{x_T_in}」\n"
-                    "開始前提から出発し、論理導出ステップを詳細に積み重ねながら中間転換核を中盤で自然に通過し、"
-                    "最終証明目標へ厳密に着地する一気通貫の完全な証明段落（6〜8文、450〜650字、地の文のみ）を執筆してください。"
+                    "開始前提から出発し、論理導出ステップを日本語で詳細に積み重ねながら中間転換核を中盤で自然に通過し、"
+                    "最終証明目標へ厳密に着地する一気通貫の完全な日本語証明段落（420〜560字、地の文のみ、中国語表現厳禁）を執筆してください。"
                 )
-            else:
+            elif domain == "novel":
                 sys_roll = (
-                    "あなたは最高峰の日本語表現力を持つ文豪・第一級の論説家です。"
+                    "あなたは最高峰の日本語表現力を持つ文豪です。"
                     "『冒頭文』『展開文』『結びの一文』『この記事では』といったメタ単語や見出し、会話文を一切排し、"
                     "開始文の情景・提起から中間の展開核を経て結びの着地点に至る、"
-                    "一気通貫の完全な長編段落（6〜8文、450〜650字、地の文のみ）を執筆してください。"
+                    "一気通貫の完全な長編段落（6〜8文、450〜600字、地の文のみ）を執筆してください。"
                 )
                 usr_roll = (
                     f"テーマ：「{theme}」\n"
                     f"開始文：「{x_0_in}」\n"
                     f"中間展開核：「{x_mid_in}」\n"
                     f"結びの着地点：「{x_T_in}」\n"
-                    "開始文から始まり、情景や論理を豊かに肉付けしながら展開し、中間展開核の描写・考察を中盤で自然に織り込み、"
-                    "結びの着地点へと美しく収束する一気通貫の完全な段落（6〜8文、450〜650字、地の文のみ）を執筆してください。"
+                    "開始文から始まり、情景や感覚の推移を豊かに肉付けしながら展開し、中間展開核の描写・考察を中盤で自然に織り込み、"
+                    "結びの着地点へと美しく収束する一気通貫の完全な段落（6〜8文、450〜600字、地の文のみ）を執筆してください。"
+                )
+            else:
+                sys_roll = (
+                    "あなたは最高峰の日本語表現力を持つ第一級の論説家です。"
+                    "『冒頭文』『展開文』『結びの一文』『この記事では』といったメタ単語や見出し、会話文を一切排し、"
+                    "開始文の提起から中間の展開核を経て結びの着地点に至る、"
+                    "一気通貫の完全な論説段落（6〜8文、450〜600字、地の文のみ）を執筆してください。"
+                )
+                usr_roll = (
+                    f"テーマ：「{theme}」\n"
+                    f"開始文：「{x_0_in}」\n"
+                    f"中間展開核：「{x_mid_in}」\n"
+                    f"結びの着地点：「{x_T_in}」\n"
+                    "開始文から始まり、論理の根拠と多面的な考察を豊かに肉付けしながら展開し、中間展開核を中盤で自然に織り込み、"
+                    "結びの着地点へと明快に収束する一気通貫の完全な段落（6〜8文、450〜600字、地の文のみ）を執筆してください。"
                 )
 
             if hasattr(tok, "apply_chat_template") and tok.chat_template:
@@ -794,14 +809,21 @@ def _run_experiment_on_domain_impl(
             else:
                 roll_prompt = f"{x_0_in}\n{usr_roll}"
 
+            if domain == "novel":
+                min_tok, max_tok = 320, 460
+            elif domain == "cot_reasoning":
+                min_tok, max_tok = 220, 340
+            else:
+                min_tok, max_tok = 280, 440
+
             inp_roll = tok(roll_prompt, return_tensors="pt").to(model.device)
             inp_len_r = inp_roll["input_ids"].shape[-1]
             proc_v4.reset()
             out_roll = model.generate(
                 **inp_roll,
                 logits_processor=[proc_v4],
-                min_new_tokens=280,
-                max_new_tokens=460,
+                min_new_tokens=min_tok,
+                max_new_tokens=max_tok,
                 do_sample=True,
                 temperature=0.72,
                 num_return_sequences=3,
@@ -818,9 +840,12 @@ def _run_experiment_on_domain_impl(
                     full_cand = raw_text
                 if not full_cand.endswith(("。", "！", "？", "!", "?", "D.")):
                     last_punct = max(full_cand.rfind("。"), full_cand.rfind("！"), full_cand.rfind("？"))
-                    if last_punct > 350:
+                    if last_punct >= 390:
                         full_cand = full_cand[:last_punct + 1]
                 cands.append(full_cand)
+            clean_cands = [c for c in cands if not _has_meta_or_cjk_leak(c)]
+            if clean_cands:
+                return clean_cands
             return cands
 
         bridge_res_v4 = solve_bidirectional_collision_bridge(

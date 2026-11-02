@@ -681,3 +681,73 @@ def test_continuous_rollout_all_degenerate_raises():
             continuous_rollout_generator=mock_generator_all_empty,
             k_candidates=2,
         )
+
+
+def test_continuous_rollout_leaking_candidate_penalized_and_bypassed():
+    """Verify solve_bidirectional_collision_bridge penalizes and bypasses candidates with Chinese CJK/grammar leaks."""
+    anchors = pin_boundary_anchors(theme="雨夜の湯治場と老陶工", domain="novel")
+
+    cand_leak = (
+        anchors.x_0 + " "
+        + "まず作業場を確認する。首先注意到，在任一空间中存在一个封闭的子空间。轩先からの雨垂れが静かに響く。"
+        + ("冷たい風が夜の闇を深めていった。" * 12)
+        + anchors.x_T
+    )
+
+    cand_clean = (
+        anchors.x_0 + " "
+        + "軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。"
+        + "作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。"
+        + "削り屑が濡れた板張りの床へと静かに積もり、窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。"
+        + "手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のないまま沈黙の時間がゆっくりと沈殿していった。"
+        + "火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。"
+        + anchors.x_T
+    )
+
+    def mock_generator(x_0: str, x_mid: str, x_T: str) -> list[str]:
+        return [cand_leak, cand_clean]
+
+    res = solve_bidirectional_collision_bridge(
+        anchors,
+        forward_candidates=TEST_FWD_NOVEL,
+        backward_candidates=TEST_BWD_NOVEL,
+        continuous_rollout_generator=mock_generator,
+        k_candidates=2,
+    )
+    assert res.welded_text == cand_clean, "Clean candidate must be chosen over leaking candidate"
+
+
+def test_continuous_rollout_two_sided_scale_enforcement():
+    """Verify solve_bidirectional_collision_bridge penalizes both underflow (<400) and overflow (>650)."""
+    anchors = pin_boundary_anchors(theme="雨夜の湯治場と老陶工", domain="novel")
+
+    cand_underflow = anchors.x_0 + " " + "短い展開です。" + anchors.x_T
+    assert len(cand_underflow) < 400
+
+    cand_overflow = anchors.x_0 + " " + ("雪の降る夜の長い長い静寂が村全体を深く深く包み込んでいた。" * 20) + anchors.x_T
+    assert len(cand_overflow) > 650
+
+    cand_perfect = (
+        anchors.x_0 + " "
+        + "軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。"
+        + "作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。"
+        + "削り屑が濡れた板張りの床へと静かに積もり、窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。"
+        + "手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のないまま沈黙の時間がゆっくりと沈殿していった。"
+        + "やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。"
+        + "火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。"
+        + anchors.x_T
+    )
+    assert 400 <= len(cand_perfect) <= 650
+
+    def mock_generator(x_0: str, x_mid: str, x_T: str) -> list[str]:
+        return [cand_underflow, cand_overflow, cand_perfect]
+
+    res = solve_bidirectional_collision_bridge(
+        anchors,
+        forward_candidates=TEST_FWD_NOVEL,
+        backward_candidates=TEST_BWD_NOVEL,
+        continuous_rollout_generator=mock_generator,
+        k_candidates=2,
+    )
+    assert res.welded_text == cand_perfect, f"Target scale (400-650) must be chosen, got len={len(res.welded_text)}"
+
