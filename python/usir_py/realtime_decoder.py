@@ -236,6 +236,11 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
         self.batch_tokens_since_punctuation: Dict[int, int] = {}
         self.call_count: int = 0
 
+    def reset(self) -> None:
+        """Resets dynamic tracking state (call_count and batch token counters) for a new generation pass."""
+        self.call_count = 0
+        self.batch_tokens_since_punctuation.clear()
+
     def register_bridge_embeddings(self, model: Any, tokenizer: Any, x_0: str, x_T: str) -> None:
         """Computes and registers embedding-space bridge vector v_bridge = normalize(e_xT - e_x0)."""
         if not TORCH_AVAILABLE:

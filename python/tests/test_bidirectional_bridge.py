@@ -639,3 +639,45 @@ def test_continuous_rollout_3point_skeleton_selection():
     assert res.infilling_step is None
     assert len(res.welded_trajectory) >= 4
     assert res.m_bridge > 0.0
+
+
+def test_continuous_rollout_empty_candidate_resilience():
+    """Verify solve_bidirectional_collision_bridge skips empty/whitespace candidates and chooses best valid candidate."""
+    anchors = pin_boundary_anchors(theme="雨夜の湯治場と老陶工", domain="novel")
+
+    cand_valid = (
+        anchors.x_0 + " "
+        + "軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。"
+        + "作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。"
+        + "削り屑が濡れた板張りの床へと静かに積もり、窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。"
+        + anchors.x_T
+    )
+
+    def mock_generator_with_empty(x_0: str, x_mid: str, x_T: str) -> list[str]:
+        return ["", "   \n\t  ", cand_valid]
+
+    res = solve_bidirectional_collision_bridge(
+        anchors,
+        forward_candidates=TEST_FWD_NOVEL,
+        backward_candidates=TEST_BWD_NOVEL,
+        continuous_rollout_generator=mock_generator_with_empty,
+        k_candidates=2,
+    )
+    assert res.welded_text == cand_valid
+
+
+def test_continuous_rollout_all_degenerate_raises():
+    """Verify solve_bidirectional_collision_bridge raises ValueError when all candidates are empty or degenerate."""
+    anchors = pin_boundary_anchors(theme="雨夜の湯治場と老陶工", domain="novel")
+
+    def mock_generator_all_empty(x_0: str, x_mid: str, x_T: str) -> list[str]:
+        return ["", "   ", "\n\n"]
+
+    with pytest.raises(ValueError, match="empty or degenerate"):
+        solve_bidirectional_collision_bridge(
+            anchors,
+            forward_candidates=TEST_FWD_NOVEL,
+            backward_candidates=TEST_BWD_NOVEL,
+            continuous_rollout_generator=mock_generator_all_empty,
+            k_candidates=2,
+        )

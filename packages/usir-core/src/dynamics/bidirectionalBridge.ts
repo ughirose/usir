@@ -929,11 +929,16 @@ export function solveBidirectionalCollisionBridge(
 
   // 1. Intermediate Midpoint Pivot x_mid* extraction
   const qMid = anchors.q_start.map((v, idx) => 0.5 * (v + (anchors.q_end[idx] ?? 0)));
-  let candidatePivotSteps = [...optFwd.steps, ...optBwd.steps].filter(
-    (s) => s !== anchors.x_0 && s !== anchors.x_T
-  );
+  let candidatePivotSteps = [...optFwd.steps, ...optBwd.steps]
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0 && s !== anchors.x_0.trim() && s !== anchors.x_T.trim());
   if (candidatePivotSteps.length === 0) {
-    candidatePivotSteps = [...optFwd.steps, ...optBwd.steps];
+    candidatePivotSteps = [...optFwd.steps, ...optBwd.steps]
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+  }
+  if (candidatePivotSteps.length === 0) {
+    candidatePivotSteps = [anchors.x_0.trim()];
   }
   let midpointPivot: string | undefined = undefined;
   let bestPivotDist = Infinity;
@@ -971,7 +976,10 @@ export function solveBidirectionalCollisionBridge(
 
     for (const cand of candidates) {
       const candText = cand;
-      const candSteps = candText.match(/[^。！？\r\n]+[。！？]?/g)?.map((s) => s.trim()).filter((s) => s.length > 0) ?? [candText];
+      if (!candText.trim()) {
+        continue;
+      }
+      const candSteps = candText.match(/[^。！？\r\n]+[。！？]?/g)?.map((s) => s.trim()).filter((s) => s.length > 0) ?? [candText.trim()];
       const qda = computeThreePhaseQdaDistance(candText, { domain: anchors.domain });
       const d3Phase = qda.d_3phase;
 
@@ -991,7 +999,7 @@ export function solveBidirectionalCollisionBridge(
         dWaypoint = minWDist;
       }
 
-      const finalStep = candSteps[candSteps.length - 1] ?? candText;
+      const finalStep = candSteps[candSteps.length - 1] ?? candText.trim();
       const eFinal = embedSentenceUnit(finalStep);
       let distSqT = 0;
       for (let k = 0; k < eFinal.length; k++) {
@@ -1011,6 +1019,10 @@ export function solveBidirectionalCollisionBridge(
         bestDWaypoint = dWaypoint;
         bestDLanding = dLanding;
       }
+    }
+
+    if (bestFullAction === Infinity) {
+      throw new Error('All continuous rollout candidates returned by continuous_rollout_generator were empty or degenerate.');
     }
 
     const mBridge = Math.max(0.0, Math.min(1.0, Math.exp(-lambdaBridge * bestFullAction)));

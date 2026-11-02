@@ -902,9 +902,14 @@ def solve_bidirectional_collision_bridge(
 
     # 1. Intermediate Midpoint Pivot x_mid* extraction
     q_mid = 0.5 * (anchors.q_start + anchors.q_end)
-    candidate_pivot_steps = [s for s in opt_fwd.steps + opt_bwd.steps if s != anchors.x_0 and s != anchors.x_T]
+    candidate_pivot_steps = [
+        s.strip() for s in opt_fwd.steps + opt_bwd.steps
+        if s.strip() and s.strip() != anchors.x_0.strip() and s.strip() != anchors.x_T.strip()
+    ]
     if not candidate_pivot_steps:
-        candidate_pivot_steps = opt_fwd.steps + opt_bwd.steps
+        candidate_pivot_steps = [s.strip() for s in opt_fwd.steps + opt_bwd.steps if s.strip()]
+    if not candidate_pivot_steps:
+        candidate_pivot_steps = [anchors.x_0.strip()]
 
     midpoint_pivot: Optional[str] = None
     best_pivot_dist = float("inf")
@@ -934,9 +939,11 @@ def solve_bidirectional_collision_bridge(
 
         for cand in candidates:
             text_Y = cand if isinstance(cand, str) else "".join(cand)
+            if not text_Y.strip():
+                continue
             steps_Y = [s.strip() for s in re.findall(r'[^。！？\r\n]+[。！？]?', text_Y.strip()) if s.strip()]
             if not steps_Y:
-                steps_Y = [text_Y]
+                steps_Y = [text_Y.strip()]
 
             qda_res = compute_three_phase_qda_distance(text_Y, domain=anchors.domain)
             d_3phase = qda_res["d_3phase"]
@@ -960,6 +967,9 @@ def solve_bidirectional_collision_bridge(
                 best_d_3phase = d_3phase
                 best_d_waypoint = d_waypoint
                 best_d_landing = d_landing
+
+        if best_full_action == float("inf"):
+            raise ValueError("All continuous rollout candidates returned by continuous_rollout_generator were empty or degenerate.")
 
         m_bridge = float(np.clip(math.exp(-lambda_bridge * best_full_action), 0.0, 1.0))
 

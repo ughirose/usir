@@ -485,4 +485,38 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
     expect(res.welded_trajectory.length).toBeGreaterThanOrEqual(4);
     expect(res.m_bridge).toBeGreaterThan(0.0);
   });
+
+  it('skips empty or whitespace continuous rollout candidates and selects best valid candidate', () => {
+    const anchors = pinBoundaryAnchors('雨夜の湯治場と老陶工', 'novel');
+    const candValid =
+      anchors.x_0 +
+      ' ' +
+      '軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。' +
+      '作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。' +
+      anchors.x_T;
+
+    const mockGen = (): string[] => ['', '   \n  ', candValid];
+
+    const res = solveBidirectionalCollisionBridge(anchors, {
+      forward_candidates: TEST_FWD_NOVEL,
+      backward_candidates: TEST_BWD_NOVEL,
+      continuous_rollout_generator: mockGen,
+      k_candidates: 2,
+    });
+    expect(res.welded_text).toBe(candValid);
+  });
+
+  it('throws error when all continuous rollout candidates are empty or degenerate', () => {
+    const anchors = pinBoundaryAnchors('雨夜の湯治場と老陶工', 'novel');
+    const mockGen = (): string[] => ['', '   ', '\n\n'];
+
+    expect(() => {
+      solveBidirectionalCollisionBridge(anchors, {
+        forward_candidates: TEST_FWD_NOVEL,
+        backward_candidates: TEST_BWD_NOVEL,
+        continuous_rollout_generator: mockGen,
+        k_candidates: 2,
+      });
+    }).toThrow('empty or degenerate');
+  });
 });

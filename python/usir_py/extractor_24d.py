@@ -228,6 +228,23 @@ def extract_24d(text: str) -> np.ndarray:
 
 def extract_usir_24d(text: str) -> dict:
     """Extracts 24D symplectic state z=(q,p), order parameters, and diagnostics."""
+    trimmed = text.strip() if text else ""
+    if not trimmed:
+        q_zeros = np.zeros(12, dtype=float)
+        p_zeros = np.zeros(12, dtype=float)
+        return {
+            "q": q_zeros,
+            "p": p_zeros,
+            "z_24d": np.zeros(24, dtype=float),
+            "groups": {"I_Flux": 0.0, "II_Lattice": 0.0, "III_Void": 0.0, "IV_Shock": 0.0},
+            "order_params": {"psi_order": 0.0, "phi_void": 0.0, "kappa_kin": 0.0},
+            "len_cv": 0.0,
+            "abst_bloat": 0.0,
+            "concrete_dens": 0.0,
+            "abstract_b_mean": 0.0,
+            "sluggish_mean": 0.0,
+            "cadence_alive": 0.08,
+        }
     sents = split_sentences(text)
     if len(sents) < 3:
         sents = [text[i:i+30] for i in range(0, len(text), 30) if len(text[i:i+30]) >= 5]
