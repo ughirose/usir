@@ -484,11 +484,14 @@ export function sanitizeWaveSteps(
 ): string[] {
   const cleanSteps: string[] = [];
   const seenStems: Set<string>[] = [];
+  const stemsXT = x_T ? extractKanjiStems(x_T.trim()) : new Set<string>();
 
   for (const step of steps) {
     const s = step.trim();
     if (!s) continue;
-    const isBoundary = (x_0 !== undefined && s === x_0.trim()) || (x_T !== undefined && s === x_T.trim());
+    const isX0 = x_0 !== undefined && s === x_0.trim();
+    const isXT = x_T !== undefined && s === x_T.trim();
+    const isBoundary = isX0 || isXT;
     if (!isBoundary && hasMetaOrCjkLeak(s)) {
       continue;
     }
@@ -509,6 +512,16 @@ export function sanitizeWaveSteps(
           }
         }
       }
+      if (!isDup && stemsXT.size > 0) {
+        let interT = 0;
+        for (const st of stemsS) {
+          if (stemsXT.has(st)) interT++;
+        }
+        const uLenT = new Set([...stemsS, ...stemsXT]).size;
+        if (uLenT > 0 && interT / uLenT >= 0.50) {
+          isDup = true;
+        }
+      }
     }
     if (!isDup) {
       cleanSteps.push(s);
@@ -517,7 +530,8 @@ export function sanitizeWaveSteps(
   }
 
   if (cleanSteps.length === 0 && steps.length > 0) {
-    return [steps[0]!.trim()];
+    const last = steps[steps.length - 1]!.trim();
+    return [x_T !== undefined && last === x_T.trim() ? last : steps[0]!.trim()];
   }
   return cleanSteps;
 }

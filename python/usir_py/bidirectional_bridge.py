@@ -494,16 +494,20 @@ def sanitize_wave_steps(
     """Normalizes and sanitizes wave trajectory steps:
     1. Removes sentences containing prompt meta-leaks or Chinese CJK artifacts.
     2. Deduplicates subsequent sentences whose Kanji stem Jaccard similarity >= 0.50
-       with any earlier step in the wave (preserving boundary anchors x_0 and x_T).
+       with any earlier step in the wave or with boundary anchors x_0 / x_T
+       (while preserving boundary anchors x_0 and x_T themselves).
     """
     clean_steps: List[str] = []
     seen_stems: List[Set[str]] = []
+    stems_xT = _extract_kanji_stems(x_T.strip()) if x_T else set()
 
     for idx, step in enumerate(steps):
         s = step.strip()
         if not s:
             continue
-        is_boundary = (x_0 is not None and s == x_0.strip()) or (x_T is not None and s == x_T.strip())
+        is_x0 = x_0 is not None and s == x_0.strip()
+        is_xT = x_T is not None and s == x_T.strip()
+        is_boundary = is_x0 or is_xT
         if not is_boundary and _has_meta_or_cjk_leak(s):
             continue
 
@@ -516,12 +520,16 @@ def sanitize_wave_steps(
                     if u_len > 0 and (len(stems_s & prev_stems) / float(u_len)) >= 0.50:
                         is_dup = True
                         break
+            if not is_dup and stems_xT:
+                u_len_T = len(stems_s | stems_xT)
+                if u_len_T > 0 and (len(stems_s & stems_xT) / float(u_len_T)) >= 0.50:
+                    is_dup = True
         if not is_dup:
             clean_steps.append(s)
             seen_stems.append(stems_s)
 
     if not clean_steps and steps:
-        return [steps[0].strip()]
+        return [steps[-1].strip() if (x_T and steps[-1].strip() == x_T.strip()) else steps[0].strip()]
     return clean_steps
 
 
