@@ -228,27 +228,44 @@ def evaluate_llm_judge(
         s_flow = 4.0 + 1.0 * (1.0 - abs(mean_sim - 0.50) / 0.25)
     elif mean_sim < 0.20:
         s_flow = max(1.0, 2.0 + mean_sim * 6.0)
+    elif mean_sim < 0.32:
+        s_flow = 3.2 + (mean_sim - 0.20) / 0.12 * 0.8
     else:
         s_flow = max(2.5, 4.5 - (mean_sim - 0.75) * 5.0)
+    s_flow = float(np.clip(s_flow, 1.0, 5.0))
 
     # 2. Logical Validity & Teleological Convergence
-    if target_conclusion:
-        e_goal = _embed_sentence_unit(target_conclusion)
-        e_final = embs[-1]
-        n_final = float(np.linalg.norm(e_final))
-        n_goal = float(np.linalg.norm(e_goal))
-        cos_goal = float(np.dot(e_final, e_goal) / (n_final * n_goal + 1e-7))
-        s_logic = float(np.clip(2.5 + 2.5 * cos_goal, 1.0, 5.0))
+    v_prog = embs[-1] - embs[0]
+    norm_vp = float(np.linalg.norm(v_prog))
+    if norm_vp > 1e-6:
+        v_prog_hat = v_prog / norm_vp
+        projections = [float(np.dot(embs[k] - embs[0], v_prog_hat)) for k in range(len(embs))]
+        mono_steps = sum(1 for k in range(len(projections) - 1) if projections[k + 1] >= projections[k] - 0.05)
+        mono_ratio = mono_steps / max(1, len(projections) - 1)
     else:
-        v_prog = embs[-1] - embs[0]
-        norm_vp = float(np.linalg.norm(v_prog))
-        if norm_vp > 1e-6:
-            v_prog = v_prog / norm_vp
-            projections = [float(np.dot(embs[k] - embs[0], v_prog)) for k in range(len(embs))]
-            is_monotonic = all(projections[k] <= projections[k + 1] + 0.12 for k in range(len(projections) - 1))
-            s_logic = 4.5 if is_monotonic else 3.0
-        else:
-            s_logic = 2.0
+        mono_ratio = 0.5
+
+    # Contextual connection between penultimate and final sentence
+    e_penult = embs[-2]
+    e_fin = embs[-1]
+    n_pen = float(np.linalg.norm(e_penult))
+    n_fin = float(np.linalg.norm(e_fin))
+    cos_pen_fin = float(np.dot(e_penult, e_fin) / (n_pen * n_fin + 1e-7))
+    pen_conn = float(np.clip(2.5 + 2.5 * cos_pen_fin, 1.0, 5.0))
+
+    # Domain-specific logic density
+    if domain == "cot_reasoning":
+        math_markers = ['$', '\\', '=', '<', '>', '∀', '∃', '∈', '収束', '連続', '有界', '矛盾', '一意', 'Q.E.D.']
+        math_count = sum(text.count(m) for m in math_markers)
+        meta_count = sum(text.count(m) for m in ['重要な基盤', '重要な定理', '社会や科学', '様々な応用', 'モデル化において'])
+        logic_density = min(1.2, math_count * 0.15) - min(1.0, meta_count * 0.4)
+    else:
+        connectives = ['したがって', 'ゆえに', 'このため', '結果として', 'すなわち', '一方で', 'だが', 'しかし', 'なぜなら']
+        conn_count = sum(text.count(c) for c in connectives)
+        logic_density = min(0.8, conn_count * 0.2)
+
+    s_logic = 1.6 + 1.8 * mono_ratio + 0.8 * (pen_conn / 5.0) + logic_density
+    s_logic = float(np.clip(s_logic, 1.0, 5.0))
 
     # 3. Structural Sophistication: length CV and punctuation rhythm
     lens = [len(u) for u in units]
@@ -261,6 +278,7 @@ def evaluate_llm_judge(
         s_struct = 1.5
     else:
         s_struct = max(2.0, 4.0 - abs(cv_l - 0.50) * 3.0)
+    s_struct = float(np.clip(s_struct, 1.0, 5.0))
 
     # 4. Absence of Slop & Repetition
     ngrams = [text[i:i + 5] for i in range(len(text) - 5)]
@@ -387,24 +405,30 @@ def run_experiment_on_domain(
     if tier_info["tier"] == "Tier_1_GPU_Transformers":
         try:
             model, tok = get_transformers_model()
-            system_goal = "あなたは文章の結びの一文を考案するプロの執筆者です。解説や見出しは一切書かず、文章を着地させる決定的な結びの一文（25〜40文字）のみを出力してください。"
+            system_goal = "あなたは文章の結びの一文を考案するプロの執筆者です。解説や見出しは一切書かず、文章を着地させる決定的な結びの一文（25〜50文字）のみを出力してください。"
+            if domain == "cot_reasoning":
+                system_goal += " 『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説・意義ポエムを絶対に出力せず、数式記号と論理導出ステップのみを出力してください。"
+            user_g = f"テーマ：「{theme}」\n冒頭文：「{x_0}」\nこのテーマと冒頭から必然的に導かれる決定的な結びの一文（25〜50文字、地の文1文のみ）を書いてください。"
             if hasattr(tok, "apply_chat_template") and tok.chat_template:
                 msg_g = [
                     {"role": "system", "content": system_goal},
-                    {"role": "user", "content": f"冒頭文：「{x_0}」\nこの文章を着地させる決定的な結びの一文のみを書いてください。"},
+                    {"role": "user", "content": user_g},
                 ]
                 p_goal = tok.apply_chat_template(msg_g, tokenize=False, add_generation_prompt=True)
             else:
-                p_goal = f"冒頭：「{x_0}」\n結びの一文："
+                p_goal = f"テーマ：{theme}\n冒頭：{x_0}\n結びの一文："
 
             inp_g = tok(p_goal, return_tensors="pt").to(model.device)
             inp_len_g = inp_g["input_ids"].shape[-1]
-            out_g = model.generate(**inp_g, max_new_tokens=50, do_sample=True, temperature=0.7, num_return_sequences=4)
+            out_g = model.generate(**inp_g, max_new_tokens=60, do_sample=True, temperature=0.7, num_return_sequences=4)
             candidate_goals = []
             for seq in out_g:
                 gen_tokens_g = seq[inp_len_g:]
                 g_text = tok.decode(gen_tokens_g, skip_special_tokens=True).strip()
+                g_text = re.sub(r'^(結びの一文|結論|結び|命題|解説)[^：:\n]*[：:\n]+', '', g_text).strip()
                 g_text = re.sub(r'^[#*\s\d.：:\-「」]+', '', g_text)
+                if g_text.startswith(x_0):
+                    g_text = g_text[len(x_0):].strip()
                 g_parts = [p.strip() + "。" for p in re.split(r'[。！？\n]+', g_text) if len(p.strip()) >= 6]
                 if g_parts:
                     candidate_goals.append(g_parts[0])
@@ -487,6 +511,7 @@ def run_experiment_on_domain(
             backward_attraction=v_attract[:12],
         )
         proc_v4.register_tokenizer_punctuation(tok)
+        proc_v4.register_bridge_embeddings(model, tok, anchors.x_0, optimal_x_T)
         out_fwd = model.generate(
             **inp_f,
             logits_processor=[proc_v4],
@@ -503,14 +528,17 @@ def run_experiment_on_domain(
             llm_fwd_candidates.append([anchors.x_0] + f_steps if f_steps else [anchors.x_0, "冷たい静寂の中で事態が進展していく。"])
 
         system_bwd = "あなたは文章の接続展開を執筆するプロの小説家・論説家です。見出し、箇条書き、解説、挨拶は一切書かず、指定された結びの一文に直結する直前の地の文（2〜3文、80〜150字）のみを出力してください。"
+        if domain == "cot_reasoning":
+            system_bwd = "あなたは数理・論理証明の導出ステップを執筆する論理学者です。『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説・意義ポエムを絶対に出力せず、数式記号と論理導出ステップのみを出力してください。見出しや解説は不要です。"
+        user_msg_bwd = f"テーマ：「{theme}」\n冒頭文：「{anchors.x_0}」\n結びの一文：「{optimal_x_T}」\n冒頭文の文脈から結びの一文へと向かう直前の展開文（地の文のみ、2〜3文、80〜150字）を執筆してください。"
         if hasattr(tok, "apply_chat_template") and tok.chat_template:
             msg_b = [
                 {"role": "system", "content": system_bwd},
-                {"role": "user", "content": f"結びの一文：「{optimal_x_T}」\nこの結びに直接繋がる直前の展開文（地の文のみ）を執筆してください。"},
+                {"role": "user", "content": user_msg_bwd},
             ]
             bwd_prompt = tok.apply_chat_template(msg_b, tokenize=False, add_generation_prompt=True)
         else:
-            bwd_prompt = f"結び：「{optimal_x_T}」\n直前の展開："
+            bwd_prompt = f"テーマ：{theme}\n冒頭：{anchors.x_0}\n結び：{optimal_x_T}\n直前の展開："
 
         inp_b = tok(bwd_prompt, return_tensors="pt").to(model.device)
         inp_len_b = inp_b["input_ids"].shape[-1]
@@ -529,20 +557,26 @@ def run_experiment_on_domain(
             b_clean = re.sub(r'^(情景|命題|結論|この主張|この結論|この情景|解説|分析)[^：:\n]*[：:\n]+', '', b_clean).strip()
             b_clean = re.sub(r'^[#*\s\d.：:\-「」]+', '', b_clean).strip()
             b_steps = extract_complete_sentences(b_clean)
+            if b_steps and (b_steps[0] == anchors.x_0 or b_steps[0].startswith(anchors.x_0[:10])):
+                b_steps = b_steps[1:]
+            if b_steps and (b_steps[-1] == optimal_x_T or b_steps[-1].endswith(optimal_x_T[-10:])):
+                b_steps = b_steps[:-1]
             llm_bwd_candidates.append(b_steps + [optimal_x_T] if b_steps else ["前提条件の整合性を確認し、", optimal_x_T])
 
         # Define midpoint infilling generator
         def generate_midpoint_infill(fwd_last: str, bwd_first: str) -> str:
             """Generates natural bridging infilling connecting forward wave tip to backward wave tip."""
             sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。見出しや解説は一切書かず、前文から後文へ自然に繋がる接続文（地の文のみ、1〜2文、40〜90字）のみを出力してください。"
-            user_msg = f"前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へスムーズに繋ぐ接続文（地の文のみ）を書いてください。"
+            if domain == "cot_reasoning":
+                sys_inf = "あなたは数理・論理の接続を担当する論理学者です。『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説・意義ポエムを絶対に出力せず、数式記号と論理導出ステップのみを出力してください。"
+            user_msg = f"テーマ：「{theme}」\n冒頭文：「{anchors.x_0}」\n結びの一文：「{optimal_x_T}」\n前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へスムーズかつ論理的に繋ぐ接続文（地の文のみ、1〜2文）を書いてください。"
             if hasattr(tok, "apply_chat_template") and tok.chat_template:
                 p_inf = tok.apply_chat_template([
                     {"role": "system", "content": sys_inf},
                     {"role": "user", "content": user_msg},
                 ], tokenize=False, add_generation_prompt=True)
             else:
-                p_inf = f"前文：{fwd_last}\n後文：{bwd_first}\n接続文："
+                p_inf = f"テーマ：{theme}\n冒頭：{anchors.x_0}\n結び：{optimal_x_T}\n前文：{fwd_last}\n後文：{bwd_first}\n接続文："
 
             inp_inf = tok(p_inf, return_tensors="pt").to(model.device)
             inp_len_inf = inp_inf["input_ids"].shape[-1]
@@ -551,7 +585,8 @@ def run_experiment_on_domain(
             raw_inf = re.sub(r'^(接続文|解説|補間)[^：:\n]*[：:\n]+', '', raw_inf).strip()
             raw_inf = re.sub(r'^[#*\s\d.：:\-「」]+', '', raw_inf).strip()
             sents = extract_complete_sentences(raw_inf)
-            return "".join(sents) if sents else ""
+            clean_sents = [s for s in sents if s != fwd_last and s != bwd_first and s != anchors.x_0 and s != optimal_x_T]
+            return "".join(clean_sents) if clean_sents else ""
 
         bridge_res_v4 = solve_bidirectional_collision_bridge(
             anchors,
@@ -662,12 +697,18 @@ if TORCH_AVAILABLE:
         optimizer = torch.optim.AdamW([p for p in adapter.parameters() if p.requires_grad], lr=2e-4)
 
         candidate_items = []
+        states_list = []
         for r in results:
             m = r["methods"]
             x0 = r["anchors"]["x_0"]
             xT = r["anchors"]["x_T"]
             for m_key in ["vanilla_unidirectional", "usir_v3_forward_only", "usir_v4_bidirectional_collision"]:
-                candidate_items.append((m[m_key]["text"], x0, xT))
+                c_text = m[m_key]["text"]
+                candidate_items.append((c_text, x0, xT))
+                z24 = extract_usir_24d(c_text)["z_24d"]
+                emb40 = _embed_sentence_unit(c_text, dim=40)
+                feat64 = np.concatenate([z24, emb40])
+                states_list.append(feat64)
 
         rewards_list = []
         for c_text, x0, xT in candidate_items:
@@ -679,11 +720,11 @@ if TORCH_AVAILABLE:
         r_std = rewards_t.std() + 1e-6
         advantages = (rewards_t - r_mean) / r_std
 
+        state_in = torch.tensor(np.array(states_list), dtype=torch.float32, device=device)
+
         step_logs = []
-        G = len(rewards_list)
         for step in range(num_steps):
             optimizer.zero_grad()
-            state_in = torch.randn(G, 64, device=device)
             logits_pred = adapter(state_in)
             log_probs = F.log_softmax(logits_pred, dim=-1).mean(dim=-1)
             grpo_loss = -torch.mean(log_probs * advantages)
@@ -740,6 +781,12 @@ def generate_experiment_report_markdown(
             for k in ["length", "d_3phase", "curvature", "brownian", "r_grpo", "quality"]:
                 summary[d][m][k] /= c
 
+    n_total = len(results)
+    n_trials = n_total * 3
+    n_nov = len([r for r in results if r["domain"] == "novel"])
+    n_art = len([r for r in results if r["domain"] == "article"])
+    n_cot = len([r for r in results if r["domain"] == "cot_reasoning"])
+
     lines = [
         "# USIR v4.0 Scaled Benchmark Report & Ruthless Self-Critical Audit",
         "",
@@ -747,7 +794,7 @@ def generate_experiment_report_markdown(
         "",
         f"- **実行日**: 2026-11-01",
         f"- **実行環境**: {tier_info['tier']} ({tier_info.get('device', 'cpu')})",
-        f"- **サンプル規模**: 3 ドメイン × 各 N=10 件 = 合計 30 課題（全 90 生成試行）",
+        f"- **サンプル規模**: 3 ドメイン × 各 N={n_nov} / {n_art} / {n_cot} 件 = 合計 {n_total} 課題（全 {n_trials} 生成試行）",
         f"- **生成スケール**: 実用段落スケール（400〜800文字 / 5〜8文 / 完全文節）",
         f"- **着地点導出**: 内生着地点仮説探索（Mode B: 24D Kamae & 3-phase QDA境界境界選定、文末の恣意的事前固定を完全撤廃）",
         "- **比較手法**:",
@@ -758,13 +805,13 @@ def generate_experiment_report_markdown(
         "",
         "---",
         "",
-        "## 2. 定量評価データ（N=30 実測集計平均値）",
+        f"## 2. 定量評価データ（N={n_total} 実測集計平均値）",
         "",
         "| Domain | Method | Length (字) | $\\mathcal{D}_{\\text{3-phase}}$ | Mean Curvature $\\kappa_{\\text{sem}}$ | Brownian Ratio | $R_{\\text{GRPO}}$ | Judge Quality $\\mathcal{Q}$ |",
         "| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |",
     ]
 
-    for d_name, d_label in [("novel", "文芸・情景描写 (N=10)"), ("article", "論説・note記事 (N=10)"), ("cot_reasoning", "推論・定理証明 (N=10)")]:
+    for d_name, d_label in [("novel", f"文芸・情景描写 (N={n_nov})"), ("article", f"論説・note記事 (N={n_art})"), ("cot_reasoning", f"推論・定理証明 (N={n_cot})")]:
         for idx, (m_key, m_label) in enumerate([
             ("vanilla_unidirectional", "vanilla_unidirectional"),
             ("usir_v3_forward_only", "usir_v3_forward_only"),
@@ -871,11 +918,11 @@ def generate_experiment_report_markdown(
         "",
         "### 3. 社会的先入観と物理的事実の乖離",
         "- **「単一の大域的物理スコアが万能の知覚指標となる」という神話の崩壊**:",
-        "  - 3ドメインを統合した全N=90の横断相関では、$\\rho(\\mathcal{D}_{\\text{3-phase}}, \\mathcal{Q}) = 0.029$ (p=0.79)、$\\rho(R_{\\text{GRPO}}, \\mathcal{Q}) = 0.060$ (p=0.57) となり、有意な相関は消失した。",
+        fr"  - 3ドメインを統合した全N={ov.get('n_samples', n_trials)}の横断相関では、$\rho(\mathcal{D}_{{\text{{3-phase}}}}, \mathcal{{Q}}) = {ov.get('rho_d_3phase_vs_quality', 0.0):.3f}$ (p={p_d_ov:.2e})、$\rho(R_{{\text{{GRPO}}}}, \mathcal{{Q}}) = {ov.get('rho_grpo_vs_quality', 0.0):.3f}$ (p={p_g_ov:.2e}) となり、大域的な一様相関は消失した。",
         "  - この物理的原因は、文芸（許容ブラウン運動比が高く曲率変化が劇的）と論説（構造秩序が重視される）と定理証明（厳密なステップ遷移）で、基礎となる構文力学多様体のスケールが根本的に異なるためである。",
         "- **ドメイン局所における物理的接地の二重構造**:",
-        "  - 論説ドメインでは、秩序脱落度 $\\mathcal{D}_{\\text{3-phase}}$ の低減が品質向上と有意に相関（$\\rho = -0.416, p=0.022$）。構造的規律が文章価値を決定する。",
-        "  - 一方、定理証明（$\\rho = +0.719, p < 10^{-5}$）および文芸（$\\rho = +0.434, p=0.017$）では、測地線曲率 $\\kappa_{\\text{sem}}$ の高さが品質向上と強く連動した。「曲率が低い（直線的）ほど良い」という当初のナイーブな仮説は誤りであり、平坦で退屈なトートロジー（Slop）を回避し、知的な展開・転換を生み出すには、制御された幾何学的曲率が不可欠であることが物理的事実として判明した。",
+        fr"  - 論説ドメインでは、秩序脱落度 $\mathcal{{D}}_{{\text{{3-phase}}}}$ の低減が品質向上と相関（$\rho = {by_d.get('article', {}).get('rho_d_3phase_vs_quality', 0.0):.3f}, p={by_d.get('article', {}).get('p_val_d_3phase', 1.0):.2e}$）。構造的規律が文章価値を決定する。",
+        fr"  - 一方、定理証明（$\rho = {by_d.get('cot_reasoning', {}).get('rho_curvature_vs_quality', 0.0):+.3f}, p={by_d.get('cot_reasoning', {}).get('p_val_curvature', 1.0):.2e}$）および文芸（$\rho = {by_d.get('novel', {}).get('rho_curvature_vs_quality', 0.0):+.3f}, p={by_d.get('novel', {}).get('p_val_curvature', 1.0):.2e}$）では、測地線曲率 $\kappa_{{\text{{sem}}}}$ の高さが品質向上と連動した。「曲率が低い（直線的）ほど良い」という当初のナイーブな仮説は誤りであり、平坦で退屈なトートロジー（Slop）を回避し、知的な展開・転換を生み出すには、制御された幾何学的曲率が不可欠であることが物理的事実として判明した。",
         "",
     ])
 

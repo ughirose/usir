@@ -188,10 +188,42 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
         )
         self.punctuation_token_ids = set(punctuation_token_ids) if punctuation_token_ids else set()
         self.token_jacobians = token_jacobians
+        self.embedding_weight: Optional[Any] = None
+        self.v_bridge: Optional[Any] = None
 
         # Track per-batch sequence state
         self.batch_tokens_since_punctuation: Dict[int, int] = {}
         self.call_count: int = 0
+
+    def register_bridge_embeddings(self, model: Any, tokenizer: Any, x_0: str, x_T: str) -> None:
+        """Computes and registers embedding-space bridge vector v_bridge = normalize(e_xT - e_x0)."""
+        if not TORCH_AVAILABLE:
+            return
+        try:
+            emb_layer = model.get_input_embeddings()
+            if emb_layer is None or not hasattr(emb_layer, "weight"):
+                return
+            self.embedding_weight = emb_layer.weight
+
+            device = self.embedding_weight.device
+            ids_0 = tokenizer.encode(x_0, add_special_tokens=False)
+            ids_T = tokenizer.encode(x_T, add_special_tokens=False)
+
+            if not ids_0 or not ids_T:
+                return
+
+            t_ids_0 = torch.tensor(ids_0, dtype=torch.long, device=device)
+            t_ids_T = torch.tensor(ids_T, dtype=torch.long, device=device)
+
+            e_0 = self.embedding_weight[t_ids_0].mean(dim=0).to(dtype=torch.float32)
+            e_T = self.embedding_weight[t_ids_T].mean(dim=0).to(dtype=torch.float32)
+
+            diff = e_T - e_0
+            norm = torch.norm(diff, p=2)
+            if norm > 1e-7:
+                self.v_bridge = diff / norm
+        except Exception:
+            pass
 
     def register_tokenizer_punctuation(self, tokenizer: Any) -> None:
         """Auto-detects and registers punctuation token IDs from HuggingFace tokenizer."""
@@ -258,23 +290,27 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
                         if is_refractory_blocked:
                             curr_scores[tid] -= 1000.0
                         elif is_refractory_forced:
-                            curr_scores[tid] += 15.0
+                            curr_scores[tid] += 3.5
 
             # 5. Backward Attraction Steering on Top-K
-            if effective_beta > 0.0 and self.backward_attraction is not None:
-                norm_attract = float(np.linalg.norm(self.backward_attraction))
-                if norm_attract > 1e-5:
-                    attract_vec = self.backward_attraction
-                    for idx in top_indices:
-                        tid = int(idx.item())
-                        if self.token_jacobians and tid in self.token_jacobians:
-                            j_vec = self.token_jacobians[tid][:len(attract_vec)]
-                            dot_val = float(np.dot(attract_vec, j_vec))
-                        else:
-                            # Deterministic pseudo-gradient projection for token ID
-                            # Allows directional differentiation across candidates
-                            h = ((tid * 2654435761) & 0xFFFFFFFF) / 0xFFFFFFFF - 0.5
-                            dot_val = float(h * attract_vec[0] if len(attract_vec) > 0 else h)
-                        curr_scores[tid] += effective_beta * dot_val * 0.5
+            if effective_beta > 0.0:
+                if self.v_bridge is not None and self.embedding_weight is not None:
+                    # True embedding-space bridge attraction
+                    top_emb = self.embedding_weight[top_indices].to(device=device, dtype=torch.float32)
+                    v_b = self.v_bridge.to(device=device, dtype=torch.float32)
+                    top_norm = torch.norm(top_emb, p=2, dim=-1).clamp(min=1e-7)
+                    v_norm = torch.norm(v_b, p=2).clamp(min=1e-7)
+                    cos_sims = torch.matmul(top_emb, v_b) / (top_norm * v_norm)
+                    curr_scores[top_indices] += (effective_beta * cos_sims * 0.5).to(dtype=curr_scores.dtype)
+                elif self.backward_attraction is not None:
+                    norm_attract = float(np.linalg.norm(self.backward_attraction))
+                    if norm_attract > 1e-5:
+                        attract_vec = self.backward_attraction
+                        for idx in top_indices:
+                            tid = int(idx.item())
+                            if self.token_jacobians and tid in self.token_jacobians:
+                                j_vec = self.token_jacobians[tid][:len(attract_vec)]
+                                dot_val = float(np.dot(attract_vec, j_vec))
+                                curr_scores[tid] += effective_beta * dot_val * 0.5
 
         return scores

@@ -5,6 +5,7 @@ import {
   solveTensorCollisionBridge,
   deriveEndogenousGoalHypotheses,
   executeClosedLoopRewrite,
+  computeTrajectoryRepetitionPenalty,
 } from '../src/dynamics/bidirectionalBridge.js';
 
 
@@ -216,5 +217,53 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
     expect(res.anchors.x_T).not.toBe(singleSentence);
     expect(res.anchors.x_T.length).toBeGreaterThan(10);
     expect(res.welded_text.length).toBeGreaterThanOrEqual(80);
+  });
+
+  it('deduplicates parrot infill echo sentences', () => {
+    const anchors = pinBoundaryAnchors('重複遮断検証', 'article');
+    const fwd = [['都市空間の歩行速度は過去五十年で一割上昇した。', 'スマートフォンの普及により視線は下方に固定され、受動的な群衆流動が常態化している。']];
+    const bwd = [['身体的な余白を取り戻す建築設計が求められている。', '広場における偶発的な滞留こそが都市の呼吸を再生する。']];
+
+    const parrotInfill = (fLast: string, bFirst: string) => `${fLast}${bFirst}`;
+    const res = solveBidirectionalCollisionBridge(anchors, {
+      forward_candidates: fwd,
+      backward_candidates: bwd,
+      infill_generator: parrotInfill,
+    });
+    expect(res.infilling_step).toBeUndefined();
+    expect(res.welded_trajectory.length).toBe(4);
+    expect(res.welded_trajectory.filter((s) => s === fwd[0]![1]).length).toBe(1);
+  });
+
+  it('penalizes prefix repetition and 5-gram overlaps', () => {
+    const stepsClean = [
+      '夜明け前の山道に白い霧が立ち込めていた。',
+      '遠くの沢から冷たい水音が微かに響いてくる。',
+      '石畳の階段を踏みしめるたびに草の匂いが立った。',
+    ];
+    const stepsPrefixEcho = [
+      '朝日が昇る頃には、山道に白い霧が立ち込めていた。',
+      '遠くの沢から冷たい水音が微かに響いてくる。',
+      '朝日が昇る頃には、谷底の集落に淡い光が差し込んだ。',
+    ];
+    const penClean = computeTrajectoryRepetitionPenalty(stepsClean);
+    const penEcho = computeTrajectoryRepetitionPenalty(stepsPrefixEcho);
+    expect(penClean).toBe(0.0);
+    expect(penEcho).toBeGreaterThanOrEqual(4.0);
+  });
+
+  it('rejects CoT meta poem conclusions in favor of mathematical derivations', () => {
+    const x0 = '実数列 $a_n$ が有界かつ単調増加であるとき、極限 $\\lim_{n\\to\\infty} a_n = \\sup_n a_n$ の存在を示せ。';
+    const candidates = [
+      'この定理は解析学における重要な基盤であり、社会や科学の様々な応用モデル化において不可欠な役割を果たしている。',
+      '上限 $M = \\sup_n a_n$ に対し $\\forall \\varepsilon > 0, \\exists N \\in \\mathbb{N}$ で $M - \\varepsilon < a_n \\le M$ となり収束が一意に示される。Q.E.D.',
+    ];
+    const { optimal_x_T, scored_candidates } = deriveEndogenousGoalHypotheses(x0, 'cot_reasoning', {
+      candidate_goals: candidates,
+      k_candidates: 2,
+    });
+    expect(optimal_x_T).toContain('Q.E.D.');
+    expect(optimal_x_T).not.toContain('重要な基盤');
+    expect(scored_candidates[0]!.score).toBeLessThan(scored_candidates[1]!.score);
   });
 });

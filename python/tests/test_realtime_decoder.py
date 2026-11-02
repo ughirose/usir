@@ -130,6 +130,60 @@ def test_pytorch_logits_processor_batch_processing():
     assert output.shape == (batch_size, vocab_size)
 
 
+@pytest.mark.skipif(not TORCH_AVAILABLE, reason="PyTorch not available")
+def test_pytorch_logits_processor_register_bridge_embeddings():
+    """Verify register_bridge_embeddings computes v_bridge and steers logits along bridge direction."""
+    processor = USIRPyTorchLogitsProcessor(
+        top_k=10,
+        eps_syn=0.1,
+        beta_steer=1.0,
+        refractory_min=2,
+    )
+
+    class MockEmbedding(torch.nn.Module):
+        def __init__(self, weight):
+            super().__init__()
+            self.weight = weight
+
+    class MockModel:
+        def __init__(self, weight):
+            self.emb = MockEmbedding(weight)
+
+        def get_input_embeddings(self):
+            return self.emb
+
+    class MockTokenizer:
+        def encode(self, text, add_special_tokens=False):
+            if "start" in text:
+                return [1]
+            return [2]
+
+    vocab_size = 50
+    hidden_dim = 16
+    weight = torch.zeros(vocab_size, hidden_dim)
+    weight[1, 0] = 1.0
+    weight[2, 1] = 1.0
+    weight[3, 1] = 1.0
+    weight[3, 0] = -1.0
+    weight[4, 0] = 1.0
+    weight[4, 1] = -1.0
+
+    model = MockModel(weight)
+    tokenizer = MockTokenizer()
+    processor.register_bridge_embeddings(model, tokenizer, x_0="start", x_T="end")
+
+    assert processor.v_bridge is not None
+    scores = torch.zeros(1, vocab_size)
+    scores[0, 3] = 2.0
+    scores[0, 4] = 2.0
+    scores[0, 5] = 2.0
+    input_ids = torch.tensor([[10, 20]])
+
+    steered = processor(input_ids, scores.clone())
+    assert steered[0, 3] > scores[0, 3]
+    assert steered[0, 4] < scores[0, 4]
+
+
 # ==============================================================================
 # 3. Experiment Runner & Auto-Detection Tests
 # ==============================================================================

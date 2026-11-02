@@ -17,6 +17,7 @@ from usir_py.bidirectional_bridge import (
     CollisionBridgeResult,
     TensorBridgeResult,
     compute_collision_action,
+    compute_trajectory_repetition_penalty,
     pin_boundary_anchors,
     solve_bidirectional_collision_bridge,
     solve_tensor_collision_bridge,
@@ -328,3 +329,61 @@ def test_derive_endogenous_goal_hypotheses_missing_candidates_raises():
     """Verify that calling derive_endogenous_goal_hypotheses without candidates raises ValueError."""
     with pytest.raises(ValueError, match="must be explicitly provided"):
         derive_endogenous_goal_hypotheses("冒頭文", domain="novel")
+
+
+def test_parrot_infill_deduplication_gate():
+    """オウム返し Infill の完全除去テスト: infill_generator returning duplicate/echo sentences is stripped."""
+    anchors = pin_boundary_anchors(theme="重複遮断検証", domain="article")
+    fwd = [["都市空間の歩行速度は過去五十年で一割上昇した。", "スマートフォンの普及により視線は下方に固定され、受動的な群衆流動が常態化している。"]]
+    bwd = [["身体的な余白を取り戻す建築設計が求められている。", "広場における偶発的な滞留こそが都市の呼吸を再生する。"]]
+
+    # Parrot infill repeating fwd[-1] and bwd[0] verbatim
+    def parrot_infill(f_last: str, b_first: str) -> str:
+        return f"{f_last}{b_first}"
+
+    res = solve_bidirectional_collision_bridge(
+        anchors,
+        forward_candidates=fwd,
+        backward_candidates=bwd,
+        infill_generator=parrot_infill,
+    )
+    assert res.infilling_step is None
+    assert len(res.welded_trajectory) == 4
+    assert res.welded_trajectory.count(fwd[0][-1]) == 1
+
+
+def test_prefix_repetition_penalty_and_5gram_gate():
+    """Prefix 反復ペナルティテスト: leading 5-char echo and 5-gram overlap incur trajectory penalties."""
+    steps_clean = [
+        "夜明け前の山道に白い霧が立ち込めていた。",
+        "遠くの沢から冷たい水音が微かに響いてくる。",
+        "石畳の階段を踏みしめるたびに草の匂いが立った。",
+    ]
+    steps_prefix_echo = [
+        "朝日が昇る頃には、山道に白い霧が立ち込めていた。",
+        "遠くの沢から冷たい水音が微かに響いてくる。",
+        "朝日が昇る頃には、谷底の集落に淡い光が差し込んだ。",
+    ]
+    pen_clean = compute_trajectory_repetition_penalty(steps_clean)
+    pen_echo = compute_trajectory_repetition_penalty(steps_prefix_echo)
+    assert pen_clean == 0.0
+    assert pen_echo >= 4.0
+
+
+def test_cot_meta_poem_conclusion_rejection():
+    """CoT メタポエム結論の棄却テスト: mathematical derivation is selected over meta-explanation poem."""
+    x0 = "実数列 $a_n$ が有界かつ単調増加であるとき、極限 $\\lim_{n\\to\\infty} a_n = \\sup_n a_n$ の存在を示せ。"
+    candidates = [
+        "この定理は解析学における重要な基盤であり、社会や科学の様々な応用モデル化において不可欠な役割を果たしている。",
+        "上限 $M = \\sup_n a_n$ に対し $\\forall \\varepsilon > 0, \\exists N \\in \\mathbb{N}$ で $M - \\varepsilon < a_n \\le M$ となり収束が一意に示される。Q.E.D.",
+    ]
+    optimal_x_T, rankings = derive_endogenous_goal_hypotheses(
+        x0,
+        domain="cot_reasoning",
+        candidate_goals=candidates,
+        k_candidates=2,
+    )
+    assert "Q.E.D." in optimal_x_T
+    assert "重要な基盤" not in optimal_x_T
+    assert rankings[0]["score"] < rankings[1]["score"]
+

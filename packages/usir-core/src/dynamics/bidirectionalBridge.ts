@@ -19,7 +19,7 @@
  *    - "cot_reasoning": Premise forward deduction x Goal backward abduction collision
  */
 
-import { embedSentenceUnit, computeThreePhaseQdaDistance } from './manifoldGeodesic.js';
+import { embedSentenceUnit, computeThreePhaseQdaDistance, computeSemanticGeodesicCurvature } from './manifoldGeodesic.js';
 
 export type BridgeDomain = 'novel' | 'article' | 'cot_reasoning';
 
@@ -253,7 +253,7 @@ export function deriveEndogenousGoalHypotheses(
   x_0: string,
   domain: BridgeDomain = 'novel',
   options?: { candidate_goals?: string[]; k_candidates?: number }
-): { optimal_x_T: string; scored_candidates: Array<{ text: string; score: number }> } {
+): { optimal_x_T: string; scored_candidates: Array<{ text: string; score: number; tautology_penalty?: number; domain_penalty?: number }> } {
   const preset = DOMAIN_PRESETS[domain] ?? DOMAIN_PRESETS.novel;
   const kamaeTarget = preset.kamae_target;
   const kCandidates = options?.k_candidates ?? 4;
@@ -264,7 +264,10 @@ export function deriveEndogenousGoalHypotheses(
   }
 
   const q0 = embedSentenceUnit(safeX0);
-  const scored: Array<{ text: string; score: number }> = [];
+  const stemsX0 = new Set(safeX0.match(/[\u4e00-\u9fff]+/g) || []);
+  const cotMathMarkers = ['$', '\\', '=', '<', '>', '∀', '∃', '∈', '収束', '連続', '有界', '矛盾', '一意', 'Q.E.D.'];
+  const cotMetaPoems = ['重要な基盤', '重要な定理', '社会や科学', '様々な応用', 'モデル化において'];
+  const scored: Array<{ text: string; score: number; tautology_penalty?: number; domain_penalty?: number }> = [];
 
   for (const c of candidates) {
     const qc = embedSentenceUnit(c);
@@ -288,8 +291,38 @@ export function deriveEndogenousGoalHypotheses(
     if (reachDist < 0.25) reachPenalty = 2.0;
     else if (reachDist > 2.8) reachPenalty = 1.5;
 
-    const actionScore = kamaeDiff + 0.35 * qda.d_3phase + reachPenalty;
-    scored.push({ text: c, score: actionScore });
+    // (a) Kanji stem Jaccard tautology penalty (> 0.45 => +3.0)
+    const stemsC = new Set(c.match(/[\u4e00-\u9fff]+/g) || []);
+    let tautologyPenalty = 0.0;
+    if (stemsX0.size > 0 && stemsC.size > 0) {
+      let inter = 0;
+      for (const s of stemsX0) {
+        if (stemsC.has(s)) inter++;
+      }
+      const unionSize = new Set([...stemsX0, ...stemsC]).size;
+      const jaccX0 = unionSize > 0 ? inter / unionSize : 0;
+      if (jaccX0 > 0.45) {
+        tautologyPenalty += 3.0;
+      }
+    }
+
+    // (b) CoT domain math/logic bonus and meta-explanation poem penalty
+    let domainPenalty = 0.0;
+    if (domain === 'cot_reasoning') {
+      let mathHits = 0;
+      for (const m of cotMathMarkers) {
+        if (c.includes(m)) mathHits++;
+      }
+      if (mathHits > 0) {
+        domainPenalty -= Math.min(1.5, 0.4 * mathHits);
+      }
+      if (cotMetaPoems.some(mp => c.includes(mp))) {
+        domainPenalty += 5.0;
+      }
+    }
+
+    const actionScore = kamaeDiff + 0.35 * qda.d_3phase + reachPenalty + tautologyPenalty + domainPenalty;
+    scored.push({ text: c, score: actionScore, tautology_penalty: tautologyPenalty, domain_penalty: domainPenalty });
   }
 
   scored.sort((a, b) => a.score - b.score);
@@ -356,6 +389,120 @@ export function executeClosedLoopRewrite(
 // 3. Collision Action Integral & Midpoint Infilling Solver
 // ==============================================================================
 
+function normalizeForPrefix(text: string): string {
+  return text.replace(/[\s、。！？!?,.\-—…「」『』（）()\[\]【】]+/g, '');
+}
+
+function char5Grams(text: string): Set<string> {
+  const cleaned = text.replace(/\s+/g, '');
+  if (cleaned.length < 5) {
+    return cleaned.length > 0 ? new Set([cleaned]) : new Set();
+  }
+  const grams = new Set<string>();
+  for (let i = 0; i <= cleaned.length - 5; i++) {
+    grams.add(cleaned.slice(i, i + 5));
+  }
+  return grams;
+}
+
+function compute5GramOverlap(sA: string, sB: string): number {
+  const gA = char5Grams(sA);
+  const gB = char5Grams(sB);
+  if (gA.size === 0 || gB.size === 0) return 0.0;
+  const denom = Math.min(gA.size, gB.size);
+  if (denom === 0) return 0.0;
+  let inter = 0;
+  for (const g of gA) {
+    if (gB.has(g)) inter++;
+  }
+  return inter / denom;
+}
+
+export function computeTrajectoryRepetitionPenalty(steps: string[]): number {
+  let penalty = 0.0;
+  const n = steps.length;
+  const normPrefixes = steps.map(s => normalizeForPrefix(s));
+  const gramsList = steps.map(s => char5Grams(s));
+
+  for (let a = 0; a < n; a++) {
+    for (let b = a + 1; b < n; b++) {
+      const pa = normPrefixes[a] ?? '';
+      const pb = normPrefixes[b] ?? '';
+      if (pa.length >= 5 && pb.length >= 5 && pa.slice(0, 5) === pb.slice(0, 5)) {
+        penalty += 4.0;
+      }
+
+      const ga = gramsList[a]!;
+      const gb = gramsList[b]!;
+      if (ga.size > 0 && gb.size > 0) {
+        const denom = Math.min(ga.size, gb.size);
+        if (denom > 0) {
+          let inter = 0;
+          for (const g of ga) {
+            if (gb.has(g)) inter++;
+          }
+          const overlap = inter / denom;
+          if (overlap > 0.35) {
+            penalty += 8.0 * (overlap - 0.35);
+          }
+        }
+      }
+    }
+  }
+  return penalty;
+}
+
+function splitInfillSentences(text: string): string[] {
+  if (!text || !text.trim()) return [];
+  const parts = text.trim().match(/[^。！？\r\n]+[。！？]?/g) || [];
+  const out: string[] = [];
+  for (const p of parts) {
+    let s = p.trim();
+    if (!s) continue;
+    if (!/[。！？!?]$/.test(s)) s += '。';
+    out.push(s);
+  }
+  return out;
+}
+
+function deduplicateInfillSentences(infillText: string, existingSteps: string[]): string[] {
+  const candidates = splitInfillSentences(infillText);
+  const existingPool = [...existingSteps];
+  const cleanSents: string[] = [];
+
+  for (const cand of candidates) {
+    const pCand = normalizeForPrefix(cand);
+    let isDup = false;
+    for (const ex of existingPool) {
+      const pEx = normalizeForPrefix(ex);
+      if (pCand.length >= 5 && pEx.length >= 5 && pCand.slice(0, 5) === pEx.slice(0, 5)) {
+        isDup = true;
+        break;
+      }
+      if (compute5GramOverlap(cand, ex) >= 0.40) {
+        isDup = true;
+        break;
+      }
+    }
+    if (!isDup) {
+      cleanSents.push(cand);
+      existingPool.push(cand);
+    }
+  }
+  return cleanSents;
+}
+
+function buildForwardWave(waveId: number, steps: string[]): TrajectoryWave {
+  const tipVec = embedSentenceUnit(steps[steps.length - 1]!);
+  const prevVec = steps.length >= 2 ? embedSentenceUnit(steps[steps.length - 2]!) : tipVec;
+  const dirVec = tipVec.map((v, idx) => v - (prevVec[idx] ?? 0));
+  let norm = 0;
+  for (const v of dirVec) norm += v * v;
+  norm = Math.sqrt(norm);
+  const normalizedDir = norm > 1e-7 ? dirVec.map((v) => v / norm) : dirVec;
+  return { wave_id: waveId, direction: 'forward', steps, tip_vector: tipVec, direction_vector: normalizedDir };
+}
+
 export function computeCollisionAction(
   fwdWave: TrajectoryWave,
   bwdWave: TrajectoryWave,
@@ -376,7 +523,7 @@ export function computeCollisionAction(
   const dirCurvature = 1.0 - Math.max(-1.0, Math.min(1.0, dotDir));
   const dGeodesic = distL2 * 1.5 + dirCurvature * 0.8;
 
-  // 2. Spatial / Causal consistency distance with repetition penalty
+  // 2. Spatial / Causal consistency distance with trajectory-wide repetition penalty
   const stepFwdLast = fwdWave.steps[fwdWave.steps.length - 1] ?? '';
   const stepBwdFirst = bwdWave.steps[0] ?? '';
 
@@ -396,26 +543,22 @@ export function computeCollisionAction(
   const stemsFwd = new Set(stepFwdLast.match(/[\u4e00-\u9fff]+/g) || []);
   const stemsBwd = new Set(stepBwdFirst.match(/[\u4e00-\u9fff]+/g) || []);
 
-  let intersect = 0;
-  for (const s of stemsFwd) {
-    if (stemsBwd.has(s)) intersect++;
-  }
-  const union = new Set([...stemsFwd, ...stemsBwd]).size;
-  const jaccard = union > 0 ? intersect / union : 0.2;
-  let repPenalty = 0.0;
-  if (jaccard > 0.40) repPenalty += 3.0 * (jaccard - 0.40);
-  for (let i = 0; i < Math.max(0, stepFwdLast.length - 6); i++) {
-    const gram6 = stepFwdLast.slice(i, i + 6);
-    if (stepBwdFirst.includes(gram6)) {
-      repPenalty += 2.5;
-      break;
+  const combinedSteps = [...fwdWave.steps, ...bwdWave.steps];
+  let repPenalty = computeTrajectoryRepetitionPenalty(combinedSteps);
+  if (stemsFwd.size > 0 && stemsBwd.size > 0) {
+    let intersect = 0;
+    for (const s of stemsFwd) {
+      if (stemsBwd.has(s)) intersect++;
     }
+    const union = new Set([...stemsFwd, ...stemsBwd]).size;
+    const jaccard = union > 0 ? intersect / union : 0.0;
+    if (jaccard > 0.40) repPenalty += 3.0 * (jaccard - 0.40);
   }
 
   const dCausal = transitionDist * 1.2 + repPenalty;
 
   // 3. 3-Phase QDA of welded sequence
-  const weldedText = fwdWave.steps.join('') + bwdWave.steps.join('');
+  const weldedText = combinedSteps.join('');
   const qdaRes = computeThreePhaseQdaDistance(weldedText);
   const d3Phase = qdaRes.d_3phase;
 
@@ -506,14 +649,38 @@ export function solveBidirectionalCollisionBridge(
   const optFwd = fwdWaves[bestPair[0]]!;
   const optBwd = bwdWaves[bestPair[1]]!;
 
-  let actualInfill = options?.infilling_step;
-  if (actualInfill === undefined && options?.infill_generator) {
-    actualInfill = options.infill_generator(optFwd.steps[optFwd.steps.length - 1]!, optBwd.steps[0]!);
+  let rawInfill = options?.infilling_step;
+  if (rawInfill === undefined && options?.infill_generator) {
+    rawInfill = options.infill_generator(optFwd.steps[optFwd.steps.length - 1]!, optBwd.steps[0]!);
   }
 
-  const weldedTrajectory = actualInfill && actualInfill.trim().length > 0
-    ? [...optFwd.steps, actualInfill.trim(), ...optBwd.steps]
-    : [...optFwd.steps, ...optBwd.steps];
+  const existingSteps = [...optFwd.steps, ...optBwd.steps];
+  const cleanInfillSents = rawInfill ? deduplicateInfillSentences(rawInfill, existingSteps) : [];
+
+  let acceptedInfill: string | undefined = undefined;
+  let weldedTrajectory: string[];
+
+  if (cleanInfillSents.length > 0) {
+    const infilledFwdWave = buildForwardWave(optFwd.wave_id, [...optFwd.steps, ...cleanInfillSents]);
+    const [sInfilled] = computeCollisionAction(infilledFwdWave, optBwd, beta);
+    const curvDirect = computeSemanticGeodesicCurvature(existingSteps.join('')).mean_curvature;
+    const infilledSteps = [...optFwd.steps, ...cleanInfillSents, ...optBwd.steps];
+    const curvInfilled = computeSemanticGeodesicCurvature(infilledSteps.join('')).mean_curvature;
+
+    const sDirectAug = bestAction + 0.5 * curvDirect;
+    const sInfilledAug = sInfilled + 0.5 * curvInfilled;
+
+    const dCausalDirect = bestComponents[1];
+    if (sInfilledAug < sDirectAug || dCausalDirect > 0.65) {
+      acceptedInfill = cleanInfillSents.join('');
+      weldedTrajectory = infilledSteps;
+    } else {
+      weldedTrajectory = existingSteps;
+    }
+  } else {
+    weldedTrajectory = existingSteps;
+  }
+
   const weldedText = weldedTrajectory.join('');
   const mBridge = Math.max(0.0, Math.min(1.0, Math.exp(-lambdaBridge * bestAction)));
 
@@ -531,6 +698,6 @@ export function solveBidirectionalCollisionBridge(
     forward_waves: fwdWaves,
     backward_waves: bwdWaves,
     collision_matrix: actionMatrix,
-    infilling_step: actualInfill,
+    infilling_step: acceptedInfill,
   };
 }
