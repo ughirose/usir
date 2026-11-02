@@ -17,6 +17,7 @@ Execution Pipeline:
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
 import json
 import os
 from pathlib import Path
@@ -405,10 +406,12 @@ def run_experiment_on_domain(
     if tier_info["tier"] == "Tier_1_GPU_Transformers":
         try:
             model, tok = get_transformers_model()
-            system_goal = "あなたは文章の結びの一文を考案するプロの執筆者です。解説や見出しは一切書かず、文章を着地させる決定的な結びの一文（25〜50文字）のみを出力してください。"
             if domain == "cot_reasoning":
-                system_goal += " 『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説・意義ポエムを絶対に出力せず、数式記号と論理導出ステップのみを出力してください。"
-            user_g = f"テーマ：「{theme}」\n冒頭文：「{x_0}」\nこのテーマと冒頭から必然的に導かれる決定的な結びの一文（25〜50文字、地の文1文のみ）を書いてください。"
+                system_goal = "あなたは数学・論理学の定理証明の決定的な証明完了の一文を記述する論理学者です。『重要な定理』『社会や科学技術への影響』『モデル化』『物理現象』『技術進歩』『様々な応用』といったメタ解説・意義ポエムは絶対に書かず、必ず数式記号（$, =, \\lim など）と Q.E.D. を含む確定的な証明結論命題の1文（30〜60文字、地の文1文のみ）を出力してください。"
+                user_g = f"証明テーマ：「{theme}」\n前提：「{x_0}」\nこの前提から論理的に導かれる最終証明結論の数理命題（数式記号を含み、Q.E.D. で終わる決定的な1文のみ）を書いてください。"
+            else:
+                system_goal = "あなたは文章の結びの一文を考案するプロの執筆者です。解説や見出しは一切書かず、文章を着地させる決定的な結びの一文（25〜50文字）のみを出力してください。"
+                user_g = f"テーマ：「{theme}」\n冒頭文：「{x_0}」\nこのテーマと冒頭から必然的に導かれる決定的な結びの一文（25〜50文字、地の文1文のみ）を書いてください。"
             if hasattr(tok, "apply_chat_template") and tok.chat_template:
                 msg_g = [
                     {"role": "system", "content": system_goal},
@@ -427,6 +430,8 @@ def run_experiment_on_domain(
                 g_text = tok.decode(gen_tokens_g, skip_special_tokens=True).strip()
                 g_text = re.sub(r'^(結びの一文|結論|結び|命題|解説)[^：:\n]*[：:\n]+', '', g_text).strip()
                 g_text = re.sub(r'^[#*\s\d.：:\-「」]+', '', g_text)
+                g_text = re.sub(r'」?[という]*結びの一文として[^\n。！？]*[：:\n]*', '', g_text)
+                g_text = re.sub(r'^[「『]|[\n』」]+$', '', g_text).strip()
                 if g_text.startswith(x_0):
                     g_text = g_text[len(x_0):].strip()
                 g_parts = [p.strip() + "。" for p in re.split(r'[。！？\n]+', g_text) if len(p.strip()) >= 6]
@@ -520,17 +525,21 @@ def run_experiment_on_domain(
             temperature=0.75,
             num_return_sequences=2,
         )
+        chat_slop = ["説明してください", "覚えておいてください", "始めましょう", "確認してください", "問題:", "file.txt"]
         llm_fwd_candidates = []
         for seq in out_fwd:
             gen_tokens_f = seq[inp_len_f:]
             f_text = tok.decode(gen_tokens_f, skip_special_tokens=True).strip()
             f_steps = extract_complete_sentences(f_text)
+            f_steps = [s for s in f_steps if not any(cs in s for cs in chat_slop)]
             llm_fwd_candidates.append([anchors.x_0] + f_steps if f_steps else [anchors.x_0, "冷たい静寂の中で事態が進展していく。"])
 
-        system_bwd = "あなたは文章の接続展開を執筆するプロの小説家・論説家です。見出し、箇条書き、解説、挨拶は一切書かず、指定された結びの一文に直結する直前の地の文（2〜3文、80〜150字）のみを出力してください。"
+        system_bwd = "あなたは文章の接続展開を執筆するプロの小説家・論説家です。見出し、箇条書き、解説、挨拶は一切書かず、直前の文や冒頭文と同じ接続詞や同一の文頭表現（先頭5文字以上の反復）を排し、指定された結びの一文に直結する直前の地の文（2〜3文、80〜150字）のみを出力してください。"
         if domain == "cot_reasoning":
-            system_bwd = "あなたは数理・論理証明の導出ステップを執筆する論理学者です。『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説・意義ポエムを絶対に出力せず、数式記号と論理導出ステップのみを出力してください。見出しや解説は不要です。"
-        user_msg_bwd = f"テーマ：「{theme}」\n冒頭文：「{anchors.x_0}」\n結びの一文：「{optimal_x_T}」\n冒頭文の文脈から結びの一文へと向かう直前の展開文（地の文のみ、2〜3文、80〜150字）を執筆してください。"
+            system_bwd = "あなたは厳密な定理証明を執筆する数理科学者です。『重要な定理』『社会や科学技術への影響』『モデル化』『物理現象』といったメタ解説・意義ポエムは絶対に書かず、数式記号（$, =, \\lim など）を用いた厳密な論理導出ステップのみを出力してください。見出しや箇条書きは不要です。"
+            user_msg_bwd = f"証明テーマ：「{theme}」\n前提：「{anchors.x_0}」\n最終証明命題：「{optimal_x_T}」\n前提から最終証明命題へと論理的・演繹的に繋ぐ直前の導出ステップ（数式記号を用い、メタ解説や意義ポエムを排した純粋な数理展開の地の文のみ、2〜3文、80〜150字）を記述してください。"
+        else:
+            user_msg_bwd = f"テーマ：「{theme}」\n冒頭文：「{anchors.x_0}」\n結びの一文：「{optimal_x_T}」\n冒頭文の文脈から結びの一文へと向かう直前の展開文（地の文のみ、2〜3文、80〜150字）を執筆してください。"
         if hasattr(tok, "apply_chat_template") and tok.chat_template:
             msg_b = [
                 {"role": "system", "content": system_bwd},
@@ -554,9 +563,11 @@ def run_experiment_on_domain(
             gen_tokens_b = seq[inp_len_b:]
             b_clean = tok.decode(gen_tokens_b, skip_special_tokens=True).strip()
             # Clean away any markdown headings or bullet prefixes
-            b_clean = re.sub(r'^(情景|命題|結論|この主張|この結論|この情景|解説|分析)[^：:\n]*[：:\n]+', '', b_clean).strip()
+            b_clean = re.sub(r'^(情景|命題|結論|この主張|この結論|この情景|解説|分析|問題)[^：:\n]*[：:\n]+', '', b_clean).strip()
             b_clean = re.sub(r'^[#*\s\d.：:\-「」]+', '', b_clean).strip()
+            b_clean = re.sub(r'(?m)^#{1,6}\s*.*$', '', b_clean).strip()
             b_steps = extract_complete_sentences(b_clean)
+            b_steps = [s for s in b_steps if not any(cs in s for cs in chat_slop)]
             if b_steps and (b_steps[0] == anchors.x_0 or b_steps[0].startswith(anchors.x_0[:10])):
                 b_steps = b_steps[1:]
             if b_steps and (b_steps[-1] == optimal_x_T or b_steps[-1].endswith(optimal_x_T[-10:])):
@@ -566,10 +577,12 @@ def run_experiment_on_domain(
         # Define midpoint infilling generator
         def generate_midpoint_infill(fwd_last: str, bwd_first: str) -> str:
             """Generates natural bridging infilling connecting forward wave tip to backward wave tip."""
-            sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。見出しや解説は一切書かず、前文から後文へ自然に繋がる接続文（地の文のみ、1〜2文、40〜90字）のみを出力してください。"
+            sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。見出しや解説は一切書かず、前文から後文へ自然に繋がる接続文（地の文のみ、1〜2文、40〜90字）のみを出力してください。直前文と同一の文頭表現を避けてください。"
             if domain == "cot_reasoning":
-                sys_inf = "あなたは数理・論理の接続を担当する論理学者です。『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説・意義ポエムを絶対に出力せず、数式記号と論理導出ステップのみを出力してください。"
-            user_msg = f"テーマ：「{theme}」\n冒頭文：「{anchors.x_0}」\n結びの一文：「{optimal_x_T}」\n前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へスムーズかつ論理的に繋ぐ接続文（地の文のみ、1〜2文）を書いてください。"
+                sys_inf = "あなたは定理証明の中間導出を担当する論理学者です。『重要な定理』『社会や科学技術への影響』『モデル化』『物理現象』といったメタ解説・意義ポエムは一切書かず、数式記号を用いた論理導出文のみを出力してください。"
+                user_msg = f"証明テーマ：「{theme}」\n前提：「{anchors.x_0}」\n結び：「{optimal_x_T}」\n前段ステップ：「{fwd_last}」\n後段ステップ：「{bwd_first}」\n前段から後段へ論理的・数式的に繋ぐ導出ステップ文（数式記号を含む地の文のみ、1〜2文）を書いてください。"
+            else:
+                user_msg = f"テーマ：「{theme}」\n冒頭文：「{anchors.x_0}」\n結びの一文：「{optimal_x_T}」\n前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へスムーズかつ論理的に繋ぐ接続文（地の文のみ、1〜2文）を書いてください。"
             if hasattr(tok, "apply_chat_template") and tok.chat_template:
                 p_inf = tok.apply_chat_template([
                     {"role": "system", "content": sys_inf},
@@ -582,10 +595,11 @@ def run_experiment_on_domain(
             inp_len_inf = inp_inf["input_ids"].shape[-1]
             out_inf = model.generate(**inp_inf, max_new_tokens=100, do_sample=True, temperature=0.7)
             raw_inf = tok.decode(out_inf[0][inp_len_inf:], skip_special_tokens=True).strip()
-            raw_inf = re.sub(r'^(接続文|解説|補間)[^：:\n]*[：:\n]+', '', raw_inf).strip()
+            raw_inf = re.sub(r'^(接続文|解説|補間|問題)[^：:\n]*[：:\n]+', '', raw_inf).strip()
             raw_inf = re.sub(r'^[#*\s\d.：:\-「」]+', '', raw_inf).strip()
+            raw_inf = re.sub(r'(?m)^#{1,6}\s*.*$', '', raw_inf).strip()
             sents = extract_complete_sentences(raw_inf)
-            clean_sents = [s for s in sents if s != fwd_last and s != bwd_first and s != anchors.x_0 and s != optimal_x_T]
+            clean_sents = [s for s in sents if s != fwd_last and s != bwd_first and s != anchors.x_0 and s != optimal_x_T and not any(cs in s for cs in chat_slop)]
             return "".join(clean_sents) if clean_sents else ""
 
         bridge_res_v4 = solve_bidirectional_collision_bridge(
@@ -792,7 +806,7 @@ def generate_experiment_report_markdown(
         "",
         "## 1. 実行環境及び評価構成",
         "",
-        f"- **実行日**: 2026-11-01",
+        f"- **実行日**: {datetime.now().strftime('%Y-%m-%d')}",
         f"- **実行環境**: {tier_info['tier']} ({tier_info.get('device', 'cpu')})",
         f"- **サンプル規模**: 3 ドメイン × 各 N={n_nov} / {n_art} / {n_cot} 件 = 合計 {n_total} 課題（全 {n_trials} 生成試行）",
         f"- **生成スケール**: 実用段落スケール（400〜800文字 / 5〜8文 / 完全文節）",

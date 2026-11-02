@@ -266,7 +266,11 @@ export function deriveEndogenousGoalHypotheses(
   const q0 = embedSentenceUnit(safeX0);
   const stemsX0 = new Set(safeX0.match(/[\u4e00-\u9fff]+/g) || []);
   const cotMathMarkers = ['$', '\\', '=', '<', '>', '∀', '∃', '∈', '収束', '連続', '有界', '矛盾', '一意', 'Q.E.D.'];
-  const cotMetaPoems = ['重要な基盤', '重要な定理', '社会や科学', '様々な応用', 'モデル化において'];
+  const cotMetaPoems = [
+    '重要な基盤', '重要な定理', '社会や科学', '様々な応用', 'モデル化において',
+    '科学技術への影響', '社会や科学技術', '物理現象', '技術進歩', '不可欠な基盤',
+    '広範な適用', '広く応用', '応用される', '応用可能性', 'モデル化',
+  ];
   const scored: Array<{ text: string; score: number; tautology_penalty?: number; domain_penalty?: number }> = [];
 
   for (const c of candidates) {
@@ -396,7 +400,7 @@ function normalizeForPrefix(text: string): string {
 function char5Grams(text: string): Set<string> {
   const cleaned = text.replace(/\s+/g, '');
   if (cleaned.length < 5) {
-    return cleaned.length > 0 ? new Set([cleaned]) : new Set();
+    return new Set<string>();
   }
   const grams = new Set<string>();
   for (let i = 0; i <= cleaned.length - 5; i++) {
@@ -474,6 +478,10 @@ function deduplicateInfillSentences(infillText: string, existingSteps: string[])
     const pCand = normalizeForPrefix(cand);
     let isDup = false;
     for (const ex of existingPool) {
+      if (cand === ex || cand.replace(/[。！？!?]+$/, '') === ex.replace(/[。！？!?]+$/, '')) {
+        isDup = true;
+        break;
+      }
       const pEx = normalizeForPrefix(ex);
       if (pCand.length >= 5 && pEx.length >= 5 && pCand.slice(0, 5) === pEx.slice(0, 5)) {
         isDup = true;

@@ -60,7 +60,7 @@ def test_logits_stepper_refractory_forces_punctuation_late():
     steered, telemetry = stepper.steer_logits(logits)
 
     assert telemetry["is_refractory_forced"]
-    assert steered[42] > 10.0  # Boosted
+    assert steered[42] == pytest.approx(5.5)  # Boosted by +3.5 (from 2.0)
 
 
 def test_logits_stepper_clause_step_momentum_reset():

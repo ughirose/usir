@@ -136,7 +136,7 @@ class LogitsStepper:
                 steered[idx] -= 1000.0
             elif is_punct and is_refractory_forced:
                 # Strongly boost punctuation (prevent runaway run-on sentence)
-                steered[idx] += 15.0
+                steered[idx] += 3.5
             elif not bypassed:
                 # Steer towards backward bridge attraction phi and Hamiltonian direction
                 steer_val = 0.0

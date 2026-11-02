@@ -284,7 +284,11 @@ def derive_endogenous_goal_hypotheses(
     q0 = _embed_sentence_unit(safe_x0)
     stems_x0 = set(re.findall(r'[\u4e00-\u9fff]+', safe_x0))
     cot_math_markers = ["$", "\\", "=", "<", ">", "∀", "∃", "∈", "収束", "連続", "有界", "矛盾", "一意", "Q.E.D."]
-    cot_meta_poems = ["重要な基盤", "重要な定理", "社会や科学", "様々な応用", "モデル化において"]
+    cot_meta_poems = [
+        "重要な基盤", "重要な定理", "社会や科学", "様々な応用", "モデル化において",
+        "科学技術への影響", "社会や科学技術", "物理現象", "技術進歩", "不可欠な基盤",
+        "広範な適用", "広く応用", "応用される", "応用可能性", "モデル化",
+    ]
     scored_candidates: List[Dict[str, Any]] = []
 
     for idx, c in enumerate(candidates):
@@ -414,7 +418,7 @@ def _normalize_for_prefix(text: str) -> str:
 def _char_5grams(text: str) -> Set[str]:
     cleaned = re.sub(r'\s+', '', text)
     if len(cleaned) < 5:
-        return {cleaned} if cleaned else set()
+        return set()
     return {cleaned[i:i + 5] for i in range(len(cleaned) - 4)}
 
 
@@ -485,6 +489,9 @@ def _deduplicate_infill_sentences(infill_text: str, existing_steps: List[str]) -
         p_cand = _normalize_for_prefix(cand)
         is_dup = False
         for ex in existing_Pool:
+            if cand == ex or cand.strip("。！？!?") == ex.strip("。！？!?"):
+                is_dup = True
+                break
             p_ex = _normalize_for_prefix(ex)
             if len(p_cand) >= 5 and len(p_ex) >= 5 and p_cand[:5] == p_ex[:5]:
                 is_dup = True
