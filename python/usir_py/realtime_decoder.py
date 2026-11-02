@@ -50,7 +50,7 @@ BANNED_CJK_AND_META_CHARS: Set[str] = {
 }
 
 
-def is_non_japanese_cjk(text: str) -> bool:
+def is_non_japanese_cjk(text: Union[str, bytes]) -> bool:
     """Detects whether text contains any non-Japanese CJK character.
 
     Mechanical JIS EUC-JP whitelist check:
@@ -60,6 +60,8 @@ def is_non_japanese_cjk(text: str) -> bool:
     Standard Japanese Joyo and Jinmeiyo kanji (希, 著, 据, 与, 若, etc.) encode cleanly in euc_jp
     and return False with 0 false positives.
     """
+    if isinstance(text, bytes):
+        text = text.decode("utf-8", errors="ignore")
     for ch in text:
         code = ord(ch)
         if 0x4E00 <= code <= 0x9FFF:
@@ -300,6 +302,15 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             for token_str, token_id in vocab.items():
                 if is_non_japanese_cjk(token_str):
                     self.banned_cjk_token_ids.add(token_id)
+        elif hasattr(tokenizer, "convert_ids_to_tokens") and hasattr(tokenizer, "__len__"):
+            try:
+                for tid in range(len(tokenizer)):
+                    tok_text = tokenizer.convert_ids_to_tokens(tid)
+                    if tok_text and is_non_japanese_cjk(tok_text):
+                        self.banned_cjk_token_ids.add(tid)
+            except Exception:
+                pass
+        self._banned_token_ids = self.banned_cjk_token_ids
 
         self._punct_tensor = None
         self._banned_tensor = None

@@ -415,18 +415,44 @@ TIER3_CI_FIXTURES: Dict[str, Dict[str, Any]] = {
     "novel": {
         "vanilla": "雨夜の湯治場と老陶工の気配が漂い、冷気が指先を凍らせていた。軒先から落ちる水滴が踏み石を叩き、古い轆轤が低く軋み始める。",
         "v3": "雨夜の湯治場と老陶工の気配が漂い、冷気が指先を凍らせていた。削り屑が床に静かに積もり、窯の焚口から微かな熱気が漏れる。",
+        "v4": (
+            "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。"
+            "軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。"
+            "作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。"
+            "削り屑が濡れた板張りの床へと静かに積もり、窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。"
+            "手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のないまま沈黙の時間がゆっくりと沈殿していった。"
+            "やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。"
+            "火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。"
+            "微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。"
+        ),
         "fwd_cands": [["雨夜の湯治場と老陶工の気配が漂う。", "軒先からの水滴が踏み石を打つ。"]],
         "bwd_cands": [["窯の焚口から微かな熱気が漏れる。", "微かな軋みとともにすべての輪郭が沈む。"]],
     },
     "article": {
         "vanilla": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。",
         "v3": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。",
+        "v4": (
+            "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。"
+            "即時性を偏重した常時接続チャットは認知負荷を指数関数的に高め、文脈の断片化と合意形成の劣化を必然的にもたらす。"
+            "同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。"
+            "情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。"
+            "このような非同期プロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。"
+            "したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。"
+        ),
         "fwd_cands": [["組織の非同期コミュニケーションと生産性に関する観測。", "同期会議の削減が集中時間を生む。"]],
         "bwd_cands": [["自律的な意思決定フレームワークが浸透する。", "したがって本質的な競争優位は非同期プロトコルに帰着する。"]],
     },
     "cot_reasoning": {
         "vanilla": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。",
         "v3": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。",
+        "v4": (
+            r"前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。"
+            r"有界閉区間 $[a, b]$ 上で微分可能な関数列 $\{f_n\}$ に対し、導関数列 $\{f'_n\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\{f_n(x_0)\}$ が収束すると仮定する。"
+            r"平均値の定理を差分列 $\{f_n(x) - f_m(x)\}$ に適用することにより、任意の $\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。"
+            r"完備性より関数列 $\{f_n\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。"
+            r"極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。"
+            r"ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。"
+        ),
         "fwd_cands": [["前提確定：コンパクト群上の不変測度の存在証明。", "ステップ1：ハール測度の左不変性を仮定する。"]],
         "bwd_cands": [["ステップN-1：全単射性と等長性が示される。", "結論：不変測度の一意存在が証明された Q.E.D. 。"]],
     },
@@ -684,48 +710,81 @@ def _run_experiment_on_domain_impl(
                 b_steps = ["したがって極限操作 $n \\to \\infty$ の下で残差項は $0$ に収束し、連続性と一意性の十分条件が厳密に満たされる。"]
             llm_bwd_candidates.append(b_steps + [optimal_x_T] if b_steps else [optimal_x_T])
 
-        # Define midpoint infilling generator
-        def generate_midpoint_infill(fwd_last: str, bwd_first: str) -> str:
-            """Generates natural bridging infilling connecting forward wave tip to backward wave tip."""
-            sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。『冒頭文』『展開文』『結びの一文』といったメタ単語や見出しは一切書かず、前文から後文へ同一視点のまま自然に繋がる接続文（地の文のみ、1〜2文、60〜120字）のみを出力してください。"
+        # Define 3-point geodesic continuous rollout generator
+        def generate_continuous_rollout(x_0_in: str, x_mid_in: str, x_T_in: str) -> List[str]:
+            """Generates K=3 continuous, single-pass paragraph rollouts connecting x_0 -> x_mid -> x_T."""
             if domain == "cot_reasoning":
-                sys_inf = "あなたは定理証明の中間導出を担当する論理学者です。『冒頭文』『展開文』『結びの一文』『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説は一切書かず、数式記号を用いた論理導出文（1〜2文、60〜120字）のみを出力してください。"
-                user_msg = f"証明テーマ：「{theme}」\n前段ステップ：「{fwd_last}」\n後段ステップ：「{bwd_first}」\n前段から後段へ論理的・数式的に繋ぐ導出ステップ文（数式記号を含む地の文のみ、1〜2文、60〜120字）を書いてください。"
+                sys_roll = (
+                    "あなたは厳密な定理証明を論理的に展開する数理科学者です。"
+                    "『冒頭文』『展開文』『結びの一文』といったメタ解説や見出しを排し、"
+                    "開始の前提から中間核の論理導出を経て最終証明結論に至る、"
+                    "一気通貫の完全な1段落（6〜8文、450〜650字、数式記号を含む地の文のみ）を執筆してください。"
+                    "中国語簡体字やバッククォートは絶対に使用しないでください。"
+                )
+                usr_roll = (
+                    f"証明テーマ：「{theme}」\n"
+                    f"開始前提：「{x_0_in}」\n"
+                    f"中間転換核：「{x_mid_in}」\n"
+                    f"最終証明目標：「{x_T_in}」\n"
+                    "開始前提から出発し、中間転換核の導出ステップを中盤で自然に通過し、"
+                    "最終証明目標へ厳密に着地する一気通貫の証明段落（6〜8文、450〜650字、地の文のみ）を執筆してください。"
+                )
             else:
-                user_msg = f"テーマ：「{theme}」\n前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へ同一視点・時間帯のままスムーズに繋ぐ接続文（地の文のみ、1〜2文、60〜120字）を書いてください。"
+                sys_roll = (
+                    "あなたは最高峰の日本語表現力を持つ作家・論説家です。"
+                    "『冒頭文』『展開文』『結びの一文』『この記事では』といったメタ単語や見出し、会話文を一切排し、"
+                    "開始文の情景・提起から中間の展開核を経て結びの着地点に至る、"
+                    "一気通貫の完全な1段落（6〜8文、450〜650字、地の文のみ）を執筆してください。"
+                )
+                usr_roll = (
+                    f"テーマ：「{theme}」\n"
+                    f"開始文：「{x_0_in}」\n"
+                    f"中間展開核：「{x_mid_in}」\n"
+                    f"結びの着地点：「{x_T_in}」\n"
+                    "開始文から始まり、中間展開核の描写・考察を中盤で自然に織り込みながら、"
+                    "結びの着地点へと美しく収束する一気通貫の完全な段落（6〜8文、450〜650字、地の文のみ）を執筆してください。"
+                )
+
             if hasattr(tok, "apply_chat_template") and tok.chat_template:
-                p_inf = tok.apply_chat_template([
-                    {"role": "system", "content": sys_inf},
-                    {"role": "user", "content": user_msg},
+                roll_prompt = tok.apply_chat_template([
+                    {"role": "system", "content": sys_roll},
+                    {"role": "user", "content": usr_roll},
                 ], tokenize=False, add_generation_prompt=True)
             else:
-                p_inf = f"テーマ：{theme}\n前文：{fwd_last}\n後文：{bwd_first}\n接続文："
+                roll_prompt = f"{x_0_in}\n{usr_roll}"
 
-            inp_inf = tok(p_inf, return_tensors="pt").to(model.device)
-            inp_len_inf = inp_inf["input_ids"].shape[-1]
-            out_inf = model.generate(**inp_inf, logits_processor=[proc_v4], max_new_tokens=120, do_sample=True, temperature=0.7)
-            raw_inf = tok.decode(out_inf[0][inp_len_inf:], skip_special_tokens=True).strip()
-            raw_inf = re.sub(r'^(接続文|解説|補間|問題)[^：:\n]*[：:\n]+', '', raw_inf).strip()
-            raw_inf = re.sub(r'^[#*\s\d.：:\-「」]+', '', raw_inf).strip()
-            raw_inf = re.sub(r'(?m)^#{1,6}\s*.*$', '', raw_inf).strip()
-            sents = extract_complete_sentences(raw_inf)
-            clean_sents = [
-                s for s in sents
-                if s != fwd_last
-                and s != bwd_first
-                and s != anchors.x_0
-                and s != optimal_x_T
-                and not any(cs in s for cs in chat_slop)
-                and not _has_meta_or_cjk_leak(s)
-                and s.count("$") % 2 == 0
-            ]
-            return "".join(clean_sents) if clean_sents else ""
+            inp_roll = tok(roll_prompt, return_tensors="pt").to(model.device)
+            inp_len_r = inp_roll["input_ids"].shape[-1]
+            out_roll = model.generate(
+                **inp_roll,
+                logits_processor=[proc_v4],
+                max_new_tokens=360,
+                do_sample=True,
+                temperature=0.72,
+                num_return_sequences=3,
+            )
+            cands = []
+            for seq in out_roll:
+                gen_tokens = seq[inp_len_r:]
+                raw_text = tok.decode(gen_tokens, skip_special_tokens=True).strip()
+                raw_text = re.sub(r'^[#*\s\d.：:\-「」]+', '', raw_text).strip()
+                raw_text = re.sub(r'(?m)^#{1,6}\s*.*$', '', raw_text).strip()
+                if not raw_text.startswith(x_0_in[:10]):
+                    full_cand = x_0_in + (" " if not x_0_in.endswith("。") else "") + raw_text
+                else:
+                    full_cand = raw_text
+                if not full_cand.endswith(("。", "！", "？", "!", "?", "D.")):
+                    last_punct = max(full_cand.rfind("。"), full_cand.rfind("！"), full_cand.rfind("？"))
+                    if last_punct > 150:
+                        full_cand = full_cand[:last_punct + 1]
+                cands.append(full_cand)
+            return cands
 
         bridge_res_v4 = solve_bidirectional_collision_bridge(
             anchors,
             forward_candidates=llm_fwd_candidates,
             backward_candidates=llm_bwd_candidates,
-            infill_generator=generate_midpoint_infill,
+            continuous_rollout_generator=generate_continuous_rollout,
             k_candidates=2,
         )
         v4_collision_text = bridge_res_v4.welded_text
@@ -741,19 +800,40 @@ def _run_experiment_on_domain_impl(
         b_steps = [s.strip() + "。" for s in re.split(r'[。！？\n]+', b_resp) if len(s.strip()) >= 5]
         llm_bwd = [b_steps + [optimal_x_T]]
 
+        def ollama_continuous_rollout(x_0_in: str, x_mid_in: str, x_T_in: str) -> List[str]:
+            p = (
+                f"テーマ：「{theme}」\n"
+                f"開始：「{x_0_in}」\n"
+                f"中間：「{x_mid_in}」\n"
+                f"結び：「{x_T_in}」\n"
+                "開始から始まり、中間の展開を通過して結びに着地する一気通貫の完全な段落（450〜650文字、6〜8文）を執筆してください。"
+            )
+            cands = []
+            for _ in range(3):
+                resp = call_ollama_generate(p, model=tier_info["models"][0])
+                if resp:
+                    cands.append(resp)
+            return cands if cands else [x_0_in + " " + x_mid_in + " " + x_T_in]
+
         bridge_res_v4 = solve_bidirectional_collision_bridge(
             anchors,
             forward_candidates=llm_fwd,
             backward_candidates=llm_bwd,
+            continuous_rollout_generator=ollama_continuous_rollout,
             k_candidates=1,
         )
         v4_collision_text = bridge_res_v4.welded_text
     else:
         ci_fix = TIER3_CI_FIXTURES.get(domain, TIER3_CI_FIXTURES["novel"])
+        def tier3_continuous_rollout(x_0_in: str, x_mid_in: str, x_T_in: str) -> List[str]:
+            v4_text = ci_fix.get("v4", f"{x_0_in} {x_mid_in} {x_T_in}")
+            return [v4_text]
+
         bridge_res_v4 = solve_bidirectional_collision_bridge(
             anchors,
             forward_candidates=ci_fix["fwd_cands"],
             backward_candidates=ci_fix["bwd_cands"],
+            continuous_rollout_generator=tier3_continuous_rollout,
             k_candidates=1,
         )
         v4_collision_text = bridge_res_v4.welded_text

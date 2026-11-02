@@ -434,4 +434,55 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
 
     expect(sPenalized).toBeGreaterThan(sNormal + 10.0);
   });
+
+  it('selects best continuous rollout candidate via 3-point skeleton and full action minimization without stitching', () => {
+    const anchors = pinBoundaryAnchors('雨夜の湯治場と老陶工', 'novel');
+
+    const candRepetitive = anchors.x_0 + ' ' + '冷気が指先と肌を凍らせていた。'.repeat(25) + anchors.x_T;
+    expect(candRepetitive.length).toBeGreaterThanOrEqual(400);
+
+    const candOptimal =
+      anchors.x_0 +
+      ' ' +
+      '軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。' +
+      '作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。' +
+      '削り屑が濡れた板張りの床へと静かに積もり、窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。' +
+      '手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のないまま沈黙の時間がゆっくりと沈殿していった。' +
+      'やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。' +
+      '火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。' +
+      anchors.x_T;
+    expect(candOptimal.length).toBeGreaterThanOrEqual(400);
+
+    const candDivergent =
+      '急激な相転移と超伝導状態の発現により、量子ゆらぎが巨視的な結晶格子の欠陥をことごとく覆い尽くしていった。' +
+      '電子密度の特異点近傍において対称性の自発的破れが生じ、空間の位相的欠陥が指数関数的な速度で急速に増殖していった。' +
+      'ゲージ場の微細なゆらぎは長距離の非線形相互作用を媒介し、局所的なエネルギー散逸とエントロピー生成を不可逆的に加速させた。' +
+      'したがって臨界温度近傍における秩序パラメータの動的振る舞いは、従来の平均場理論や準粒子描像による漸近的予測を完全に逸脱している。' +
+      '最終的にすべての多体固有状態は熱力学的平衡へ到達することなく、強相関効果によって未知の非平衡トポロジカル定常状態へと捕捉された。' +
+      'この巨視的コヒーレンスの崩壊は、基底状態の縮退度とベリー位相の幾何学的性質が非自明な絡み合いを示していることを実験的に証明している。' +
+      'ゆえに超流動密度と相関長の特異な臨界指数が普遍性クラスの境界において発散し、量子カオスの領域へと完全に遷移した。';
+    expect(candDivergent.length).toBeGreaterThanOrEqual(400);
+
+    const mockContinuousGenerator = (x_0: string, x_mid: string, x_T: string): string[] => {
+      expect(x_0.length).toBeGreaterThan(0);
+      expect(x_mid.length).toBeGreaterThan(0);
+      expect(x_T.length).toBeGreaterThan(0);
+      return [candRepetitive, candOptimal, candDivergent];
+    };
+
+    const res = solveBidirectionalCollisionBridge(anchors, {
+      forward_candidates: TEST_FWD_NOVEL,
+      backward_candidates: TEST_BWD_NOVEL,
+      continuous_rollout_generator: mockContinuousGenerator,
+      k_candidates: 4,
+    });
+
+    expect(res.midpoint_pivot).toBeDefined();
+    expect(res.midpoint_pivot!.length).toBeGreaterThan(0);
+    expect(res.welded_text).toBe(candOptimal);
+    expect(res.welded_text.length).toBeGreaterThanOrEqual(400);
+    expect(res.infilling_step).toBeUndefined();
+    expect(res.welded_trajectory.length).toBeGreaterThanOrEqual(4);
+    expect(res.m_bridge).toBeGreaterThan(0.0);
+  });
 });

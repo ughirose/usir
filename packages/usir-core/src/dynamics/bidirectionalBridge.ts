@@ -59,6 +59,7 @@ export interface CollisionBridgeResult {
   backward_waves: TrajectoryWave[];
   collision_matrix: number[][];
   infilling_step?: string;
+  midpoint_pivot?: string;
 }
 
 export interface TensorBridgeResult {
@@ -839,6 +840,7 @@ export function solveBidirectionalCollisionBridge(
     backward_candidates?: string[][];
     infilling_step?: string;
     infill_generator?: (fwdLast: string, bwdFirst: string) => string;
+    continuous_rollout_generator?: (x_0: string, x_mid: string, x_T: string) => string[];
     beta?: number;
     lambda_bridge?: number;
     k_candidates?: number;
@@ -925,6 +927,113 @@ export function solveBidirectionalCollisionBridge(
   const optFwd = fwdWaves[bestPair[0]]!;
   const optBwd = bwdWaves[bestPair[1]]!;
 
+  // 1. Intermediate Midpoint Pivot x_mid* extraction
+  const qMid = anchors.q_start.map((v, idx) => 0.5 * (v + (anchors.q_end[idx] ?? 0)));
+  let candidatePivotSteps = [...optFwd.steps, ...optBwd.steps].filter(
+    (s) => s !== anchors.x_0 && s !== anchors.x_T
+  );
+  if (candidatePivotSteps.length === 0) {
+    candidatePivotSteps = [...optFwd.steps, ...optBwd.steps];
+  }
+  let midpointPivot: string | undefined = undefined;
+  let bestPivotDist = Infinity;
+  for (const step of candidatePivotSteps) {
+    const eStep = embedSentenceUnit(step);
+    let distSq = 0;
+    for (let k = 0; k < eStep.length; k++) {
+      const diff = eStep[k]! - (qMid[k] ?? 0);
+      distSq += diff * diff;
+    }
+    const dist = Math.sqrt(distSq);
+    if (dist < bestPivotDist) {
+      bestPivotDist = dist;
+      midpointPivot = step;
+    }
+  }
+
+  // 2. Continuous Rollout & Best-of-K Action Selection (Single-Pass Rollout Mode)
+  if (options?.continuous_rollout_generator) {
+    const xMidArg = midpointPivot ?? (optFwd.steps[optFwd.steps.length - 1] ?? anchors.x_0);
+    const candidates = options.continuous_rollout_generator(anchors.x_0, xMidArg, anchors.x_T);
+    if (!candidates || candidates.length === 0) {
+      throw new Error('continuous_rollout_generator returned an empty candidate array.');
+    }
+
+    const eT = embedSentenceUnit(anchors.x_T);
+    const eMid = midpointPivot ? embedSentenceUnit(midpointPivot) : null;
+
+    let bestFullAction = Infinity;
+    let bestText = '';
+    let bestSteps: string[] = [];
+    let bestD3Phase = 0;
+    let bestDWaypoint = 0;
+    let bestDLanding = 0;
+
+    for (const cand of candidates) {
+      const candText = cand;
+      const candSteps = candText.match(/[^。！？\r\n]+[。！？]?/g)?.map((s) => s.trim()).filter((s) => s.length > 0) ?? [candText];
+      const qda = computeThreePhaseQdaDistance(candText, { domain: anchors.domain });
+      const d3Phase = qda.d_3phase;
+
+      let dWaypoint = 0;
+      if (eMid) {
+        let minWDist = Infinity;
+        for (const step of candSteps) {
+          const eStep = embedSentenceUnit(step);
+          let distSq = 0;
+          for (let k = 0; k < eStep.length; k++) {
+            const diff = eStep[k]! - eMid[k]!;
+            distSq += diff * diff;
+          }
+          const d = Math.sqrt(distSq);
+          if (d < minWDist) minWDist = d;
+        }
+        dWaypoint = minWDist;
+      }
+
+      const finalStep = candSteps[candSteps.length - 1] ?? candText;
+      const eFinal = embedSentenceUnit(finalStep);
+      let distSqT = 0;
+      for (let k = 0; k < eFinal.length; k++) {
+        const diff = eFinal[k]! - eT[k]!;
+        distSqT += diff * diff;
+      }
+      const dLanding = Math.sqrt(distSqT);
+
+      const pRep = computeTrajectoryRepetitionPenalty(candSteps);
+      const sFull = d3Phase + 0.8 * dWaypoint + 1.2 * dLanding + pRep;
+
+      if (sFull < bestFullAction) {
+        bestFullAction = sFull;
+        bestText = candText;
+        bestSteps = candSteps;
+        bestD3Phase = d3Phase;
+        bestDWaypoint = dWaypoint;
+        bestDLanding = dLanding;
+      }
+    }
+
+    const mBridge = Math.max(0.0, Math.min(1.0, Math.exp(-lambdaBridge * bestFullAction)));
+
+    return {
+      domain: anchors.domain,
+      anchors,
+      optimal_pair: bestPair,
+      min_action: bestFullAction,
+      welded_trajectory: bestSteps,
+      welded_text: bestText,
+      m_bridge: mBridge,
+      d_geodesic: bestDWaypoint,
+      d_causal: bestDLanding,
+      d_3phase: bestD3Phase,
+      forward_waves: fwdWaves,
+      backward_waves: bwdWaves,
+      collision_matrix: actionMatrix,
+      infilling_step: undefined,
+      midpoint_pivot: midpointPivot,
+    };
+  }
+
   let rawInfill = options?.infilling_step;
   if (rawInfill === undefined && options?.infill_generator) {
     rawInfill = options.infill_generator(optFwd.steps[optFwd.steps.length - 1]!, optBwd.steps[0]!);
@@ -976,5 +1085,6 @@ export function solveBidirectionalCollisionBridge(
     backward_waves: bwdWaves,
     collision_matrix: actionMatrix,
     infilling_step: acceptedInfill,
+    midpoint_pivot: midpointPivot,
   };
 }

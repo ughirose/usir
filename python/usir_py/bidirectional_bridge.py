@@ -75,6 +75,7 @@ class CollisionBridgeResult:
     backward_waves: List[TrajectoryWave]
     collision_matrix: np.ndarray
     infilling_step: Optional[str] = None
+    midpoint_pivot: Optional[str] = None
 
 
 @dataclass
@@ -831,6 +832,7 @@ def solve_bidirectional_collision_bridge(
     backward_candidates: Optional[List[List[str]]] = None,
     infilling_step: Optional[str] = None,
     infill_generator: Optional[Callable[[str, str], str]] = None,
+    continuous_rollout_generator: Optional[Callable[[str, str, str], List[str]]] = None,
     beta: float = 0.5,
     lambda_bridge: float = 0.8,
     k_candidates: int = 4,
@@ -898,6 +900,87 @@ def solve_bidirectional_collision_bridge(
     opt_fwd = fwd_waves[best_pair[0]]
     opt_bwd = bwd_waves[best_pair[1]]
 
+    # 1. Intermediate Midpoint Pivot x_mid* extraction
+    q_mid = 0.5 * (anchors.q_start + anchors.q_end)
+    candidate_pivot_steps = [s for s in opt_fwd.steps + opt_bwd.steps if s != anchors.x_0 and s != anchors.x_T]
+    if not candidate_pivot_steps:
+        candidate_pivot_steps = opt_fwd.steps + opt_bwd.steps
+
+    midpoint_pivot: Optional[str] = None
+    best_pivot_dist = float("inf")
+    for step in candidate_pivot_steps:
+        e_step = _embed_sentence_unit(step)
+        dist = float(np.linalg.norm(e_step - q_mid))
+        if dist < best_pivot_dist:
+            best_pivot_dist = dist
+            midpoint_pivot = step
+
+    # 2. Continuous Rollout & Best-of-K Action Selection (Single-Pass Rollout Mode)
+    if continuous_rollout_generator is not None:
+        x_mid_arg = midpoint_pivot if midpoint_pivot is not None else (opt_fwd.steps[-1] if opt_fwd.steps else anchors.x_0)
+        candidates = continuous_rollout_generator(anchors.x_0, x_mid_arg, anchors.x_T)
+        if not candidates:
+            raise ValueError("continuous_rollout_generator returned an empty candidate list.")
+
+        e_T = _embed_sentence_unit(anchors.x_T)
+        e_mid = _embed_sentence_unit(midpoint_pivot) if midpoint_pivot is not None else None
+
+        best_full_action = float("inf")
+        best_cand_text = ""
+        best_cand_steps: List[str] = []
+        best_d_3phase = 0.0
+        best_d_waypoint = 0.0
+        best_d_landing = 0.0
+
+        for cand in candidates:
+            text_Y = cand if isinstance(cand, str) else "".join(cand)
+            steps_Y = [s.strip() for s in re.findall(r'[^。！？\r\n]+[。！？]?', text_Y.strip()) if s.strip()]
+            if not steps_Y:
+                steps_Y = [text_Y]
+
+            qda_res = compute_three_phase_qda_distance(text_Y, domain=anchors.domain)
+            d_3phase = qda_res["d_3phase"]
+
+            if e_mid is not None:
+                d_waypoint = min(float(np.linalg.norm(_embed_sentence_unit(s) - e_mid)) for s in steps_Y)
+            else:
+                d_waypoint = 0.0
+
+            e_final = _embed_sentence_unit(steps_Y[-1])
+            d_landing = float(np.linalg.norm(e_final - e_T))
+
+            p_rep = compute_trajectory_repetition_penalty(steps_Y)
+
+            s_full = float(d_3phase + 0.8 * d_waypoint + 1.2 * d_landing + p_rep)
+
+            if s_full < best_full_action:
+                best_full_action = s_full
+                best_cand_text = text_Y
+                best_cand_steps = steps_Y
+                best_d_3phase = d_3phase
+                best_d_waypoint = d_waypoint
+                best_d_landing = d_landing
+
+        m_bridge = float(np.clip(math.exp(-lambda_bridge * best_full_action), 0.0, 1.0))
+
+        return CollisionBridgeResult(
+            domain=anchors.domain,
+            anchors=anchors,
+            optimal_pair=best_pair,
+            min_action=best_full_action,
+            welded_trajectory=best_cand_steps,
+            welded_text=best_cand_text,
+            m_bridge=m_bridge,
+            d_geodesic=best_d_waypoint,
+            d_causal=best_d_landing,
+            d_3phase=best_d_3phase,
+            forward_waves=fwd_waves,
+            backward_waves=bwd_waves,
+            collision_matrix=action_matrix,
+            infilling_step=None,
+            midpoint_pivot=midpoint_pivot,
+        )
+
     raw_infill = infilling_step
     if raw_infill is None and infill_generator is not None:
         raw_infill = infill_generator(opt_fwd.steps[-1], opt_bwd.steps[0])
@@ -950,4 +1033,5 @@ def solve_bidirectional_collision_bridge(
         backward_waves=bwd_waves,
         collision_matrix=action_matrix,
         infilling_step=accepted_infill,
+        midpoint_pivot=midpoint_pivot,
     )

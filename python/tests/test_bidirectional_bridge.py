@@ -574,3 +574,68 @@ def test_paragraph_scale_barrier_penalty():
     s_penalized, _, _, _ = compute_collision_action(fwd, bwd, max_possible_len=350)
 
     assert s_penalized > s_normal + 10.0, f"Expected underflow barrier penalty: {s_penalized} vs {s_normal}"
+
+
+def test_continuous_rollout_3point_skeleton_selection():
+    """Verify USIR v4.0 continuous rollout selection via 3-point geodesic skeleton (x_0 -> x_mid* -> x_T*).
+
+    Tests that:
+    1. Intermediate Midpoint Pivot x_mid* is deterministically identified from collision waves.
+    2. single-pass continuous rollout candidates (>= 400 chars) are evaluated with S_full.
+    3. Candidate with minimum S_full is chosen intact as welded_text without sentence trimming.
+    """
+    anchors = pin_boundary_anchors(theme="雨夜の湯治場と老陶工", domain="novel")
+
+    # Construct 3 complete paragraph candidates (>= 400 chars each)
+    cand_repetitive = anchors.x_0 + " " + ("冷気が指先と肌を凍らせていた。" * 25) + anchors.x_T
+    assert len(cand_repetitive) >= 400
+
+    cand_optimal = (
+        anchors.x_0 + " "
+        + "軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸だけが湿った空気に混ざり合っていた。"
+        + "作業台に積もった陶土の匂いが立ち込め、使い込まれた古い轆轤が低く軋みながら規則的な回転を刻み始める。"
+        + "削り屑が濡れた板張りの床へと静かに積もり、窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。"
+        + "手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のないまま沈黙の時間がゆっくりと沈殿していった。"
+        + "やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。"
+        + "火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。"
+        + anchors.x_T
+    )
+    assert len(cand_optimal) >= 400
+
+    cand_divergent = (
+        "急激な相転移と超伝導状態の発現により、量子ゆらぎが巨視的な結晶格子の欠陥をことごとく覆い尽くしていった。"
+        "電子密度の特異点近傍において対称性の自発的破れが生じ、空間の位相的欠陥が指数関数的な速度で急速に増殖していった。"
+        "ゲージ場の微細なゆらぎは長距離の非線形相互作用を媒介し、局所的なエネルギー散逸とエントロピー生成を不可逆的に加速させた。"
+        "したがって臨界温度近傍における秩序パラメータの動的振る舞いは、従来の平均場理論や準粒子描像による漸近的予測を完全に逸脱している。"
+        "最終的にすべての多体固有状態は熱力学的平衡へ到達することなく、強相関効果によって未知の非平衡トポロジカル定常状態へと捕捉された。"
+        "この巨視的コヒーレンスの崩壊は、基底状態の縮退度とベリー位相の幾何学的性質が非自明な絡み合いを示していることを実験的に証明している。"
+        "ゆえに超流動密度と相関長の特異な臨界指数が普遍性クラスの境界において発散し、量子カオスの領域へと完全に遷移した。"
+    )
+    assert len(cand_divergent) >= 400
+
+    def mock_continuous_generator(x_0: str, x_mid: str, x_T: str) -> list[str]:
+        assert len(x_0) > 0
+        assert len(x_mid) > 0
+        assert len(x_T) > 0
+        return [cand_repetitive, cand_optimal, cand_divergent]
+
+    res = solve_bidirectional_collision_bridge(
+        anchors,
+        forward_candidates=TEST_FWD_NOVEL,
+        backward_candidates=TEST_BWD_NOVEL,
+        continuous_rollout_generator=mock_continuous_generator,
+        k_candidates=4,
+    )
+
+    # 1. Midpoint pivot must be extracted and non-empty
+    assert res.midpoint_pivot is not None
+    assert len(res.midpoint_pivot) > 0
+
+    # 2. Minimum action must choose cand_optimal
+    assert res.welded_text == cand_optimal
+    assert len(res.welded_text) >= 400
+
+    # 3. No string-stitching infill artifact
+    assert res.infilling_step is None
+    assert len(res.welded_trajectory) >= 4
+    assert res.m_bridge > 0.0
