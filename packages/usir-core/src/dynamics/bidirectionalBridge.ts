@@ -20,6 +20,7 @@
  */
 
 import { embedSentenceUnit, computeThreePhaseQdaDistance, computeSemanticGeodesicCurvature } from './manifoldGeodesic.js';
+import { isNonJapaneseCjk } from './cjkWhitelist.js';
 
 export type BridgeDomain = 'novel' | 'article' | 'cot_reasoning';
 
@@ -472,6 +473,9 @@ export const CHINESE_GRAMMAR_REGEXES: readonly RegExp[] = [
   /[\$a-zA-Z0-9]\s*与\s*[\$a-zA-Z0-9]/,
   /\$\s*与/,
   /与(?:此|之|其)/,
+  /(?:^|[、,。．！？\s\n])\s*令\s*[\$a-zA-Z\\]/,
+  /在\s*(?:[^\s。、]|\s*\$[^\$]+\$\s*){2,25}上/,
+  /第[一二三四五六七八九十百]+[步歩]/,
 ];
 
 function extractKanjiStems(text: string): Set<string> {
@@ -484,7 +488,7 @@ function extractKanjiStems(text: string): Set<string> {
   return stems;
 }
 
-function computeStemJaccard(sA: string, sB: string): number {
+export function computeStemJaccard(sA: string, sB: string): number {
   const stemsA = extractKanjiStems(sA);
   const stemsB = extractKanjiStems(sB);
   if (stemsA.size === 0 || stemsB.size === 0) return 0.0;
@@ -496,7 +500,64 @@ function computeStemJaccard(sA: string, sB: string): number {
   return unionLen > 0 ? inter / unionLen : 0.0;
 }
 
-function hasMetaOrCjkLeak(text: string): boolean {
+function getTailStems(text: string): Set<string> {
+  const core = text.trim().replace(/[。！？!?…]+$/, '');
+  let tail: string;
+  if (core.includes('、')) {
+    const parts = core.split('、');
+    tail = parts[parts.length - 1]!.trim();
+  } else {
+    tail = core.length >= 24 ? core.slice(-24) : core;
+  }
+  if (tail.length < 12 && core.length >= 24) {
+    tail = core.slice(-24);
+  }
+  return extractKanjiStems(tail);
+}
+
+export function isKanjiStemRepetition(
+  sA: string,
+  sB: string,
+  stemsA?: Set<string>,
+  stemsB?: Set<string>
+): boolean {
+  const ka = stemsA ?? extractKanjiStems(sA);
+  const kb = stemsB ?? extractKanjiStems(sB);
+  if (ka.size === 0 || kb.size === 0) return false;
+
+  let inter = 0;
+  for (const s of ka) {
+    if (kb.has(s)) inter++;
+  }
+  if (inter === 0) return false;
+
+  // (A) Full sentence kanji stem Jaccard >= 0.50
+  const unionLen = new Set([...ka, ...kb]).size;
+  if (unionLen > 0 && inter / unionLen >= 0.50) return true;
+
+  // (B) Overlap Coefficient >= 0.65 (min len >= 3)
+  const minLen = Math.min(ka.size, kb.size);
+  if (minLen >= 3 && inter / minLen >= 0.65) return true;
+
+  // (C) Tail-clause local Jaccard: common >= 2 and Jaccard >= 0.45
+  const ktA = getTailStems(sA);
+  const ktB = getTailStems(sB);
+  if (ktA.size > 0 && ktB.size > 0) {
+    let interT = 0;
+    for (const s of ktA) {
+      if (ktB.has(s)) interT++;
+    }
+    if (interT >= 2) {
+      const unionT = new Set([...ktA, ...ktB]).size;
+      if (unionT > 0 && interT / unionT >= 0.45) return true;
+    }
+  }
+
+  return false;
+}
+
+export function hasMetaOrCjkLeak(text: string): boolean {
+  if (isNonJapaneseCjk(text)) return true;
   for (const m of META_LEAK_MARKERS) {
     if (text.includes(m)) return true;
   }
@@ -530,7 +591,7 @@ export function sanitizeWaveSteps(
   const nSteps = validSteps.length;
 
   for (let idx = 0; idx < nSteps; idx++) {
-    const s = validSteps[idx]!;
+    const s = validSteps[idx]!.replace(/\u6b65/g, '\u6b69');
     const isX0 = idx === 0 && normX0 !== undefined && s === normX0;
     const isXT = idx === nSteps - 1 && normXT !== undefined && s === normXT;
     const isBoundary = isX0 || isXT;
@@ -542,12 +603,17 @@ export function sanitizeWaveSteps(
     let isDup = false;
     if (!isBoundary) {
       const sCore = s.replace(/[。！？!?]+$/, '');
-      for (const prevS of cleanSteps) {
+      for (let prevIdx = 0; prevIdx < cleanSteps.length; prevIdx++) {
+        const prevS = cleanSteps[prevIdx]!;
         if (s === prevS || sCore === prevS.replace(/[。！？!?]+$/, '')) {
           isDup = true;
           break;
         }
         if (compute5GramOverlap(s, prevS) >= 0.50) {
+          isDup = true;
+          break;
+        }
+        if (isKanjiStemRepetition(s, prevS, stemsS, seenStems[prevIdx])) {
           isDup = true;
           break;
         }
@@ -558,15 +624,8 @@ export function sanitizeWaveSteps(
           isDup = true;
         } else if (compute5GramOverlap(s, normX0) >= 0.50) {
           isDup = true;
-        } else if (stemsS.size > 0 && stemsX0.size > 0) {
-          let inter0 = 0;
-          for (const st of stemsS) {
-            if (stemsX0.has(st)) inter0++;
-          }
-          const uLen0 = new Set([...stemsS, ...stemsX0]).size;
-          if (uLen0 > 0 && inter0 / uLen0 >= 0.50) {
-            isDup = true;
-          }
+        } else if (isKanjiStemRepetition(s, normX0, stemsS, stemsX0)) {
+          isDup = true;
         }
       }
       // Preceding step (idx < nSteps - 1) echoing terminal anchor x_T
@@ -575,30 +634,8 @@ export function sanitizeWaveSteps(
           isDup = true;
         } else if (compute5GramOverlap(s, normXT) >= 0.50) {
           isDup = true;
-        } else if (stemsS.size > 0 && stemsXT.size > 0) {
-          let interT = 0;
-          for (const st of stemsS) {
-            if (stemsXT.has(st)) interT++;
-          }
-          const uLenT = new Set([...stemsS, ...stemsXT]).size;
-          if (uLenT > 0 && interT / uLenT >= 0.50) {
-            isDup = true;
-          }
-        }
-      }
-      if (!isDup && stemsS.size > 0) {
-        for (const prevStems of seenStems) {
-          if (prevStems.size > 0) {
-            let inter = 0;
-            for (const st of stemsS) {
-              if (prevStems.has(st)) inter++;
-            }
-            const uLen = new Set([...stemsS, ...prevStems]).size;
-            if (uLen > 0 && inter / uLen >= 0.50) {
-              isDup = true;
-              break;
-            }
-          }
+        } else if (isKanjiStemRepetition(s, normXT, stemsS, stemsXT)) {
+          isDup = true;
         }
       }
     }
@@ -655,12 +692,7 @@ export function computeTrajectoryRepetitionPenalty(steps: string[]): number {
       const sa = stemsList[a]!;
       const sb = stemsList[b]!;
       if (sa.size > 0 && sb.size > 0) {
-        let inter = 0;
-        for (const st of sa) {
-          if (sb.has(st)) inter++;
-        }
-        const uLen = new Set([...sa, ...sb]).size;
-        if (uLen > 0 && inter / uLen >= 0.50) {
+        if (isKanjiStemRepetition(steps[a]!, steps[b]!, sa, sb)) {
           penalty += 6.0;
         }
       }
@@ -705,7 +737,7 @@ function deduplicateInfillSentences(infillText: string, existingSteps: string[])
         isDup = true;
         break;
       }
-      if (computeStemJaccard(cand, ex) >= 0.50) {
+      if (isKanjiStemRepetition(cand, ex)) {
         isDup = true;
         break;
       }
@@ -733,7 +765,8 @@ export function computeCollisionAction(
   fwdWave: TrajectoryWave,
   bwdWave: TrajectoryWave,
   beta = 0.5,
-  domain: BridgeDomain = 'novel'
+  domain: BridgeDomain = 'novel',
+  options?: { maxPossibleLen?: number }
 ): [number, number, number, number] {
   const tipFwd = fwdWave.tip_vector;
   const tipBwd = bwdWave.tip_vector;
@@ -789,7 +822,13 @@ export function computeCollisionAction(
   const qdaRes = computeThreePhaseQdaDistance(weldedText, { domain });
   const d3Phase = qdaRes.d_3phase;
 
-  const sTotal = dGeodesic + dCausal + 0.5 * beta * d3Phase;
+  let sTotal = dGeodesic + dCausal + 0.5 * beta * d3Phase;
+  const L = weldedText.length;
+  const checkLen = options?.maxPossibleLen !== undefined ? options.maxPossibleLen : L;
+  if (checkLen >= 250 && L < 320) {
+    const shortPenalty = 4.0 * Math.pow(Math.max(0, (320.0 - L) / 100.0), 2);
+    sTotal += shortPenalty;
+  }
   return [sTotal, dGeodesic, dCausal, d3Phase];
 }
 
@@ -855,6 +894,14 @@ export function solveBidirectionalCollisionBridge(
   const Kbwd = bwdWaves.length;
   const actionMatrix: number[][] = [];
 
+  let maxPossibleLen = 0;
+  for (const f of fwdWaves) {
+    for (const b of bwdWaves) {
+      const candL = (f.steps.join('') + b.steps.join('')).length;
+      if (candL > maxPossibleLen) maxPossibleLen = candL;
+    }
+  }
+
   let bestAction = Infinity;
   let bestPair: [number, number] = [0, 0];
   let bestComponents: [number, number, number] = [0, 0, 0];
@@ -862,7 +909,9 @@ export function solveBidirectionalCollisionBridge(
   for (let i = 0; i < Kfwd; i++) {
     const row: number[] = [];
     for (let j = 0; j < Kbwd; j++) {
-      const [sTot, dGeo, dCau, d3ph] = computeCollisionAction(fwdWaves[i]!, bwdWaves[j]!, beta, anchors.domain);
+      const [sTot, dGeo, dCau, d3ph] = computeCollisionAction(
+        fwdWaves[i]!, bwdWaves[j]!, beta, anchors.domain, { maxPossibleLen }
+      );
       row.push(sTot);
       if (sTot < bestAction) {
         bestAction = sTot;
@@ -889,16 +938,17 @@ export function solveBidirectionalCollisionBridge(
 
   if (cleanInfillSents.length > 0) {
     const infilledFwdWave = buildForwardWave(optFwd.wave_id, [...optFwd.steps, ...cleanInfillSents]);
-    const [sInfilled] = computeCollisionAction(infilledFwdWave, optBwd, beta, anchors.domain);
-    const curvDirect = computeSemanticGeodesicCurvature(existingSteps.join('')).mean_curvature;
+    const [sInfilled] = computeCollisionAction(infilledFwdWave, optBwd, beta, anchors.domain, { maxPossibleLen });
+    const curvDirect = computeSemanticGeodesicCurvature(existingSteps.join(''), { domain: anchors.domain }).mean_curvature;
     const infilledSteps = [...optFwd.steps, ...cleanInfillSents, ...optBwd.steps];
-    const curvInfilled = computeSemanticGeodesicCurvature(infilledSteps.join('')).mean_curvature;
+    const curvInfilled = computeSemanticGeodesicCurvature(infilledSteps.join(''), { domain: anchors.domain }).mean_curvature;
 
     const sDirectAug = bestAction + 0.5 * curvDirect;
     const sInfilledAug = sInfilled + 0.5 * curvInfilled;
 
     const dCausalDirect = bestComponents[1];
-    if (sInfilledAug < sDirectAug || dCausalDirect > 0.65 || existingSteps.length < 4) {
+    const directLen = existingSteps.join('').length;
+    if (sInfilledAug < sDirectAug || dCausalDirect > 0.65 || existingSteps.length < 4 || directLen < 350) {
       acceptedInfill = cleanInfillSents.join('');
       weldedTrajectory = sanitizeWaveSteps(infilledSteps, anchors.x_0, anchors.x_T);
     } else {

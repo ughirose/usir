@@ -236,12 +236,20 @@ def _embed_sentence_unit(sentence: str, dim: int = 24) -> np.ndarray:
     return vec
 
 
+DOMAIN_CURVATURE_TARGETS: Dict[str, float] = {
+    "novel": 0.30,
+    "article": 0.48,
+    "cot_reasoning": 0.52,
+}
+
+
 def compute_semantic_geodesic_curvature(
     text_or_units: Union[str, List[str]],
     embeddings: Optional[np.ndarray] = None,
     alpha_kappa: float = 1.8,
     alpha_brownian: float = 1.2,
     is_coordinates: bool = False,
+    domain: str = "novel",
 ) -> Dict[str, Any]:
     r"""Computes semantic space trajectory geodesic curvature, torsion, and Brownian diffusion.
 
@@ -281,6 +289,7 @@ def compute_semantic_geodesic_curvature(
                 "m_geodesic": 1.0,
                 "is_brownian_catalog": False,
                 "units_count": M,
+                "target_curvature": DOMAIN_CURVATURE_TARGETS.get(domain, 0.30),
             }
         diffs = np.vstack([_embed_sentence_unit(u) for u in units])
 
@@ -331,13 +340,21 @@ def compute_semantic_geodesic_curvature(
     net_disp_sq = float(np.linalg.norm(net_step_vec) ** 2) + 1e-5
     brownian_ratio = float((len(diffs) * sum_steps_sq) / net_disp_sq)
 
+    target_kappa = DOMAIN_CURVATURE_TARGETS.get(domain, 0.30)
+    if domain == "novel":
+        curv_dev = max(0.0, mean_curv - target_kappa)
+        catalog_curv_thresh = 0.50
+    else:
+        curv_dev = abs(mean_curv - target_kappa)
+        catalog_curv_thresh = target_kappa + 0.22
+
     # Geodesic multiplier M_geodesic in [0, 1]
     brownian_excess = max(0.0, brownian_ratio - 1.5)
-    exponent = -(alpha_kappa * mean_curv + alpha_brownian * brownian_excess)
+    exponent = -(alpha_kappa * curv_dev + alpha_brownian * brownian_excess)
     m_geodesic = float(np.clip(math.exp(exponent), 0.0, 1.0))
 
     # Flag if text is cataloging props without narrative trajectory
-    is_brownian_catalog = bool(brownian_ratio > 2.0 or mean_curv > 0.50)
+    is_brownian_catalog = bool(brownian_ratio > 2.0 or mean_curv > catalog_curv_thresh)
 
     return {
         "curvatures": curvatures,
@@ -348,6 +365,7 @@ def compute_semantic_geodesic_curvature(
         "m_geodesic": m_geodesic,
         "is_brownian_catalog": is_brownian_catalog,
         "units_count": M,
+        "target_curvature": target_kappa,
     }
 
 

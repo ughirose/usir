@@ -578,11 +578,11 @@ def run_experiment_on_domain(
         proc_v4.register_bridge_embeddings(model, tok, anchors.x_0, optimal_x_T)
 
         if domain == "cot_reasoning":
-            sys_fwd = "あなたは定理証明の前半ステップを記述する数理科学者です。冒頭文の直後の論理の第一歩（2〜3文）のみを書き、結論を先取りしたりメタ解説を入れたりしないでください。中国語簡体字やバッククォートは絶対に使用しないでください。"
-            usr_fwd = f"証明テーマ：「{theme}」\n開始文：「{anchors.x_0}」\nこの開始文の直後に続く論理導出の第一歩（2〜3文、地の文のみ）を記述してください。"
+            sys_fwd = "あなたは定理証明の前半ステップを記述する数理科学者です。冒頭文の直後の論理導出（3〜4文、180〜260字）を書き、結論を先取りしたりメタ解説を入れたりしないでください。中国語簡体字やバッククォートは絶対に使用しないでください。"
+            usr_fwd = f"証明テーマ：「{theme}」\n開始文：「{anchors.x_0}」\nこの開始文の直後に続く論理導出の展開ステップ（3〜4文、180〜260字、地の文のみ）を記述してください。"
         else:
-            sys_fwd = "あなたは文章の前半部のみを執筆する作家・論説家です。冒頭文の直後の場面・論理の第一歩（2〜3文）のみを書き、時間を翌朝に進めたり結論を先取りしたりしないこと（会話文の乱発や唐突な登場人物の追加を禁ずる）。見出しや解説は一切書かず地の文のみを出力してください。"
-            usr_fwd = f"テーマ：「{theme}」\n開始文：「{anchors.x_0}」\nこの開始文の直後の場面・論理の第一歩（2〜3文、地の文のみ）を執筆してください。"
+            sys_fwd = "あなたは文章の前半部を展開する作家・論説家です。冒頭文の直後の場面・論理の展開（3〜4文、180〜260字）を書き、時間を翌朝に進めたり結論を先取りしたりしないこと（会話文の乱発や唐突な登場人物の追加を禁ずる）。見出しや解説は一切書かず地の文のみを出力してください。"
+            usr_fwd = f"テーマ：「{theme}」\n開始文：「{anchors.x_0}」\nこの開始文の直後の場面・論理の展開（3〜4文、180〜260字、地の文のみ）を執筆してください。"
 
         if hasattr(tok, "apply_chat_template") and tok.chat_template:
             fwd_prompt = tok.apply_chat_template([
@@ -597,7 +597,7 @@ def run_experiment_on_domain(
         out_fwd = model.generate(
             **inp_f,
             logits_processor=[proc_v4],
-            max_new_tokens=160,
+            max_new_tokens=240,
             do_sample=True,
             temperature=0.72,
             num_return_sequences=2,
@@ -615,18 +615,18 @@ def run_experiment_on_domain(
                 and s != anchors.x_0
                 and not _has_meta_or_cjk_leak(s)
                 and s.count("$") % 2 == 0
-            ][:3]
+            ][:4]
             if not f_steps and domain == "cot_reasoning":
                 f_steps = [f"いま「{theme}」の条件を満たす任意の要素列 $\\{{x_n\\}}$ に対し、基本不等式による有界性と単調性を適用して評価を行う。"]
             llm_fwd_candidates.append([anchors.x_0] + f_steps if f_steps else [anchors.x_0])
 
         s_fwd_last = llm_fwd_candidates[0][-1]
-        system_bwd = "あなたは文章の後半接続を執筆するプロの作家・論説家です。『冒頭文』『展開文』『結びの一文』『この記事では』というメタ単語を出力に含めることを厳禁とします。前段の文から最終文へ同一の視点・時間帯のまま直結する2文（地の文のみ、60〜130字）のみを生成してください。会話文や新たな登場人物の追加を禁じます。"
+        system_bwd = "あなたは文章の後半接続を執筆するプロの作家・論説家です。『冒頭文』『展開文』『結びの一文』『この記事では』というメタ単語を出力に含めることを厳禁とします。前段の文から最終文へ同一の視点・時間帯のまま直結する3文（地の文のみ、140〜200字）を生成してください。会話文や新たな登場人物の追加を禁じます。"
         if domain == "cot_reasoning":
-            system_bwd = "あなたは厳密な定理証明を執筆する数理科学者です。『冒頭文』『展開文』『結びの一文』『重要な定理』『社会や科学技術への影響』『モデル化』というメタ単語を出力に含めることを厳禁とし、前段ステップから最終命題へ同一の論理空間のまま直結する2文（数式記号を含む地の文のみ、60〜140字）のみを出力してください。"
-            user_msg_bwd = f"証明テーマ：「{theme}」\n前段の文：「{s_fwd_last}」\n最終文：「{optimal_x_T}」\n前段の文から最終文へ直結する中間導出の2文（地の文のみ、メタ単語厳禁）を記述してください。"
+            system_bwd = "あなたは厳密な定理証明を執筆する数理科学者です。『冒頭文』『展開文』『結びの一文』『重要な定理』『社会や科学技術への影響』『モデル化』というメタ単語を出力に含めることを厳禁とし、前段ステップから最終命題へ同一の論理空間のまま直結する3文（数式記号を含む地の文のみ、140〜200字）のみを出力してください。"
+            user_msg_bwd = f"証明テーマ：「{theme}」\n前段の文：「{s_fwd_last}」\n最終文：「{optimal_x_T}」\n前段の文から最終文へ直結する中間導出の3文（地の文のみ、140〜200字、メタ単語厳禁）を記述してください。"
         else:
-            user_msg_bwd = f"テーマ：「{theme}」\n前段の文：「{s_fwd_last}」\n最終文：「{optimal_x_T}」\n前段の文から最終文へ同一の視点・時間帯のまま直結する2文（地の文のみ、メタ単語厳禁）を執筆してください。"
+            user_msg_bwd = f"テーマ：「{theme}」\n前段の文：「{s_fwd_last}」\n最終文：「{optimal_x_T}」\n前段の文から最終文へ同一の視点・時間帯のまま直結する3文（地の文のみ、140〜200字、メタ単語厳禁）を執筆してください。"
         if hasattr(tok, "apply_chat_template") and tok.chat_template:
             msg_b = [
                 {"role": "system", "content": system_bwd},
@@ -634,14 +634,14 @@ def run_experiment_on_domain(
             ]
             bwd_prompt = tok.apply_chat_template(msg_b, tokenize=False, add_generation_prompt=True)
         else:
-            bwd_prompt = f"テーマ：{theme}\n前段：{s_fwd_last}\n最終文：{optimal_x_T}\n接続する2文："
+            bwd_prompt = f"テーマ：{theme}\n前段：{s_fwd_last}\n最終文：{optimal_x_T}\n接続する3文："
 
         inp_b = tok(bwd_prompt, return_tensors="pt").to(model.device)
         inp_len_b = inp_b["input_ids"].shape[-1]
         out_bwd = model.generate(
             **inp_b,
             logits_processor=[proc_v4],
-            max_new_tokens=160,
+            max_new_tokens=200,
             do_sample=True,
             temperature=0.72,
             num_return_sequences=2,
@@ -665,7 +665,7 @@ def run_experiment_on_domain(
                 b_steps = b_steps[1:]
             if b_steps and (b_steps[-1] == optimal_x_T or b_steps[-1].endswith(optimal_x_T[-10:])):
                 b_steps = b_steps[:-1]
-            b_steps = b_steps[:2]
+            b_steps = b_steps[:3]
             if not b_steps and domain == "cot_reasoning":
                 b_steps = ["したがって極限操作 $n \\to \\infty$ の下で残差項は $0$ に収束し、連続性と一意性の十分条件が厳密に満たされる。"]
             llm_bwd_candidates.append(b_steps + [optimal_x_T] if b_steps else [optimal_x_T])
@@ -673,12 +673,12 @@ def run_experiment_on_domain(
         # Define midpoint infilling generator
         def generate_midpoint_infill(fwd_last: str, bwd_first: str) -> str:
             """Generates natural bridging infilling connecting forward wave tip to backward wave tip."""
-            sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。『冒頭文』『展開文』『結びの一文』といったメタ単語や見出しは一切書かず、前文から後文へ同一視点のまま自然に繋がる接続文（地の文のみ、1〜2文、40〜90字）のみを出力してください。"
+            sys_inf = "あなたは文章の中間接続を担当するプロの作家・論説家です。『冒頭文』『展開文』『結びの一文』といったメタ単語や見出しは一切書かず、前文から後文へ同一視点のまま自然に繋がる接続文（地の文のみ、1〜2文、60〜120字）のみを出力してください。"
             if domain == "cot_reasoning":
-                sys_inf = "あなたは定理証明の中間導出を担当する論理学者です。『冒頭文』『展開文』『結びの一文』『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説は一切書かず、数式記号を用いた論理導出文のみを出力してください。"
-                user_msg = f"証明テーマ：「{theme}」\n前段ステップ：「{fwd_last}」\n後段ステップ：「{bwd_first}」\n前段から後段へ論理的・数式的に繋ぐ導出ステップ文（数式記号を含む地の文のみ、1〜2文）を書いてください。"
+                sys_inf = "あなたは定理証明の中間導出を担当する論理学者です。『冒頭文』『展開文』『結びの一文』『重要な定理』『社会や科学技術への影響』『モデル化』といったメタ解説は一切書かず、数式記号を用いた論理導出文（1〜2文、60〜120字）のみを出力してください。"
+                user_msg = f"証明テーマ：「{theme}」\n前段ステップ：「{fwd_last}」\n後段ステップ：「{bwd_first}」\n前段から後段へ論理的・数式的に繋ぐ導出ステップ文（数式記号を含む地の文のみ、1〜2文、60〜120字）を書いてください。"
             else:
-                user_msg = f"テーマ：「{theme}」\n前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へ同一視点・時間帯のままスムーズに繋ぐ接続文（地の文のみ、1〜2文）を書いてください。"
+                user_msg = f"テーマ：「{theme}」\n前文：「{fwd_last}」\n後文：「{bwd_first}」\n前文から後文へ同一視点・時間帯のままスムーズに繋ぐ接続文（地の文のみ、1〜2文、60〜120字）を書いてください。"
             if hasattr(tok, "apply_chat_template") and tok.chat_template:
                 p_inf = tok.apply_chat_template([
                     {"role": "system", "content": sys_inf},
@@ -689,7 +689,7 @@ def run_experiment_on_domain(
 
             inp_inf = tok(p_inf, return_tensors="pt").to(model.device)
             inp_len_inf = inp_inf["input_ids"].shape[-1]
-            out_inf = model.generate(**inp_inf, logits_processor=[proc_v4], max_new_tokens=100, do_sample=True, temperature=0.7)
+            out_inf = model.generate(**inp_inf, logits_processor=[proc_v4], max_new_tokens=120, do_sample=True, temperature=0.7)
             raw_inf = tok.decode(out_inf[0][inp_len_inf:], skip_special_tokens=True).strip()
             raw_inf = re.sub(r'^(接続文|解説|補間|問題)[^：:\n]*[：:\n]+', '', raw_inf).strip()
             raw_inf = re.sub(r'^[#*\s\d.：:\-「」]+', '', raw_inf).strip()
@@ -747,7 +747,7 @@ def run_experiment_on_domain(
     # Evaluate all 3 outputs with physical metrics AND automated blind judge
     def evaluate_output(text: str) -> Dict[str, Any]:
         ext = extract_usir_24d(text)
-        geodesic = compute_semantic_geodesic_curvature(text)
+        geodesic = compute_semantic_geodesic_curvature(text, domain=domain)
         qda = compute_three_phase_qda_distance(text, domain=domain)
         grpo = compute_multiplicative_grpo_reward(text, x_0=anchors.x_0, x_T=optimal_x_T, domain=domain)
         judge = evaluate_llm_judge(text, domain=domain, prompt=anchors.x_0, target_conclusion=optimal_x_T)

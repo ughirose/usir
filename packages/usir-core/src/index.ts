@@ -20,6 +20,7 @@ export * from './dynamics/landauPhase.js';
 export * from './dynamics/equalizer.js';
 export * from './dynamics/manifoldGeodesic.js';
 export * from './dynamics/bidirectionalBridge.js';
+export * from './dynamics/cjkWhitelist.js';
 
 // Clean Room Gate & Micro-Constraint Gate
 export * from './cleanroom/threeRoomGate.js';

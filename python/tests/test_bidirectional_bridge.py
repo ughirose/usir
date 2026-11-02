@@ -485,3 +485,92 @@ def test_sanitize_wave_steps_boundary_whitespace_and_x0_echo_dedup():
     assert cleaned_echo[0] == x0
     assert cleaned_echo[1] == "信号所の手前で列車が止まった。"
     assert cleaned_echo[2] == xT
+
+
+def test_sanitize_wave_steps_prunes_euc_jp_simplified_cjk_and_chinese_grammar():
+    """Verify non-Japanese CJK (隐, 测, 步) and Chinese grammar (令 $f_n$, 在...上, 第一步) are pruned with 0 false positives."""
+    from usir_py.bidirectional_bridge import _has_meta_or_cjk_leak, sanitize_wave_steps
+    from usir_py.realtime_decoder import is_non_japanese_cjk
+
+    # 1. Direct character / string EUC-JP whitelist check
+    assert is_non_japanese_cjk("隐")
+    assert is_non_japanese_cjk("测")
+    assert is_non_japanese_cjk("这")
+    assert is_non_japanese_cjk("们")
+    assert is_non_japanese_cjk("为")
+    assert is_non_japanese_cjk("设")
+    assert is_non_japanese_cjk("证")
+    assert is_non_japanese_cjk("满")
+    assert is_non_japanese_cjk("导")
+    assert is_non_japanese_cjk("边")
+    assert is_non_japanese_cjk("步")  # U+6B65 (simplified/old)
+    assert not is_non_japanese_cjk("歩")  # U+6B69 (standard Japanese)
+    assert not is_non_japanese_cjk("希")
+    assert not is_non_japanese_cjk("著")
+    assert not is_non_japanese_cjk("据")
+    assert not is_non_japanese_cjk("与")
+    assert not is_non_japanese_cjk("若")
+
+    # 2. Chinese mathematical & spatial grammar patterns
+    leaks = [
+        "令 $f_n$ 為一実関数列とする。",
+        "したがって、令 $x \\in \\Omega$ とする。",
+        "在閉区間 $[a, b]$ 上で連続関数を仮定する。",
+        "第一步：ヒルベルト空間の完備性を確認する。",
+        "第二步：コーシー列の収束を評価する。",
+        "霧の中に隐れた輪郭を凝視する。",
+        "温度の微細な変化を测定した。",
+    ]
+    for leak_sent in leaks:
+        assert _has_meta_or_cjk_leak(leak_sent), f"Failed to detect leak: {leak_sent}"
+
+    # 3. Standard Japanese Joyo kanji preservation (zero false positives)
+    clean_japanese = [
+        "希望に満ちた夜明けの光が梢を照らし出した。",
+        "著しい科学技術の進展が理論の妥当性を支えている。",
+        "旅人は道端の巨石に腰を据え、乾いた喉を潤した。",
+        "自律分散的なプロトコルが組織の生産性に寄与する。",
+        "若き哲学者たちは深夜まで激論を交わした。",
+        "訴訟の手続きが滞りなく完了した。",
+        "命題の前提条件を簡潔に説明する。",
+        "湿った空気が草むらに深く沈殿していく。",
+        "一歩一歩、雪道を踏みしめて前進する。",
+    ]
+    for j_sent in clean_japanese:
+        assert not _has_meta_or_cjk_leak(j_sent), f"False positive leak detected: {j_sent}"
+
+
+def test_tail_clause_local_jaccard_novel_04_motif_pruning():
+    """Verify novel-04 tail-clause motif repetition (湿地...渡り鳥) is pruned by _is_kanji_stem_repetition."""
+    from usir_py.bidirectional_bridge import _is_kanji_stem_repetition, sanitize_wave_steps
+
+    s_a = "遠くの湿地では渡り鳥の姿すら消え…。"
+    s_b = "寒風に揺れる干拓地の光跡に、遠くの湿地でさえも渡り鳥の群れが消えていった。"
+
+    # Must trigger repetition check
+    assert _is_kanji_stem_repetition(s_a, s_b), "Failed to detect novel-04 tail clause repetition!"
+
+    # In sanitize_wave_steps, s_b must be pruned when s_a preceded it
+    x0 = "薄暮の干拓地に冷たい風が吹き抜けていた。"
+    xT = "やがて冷たい夜の静寂が湿地全体を覆い尽くした。"
+    cleaned = sanitize_wave_steps([x0, s_a, s_b, xT], x_0=x0, x_T=xT)
+    assert s_a in cleaned
+    assert s_b not in cleaned
+    assert len(cleaned) == 3
+
+
+def test_paragraph_scale_barrier_penalty():
+    """Verify compute_collision_action adds underflow penalty when max_possible_len >= 250 and L < 320."""
+    from usir_py.bidirectional_bridge import TrajectoryWave, compute_collision_action
+    import numpy as np
+
+    tip = np.full(24, 0.5)
+    fwd = TrajectoryWave(wave_id=0, direction="forward", steps=["短い文です。"], tip_vector=tip, direction_vector=tip)
+    bwd = TrajectoryWave(wave_id=0, direction="backward", steps=["終わりの文です。"], tip_vector=tip, direction_vector=tip)
+
+    # When max_possible_len is None or short (< 250), no underflow penalty
+    s_normal, _, _, _ = compute_collision_action(fwd, bwd, max_possible_len=None)
+    # When max_possible_len >= 250 (e.g. from realistic candidate pool), underflow penalty is added
+    s_penalized, _, _, _ = compute_collision_action(fwd, bwd, max_possible_len=350)
+
+    assert s_penalized > s_normal + 10.0, f"Expected underflow barrier penalty: {s_penalized} vs {s_normal}"

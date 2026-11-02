@@ -47,6 +47,7 @@ export interface SemanticGeodesicResult {
   m_geodesic: number;
   is_brownian_catalog: boolean;
   units_count: number;
+  target_curvature?: number;
 }
 
 export interface MultiplicativeGrpoRewardResult {
@@ -301,6 +302,12 @@ export function embedSentenceUnit(sentence: string, dim = 24): number[] {
   return vec;
 }
 
+export const DOMAIN_CURVATURE_TARGETS: Record<string, number> = {
+  novel: 0.30,
+  article: 0.48,
+  cot_reasoning: 0.52,
+};
+
 export function computeSemanticGeodesicCurvature(
   textOrUnits: string | string[],
   options?: {
@@ -308,11 +315,14 @@ export function computeSemanticGeodesicCurvature(
     alpha_kappa?: number;
     alpha_brownian?: number;
     is_coordinates?: boolean;
+    domain?: string;
   }
 ): SemanticGeodesicResult {
   const units = typeof textOrUnits === 'string' ? splitIntoTrajectoryUnits(textOrUnits) : [...textOrUnits];
   const alphaKappa = options?.alpha_kappa ?? 1.8;
   const alphaBrownian = options?.alpha_brownian ?? 1.2;
+  const domain = options?.domain ?? 'novel';
+  const targetKappa = DOMAIN_CURVATURE_TARGETS[domain] ?? 0.30;
 
   let diffs: number[][];
   if (options?.embeddings) {
@@ -340,6 +350,7 @@ export function computeSemanticGeodesicCurvature(
         m_geodesic: 1.0,
         is_brownian_catalog: false,
         units_count: units.length,
+        target_curvature: targetKappa,
       };
     }
     diffs = units.map((u) => embedSentenceUnit(u));
@@ -433,11 +444,21 @@ export function computeSemanticGeodesicCurvature(
 
   const brownianRatio = (diffs.length * sumStepsSq) / netDispSq;
 
+  let curvDev: number;
+  let catalogCurvThresh: number;
+  if (domain === 'novel') {
+    curvDev = Math.max(0.0, meanCurv - targetKappa);
+    catalogCurvThresh = 0.50;
+  } else {
+    curvDev = Math.abs(meanCurv - targetKappa);
+    catalogCurvThresh = targetKappa + 0.22;
+  }
+
   const brownianExcess = Math.max(0.0, brownianRatio - 1.5);
-  const exponent = -(alphaKappa * meanCurv + alphaBrownian * brownianExcess);
+  const exponent = -(alphaKappa * curvDev + alphaBrownian * brownianExcess);
   const mGeodesic = Math.max(0.0, Math.min(1.0, Math.exp(exponent)));
 
-  const isBrownianCatalog = brownianRatio > 2.0 || meanCurv > 0.50;
+  const isBrownianCatalog = brownianRatio > 2.0 || meanCurv > catalogCurvThresh;
 
   return {
     curvatures,
@@ -448,6 +469,7 @@ export function computeSemanticGeodesicCurvature(
     m_geodesic: mGeodesic,
     is_brownian_catalog: isBrownianCatalog,
     units_count: units.length,
+    target_curvature: targetKappa,
   };
 }
 

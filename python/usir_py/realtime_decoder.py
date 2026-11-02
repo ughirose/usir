@@ -50,6 +50,28 @@ BANNED_CJK_AND_META_CHARS: Set[str] = {
 }
 
 
+def is_non_japanese_cjk(text: str) -> bool:
+    """Detects whether text contains any non-Japanese CJK character.
+
+    Mechanical JIS EUC-JP whitelist check:
+    Returns True if any character in the CJK range [0x4E00, 0x9FFF] fails to encode in 'euc_jp'
+    (e.g. 隐, 测, 这, 们, 为, 设, 证, 满, 导, 边) or is a simplified variant (e.g. 步 U+6B65 vs
+    Japanese 歩 U+6B69, or 个 U+4E2A).
+    Standard Japanese Joyo and Jinmeiyo kanji (希, 著, 据, 与, 若, etc.) encode cleanly in euc_jp
+    and return False with 0 false positives.
+    """
+    for ch in text:
+        code = ord(ch)
+        if 0x4E00 <= code <= 0x9FFF:
+            if code == 0x6B65 or code == 0x4E2A:  # 步 (U+6B65) and 个 (U+4E2A)
+                return True
+            try:
+                ch.encode("euc_jp")
+            except UnicodeEncodeError:
+                return True
+    return False
+
+
 
 class LogitsStepper:
     """General-purpose standalone Logits Stepper for Top-K candidate reweighting,
@@ -199,6 +221,7 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
         )
         self.punctuation_token_ids = set(punctuation_token_ids) if punctuation_token_ids else set()
         self.banned_cjk_token_ids: Set[int] = set()
+        self._banned_token_ids: Set[int] = self.banned_cjk_token_ids
         self.token_jacobians = token_jacobians
         self.embedding_weight: Optional[Any] = None
         self._embed_weight: Optional[Any] = None
@@ -262,6 +285,22 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
                     self.banned_cjk_token_ids.add(ids[0])
             except Exception:
                 pass
+
+        # Full-vocabulary scan for non-Japanese CJK characters via EUC-JP whitelist
+        vocab = None
+        if hasattr(tokenizer, "get_vocab") and callable(tokenizer.get_vocab):
+            try:
+                vocab = tokenizer.get_vocab()
+            except Exception:
+                vocab = None
+        elif hasattr(tokenizer, "vocab") and isinstance(tokenizer.vocab, dict):
+            vocab = tokenizer.vocab
+
+        if isinstance(vocab, dict):
+            for token_str, token_id in vocab.items():
+                if is_non_japanese_cjk(token_str):
+                    self.banned_cjk_token_ids.add(token_id)
+
         self._punct_tensor = None
         self._banned_tensor = None
 

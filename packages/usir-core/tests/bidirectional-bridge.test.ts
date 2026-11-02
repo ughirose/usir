@@ -7,7 +7,11 @@ import {
   executeClosedLoopRewrite,
   computeTrajectoryRepetitionPenalty,
   sanitizeWaveSteps,
+  hasMetaOrCjkLeak,
+  isKanjiStemRepetition,
+  computeCollisionAction,
 } from '../src/dynamics/bidirectionalBridge.js';
+import { isNonJapaneseCjk } from '../src/dynamics/cjkWhitelist.js';
 
 
 const TEST_FWD_NOVEL = [
@@ -353,5 +357,81 @@ describe('USIR v4.0 Bidirectional Schrödinger Bridge (TS)', () => {
     expect(cleanedEcho[0]).toBe(x0);
     expect(cleanedEcho[1]).toBe('信号所の手前で列車が止まった。');
     expect(cleanedEcho[2]).toBe(xT);
+  });
+
+  it('prunes non-Japanese CJK and Chinese grammar while preserving Japanese Joyo kanji', () => {
+    // 1. Direct character / string EUC-JP bitset whitelist check
+    expect(isNonJapaneseCjk('隐')).toBe(true);
+    expect(isNonJapaneseCjk('测')).toBe(true);
+    expect(isNonJapaneseCjk('这')).toBe(true);
+    expect(isNonJapaneseCjk('们')).toBe(true);
+    expect(isNonJapaneseCjk('为')).toBe(true);
+    expect(isNonJapaneseCjk('设')).toBe(true);
+    expect(isNonJapaneseCjk('证')).toBe(true);
+    expect(isNonJapaneseCjk('满')).toBe(true);
+    expect(isNonJapaneseCjk('导')).toBe(true);
+    expect(isNonJapaneseCjk('边')).toBe(true);
+    expect(isNonJapaneseCjk('步')).toBe(true); // U+6B65 (simplified/old)
+    expect(isNonJapaneseCjk('歩')).toBe(false); // U+6B69 (standard Japanese)
+    expect(isNonJapaneseCjk('希')).toBe(false);
+    expect(isNonJapaneseCjk('著')).toBe(false);
+    expect(isNonJapaneseCjk('据')).toBe(false);
+    expect(isNonJapaneseCjk('与')).toBe(false);
+    expect(isNonJapaneseCjk('若')).toBe(false);
+
+    // 2. Chinese mathematical & spatial grammar patterns
+    const leaks = [
+      '令 $f_n$ 為一実関数列とする。',
+      'したがって、令 $x \\in \\Omega$ とする。',
+      '在閉区間 $[a, b]$ 上で連続関数を仮定する。',
+      '第一步：ヒルベルト空間の完備性を確認する。',
+      '第二步：コーシー列の収束を評価する。',
+      '霧の中に隐れた輪郭を凝視する。',
+      '温度の微細な変化を测定した。',
+    ];
+    for (const leakSent of leaks) {
+      expect(hasMetaOrCjkLeak(leakSent)).toBe(true);
+    }
+
+    // 3. Standard Japanese Joyo kanji preservation (zero false positives)
+    const cleanJapanese = [
+      '希望に満ちた夜明けの光が梢を照らし出した。',
+      '著しい科学技術の進展が理論の妥当性を支えている。',
+      '旅人は道端の巨石に腰を据え、乾いた喉を潤した。',
+      '自律分散的なプロトコルが組織の生産性に寄与する。',
+      '若き哲学者たちは深夜まで激論を交わした。',
+      '訴訟の手続きが滞りなく完了した。',
+      '命題の前提条件を簡潔に説明する。',
+      '湿った空気が草むらに深く沈殿していく。',
+      '一歩一歩、雪道を踏みしめて前進する。',
+    ];
+    for (const jSent of cleanJapanese) {
+      expect(hasMetaOrCjkLeak(jSent)).toBe(false);
+    }
+  });
+
+  it('prunes novel-04 tail-clause motif repetition via isKanjiStemRepetition', () => {
+    const sA = '遠くの湿地では渡り鳥の姿すら消え…。';
+    const sB = '寒風に揺れる干拓地の光跡に、遠くの湿地でさえも渡り鳥の群れが消えていった。';
+
+    expect(isKanjiStemRepetition(sA, sB)).toBe(true);
+
+    const x0 = '薄暮の干拓地に冷たい風が吹き抜けていた。';
+    const xT = 'やがて冷たい夜の静寂が湿地全体を覆い尽くした。';
+    const cleaned = sanitizeWaveSteps([x0, sA, sB, xT], x0, xT);
+    expect(cleaned).toContain(sA);
+    expect(cleaned).not.toContain(sB);
+    expect(cleaned.length).toBe(3);
+  });
+
+  it('adds paragraph underflow barrier penalty when maxPossibleLen >= 250 and L < 320', () => {
+    const tip = new Array(24).fill(0.5);
+    const fwd = { wave_id: 0, direction: 'forward' as const, steps: ['短い文です。'], tip_vector: tip, direction_vector: tip };
+    const bwd = { wave_id: 0, direction: 'backward' as const, steps: ['終わりの文です。'], tip_vector: tip, direction_vector: tip };
+
+    const [sNormal] = computeCollisionAction(fwd, bwd, 0.5, 'novel', { maxPossibleLen: undefined });
+    const [sPenalized] = computeCollisionAction(fwd, bwd, 0.5, 'novel', { maxPossibleLen: 350 });
+
+    expect(sPenalized).toBeGreaterThan(sNormal + 10.0);
   });
 });

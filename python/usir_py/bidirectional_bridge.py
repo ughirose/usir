@@ -34,6 +34,7 @@ from .manifold_geodesic import (
     compute_semantic_geodesic_curvature,
     compute_three_phase_qda_distance,
 )
+from .realtime_decoder import is_non_japanese_cjk
 
 
 @dataclass
@@ -481,6 +482,9 @@ CHINESE_GRAMMAR_REGEXES: List[str] = [
     r'[\$a-zA-Z0-9]\s*与\s*[\$a-zA-Z0-9]',
     r'\$\s*与',
     r'与(?:此|之|其)',
+    r'(?:^|[、,。．！？\s\n])\s*令\s*[\$a-zA-Z\\]',
+    r'在\s*(?:[^\s。、]|\s*\$[^\$]+\$\s*){2,25}上',
+    r'第[一二三四五六七八九十百]+[步歩]',
 ]
 
 
@@ -503,7 +507,65 @@ def _compute_stem_jaccard(s_a: str, s_b: str) -> float:
     return float(len(stems_a & stems_b)) / float(union_len)
 
 
+def _get_tail_stems(text: str) -> Set[str]:
+    """Extracts kanji stems from the tail clause (after last comma '、', or last 24 chars)."""
+    core = text.strip().rstrip("。！？!?…")
+    if "、" in core:
+        tail = core.split("、")[-1].strip()
+    else:
+        tail = core[-24:] if len(core) >= 24 else core
+    if len(tail) < 12 and len(core) >= 24:
+        tail = core[-24:]
+    return _extract_kanji_stems(tail)
+
+
+def _is_kanji_stem_repetition(
+    s_a: str,
+    s_b: str,
+    stems_a: Optional[Set[str]] = None,
+    stems_b: Optional[Set[str]] = None,
+) -> bool:
+    """Evaluates whether sentence pair (s_a, s_b) has excessive kanji stem repetition:
+
+    (A) Full sentence kanji stem Jaccard >= 0.50
+    (B) Overlap coefficient |K_a & K_b| / min(|K_a|, |K_b|) >= 0.65 (with min len >= 3)
+    (C) Tail-clause (述部) kanji stems: common >= 2 and Jaccard >= 0.45
+    """
+    ka = stems_a if stems_a is not None else _extract_kanji_stems(s_a)
+    kb = stems_b if stems_b is not None else _extract_kanji_stems(s_b)
+    if not ka or not kb:
+        return False
+    inter = ka & kb
+    inter_len = len(inter)
+    if inter_len == 0:
+        return False
+
+    # (A) Full sentence kanji stem Jaccard >= 0.50
+    union_len = len(ka | kb)
+    if union_len > 0 and (inter_len / float(union_len)) >= 0.50:
+        return True
+
+    # (B) Overlap Coefficient >= 0.65 (min len >= 3)
+    min_len = min(len(ka), len(kb))
+    if min_len >= 3 and (inter_len / float(min_len)) >= 0.65:
+        return True
+
+    # (C) Tail-clause (述部) local Jaccard: common >= 2 and Jaccard >= 0.45
+    kt_a = _get_tail_stems(s_a)
+    kt_b = _get_tail_stems(s_b)
+    if kt_a and kt_b:
+        inter_t = kt_a & kt_b
+        if len(inter_t) >= 2:
+            union_t = len(kt_a | kt_b)
+            if union_t > 0 and (len(inter_t) / float(union_t)) >= 0.45:
+                return True
+
+    return False
+
+
 def _has_meta_or_cjk_leak(text: str) -> bool:
+    if is_non_japanese_cjk(text):
+        return True
     for m in META_LEAK_MARKERS:
         if m in text:
             return True
@@ -542,7 +604,8 @@ def sanitize_wave_steps(
     stems_xT = _extract_kanji_stems(norm_xT) if norm_xT else set()
     n_steps = len(valid_steps)
 
-    for idx, s in enumerate(valid_steps):
+    for idx, raw_s in enumerate(valid_steps):
+        s = raw_s.replace("\u6b65", "\u6b69")
         is_x0 = idx == 0 and norm_x0 is not None and s == norm_x0
         is_xT = idx == n_steps - 1 and norm_xT is not None and s == norm_xT
         is_boundary = is_x0 or is_xT
@@ -553,11 +616,14 @@ def sanitize_wave_steps(
         is_dup = False
         if not is_boundary:
             s_core = s.rstrip("。！？!?")
-            for prev_s in clean_steps:
+            for prev_idx, prev_s in enumerate(clean_steps):
                 if s == prev_s or s_core == prev_s.rstrip("。！？!?"):
                     is_dup = True
                     break
                 if _compute_5gram_overlap(s, prev_s) >= 0.50:
+                    is_dup = True
+                    break
+                if _is_kanji_stem_repetition(s, prev_s, stems_s, seen_stems[prev_idx]):
                     is_dup = True
                     break
             # Subsequent step (idx > 0) echoing starting anchor x_0
@@ -566,27 +632,16 @@ def sanitize_wave_steps(
                     is_dup = True
                 elif _compute_5gram_overlap(s, norm_x0) >= 0.50:
                     is_dup = True
-                elif stems_s and stems_x0:
-                    u_len_0 = len(stems_s | stems_x0)
-                    if u_len_0 > 0 and (len(stems_s & stems_x0) / float(u_len_0)) >= 0.50:
-                        is_dup = True
+                elif _is_kanji_stem_repetition(s, norm_x0, stems_s, stems_x0):
+                    is_dup = True
             # Preceding step (idx < n_steps - 1) echoing terminal anchor x_T
             if not is_dup and idx < n_steps - 1 and norm_xT:
                 if s == norm_xT or s_core == norm_xT.rstrip("。！？!?"):
                     is_dup = True
                 elif _compute_5gram_overlap(s, norm_xT) >= 0.50:
                     is_dup = True
-                elif stems_s and stems_xT:
-                    u_len_T = len(stems_s | stems_xT)
-                    if u_len_T > 0 and (len(stems_s & stems_xT) / float(u_len_T)) >= 0.50:
-                        is_dup = True
-            if not is_dup and stems_s:
-                for prev_stems in seen_stems:
-                    if prev_stems:
-                        u_len = len(stems_s | prev_stems)
-                        if u_len > 0 and (len(stems_s & prev_stems) / float(u_len)) >= 0.50:
-                            is_dup = True
-                            break
+                elif _is_kanji_stem_repetition(s, norm_xT, stems_s, stems_xT):
+                    is_dup = True
         if not is_dup:
             clean_steps.append(s)
             seen_stems.append(stems_s)
@@ -632,8 +687,7 @@ def compute_trajectory_repetition_penalty(steps: List[str]) -> float:
             sa = stems_list[a]
             sb = stems_list[b]
             if sa and sb:
-                u_len = len(sa | sb)
-                if u_len > 0 and (len(sa & sb) / float(u_len)) >= 0.50:
+                if _is_kanji_stem_repetition(steps[a], steps[b], sa, sb):
                     penalty += 6.0
     return float(penalty)
 
@@ -655,8 +709,8 @@ def _split_infill_sentences(text: str) -> List[str]:
 
 def _deduplicate_infill_sentences(infill_text: str, existing_steps: List[str]) -> List[str]:
     """Splits infill text into sentences and immediately removes any sentence that has
-    5-gram overlap >= 0.40, Kanji stem Jaccard >= 0.50, meta/CJK leaks, or matching first 5
-    non-punctuation chars with any existing step (or previously accepted infill sentences).
+    5-gram overlap >= 0.40, Kanji stem Jaccard / tail / overlap repetition, meta/CJK leaks,
+    or matching first 5 non-punctuation chars with any existing step (or previously accepted infill sentences).
     """
     candidates = _split_infill_sentences(infill_text)
     existing_Pool = list(existing_steps)
@@ -678,7 +732,7 @@ def _deduplicate_infill_sentences(infill_text: str, existing_steps: List[str]) -
             if _compute_5gram_overlap(cand, ex) >= 0.40:
                 is_dup = True
                 break
-            if _compute_stem_jaccard(cand, ex) >= 0.50:
+            if _is_kanji_stem_repetition(cand, ex):
                 is_dup = True
                 break
         if not is_dup:
@@ -692,6 +746,7 @@ def compute_collision_action(
     bwd_wave: TrajectoryWave,
     beta: float = 0.5,
     domain: str = "novel",
+    max_possible_len: Optional[int] = None,
 ) -> Tuple[float, float, float, float]:
     r"""Computes the collision action integral:
 
@@ -749,6 +804,13 @@ def compute_collision_action(
 
     # Total Action
     s_total = float(d_geodesic + d_causal + 0.5 * beta * d_3phase)
+
+    # Paragraph length underflow barrier penalty (scale enforcement: 320-600 chars)
+    L = len(welded_text)
+    check_len = max_possible_len if max_possible_len is not None else L
+    if check_len >= 250 and L < 320:
+        short_penalty = 4.0 * max(0.0, (320.0 - float(L)) / 100.0) ** 2
+        s_total += float(short_penalty)
 
     return s_total, d_geodesic, d_causal, d_3phase
 
@@ -810,6 +872,13 @@ def solve_bidirectional_collision_bridge(
     K_bwd = len(bwd_waves)
     action_matrix = np.zeros((K_fwd, K_bwd), dtype=float)
 
+    max_possible_len = 0
+    for f in fwd_waves:
+        for b in bwd_waves:
+            cand_l = len("".join(f.steps) + "".join(b.steps))
+            if cand_l > max_possible_len:
+                max_possible_len = cand_l
+
     best_action = float("inf")
     best_pair = (0, 0)
     best_components = (0.0, 0.0, 0.0)
@@ -817,7 +886,7 @@ def solve_bidirectional_collision_bridge(
     for i in range(K_fwd):
         for j in range(K_bwd):
             s_tot, d_geo, d_cau, d_3ph = compute_collision_action(
-                fwd_waves[i], bwd_waves[j], beta=beta, domain=anchors.domain
+                fwd_waves[i], bwd_waves[j], beta=beta, domain=anchors.domain, max_possible_len=max_possible_len
             )
             action_matrix[i, j] = s_tot
             if s_tot < best_action:
@@ -841,18 +910,19 @@ def solve_bidirectional_collision_bridge(
         # Compare direct welding action vs infilled welding action
         infilled_fwd_wave = _build_forward_wave(opt_fwd.wave_id, list(opt_fwd.steps) + clean_infill_sents)
         s_infilled, d_geo_inf, d_cau_inf, d_3ph_inf = compute_collision_action(
-            infilled_fwd_wave, opt_bwd, beta=beta, domain=anchors.domain
+            infilled_fwd_wave, opt_bwd, beta=beta, domain=anchors.domain, max_possible_len=max_possible_len
         )
         # Also evaluate trajectory-level geodesic curvature improvement
-        curv_direct = compute_semantic_geodesic_curvature("".join(existing_steps))["mean_curvature"]
+        curv_direct = compute_semantic_geodesic_curvature("".join(existing_steps), domain=anchors.domain)["mean_curvature"]
         infilled_steps = list(opt_fwd.steps) + clean_infill_sents + list(opt_bwd.steps)
-        curv_infilled = compute_semantic_geodesic_curvature("".join(infilled_steps))["mean_curvature"]
+        curv_infilled = compute_semantic_geodesic_curvature("".join(infilled_steps), domain=anchors.domain)["mean_curvature"]
 
         s_direct_aug = best_action + 0.5 * curv_direct
         s_infilled_aug = s_infilled + 0.5 * curv_infilled
 
         d_causal_direct = best_components[1]
-        if s_infilled_aug < s_direct_aug or d_causal_direct > 0.65 or len(existing_steps) < 4:
+        direct_len = len("".join(existing_steps))
+        if s_infilled_aug < s_direct_aug or d_causal_direct > 0.65 or len(existing_steps) < 4 or direct_len < 350:
             accepted_infill = "".join(clean_infill_sents)
             welded_trajectory = sanitize_wave_steps(infilled_steps, x_0=anchors.x_0, x_T=anchors.x_T)
         else:
