@@ -59,15 +59,34 @@ def test_hsmm_wells_and_transition_matrix_normalization():
 
 
 def test_refractory_period_guard_prevents_consecutive_climaxes():
-    """Verify OPEN-10 Refractory Period Gate blocks back-to-back Climax states."""
+    """Verify OPEN-10 Refractory Period Gate blocks back-to-back Climax states and tracks lifecycle."""
     director = HSMMLongformDirector(dim=12, seed=42)
 
-    # If current well is Climax (2), next well MUST be Well 0
-    for _ in range(50):
-        next_well = director.step_transition(2)
-        assert next_well == 0, f"Expected Well 0 after Climax, got {next_well}"
+    # 1. Immediate exit from Climax (2) always forces Well 0 and activates refractory
+    assert not director.is_in_refractory()
+    next_well = director.step_transition(2)
+    assert next_well == 0, f"Expected Well 0 after Climax, got {next_well}"
+    assert director.is_in_refractory()
+    # Next transition decrements cooldown and clears refractory state
+    after_refractory = director.step_transition(0)
+    assert not director.is_in_refractory()
 
-    # Across a 200-step trajectory, consecutive Climaxes (2 -> 2) must NEVER occur
+    # 2. Even with adversarial transition matrix with T[2, 2] = 1.0, gate forces Well 0
+    adversarial_T = np.array([
+        [0.0, 0.0, 1.0],
+        [0.0, 0.0, 1.0],
+        [0.0, 0.0, 1.0],  # Attempts to stay in Climax forever
+    ])
+    adv_director = HSMMLongformDirector(dim=12, transition_matrix=adversarial_T, refractory_cooldown=2, seed=42)
+    w1 = adv_director.step_transition(2)
+    assert w1 == 0  # Forced Well 0
+    assert adv_director.is_in_refractory()
+    # Step 2: cooldown=2 still blocks Climax even though T[0, 2]=1.0
+    w2 = adv_director.step_transition(w1)
+    assert w2 != 2  # Climax strictly blocked
+    assert adv_director.is_in_refractory()
+
+    # 3. Across a 200-step trajectory, consecutive Climaxes (2 -> 2) must NEVER occur
     cur_well = 0
     trajectory = [cur_well]
     for _ in range(200):
@@ -203,4 +222,29 @@ def test_longform_generation_with_clause_twisted_smc_integration():
     assert res["paragraph_count"] == 6
     assert len(res["paragraphs"]) == 6
     assert len(res["full_text"]) > 0
+    assert res["total_chars"] >= 1000
     assert not res["in_deadzone"]
+    assert res["is_healthy"], f"SMC CV_L {res['overall_cv_l']} outside healthy band [0.40, 0.70]"
+
+
+def test_paragraph_text_diversity_across_same_well():
+    """Verify that multiple paragraphs of the same well do not duplicate text verbatim."""
+    director = HSMMLongformDirector(dim=12, seed=42)
+    res = director.generate_longform(
+        prompt="秋の夕暮れの枯野",
+        target_paragraphs=8,
+        target_total_chars=3200,
+    )
+
+    # Group texts by well
+    texts_by_well: dict[int, list[str]] = {}
+    for p in res["paragraphs"]:
+        w = p["well_index"]
+        texts_by_well.setdefault(w, []).append(p["text"])
+
+    # For wells that appear multiple times, pairwise texts must differ
+    for w, t_list in texts_by_well.items():
+        if len(t_list) > 1:
+            for i in range(len(t_list)):
+                for j in range(i + 1, len(t_list)):
+                    assert t_list[i] != t_list[j], f"Well {w} produced identical text at paragraphs {i} and {j}"

@@ -109,17 +109,19 @@ export function createDefaultWells(dim = 12): Record<number, PhaseWell> {
 }
 
 export function computeWundtBerlyneUtility(arousal: number, aStar = 0.60): number {
-  if (arousal <= 0 || aStar <= 0) return 0.0;
+  if (!Number.isFinite(arousal) || arousal <= 0 || !Number.isFinite(aStar) || aStar <= 0) return 0.0;
   const ratio = arousal / aStar;
   return Math.E * ratio * Math.exp(-ratio);
 }
 
 export function splitSentencesWithFallback(text: string): string[] {
-  const sents = splitSentences(text);
+  if (!text) return [];
+  const segs = text.split(/(?<=[。！？!?\n」』])/);
+  const sents = segs.map((s) => s.trim()).filter((s) => s.length >= 2);
   if (sents.length >= 2) return sents;
-  const clauseSegs = text.split(/[、,。！？!?\n]+/);
+  const clauseSegs = text.split(/[、,。！？!?\n」』]+/);
   const clauses = clauseSegs.map((s) => s.trim()).filter((s) => s.length >= 2);
-  return clauses.length >= 2 ? clauses : sents;
+  return clauses.length >= 2 ? clauses : (sents.length > 0 ? sents : (text.trim() ? [text.trim()] : []));
 }
 
 export function computeCvL(textOrLengths: string | number[] | string[]): number {
@@ -175,12 +177,14 @@ export class HSMMLongformDirector {
   public readonly refractoryCooldown: number;
   public pBanked: number[];
   public refractoryCounter: number;
+  private readonly rng: () => number;
 
   constructor(options?: {
     dim?: number;
     wells?: Record<number, PhaseWell>;
     transitionMatrix?: number[][];
     refractoryCooldown?: number;
+    seed?: number;
   }) {
     this.dim = options?.dim ?? 12;
     this.wells = options?.wells ?? createDefaultWells(this.dim);
@@ -197,6 +201,16 @@ export class HSMMLongformDirector {
 
     this.pBanked = new Array(this.dim).fill(0.0);
     this.refractoryCounter = 0;
+
+    if (options?.seed !== undefined) {
+      let s = options.seed >>> 0;
+      this.rng = () => {
+        s = (Math.imul(1664525, s) + 1013904223) >>> 0;
+        return s / 4294967296;
+      };
+    } else {
+      this.rng = Math.random;
+    }
   }
 
   public isInRefractory(): boolean {
@@ -204,20 +218,15 @@ export class HSMMLongformDirector {
   }
 
   public stepTransition(currentWellIdx: number): number {
-    // OPEN-10 Refractory period gate check
-    if (this.refractoryCounter > 0) {
-      this.refractoryCounter -= 1;
-      return 0; // Forced return to Narrative / Void (残心)
-    }
-
     if (currentWellIdx === 2) {
-      // Climax was executed -> trigger refractory cooldown
-      this.refractoryCounter = this.refractoryCooldown;
+      // Climax just executed -> activate refractory cooldown, force immediate return to Well 0
+      this.refractoryCounter = Math.max(1, this.refractoryCooldown);
       return 0;
     }
 
     const row = [...this.transitionMatrix[currentWellIdx]!];
     if (this.refractoryCounter > 0) {
+      this.refractoryCounter -= 1;
       row[2] = 0.0;
       const sum = row.reduce((a, b) => a + b, 0);
       if (sum > 0) {
@@ -228,7 +237,7 @@ export class HSMMLongformDirector {
     }
 
     // Cumulative distribution sampling
-    const r = Math.random();
+    const r = this.rng();
     let cum = 0.0;
     let nextIdx = 0;
     for (let j = 0; j < row.length; j++) {
@@ -237,10 +246,6 @@ export class HSMMLongformDirector {
         nextIdx = j;
         break;
       }
-    }
-
-    if (nextIdx === 2) {
-      this.refractoryCounter = this.refractoryCooldown;
     }
 
     return nextIdx;
@@ -284,12 +289,11 @@ export class HSMMLongformDirector {
     themePrefix = '',
   ): string {
     let units: string[];
+    const prefix = paragraphIdx === 0 && themePrefix ? `${themePrefix}。` : '';
     if (well.index === 0) {
-      // Narrative / Void: target CV_L ~ 0.48
+      // Narrative / Void: target CV_L ~ 0.48 (grounding short + contemplative long)
       units = [
-        paragraphIdx === 0 && themePrefix
-          ? `${themePrefix}静寂が夜の帳を静かに降ろした。`
-          : '静寂が夜の帳を静かに降ろした。',
+        `${prefix}静寂が夜の帳を静かに降ろした。`,
         '遠くの山並みは青黒い輪郭だけをかすかに残し、冷涼な夜気が足元をかすめるように流れていく。',
         '風の音はない。',
         'ただ木々の細い葉先が擦れ合う微かな気配だけが、暗がりの中に白く浮き沈みしていた。',
@@ -297,9 +301,13 @@ export class HSMMLongformDirector {
         '時は緩やかに歩みを止めていた。',
         '遙か昔に旅立った者の記憶のように、かすかな月影が濡れた軒端を青白く照らし出し、沈黙の底へと吸い込まれていく。',
         '息をひそめ、ただ耳を澄ます。',
+        '夜明けの気配はまだ遠く、地平の彼方にわずかな藍色の階調が漂うばかりだった。',
+        '冷えた大気の中に漂う木々の芳香が、研ぎ澄まされた意識を透明な静止の中へといざなう。',
+        '水面は鏡のように張りつめていた。',
+        '静けさは失われるのではなく、世界の輪郭そのものを確かめるように深まり続けている。',
       ];
     } else if (well.index === 1) {
-      // Dialogue / Polyphony: target CV_L ~ 0.55
+      // Dialogue / Polyphony: target CV_L ~ 0.55 (short rapid turns + reflective beats)
       units = [
         '「本当にこれでよいと思うのか」と、彼が低い声で問いかけた。',
         '闇の中から響くその抑揚には、隠しきれない焦燥と微かな祈りが綯い交ぜになっていた。',
@@ -309,9 +317,13 @@ export class HSMMLongformDirector {
         '冷たい風が二人の間を吹き抜け、古い扉の蝶番をきしませる。',
         '互いの視線が暗がりの中で交錯し、幾重にも重なる沈黙の問いが空気を張り詰めさせた。',
         '「進むほかない」と、彼女は短く告げた。',
+        '「足音が近づいてくる」と、彼は背後の暗闇に視線を向けた。',
+        '息を殺したまま、二人は握りしめた互いの手のぬくもりだけを唯一の信憑としていた。',
+        '「迷うな」',
+        'その一言が、夜の厚い壁を切り裂くように二人の胸を打った。',
       ];
     } else {
-      // Climax / Critical-Shock: target CV_L ~ 0.65
+      // Climax / Critical-Shock: target CV_L ~ 0.65 (punchlines + turbulent surging periods)
       units = [
         '閃光が走った。',
         '張り詰めた大気が一瞬にして爆縮し、天地を裂く重低音が石壁の隙間から全身の骨髄へと突き刺さる。',
@@ -321,17 +333,20 @@ export class HSMMLongformDirector {
         '絶叫すらも真空の渦に呑み込まれ、ただ熱い拍動だけが胸の奥底で警鐘のように乱打されていた。',
         '光と影が混ざり合う境界で、張り詰めた運命の糸が音を立てて断ち切られ、新たな混沌が幕を開けた。',
         '一瞬の静止。',
+        '崩落の轟音が地底から湧き上がり、確固たる世界が足元から激しく傾いていく。',
+        '衝動が奔流となって溢れ出し、もはや誰もその激流を押しとどめることはできなかった。',
       ];
     }
 
+    const offset = (paragraphIdx * 7 + 1) % units.length;
     const chosen: string[] = [];
     let curLen = 0;
-    let uIdx = 0;
-    while (curLen < targetChars && uIdx < units.length * 2) {
-      const s = units[uIdx % units.length]!;
+    let idx = 0;
+    while (curLen < targetChars && idx < units.length * 2) {
+      const s = units[(offset + idx) % units.length]!;
       chosen.push(s);
       curLen += s.length;
-      uIdx++;
+      idx++;
     }
 
     return chosen.join('');

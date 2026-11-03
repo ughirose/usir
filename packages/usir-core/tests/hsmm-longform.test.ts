@@ -59,13 +59,38 @@ describe('Phase B WS-B2: 3-Mode HSMM Multi-Well Director & Longform Generation',
   // 2. OPEN-10 Wundt-Berlyne Refractory Period Gate
   // ===========================================================================
   describe('Refractory Period Gate', () => {
-    it('forces transition to Well 0 immediately after Climax', () => {
+    it('forces transition to Well 0 immediately after Climax and tracks refractory lifecycle', () => {
       const director = new HSMMLongformDirector({ dim: 12 });
 
-      for (let i = 0; i < 30; i++) {
-        const next = director.stepTransition(2);
-        expect(next).toBe(0);
-      }
+      expect(director.isInRefractory()).toBe(false);
+      const next = director.stepTransition(2);
+      expect(next).toBe(0);
+      expect(director.isInRefractory()).toBe(true);
+
+      const after = director.stepTransition(0);
+      expect(director.isInRefractory()).toBe(false);
+    });
+
+    it('enforces multi-step cooldown with adversarial transition matrix', () => {
+      const adversarialT = [
+        [0.0, 0.0, 1.0],
+        [0.0, 0.0, 1.0],
+        [0.0, 0.0, 1.0],
+      ];
+      const director = new HSMMLongformDirector({
+        dim: 12,
+        transitionMatrix: adversarialT,
+        refractoryCooldown: 2,
+      });
+
+      const w1 = director.stepTransition(2);
+      expect(w1).toBe(0);
+      expect(director.isInRefractory()).toBe(true);
+
+      // Step 2: cooldown=2 blocks Climax even though T[0][2]=1.0
+      const w2 = director.stepTransition(w1);
+      expect(w2).not.toBe(2);
+      expect(director.isInRefractory()).toBe(true);
     });
 
     it('prohibits consecutive Climaxes across random walk', () => {
@@ -186,6 +211,32 @@ describe('Phase B WS-B2: 3-Mode HSMM Multi-Well Director & Longform Generation',
       expect(res.bankedHistory).toHaveLength(7);
       for (const e of res.bankedHistory) {
         expect(e).toBeGreaterThanOrEqual(0.0);
+      }
+    });
+
+    it('generates distinct text across multiple paragraphs of the same well', () => {
+      const director = new HSMMLongformDirector({ dim: 12, seed: 42 });
+      const res = director.generateLongform({
+        prompt: '秋の夕暮れの枯野',
+        targetParagraphs: 8,
+        targetTotalChars: 3200,
+      });
+
+      const textsByWell = new Map<number, string[]>();
+      for (const p of res.paragraphs) {
+        const list = textsByWell.get(p.wellIndex) ?? [];
+        list.push(p.text);
+        textsByWell.set(p.wellIndex, list);
+      }
+
+      for (const [wellIdx, list] of textsByWell.entries()) {
+        if (list.length > 1) {
+          for (let i = 0; i < list.length; i++) {
+            for (let j = i + 1; j < list.length; j++) {
+              expect(list[i]).not.toBe(list[j]);
+            }
+          }
+        }
       }
     });
   });

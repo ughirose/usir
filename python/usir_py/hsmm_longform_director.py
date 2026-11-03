@@ -135,22 +135,25 @@ def compute_wundt_berlyne_utility(arousal: float, a_star: float = 0.60) -> float
     Peak value is 1.0 at a = a^*.
     Drops sharply for under-arousal (deadzone) and over-arousal (purple prose).
     """
-    if arousal <= 0.0 or a_star <= 0.0:
+    if not math.isfinite(arousal) or arousal <= 0.0 or not math.isfinite(a_star) or a_star <= 0.0:
         return 0.0
     ratio = arousal / a_star
     return float(math.e * ratio * math.exp(-ratio))
 
 
 def split_sentences_japanese(text: str) -> List[str]:
-    """Splits Japanese prose into distinct sentences by terminal punctuation with clause fallback."""
-    segs = re.split(r"[。！？!?\n]+", text)
+    """Splits Japanese prose into distinct sentences by terminal punctuation & dialogue quotes with clause fallback."""
+    if not text:
+        return []
+    # Split on sentence terminals or following dialogue closing brackets
+    segs = re.split(r"(?<=[。！？!?\n」』])+", text)
     sents = [s.strip() for s in segs if len(s.strip()) >= 2]
     if len(sents) < 2:
-        clause_segs = re.split(r"[、,。！？!?\n]+", text)
+        clause_segs = re.split(r"[、,。！？!?\n」』]+", text)
         clause_sents = [c.strip() for c in clause_segs if len(c.strip()) >= 2]
         if len(clause_sents) >= 2:
             return clause_sents
-    return sents
+    return sents if sents else ([text.strip()] if text.strip() else [])
 
 
 def compute_cv_l(text_or_lengths: Union[str, Sequence[str], Sequence[int], Sequence[float]]) -> float:
@@ -210,23 +213,17 @@ class HSMMLongformDirector:
     def step_transition(self, current_well_idx: int) -> int:
         """Determines the next well index via Markov transition & refractory gate.
 
-        OPEN-10: If refractory period is active or previous well was Climax,
-        transition to Climax is forbidden, forcing transition to Well 0 (Narrative).
+        OPEN-10: If previous well was Climax, forces transition to Well 0 (Narrative / 残心)
+        and activates refractory cooldown. During refractory cooldown, Climax transitions are suppressed.
         """
-        # OPEN-10 Refractory period gate check
+        if current_well_idx == 2:
+            # Climax just executed -> activate refractory cooldown, force immediate return to Well 0
+            self.refractory_counter = max(1, self.refractory_cooldown)
+            return 0
+
+        probs = self.transition_matrix[current_well_idx].copy()
         if self.refractory_counter > 0:
             self.refractory_counter -= 1
-            return 0
-
-        if current_well_idx == 2:
-            # Climax completed -> initiate refractory period
-            self.refractory_counter = self.refractory_cooldown
-            return 0
-
-        # Standard Markov transition sampling
-        probs = self.transition_matrix[current_well_idx].copy()
-        # Ensure zero prob of Climax if refractory is somehow pending
-        if self.refractory_counter > 0:
             probs[2] = 0.0
             sum_p = probs.sum()
             if sum_p > 0:
@@ -235,11 +232,6 @@ class HSMMLongformDirector:
                 probs[0] = 1.0
 
         next_idx = int(self.rng.choice(len(probs), p=probs))
-
-        if next_idx == 2:
-            # Entering Climax; after this paragraph refractory period will trigger
-            self.refractory_counter = self.refractory_cooldown
-
         return next_idx
 
     def accumulate_unreleased_momentum(
@@ -251,8 +243,11 @@ class HSMMLongformDirector:
 
         Delta p_banked <- Delta p_banked + max(0, p_k^* - hat{p}_k)
         """
-        t_p = np.asarray(target_p, dtype=np.float64).ravel()[:self.dim]
-        m_p = np.asarray(measured_p, dtype=np.float64).ravel()[:self.dim]
+        t_arr = np.asarray(target_p, dtype=np.float64).ravel()
+        m_arr = np.asarray(measured_p, dtype=np.float64).ravel()
+
+        t_p = np.pad(t_arr, (0, max(0, self.dim - len(t_arr))))[:self.dim]
+        m_p = np.pad(m_arr, (0, max(0, self.dim - len(m_arr))))[:self.dim]
 
         delta = np.maximum(0.0, t_p - m_p)
         self.p_banked += delta
@@ -266,7 +261,8 @@ class HSMMLongformDirector:
 
         Returns (boosted_target_p, discharged_delta_p).
         """
-        base_p = np.asarray(base_climax_p, dtype=np.float64).ravel()[:self.dim]
+        base_arr = np.asarray(base_climax_p, dtype=np.float64).ravel()
+        base_p = np.pad(base_arr, (0, max(0, self.dim - len(base_arr))))[:self.dim]
         discharged = self.p_banked.copy()
         boosted = base_p + discharged
         self.p_banked.fill(0.0)
@@ -284,12 +280,12 @@ class HSMMLongformDirector:
         theme_prefix: str = "",
     ) -> str:
         """Generates a coherent literary paragraph meeting the well's CV_L target."""
-        # Sentences tailored per well to produce exact target CV_L
+        # Generative sentence pools per well and narrative stage
+        prefix = f"{theme_prefix}。" if (paragraph_idx == 0 and theme_prefix) else ""
         if well.index == 0:
-            # Narrative / Void: target CV_L ~ 0.48
-            # Mixture of short grounding sentences (15-22 chars) and long descriptive sentences (42-55 chars)
+            # Narrative / Void: target CV_L ~ 0.48 (grounding short + contemplative long)
             units = [
-                f"{theme_prefix}静寂が夜の帳を静かに降ろした。" if paragraph_idx == 0 else "静寂が夜の帳を静かに降ろした。",
+                f"{prefix}静寂が夜の帳を静かに降ろした。",
                 "遠くの山並みは青黒い輪郭だけをかすかに残し、冷涼な夜気が足元をかすめるように流れていく。",
                 "風の音はない。",
                 "ただ木々の細い葉先が擦れ合う微かな気配だけが、暗がりの中に白く浮き沈みしていた。",
@@ -297,10 +293,13 @@ class HSMMLongformDirector:
                 "時は緩やかに歩みを止めていた。",
                 "遙か昔に旅立った者の記憶のように、かすかな月影が濡れた軒端を青白く照らし出し、沈黙の底へと吸い込まれていく。",
                 "息をひそめ、ただ耳を澄ます。",
+                "夜明けの気配はまだ遠く、地平の彼方にわずかな藍色の階調が漂うばかりだった。",
+                "冷えた大気の中に漂う木々の芳香が、研ぎ澄まされた意識を透明な静止の中へといざなう。",
+                "水面は鏡のように張りつめていた。",
+                "静けさは失われるのではなく、世界の輪郭そのものを確かめるように深まり続けている。",
             ]
         elif well.index == 1:
-            # Dialogue / Polyphony: target CV_L ~ 0.55
-            # Mixture of short dialogue turns (10-18 chars) and reflective narrative beats (38-52 chars)
+            # Dialogue / Polyphony: target CV_L ~ 0.55 (short rapid turns + reflective beats)
             units = [
                 "「本当にこれでよいと思うのか」と、彼が低い声で問いかけた。",
                 "闇の中から響くその抑揚には、隠しきれない焦燥と微かな祈りが綯い交ぜになっていた。",
@@ -310,10 +309,13 @@ class HSMMLongformDirector:
                 "冷たい風が二人の間を吹き抜け、古い扉の蝶番をきしませる。",
                 "互いの視線が暗がりの中で交錯し、幾重にも重なる沈黙の問いが空気を張り詰めさせた。",
                 "「進むほかない」と、彼女は短く告げた。",
+                "「足音が近づいてくる」と、彼は背後の暗闇に視線を向けた。",
+                "息を殺したまま、二人は握りしめた互いの手のぬくもりだけを唯一の信憑としていた。",
+                "「迷うな」",
+                "その一言が、夜の厚い壁を切り裂くように二人の胸を打った。",
             ]
         else:
-            # Climax / Critical-Shock: target CV_L ~ 0.65
-            # Radical contrast: sudden punchlines (6-12 chars) with surging complex clauses (60-75 chars)
+            # Climax / Critical-Shock: target CV_L ~ 0.65 (punchlines + turbulent surging periods)
             units = [
                 "閃光が走った。",
                 "張り詰めた大気が一瞬にして爆縮し、天地を裂く重低音が石壁の隙間から全身の骨髄へと突き刺さる。",
@@ -323,17 +325,20 @@ class HSMMLongformDirector:
                 "絶叫すらも真空の渦に呑み込まれ、ただ熱い拍動だけが胸の奥底で警鐘のように乱打されていた。",
                 "光と影が混ざり合う境界で、張り詰めた運命の糸が音を立てて断ち切られ、新たな混沌が幕を開けた。",
                 "一瞬の静止。",
+                "崩落の轟音が地底から湧き上がり、確固たる世界が足元から激しく傾いていく。",
+                "衝動が奔流となって溢れ出し、もはや誰もその激流を押しとどめることはできなかった。",
             ]
 
-        # Assemble sentences up to target_chars
+        # Shift selection offset with coprime multiplier 7 to guarantee unique starting offset for all paragraphs
+        offset = (paragraph_idx * 7 + 1) % len(units)
         chosen_sents: List[str] = []
         cur_len = 0
-        u_idx = 0
-        while cur_len < target_chars and u_idx < len(units) * 2:
-            s = units[u_idx % len(units)]
+        idx = 0
+        while cur_len < target_chars and idx < len(units) * 2:
+            s = units[(offset + idx) % len(units)]
             chosen_sents.append(s)
             cur_len += len(s)
-            u_idx += 1
+            idx += 1
 
         return "".join(chosen_sents)
 
@@ -385,35 +390,43 @@ class HSMMLongformDirector:
 
             # 3. Generate paragraph text
             if decoder is not None and hasattr(decoder, "generate_with_clause_twisted_smc"):
-                # Dynamic candidate generator matching well rhythm when running offline/mock decoder
+                # Synchronize well target attractor and momentum state into decoder's integrator
+                if hasattr(decoder, "integrator") and decoder.integrator is not None:
+                    decoder.integrator.mu_star = well.target_q.copy()
+                    decoder.integrator.p = effective_target_p.copy()
+
+                max_c = max(8, int(chars_per_para / 16))
+
                 def _smc_cand_gen(ctx: str, p_idx: int, temp: float) -> str:
+                    c_count = ctx.count("、") + ctx.count("。") + ctx.count("」")
+                    phase = c_count % 3
                     if well_idx == 0:
-                        p_cands = [
-                            "静寂が夜の帳を静かに降ろし、",
-                            "風の音は絶え、",
-                            "石畳の隙間に潜む古い苔は冷たい露を深く吸い込んで、",
-                            "時は緩やかに歩みを止めていた。",
-                        ]
+                        if phase == 0:
+                            cands = ["風の音はない。", "時は止まっていた。", "息をひそめる。", "水面は静かだ。"]
+                        elif phase == 1:
+                            cands = ["静寂が夜の帳を静かに降ろし、", "遠くの山並みは青黒く沈みながら、", "冷涼な夜気が足元をかすめ、", "古い苔が冷たい露を吸い込んで、"]
+                        else:
+                            cands = ["世界の輪郭を確かめるように深まっていく。", "濡れた軒端を青白く照らし出していた。", "沈黙の底へと緩やかに吸い込まれていく。", "透明な静止の中へといざなわれていく。"]
                     elif well_idx == 1:
-                        p_cands = [
-                            "「引き返す道など、最初から存在しない」",
-                            "彼女は手元の明かりを覆い隠しながら、",
-                            "「だが、境界を越えれば戻れぬぞ」",
-                            "冷たい風が二人の間を吹き抜けていく。",
-                        ]
+                        if phase == 0:
+                            cands = ["「迷うな」", "「進むほかない」", "「嘘ではない」", "「もう遅い」"]
+                        elif phase == 1:
+                            cands = ["「本当にこれでよいのか」と彼は問いかけ、", "「引き返す道などない」と彼女は応じ、", "「あの境界を越えれば戻れぬぞ」と声が重なり、", "冷たい風が二人の間を吹き抜けながら、"]
+                        else:
+                            cands = ["互いの視線が暗がりの中で鋭く交錯した。", "古い扉の蝶番がきしみながら音を立てた。", "二人は握りしめた手のぬくもりだけを頼りにした。", "夜の厚い壁を切り裂くように言葉が胸を打った。"]
                     else:
-                        p_cands = [
-                            "閃光が走った。",
-                            "張り詰めた大気が一瞬にして爆縮し、天地を裂く重低音が全身の骨髄へと突き刺さる。",
-                            "逃げ場はない。",
-                            "砕け散る硝子の破片が暗夜の空間を鋭利な乱反射で満たしていった。",
-                        ]
-                    return p_cands[p_idx % len(p_cands)]
+                        if phase == 0:
+                            cands = ["閃光が走った。", "逃げ場はない。", "全てが終わる。", "一瞬の静止。"]
+                        elif phase == 1:
+                            cands = ["張り詰めた大気が一瞬にして爆縮し、", "砕け散る硝子の破片が暗夜の空間を鋭利に満たし、", "激しい衝撃の波が根底から洗い流していく中で、", "絶叫すらも真空の渦に呑み込まれながら、"]
+                        else:
+                            cands = ["天地を裂く重低音が全身の骨髄へと突き刺さる。", "確固たる世界が足元から激しく傾いていった。", "張り詰めた運命の糸が音を立てて断ち切られた。", "新たな混沌が激しく幕を開けていく。"]
+                    return cands[p_idx % len(cands)]
 
                 cand_gen = _smc_cand_gen if getattr(decoder, "model", None) is None else None
                 smc_res = decoder.generate_with_clause_twisted_smc(
                     prefix=f"【第{k+1}段落】",
-                    max_clauses=8,
+                    max_clauses=max_c,
                     candidate_generator=cand_gen,
                     early_stop_on_punct=False,
                 )
