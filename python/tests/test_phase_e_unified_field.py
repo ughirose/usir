@@ -111,6 +111,12 @@ def test_genre_temperature_monotonic_sweep():
 
     # Inherent property: specification has much lower Toulmin potential than literature
     assert u_spec < u_lit
+    # Inherent property: specification has much higher style free energy than literature
+    assert f_usir_spec > f_usir_lit
+    # Specification: logical potential is lower than style free energy
+    assert u_spec < f_usir_spec
+    # Literature: logical potential is higher than style free energy
+    assert u_lit > f_usir_lit
 
     tau_levels = [0.1, 0.3, 0.5, 0.7, 0.9]
     spec_energies = [compute_unified_field_energy(spec_text, tau)["f_total"] for tau in tau_levels]
@@ -119,15 +125,16 @@ def test_genre_temperature_monotonic_sweep():
     # At specification mode (tau=0.1), specification must have lower energy than literature
     assert spec_energies[0] < lit_energies[0]
 
-    # Check monotonicity for spec: since u_spec < f_usir_spec, energy increases with tau
-    if f_usir_spec > u_spec:
-        for i in range(len(spec_energies) - 1):
-            assert spec_energies[i] <= spec_energies[i + 1] + 1e-6
+    # At literary mode (tau=0.9), literature must have lower energy than specification
+    assert lit_energies[-1] < spec_energies[-1]
 
-    # Check monotonicity for lit: since u_lit > f_usir_lit, energy decreases with tau
-    if u_lit > f_usir_lit:
-        for i in range(len(lit_energies) - 1):
-            assert lit_energies[i] >= lit_energies[i + 1] - 1e-6
+    # Monotonicity for specification: energy increases strictly monotonically with tau
+    for i in range(len(spec_energies) - 1):
+        assert spec_energies[i] < spec_energies[i + 1]
+
+    # Monotonicity for literature: energy decreases strictly monotonically with tau
+    for i in range(len(lit_energies) - 1):
+        assert lit_energies[i] > lit_energies[i + 1]
 
 
 # ==============================================================================
@@ -282,3 +289,54 @@ def test_cross_modal_music_functor_invariants():
     assert params_tense["bpm"] > 120.0
     assert params_tense["harmonic_tension"] > 0.60
     assert params_tense["soliton_accent_gain"] > 0.70
+
+
+def test_toulmin_dependency_depth_penalty():
+    """Verify D_max > 6 triggers dependency depth penalty."""
+    deep_text = "私の兄の友人の会社の社長の秘書の父親の家の庭の桜の木が倒れた。"
+    res = evaluate_toulmin_components(deep_text)
+    assert res.max_depth_found > 6
+    assert res.depth_penalty > 0.0
+    assert res.u_toulmin > res.triad_deficiency
+
+
+def test_worldcraft_empty_constraints():
+    """Verify empty constraint Jacobian yields identity projector without error."""
+    arbitrator = WorldCraftArbitrator()
+    p_null_none = arbitrator.compute_null_space_projector(None)
+    assert np.allclose(p_null_none, np.eye(12))
+
+    p_null_empty = arbitrator.compute_null_space_projector(np.empty((0, 12)))
+    assert np.allclose(p_null_empty, np.eye(12))
+
+    target_dq = np.ones(12)
+    dq_safe, dq_cut, _ = arbitrator.arbitrate_momentum(target_dq, np.empty((0, 12)))
+    assert np.allclose(dq_safe, target_dq)
+    assert np.allclose(dq_cut, np.zeros(12))
+
+
+def test_worldcraft_deceased_passive_voice_not_flagged():
+    """Verify passive voice about deceased character is not falsely flagged as live agent action."""
+    rule = WorldCraftOntologyRule(deceased_characters={"ボブ"})
+    arbitrator = WorldCraftArbitrator(rule)
+    text = "ボブは静かに墓地に埋葬された。"
+    violations = arbitrator.check_tier1_violations(text)
+    assert len(violations) == 0
+
+
+def test_momentum_bank_dimension_check():
+    """Verify MomentumBank validates vector dimension."""
+    bank = MomentumBank()
+    with pytest.raises(ValueError):
+        bank.accumulate(np.ones(5))
+
+
+def test_music_functor_inverse_sequence():
+    """Verify Python music_functor_inverse produces web_audio_sequence directives."""
+    z = np.zeros(24)
+    z[0] = 0.5
+    res = music_functor_inverse(z)
+    assert "web_audio_sequence" in res
+    assert len(res["web_audio_sequence"]) == 8
+    first = res["web_audio_sequence"][0]
+    assert "note" in first and "time" in first and "duration" in first and "gain" in first

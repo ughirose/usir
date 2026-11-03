@@ -63,6 +63,8 @@ WARRANT_CONNECTORS = [
     "のため", "理由として", "根拠として", "結果として", "ゆえ", "に基づき", "に従い",
     "より導かれる", "からである", "ためである", "ゆえに導かれる", "以上の理由から"
 ]
+DATA_KW_RE = re.compile('|'.join(re.escape(kw) for kw in sorted(DATA_KEYWORDS, key=len, reverse=True)))
+WARRANT_RE = re.compile('|'.join(re.escape(w) for w in sorted(WARRANT_CONNECTORS, key=len, reverse=True)))
 
 # Subject-Predicate Twist (主述ねじれ) detection indicators
 TWIST_REASON_HEAD_RE = re.compile(r'(?:理由は|原因は|目的は|課題は|方針は|契機は)')
@@ -124,13 +126,13 @@ def evaluate_toulmin_components(text: str) -> ToulminAuditResult:
 
     # 2. Data evaluation (数値/根拠/引用)
     num_matches = len(DATA_NUMERIC_RE.findall(clean))
-    data_kw_matches = sum(clean.count(kw) for kw in DATA_KEYWORDS)
+    data_kw_matches = len(DATA_KW_RE.findall(clean))
     citation_matches = len(CITATION_PATTERNS.findall(clean))
     raw_data_density = (num_matches * 0.25 + data_kw_matches * 0.20 + citation_matches * 0.35) / max(1, n_sents)
     data_score = max(0.0, min(1.0, raw_data_density))
 
     # 3. Warrant evaluation (因果接続詞)
-    warrant_hits = sum(clean.count(w) for w in WARRANT_CONNECTORS)
+    warrant_hits = len(WARRANT_RE.findall(clean))
     raw_warrant_density = warrant_hits / max(1, n_sents * 0.5)
     warrant_score = max(0.0, min(1.0, raw_warrant_density))
 
@@ -199,9 +201,14 @@ def compute_usir_style_energy(text: str) -> float:
     extracted = extract_usir_24d(text)
     z_24d = extracted["z_24d"]
     # Double-well barrier to literary critical manifold
-    d_3phase = compute_three_phase_qda_distance(z_24d)["d_3phase"]
-    # Energy is bounded and smooth
-    return float(d_3phase)
+    # Calibrated sigma_crit_high=3.5 to accommodate natural 24D literary momentum (norm ~ 2.3-2.7)
+    d_3phase = compute_three_phase_qda_distance(z_24d, sigma_crit_high=3.5)["d_3phase"]
+    # Void defect and cadence deadness penalties
+    phi_void = float(extracted["order_params"]["phi_void"])
+    cadence_alive = float(extracted["cadence_alive"])
+    void_defect = float((1.0 - phi_void) ** 2)
+    slop_deadness = float((1.0 - cadence_alive) ** 2)
+    return float(d_3phase + 1.2 * void_defect + 1.5 * slop_deadness)
 
 
 def compute_unified_field_energy(
@@ -291,9 +298,9 @@ class WorldCraftArbitrator:
 
         # 4. Deceased character action check
         for deceased in self.rule.deceased_characters:
-            # Check if deceased character acts as subject in present/past tense
-            # e.g., "ボブが立ち上がり", "ボブは言った"
-            pattern = rf'{re.escape(deceased)}(?:が|は)(?:[^\s。！？]*?)(?:走|言|語|叫|立|笑|歩|向|動|見|来|行|聞|答|問|思|考|入|出)'
+            # Check if deceased character acts as active live agent
+            # Avoid matching passive voice or burial/death descriptions (e.g. 埋葬された, 見送られた)
+            pattern = rf'{re.escape(deceased)}(?:が|は)(?:[^\s。！？]*?)(?:走|言|語|叫|立|笑|歩|向|動|見|来|行|聞|答|問|思|考|入|出)(?:[^\s。！？]*?)(?<!られた)(?<!れた)(?<!される)(?<!された)'
             if re.search(pattern, candidate_text):
                 violations.append(f"Deceased character '{deceased}' acts as live agent")
 
@@ -314,7 +321,7 @@ class WorldCraftArbitrator:
 
     @staticmethod
     def compute_null_space_projector(
-        jacobian_c: np.ndarray,
+        jacobian_c: Optional[np.ndarray],
         eps: float = 1e-6,
     ) -> np.ndarray:
         r"""Computes null-space projection operator for constraint Jacobian J_C in R^{k x 12}:
@@ -323,7 +330,14 @@ class WorldCraftArbitrator:
 
         Guarantees J_C * P_null \approx 0.
         """
+        i_12 = np.eye(12, dtype=np.float64)
+        if jacobian_c is None:
+            return i_12
+
         j_c = np.asarray(jacobian_c, dtype=np.float64)
+        if j_c.size == 0 or (j_c.ndim == 2 and j_c.shape[0] == 0):
+            return i_12
+
         if j_c.ndim == 1:
             j_c = j_c.reshape(1, -1)
 
@@ -331,7 +345,6 @@ class WorldCraftArbitrator:
         if n != 12:
             raise ValueError(f"Constraint Jacobian must have 12 columns, got {n}")
 
-        i_12 = np.eye(12, dtype=np.float64)
         if k == 0:
             return i_12
 
@@ -384,7 +397,9 @@ class MomentumBank:
     def accumulate(self, delta_q_cut: np.ndarray) -> None:
         """Banks unreleased orthogonal cut momentum."""
         dq = np.asarray(delta_q_cut, dtype=np.float64).ravel()
-        self.banked_momentum = self.banked_momentum + dq
+        if dq.shape[0] < 12:
+            raise ValueError(f"delta_q_cut must have at least 12 elements, got {dq.shape[0]}")
+        self.banked_momentum = self.banked_momentum + dq[:12]
 
     def discharge(self) -> np.ndarray:
         """Discharges all stored momentum and resets bank to zero."""
@@ -553,12 +568,35 @@ def music_functor_inverse(z_24d: np.ndarray) -> Dict[str, Any]:
 
     # Reverb decay in seconds: driven by Void depth (obsidian stillness)
     reverb_decay = float(np.clip(0.5 + 4.5 * q[9] + 1.5 * q[2], 0.4, 6.0))
+    rubato_depth = float(np.clip(0.1 + 0.5 * q[7] + 0.2 * math.tanh(p[7]), 0.0, 1.0))
+    soliton_accent_gain = float(np.clip(0.6 * q[11] + 0.4 * q[6] + 0.3 * math.tanh(p[11]), 0.0, 2.0))
+
+    # WebAudio sequence synthesis
+    base_scale = [60, 62, 64, 67, 69]
+    web_audio_seq = []
+    beat_sec = 60.0 / bpm
+    curr_time = 0.0
+    for step in range(8):
+        scale_idx = step % len(base_scale)
+        pitch = base_scale[scale_idx]
+        if harmonic_tension > 0.5 and step % 3 == 2:
+            pitch += 1
+        duration = beat_sec * (1.0 - rest_interval * 0.6)
+        gain = float(np.clip(0.4 + 0.3 * soliton_accent_gain, 0.1, 1.0))
+        web_audio_seq.append({
+            "note": int(pitch),
+            "time": float(curr_time),
+            "duration": float(duration),
+            "gain": float(gain),
+        })
+        curr_time += beat_sec
 
     return {
         "bpm": bpm,
         "harmonic_tension": harmonic_tension,
         "rest_interval": rest_interval,
         "reverb_decay": reverb_decay,
-        "rubato_depth": float(np.clip(0.1 + 0.5 * q[7] + 0.2 * math.tanh(p[7]), 0.0, 1.0)),
-        "soliton_accent_gain": float(np.clip(0.6 * q[11] + 0.4 * q[6] + 0.3 * math.tanh(p[11]), 0.0, 2.0)),
+        "rubato_depth": rubato_depth,
+        "soliton_accent_gain": soliton_accent_gain,
+        "web_audio_sequence": web_audio_seq,
     }

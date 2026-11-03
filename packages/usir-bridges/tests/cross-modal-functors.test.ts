@@ -205,5 +205,55 @@ describe('Phase E WS-E1: Cross-Modal Visual & Music Functors', () => {
       // Calm sequence has significantly longer reverb decay than tense
       expect(audioCalm.reverbDecay).toBeGreaterThan(audioTense.reverbDecay);
     });
+
+    it('handles degenerate single-pitch music sequence stably without NaN or division by zero', () => {
+      const singlePitchNotes: MusicNoteEvent[] = [
+        { pitch: 60, startTime: 0.0, duration: 0.5, velocity: 80 },
+        { pitch: 60, startTime: 0.5, duration: 0.5, velocity: 80 },
+        { pitch: 60, startTime: 1.0, duration: 0.5, velocity: 80 },
+      ];
+      const feats = extractMusicFeaturesFromNotes(singlePitchNotes);
+      expect(feats.torusDistance).toBe(0.0);
+      expect(feats.dissonance).toBe(0.0);
+      expect(feats.bpm).toBe(120);
+
+      const z = musicFunctorForward(feats);
+      expect(z).toHaveLength(24);
+      for (const val of z.slice(0, 12)) {
+        expect(val).toBeGreaterThanOrEqual(0.0);
+        expect(val).toBeLessThanOrEqual(1.0);
+      }
+    });
+
+    it('correctly calculates totalDuration when an earlier note is sustained past later notes', () => {
+      const sustainedNotes: MusicNoteEvent[] = [
+        { pitch: 48, startTime: 0.0, duration: 8.0, velocity: 70 }, // Bass pedal held 8s
+        { pitch: 60, startTime: 1.0, duration: 0.5, velocity: 80 },
+        { pitch: 64, startTime: 2.0, duration: 0.5, velocity: 80 },
+      ];
+      const feats = extractMusicFeaturesFromNotes(sustainedNotes);
+      expect(feats.restRatio).toBeLessThan(0.1); // 9.0 active / 8.0 total -> clamped to 0
+    });
+  });
+
+  describe('Edge Cases & Type Array Invariance', () => {
+    it('handles uniform flat pixel buffer preserving Gabor normalization', () => {
+      const flatImg: ImageData2D = {
+        width: 16,
+        height: 16,
+        data: new Uint8Array(16 * 16).fill(255), // All white
+      };
+      const feats = extractVisualFeaturesFromImage(flatImg);
+      expect(feats.gaborFrequencies).toEqual([0.25, 0.25, 0.25, 0.25]);
+      expect(feats.gaborFrequencies.reduce((a, b) => a + b, 0)).toBeCloseTo(1.0, 4);
+    });
+
+    it('accepts Float32Array in visual and music inverse functors', () => {
+      const zF32 = new Float32Array(24).fill(0.3);
+      const vParams = visualFunctorInverse(zF32);
+      expect(vParams.cfgScale).toBeGreaterThan(0);
+      const mParams = musicFunctorInverse(zF32);
+      expect(mParams.bpm).toBeGreaterThan(0);
+    });
   });
 });

@@ -155,13 +155,16 @@ export function extractVisualFeaturesFromImage(image: ImageData2D): VisualFeatur
       e135 += d2Diff;
     }
   }
-  const totalGabor = e0 + e45 + e90 + e135 + 1e-6;
-  const gaborFrequencies: [number, number, number, number] = [
-    e0 / totalGabor,
-    e45 / totalGabor,
-    e90 / totalGabor,
-    e135 / totalGabor,
-  ];
+  const rawTotalGabor = e0 + e45 + e90 + e135;
+  const gaborFrequencies: [number, number, number, number] =
+    rawTotalGabor < 1e-6
+      ? [0.25, 0.25, 0.25, 0.25]
+      : [
+          e0 / rawTotalGabor,
+          e45 / rawTotalGabor,
+          e90 / rawTotalGabor,
+          e135 / rawTotalGabor,
+        ];
 
   // 4. Spatial Quadtree Decomposition & Depth Entropy
   const maxDepth = 4;
@@ -310,12 +313,13 @@ export function visualFunctorForward(features: VisualFeatures2D): number[] {
 /**
  * Inverse Visual Functor F_visual^{-1}: Maps 24D USIR symplectic state to Diffusion parameters.
  */
-export function visualFunctorInverse(z24d: number[]): VisualGenerativeParams {
+export function visualFunctorInverse(z24d: number[] | Float32Array | Float64Array): VisualGenerativeParams {
   if (z24d.length < 24) {
     throw new Error(`Expected 24-dimensional USIR state vector, got ${z24d.length}`);
   }
-  const q = z24d.slice(0, 12);
-  const p = z24d.slice(12, 24);
+  const z = Array.from(z24d);
+  const q = z.slice(0, 12);
+  const p = z.slice(12, 24);
 
   // CFG Scale: Driven by Lattice (Sg-02, Sg-05, Sg-09) and restrained by Void (Sg-10)
   const cfgScale = Math.max(
@@ -461,7 +465,13 @@ export function extractMusicFeaturesFromNotes(notes: MusicNoteEvent[]): MusicFea
 
   // Sort notes by startTime
   const sorted = [...notes].sort((a, b) => a.startTime - b.startTime);
-  const totalDuration = sorted[sorted.length - 1]!.startTime + sorted[sorted.length - 1]!.duration;
+  let totalDuration = 0.0;
+  for (const n of sorted) {
+    const endT = n.startTime + n.duration;
+    if (endT > totalDuration) {
+      totalDuration = endT;
+    }
+  }
 
   // 1. Circle of Fifths Torus Distance
   let torusDistSum = 0.0;
@@ -503,8 +513,25 @@ export function extractMusicFeaturesFromNotes(notes: MusicNoteEvent[]): MusicFea
   }
   const syncopation = Math.min(1.0, 0.5 * ioiVar + 0.5 * torusDistance);
 
-  // Estimate BPM from median IOI
-  const bpm = 100.0;
+  // Estimate BPM from median positive IOI
+  let bpm = 100.0;
+  if (sorted.length > 1) {
+    const positiveIois: number[] = [];
+    for (let i = 1; i < sorted.length; i++) {
+      const ioi = sorted[i]!.startTime - sorted[i - 1]!.startTime;
+      if (ioi > 0.05) {
+        positiveIois.push(ioi);
+      }
+    }
+    if (positiveIois.length > 0) {
+      positiveIois.sort((a, b) => a - b);
+      const medianIoi = positiveIois[Math.floor(positiveIois.length / 2)]!;
+      let estBpm = 60.0 / medianIoi;
+      while (estBpm < 50.0 && estBpm > 0) estBpm *= 2.0;
+      while (estBpm > 190.0) estBpm /= 2.0;
+      bpm = Math.max(50.0, Math.min(190.0, Math.round(estBpm)));
+    }
+  }
 
   return {
     torusDistance,
@@ -563,12 +590,13 @@ export function musicFunctorForward(features: MusicFeatures): number[] {
 /**
  * Inverse Music Functor F_music^{-1}: Maps 24D state to WebAudio / MIDI sequence controls.
  */
-export function musicFunctorInverse(z24d: number[]): MusicGenerativeParams {
+export function musicFunctorInverse(z24d: number[] | Float32Array | Float64Array): MusicGenerativeParams {
   if (z24d.length < 24) {
     throw new Error(`Expected 24-dimensional USIR state vector, got ${z24d.length}`);
   }
-  const q = z24d.slice(0, 12);
-  const p = z24d.slice(12, 24);
+  const z = Array.from(z24d);
+  const q = z.slice(0, 12);
+  const p = z.slice(12, 24);
 
   // BPM: Driven by Flux (q0, q3, q7) and momentum p0
   const bpm = Math.max(
