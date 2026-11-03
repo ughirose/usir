@@ -21,4 +21,7 @@ export * from './cinematicStoryboard.js';
 // Live AI Rewrite Connector & Iterative Closed-Loop Tuning (Workstream 4)
 export * from './liveAiConnector.js';
 
+// Universal Cross-Modal Visual & Music Functors (Phase E WS-E1)
+export * from './crossModalFunctors.js';
+
 

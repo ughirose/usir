@@ -74,6 +74,20 @@ from .usir_forge import (
     USIR_MAGIC,
     TIER_M_BYTE_LENGTH,
 )
+from .nishiki_unified_field import (
+    ToulminAuditResult,
+    evaluate_toulmin_components,
+    compute_toulmin_potential,
+    compute_usir_style_energy,
+    compute_unified_field_energy,
+    WorldCraftOntologyRule,
+    WorldCraftArbitrator,
+    MomentumBank,
+    visual_functor_forward_24d,
+    visual_functor_inverse,
+    music_functor_forward_24d,
+    music_functor_inverse,
+)
 
 
 __all__ = [
@@ -141,4 +155,16 @@ __all__ = [
     "OSWEStreamingCompiler",
     "USIR_MAGIC",
     "TIER_M_BYTE_LENGTH",
+    "ToulminAuditResult",
+    "evaluate_toulmin_components",
+    "compute_toulmin_potential",
+    "compute_usir_style_energy",
+    "compute_unified_field_energy",
+    "WorldCraftOntologyRule",
+    "WorldCraftArbitrator",
+    "MomentumBank",
+    "visual_functor_forward_24d",
+    "visual_functor_inverse",
+    "music_functor_forward_24d",
+    "music_functor_inverse",
 ]
