@@ -6,6 +6,7 @@
 // Schema & Binary Serializers
 export * from './schema/usirBinarySchema.js';
 export * from './schema/syntaxFrame.js';
+export * from './schema/usirForge.js';
 
 // Sensor Dictionaries & Primitives
 export * from './sensor/dictionaries.js';
@@ -47,7 +48,18 @@ export * from './presets/canonicalParticles.js';
 // Stage 3 Dynamics, HSMM & Closed-Loop
 export * from './dynamics/closedLoopCorpus.js';
 export * from './dynamics/trajectoryHsmm.js';
-export * from './dynamics/hsmmLongformDirector.js';
+export {
+  type PhaseWell,
+  BASE_P_NARRATIVE,
+  BASE_P_DIALOGUE,
+  BASE_P_CLIMAX,
+  DEFAULT_HSMM_TRANSITION_MATRIX,
+  createDefaultWells,
+  computeWundtBerlyneUtility as computeScalarWundtBerlyneUtility,
+  splitSentencesWithFallback,
+  computeCvL,
+  HSMMLongformDirector,
+} from './dynamics/hsmmLongformDirector.js';
 export * from './dynamics/presalesShowcase.js';
 
 // Stage 3 Style Genome Algebra & Compiler

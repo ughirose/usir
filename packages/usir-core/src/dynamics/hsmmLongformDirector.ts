@@ -230,7 +230,7 @@ export class HSMMLongformDirector {
       row[2] = 0.0;
       const sum = row.reduce((a, b) => a + b, 0);
       if (sum > 0) {
-        for (let j = 0; j < row.length; j++) row[j] /= sum;
+        for (let j = 0; j < row.length; j++) row[j] = (row[j] ?? 0) / sum;
       } else {
         row[0] = 1.0;
       }

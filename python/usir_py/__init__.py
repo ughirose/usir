@@ -61,6 +61,19 @@ from .lora_grpo_forge import (
 from .activation_steerer import (
     SymplecticActivationSteerer,
 )
+from .usir_forge import (
+    align_polar_fourier_phase,
+    compute_polar_fourier_phase,
+    compute_packed_cholesky_24d,
+    unpack_cholesky_24d,
+    precision_matrix_from_packed_cholesky_24d,
+    compile_tier_m_binary,
+    load_tier_m_binary,
+    classify_mode_24d,
+    OSWEStreamingCompiler,
+    USIR_MAGIC,
+    TIER_M_BYTE_LENGTH,
+)
 
 
 __all__ = [
@@ -117,4 +130,15 @@ __all__ = [
     "set_lora_enabled",
     "run_authentic_grpo_lora_forge",
     "SymplecticActivationSteerer",
+    "align_polar_fourier_phase",
+    "compute_polar_fourier_phase",
+    "compute_packed_cholesky_24d",
+    "unpack_cholesky_24d",
+    "precision_matrix_from_packed_cholesky_24d",
+    "compile_tier_m_binary",
+    "load_tier_m_binary",
+    "classify_mode_24d",
+    "OSWEStreamingCompiler",
+    "USIR_MAGIC",
+    "TIER_M_BYTE_LENGTH",
 ]
