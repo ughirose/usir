@@ -374,3 +374,170 @@ def test_colab_run_grpo_forge_training_adapter_integration():
     assert "mean_reward" in res
     assert "steps" in res
     assert len(res["steps"]) == 2
+
+
+# ===========================================================================
+# 7. Deep Edge Cases & Robustness Audit Tests
+# ===========================================================================
+
+def test_multiplicative_grpo_reward_nan_and_inf_safety():
+    """Verifies compute_multiplicative_grpo_reward shuts down cleanly without propagating NaNs or Infs."""
+    # 1. NaN perplexity
+    res_nan = compute_multiplicative_grpo_reward(HEALTHY_PASSAGE, ppl_ref=float("nan"))
+    assert res_nan["m_semantic"] == 0.0
+    assert res_nan["reward"] == 0.0
+    assert res_nan["is_rejected"] is True
+
+    # 2. Infinite perplexity
+    res_inf = compute_multiplicative_grpo_reward(HEALTHY_PASSAGE, ppl_ref=float("inf"))
+    assert res_inf["m_semantic"] == 0.0
+    assert res_inf["reward"] == 0.0
+    assert res_inf["is_rejected"] is True
+
+    # 3. Negative perplexity
+    res_neg = compute_multiplicative_grpo_reward(HEALTHY_PASSAGE, ppl_ref=-10.0)
+    assert res_neg["m_semantic"] == 0.0
+    assert res_neg["reward"] == 0.0
+    assert res_neg["is_rejected"] is True
+
+
+def test_steerer_d_model_dimension_guard():
+    """Verifies SymplecticActivationSteerer strictly validates d_model >= 12."""
+    with pytest.raises(ValueError, match="d_model must be at least 12"):
+        SymplecticActivationSteerer(d_model=8)
+
+    steerer12 = SymplecticActivationSteerer(d_model=12)
+    assert steerer12.v_steer.shape == (12, 12)
+    assert steerer12.verify_orthonormality()["is_orthonormal"] is True
+
+
+def test_attach_lora_named_modules_hierarchical_fallback():
+    """Verifies attach_lora_to_model correctly traverses hierarchy even without get_submodule."""
+    class MockAttention:
+        def __init__(self):
+            self.q_proj = MockBaseLinear(64, 64)
+            self.v_proj = MockBaseLinear(64, 64)
+
+    class MockLayerHierarchy:
+        def __init__(self):
+            self.self_attn = MockAttention()
+
+    class MockModelHierarchy:
+        def __init__(self):
+            self.layer0 = MockLayerHierarchy()
+            self.layer1 = MockLayerHierarchy()
+
+        def named_modules(self):
+            return [
+                ("", self),
+                ("layer0", self.layer0),
+                ("layer0.self_attn", self.layer0.self_attn),
+                ("layer0.self_attn.q_proj", self.layer0.self_attn.q_proj),
+                ("layer0.self_attn.v_proj", self.layer0.self_attn.v_proj),
+                ("layer1", self.layer1),
+                ("layer1.self_attn", self.layer1.self_attn),
+                ("layer1.self_attn.q_proj", self.layer1.self_attn.q_proj),
+                ("layer1.self_attn.v_proj", self.layer1.self_attn.v_proj),
+            ]
+
+    model = MockModelHierarchy()
+    res = attach_lora_to_model(model, target_modules=["q_proj", "v_proj"])
+    assert res["num_attached"] == 4
+    assert isinstance(model.layer0.self_attn.q_proj, AttachedLoRALinear)
+    assert isinstance(model.layer1.self_attn.v_proj, AttachedLoRALinear)
+
+    # Test target_layers <= 0 returns 0 attached modules
+    res_zero = attach_lora_to_model(MockModelHierarchy(), target_modules=["q_proj"], target_layers=0)
+    assert res_zero["num_attached"] == 0
+
+
+def test_steerer_forward_hook_live_injection_and_removal():
+    """Verifies SymplecticActivationSteerer registers, injects potential, and cleans up hook."""
+    class HookHandle:
+        def __init__(self, registry, hook):
+            self.registry = registry
+            self.hook = hook
+
+        def remove(self):
+            if self.hook in self.registry:
+                self.registry.remove(self.hook)
+
+    class MockHookableLayer:
+        def __init__(self, d_model: int = 64):
+            self.d_model = d_model
+            self.hooks = []
+
+        def register_forward_hook(self, fn):
+            self.hooks.append(fn)
+            return HookHandle(self.hooks, fn)
+
+        def forward(self, x):
+            out = np.asarray(x, dtype=np.float32)
+            for h in self.hooks:
+                out = h(self, (x,), out)
+            return out
+
+        def __call__(self, x):
+            return self.forward(x)
+
+    class CustomContainer:
+        def __init__(self, items):
+            self._items = items
+        def __len__(self):
+            return len(self._items)
+        def __getitem__(self, idx):
+            return self._items[idx]
+
+    layer = MockHookableLayer(d_model=64)
+    model = type("MockModel", (), {"layers": CustomContainer([layer])})()
+
+    steerer = SymplecticActivationSteerer(d_model=64, layer_idx=0)
+    x = np.ones((1, 4, 64), dtype=np.float32)
+
+    # 1. Before steering context: unsteered
+    out_before = layer(x)
+    np.testing.assert_allclose(out_before, x)
+
+    # 2. Within steering context: hook actively injects potential
+    delta_q = np.zeros(12, dtype=np.float32)
+    delta_q[0] = 0.5
+    with steerer.steering_context(delta_q_star=delta_q, alpha_act=0.2, model=model):
+        out_during = layer(x)
+        assert not np.allclose(out_during, x)
+        diff = np.linalg.norm(out_during - x)
+        assert diff > 0.05
+
+    # 3. After steering context: hook is cleanly removed
+    out_after = layer(x)
+    np.testing.assert_allclose(out_after, x)
+
+
+def test_independent_judge_empty_string_and_technical_terms():
+    """Verifies independent judge handles empty strings and katakana/alphanumeric keywords."""
+    # 1. Empty string yields 0.0 quality
+    res_empty = evaluate_llm_judge("", domain="novel", prompt="雨上がりの古寺")
+    assert res_empty["normalized_quality"] == 0.0
+    assert res_empty["total_score"] == 4.0
+
+    # 2. Technical domain prompt with katakana and alphanumeric terms
+    prompt_tech = "コンパクトHausdorff位相群上のHaar測度と3-SAT定理"
+    text_tech = (
+        "コンパクトHausdorff位相群において、Haar測度の構成は極めて自然な議論である。"
+        "したがって、左不変性と正規化条件により、測度の一意性が確立される。"
+        "一方で3-SAT定理との還元ステップにおける論理整合性も満たされる。"
+    )
+    res_tech = evaluate_llm_judge(text_tech, domain="cot_reasoning", prompt=prompt_tech)
+    assert res_tech["normalized_quality"] > 60.0
+    assert res_tech["logical_validity"] >= 4.0
+
+
+def test_dual_ridge_regression_calibration():
+    """Verifies calibrate_12_element_axes applies dual ridge regression and yields orthonormal basis."""
+    steerer = SymplecticActivationSteerer(d_model=64, num_layers=10)
+    v = steerer.calibrate_12_element_axes(ridge_lambda=1e-2)
+    assert v.shape == (64, 12)
+    info = steerer.verify_orthonormality()
+    assert info["is_orthonormal"] is True
+    assert info["max_diag_error"] < 1e-4
+    assert info["max_offdiag_error"] < 1e-4
+

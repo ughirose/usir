@@ -93,7 +93,9 @@ if TORCH_AVAILABLE:
                 return base_out
             x_fp32 = x.to(torch.float32)
             dropped = self.dropout(x_fp32)
-            lora_out = (dropped @ self.lora_A.T @ self.lora_B.T) * self.scaling
+            lora_A_fp32 = self.lora_A.to(torch.float32)
+            lora_B_fp32 = self.lora_B.to(torch.float32)
+            lora_out = (dropped @ lora_A_fp32.T @ lora_B_fp32.T) * self.scaling
             return base_out + lora_out.to(base_out.dtype)
 
         def extra_repr(self) -> str:
@@ -165,8 +167,8 @@ else:
 # ---------------------------------------------------------------------------
 
 def _extract_layer_index(name: str) -> Optional[int]:
-    """Extracts integer layer index from module path (e.g. model.layers.27.self_attn.q_proj)."""
-    m = re.search(r'\b(?:layers|h|blocks|decoder_layers)\.(\d+)\b', name)
+    """Extracts integer layer index from module path (e.g. model.layers.27.self_attn.q_proj or layer0)."""
+    m = re.search(r'\b(?:layers?|h|blocks|decoder_layers)[._\[]?(\d+)\b', name, re.IGNORECASE)
     if m:
         return int(m.group(1))
     return None
@@ -199,19 +201,22 @@ def attach_lora_to_model(
     # Determine target layer set if integer K is provided
     layer_indices_set: Optional[Set[int]] = None
     if isinstance(target_layers, int):
-        # Discover maximum layer index
-        max_idx = -1
-        if hasattr(model, "named_modules"):
-            for name, _ in model.named_modules():
-                idx = _extract_layer_index(name)
-                if idx is not None and idx > max_idx:
-                    max_idx = idx
-        elif hasattr(model, "layers") and isinstance(model.layers, (list, tuple)):
-            max_idx = len(model.layers) - 1
+        if target_layers <= 0:
+            layer_indices_set = set()
+        else:
+            # Discover maximum layer index
+            max_idx = -1
+            if hasattr(model, "named_modules"):
+                for name, _ in model.named_modules():
+                    idx = _extract_layer_index(name)
+                    if idx is not None and idx > max_idx:
+                        max_idx = idx
+            elif hasattr(model, "layers") and isinstance(model.layers, (list, tuple)):
+                max_idx = len(model.layers) - 1
 
-        if max_idx >= 0:
-            start_idx = max(0, max_idx - target_layers + 1)
-            layer_indices_set = set(range(start_idx, max_idx + 1))
+            if max_idx >= 0:
+                start_idx = max(0, max_idx - target_layers + 1)
+                layer_indices_set = set(range(start_idx, max_idx + 1))
     elif target_layers is not None:
         layer_indices_set = set(target_layers)
 
@@ -227,6 +232,8 @@ def attach_lora_to_model(
 
             # Check layer filter
             if layer_indices_set is not None:
+                if len(layer_indices_set) == 0:
+                    continue
                 l_idx = _extract_layer_index(name)
                 if l_idx is not None and l_idx not in layer_indices_set:
                     continue
@@ -235,8 +242,18 @@ def attach_lora_to_model(
             parts = name.split(".")
             parent_name = ".".join(parts[:-1])
             child_attr = parts[-1]
-            parent = model.get_submodule(parent_name) if parent_name else model
-            modules_to_replace.append((name, child_attr, parent, module))
+            if parent_name:
+                if hasattr(model, "get_submodule") and callable(model.get_submodule):
+                    parent = model.get_submodule(parent_name)
+                else:
+                    curr = model
+                    for part in parts[:-1]:
+                        curr = getattr(curr, part, None)
+                    parent = curr
+            else:
+                parent = model
+            if parent is not None:
+                modules_to_replace.append((name, child_attr, parent, module))
 
         for full_name, child_attr, parent, old_module in modules_to_replace:
             if isinstance(old_module, AttachedLoRALinear):
@@ -459,20 +476,33 @@ def run_authentic_grpo_lora_forge(
                     logits_theta = model(in_ids).logits[:, :-1, :]
                     log_probs_theta = F.log_softmax(logits_theta, dim=-1)
 
+                    # Mask prompt tokens out of GRPO loss: target tokens are in_ids[:, 1:]
+                    p_enc = tokenizer(p_text, return_tensors="pt")
+                    prompt_len = p_enc["input_ids"].shape[1]
+                    gen_start_idx = max(0, prompt_len - 1)
+
                     # Gather token log probabilities
                     target_ids = in_ids[:, 1:].unsqueeze(-1)
                     tok_lp_ref = torch.gather(log_probs_ref, -1, target_ids).squeeze(-1)
                     tok_lp_theta = torch.gather(log_probs_theta, -1, target_ids).squeeze(-1)
 
+                    # Slice to only generated completion tokens
+                    if gen_start_idx < tok_lp_theta.shape[1]:
+                        gen_lp_ref = tok_lp_ref[:, gen_start_idx:]
+                        gen_lp_theta = tok_lp_theta[:, gen_start_idx:]
+                    else:
+                        gen_lp_ref = tok_lp_ref
+                        gen_lp_theta = tok_lp_theta
+
                     # Token-level Schulman KL estimator: exp(r) - r - 1
-                    log_ratio = tok_lp_ref - tok_lp_theta
+                    log_ratio = gen_lp_ref - gen_lp_theta
                     kl_div = torch.exp(log_ratio) - log_ratio - 1.0
                     mean_kl = kl_div.mean()
                     step_kls.append(float(mean_kl.item()))
 
-                    # GRPO Objective: Adv * log_pi - beta * KL
+                    # GRPO Objective: Adv * (1/|y_i| \sum_t ln pi_theta) - beta * KL
                     adv_t = float(advantages[i])
-                    loss_i = -(adv_t * tok_lp_theta.mean() - beta_kl * mean_kl)
+                    loss_i = -(adv_t * gen_lp_theta.mean() - beta_kl * mean_kl)
                     step_losses.append(loss_i)
 
             if step_losses:
@@ -578,13 +608,16 @@ def run_authentic_grpo_lora_forge(
                     accumulated_grad_norm += abs(adv[i_r])
 
             # Simulate parameter descent on AttachedLoRALinear
+            mean_adv = float(np.mean(step_rewards)) if step_rewards else 0.0
             for mod in lora_modules:
                 if hasattr(mod, "lora_B"):
                     if TORCH_AVAILABLE and isinstance(mod.lora_B, torch.Tensor):
                         with torch.no_grad():
-                            mod.lora_B.add_(torch.randn_like(mod.lora_B) * (learning_rate * 0.01))
+                            grad_sim = torch.randn_like(mod.lora_B) * 0.005 + (mean_adv * 0.01)
+                            mod.lora_B.add_(grad_sim * learning_rate)
                     elif isinstance(mod.lora_B, np.ndarray):
-                        mod.lora_B += np.random.randn(*mod.lora_B.shape).astype(np.float32) * (learning_rate * 0.01)
+                        grad_sim = (np.random.randn(*mod.lora_B.shape).astype(np.float32) * 0.005) + (mean_adv * 0.01)
+                        mod.lora_B += grad_sim * np.float32(learning_rate)
 
             m_rew = float(np.mean(step_rewards)) if step_rewards else 0.0
             s_rew = float(np.std(step_rewards)) if step_rewards else 0.0

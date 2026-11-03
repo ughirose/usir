@@ -48,6 +48,8 @@ class SymplecticActivationSteerer:
         v_steer: Optional[Union[np.ndarray, Any]] = None,
     ):
         self.d_model = int(d_model)
+        if self.d_model < 12:
+            raise ValueError(f"d_model must be at least 12 to embed 12-element symplectic space, got {self.d_model}")
         self.num_layers = int(num_layers)
         self.layer_ratio = float(layer_ratio)
 
@@ -163,11 +165,20 @@ class SymplecticActivationSteerer:
         h_centered = h_matrix - np.mean(h_matrix, axis=0, keepdims=True)
         q_centered = q_matrix - np.mean(q_matrix, axis=0, keepdims=True)
 
-        # Cross covariance: H^T Q
-        cross_cov = h_centered.T @ q_centered  # Shape (d_model, 12)
+        # Dual Ridge Regression: W = H^T (H H^T + lambda I)^{-1} Q
+        if ridge_lambda > 0.0 and m_samples > 1:
+            gram_hh = h_centered @ h_centered.T  # (M, M)
+            reg_eye = np.eye(m_samples, dtype=np.float32) * float(ridge_lambda)
+            try:
+                inv_kernel = np.linalg.solve(gram_hh + reg_eye, q_centered)  # (M, 12)
+                w_ridge = h_centered.T @ inv_kernel  # (d_model, 12)
+            except np.linalg.LinAlgError:
+                w_ridge = h_centered.T @ q_centered
+        else:
+            w_ridge = h_centered.T @ q_centered
 
-        # Orthonormalize cross_cov columns via QR
-        v_calib = self._ensure_orthonormal(cross_cov)
+        # Orthonormalize w_ridge columns via QR
+        v_calib = self._ensure_orthonormal(w_ridge)
         self.v_steer = v_calib
         return self.v_steer
 
@@ -210,17 +221,22 @@ class SymplecticActivationSteerer:
 
     def get_target_layer_module(self, model: Any) -> Optional[Any]:
         """Resolves target layer module from transformer model."""
-        if hasattr(model, "model") and hasattr(model.model, "layers"):
-            layers = model.model.layers
-            if self.layer_idx < len(layers):
-                return layers[self.layer_idx]
-        elif hasattr(model, "layers") and isinstance(model.layers, (list, tuple)):
-            if self.layer_idx < len(model.layers):
-                return model.layers[self.layer_idx]
-        elif hasattr(model, "transformer") and hasattr(model.transformer, "h"):
-            layers = model.transformer.h
-            if self.layer_idx < len(layers):
-                return layers[self.layer_idx]
+        candidate_containers = [
+            getattr(getattr(model, "model", None), "layers", None),
+            getattr(model, "layers", None),
+            getattr(getattr(model, "transformer", None), "h", None),
+            getattr(getattr(getattr(model, "base_model", None), "model", None), "layers", None),
+            getattr(getattr(model, "decoder", None), "layers", None),
+        ]
+        for c in candidate_containers:
+            if c is not None:
+                try:
+                    num_l = len(c)
+                    idx = self.layer_idx if self.layer_idx >= 0 else num_l + self.layer_idx
+                    if 0 <= idx < num_l:
+                        return c[idx]
+                except Exception:
+                    pass
         return None
 
     @contextlib.contextmanager
@@ -240,18 +256,20 @@ class SymplecticActivationSteerer:
         self._current_alpha = float(alpha_act)
 
         hook_handle = None
-        if TORCH_AVAILABLE and model is not None and isinstance(model, nn.Module):
+        if model is not None:
             target_layer = self.get_target_layer_module(model)
-            if target_layer is not None:
+            if target_layer is not None and hasattr(target_layer, "register_forward_hook") and callable(target_layer.register_forward_hook):
                 def hook_fn(module, input_args, output):
-                    # Output can be a tensor or tuple (hidden_states, ...)
+                    # Output can be a tensor, tuple (hidden_states, ...), or ModelOutput
                     if isinstance(output, tuple):
                         h_out = output[0]
                         steered_h = self.steer_tensor(h_out, self._current_delta_q, self._current_alpha)
                         return (steered_h,) + output[1:]
-                    elif isinstance(output, torch.Tensor):
+                    elif hasattr(output, "hidden_states") and output.hidden_states is not None:
+                        output.hidden_states = self.steer_tensor(output.hidden_states, self._current_delta_q, self._current_alpha)
+                        return output
+                    else:
                         return self.steer_tensor(output, self._current_delta_q, self._current_alpha)
-                    return output
 
                 hook_handle = target_layer.register_forward_hook(hook_fn)
                 self._active_hook_handle = hook_handle

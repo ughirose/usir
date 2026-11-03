@@ -293,6 +293,17 @@ def evaluate_llm_judge(
             pass
 
     # 2. Deterministic Offline Independent Rubric Scorer
+    if not text or not text.strip():
+        return {
+            "coherence_flow": 1.0,
+            "logical_validity": 1.0,
+            "structural_sophistication": 1.0,
+            "absence_of_slop": 1.0,
+            "total_score": 4.0,
+            "normalized_quality": 0.0,
+            "rubric_prompt": rubric_prompt,
+        }
+
     units = [s.strip() for s in re.split(r'[。！？\n]+', text) if len(s.strip()) >= 5]
     if len(units) < 2:
         return {
@@ -317,14 +328,14 @@ def evaluate_llm_judge(
     conn_count = sum(text.count(c) for c in connectives)
     conn_bonus = min(0.8, conn_count * 0.2)
 
-    prompt_words = [w for w in re.findall(r'[\u4e00-\u9fff]{2,}', prompt) if len(w) >= 2]
-    overlap_count = sum(1 for w in prompt_words if w in text)
+    prompt_words = [w for w in re.findall(r'[\u4e00-\u9fff]{2,}|[\u30a0-\u30ff]{2,}|[A-Za-z0-9_-]{2,}', prompt) if len(w) >= 2]
+    overlap_count = sum(1 for w in prompt_words if (w in text or (len(w) >= 3 and w[:2] in text)))
     overlap_ratio = overlap_count / float(max(1, len(prompt_words)))
 
     target_bonus = 0.0
     if target_conclusion:
-        tgt_words = [w for w in re.findall(r'[\u4e00-\u9fff]{2,}', target_conclusion) if len(w) >= 2]
-        if tgt_words and any(w in units[-1] or w in text for w in tgt_words):
+        tgt_words = [w for w in re.findall(r'[\u4e00-\u9fff]{2,}|[\u30a0-\u30ff]{2,}|[A-Za-z0-9_-]{2,}', target_conclusion) if len(w) >= 2]
+        if tgt_words and any(w in units[-1] or w in text or (len(w) >= 3 and w[:2] in text) for w in tgt_words):
             target_bonus = 0.6
 
     logic_base = 2.4 + 1.2 * overlap_ratio + conn_bonus + target_bonus
@@ -348,6 +359,7 @@ def evaluate_llm_judge(
         "といえるだろう", "にほかならない", "が求められている", "注目を集めている",
         "重要な課題である", "様々な応用", "モデル化において", "初期条件：",
         "解決策：", "期待結果：", "いかがでしたでしょうか", "AIとして",
+        "することが重要である", "が不可欠である", "本記事では", "まとめとして",
     ]
     cliche_hits = sum(text.count(c) for c in cliches)
 
@@ -973,6 +985,8 @@ def _run_experiment_on_domain_impl(
 
 def run_grpo_forge_training(
     results: List[Dict[str, Any]],
+    model: Optional[Any] = None,
+    tokenizer: Optional[Any] = None,
     device: str = "cpu",
     num_steps: int = 5,
 ) -> Dict[str, Any]:
@@ -992,22 +1006,34 @@ def run_grpo_forge_training(
         prompts_data.append({"prompt": x0, "x_0": x0, "x_T": xT, "domain": dom})
         rollout_candidates.append(cand_list)
 
-    if TORCH_AVAILABLE:
+    if model is not None and tokenizer is not None:
+        attach_lora_to_model(
+            model,
+            target_modules=["q_proj", "v_proj"],
+            r=8,
+            alpha=16.0,
+            target_layers=4,
+        )
+        target_model = model
+        target_tok = tokenizer
+    elif TORCH_AVAILABLE:
         import torch
         import torch.nn as nn
         base_head = nn.Linear(64, 64, bias=False).to(device)
-        adapter = AttachedLoRALinear(base_head, r=8, alpha=16.0).to(device)
+        target_model = AttachedLoRALinear(base_head, r=8, alpha=16.0).to(device)
+        target_tok = None
     else:
         class DummyBaseHead:
             in_features = 64
             out_features = 64
             weight = np.eye(64, dtype=np.float32)
 
-        adapter = AttachedLoRALinear(DummyBaseHead(), r=8, alpha=16.0)
+        target_model = AttachedLoRALinear(DummyBaseHead(), r=8, alpha=16.0)
+        target_tok = None
 
     forge_res = run_authentic_grpo_lora_forge(
-        model=adapter,
-        tokenizer=None,
+        model=target_model,
+        tokenizer=target_tok,
         prompts=prompts_data,
         candidate_completions=rollout_candidates,
         num_rollouts=min(4, len(rollout_candidates[0])) if rollout_candidates else 3,
@@ -1287,7 +1313,20 @@ def main() -> None:
             print("\n" + "=" * 80)
             print("EXECUTING USIR v4.0 GRPO LoRA FORGE POLICY GRADIENT OPTIMIZATION")
             print("=" * 80)
-        grpo_training_summary = run_grpo_forge_training(results, device=device_str, num_steps=5)
+        t1_model = None
+        t1_tok = None
+        if tier_info.get("tier") == "Tier_1_GPU_Transformers":
+            try:
+                t1_model, t1_tok = get_transformers_model()
+            except Exception:
+                t1_model, t1_tok = None, None
+        grpo_training_summary = run_grpo_forge_training(
+            results,
+            model=t1_model,
+            tokenizer=t1_tok,
+            device=device_str,
+            num_steps=5,
+        )
         if not args.quiet:
             print(f"GRPO Training Complete: Mean Reward={grpo_training_summary['mean_reward']:.4f}")
             for s in grpo_training_summary["steps"]:

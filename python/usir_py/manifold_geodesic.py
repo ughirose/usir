@@ -563,8 +563,11 @@ def compute_multiplicative_grpo_reward(
     # 4b. Reference Perplexity Semantic Barrier M_semantic(y | x)
     if ppl_ref is not None:
         ppl_val = float(ppl_ref)
-        clamped_arg = float(np.clip(alpha_ppl * (ppl_val - ppl_thresh), -50.0, 50.0))
-        m_semantic = float(1.0 / (1.0 + math.exp(clamped_arg)))
+        if math.isnan(ppl_val) or math.isinf(ppl_val) or ppl_val < 0.0:
+            m_semantic = 0.0
+        else:
+            clamped_arg = float(np.clip(alpha_ppl * (ppl_val - ppl_thresh), -50.0, 50.0))
+            m_semantic = float(1.0 / (1.0 + math.exp(clamped_arg)))
     else:
         m_semantic = 1.0
 
