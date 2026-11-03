@@ -19,6 +19,7 @@ import { extractUsir24d, type Usir24dResult } from '../sensor/symplectic24d.js';
 import { BANNED_TARGET_KEYWORDS } from '../cleanroom/threeRoomGate.js';
 import { HARD_AI_CLICHE_FRAMES, META_GOODHART_TERMS } from '../cleanroom/microConstraintGate.js';
 import type { SyntaxTreeFrame } from '../schema/syntaxFrame.js';
+import { synthesizeMimeticHTH } from '../v2/hthLexicon.js';
 
 export const MODERN_LOANWORDS: readonly string[] = [
   '猛スピード', 'スピード', 'システム', 'レベル', 'ストレス', 'タイミング',
@@ -274,6 +275,11 @@ export function embedSentenceUnit(
           const nibble = Number((prim >> BigInt(4 * d)) & 0xfn);
           sSum[d] = (sSum[d] ?? 0) + nibble / 15.0;
         }
+      } else if (u.surface && (/[っッんンー]/.test(u.surface) || u.surface.length >= 4)) {
+        const mim = synthesizeMimeticHTH(u.surface);
+        for (let d = 0; d < 8; d++) {
+          sSum[d] = (sSum[d] ?? 0) + (mim.sensory8d[d] ?? 0.0);
+        }
       }
     }
     for (let d = 0; d < 8; d++) {
@@ -394,6 +400,8 @@ export function computeSemanticGeodesicCurvature(
     alpha_brownian?: number;
     is_coordinates?: boolean;
     domain?: string;
+    frames?: SyntaxTreeFrame[];
+    hiddenStates?: any;
   }
 ): SemanticGeodesicResult {
   const units = typeof textOrUnits === 'string' ? splitIntoTrajectoryUnits(textOrUnits) : [...textOrUnits];
@@ -431,7 +439,11 @@ export function computeSemanticGeodesicCurvature(
         target_curvature: targetKappa,
       };
     }
-    diffs = units.map((u) => embedSentenceUnit(u));
+    if (options?.frames && options.frames.length === units.length) {
+      diffs = units.map((u, i) => embedSentenceUnit(u, 24, options.frames![i], options.hiddenStates));
+    } else {
+      diffs = units.map((u) => embedSentenceUnit(u, 24, undefined, options?.hiddenStates));
+    }
   }
 
   const diffNorms: number[] = [];
@@ -582,6 +594,8 @@ export function computeMultiplicativeGrpoReward(
     domain?: string;
     is_authentic_masterwork?: boolean;
     alpha_metric?: number;
+    frames?: SyntaxTreeFrame[];
+    hiddenStates?: any;
   }
 ): MultiplicativeGrpoRewardResult {
   if (!text || text.trim().length === 0) {
@@ -652,7 +666,11 @@ export function computeMultiplicativeGrpoReward(
   }
 
   // 2. Semantic Geodesic Multiplier
-  const geodesicRes = computeSemanticGeodesicCurvature(text);
+  const geodesicRes = computeSemanticGeodesicCurvature(text, {
+    domain: options?.domain,
+    frames: options?.frames,
+    hiddenStates: options?.hiddenStates,
+  });
   const mGeodesic = geodesicRes.m_geodesic;
 
   // 3. Bidirectional Bridge Multiplier
@@ -660,8 +678,8 @@ export function computeMultiplicativeGrpoReward(
   if (options?.x_0 !== undefined || options?.x_T !== undefined) {
     const units = splitIntoTrajectoryUnits(text);
     if (units.length > 0) {
-      const tipFwd = embedSentenceUnit(units[0]!);
-      const tipBwd = embedSentenceUnit(units[units.length - 1]!);
+      const tipFwd = embedSentenceUnit(units[0]!, 24, options?.frames?.[0], options?.hiddenStates);
+      const tipBwd = embedSentenceUnit(units[units.length - 1]!, 24, options?.frames?.[units.length - 1], options?.hiddenStates);
 
       let cos0 = 1.0;
       if (options?.x_0 !== undefined) {

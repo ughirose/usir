@@ -22,6 +22,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 
 from .extractor_24d import PHYSICAL_SENSE_INTERVALS, extract_usir_24d
+from .linguistic_gates import is_mimetic_word, synthesize_mimetic_8d
 from .grpo_reward import (
     _FEATURE_STD,
     BRACKET_PAIRS,
@@ -202,6 +203,8 @@ def _embed_sentence_unit(
             prim = getattr(u, "hth_primary", 0)
             if prim:
                 s_sum += np.array([(prim >> (4 * d)) & 0xF for d in range(8)], dtype=float) / 15.0
+            elif is_mimetic_word(getattr(u, "surface", "")):
+                s_sum += synthesize_mimetic_8d(u.surface).sensory_vec
         vec[:8] = np.clip(s_sum / max(len(frame.nodes), 1), 0.0, 1.0)
         vec[8] = np.clip(float(getattr(frame, "radial_entropy", 0.0)), 0.0, 1.0)
         vec[9] = np.clip(float(getattr(frame, "max_depth", 0)) / max(len(frame.nodes), 1), 0.0, 1.0)
@@ -288,6 +291,8 @@ def compute_semantic_geodesic_curvature(
     alpha_brownian: float = 1.2,
     is_coordinates: bool = False,
     domain: str = "novel",
+    frames: Optional[List[Any]] = None,
+    hidden_states: Optional[Any] = None,
 ) -> Dict[str, Any]:
     r"""Computes semantic space trajectory geodesic curvature, torsion, and Brownian diffusion.
 
@@ -329,7 +334,10 @@ def compute_semantic_geodesic_curvature(
                 "units_count": M,
                 "target_curvature": DOMAIN_CURVATURE_TARGETS.get(domain, 0.30),
             }
-        diffs = np.vstack([_embed_sentence_unit(u) for u in units])
+        if frames is not None and len(frames) == M:
+            diffs = np.vstack([_embed_sentence_unit(u, frame=f, hidden_states=hidden_states) for u, f in zip(units, frames)])
+        else:
+            diffs = np.vstack([_embed_sentence_unit(u, hidden_states=hidden_states) for u in units])
 
     diff_norms = np.linalg.norm(diffs, axis=1)
 
@@ -448,6 +456,8 @@ def compute_multiplicative_grpo_reward(
     is_authentic_masterwork: bool = False,
     masterwork_texts: Optional[List[str]] = None,
     alpha_metric: float = 1.0,
+    frames: Optional[List[Any]] = None,
+    hidden_states: Optional[Any] = None,
 ) -> Dict[str, Any]:
     r"""Computes v4.0 4-factor non-hackable multiplicative GRPO barrier reward:
 
@@ -509,7 +519,7 @@ def compute_multiplicative_grpo_reward(
         m_syntax = float(np.clip(punct_gate * b_score * (1.0 - rep_pen), 0.0, 1.0))
 
     # 2. Semantic Geodesic Multiplier (Brownian Motion & Curvature Gate)
-    geodesic_res = compute_semantic_geodesic_curvature(text)
+    geodesic_res = compute_semantic_geodesic_curvature(text, domain=domain, frames=frames, hidden_states=hidden_states)
     m_geodesic = geodesic_res["m_geodesic"]
 
     # 3. Bidirectional Bridge Multiplier M_bridge(y | x_0, x_T)
@@ -517,8 +527,8 @@ def compute_multiplicative_grpo_reward(
     if x_0 is not None or x_T is not None:
         units = _split_into_trajectory_units(text)
         if units:
-            tip_fwd = _embed_sentence_unit(units[0])
-            tip_bwd = _embed_sentence_unit(units[-1])
+            tip_fwd = _embed_sentence_unit(units[0], frame=frames[0] if (frames and len(frames) > 0) else None, hidden_states=hidden_states)
+            tip_bwd = _embed_sentence_unit(units[-1], frame=frames[-1] if (frames and len(frames) > 0) else None, hidden_states=hidden_states)
 
             cos_0 = 1.0
             if x_0 is not None:
@@ -589,19 +599,35 @@ def fit_contrastive_fisher_metric(
     """
     pos = np.asarray(pos_z, dtype=float)
     neg = np.asarray(neg_z, dtype=float)
-    if pos.ndim == 1:
+
+    if pos.size == 0 and neg.size == 0:
+        dim = 24
+        reg_eye = float(lambda_reg) * np.eye(dim, dtype=float)
+        G_style = (1.0 / float(lambda_reg)) * np.eye(dim, dtype=float)
+        return {
+            "G_style": G_style,
+            "optimal_projection_axis": np.zeros(dim, dtype=float),
+            "mu_pos": np.zeros(dim, dtype=float),
+            "mu_neg": np.zeros(dim, dtype=float),
+            "delta_mu": np.zeros(dim, dtype=float),
+            "lambda_max": 0.0,
+            "S_B": np.zeros((dim, dim), dtype=float),
+            "S_W": reg_eye,
+        }
+
+    if pos.ndim == 1 and pos.size > 0:
         pos = pos.reshape(1, -1)
-    if neg.ndim == 1:
+    if neg.ndim == 1 and neg.size > 0:
         neg = neg.reshape(1, -1)
 
-    dim = pos.shape[1] if pos.shape[1] > 0 else 24
-    mu_pos = np.mean(pos, axis=0)
-    mu_neg = np.mean(neg, axis=0)
+    dim = pos.shape[1] if (pos.ndim == 2 and pos.shape[1] > 0) else (neg.shape[1] if (neg.ndim == 2 and neg.shape[1] > 0) else 24)
+    mu_pos = np.mean(pos, axis=0) if (pos.ndim == 2 and pos.shape[0] > 0) else np.zeros(dim, dtype=float)
+    mu_neg = np.mean(neg, axis=0) if (neg.ndim == 2 and neg.shape[0] > 0) else np.zeros(dim, dtype=float)
     delta_mu = mu_pos - mu_neg
     S_B = np.outer(delta_mu, delta_mu)
 
-    cov_pos = np.cov(pos, rowvar=False) if pos.shape[0] > 1 else np.zeros((dim, dim), dtype=float)
-    cov_neg = np.cov(neg, rowvar=False) if neg.shape[0] > 1 else np.zeros((dim, dim), dtype=float)
+    cov_pos = np.cov(pos, rowvar=False) if (pos.ndim == 2 and pos.shape[0] > 1) else np.zeros((dim, dim), dtype=float)
+    cov_neg = np.cov(neg, rowvar=False) if (neg.ndim == 2 and neg.shape[0] > 1) else np.zeros((dim, dim), dtype=float)
     if cov_pos.ndim == 0:
         cov_pos = cov_pos.reshape(1, 1)
     if cov_neg.ndim == 0:
@@ -629,3 +655,6 @@ def fit_contrastive_fisher_metric(
         "S_B": S_B,
         "S_W": S_W,
     }
+
+
+embed_sentence_unit = _embed_sentence_unit

@@ -14,7 +14,20 @@ export * from './sensor/microKasane.js';
 export * from './sensor/mesoSasae.js';
 export * from './sensor/macroKamae.js';
 export * from './sensor/symplectic24d.js';
-export * from './sensor/hthLexicon.js';
+export {
+  HTHPolyLexicon,
+  type DualSenseEntry,
+  type SenseResolutionResult,
+  TOTAL_WORDS,
+  BYTES_PER_ENTRY,
+  EXPECTED_BINARY_SIZE,
+  ENTRIES_PER_QUANTILE_BIN,
+  lcaDepth64bit,
+  jumpDistance64bit,
+  packPoly64bit,
+  unpackPoly64bit,
+  sensoryNibblesToFloats,
+} from './sensor/hthLexicon.js';
 
 // Dynamics & Thermodynamics
 export * from './dynamics/hamiltonian.js';

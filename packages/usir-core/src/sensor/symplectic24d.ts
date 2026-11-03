@@ -21,7 +21,9 @@ import {
   mean,
   splitSentences,
   stdPop,
+  countMoras,
 } from './dictionaries.js';
+import { synthesizeMimeticHTH } from '../v2/hthLexicon.js';
 import { computeMicroKasane } from './microKasane.js';
 import { computeMesoSasae } from './mesoSasae.js';
 import { computeMacroKamae } from './macroKamae.js';
@@ -56,6 +58,15 @@ export interface Usir24dResult {
   cadence_alive: number;
 }
 
+const SLUGGISH_ENDINGS = ['のだった', 'であった', '思われた', '感じられた', 'ていた'];
+
+function isMimeticWord(w: string): boolean {
+  if (w.length < 2) return false;
+  if (/[っッんンー]/.test(w) && (w.endsWith('と') || w.endsWith('り') || w.endsWith('っと'))) return true;
+  if (w.length >= 4 && w.slice(0, Math.floor(w.length / 2)) === w.slice(Math.floor(w.length / 2))) return true;
+  return false;
+}
+
 export function extractStage1Signals(text: string, frames?: SyntaxTreeFrame[]): number[][] {
   const clean = text.trim();
   let sents: string[] = [];
@@ -80,15 +91,68 @@ export function extractStage1Signals(text: string, frames?: SyntaxTreeFrame[]): 
       const K = nodes.length;
 
       let sensorySum = 0;
+      let sMinusSum = 0;
       for (const u of nodes) {
         const prim = u.hth_primary ? BigInt(u.hth_primary) : 0n;
+        const sensVec = new Array<number>(8).fill(0.0);
         if (prim > 0n) {
-          let nSum = 0;
-          for (let d = 0; d < 8; d++) nSum += Number((prim >> BigInt(4 * d)) & 0xfn) / 15.0;
-          sensorySum += nSum;
+          for (let d = 0; d < 8; d++) sensVec[d] = Number((prim >> BigInt(4 * d)) & 0xfn) / 15.0;
+        } else if (isMimeticWord(u.surface)) {
+          const mim = synthesizeMimeticHTH(u.surface);
+          for (let d = 0; d < 8; d++) sensVec[d] = mim.sensory8d[d] ?? 0.0;
+        }
+
+        let maxS = 0;
+        for (let d = 0; d < 8; d++) if (sensVec[d]! > maxS) maxS = sensVec[d]!;
+        let cU = 0.5;
+        if (u.pos === '助詞' || u.pos === '助動詞' || (u.pos_detail && u.pos_detail.includes('助詞'))) {
+          cU = 0.05;
+        } else if (u.surface.split('').some((ch) => PHYSICAL_SENSE_CHARS.has(ch))) {
+          cU = 0.90;
+        } else if (extractKanjiStems(u.surface).length > 0) {
+          cU = Math.max(0.65, maxS);
+        } else {
+          cU = Math.max(0.30, maxS);
+        }
+
+        let alpha = 1.0;
+        if (u.is_negation_scope || (u.pos_detail && u.pos_detail.includes('否定')) || /ない|ぬ|ず|なかった/.test(u.surface)) {
+          alpha = -0.5;
+        } else if (u.is_speculative_scope || /だろう|かもしれない|よう|みたい/.test(u.surface)) {
+          alpha = 0.6;
+        }
+
+        let sNorm = 0;
+        for (let d = 0; d < 8; d++) sNorm += sensVec[d]! * sensVec[d]!;
+        sNorm = Math.sqrt(sNorm);
+
+        if (alpha > 0) {
+          let sPlusNorm1 = 0;
+          for (let d = 0; d < 8; d++) sPlusNorm1 += sensVec[d]!;
+          sensorySum += sPlusNorm1 * alpha * cU;
+        } else {
+          sMinusSum += Math.abs(alpha) * sNorm;
         }
       }
-      const s1 = clip(0.35 * (frame.radial_entropy ?? 0.0) + 0.65 * ((sensorySum / K) / 4.0), 0.0, 1.0);
+      const meanSens = K > 0 ? sensorySum / K : 0.0;
+      const s1 = clip(0.35 * (frame.radial_entropy ?? 0.0) + 0.65 * (meanSens / 4.0), 0.0, 1.0);
+
+      let autocorr = 0.5;
+      if (K >= 2) {
+        const mLens = nodes.map((u) => countMoras(u.surface));
+        const mMean = mean(mLens);
+        let mVar = 0;
+        for (const l of mLens) mVar += (l - mMean) * (l - mMean);
+        mVar /= mLens.length;
+        if (mVar > 1e-5) {
+          let cov = 0;
+          for (let i = 0; i < mLens.length - 1; i++) {
+            cov += (mLens[i]! - mMean) * (mLens[i + 1]! - mMean);
+          }
+          cov /= (mLens.length - 1);
+          autocorr = clip(0.5 * (cov / mVar) + 0.5, 0.0, 1.0);
+        }
+      }
 
       const childCounts = new Array<number>(K).fill(0);
       for (const e of edges) {
@@ -98,13 +162,15 @@ export function extractStage1Signals(text: string, frames?: SyntaxTreeFrame[]): 
       const bStd = brDeg.length > 1 ? stdPop(brDeg) : 0.0;
       const bMean = brDeg.length > 0 ? mean(brDeg) : 1.0;
       const treeSym = brDeg.length > 0 ? clip(1.0 - bStd / (bMean + 1.0), 0.0, 1.0) : 0.5;
-      const s2 = clip(0.5 + 0.5 * treeSym, 0.0, 1.0);
+      const s2 = clip(0.5 * autocorr + 0.5 * treeSym, 0.0, 1.0);
 
       const brevity = 1.0 / (1.0 + (L / 31.0) ** 2.2);
       let abstCnt = 0;
       for (const f of ABSTRACT_FILLERS) if (sText.includes(f)) abstCnt++;
+      const isSluggish = SLUGGISH_ENDINGS.some((w) => sText.endsWith(w));
+      const cleanCut = (isSluggish ? 0.0 : 1.0) * Math.exp(-abstCnt * 1.5);
       const modEdges = edges.filter((e) => e.relation === 'mod' || e.relation === 'terminal').length;
-      const s3 = clip(brevity * Math.exp(-abstCnt * 1.5) * Math.exp(-0.3 * (modEdges / K)), 0.0, 1.0);
+      const s3 = clip(brevity * (0.6 + 0.4 * cleanCut) * Math.exp(-0.3 * (modEdges / Math.max(K, 1))), 0.0, 1.0);
 
       let jumpSum = 0;
       let jumpCnt = 0;
@@ -112,9 +178,9 @@ export function extractStage1Signals(text: string, frames?: SyntaxTreeFrame[]): 
         if (e.jump_distance > 0) { jumpSum += e.jump_distance; jumpCnt++; }
       }
       const meanJump = jumpCnt > 0 ? jumpSum / jumpCnt : 0.0;
-      let negCount = 0;
-      for (const u of nodes) if (u.is_negation_scope) negCount++;
-      const s4 = clip(meanJump * 0.5 + (negCount / K) * 0.5, 0.0, 1.0);
+      const meanSMinus = K > 0 ? sMinusSum / K : 0.0;
+      const mimShock = nodes.some((u) => isMimeticWord(u.surface)) ? 0.35 : 0.0;
+      const s4 = clip(meanJump * 0.45 + meanSMinus * 0.40 + mimShock, 0.0, 1.0);
 
       signals[m] = [s1, s2, s3, s4];
     } else {
@@ -228,7 +294,14 @@ export function extractStage2Multiresolution(
   const q6 = clip(mean(Array.from(mesoDetails[2]!).map(Math.abs)) * 2.5 + stdPop(Array.from(sPadded[2]!.slice(0, M))) * 0.8, 0.0, 1.0);
   const q7 = clip(mean(Array.from(mesoDetails[3]!).map(Math.abs)) * 2.5 + mean(Array.from(solitonComps[0]!).map(Math.abs)) * 2.0, 0.0, 1.0);
 
-  const q8 = clip(mean(Array.from(macroDetails[0]!).map(Math.abs)) * 1.5 + (Math.max(...sPadded[0]!.slice(0, M)) - Math.min(...sPadded[0]!.slice(0, M))) * 0.5, 0.0, 1.0);
+  let minCol0 = Infinity;
+  let maxCol0 = -Infinity;
+  for (let i = 0; i < M; i++) {
+    const v = sPadded[0]![i]!;
+    if (v < minCol0) minCol0 = v;
+    if (v > maxCol0) maxCol0 = v;
+  }
+  const q8 = clip(mean(Array.from(macroDetails[0]!).map(Math.abs)) * 1.5 + (maxCol0 - minCol0) * 0.5, 0.0, 1.0);
   const rqaArch = rqaResults[1]?.iArch ?? 0.0;
   const q9 = clip(0.40 + 0.60 * rqaArch, 0.0, 1.0);
   const q10 = clip(mean(Array.from(macroDetails[2]!).map(Math.abs)) * 1.5 + cMeans[2]! * 0.5, 0.0, 1.0);

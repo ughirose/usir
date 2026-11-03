@@ -18,7 +18,7 @@ from .extractor_24d import (
     RHETORICAL_RUPTURE,
     APOPHATIC_VOID_OPS,
 )
-from .manifold_geodesic import fit_contrastive_fisher_metric
+from .manifold_geodesic import fit_contrastive_fisher_metric, embed_sentence_unit
 from .grpo_reward import compute_grpo_reward, USIR_CANONICAL_TARGETS
 from .presales_showcase import (
     RedlineToken,
@@ -61,6 +61,7 @@ __all__ = [
     "extract_stage2_multiresolution",
     "extract_multiresolution_24d",
     "fit_contrastive_fisher_metric",
+    "embed_sentence_unit",
     "run_loocv",
     "split_sentences",
     "char_bigram_entropy",

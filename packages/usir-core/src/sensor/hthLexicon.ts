@@ -164,7 +164,9 @@ export class HTHPolyLexicon {
       );
     }
 
-    this.buffer = uint8.buffer.slice(uint8.byteOffset, uint8.byteOffset + uint8.byteLength);
+    const copy = new ArrayBuffer(uint8.byteLength);
+    new Uint8Array(copy).set(uint8);
+    this.buffer = copy;
     this.view = new DataView(this.buffer);
 
     // Load companion metadata

@@ -22,6 +22,7 @@ from usir_py.extractor_24d import (
 from usir_py.manifold_geodesic import (
     fit_contrastive_fisher_metric,
     _embed_sentence_unit,
+    embed_sentence_unit,
 )
 from usir_py.syntax_frame import SyntaxEdge, SyntaxNode, SyntaxTreeFrame
 
@@ -233,7 +234,34 @@ def test_multiresolution_edge_cases():
     assert len(empty_res["q"]) == 12
     assert len(empty_res["p"]) == 12
 
+    # Empty list and 0-shape arrays to Stage 2
+    s2_empty_list = extract_stage2_multiresolution([])
+    assert len(s2_empty_list["z_24d"]) == 24
+    assert np.all(s2_empty_list["z_24d"] == 0.0)
+
+    s2_zero_arr = extract_stage2_multiresolution(np.zeros((0, 4)))
+    assert len(s2_zero_arr["z_24d"]) == 24
+    assert np.all(s2_zero_arr["z_24d"] == 0.0)
+
+    # Empty inputs to Contrastive Fisher
+    fisher_empty = fit_contrastive_fisher_metric([], [], lambda_reg=1e-3)
+    assert fisher_empty["G_style"].shape == (24, 24)
+    assert len(fisher_empty["optimal_projection_axis"]) == 24
+    assert np.all(fisher_empty["optimal_projection_axis"] == 0.0)
+    assert fisher_empty["lambda_max"] == 0.0
+
+    fisher_zeros = fit_contrastive_fisher_metric(np.zeros((0, 24)), np.zeros((0, 24)), lambda_reg=1e-3)
+    assert fisher_zeros["G_style"].shape == (24, 24)
+    assert len(fisher_zeros["optimal_projection_axis"]) == 24
+
     # Single word
     single_res = extract_multiresolution_24d("静寂。")
     assert len(single_res["z_24d"]) == 24
     assert np.all(single_res["q"] >= 0.0)
+
+    # Mimetic frame embed_sentence_unit
+    assert embed_sentence_unit is _embed_sentence_unit
+    mim_node = SyntaxNode(node_id=0, surface="きらきら", lemma="きらきら", pos="副詞", pos_detail="")
+    mim_frame = SyntaxTreeFrame(sentence_id=0, text="きらきら", nodes=[mim_node], edges=[])
+    e_mim = embed_sentence_unit("きらきら", frame=mim_frame)
+    assert np.any(e_mim[:8] > 0.0)

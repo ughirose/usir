@@ -274,8 +274,9 @@ def extract_stage1_signals(
         s_text = frame.text.strip()
         L = max(len(s_text), 1)
 
-        # 1. s_{m,1} (Flux: density & concrete depth)
+        # 1. s_{m,1} (Flux: density & concrete depth) & 4. s_{m,4} (Shock: s_minus)
         sensory_sum = 0.0
+        s_minus_sum = 0.0
         for u in nodes:
             nibbles = unpack_sensory_32bit(u.hth_primary & 0xFFFFFFFF)
             sens_vec = synthesize_mimetic_8d(u.surface).sensory_vec if is_mimetic_word(u.surface) else sensory_nibbles_to_floats(nibbles)
@@ -284,6 +285,7 @@ def extract_stage1_signals(
             gate = apply_open01_polysemy_damping(c_u, sens_vec, v_is_mimetic=is_mimetic_word(u.surface))
             dual = compute_dual_sensory_tensor(gate.effective_sensory, alpha)
             sensory_sum += float(np.sum(np.abs(dual.s_plus))) * c_u
+            s_minus_sum += float(dual.s_minus)
         mean_sens = (sensory_sum / K) if K > 0 else 0.0
         s1 = float(np.clip(0.35 * float(frame.radial_entropy) + 0.65 * (mean_sens / 4.0), 0.0, 1.0))
 
@@ -313,12 +315,6 @@ def extract_stage1_signals(
         # 4. s_{m,4} (Shock: leap & contrast)
         jump_vals = [e.jump_distance for e in edges if e.jump_distance > 0.0]
         mean_jump = float(np.mean(jump_vals)) if jump_vals else 0.0
-        s_minus_sum = 0.0
-        for u in nodes:
-            nibbles = unpack_sensory_32bit(u.hth_primary & 0xFFFFFFFF)
-            sens_vec = sensory_nibbles_to_floats(nibbles)
-            alpha = evaluate_modality_alpha(u.pos_detail, u.is_negation_scope, u.is_speculative_scope)
-            s_minus_sum += compute_dual_sensory_tensor(sens_vec, alpha).s_minus
         mean_s_minus = (s_minus_sum / K) if K > 0 else 0.0
         mim_shock = 0.35 if any(is_mimetic_word(u.surface) for u in nodes) else 0.0
         s4 = float(np.clip(mean_jump * 0.45 + mean_s_minus * 0.40 + mim_shock, 0.0, 1.0))
@@ -340,10 +336,7 @@ def extract_stage2_multiresolution(
     producing symplectic state (q, p) in R^24.
     """
     S = np.asarray(s_signals, dtype=float)
-    if S.ndim == 1:
-        S = S.reshape(1, -1)
-    M = S.shape[0]
-    if M == 0:
+    if S.size == 0 or (S.ndim == 2 and (S.shape[0] == 0 or S.shape[1] == 0)):
         q_zeros = np.zeros(12, dtype=float)
         p_zeros = np.zeros(12, dtype=float)
         return {
@@ -357,6 +350,9 @@ def extract_stage2_multiresolution(
             "rqa_i_arch": 0.0,
             "cadence_alive": 1.0,
         }
+    if S.ndim == 1:
+        S = S.reshape(1, -1)
+    M = S.shape[0]
 
     pad_len = 8
     while pad_len < M:

@@ -271,7 +271,23 @@ describe('Phase A Multiresolution & Contrastive Fisher Suite', () => {
     const emptyRes = extractMultiresolution24d('');
     expect(emptyRes.z_24d.every((v) => v === 0.0)).toBe(true);
 
+    const s2Empty = extractStage2Multiresolution([]);
+    expect(s2Empty.z_24d.length).toBe(24);
+    expect(s2Empty.z_24d.every((v) => v === 0.0)).toBe(true);
+
+    const fisherEmpty = fitContrastiveFisherMetric([], []);
+    expect(fisherEmpty.G_style.length).toBe(24);
+    expect(fisherEmpty.optimal_projection_axis.length).toBe(24);
+    expect(fisherEmpty.optimal_projection_axis.every((v) => v === 0.0)).toBe(true);
+    expect(fisherEmpty.lambda_max).toBe(0.0);
+
     const singleRes = extractMultiresolution24d('静寂。');
     expect(singleRes.z_24d.length).toBe(24);
+
+    const mimNode = createSyntaxNode({ node_id: 0, surface: 'きらきら', pos: '副詞' });
+    const mimFrame = createSyntaxTreeFrame({ sentence_id: 0, text: 'きらきら', nodes: [mimNode], edges: [] });
+    const eMim = embedSentenceUnit('きらきら', 24, mimFrame);
+    expect(eMim.length).toBe(24);
+    expect(eMim.slice(0, 8).some((v) => v > 0)).toBe(true);
   });
 });
