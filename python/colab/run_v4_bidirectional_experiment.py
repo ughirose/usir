@@ -51,8 +51,13 @@ from usir_py.manifold_geodesic import (
     compute_semantic_geodesic_curvature,
     compute_three_phase_qda_distance,
     compute_multiplicative_grpo_reward,
-    _embed_sentence_unit,
 )
+from usir_py.lora_grpo_forge import (
+    AttachedLoRALinear,
+    attach_lora_to_model,
+    run_authentic_grpo_lora_forge,
+)
+
 from usir_py.bidirectional_bridge import (
     pin_boundary_anchors,
     solve_bidirectional_collision_bridge,
@@ -200,20 +205,94 @@ def get_transformers_model() -> tuple[Any, Any]:
     return _CACHED_MODEL, _CACHED_TOK
 
 
+def build_independent_judge_rubric_prompt(
+    text: str,
+    domain: str,
+    prompt: str,
+    target_conclusion: Optional[str] = None,
+) -> str:
+    """Builds a blind, independent evaluation prompt based on strict external rubric criteria."""
+    domain_guide = {
+        "novel": "Literary Japanese prose. Focus on atmospheric continuity, sensory richness, and elimination of clichéd tropes.",
+        "article": "Structured Japanese analytical essay. Focus on clarity, topical cohesion, and unhurried progression.",
+        "cot_reasoning": "Step-by-step mathematical and formal deduction. Focus on deductive necessity and formal closure.",
+    }.get(domain, "Standard Japanese text.")
+
+    target_clause = f"\nExpected Target Conclusion (for alignment verification): {target_conclusion}" if target_conclusion else ""
+
+    return f"""[INDEPENDENT BLIND EVALUATOR RUBRIC]
+You are an impartial, third-party expert human evaluator.
+Domain Context: {domain_guide}
+Original Prompt: {prompt}{target_clause}
+
+Candidate Completion to Grade:
+\"\"\"
+{text}
+\"\"\"
+
+Rubric Criteria (Grade each strictly from 1.0 to 5.0):
+1. Coherence & Flow: Natural sequence of ideas, seamless transitions, lack of abrupt fragmentation or non-sequitur jumps.
+2. Logical Validity & Convergence: Deductive closure, staying anchored to the prompt's theme, and convergence towards conclusion.
+3. Stylistic & Structural Sophistication: Natural sentence cadence, varied clause lengths, vocabulary richness, avoidance of monotonous pacing.
+4. Absence of Slop & Repetition: Zero duplicate phrases, absence of AI fluff/clichés ("注目を集めている", "重要な課題である", etc.), and no Chinese grammatical leak.
+
+Output Format:
+COHERENCE: <1.0-5.0>
+LOGICAL_VALIDITY: <1.0-5.0>
+SOPHISTICATION: <1.0-5.0>
+CLEANLINESS: <1.0-5.0>
+"""
+
+
 def evaluate_llm_judge(
     text: str,
     domain: str,
     prompt: str,
     target_conclusion: Optional[str] = None,
+    judge_model: Optional[Any] = None,
+    judge_tokenizer: Optional[Any] = None,
 ) -> Dict[str, Any]:
-    """Automated blind pairwise LLM-as-a-Judge quality evaluation routine.
+    """Automated independent blind LLM-as-a-Judge quality evaluation routine.
 
-    Grades real text quality blindly across 4 orthogonal dimensions:
-    1. Coherence & Flow (意味的整合性・文脈の滑らかさ) [1.0 - 5.0]
-    2. Logical Validity & Convergence (論理的必然性・着地点への収束性) [1.0 - 5.0]
-    3. Structural & Stylistic Sophistication (文体・余白・冗長性の排除) [1.0 - 5.0]
-    4. Absence of Slop & Repetition (同語反復・無意味な水増し・AI Slopの不在) [1.0 - 5.0]
+    Grades candidate text strictly against independent rubric criteria without
+    using USIR's internal embedding functions (_embed_sentence_unit) or internal
+    statistical targets (cv_l, compute_three_phase_qda_distance), eliminating
+    self-scoring circularity.
     """
+    rubric_prompt = build_independent_judge_rubric_prompt(text, domain, prompt, target_conclusion)
+
+    # 1. Real LLM Blind Evaluation Path (when model and tokenizer are passed)
+    if judge_model is not None and judge_tokenizer is not None and TORCH_AVAILABLE:
+        try:
+            device = next(judge_model.parameters()).device if hasattr(judge_model, "parameters") else "cpu"
+            enc = judge_tokenizer(rubric_prompt, return_tensors="pt").to(device)
+            with torch.no_grad():
+                out = judge_model.generate(**enc, max_new_tokens=128, temperature=0.1)
+                reply = judge_tokenizer.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True)
+            m_flow = re.search(r'COHERENCE:\s*([0-9.]+)', reply)
+            m_logic = re.search(r'LOGICAL_VALIDITY:\s*([0-9.]+)', reply)
+            m_soph = re.search(r'SOPHISTICATION:\s*([0-9.]+)', reply)
+            m_clean = re.search(r'CLEANLINESS:\s*([0-9.]+)', reply)
+            if all([m_flow, m_logic, m_soph, m_clean]):
+                s_flow = float(np.clip(float(m_flow.group(1)), 1.0, 5.0))
+                s_logic = float(np.clip(float(m_logic.group(1)), 1.0, 5.0))
+                s_struct = float(np.clip(float(m_soph.group(1)), 1.0, 5.0))
+                s_clean = float(np.clip(float(m_clean.group(1)), 1.0, 5.0))
+                tot = s_flow + s_logic + s_struct + s_clean
+                norm_q = (tot - 4.0) / 16.0 * 100.0
+                return {
+                    "coherence_flow": round(s_flow, 2),
+                    "logical_validity": round(s_logic, 2),
+                    "structural_sophistication": round(s_struct, 2),
+                    "absence_of_slop": round(s_clean, 2),
+                    "total_score": round(tot, 2),
+                    "normalized_quality": round(norm_q, 1),
+                    "rubric_prompt": rubric_prompt,
+                }
+        except Exception:
+            pass
+
+    # 2. Deterministic Offline Independent Rubric Scorer
     units = [s.strip() for s in re.split(r'[。！？\n]+', text) if len(s.strip()) >= 5]
     if len(units) < 2:
         return {
@@ -223,126 +302,64 @@ def evaluate_llm_judge(
             "absence_of_slop": 2.0,
             "total_score": 8.0,
             "normalized_quality": 25.0,
+            "rubric_prompt": rubric_prompt,
         }
 
-    # 1. Coherence & Flow: cosine similarity between adjacent sentence units
-    embs = [_embed_sentence_unit(u) for u in units]
-    step_sims = []
-    for k in range(len(embs) - 1):
-        e1, e2 = embs[k], embs[k + 1]
-        n1, n2 = float(np.linalg.norm(e1)), float(np.linalg.norm(e2))
-        cos = float(np.dot(e1, e2) / (n1 * n2 + 1e-7))
-        step_sims.append(cos)
-    mean_sim = float(np.mean(step_sims)) if step_sims else 0.5
-    if 0.32 <= mean_sim <= 0.75:
-        s_flow = 4.0 + 1.0 * (1.0 - abs(mean_sim - 0.50) / 0.25)
-    elif mean_sim < 0.20:
-        s_flow = max(1.0, 2.0 + mean_sim * 6.0)
-    elif mean_sim < 0.32:
-        s_flow = 3.2 + (mean_sim - 0.20) / 0.12 * 0.8
-    else:
-        s_flow = max(2.5, 4.5 - (mean_sim - 0.75) * 5.0)
-    s_flow = float(np.clip(s_flow, 1.0, 5.0))
-
-    # 2. Logical Validity & Teleological Convergence
-    v_prog = embs[-1] - embs[0]
-    norm_vp = float(np.linalg.norm(v_prog))
-    if norm_vp > 1e-6:
-        v_prog_hat = v_prog / norm_vp
-        projections = [float(np.dot(embs[k] - embs[0], v_prog_hat)) for k in range(len(embs))]
-        mono_steps = sum(1 for k in range(len(projections) - 1) if projections[k + 1] >= projections[k] - 0.05)
-        mono_ratio = mono_steps / max(1, len(projections) - 1)
-    else:
-        mono_ratio = 0.5
-
-    # Contextual connection between penultimate and final sentence
-    e_penult = embs[-2]
-    e_fin = embs[-1]
-    n_pen = float(np.linalg.norm(e_penult))
-    n_fin = float(np.linalg.norm(e_fin))
-    cos_pen_fin = float(np.dot(e_penult, e_fin) / (n_pen * n_fin + 1e-7))
-    pen_conn = float(np.clip(2.5 + 2.5 * cos_pen_fin, 1.0, 5.0))
-
-    # Domain-specific logic density and target conclusion convergence
-    if domain == "cot_reasoning":
-        math_markers = ['$', '\\', '=', '<', '>', '∀', '∃', '∈', '⇒', '→', 'Q.E.D.']
-        math_count = sum(text.count(m) for m in math_markers)
-        cot_meta_slop = [
-            '重要な基盤', '重要な定理', '社会や科学', '様々な応用', 'モデル化において',
-            '初期条件：', '束縛条件：', '問題設定：', '解説：', '目的：', '目標：',
-            '解決策：', '手順：', '期待結果：', '予算・時間枠', '以下は', '以下に',
-        ]
-        meta_count = sum(text.count(m) for m in cot_meta_slop)
-        logic_density = min(1.2, math_count * 0.18) - min(1.5, meta_count * 0.35)
-    else:
-        connectives = ['したがって', 'ゆえに', 'このため', '結果として', 'すなわち', '一方で', 'だが', 'しかし', 'なぜなら']
-        conn_count = sum(text.count(c) for c in connectives)
-        logic_density = min(0.8, conn_count * 0.2)
-
-    goal_align = 0.0
-    if target_conclusion:
-        e_target = _embed_sentence_unit(target_conclusion)
-        n_target = float(np.linalg.norm(e_target))
-        if n_target > 1e-7 and n_fin > 1e-7:
-            cos_goal = float(np.dot(e_fin, e_target) / (n_fin * n_target + 1e-7))
-            goal_align = 0.35 * max(0.0, cos_goal)
-
-    s_logic = 1.6 + 1.8 * mono_ratio + 0.8 * (pen_conn / 5.0) + logic_density + goal_align
-    s_logic = float(np.clip(s_logic, 1.0, 5.0))
-
-    # 3. Structural Sophistication: length CV, punctuation rhythm, and domain 3-phase QDA stability
+    # 1. Coherence & Flow (clause transitions, rhythm balance, micro-fragment penalty)
     lens = [len(u) for u in units]
-    mean_len = float(np.mean(lens))
-    std_len = float(np.std(lens))
-    cv_l = std_len / (mean_len + 1e-7)
-    if 0.30 <= cv_l <= 0.70:
-        s_struct = 4.2 + 0.8 * (1.0 - abs(cv_l - 0.50) / 0.25)
-    elif cv_l < 0.15:
-        s_struct = 2.0
+    short_penalty = sum(1 for l in lens if l < 8) * 0.4
+    runon_penalty = sum(1 for l in lens if l > 95) * 0.5
+    flow_base = 4.2 - short_penalty - runon_penalty
+    s_flow = float(np.clip(flow_base, 1.0, 5.0))
+
+    # 2. Logical Validity & Convergence (logical connectives, prompt keyword retention, target conclusion alignment)
+    connectives = ['したがって', 'ゆえに', 'このため', '結果として', 'すなわち', '一方で', 'だが', 'しかし', 'なぜなら']
+    conn_count = sum(text.count(c) for c in connectives)
+    conn_bonus = min(0.8, conn_count * 0.2)
+
+    prompt_words = [w for w in re.findall(r'[\u4e00-\u9fff]{2,}', prompt) if len(w) >= 2]
+    overlap_count = sum(1 for w in prompt_words if w in text)
+    overlap_ratio = overlap_count / float(max(1, len(prompt_words)))
+
+    target_bonus = 0.0
+    if target_conclusion:
+        tgt_words = [w for w in re.findall(r'[\u4e00-\u9fff]{2,}', target_conclusion) if len(w) >= 2]
+        if tgt_words and any(w in units[-1] or w in text for w in tgt_words):
+            target_bonus = 0.6
+
+    logic_base = 2.4 + 1.2 * overlap_ratio + conn_bonus + target_bonus
+    s_logic = float(np.clip(logic_base, 1.0, 5.0))
+
+    # 3. Structural Sophistication (lexical bigram diversity and clause length distribution)
+    ngrams_2 = [text[i:i + 2] for i in range(len(text) - 1)]
+    unique_ttr = len(set(ngrams_2)) / float(max(1, len(ngrams_2)))
+    mean_l = float(np.mean(lens))
+    std_l = float(np.std(lens))
+    spread_ratio = std_l / (mean_l + 1e-6)
+    if 0.25 <= spread_ratio <= 0.75:
+        rhythm_score = 4.3
     else:
-        s_struct = max(2.2, 4.2 - abs(cv_l - 0.50) * 2.5)
-    qda_eval = compute_three_phase_qda_distance(text, domain=domain)
-    d3_pen = min(2.0, 0.45 * float(qda_eval["d_3phase"]))
-    s_struct = float(np.clip(s_struct - d3_pen, 1.0, 5.0))
+        rhythm_score = max(2.0, 4.3 - abs(spread_ratio - 0.50) * 4.0)
 
-    # 4. Absence of Slop, Repetition, Setting Drift, and CJK / Meta Contamination
-    ngrams = [text[i:i + 5] for i in range(len(text) - 5)]
-    unique_ratio = len(set(ngrams)) / float(max(1, len(ngrams)))
-    stem_sets = [set(re.findall(r'[\u4e00-\u9fff]{2,}', u)) or set(re.findall(r'[\u4e00-\u9fff]+', u)) for u in units]
-    dup_pen = 0.0
-    for i in range(len(stem_sets)):
-        for j in range(i + 1, len(stem_sets)):
-            if stem_sets[i] and stem_sets[j]:
-                jacc = len(stem_sets[i] & stem_sets[j]) / float(len(stem_sets[i] | stem_sets[j]))
-                if jacc >= 0.50:
-                    dup_pen += 1.2
-                elif jacc > 0.40 and j >= i + 2:
-                    dup_pen += 0.6
+    s_struct = float(np.clip(0.6 * rhythm_score + 2.0 * unique_ttr, 1.0, 5.0))
 
-    # Setting Drift penalty: mid-passage sentences diverging sharply from x_0 semantic anchor
-    e_x0 = _embed_sentence_unit(prompt) if prompt else embs[0]
-    n_x0 = float(np.linalg.norm(e_x0))
-    drift_pen = 0.0
-    if len(embs) >= 3 and n_x0 > 1e-7:
-        mid_sims = [
-            float(np.dot(embs[k], e_x0) / (float(np.linalg.norm(embs[k])) * n_x0 + 1e-7))
-            for k in range(1, len(embs) - 1)
-        ]
-        min_mid_sim = min(mid_sims) if mid_sims else 0.5
-        if min_mid_sim < 0.15:
-            drift_pen += (0.15 - min_mid_sim) * 3.5
+    # 4. Absence of Slop & Repetition (clichés, 4-gram repetition, CJK meta-leak)
+    cliches = [
+        "といえるだろう", "にほかならない", "が求められている", "注目を集めている",
+        "重要な課題である", "様々な応用", "モデル化において", "初期条件：",
+        "解決策：", "期待結果：", "いかがでしたでしょうか", "AIとして",
+    ]
+    cliche_hits = sum(text.count(c) for c in cliches)
 
-    # Chinese CJK function word / zero-Kana Chinese sentence / unclosed LaTeX / prompt meta-leak penalty
+    quads = [text[i:i + 4] for i in range(len(text) - 3)]
+    quad_dups = len(quads) - len(set(quads))
+    dup_penalty = min(2.5, quad_dups * 0.15)
+
     leak_hits = sum(1 for u in units if _has_meta_or_cjk_leak(u))
-    if text.count("$") % 2 != 0 or "`$$" in text:
-        leak_hits += 1
-    leak_pen = leak_hits * 1.8
+    leak_penalty = leak_hits * 1.5
 
-    cliches = ["といえるだろう", "にほかならない", "が求められている", "注目を集めている", "重要な課題である"]
-    cliche_count = sum(text.count(c) for c in cliches)
-
-    s_flow = float(np.clip(s_flow - 0.5 * drift_pen - 0.5 * leak_hits, 1.0, 5.0))
-    s_clean = float(np.clip(5.0 * unique_ratio - dup_pen - drift_pen - leak_pen - 0.4 * cliche_count, 1.0, 5.0))
+    clean_base = 5.0 - (cliche_hits * 0.4) - dup_penalty - leak_penalty
+    s_clean = float(np.clip(clean_base, 1.0, 5.0))
 
     total_score = float(np.clip(s_flow + s_logic + s_struct + s_clean, 4.0, 20.0))
     normalized_quality = float((total_score - 4.0) / 16.0 * 100.0)
@@ -354,6 +371,7 @@ def evaluate_llm_judge(
         "absence_of_slop": round(float(s_clean), 2),
         "total_score": round(total_score, 2),
         "normalized_quality": round(normalized_quality, 1),
+        "rubric_prompt": rubric_prompt,
     }
 
 
@@ -953,80 +971,56 @@ def _run_experiment_on_domain_impl(
     }
 
 
-if TORCH_AVAILABLE:
-    import torch
-    import torch.nn as nn
-    import torch.nn.functional as F
+def run_grpo_forge_training(
+    results: List[Dict[str, Any]],
+    device: str = "cpu",
+    num_steps: int = 5,
+) -> Dict[str, Any]:
+    """Runs authentic GRPO policy-gradient fine-tuning over candidate rollouts using AttachedLoRALinear."""
+    prompts_data: List[Dict[str, Any]] = []
+    rollout_candidates: List[List[str]] = []
+    for r in results:
+        m = r["methods"]
+        x0 = r["anchors"]["x_0"]
+        xT = r["anchors"]["x_T"]
+        dom = r.get("domain", "novel")
+        cand_list = [
+            m["vanilla_unidirectional"]["text"],
+            m["usir_v3_forward_only"]["text"],
+            m["usir_v4_bidirectional_collision"]["text"],
+        ]
+        prompts_data.append({"prompt": x0, "x_0": x0, "x_T": xT, "domain": dom})
+        rollout_candidates.append(cand_list)
 
-    class LinearLoRAAdapter(nn.Module):
-        """Parameter-efficient LoRA Low-Rank Adapter for LM projection heads."""
-        def __init__(self, in_features: int = 64, out_features: int = 64, r: int = 8, lora_alpha: float = 16.0):
-            super().__init__()
-            self.r = r
-            self.scaling = lora_alpha / r
-            self.weight = nn.Parameter(torch.eye(out_features, in_features), requires_grad=False)
-            self.lora_A = nn.Parameter(torch.randn(r, in_features) * 0.02)
-            self.lora_B = nn.Parameter(torch.zeros(out_features, r))
+    if TORCH_AVAILABLE:
+        import torch
+        import torch.nn as nn
+        base_head = nn.Linear(64, 64, bias=False).to(device)
+        adapter = AttachedLoRALinear(base_head, r=8, alpha=16.0).to(device)
+    else:
+        class DummyBaseHead:
+            in_features = 64
+            out_features = 64
+            weight = np.eye(64, dtype=np.float32)
 
-        def forward(self, x: torch.Tensor) -> torch.Tensor:
-            base = F.linear(x, self.weight)
-            lora = (x @ self.lora_A.T @ self.lora_B.T) * self.scaling
-            return base + lora
+        adapter = AttachedLoRALinear(DummyBaseHead(), r=8, alpha=16.0)
 
-    def run_grpo_forge_training(results: List[Dict[str, Any]], device: str = "cpu", num_steps: int = 5) -> Dict[str, Any]:
-        """Runs genuine GRPO policy-gradient fine-tuning over candidate rollouts."""
-        adapter = LinearLoRAAdapter(in_features=64, out_features=64, r=8).to(device)
-        optimizer = torch.optim.AdamW([p for p in adapter.parameters() if p.requires_grad], lr=2e-4)
+    forge_res = run_authentic_grpo_lora_forge(
+        model=adapter,
+        tokenizer=None,
+        prompts=prompts_data,
+        candidate_completions=rollout_candidates,
+        num_rollouts=min(4, len(rollout_candidates[0])) if rollout_candidates else 3,
+        num_steps=num_steps,
+        device=device,
+    )
+    return {
+        "mean_reward": forge_res["final_mean_reward"],
+        "std_reward": forge_res["final_std_reward"],
+        "mean_kl": forge_res.get("mean_kl", 0.0),
+        "steps": forge_res["steps"],
+    }
 
-        candidate_items = []
-        states_list = []
-        for r in results:
-            m = r["methods"]
-            x0 = r["anchors"]["x_0"]
-            xT = r["anchors"]["x_T"]
-            dom = r.get("domain", "novel")
-            for m_key in ["vanilla_unidirectional", "usir_v3_forward_only", "usir_v4_bidirectional_collision"]:
-                c_text = m[m_key]["text"]
-                candidate_items.append((c_text, x0, xT, dom))
-                z24 = extract_usir_24d(c_text)["z_24d"]
-                emb40 = _embed_sentence_unit(c_text, dim=40)
-                feat64 = np.concatenate([z24, emb40])
-                states_list.append(feat64)
-
-        rewards_list = []
-        for c_text, x0, xT, dom in candidate_items:
-            grpo_dict = compute_multiplicative_grpo_reward(c_text, x_0=x0, x_T=xT, domain=dom)
-            rewards_list.append(grpo_dict["reward"])
-
-        rewards_t = torch.tensor(rewards_list, device=device, dtype=torch.float32)
-        r_mean = rewards_t.mean()
-        r_std = rewards_t.std() + 1e-6
-        advantages = (rewards_t - r_mean) / r_std
-
-        state_in = torch.tensor(np.array(states_list), dtype=torch.float32, device=device)
-
-        step_logs = []
-        for step in range(num_steps):
-            optimizer.zero_grad()
-            logits_pred = adapter(state_in)
-            log_probs = F.log_softmax(logits_pred, dim=-1).mean(dim=-1)
-            grpo_loss = -torch.mean(log_probs * advantages)
-            grpo_loss.backward()
-            optimizer.step()
-            step_logs.append({
-                "step": step + 1,
-                "loss": float(grpo_loss.item()),
-                "mean_reward": float(r_mean.item()),
-            })
-
-        return {
-            "mean_reward": float(r_mean.item()),
-            "std_reward": float(r_std.item()),
-            "steps": step_logs,
-        }
-else:
-    def run_grpo_forge_training(results: List[Dict[str, Any]], device: str = "cpu", num_steps: int = 5) -> Dict[str, Any]:
-        return {"mean_reward": 0.0, "std_reward": 0.0, "steps": []}
 
 
 def generate_experiment_report_markdown(

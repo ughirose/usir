@@ -52,6 +52,16 @@ from .hsmm_longform_director import (
     compute_cv_l,
     compute_wundt_berlyne_utility,
 )
+from .lora_grpo_forge import (
+    AttachedLoRALinear,
+    attach_lora_to_model,
+    set_lora_enabled,
+    run_authentic_grpo_lora_forge,
+)
+from .activation_steerer import (
+    SymplecticActivationSteerer,
+)
+
 
 __all__ = [
     "HTHPolyLexicon",
@@ -102,4 +112,9 @@ __all__ = [
     "PhaseWell",
     "compute_cv_l",
     "compute_wundt_berlyne_utility",
+    "AttachedLoRALinear",
+    "attach_lora_to_model",
+    "set_lora_enabled",
+    "run_authentic_grpo_lora_forge",
+    "SymplecticActivationSteerer",
 ]

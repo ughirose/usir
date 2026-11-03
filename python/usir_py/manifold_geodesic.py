@@ -458,15 +458,20 @@ def compute_multiplicative_grpo_reward(
     alpha_metric: float = 1.0,
     frames: Optional[List[Any]] = None,
     hidden_states: Optional[Any] = None,
+    ppl_ref: Optional[float] = None,
+    ppl_thresh: float = 45.0,
+    alpha_ppl: float = 0.1,
 ) -> Dict[str, Any]:
-    r"""Computes v4.0 4-factor non-hackable multiplicative GRPO barrier reward:
+    r"""Computes v4.0 multiplicative GRPO barrier reward:
 
     R_GRPO(y | x_0, x_T) = \mathcal{M}_{\text{syntax}}(y)
                          * \mathcal{M}_{\text{geodesic}}(y)
                          * \mathcal{M}_{\text{bridge}}(y | x_0, x_T)
+                         * \mathcal{M}_{\text{cleanroom}}(y)
+                         * \mathcal{M}_{\text{semantic}}(y | x)
                          * \exp(-0.5 * \mathcal{D}_{\text{3-phase}}(\mathbf{z}(y)))
 
-    If any structural gate collapses (syntax gate, Brownian jumping, bridge disconnection),
+    If any structural gate collapses (syntax gate, Brownian jumping, bridge disconnection, semantic barrier),
     the reward strictly drops to 0.
     """
     if not text or len(text.strip()) == 0:
@@ -476,6 +481,8 @@ def compute_multiplicative_grpo_reward(
             "m_geodesic": 0.0,
             "m_bridge": 0.0,
             "m_cleanroom": 0.0,
+            "m_semantic": 0.0,
+            "ppl_ref": ppl_ref,
             "d_3phase": 99.0,
             "exp_barrier": 0.0,
             "is_rejected": True,
@@ -553,16 +560,24 @@ def compute_multiplicative_grpo_reward(
         masterwork_texts=masterwork_texts,
     )
 
+    # 4b. Reference Perplexity Semantic Barrier M_semantic(y | x)
+    if ppl_ref is not None:
+        ppl_val = float(ppl_ref)
+        clamped_arg = float(np.clip(alpha_ppl * (ppl_val - ppl_thresh), -50.0, 50.0))
+        m_semantic = float(1.0 / (1.0 + math.exp(clamped_arg)))
+    else:
+        m_semantic = 1.0
+
     # 5. 3-Phase QDA Asymmetric Barrier Distance
     qda_res = compute_three_phase_qda_distance(text, domain=domain)
     d_3phase = qda_res["d_3phase"]
     exp_barrier = float(math.exp(-0.5 * (d_3phase / max(alpha_metric, 0.1))))
 
     # Multiplicative Product: any zero shuts down total reward
-    raw_reward = m_syntax * m_geodesic * m_bridge * m_cleanroom * exp_barrier
+    raw_reward = m_syntax * m_geodesic * m_bridge * m_cleanroom * m_semantic * exp_barrier
     r_grpo = float(np.clip(raw_reward, 0.0, 1.0))
 
-    is_rejected = bool(r_grpo < 0.005 or m_syntax < 0.1 or m_geodesic < 0.1)
+    is_rejected = bool(r_grpo < 0.005 or m_syntax < 0.1 or m_geodesic < 0.1 or m_semantic < 0.1)
 
     return {
         "reward": r_grpo,
@@ -570,6 +585,8 @@ def compute_multiplicative_grpo_reward(
         "m_geodesic": m_geodesic,
         "m_bridge": m_bridge,
         "m_cleanroom": m_cleanroom,
+        "m_semantic": m_semantic,
+        "ppl_ref": ppl_ref,
         "d_3phase": d_3phase,
         "d_mahalanobis": qda_res["d_mahalanobis"],
         "penalty_freeze": qda_res["penalty_freeze"],
