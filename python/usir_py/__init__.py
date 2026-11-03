@@ -3,6 +3,10 @@
 from .corpus_40_benchmark import CORPUS, PHASE_ORDER, PHASE_NAMES_JA
 from .extractor_24d import (
     extract_usir_24d,
+    extract_24d,
+    extract_stage1_signals,
+    extract_stage2_multiresolution,
+    extract_multiresolution_24d,
     run_loocv,
     split_sentences,
     char_bigram_entropy,
@@ -14,6 +18,7 @@ from .extractor_24d import (
     RHETORICAL_RUPTURE,
     APOPHATIC_VOID_OPS,
 )
+from .manifold_geodesic import fit_contrastive_fisher_metric
 from .grpo_reward import compute_grpo_reward, USIR_CANONICAL_TARGETS
 from .presales_showcase import (
     RedlineToken,
@@ -51,6 +56,11 @@ __all__ = [
     "PHASE_ORDER",
     "PHASE_NAMES_JA",
     "extract_usir_24d",
+    "extract_24d",
+    "extract_stage1_signals",
+    "extract_stage2_multiresolution",
+    "extract_multiresolution_24d",
+    "fit_contrastive_fisher_metric",
     "run_loocv",
     "split_sentences",
     "char_bigram_entropy",

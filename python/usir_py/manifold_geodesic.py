@@ -174,14 +174,52 @@ def _split_into_trajectory_units(text: str) -> List[str]:
     return [text[i:i+stride] for i in range(0, len(text), stride) if len(text[i:i+stride]) >= 3]
 
 
-def _embed_sentence_unit(sentence: str, dim: int = 24) -> np.ndarray:
+def _embed_sentence_unit(
+    sentence: str,
+    dim: int = 24,
+    frame: Optional[Any] = None,
+    hidden_states: Optional[Any] = None,
+) -> np.ndarray:
     """Computes a deterministic semantic and structural state vector e_m in R^dim.
 
-    Combines:
-    1. Sensory / concrete physical grounding (Kanji radical intervals)
-    2. Stylistic syntactic frame (clause count, length, terminal markers)
-    3. Content concept hash projection (orthogonal random projection of kanji stems)
+    Supports:
+    1. GPU hidden_states average pooling hook when available.
+    2. SyntaxTreeFrame bunketsu tree & sensory tensor embedding priority.
+    3. Deterministic sensory / radical topology and stem hash projection fallback.
     """
+    if hidden_states is not None:
+        hs = hidden_states.detach().cpu().numpy() if hasattr(hidden_states, "detach") else np.asarray(hidden_states, dtype=float)
+        pooled = np.mean(hs, axis=0) if hs.ndim > 1 else hs
+        vec = np.zeros(dim, dtype=float)
+        vec[:min(len(pooled), dim)] = pooled[:min(len(pooled), dim)]
+        n = np.linalg.norm(vec)
+        return vec / (n + 1e-9) if n > 1e-9 else vec
+
+    if frame is not None and hasattr(frame, "nodes") and frame.nodes:
+        vec = np.zeros(dim, dtype=float)
+        s_sum = np.zeros(8, dtype=float)
+        for u in frame.nodes:
+            prim = getattr(u, "hth_primary", 0)
+            if prim:
+                s_sum += np.array([(prim >> (4 * d)) & 0xF for d in range(8)], dtype=float) / 15.0
+        vec[:8] = np.clip(s_sum / max(len(frame.nodes), 1), 0.0, 1.0)
+        vec[8] = np.clip(float(getattr(frame, "radial_entropy", 0.0)), 0.0, 1.0)
+        vec[9] = np.clip(float(getattr(frame, "max_depth", 0)) / max(len(frame.nodes), 1), 0.0, 1.0)
+        edges = getattr(frame, "edges", [])
+        if edges:
+            vec[10] = np.clip(float(np.mean([getattr(e, "jump_distance", 0.0) for e in edges])), 0.0, 1.0)
+        vec[11] = float(sum(1 for n in frame.nodes if getattr(n, "is_negation_scope", False)) / len(frame.nodes))
+        vec[12] = np.clip(len(sentence) / 50.0, 0.0, 1.0)
+        kanji_stems = re.findall(r'[\u4e00-\u9fff]+', sentence)
+        for stem in kanji_stems:
+            h = 2166136261
+            for ch in stem:
+                h = ((h ^ ord(ch)) * 16777619) & 0xFFFFFFFF
+            for k in range(13, dim):
+                vec[k] += (1.0 if ((h >> (k - 13)) & 1) else -0.5) * (len(stem) / 3.0)
+        n = np.linalg.norm(vec)
+        return vec / (n + 1e-9) if n > 1e-9 else vec
+
     vec = np.zeros(dim, dtype=float)
     if not sentence:
         return vec
@@ -533,4 +571,61 @@ def compute_multiplicative_grpo_reward(
         "is_brownian_catalog": geodesic_res["is_brownian_catalog"],
         "exp_barrier": exp_barrier,
         "is_rejected": is_rejected,
+    }
+
+
+def fit_contrastive_fisher_metric(
+    pos_z: Union[np.ndarray, Sequence[Any]],
+    neg_z: Union[np.ndarray, Sequence[Any]],
+    lambda_reg: float = 1e-3,
+) -> Dict[str, Any]:
+    r"""Estimates the pullback Riemannian metric G_style via Contrastive Fisher Distillation.
+
+    Given positive cluster samples pos_z and negative cluster samples neg_z in R^24:
+    1. Between-class scatter: S_B = (\mu_+ - \mu_-)(\mu_+ - \mu_-)^\top
+    2. Within-class regularized covariance: S_W = \frac{1}{2}(\Sigma_+ + \Sigma_-) + \lambda I_{24}
+    3. Pullback Riemannian metric: G_{\text{style}} = (S_W)^{-1}
+    4. Optimal discriminant projection axis: w^* = (S_W)^{-1}(\mu_+ - \mu_-) / \|(S_W)^{-1}(\mu_+ - \mu_-)\|_2
+    """
+    pos = np.asarray(pos_z, dtype=float)
+    neg = np.asarray(neg_z, dtype=float)
+    if pos.ndim == 1:
+        pos = pos.reshape(1, -1)
+    if neg.ndim == 1:
+        neg = neg.reshape(1, -1)
+
+    dim = pos.shape[1] if pos.shape[1] > 0 else 24
+    mu_pos = np.mean(pos, axis=0)
+    mu_neg = np.mean(neg, axis=0)
+    delta_mu = mu_pos - mu_neg
+    S_B = np.outer(delta_mu, delta_mu)
+
+    cov_pos = np.cov(pos, rowvar=False) if pos.shape[0] > 1 else np.zeros((dim, dim), dtype=float)
+    cov_neg = np.cov(neg, rowvar=False) if neg.shape[0] > 1 else np.zeros((dim, dim), dtype=float)
+    if cov_pos.ndim == 0:
+        cov_pos = cov_pos.reshape(1, 1)
+    if cov_neg.ndim == 0:
+        cov_neg = cov_neg.reshape(1, 1)
+
+    reg_eye = float(lambda_reg) * np.eye(dim, dtype=float)
+    S_W = 0.5 * (cov_pos + cov_neg) + reg_eye
+
+    # Invert S_W (guaranteed positive definite due to lambda_reg * I)
+    G_style = np.linalg.pinv(S_W) if np.linalg.cond(S_W) > 1e12 else np.linalg.inv(S_W)
+    G_style = 0.5 * (G_style + G_style.T)
+
+    w_star = G_style @ delta_mu
+    norm_w = float(np.linalg.norm(w_star))
+    optimal_axis = (w_star / (norm_w + 1e-12)) if norm_w > 1e-12 else np.zeros(dim, dtype=float)
+    lambda_max = float(delta_mu.T @ G_style @ delta_mu)
+
+    return {
+        "G_style": G_style,
+        "optimal_projection_axis": optimal_axis,
+        "mu_pos": mu_pos,
+        "mu_neg": mu_neg,
+        "delta_mu": delta_mu,
+        "lambda_max": lambda_max,
+        "S_B": S_B,
+        "S_W": S_W,
     }

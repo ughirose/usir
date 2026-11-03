@@ -9,10 +9,28 @@ from __future__ import annotations
 
 import math
 import re
-from typing import Dict, List, Set, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 import numpy as np
 from scipy.linalg import pinv
+
+from usir_py.hth_lexicon import HTHPolyLexicon, sensory_nibbles_to_floats, unpack_sensory_32bit
+from usir_py.linguistic_gates import (
+    apply_open01_polysemy_damping,
+    compute_concreteness,
+    compute_dual_sensory_tensor,
+    evaluate_modality_alpha,
+    is_mimetic_word,
+    synthesize_mimetic_8d,
+)
+from usir_py.syntax_frame import SyntaxTreeFrame
+from usir_py.drivers.syntax_driver import SyntaxDriver
+from usir_py.v2.wavelet_hermite_encoder import (
+    build_haar_orthonormal_matrix,
+    orthogonal_wavelet_decompose_1d,
+    solve_mca_fourier_soliton,
+    compute_rqa_metrics,
+)
 
 # ==============================================================================
 # OPERATOR DICTIONARIES (Zero Target-Leakage, Contiguous CJK Block Intervals)
@@ -217,8 +235,231 @@ def char_bigram_entropy(s: str) -> float:
 
 
 # ==============================================================================
-# 24-DIMENSIONAL FEATURE EXTRACTION
+# 24-DIMENSIONAL FEATURE EXTRACTION & MULTIRESOLUTION PIPELINE
 # ==============================================================================
+
+def extract_stage1_signals(
+    text: str,
+    frames: Optional[List[SyntaxTreeFrame]] = None,
+    driver: Optional[SyntaxDriver] = None,
+) -> np.ndarray:
+    """Extracts 4 basic structural signals s_m = (s_{m,1}, s_{m,2}, s_{m,3}, s_{m,4}) per sentence.
+
+    s_{m,1} (Flux: density & concrete depth):
+        H_radial(T_m) + 1/|V_m| sum_u ||s_u^+||_1 * C(u)
+    s_{m,2} (Lattice: syntax symmetry & rhythm):
+        mora length autocorrelation + tree branch symmetry
+    s_{m,3} (Void: margin & subtraction):
+        indicator 1_{Omega_0} (zero modifier bloat, short declarative clean cut, margin ratio)
+    s_{m,4} (Shock: leap & contrast):
+        hyperbolic LCA jump D_jump(u,v) + s_u^-
+    """
+    clean = text.strip() if text else ""
+    if not clean and not frames:
+        return np.zeros((0, 4), dtype=float)
+
+    if frames is None:
+        if driver is None:
+            driver = SyntaxDriver()
+        frames = driver.parse_text(clean)
+
+    if not frames:
+        return np.zeros((0, 4), dtype=float)
+
+    M = len(frames)
+    signals = np.zeros((M, 4), dtype=float)
+    for m, frame in enumerate(frames):
+        nodes, edges = frame.nodes, frame.edges
+        K = len(nodes)
+        s_text = frame.text.strip()
+        L = max(len(s_text), 1)
+
+        # 1. s_{m,1} (Flux: density & concrete depth)
+        sensory_sum = 0.0
+        for u in nodes:
+            nibbles = unpack_sensory_32bit(u.hth_primary & 0xFFFFFFFF)
+            sens_vec = synthesize_mimetic_8d(u.surface).sensory_vec if is_mimetic_word(u.surface) else sensory_nibbles_to_floats(nibbles)
+            c_u = compute_concreteness(u.surface, u.lemma, sens_vec)
+            alpha = evaluate_modality_alpha(u.pos_detail, u.is_negation_scope, u.is_speculative_scope)
+            gate = apply_open01_polysemy_damping(c_u, sens_vec, v_is_mimetic=is_mimetic_word(u.surface))
+            dual = compute_dual_sensory_tensor(gate.effective_sensory, alpha)
+            sensory_sum += float(np.sum(np.abs(dual.s_plus))) * c_u
+        mean_sens = (sensory_sum / K) if K > 0 else 0.0
+        s1 = float(np.clip(0.35 * float(frame.radial_entropy) + 0.65 * (mean_sens / 4.0), 0.0, 1.0))
+
+        # 2. s_{m,2} (Lattice: syntax symmetry & rhythm)
+        if K >= 2:
+            m_lens = np.array([count_moras(u.surface) for u in nodes], dtype=float)
+            m_var = float(np.var(m_lens))
+            autocorr = float(np.clip(0.5 * (float(np.mean((m_lens[:-1] - np.mean(m_lens)) * (m_lens[1:] - np.mean(m_lens))) / m_var) if m_var > 1e-5 else 0.0) + 0.5, 0.0, 1.0))
+        else:
+            autocorr = 0.5
+        child_counts = [0] * max(K, 1)
+        for e in edges:
+            if 0 <= e.target_id < K:
+                child_counts[e.target_id] += 1
+        br_deg = [c for c in child_counts if c > 0]
+        tree_sym = float(np.clip(1.0 - (float(np.std(br_deg)) / (float(np.mean(br_deg)) + 1.0)), 0.0, 1.0)) if br_deg else 0.5
+        s2 = float(np.clip(0.5 * autocorr + 0.5 * tree_sym, 0.0, 1.0))
+
+        # 3. s_{m,3} (Void: margin & subtraction 1_{Omega_0})
+        brevity = 1.0 / (1.0 + (L / 31.0)**2.2)
+        abst_cnt = sum(s_text.count(w) for w in ABSTRACT_FILLERS)
+        is_sluggish = any(s_text.endswith(w) for w in _SLUGGISH_ENDINGS)
+        mod_edges = sum(1 for e in edges if e.relation in ("mod", "terminal"))
+        clean_cut = (0.0 if is_sluggish else 1.0) * math.exp(-abst_cnt * 1.5)
+        s3 = float(np.clip(brevity * (0.6 + 0.4 * clean_cut) * math.exp(-0.3 * (mod_edges / max(K, 1))), 0.0, 1.0))
+
+        # 4. s_{m,4} (Shock: leap & contrast)
+        jump_vals = [e.jump_distance for e in edges if e.jump_distance > 0.0]
+        mean_jump = float(np.mean(jump_vals)) if jump_vals else 0.0
+        s_minus_sum = 0.0
+        for u in nodes:
+            nibbles = unpack_sensory_32bit(u.hth_primary & 0xFFFFFFFF)
+            sens_vec = sensory_nibbles_to_floats(nibbles)
+            alpha = evaluate_modality_alpha(u.pos_detail, u.is_negation_scope, u.is_speculative_scope)
+            s_minus_sum += compute_dual_sensory_tensor(sens_vec, alpha).s_minus
+        mean_s_minus = (s_minus_sum / K) if K > 0 else 0.0
+        mim_shock = 0.35 if any(is_mimetic_word(u.surface) for u in nodes) else 0.0
+        s4 = float(np.clip(mean_jump * 0.45 + mean_s_minus * 0.40 + mim_shock, 0.0, 1.0))
+
+        signals[m] = [s1, s2, s3, s4]
+    return signals
+
+
+def extract_stage2_multiresolution(
+    s_signals: np.ndarray,
+    text: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Stage 2: Multiresolution wavelet, ISTA soliton separation, and RQA 12-element encoder.
+
+    Decomposes the 4 basic signals into:
+    - Micro (j=1 detail): Gr, Cr, Pr, Jt
+    - Meso (j=2 detail): Cp, Sy, Cs, Lp
+    - Macro (j=3 detail + scaling + RQA I_arch): Dy, At, Ma, Ru
+    producing symplectic state (q, p) in R^24.
+    """
+    S = np.asarray(s_signals, dtype=float)
+    if S.ndim == 1:
+        S = S.reshape(1, -1)
+    M = S.shape[0]
+    if M == 0:
+        q_zeros = np.zeros(12, dtype=float)
+        p_zeros = np.zeros(12, dtype=float)
+        return {
+            "q": q_zeros,
+            "p": p_zeros,
+            "z_24d": np.zeros(24, dtype=float),
+            "groups": {"I_Flux": 0.0, "II_Lattice": 0.0, "III_Void": 0.0, "IV_Shock": 0.0},
+            "order_params": {"psi_order": 0.0, "phi_void": 0.0, "kappa_kin": 0.04},
+            "wavelet_details": [],
+            "ista_solitons": [],
+            "rqa_i_arch": 0.0,
+            "cadence_alive": 1.0,
+        }
+
+    pad_len = 8
+    while pad_len < M:
+        pad_len <<= 1
+    S_padded = np.zeros((pad_len, 4), dtype=float)
+    for c in range(4):
+        sig = S[:, c]
+        if M == pad_len:
+            S_padded[:, c] = sig
+        else:
+            padded = np.zeros(pad_len, dtype=float)
+            padded[:M] = sig
+            filled = M
+            while filled < pad_len:
+                take = min(pad_len - filled, M)
+                padded[filled:filled+take] = sig[M-1-np.arange(take)]
+                filled += take
+            S_padded[:, c] = padded
+
+    micro_details = []
+    meso_details = []
+    macro_details = []
+    soliton_comps = []
+    rqa_results = []
+
+    for c in range(4):
+        col = S_padded[:, c]
+        w_res = orthogonal_wavelet_decompose_1d(col)
+        micro_details.append(w_res.micro)
+        meso_details.append(w_res.meso)
+        macro_details.append(w_res.macro)
+        mca_res = solve_mca_fourier_soliton(col, max_iter=20, mu_soliton=0.15)
+        soliton_comps.append(mca_res.soliton_comp)
+        rqa_res = compute_rqa_metrics(w_res.macro)
+        rqa_results.append(rqa_res)
+
+    # Micro (j=1)
+    q0 = float(np.clip(np.mean(np.abs(micro_details[0])) * 2.0 + np.mean(S[:, 0]) * 0.7, 0.0, 1.0))
+    q1 = float(np.clip(np.mean(np.abs(micro_details[1])) * 2.0 + np.mean(S[:, 1]) * 0.7, 0.0, 1.0))
+    q2 = float(np.clip(np.mean(np.abs(micro_details[2])) * 2.0 + np.mean(S[:, 2]) * 0.7, 0.0, 1.0))
+    q3 = float(np.clip(np.mean(np.abs(micro_details[3])) * 2.0 + np.mean(np.abs(soliton_comps[3])) * 3.0, 0.0, 1.0))
+
+    # Meso (j=2)
+    q4 = float(np.clip(np.mean(np.abs(meso_details[0])) * 2.5 + np.std(S[:, 0]) * 0.8, 0.0, 1.0))
+    q5 = float(np.clip(np.mean(np.abs(meso_details[1])) * 2.5 + np.std(S[:, 1]) * 0.8, 0.0, 1.0))
+    q6 = float(np.clip(np.mean(np.abs(meso_details[2])) * 2.5 + np.std(S[:, 2]) * 0.8, 0.0, 1.0))
+    q7 = float(np.clip(np.mean(np.abs(meso_details[3])) * 2.5 + np.mean(np.abs(soliton_comps[0])) * 2.0, 0.0, 1.0))
+
+    # Macro (j=3)
+    q8 = float(np.clip(np.mean(np.abs(macro_details[0])) * 1.5 + (np.max(S[:, 0]) - np.min(S[:, 0])) * 0.5, 0.0, 1.0))
+    rqa_arch = float(rqa_results[1].i_arch)
+    q9 = float(np.clip(0.40 + 0.60 * rqa_arch, 0.0, 1.0))
+    q10 = float(np.clip(np.mean(np.abs(macro_details[2])) * 1.5 + np.mean(S[:, 2]) * 0.5, 0.0, 1.0))
+    q11 = float(np.clip(np.mean(np.abs(macro_details[3])) * 1.5 + float(rqa_results[3].det) * 0.4, 0.0, 1.0))
+
+    q = np.array([q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11], dtype=float)
+
+    # Conjugate momentum p in R^12
+    p = np.zeros(12, dtype=float)
+    cadence_alive = 0.95
+    if text:
+        abst_b = sum(text.count(w) for w in ABSTRACT_FILLERS) / max(len(text) / 20.0, 1.0)
+        cadence_alive = float(np.clip(1.0 - abst_b * 0.5, 0.1, 1.0))
+
+    for k in range(4):
+        p[k] = float(np.std(micro_details[k]) * 2.5 * cadence_alive)
+        p[4 + k] = float(np.std(meso_details[k]) * 2.5 * cadence_alive)
+        p[8 + k] = float(np.std(macro_details[k]) * 2.5 * cadence_alive)
+
+    z_24d = np.concatenate([q, p])
+
+    G_flux = float(np.mean([q[0], q[4], q[8]]))
+    G_lattice = float(np.mean([q[1], q[5], q[9]]))
+    G_void = float(np.mean([q[2], q[6], q[10]]))
+    G_shock = float(np.mean([q[3], q[7], q[11]]))
+
+    psi_order = float(np.tanh(2.4 * (G_lattice - 1.35 * G_shock)))
+    phi_void = float(np.clip(G_void * 1.48 - 0.68 * G_shock, 0.0, 1.0))
+    kappa_kin = float(max(0.04, float(np.linalg.norm(p)) * 0.62 + 1.10 * G_shock))
+
+    return {
+        "q": q,
+        "p": p,
+        "z_24d": z_24d,
+        "groups": {"I_Flux": G_flux, "II_Lattice": G_lattice, "III_Void": G_void, "IV_Shock": G_shock},
+        "order_params": {"psi_order": psi_order, "phi_void": phi_void, "kappa_kin": kappa_kin},
+        "wavelet_details": [micro_details, meso_details, macro_details],
+        "ista_solitons": soliton_comps,
+        "rqa_i_arch": rqa_arch,
+        "cadence_alive": cadence_alive,
+    }
+
+
+def extract_multiresolution_24d(
+    text: str,
+    frames: Optional[List[SyntaxTreeFrame]] = None,
+) -> Dict[str, Any]:
+    """Integrated Stage 1 -> Stage 2 Multiresolution 24D pipeline."""
+    signals = extract_stage1_signals(text, frames=frames)
+    res = extract_stage2_multiresolution(signals, text=text)
+    res["stage1_signals"] = signals
+    return res
+
 
 def extract_24d(text: str) -> np.ndarray:
     """Extracts 24D symplectic state vector z = (q, p) as a numpy array."""
@@ -226,8 +467,14 @@ def extract_24d(text: str) -> np.ndarray:
     return res["z_24d"]
 
 
-def extract_usir_24d(text: str) -> dict:
+def extract_usir_24d(
+    text: str,
+    use_multiresolution: bool = False,
+    frames: Optional[List[SyntaxTreeFrame]] = None,
+) -> dict:
     """Extracts 24D symplectic state z=(q,p), order parameters, and diagnostics."""
+    if use_multiresolution:
+        return extract_multiresolution_24d(text, frames=frames)
     trimmed = text.strip() if text else ""
     if not trimmed:
         q_zeros = np.zeros(12, dtype=float)

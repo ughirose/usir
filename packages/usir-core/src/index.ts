@@ -5,6 +5,7 @@
 
 // Schema & Binary Serializers
 export * from './schema/usirBinarySchema.js';
+export * from './schema/syntaxFrame.js';
 
 // Sensor Dictionaries & Primitives
 export * from './sensor/dictionaries.js';
@@ -13,6 +14,7 @@ export * from './sensor/microKasane.js';
 export * from './sensor/mesoSasae.js';
 export * from './sensor/macroKamae.js';
 export * from './sensor/symplectic24d.js';
+export * from './sensor/hthLexicon.js';
 
 // Dynamics & Thermodynamics
 export * from './dynamics/hamiltonian.js';

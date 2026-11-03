@@ -18,6 +18,7 @@ import { PHYSICAL_SENSE_INTERVALS } from '../sensor/dictionaries.js';
 import { extractUsir24d, type Usir24dResult } from '../sensor/symplectic24d.js';
 import { BANNED_TARGET_KEYWORDS } from '../cleanroom/threeRoomGate.js';
 import { HARD_AI_CLICHE_FRAMES, META_GOODHART_TERMS } from '../cleanroom/microConstraintGate.js';
+import type { SyntaxTreeFrame } from '../schema/syntaxFrame.js';
 
 export const MODERN_LOANWORDS: readonly string[] = [
   '猛スピード', 'スピード', 'システム', 'レベル', 'ストレス', 'タイミング',
@@ -232,7 +233,84 @@ export function splitIntoTrajectoryUnits(text: string): string[] {
   return chunks;
 }
 
-export function embedSentenceUnit(sentence: string, dim = 24): number[] {
+export function embedSentenceUnit(
+  sentence: string,
+  dim = 24,
+  frame?: SyntaxTreeFrame,
+  hiddenStates?: any
+): number[] {
+  if (hiddenStates !== undefined && hiddenStates !== null) {
+    const pooled = new Array<number>(dim).fill(0.0);
+    if (Array.isArray(hiddenStates) && Array.isArray(hiddenStates[0])) {
+      const seqLen = hiddenStates.length;
+      const featDim = (hiddenStates[0] as number[]).length;
+      for (let i = 0; i < Math.min(featDim, dim); i++) {
+        let sum = 0;
+        for (let t = 0; t < seqLen; t++) sum += Number((hiddenStates[t] as number[])[i] ?? 0);
+        pooled[i] = sum / Math.max(seqLen, 1);
+      }
+    } else if (ArrayBuffer.isView(hiddenStates) || Array.isArray(hiddenStates)) {
+      for (let i = 0; i < Math.min((hiddenStates as number[]).length, dim); i++) {
+        pooled[i] = Number((hiddenStates as number[])[i] ?? 0);
+      }
+    }
+    let norm = 0;
+    for (let i = 0; i < dim; i++) norm += pooled[i]! * pooled[i]!;
+    norm = Math.sqrt(norm);
+    if (norm > 1e-9) {
+      for (let i = 0; i < dim; i++) pooled[i] = pooled[i]! / norm;
+    }
+    return pooled;
+  }
+
+  if (frame && frame.nodes && frame.nodes.length > 0) {
+    const vec = new Array<number>(dim).fill(0.0);
+    const nNodes = frame.nodes.length;
+    const sSum = new Array<number>(8).fill(0.0);
+    for (const u of frame.nodes) {
+      const prim = u.hth_primary ? BigInt(u.hth_primary) : 0n;
+      if (prim > 0n) {
+        for (let d = 0; d < 8; d++) {
+          const nibble = Number((prim >> BigInt(4 * d)) & 0xfn);
+          sSum[d] = (sSum[d] ?? 0) + nibble / 15.0;
+        }
+      }
+    }
+    for (let d = 0; d < 8; d++) {
+      vec[d] = Math.min(1.0, (sSum[d] ?? 0) / Math.max(nNodes, 1));
+    }
+    vec[8] = Math.min(1.0, frame.radial_entropy ?? 0.0);
+    vec[9] = Math.min(1.0, (frame.max_depth ?? 0) / Math.max(nNodes, 1));
+    if (frame.edges && frame.edges.length > 0) {
+      let jumpSum = 0;
+      for (const e of frame.edges) jumpSum += e.jump_distance ?? 0;
+      vec[10] = Math.min(1.0, jumpSum / frame.edges.length);
+    }
+    let negCount = 0;
+    for (const u of frame.nodes) if (u.is_negation_scope) negCount++;
+    vec[11] = negCount / Math.max(nNodes, 1);
+    vec[12] = Math.min(1.0, sentence.length / 50.0);
+
+    const kanjiStems = sentence.match(/[\u4e00-\u9fff]+/g) ?? [];
+    for (const stem of kanjiStems) {
+      let h = 2166136261;
+      for (let i = 0; i < stem.length; i++) {
+        h = Math.imul(h ^ stem.charCodeAt(i), 16777619) >>> 0;
+      }
+      for (let k = 13; k < dim; k++) {
+        const bit = (h >>> (k - 13)) & 1;
+        vec[k] = (vec[k] ?? 0) + (bit === 1 ? 1.0 : -0.5) * (stem.length / 3.0);
+      }
+    }
+    let norm = 0;
+    for (let i = 0; i < dim; i++) norm += vec[i]! * vec[i]!;
+    norm = Math.sqrt(norm);
+    if (norm > 1e-9) {
+      for (let i = 0; i < dim; i++) vec[i] = vec[i]! / norm;
+    }
+    return vec;
+  }
+
   const vec = new Array<number>(dim).fill(0.0);
   if (!sentence) return vec;
   const L = Math.max(sentence.length, 1);
@@ -659,3 +737,147 @@ export function computeMultiplicativeGrpoReward(
     is_rejected: isRejected,
   };
 }
+
+function invertMatrix24(A: number[][]): number[][] {
+  const n = A.length;
+  const aug: number[][] = Array.from({ length: n }, (_, i) => {
+    const row = new Array<number>(2 * n).fill(0.0);
+    for (let j = 0; j < n; j++) row[j] = A[i]![j]!;
+    row[n + i] = 1.0;
+    return row;
+  });
+
+  for (let i = 0; i < n; i++) {
+    let maxRow = i;
+    let maxVal = Math.abs(aug[i]![i]!);
+    for (let k = i + 1; k < n; k++) {
+      if (Math.abs(aug[k]![i]!) > maxVal) {
+        maxVal = Math.abs(aug[k]![i]!);
+        maxRow = k;
+      }
+    }
+    if (maxRow !== i) {
+      const tmp = aug[i]!;
+      aug[i] = aug[maxRow]!;
+      aug[maxRow] = tmp;
+    }
+    const pivot = aug[i]![i]!;
+    if (Math.abs(pivot) < 1e-12) continue;
+    for (let j = 0; j < 2 * n; j++) aug[i]![j] = aug[i]![j]! / pivot;
+    for (let k = 0; k < n; k++) {
+      if (k !== i) {
+        const factor = aug[k]![i]!;
+        for (let j = 0; j < 2 * n; j++) {
+          aug[k]![j] = aug[k]![j]! - factor * aug[i]![j]!;
+        }
+      }
+    }
+  }
+
+  return Array.from({ length: n }, (_, i) => aug[i]!.slice(n));
+}
+
+export interface ContrastiveFisherResult {
+  G_style: number[][];
+  optimal_projection_axis: number[];
+  mu_pos: number[];
+  mu_neg: number[];
+  delta_mu: number[];
+  lambda_max: number;
+  S_B: number[][];
+  S_W: number[][];
+}
+
+export function fitContrastiveFisherMetric(
+  posZ: number[][],
+  negZ: number[][],
+  lambdaReg = 1e-3
+): ContrastiveFisherResult {
+  const dim = posZ.length > 0 && posZ[0] ? posZ[0].length : 24;
+  const nPos = posZ.length;
+  const nNeg = negZ.length;
+
+  const muPos = new Array<number>(dim).fill(0.0);
+  for (let i = 0; i < nPos; i++) {
+    for (let d = 0; d < dim; d++) muPos[d] = (muPos[d] ?? 0) + (posZ[i]![d] ?? 0);
+  }
+  for (let d = 0; d < dim; d++) muPos[d] = (muPos[d] ?? 0) / Math.max(nPos, 1);
+
+  const muNeg = new Array<number>(dim).fill(0.0);
+  for (let i = 0; i < nNeg; i++) {
+    for (let d = 0; d < dim; d++) muNeg[d] = (muNeg[d] ?? 0) + (negZ[i]![d] ?? 0);
+  }
+  for (let d = 0; d < dim; d++) muNeg[d] = (muNeg[d] ?? 0) / Math.max(nNeg, 1);
+
+  const deltaMu = new Array<number>(dim);
+  for (let d = 0; d < dim; d++) deltaMu[d] = muPos[d]! - muNeg[d]!;
+
+  const S_B: number[][] = Array.from({ length: dim }, () => new Array<number>(dim).fill(0.0));
+  for (let i = 0; i < dim; i++) {
+    for (let j = 0; j < dim; j++) {
+      S_B[i]![j] = deltaMu[i]! * deltaMu[j]!;
+    }
+  }
+
+  const covPos: number[][] = Array.from({ length: dim }, () => new Array<number>(dim).fill(0.0));
+  if (nPos > 1) {
+    for (let k = 0; k < nPos; k++) {
+      for (let i = 0; i < dim; i++) {
+        const di = posZ[k]![i]! - muPos[i]!;
+        for (let j = 0; j < dim; j++) {
+          covPos[i]![j] = (covPos[i]![j] ?? 0) + (di * (posZ[k]![j]! - muPos[j]!)) / (nPos - 1);
+        }
+      }
+    }
+  }
+
+  const covNeg: number[][] = Array.from({ length: dim }, () => new Array<number>(dim).fill(0.0));
+  if (nNeg > 1) {
+    for (let k = 0; k < nNeg; k++) {
+      for (let i = 0; i < dim; i++) {
+        const di = negZ[k]![i]! - muNeg[i]!;
+        for (let j = 0; j < dim; j++) {
+          covNeg[i]![j] = (covNeg[i]![j] ?? 0) + (di * (negZ[k]![j]! - muNeg[j]!)) / (nNeg - 1);
+        }
+      }
+    }
+  }
+
+  const S_W: number[][] = Array.from({ length: dim }, () => new Array<number>(dim).fill(0.0));
+  for (let i = 0; i < dim; i++) {
+    for (let j = 0; j < dim; j++) {
+      S_W[i]![j] = 0.5 * (covPos[i]![j]! + covNeg[i]![j]!) + (i === j ? lambdaReg : 0.0);
+    }
+  }
+
+  const G_style = invertMatrix24(S_W);
+
+  const wStar = new Array<number>(dim).fill(0.0);
+  for (let i = 0; i < dim; i++) {
+    let s = 0.0;
+    for (let j = 0; j < dim; j++) s += G_style[i]![j]! * deltaMu[j]!;
+    wStar[i] = s;
+  }
+  let normW = 0.0;
+  for (let i = 0; i < dim; i++) normW += wStar[i]! * wStar[i]!;
+  normW = Math.sqrt(normW);
+
+  const optimalAxis = new Array<number>(dim);
+  for (let i = 0; i < dim; i++) optimalAxis[i] = normW > 1e-12 ? wStar[i]! / normW : 0.0;
+
+  let lambdaMax = 0.0;
+  for (let i = 0; i < dim; i++) lambdaMax += deltaMu[i]! * wStar[i]!;
+
+  return {
+    G_style,
+    optimal_projection_axis: optimalAxis,
+    mu_pos: muPos,
+    mu_neg: muNeg,
+    delta_mu: deltaMu,
+    lambda_max: lambdaMax,
+    S_B,
+    S_W,
+  };
+}
+
+export const fit_contrastive_fisher_metric = fitContrastiveFisherMetric;

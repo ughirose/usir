@@ -9,6 +9,7 @@ import {
   FIGURATIVE_MARKERS,
   FORMAL_LOGIC_TERMS,
   PHYSICAL_SENSE_CHARS,
+  PHYSICAL_SENSE_INTERVALS,
   RHETORICAL_RUPTURE,
   VOICED_CHARS,
   charBigramEntropy,
@@ -25,6 +26,12 @@ import { computeMicroKasane } from './microKasane.js';
 import { computeMesoSasae } from './mesoSasae.js';
 import { computeMacroKamae } from './macroKamae.js';
 import type { IntermediateSensorData } from './types.js';
+import type { SyntaxTreeFrame } from '../schema/syntaxFrame.js';
+import {
+  orthogonalWaveletDecompose1D,
+  mcaSeparate1D,
+  computeRqaMetrics,
+} from '../v2/waveletHermiteEncoder.js';
 
 export interface Usir24dResult {
   q: number[];
@@ -49,7 +56,249 @@ export interface Usir24dResult {
   cadence_alive: number;
 }
 
-export function extractUsir24d(text: string): Usir24dResult {
+export function extractStage1Signals(text: string, frames?: SyntaxTreeFrame[]): number[][] {
+  const clean = text.trim();
+  let sents: string[] = [];
+  if (frames && frames.length > 0) {
+    sents = frames.map((f) => f.text);
+  } else if (clean.length > 0) {
+    sents = splitSentences(clean);
+  }
+  if (sents.length === 0) return [];
+
+  const M = sents.length;
+  const signals: number[][] = Array.from({ length: M }, () => [0, 0, 0, 0]);
+
+  for (let m = 0; m < M; m++) {
+    const sText = sents[m]!;
+    const L = Math.max(sText.length, 1);
+    const frame = frames && m < frames.length ? frames[m] : undefined;
+
+    if (frame && frame.nodes && frame.nodes.length > 0) {
+      const nodes = frame.nodes;
+      const edges = frame.edges ?? [];
+      const K = nodes.length;
+
+      let sensorySum = 0;
+      for (const u of nodes) {
+        const prim = u.hth_primary ? BigInt(u.hth_primary) : 0n;
+        if (prim > 0n) {
+          let nSum = 0;
+          for (let d = 0; d < 8; d++) nSum += Number((prim >> BigInt(4 * d)) & 0xfn) / 15.0;
+          sensorySum += nSum;
+        }
+      }
+      const s1 = clip(0.35 * (frame.radial_entropy ?? 0.0) + 0.65 * ((sensorySum / K) / 4.0), 0.0, 1.0);
+
+      const childCounts = new Array<number>(K).fill(0);
+      for (const e of edges) {
+        if (e.target_id >= 0 && e.target_id < K) childCounts[e.target_id] = (childCounts[e.target_id] ?? 0) + 1;
+      }
+      const brDeg = childCounts.filter((c) => c > 0);
+      const bStd = brDeg.length > 1 ? stdPop(brDeg) : 0.0;
+      const bMean = brDeg.length > 0 ? mean(brDeg) : 1.0;
+      const treeSym = brDeg.length > 0 ? clip(1.0 - bStd / (bMean + 1.0), 0.0, 1.0) : 0.5;
+      const s2 = clip(0.5 + 0.5 * treeSym, 0.0, 1.0);
+
+      const brevity = 1.0 / (1.0 + (L / 31.0) ** 2.2);
+      let abstCnt = 0;
+      for (const f of ABSTRACT_FILLERS) if (sText.includes(f)) abstCnt++;
+      const modEdges = edges.filter((e) => e.relation === 'mod' || e.relation === 'terminal').length;
+      const s3 = clip(brevity * Math.exp(-abstCnt * 1.5) * Math.exp(-0.3 * (modEdges / K)), 0.0, 1.0);
+
+      let jumpSum = 0;
+      let jumpCnt = 0;
+      for (const e of edges) {
+        if (e.jump_distance > 0) { jumpSum += e.jump_distance; jumpCnt++; }
+      }
+      const meanJump = jumpCnt > 0 ? jumpSum / jumpCnt : 0.0;
+      let negCount = 0;
+      for (const u of nodes) if (u.is_negation_scope) negCount++;
+      const s4 = clip(meanJump * 0.5 + (negCount / K) * 0.5, 0.0, 1.0);
+
+      signals[m] = [s1, s2, s3, s4];
+    } else {
+      let phys = 0;
+      for (let i = 0; i < sText.length; i++) {
+        const cp = sText.charCodeAt(i);
+        for (const [lo, hi] of PHYSICAL_SENSE_INTERVALS) {
+          if (cp >= lo && cp <= hi) { phys++; break; }
+        }
+      }
+      const s1 = clip((phys * 3.5) / L, 0.0, 1.0);
+      const s2 = clip(0.5 + 0.5 * (sText.includes('、') ? 0.3 : 0.0), 0.0, 1.0);
+      const brevity = 1.0 / (1.0 + (L / 31.0) ** 2.2);
+      let abstCnt = 0;
+      for (const f of ABSTRACT_FILLERS) if (sText.includes(f)) abstCnt++;
+      const s3 = clip(brevity * Math.exp(-abstCnt * 1.5), 0.0, 1.0);
+      let voiced = 0;
+      for (const ch of sText) if (VOICED_CHARS.has(ch)) voiced++;
+      const s4 = clip((voiced * 2.0) / L, 0.0, 1.0);
+      signals[m] = [s1, s2, s3, s4];
+    }
+  }
+  return signals;
+}
+
+export interface Multiresolution24dResult extends Usir24dResult {
+  stage1_signals: number[][];
+  rqa_i_arch: number;
+  wavelet_details: Float64Array[][];
+  ista_solitons: Float64Array[];
+}
+
+export function extractStage2Multiresolution(
+  sSignals: number[][],
+  text?: string
+): Multiresolution24dResult {
+  const M = sSignals.length;
+  if (M === 0) {
+    const qZeros = new Array(12).fill(0.0);
+    const pZeros = new Array(12).fill(0.0);
+    return {
+      q: qZeros,
+      p: pZeros,
+      z_24d: new Array(24).fill(0.0),
+      groups: { I_Flux: 0.0, II_Lattice: 0.0, III_Void: 0.0, IV_Shock: 0.0 },
+      order_params: { psi_order: 0.0, phi_void: 0.0, kappa_kin: 0.04 },
+      len_cv: 0.0,
+      abst_bloat: 0.0,
+      concrete_dens: 0.0,
+      abstract_b_mean: 0.0,
+      sluggish_mean: 0.0,
+      cadence_alive: 1.0,
+      stage1_signals: [],
+      rqa_i_arch: 0.0,
+      wavelet_details: [],
+      ista_solitons: [],
+    };
+  }
+
+  let padLen = 8;
+  while (padLen < M) padLen <<= 1;
+  const sPadded: Float64Array[] = Array.from({ length: 4 }, () => new Float64Array(padLen));
+  for (let c = 0; c < 4; c++) {
+    for (let i = 0; i < M; i++) {
+      sPadded[c]![i] = sSignals[i]![c] ?? 0.0;
+    }
+    let filled = M;
+    while (filled < padLen) {
+      const take = Math.min(padLen - filled, M);
+      for (let i = 0; i < take; i++) {
+        sPadded[c]![filled + i] = sSignals[M - 1 - i]![c] ?? 0.0;
+      }
+      filled += take;
+    }
+  }
+
+  const microDetails: Float64Array[] = [];
+  const mesoDetails: Float64Array[] = [];
+  const macroDetails: Float64Array[] = [];
+  const solitonComps: Float64Array[] = [];
+  const rqaResults: ReturnType<typeof computeRqaMetrics>[] = [];
+
+  for (let c = 0; c < 4; c++) {
+    const col = sPadded[c]!;
+    const wRes = orthogonalWaveletDecompose1D(col);
+    microDetails.push(wRes.micro);
+    mesoDetails.push(wRes.meso);
+    macroDetails.push(wRes.macro);
+
+    const mcaRes = mcaSeparate1D(col, 20, 0.15);
+    solitonComps.push(mcaRes.solitonComp);
+
+    const rqaRes = computeRqaMetrics(wRes.macro);
+    rqaResults.push(rqaRes);
+  }
+
+  const cMeans = [0, 1, 2, 3].map((c) => {
+    let s = 0;
+    for (let i = 0; i < M; i++) s += sSignals[i]![c] ?? 0;
+    return s / M;
+  });
+
+  const q0 = clip(mean(Array.from(microDetails[0]!).map(Math.abs)) * 2.0 + cMeans[0]! * 0.7, 0.0, 1.0);
+  const q1 = clip(mean(Array.from(microDetails[1]!).map(Math.abs)) * 2.0 + cMeans[1]! * 0.7, 0.0, 1.0);
+  const q2 = clip(mean(Array.from(microDetails[2]!).map(Math.abs)) * 2.0 + cMeans[2]! * 0.7, 0.0, 1.0);
+  const solitonShock = mean(Array.from(solitonComps[3]!).map(Math.abs)) * 3.0;
+  const q3 = clip(mean(Array.from(microDetails[3]!).map(Math.abs)) * 2.0 + solitonShock, 0.0, 1.0);
+
+  const q4 = clip(mean(Array.from(mesoDetails[0]!).map(Math.abs)) * 2.5 + stdPop(Array.from(sPadded[0]!.slice(0, M))) * 0.8, 0.0, 1.0);
+  const q5 = clip(mean(Array.from(mesoDetails[1]!).map(Math.abs)) * 2.5 + stdPop(Array.from(sPadded[1]!.slice(0, M))) * 0.8, 0.0, 1.0);
+  const q6 = clip(mean(Array.from(mesoDetails[2]!).map(Math.abs)) * 2.5 + stdPop(Array.from(sPadded[2]!.slice(0, M))) * 0.8, 0.0, 1.0);
+  const q7 = clip(mean(Array.from(mesoDetails[3]!).map(Math.abs)) * 2.5 + mean(Array.from(solitonComps[0]!).map(Math.abs)) * 2.0, 0.0, 1.0);
+
+  const q8 = clip(mean(Array.from(macroDetails[0]!).map(Math.abs)) * 1.5 + (Math.max(...sPadded[0]!.slice(0, M)) - Math.min(...sPadded[0]!.slice(0, M))) * 0.5, 0.0, 1.0);
+  const rqaArch = rqaResults[1]?.iArch ?? 0.0;
+  const q9 = clip(0.40 + 0.60 * rqaArch, 0.0, 1.0);
+  const q10 = clip(mean(Array.from(macroDetails[2]!).map(Math.abs)) * 1.5 + cMeans[2]! * 0.5, 0.0, 1.0);
+  const q11 = clip(mean(Array.from(macroDetails[3]!).map(Math.abs)) * 1.5 + (rqaResults[3]?.det ?? 0.0) * 0.4, 0.0, 1.0);
+
+  const q = [q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11];
+
+  let cadenceAlive = 0.95;
+  if (text) {
+    let abstB = 0;
+    for (const f of ABSTRACT_FILLERS) if (text.includes(f)) abstB++;
+    const bDens = abstB / Math.max(text.length / 20.0, 1.0);
+    cadenceAlive = clip(1.0 - bDens * 0.5, 0.1, 1.0);
+  }
+
+  const p = new Array<number>(12).fill(0.0);
+  for (let k = 0; k < 4; k++) {
+    p[k] = stdPop(Array.from(microDetails[k]!)) * 2.5 * cadenceAlive;
+    p[4 + k] = stdPop(Array.from(mesoDetails[k]!)) * 2.5 * cadenceAlive;
+    p[8 + k] = stdPop(Array.from(macroDetails[k]!)) * 2.5 * cadenceAlive;
+  }
+
+  const z_24d = [...q, ...p];
+
+  const G_flux = (q[0]! + q[4]! + q[8]!) / 3.0;
+  const G_lattice = (q[1]! + q[5]! + q[9]!) / 3.0;
+  const G_void = (q[2]! + q[6]! + q[10]!) / 3.0;
+  const G_shock = (q[3]! + q[7]! + q[11]!) / 3.0;
+
+  const psi_order = Math.tanh(2.4 * (G_lattice - 1.35 * G_shock));
+  const phi_void = clip(G_void * 1.48 - 0.68 * G_shock, 0.0, 1.0);
+  let pNorm = 0.0;
+  for (let i = 0; i < 12; i++) pNorm += p[i]! * p[i]!;
+  pNorm = Math.sqrt(pNorm);
+  const kappa_kin = Math.max(0.04, pNorm * 0.62 + 1.10 * G_shock);
+
+  return {
+    q,
+    p,
+    z_24d,
+    groups: { I_Flux: G_flux, II_Lattice: G_lattice, III_Void: G_void, IV_Shock: G_shock },
+    order_params: { psi_order, phi_void, kappa_kin },
+    len_cv: 0.35,
+    abst_bloat: 0.0,
+    concrete_dens: cMeans[0]!,
+    abstract_b_mean: 0.0,
+    sluggish_mean: 0.0,
+    cadence_alive: cadenceAlive,
+    stage1_signals: sSignals,
+    rqa_i_arch: rqaArch,
+    wavelet_details: [microDetails, mesoDetails, macroDetails],
+    ista_solitons: solitonComps,
+  };
+}
+
+export function extractMultiresolution24d(
+  text: string,
+  frames?: SyntaxTreeFrame[]
+): Multiresolution24dResult {
+  const signals = extractStage1Signals(text, frames);
+  return extractStage2Multiresolution(signals, text);
+}
+
+export function extractUsir24d(
+  text: string,
+  options?: { useMultiresolution?: boolean; frames?: SyntaxTreeFrame[] }
+): Usir24dResult {
+  if (options?.useMultiresolution) {
+    return extractMultiresolution24d(text, options.frames);
+  }
   const trimmed = text.trim();
   if (trimmed.length === 0) {
     const qZeros = new Array(12).fill(0.0);
