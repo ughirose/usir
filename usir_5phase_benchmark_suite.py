@@ -694,6 +694,9 @@ fig.suptitle(
     color='#f0f6fc', fontsize=15, fontweight='bold', y=0.96
 )
 
-out_img = "/working_dir/c_628174f8bd4aba74/artifacts/file_generation/ttl=63d/output/usir_5phase_empirical_verification.png"
+import os
+out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "artifacts")
+os.makedirs(out_dir, exist_ok=True)
+out_img = os.path.join(out_dir, "usir_5phase_empirical_verification.png")
 plt.savefig(out_img, dpi=180, facecolor=fig.get_facecolor())
 print(f"\nSaved updated figure to: {out_img}")
