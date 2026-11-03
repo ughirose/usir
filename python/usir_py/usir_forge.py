@@ -41,14 +41,14 @@ def compute_polar_fourier_phase(energy: Union[Sequence[float], np.ndarray]) -> f
     """
     arr = np.asarray(energy, dtype=np.float64)
     M = len(arr)
-    if M <= 1:
+    if M <= 1 or not np.all(np.isfinite(arr)):
         return 0.0
 
     m = np.arange(M, dtype=np.float64)
     angles = -2.0 * np.pi * m / float(M)
     c1 = np.sum(arr * np.exp(1j * angles)) / float(M)
 
-    if abs(c1) < 1e-12:
+    if not np.isfinite(c1) or abs(c1) < 1e-12:
         return 0.0
     return float(np.angle(c1))
 
@@ -56,7 +56,13 @@ def compute_polar_fourier_phase(energy: Union[Sequence[float], np.ndarray]) -> f
 def align_polar_fourier_phase(
     energy_trajectory: Union[Sequence[float], Sequence[Sequence[float]], np.ndarray],
     target_phase: float = 3.0 * math.pi / 4.0,
-) -> Union[List[float], List[List[float]], np.ndarray]:
+    return_shift: bool = False,
+) -> Union[
+    List[float],
+    List[List[float]],
+    np.ndarray,
+    Tuple[Union[List[float], List[List[float]], np.ndarray], int],
+]:
     """Circularly aligns energy trajectory peak phase to target_phase (default 3pi/4).
 
     Prevents destructive interference / phase cancellation Deadzone when aggregating
@@ -64,10 +70,9 @@ def align_polar_fourier_phase(
     Supports both 1D energy sequences and 2D trajectories (M, D).
     """
     arr = np.asarray(energy_trajectory, dtype=np.float64)
-    if arr.size == 0 or len(arr) <= 1:
-        if isinstance(energy_trajectory, list):
-            return list(energy_trajectory)
-        return arr.copy()
+    if arr.size == 0 or len(arr) <= 1 or not np.all(np.isfinite(arr)):
+        res = list(energy_trajectory) if isinstance(energy_trajectory, list) else arr.copy()
+        return (res, 0) if return_shift else res
 
     is_1d = (arr.ndim == 1)
     if is_1d:
@@ -76,9 +81,9 @@ def align_polar_fourier_phase(
         # For 2D trajectory (M, D), extract 1D energy envelope
         M, D = arr.shape
         if D >= 24:
-            # Hamiltonian energy: 0.5 * ||p||^2 + q_shock
+            # Hamiltonian energy: 0.5 * ||p||^2 + G_shock (Micro q3, Meso q7, Macro q11)
             p = arr[:, 12:24]
-            q_shock = arr[:, 3]
+            q_shock = (arr[:, 3] + arr[:, 7] + arr[:, 11]) / 3.0
             energy = 0.5 * np.sum(p**2, axis=1) + q_shock
         else:
             energy = np.linalg.norm(arr, axis=1)
@@ -90,23 +95,24 @@ def align_polar_fourier_phase(
     # => 2*pi*s/M = theta_peak - target_phase (mod 2*pi)
     diff = theta_peak - target_phase
     diff_wrapped = (diff + np.pi) % (2.0 * np.pi) - np.pi
-    s = int(round(float(M) * diff_wrapped / (2.0 * np.pi))) % M
+    # Deterministic half-up rounding (eliminates banker's rounding divergence with JS Math.round)
+    s = int(math.floor(float(M) * diff_wrapped / (2.0 * np.pi) + 0.5)) % M
 
     if s == 0:
         if isinstance(energy_trajectory, list):
-            return [list(r) if isinstance(r, (list, np.ndarray)) else r for r in energy_trajectory]  # type: ignore
-        return arr.copy()
+            res = [list(r) if isinstance(r, (list, np.ndarray)) else r for r in energy_trajectory]  # type: ignore
+        else:
+            res = arr.copy()
+        return (res, 0) if return_shift else res
 
     if is_1d:
         aligned = np.roll(arr, s)
-        if isinstance(energy_trajectory, list):
-            return aligned.tolist()
-        return aligned
+        res = aligned.tolist() if isinstance(energy_trajectory, list) else aligned
     else:
         aligned = np.roll(arr, s, axis=0)
-        if isinstance(energy_trajectory, list):
-            return aligned.tolist()
-        return aligned
+        res = aligned.tolist() if isinstance(energy_trajectory, list) else aligned
+
+    return (res, s) if return_shift else res
 
 
 # ==============================================================================
@@ -332,15 +338,23 @@ class OSWEStreamingCompiler:
 
         self.transition_counts: np.ndarray = np.zeros((3, 3), dtype=np.float64)
         self.prev_mode: Optional[int] = None
+        self.last_cluster: Optional[str] = None
         self.sample_count: int = 0
 
     @property
     def cluster_count(self) -> int:
         return len(self.clusters)
 
+    def reset_boundary(self) -> None:
+        """Resets the previous mode tracker across independent chunks or authors."""
+        self.prev_mode = None
+
     def register_cluster(self, cluster_id: Union[str, int]) -> None:
         """Explicitly registers a cluster or author identity."""
-        self.clusters.add(str(cluster_id))
+        cid = str(cluster_id).strip()
+        if not cid:
+            raise ValueError("cluster_id cannot be empty or whitespace")
+        self.clusters.add(cid)
 
     def _normalize_mode(self, mode: Union[int, str]) -> int:
         """Normalizes mode representation to 0, 1, or 2."""
@@ -352,7 +366,7 @@ class OSWEStreamingCompiler:
             raise ValueError(f"Invalid integer mode {mode}; expected 0, 1, 2 or 3")
 
         s = str(mode).strip().lower()
-        if s in ("0", "narration", "narrative", "地の文", "setup", "mode 1", "mode_1", "mode1"):
+        if s in ("0", "narration", "narrative", "地の文", "setup", "mode 0", "mode_0", "mode0", "mode 1", "mode_1", "mode1"):
             return 0
         if s in ("1", "dialogue", "dialog", "会話", "polyphony", "mode 2", "mode_2", "mode2"):
             return 1
@@ -372,7 +386,13 @@ class OSWEStreamingCompiler:
             raise ValueError(f"Expected 24-dimensional vector, got {len(z)}")
 
         if cluster_id is not None:
-            self.clusters.add(str(cluster_id))
+            cid = str(cluster_id).strip()
+            if not cid:
+                raise ValueError("cluster_id cannot be empty or whitespace")
+            self.clusters.add(cid)
+            if self.last_cluster is not None and cid != self.last_cluster:
+                self.reset_boundary()
+            self.last_cluster = cid
 
         mode_idx = self._normalize_mode(mode) if mode is not None else classify_mode_24d(z)
 
@@ -406,12 +426,17 @@ class OSWEStreamingCompiler:
         if traj.ndim != 2 or traj.shape[1] != 24:
             raise ValueError(f"Expected trajectory of shape (M, 24), got {traj.shape}")
 
+        active_modes = list(modes) if modes is not None else None
+
         if align_phase and len(traj) > 1:
-            traj = align_polar_fourier_phase(traj, self.target_phase)  # type: ignore
+            traj, s = align_polar_fourier_phase(traj, self.target_phase, return_shift=True)  # type: ignore
+            # Circularly shift modes in lockstep with trajectory vectors to preserve 1:1 pairing
+            if active_modes is not None and len(active_modes) == len(traj) and s != 0:
+                active_modes = list(active_modes[-s:]) + list(active_modes[:-s])
 
         assigned_modes: List[int] = []
         for i, vec in enumerate(traj):
-            m = modes[i] if (modes is not None and i < len(modes)) else None
+            m = active_modes[i] if (active_modes is not None and i < len(active_modes)) else None
             assigned = self.add_sample(vec, mode=m, cluster_id=cluster_id)
             assigned_modes.append(assigned)
 
@@ -426,6 +451,7 @@ class OSWEStreamingCompiler:
         """Extracts 24D vectors from text sentences, aligns phase, and compiles."""
         from usir_py.extractor_24d import extract_usir_24d, split_sentences
 
+        self.reset_boundary()
         sentences = split_sentences(text)
         if not sentences:
             return []

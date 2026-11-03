@@ -53,6 +53,10 @@ export function computePolarFourierPhase(energy: number[]): number {
   const M = energy.length;
   if (M <= 1) return 0.0;
 
+  for (let m = 0; m < M; m++) {
+    if (!Number.isFinite(energy[m])) return 0.0;
+  }
+
   let re = 0.0;
   let im = 0.0;
   for (let m = 0; m < M; m++) {
@@ -65,7 +69,7 @@ export function computePolarFourierPhase(energy: number[]): number {
   im /= M;
 
   const mag = Math.sqrt(re * re + im * im);
-  if (mag < 1e-12) return 0.0;
+  if (!Number.isFinite(mag) || mag < 1e-12) return 0.0;
 
   return Math.atan2(im, re);
 }
@@ -77,15 +81,30 @@ export function computePolarFourierPhase(energy: number[]): number {
  */
 export function alignPolarFourierPhase<T extends number[] | number[][]>(
   energyTrajectory: T,
-  targetPhase = (3.0 * Math.PI) / 4.0
-): T {
-  if (energyTrajectory.length <= 1) {
-    return (Array.isArray(energyTrajectory[0])
+  targetPhase?: number
+): T;
+export function alignPolarFourierPhase<T extends number[] | number[][]>(
+  energyTrajectory: T,
+  targetPhase: number,
+  returnShift: true
+): { aligned: T; shift: number };
+export function alignPolarFourierPhase<T extends number[] | number[][]>(
+  energyTrajectory: T,
+  targetPhase = (3.0 * Math.PI) / 4.0,
+  returnShift = false
+): T | { aligned: T; shift: number } {
+  const is2D = Array.isArray(energyTrajectory[0]);
+  const isFiniteSignal = is2D
+    ? (energyTrajectory as number[][]).every((row) => row.every((v) => Number.isFinite(v)))
+    : (energyTrajectory as number[]).every((v) => Number.isFinite(v));
+
+  if (!isFiniteSignal || energyTrajectory.length <= 1) {
+    const res = (Array.isArray(energyTrajectory[0])
       ? (energyTrajectory as number[][]).map((r) => [...r])
       : [...(energyTrajectory as number[])]) as T;
+    return returnShift ? { aligned: res, shift: 0 } : res;
   }
 
-  const is2D = Array.isArray(energyTrajectory[0]);
   const M = energyTrajectory.length;
 
   let energy: number[];
@@ -97,7 +116,8 @@ export function alignPolarFourierPhase<T extends number[] | number[][]>(
         for (let i = 12; i < 24; i++) {
           p2 += (vec[i] ?? 0) * (vec[i] ?? 0);
         }
-        return 0.5 * p2 + (vec[3] ?? 0);
+        const shock = ((vec[3] ?? 0) + (vec[7] ?? 0) + (vec[11] ?? 0)) / 3.0;
+        return 0.5 * p2 + shock;
       } else {
         let sumSq = 0.0;
         for (const val of vec) sumSq += val * val;
@@ -112,30 +132,35 @@ export function alignPolarFourierPhase<T extends number[] | number[][]>(
   const diff = thetaPeak - targetPhase;
   const twoPi = 2.0 * Math.PI;
   const diffWrapped = ((diff + Math.PI) % twoPi + twoPi) % twoPi - Math.PI;
-  let s = Math.round((M * diffWrapped) / twoPi) % M;
+  // Deterministic half-up rounding matching Python floor(x + 0.5)
+  let s = Math.floor((M * diffWrapped) / twoPi + 0.5) % M;
   if (s < 0) s += M;
 
   if (s === 0) {
-    return (is2D
+    const res = (is2D
       ? (energyTrajectory as number[][]).map((r) => [...r])
       : [...(energyTrajectory as number[])]) as T;
+    return returnShift ? { aligned: res, shift: 0 } : res;
   }
 
+  let aligned: T;
   if (is2D) {
     const matrix = energyTrajectory as number[][];
     const rolled: number[][] = new Array(M);
     for (let i = 0; i < M; i++) {
       rolled[(i + s) % M] = [...matrix[i]!];
     }
-    return rolled as T;
+    aligned = rolled as T;
   } else {
     const arr = energyTrajectory as number[];
     const rolled: number[] = new Array(M);
     for (let i = 0; i < M; i++) {
       rolled[(i + s) % M] = arr[i]!;
     }
-    return rolled as T;
+    aligned = rolled as T;
   }
+
+  return returnShift ? { aligned, shift: s } : aligned;
 }
 
 // =============================================================================
@@ -203,6 +228,7 @@ export class OSWEStreamingCompiler {
   public M2: number[][][]; // 3 x 24 x 24
   public transitionCounts: number[][]; // 3 x 3
   public prevMode: number | null;
+  public lastCluster: string | null;
   public sampleCount: number;
 
   constructor(options?: OSWEStreamingCompilerOptions) {
@@ -227,6 +253,7 @@ export class OSWEStreamingCompiler {
       [0.0, 0.0, 0.0],
     ];
     this.prevMode = null;
+    this.lastCluster = null;
     this.sampleCount = 0;
   }
 
@@ -234,8 +261,16 @@ export class OSWEStreamingCompiler {
     return this.clusters.size;
   }
 
+  public resetBoundary(): void {
+    this.prevMode = null;
+  }
+
   public registerCluster(clusterId: string | number): void {
-    this.clusters.add(String(clusterId));
+    const cid = String(clusterId).trim();
+    if (!cid || cid === 'undefined' || cid === 'null') {
+      throw new Error('clusterId cannot be empty or whitespace');
+    }
+    this.clusters.add(cid);
   }
 
   public normalizeMode(mode: number | string): number {
@@ -246,7 +281,7 @@ export class OSWEStreamingCompiler {
     }
 
     const s = String(mode).trim().toLowerCase();
-    if (['0', 'narration', 'narrative', '地の文', 'setup', 'mode 1', 'mode_1', 'mode1'].includes(s)) {
+    if (['0', 'narration', 'narrative', '地の文', 'setup', 'mode 0', 'mode_0', 'mode0', 'mode 1', 'mode_1', 'mode1'].includes(s)) {
       return 0;
     }
     if (['1', 'dialogue', 'dialog', '会話', 'polyphony', 'mode 2', 'mode_2', 'mode2'].includes(s)) {
@@ -268,7 +303,15 @@ export class OSWEStreamingCompiler {
     }
 
     if (clusterId !== undefined && clusterId !== null) {
-      this.clusters.add(String(clusterId));
+      const cid = String(clusterId).trim();
+      if (!cid || cid === 'undefined' || cid === 'null') {
+        throw new Error('clusterId cannot be empty or whitespace');
+      }
+      this.clusters.add(cid);
+      if (this.lastCluster !== null && cid !== this.lastCluster) {
+        this.resetBoundary();
+      }
+      this.lastCluster = cid;
     }
 
     const modeIdx = mode !== undefined ? this.normalizeMode(mode) : classifyMode24d(vector);
@@ -330,13 +373,26 @@ export class OSWEStreamingCompiler {
       }
     }
 
-    const traj = alignPhase && trajectory.length > 1
-      ? alignPolarFourierPhase(trajectory, this.targetPhase)
-      : trajectory;
+    let traj = trajectory;
+    let activeModes = modes ? [...modes] : undefined;
+
+    if (alignPhase && trajectory.length > 1) {
+      const res = alignPolarFourierPhase(trajectory, this.targetPhase, true);
+      traj = res.aligned;
+      const s = res.shift;
+      if (activeModes && activeModes.length === traj.length && s !== 0) {
+        const M = traj.length;
+        const rolled: (number | string | undefined)[] = new Array(M);
+        for (let i = 0; i < M; i++) {
+          rolled[(i + s) % M] = activeModes[i];
+        }
+        activeModes = rolled;
+      }
+    }
 
     const assignedModes: number[] = [];
     for (let i = 0; i < traj.length; i++) {
-      const m = modes && i < modes.length ? modes[i] : undefined;
+      const m = activeModes && i < activeModes.length ? activeModes[i] : undefined;
       const assigned = this.addSample(traj[i]!, m, clusterId);
       assignedModes.push(assigned);
     }
@@ -349,6 +405,7 @@ export class OSWEStreamingCompiler {
     clusterId?: string | number,
     alignPhase = true
   ): number[] {
+    this.resetBoundary();
     const sentences = splitSentences(text);
     if (sentences.length === 0) return [];
 

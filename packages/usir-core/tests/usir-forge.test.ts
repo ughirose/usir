@@ -239,4 +239,91 @@ describe('Phase D WS-D1: OSWE Polar-Fourier Phase-Aligned usir-forge & 4KB Binar
       }
     });
   });
+
+  // ===========================================================================
+  // 6. EDGE CASES & ATTACK SURFACE TESTS
+  // ===========================================================================
+  describe('Edge Cases & Robustness', () => {
+    it('preserves mode synchronization under circular phase shift', () => {
+      const compiler = new OSWEStreamingCompiler({ minClusters: 5 });
+      const traj = [
+        new Array(24).fill(0),
+        new Array(24).fill(0),
+        new Array(24).fill(0),
+        new Array(24).fill(0),
+      ];
+      traj[0]![3] = 10.0; // Climax shock spike at sample 0
+      const modes = [2, 0, 1, 1]; // Sample 0 is tagged as Climax (mode 2)
+
+      compiler.addTrajectory(traj, modes, 'c1', true);
+      expect(compiler.means[2]![3]).toBe(10.0);
+      expect(compiler.means[0]![3]).toBe(0.0);
+      expect(compiler.means[1]![3]).toBe(0.0);
+    });
+
+    it('aligns trajectories with multi-scale (Macro q11) shock oscillations', () => {
+      const M = 32;
+      const targetPhase = (3.0 * Math.PI) / 4.0;
+      const traj: number[][] = [];
+      for (let t = 0; t < M; t++) {
+        const vec = new Array(24).fill(0.1);
+        vec[11] = 0.5 + 0.5 * Math.cos((2.0 * Math.PI * t) / M); // Macro shock
+        traj.push(vec);
+      }
+
+      const aligned = alignPolarFourierPhase(traj, targetPhase);
+      const macroEnergy = aligned.map((v) => {
+        let p2 = 0.0;
+        for (let i = 12; i < 24; i++) p2 += (v[i] ?? 0) * (v[i] ?? 0);
+        return 0.5 * p2 + ((v[3] ?? 0) + (v[7] ?? 0) + (v[11] ?? 0)) / 3.0;
+      });
+      const phase = computePolarFourierPhase(macroEnergy);
+      expect(Math.abs(phase - targetPhase)).toBeLessThan((2.0 * Math.PI) / M + 1e-4);
+    });
+
+    it('handles non-finite NaN/inf values gracefully without array corruption', () => {
+      const nanSig = [1.0, NaN, 2.0];
+      const infSig = [1.0, Infinity, 2.0];
+
+      expect(computePolarFourierPhase(nanSig)).toBe(0.0);
+      expect(computePolarFourierPhase(infSig)).toBe(0.0);
+
+      const alignedNan = alignPolarFourierPhase(nanSig);
+      expect(alignedNan.length).toBe(3);
+      expect(alignedNan[0]).toBe(1.0);
+      expect(Number.isNaN(alignedNan[1])).toBe(true);
+      expect(alignedNan[2]).toBe(2.0);
+    });
+
+    it('rejects whitespace-only and empty cluster IDs', () => {
+      const compiler = new OSWEStreamingCompiler({ minClusters: 5 });
+      expect(() => compiler.registerCluster('   ')).toThrow(/clusterId cannot be empty or whitespace/);
+      expect(() => compiler.registerCluster('')).toThrow(/clusterId cannot be empty or whitespace/);
+      expect(() => compiler.addSample(new Array(24).fill(0.5), 0, '   ')).toThrow(
+        /clusterId cannot be empty or whitespace/
+      );
+    });
+
+    it('preserves amplitude in composite waves with strong harmonics', () => {
+      const M = 64;
+      const w1 = new Array<number>(M);
+      const w2 = new Array<number>(M);
+      for (let m = 0; m < M; m++) {
+        w1[m] = 1.0 + Math.cos((2 * Math.PI * m) / M) + 0.5 * Math.cos((4 * Math.PI * m) / M);
+        w2[m] = 1.0 + Math.cos((2 * Math.PI * m) / M - Math.PI) + 0.5 * Math.cos((4 * Math.PI * m) / M - Math.PI);
+      }
+
+      // Unaligned average cancels out
+      const unalignedAvg = w1.map((v, i) => (v + w2[i]!) / 2.0);
+      const ptpUnaligned = Math.max(...unalignedAvg) - Math.min(...unalignedAvg);
+      expect(ptpUnaligned).toBeLessThan(1e-12);
+
+      // Aligned preserves peak-to-peak amplitude
+      const a1 = alignPolarFourierPhase(w1);
+      const a2 = alignPolarFourierPhase(w2);
+      const alignedAvg = a1.map((v, i) => (v + a2[i]!) / 2.0);
+      const ptpAligned = Math.max(...alignedAvg) - Math.min(...alignedAvg);
+      expect(ptpAligned).toBeGreaterThanOrEqual(1.95);
+    });
+  });
 });

@@ -255,3 +255,83 @@ def test_welford_cholesky_precision_reconstruction():
     # Verify positive definiteness: all eigenvalues > 0
     eigenvals = np.linalg.eigvalsh(Lambda_reconstructed)
     assert np.all(eigenvals > 0.0), f"Reconstructed precision matrix has non-positive eigenvalues: {eigenvals.min()}"
+
+
+# ==============================================================================
+# 6. EDGE CASES & ATTACK SURFACE TESTS
+# ==============================================================================
+
+def test_phase_alignment_modes_synchronization():
+    """Verifies that circular phase shift rotates modes in lockstep with trajectory vectors."""
+    compiler = OSWEStreamingCompiler(min_clusters=5)
+    traj = np.zeros((4, 24), dtype=np.float64)
+    traj[0, 3] = 10.0  # Climax shock spike at sample 0
+    modes = [2, 0, 1, 1]  # Sample 0 is tagged as Climax (mode 2)
+
+    # When aligned to 3pi/4, sample 0 will shift.
+    # The mode tag 2 must move with sample 0 to keep shock in Climax.
+    compiler.add_trajectory(traj, modes=modes, cluster_id="c1", align_phase=True)
+
+    assert compiler.means[2][3] == 10.0, f"Expected Climax shock to be 10.0, got {compiler.means[2][3]}"
+    assert compiler.means[0][3] == 0.0, f"Expected Narration shock to be 0.0, got {compiler.means[0][3]}"
+    assert compiler.means[1][3] == 0.0, f"Expected Dialogue shock to be 0.0, got {compiler.means[1][3]}"
+
+
+def test_phase_alignment_multi_scale_shock():
+    """Verifies alignment when climax shock is located in Meso (q7) or Macro (q11) scales."""
+    M = 32
+    target_phase = 3.0 * math.pi / 4.0
+
+    # Macro shock (q11: Rupture / Soliton) oscillation
+    traj_macro = np.zeros((M, 24), dtype=np.float64)
+    for t in range(M):
+        traj_macro[t, 11] = 0.5 + 0.5 * math.cos(2.0 * math.pi * t / M)
+        traj_macro[t, 12:24] = 0.1
+
+    aligned_macro = align_polar_fourier_phase(traj_macro, target_phase=target_phase)
+    macro_energy = 0.5 * np.sum(aligned_macro[:, 12:24] ** 2, axis=1) + (
+        aligned_macro[:, 3] + aligned_macro[:, 7] + aligned_macro[:, 11]
+    ) / 3.0
+    phase_macro = compute_polar_fourier_phase(macro_energy)
+    assert abs(phase_macro - target_phase) < (2.0 * math.pi / M) + 1e-4
+
+
+def test_phase_alignment_nan_inf_robustness():
+    """Verifies that non-finite inputs fall back safely without unhandled exception."""
+    nan_sig = [1.0, float("nan"), 2.0]
+    inf_sig = [1.0, float("inf"), 2.0]
+
+    assert compute_polar_fourier_phase(nan_sig) == 0.0
+    assert compute_polar_fourier_phase(inf_sig) == 0.0
+
+    aligned_nan = align_polar_fourier_phase(nan_sig)
+    assert np.isnan(aligned_nan[1])
+    assert aligned_nan[0] == 1.0
+
+
+def test_anonymity_gate_whitespace_and_empty_id_rejection():
+    """Verifies that empty string or whitespace-only cluster IDs are rejected."""
+    compiler = OSWEStreamingCompiler(min_clusters=5)
+    with pytest.raises(ValueError):
+        compiler.register_cluster("   ")
+    with pytest.raises(ValueError):
+        compiler.register_cluster("")
+    with pytest.raises(ValueError):
+        compiler.add_sample(np.full(24, 0.5), mode=0, cluster_id="  ")
+
+
+def test_composite_wave_with_harmonics():
+    """Verifies that composite waves with strong harmonics preserve amplitude under alignment."""
+    M = 64
+    m = np.arange(M)
+    w1 = 1.0 + np.cos(2 * np.pi * m / M) + 0.5 * np.cos(4 * np.pi * m / M)
+    w2 = 1.0 + np.cos(2 * np.pi * m / M - np.pi) + 0.5 * np.cos(4 * np.pi * m / M - np.pi)
+
+    # Unaligned cancels out
+    assert np.ptp((w1 + w2) / 2.0) < 1e-12
+
+    # Aligned preserves wave amplitude
+    a1 = np.array(align_polar_fourier_phase(w1))
+    a2 = np.array(align_polar_fourier_phase(w2))
+    assert np.ptp((a1 + a2) / 2.0) >= 1.95
+
