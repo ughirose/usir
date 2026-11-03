@@ -12,8 +12,10 @@ Solves:
 
 from __future__ import annotations
 
+import collections
 import math
-from typing import Any, Dict, List, Optional, Set, Tuple, Union
+import re
+from typing import Any, Callable, Dict, List, NamedTuple, Optional, Sequence, Set, Tuple, Union
 
 import numpy as np
 
@@ -414,4 +416,790 @@ class USIRPyTorchLogitsProcessor(LogitsProcessor):
             curr_scores[top_indices] = top_scores
 
         return scores
+
+
+# ==============================================================================
+# Phase B WS-B1: Hierarchical Dual-Rate 5-Stage Adaptive-BAOAB & Clause-Level Twisted SMC
+# ==============================================================================
+
+def generate_1_over_f_noise(
+    L: int = 16,
+    dim: int = 12,
+    variance: float = 0.02,
+    rng: Optional[np.random.Generator] = None,
+) -> np.ndarray:
+    """Generates L steps of 1/f (pink) noise across dim channels with exact variance.
+
+    OPEN-08: Used for preloading ghost history ring buffers with 1/f correlated
+    Gaussian fluctuations around target attractor mu_star.
+    """
+    if L <= 0 or dim <= 0:
+        return np.zeros((max(0, L), max(0, dim)), dtype=np.float64)
+    if variance <= 0.0:
+        return np.zeros((L, dim), dtype=np.float64)
+
+    if rng is None:
+        rng = np.random.default_rng()
+    freqs = np.fft.rfftfreq(L)
+    with np.errstate(divide="ignore"):
+        scale = 1.0 / np.where(freqs == 0, float("inf"), np.sqrt(freqs))
+    scale[0] = 0.0  # Zero DC component so mean is zero
+    noise = rng.normal(0.0, 1.0, size=(dim, L))
+    spec = np.fft.rfft(noise, axis=-1) * scale
+    pink = np.fft.irfft(spec, n=L, axis=-1)
+    current_std = np.std(pink, axis=-1, keepdims=True)
+    current_std = np.where(current_std < 1e-8, 1.0, current_std)
+    pink = pink / current_std * math.sqrt(variance)
+    return pink.T  # Shape: (L, dim)
+
+
+class BAOABStepResult(NamedTuple):
+    """Result of a 5-stage Adaptive-BAOAB clause-level integration step."""
+
+    q: np.ndarray          # Next target position q_{m+1}^* in R^12
+    p: np.ndarray          # Next conjugate momentum p_{m+1}^* in R^12
+    delta_q: np.ndarray    # Next target displacement Delta q_{m+1}^* = q_{m+1}^* - q_m^{shrunk}
+    q_shrunk: np.ndarray   # Bayesian shrunk position hat{q}_m^{shrunk}
+    gamma_t: float         # Effective friction coefficient (50.0 or 1.2)
+    theta_t: float         # Friction dissipation factor exp(-Delta t * gamma_t)
+    alpha_m: float         # Bayesian shrinkage gain m / (m + 5)
+    m: int                 # Clause step counter
+
+
+def step_baoab_clause(
+    q: np.ndarray,
+    p: np.ndarray,
+    mu_star: Optional[np.ndarray] = None,
+    G_style: Optional[np.ndarray] = None,
+    h_syntax: Optional[float] = None,
+    phi_bridge: Optional[np.ndarray] = None,
+    q_measured: Optional[np.ndarray] = None,
+    m: int = 1,
+    dt: float = 0.25,
+    tau: float = 0.04,
+    eps_syn: float = 0.6,
+    gamma_low: float = 1.2,
+    gamma_high: float = 50.0,
+    lambda_bridge: float = 1.0,
+    mass_matrix: Optional[np.ndarray] = None,
+    rng: Optional[np.random.Generator] = None,
+) -> BAOABStepResult:
+    """Executes a single 5-stage Adaptive-BAOAB symplectic step at a clause boundary.
+
+    Outer Loop (Clause Boundary) equations:
+        1. Bayesian Shrinkage:
+           alpha_m = m / (m + 5)
+           hat{q}_m^{shrunk} = alpha_m * hat{q}_m + (1 - alpha_m) * mu^*
+        2. Potential Gradient:
+           nabla_q V(q) = G_style (q - mu^*) - lambda_bridge * phi_bridge
+        3. Stage B:
+           p^{(1)} = p_m - (dt / 2) * nabla_q V(q_m)
+        4. Stage A:
+           q^{(1)} = q_m + (dt / 2) * M^{-1} p^{(1)}
+        5. Stage O (Syntax-Entropy Dependent Friction Brake):
+           gamma_t = 50.0 if H_syntax < eps_syn else 1.2
+           theta_t = exp(-dt * gamma_t)
+           p^{(2)} = theta_t * p^{(1)} + sqrt(tau * (1 - theta_t^2)) * M^{1/2} xi
+        6. Stage A:
+           q_{m+1}^* = q^{(1)} + (dt / 2) * M^{-1} p^{(2)}
+        7. Stage B:
+           p_{m+1}^* = p^{(2)} - (dt / 2) * nabla_q V(q_{m+1}^*)
+        8. Target Displacement:
+           Delta q_{m+1}^* = q_{m+1}^* - hat{q}_m^{shrunk}
+    """
+    if rng is None:
+        rng = np.random.default_rng()
+
+    q_curr = np.asarray(q, dtype=np.float64).ravel()
+    p_curr = np.asarray(p, dtype=np.float64).ravel()
+    dim = len(q_curr)
+    if len(p_curr) != dim:
+        raise ValueError(f"Dimension mismatch between q ({dim}) and p ({len(p_curr)})")
+
+    if mu_star is None:
+        mu = np.full(dim, 0.5, dtype=np.float64)
+    else:
+        mu = np.asarray(mu_star, dtype=np.float64).ravel()
+
+    if G_style is None:
+        G = np.eye(dim, dtype=np.float64)
+    else:
+        G = np.asarray(G_style, dtype=np.float64)
+
+    if mass_matrix is None:
+        M_inv = np.eye(dim, dtype=np.float64)
+        M_sqrt = np.eye(dim, dtype=np.float64)
+    else:
+        M = np.asarray(mass_matrix, dtype=np.float64)
+        M_inv = np.linalg.inv(M)
+        eigvals, eigvecs = np.linalg.eigh(M)
+        M_sqrt = eigvecs @ np.diag(np.sqrt(np.maximum(1e-12, eigvals))) @ eigvecs.T
+
+    # 1. Bayesian shrinkage
+    alpha_m = float(m) / float(m + 5) if m > 0 else 0.0
+    if q_measured is not None:
+        q_meas = np.asarray(q_measured, dtype=np.float64).ravel()
+    else:
+        q_meas = q_curr
+    q_shrunk = alpha_m * q_meas + (1.0 - alpha_m) * mu
+
+    # Gradient closure
+    phi = np.zeros(dim, dtype=np.float64) if phi_bridge is None else np.asarray(phi_bridge, dtype=np.float64).ravel()
+
+    def grad_V(x: np.ndarray) -> np.ndarray:
+        return (G @ (x - mu)) - (lambda_bridge * phi)
+
+    dt_half = 0.5 * dt
+
+    # 2. Stage B
+    p_1 = p_curr - dt_half * grad_V(q_curr)
+
+    # 3. Stage A
+    q_1 = q_curr + dt_half * (M_inv @ p_1)
+
+    # 4. Stage O (Syntax Protection Brake)
+    if h_syntax is not None and float(h_syntax) < eps_syn:
+        gamma_t = float(gamma_high)  # 50.0 (Strong brake)
+    else:
+        gamma_t = float(gamma_low)   # 1.2 (Underdamped)
+
+    theta_t = math.exp(-dt * gamma_t)
+    sigma_noise = math.sqrt(max(0.0, tau * (1.0 - theta_t**2)))
+    xi = rng.normal(0.0, 1.0, size=dim)
+    p_2 = theta_t * p_1 + sigma_noise * (M_sqrt @ xi)
+
+    # 5. Stage A
+    q_next = q_1 + dt_half * (M_inv @ p_2)
+
+    # 6. Stage B
+    p_next = p_2 - dt_half * grad_V(q_next)
+
+    # 7. Next clause target displacement
+    delta_q = q_next - q_shrunk
+
+    return BAOABStepResult(
+        q=q_next,
+        p=p_next,
+        delta_q=delta_q,
+        q_shrunk=q_shrunk,
+        gamma_t=gamma_t,
+        theta_t=theta_t,
+        alpha_m=alpha_m,
+        m=m,
+    )
+
+
+class AdaptiveBAOABIntegrator:
+    """Hierarchical Dual-Rate 5-Stage Adaptive-BAOAB Symplectic Integrator (Phase B WS-B1).
+
+    Maintains phase-space state (q, p) in R^12 x R^12, ghost history ring buffer of length L=16,
+    Bayesian shrinkage against target attractor mu^*, and syntax-entropy-dependent variable friction.
+    """
+
+    def __init__(
+        self,
+        dim: int = 12,
+        mu_star: Optional[Union[np.ndarray, Sequence[float]]] = None,
+        G_style: Optional[np.ndarray] = None,
+        mass_matrix: Optional[np.ndarray] = None,
+        dt: float = 0.25,
+        tau: float = 0.04,
+        eps_syn: float = 0.6,
+        gamma_low: float = 1.2,
+        gamma_high: float = 50.0,
+        lambda_bridge: float = 1.0,
+        phi_bridge: Optional[np.ndarray] = None,
+        L_ghost: int = 16,
+        variance_ghost: float = 0.02,
+        seed: Optional[int] = None,
+    ) -> None:
+        self.dim = int(dim)
+        self.rng = np.random.default_rng(seed)
+        self.dt = float(dt)
+        self.tau = float(tau)
+        self.eps_syn = float(eps_syn)
+        self.gamma_low = float(gamma_low)
+        self.gamma_high = float(gamma_high)
+        self.lambda_bridge = float(lambda_bridge)
+        self.phi_bridge = None if phi_bridge is None else np.asarray(phi_bridge, dtype=np.float64).ravel()
+        self.L_ghost = int(L_ghost)
+        self.variance_ghost = float(variance_ghost)
+
+        if mu_star is not None:
+            self.mu_star = np.asarray(mu_star, dtype=np.float64).ravel()
+        else:
+            self.mu_star = np.full(self.dim, 0.5, dtype=np.float64)
+
+        if G_style is not None:
+            self.G_style = np.asarray(G_style, dtype=np.float64)
+        else:
+            self.G_style = np.eye(self.dim, dtype=np.float64)
+
+        if mass_matrix is not None:
+            self.mass_matrix = np.asarray(mass_matrix, dtype=np.float64)
+            self.M_inv = np.linalg.inv(self.mass_matrix)
+            eigvals, eigvecs = np.linalg.eigh(self.mass_matrix)
+            self.M_sqrt = eigvecs @ np.diag(np.sqrt(np.maximum(1e-12, eigvals))) @ eigvecs.T
+        else:
+            self.mass_matrix = np.eye(self.dim, dtype=np.float64)
+            self.M_inv = np.eye(self.dim, dtype=np.float64)
+            self.M_sqrt = np.eye(self.dim, dtype=np.float64)
+
+        # Ring buffer for Ghost History (OPEN-08)
+        self.ghost_history: collections.deque[np.ndarray] = collections.deque(maxlen=self.L_ghost)
+        self.m: int = 0
+        self.q = self.mu_star.copy()
+        self.p = np.zeros(self.dim, dtype=np.float64)
+        self.history_q: List[np.ndarray] = []
+
+        self.preload_ghost_history()
+
+    def preload_ghost_history(self, L: Optional[int] = None, variance: Optional[float] = None) -> None:
+        """Preloads ring buffer with mu^* + 1/f noise (OPEN-08)."""
+        l_len = self.L_ghost if L is None else int(L)
+        var = self.variance_ghost if variance is None else float(variance)
+        noise = generate_1_over_f_noise(L=l_len, dim=self.dim, variance=var, rng=self.rng)
+        self.ghost_history.clear()
+        for k in range(l_len):
+            self.ghost_history.append(self.mu_star + noise[k])
+
+    def compute_shrinkage(self, q_measured: np.ndarray, m: Optional[int] = None) -> np.ndarray:
+        """Computes Bayesian shrinkage hat{q}_m^{shrunk} = alpha_m * hat{q}_m + (1 - alpha_m) * mu^*."""
+        step_idx = self.m if m is None else int(m)
+        alpha = float(step_idx) / float(step_idx + 5) if step_idx > 0 else 0.0
+        meas = np.asarray(q_measured, dtype=np.float64).ravel()
+        return alpha * meas + (1.0 - alpha) * self.mu_star
+
+    def grad_V(self, q: np.ndarray, phi_bridge: Optional[np.ndarray] = None) -> np.ndarray:
+        """Computes potential gradient nabla_q V(q) = G_style (q - mu^*) - lambda_bridge * phi_bridge."""
+        x = np.asarray(q, dtype=np.float64).ravel()
+        phi_eff = self.phi_bridge if phi_bridge is None else phi_bridge
+        phi = np.zeros(self.dim, dtype=np.float64) if phi_eff is None else np.asarray(phi_eff, dtype=np.float64).ravel()
+        return (self.G_style @ (x - self.mu_star)) - (self.lambda_bridge * phi)
+
+    def step_clause(
+        self,
+        q_measured: Optional[np.ndarray] = None,
+        h_syntax: Optional[float] = None,
+        phi_bridge: Optional[np.ndarray] = None,
+        dt: Optional[float] = None,
+        tau: Optional[float] = None,
+        rng: Optional[np.random.Generator] = None,
+    ) -> BAOABStepResult:
+        """Performs a 5-stage B-A-O-A-B update at clause boundary."""
+        self.m += 1
+        phi_eff = self.phi_bridge if phi_bridge is None else phi_bridge
+        res = step_baoab_clause(
+            q=self.q,
+            p=self.p,
+            mu_star=self.mu_star,
+            G_style=self.G_style,
+            h_syntax=h_syntax,
+            phi_bridge=phi_eff,
+            q_measured=q_measured,
+            m=self.m,
+            dt=self.dt if dt is None else float(dt),
+            tau=self.tau if tau is None else float(tau),
+            eps_syn=self.eps_syn,
+            gamma_low=self.gamma_low,
+            gamma_high=self.gamma_high,
+            lambda_bridge=self.lambda_bridge,
+            mass_matrix=self.mass_matrix,
+            rng=self.rng if rng is None else rng,
+        )
+        self.q = res.q.copy()
+        self.p = res.p.copy()
+        self.ghost_history.append(res.q_shrunk.copy())
+        self.history_q.append(self.q.copy())
+        return res
+
+    def reset(
+        self,
+        q_init: Optional[np.ndarray] = None,
+        p_init: Optional[np.ndarray] = None,
+        seed: Optional[int] = None,
+    ) -> None:
+        """Resets the integrator state for a new generation run."""
+        if seed is not None:
+            self.rng = np.random.default_rng(seed)
+        self.m = 0
+        self.q = self.mu_star.copy() if q_init is None else np.asarray(q_init, dtype=np.float64).ravel().copy()
+        self.p = np.zeros(self.dim, dtype=np.float64) if p_init is None else np.asarray(p_init, dtype=np.float64).ravel().copy()
+        self.history_q.clear()
+        self.preload_ghost_history()
+
+    def verify_invariant_momentum_measure(
+        self,
+        n_steps: int = 10000,
+        tau: Optional[float] = None,
+        seed: int = 42,
+        tol_cov: float = 0.15,
+        tol_mean: float = 0.06,
+        full_baoab: bool = False,
+    ) -> Dict[str, Any]:
+        """Verifies Theorem 5.1: Stationary momentum distribution invariance N(0, tau M) under variable friction.
+
+        When full_baoab is True, executes the full coupled 5-stage B-A-O-A-B Hamiltonian Langevin system.
+        When full_baoab is False, verifies the exact Stage O momentum thermalization substep.
+        """
+        eff_tau = self.tau if tau is None else float(tau)
+        rng = np.random.default_rng(seed)
+        p_curr = math.sqrt(eff_tau) * (self.M_sqrt @ rng.normal(0.0, 1.0, size=self.dim))
+        dt = self.dt
+        samples = np.zeros((n_steps, self.dim), dtype=np.float64)
+
+        if full_baoab:
+            q_curr = self.mu_star.copy()
+            for i in range(n_steps):
+                h_syn = 0.2 if rng.random() < 0.5 else 1.2
+                res = step_baoab_clause(
+                    q=q_curr,
+                    p=p_curr,
+                    mu_star=self.mu_star,
+                    G_style=self.G_style,
+                    h_syntax=h_syn,
+                    phi_bridge=self.phi_bridge,
+                    m=i + 1,
+                    dt=dt,
+                    tau=eff_tau,
+                    eps_syn=self.eps_syn,
+                    gamma_low=self.gamma_low,
+                    gamma_high=self.gamma_high,
+                    lambda_bridge=self.lambda_bridge,
+                    mass_matrix=self.mass_matrix,
+                    rng=rng,
+                )
+                q_curr = res.q
+                p_curr = res.p
+                samples[i] = p_curr
+        else:
+            for i in range(n_steps):
+                # Toggle between strong brake (50.0) and underdamped (1.2) randomly
+                gamma_k = self.gamma_high if rng.random() < 0.5 else self.gamma_low
+                theta = math.exp(-gamma_k * dt)
+                sigma_noise = math.sqrt(max(0.0, eff_tau * (1.0 - theta**2)))
+                xi = rng.normal(0.0, 1.0, size=self.dim)
+                p_curr = theta * p_curr + sigma_noise * (self.M_sqrt @ xi)
+                samples[i] = p_curr
+
+        mean_p = np.mean(samples, axis=0)
+        target_cov = eff_tau * self.mass_matrix
+        emp_cov = np.cov(samples, rowvar=False)
+
+        cov_frob_err = float(np.linalg.norm(emp_cov - target_cov) / np.linalg.norm(target_cov))
+        diag_err = float(np.mean(np.abs(np.diag(emp_cov) - np.diag(target_cov))) / eff_tau)
+        max_abs_mean = float(np.max(np.abs(mean_p)))
+        passed = bool(cov_frob_err < tol_cov and max_abs_mean < tol_mean)
+
+        return {
+            "n_steps": n_steps,
+            "max_abs_mean": max_abs_mean,
+            "cov_relative_error": cov_frob_err,
+            "diag_relative_error": diag_err,
+            "passed": passed,
+            "empirical_mean": mean_p,
+            "empirical_cov": emp_cov,
+            "target_cov": target_cov,
+        }
+
+
+class ClauseTwistedSMCDecoder:
+    """Clause-Level Twisted Sequential Monte Carlo (SMC) Decoder (P=4 Particles, Phase B WS-B1).
+
+    Evaluates P=4 candidate clauses at each clause boundary:
+        w^{(p)} = ln P_LLM(c^{(p)} | w_{<=m})
+                + gamma_reach * ln P_LLM(W_{end}^* | w_{<=m} o c^{(p)})
+                - (beta_steer / 2) * ||hat{q}(w_{<=m} o c^{(p)}) - q_{m+1}^*||_{G_style}^2
+    Selects the optimal particle via resampling and updates Adaptive-BAOAB state.
+    Provides mock/heuristic generator and scoring fallbacks for CPU / offline unit tests.
+    """
+
+    def __init__(
+        self,
+        integrator: Optional[AdaptiveBAOABIntegrator] = None,
+        model: Optional[Any] = None,
+        tokenizer: Optional[Any] = None,
+        n_particles: int = 4,
+        temperatures: Sequence[float] = (0.65, 0.72, 0.80, 0.88),
+        gamma_reach: float = 1.0,
+        beta_steer: float = 1.0,
+        G_style: Optional[np.ndarray] = None,
+        max_clause_tokens: int = 20,
+        feature_extractor: Optional[Callable[[str], np.ndarray]] = None,
+        resample_method: str = "map",
+        dim: int = 12,
+        seed: Optional[int] = None,
+    ) -> None:
+        self.dim = int(dim)
+        self.n_particles = int(n_particles)
+        self.temperatures = list(temperatures)[:self.n_particles]
+        while len(self.temperatures) < self.n_particles:
+            self.temperatures.append(0.72)
+        self.gamma_reach = float(gamma_reach)
+        self.beta_steer = float(beta_steer)
+        self.max_clause_tokens = int(max_clause_tokens)
+        self.resample_method = str(resample_method).lower()
+        self.rng = np.random.default_rng(seed)
+
+        if G_style is not None:
+            self.G_style = np.asarray(G_style, dtype=np.float64)
+        else:
+            self.G_style = np.eye(self.dim, dtype=np.float64)
+
+        if integrator is not None:
+            self.integrator = integrator
+        else:
+            self.integrator = AdaptiveBAOABIntegrator(dim=self.dim, G_style=self.G_style, seed=seed)
+
+        self.model = model
+        self.tokenizer = tokenizer
+
+        if feature_extractor is not None:
+            self.feature_extractor = feature_extractor
+        else:
+            def _extract_q(text: str) -> np.ndarray:
+                try:
+                    from usir_py.extractor_24d import extract_usir_24d
+                    res = extract_usir_24d(text)
+                    return np.asarray(res["q"], dtype=np.float64)
+                except Exception:
+                    # Deterministic fallback mapping characters to 12D coordinates
+                    q = np.full(self.dim, 0.5, dtype=np.float64)
+                    if text:
+                        chars = list(text)
+                        for i, ch in enumerate(chars[:12]):
+                            q[i % self.dim] = ((ord(ch) * 31) % 100) / 100.0
+                    return q
+            self.feature_extractor = _extract_q
+
+    def _compute_hf_logprob(self, context: str, target: str) -> float:
+        """Computes average token log-likelihood of target conditioned on context using HuggingFace model."""
+        if not TORCH_AVAILABLE or self.model is None or self.tokenizer is None:
+            return 0.0
+        try:
+            device = next(self.model.parameters()).device
+            ctx_ids = self.tokenizer.encode(context, add_special_tokens=False) if context else []
+            tgt_ids = self.tokenizer.encode(target, add_special_tokens=False) if target else []
+            if not tgt_ids:
+                return 0.0
+
+            # If context is empty, use BOS token if available so first target token can be predicted
+            if len(ctx_ids) == 0:
+                bos_id = getattr(self.tokenizer, "bos_token_id", None)
+                if bos_id is not None:
+                    ctx_ids = [bos_id]
+
+            full_ids = ctx_ids + tgt_ids
+            input_tensor = torch.tensor([full_ids], dtype=torch.long, device=device)
+            with torch.no_grad():
+                logits = self.model(input_tensor).logits[0]
+
+            if len(ctx_ids) > 0:
+                start_pos = len(ctx_ids) - 1
+                end_pos = len(full_ids) - 1
+                target_logits = logits[start_pos:end_pos]
+                target_labels = torch.tensor(tgt_ids, dtype=torch.long, device=device)
+            else:
+                # No context and no BOS token: logits[0] predicts tgt_ids[1]
+                target_logits = logits[:len(tgt_ids) - 1]
+                target_labels = torch.tensor(tgt_ids[1:], dtype=torch.long, device=device)
+
+            if target_logits.shape[0] == 0 or target_labels.shape[0] == 0:
+                return 0.0
+
+            log_probs = F.log_softmax(target_logits, dim=-1)
+            token_logprobs = log_probs.gather(1, target_labels.unsqueeze(-1)).squeeze(-1)
+            return float(token_logprobs.mean().item())
+        except Exception:
+            return 0.0
+
+    def generate_candidate_clauses(
+        self,
+        prefix: str,
+        target_end: Optional[str] = None,
+    ) -> List[str]:
+        """Generates P=4 candidate clauses from prefix."""
+        if self.model is not None and self.tokenizer is not None and TORCH_AVAILABLE:
+            cands = []
+            device = next(self.model.parameters()).device
+            if prefix:
+                input_ids = self.tokenizer.encode(prefix, return_tensors="pt").to(device)
+            else:
+                bos_id = getattr(self.tokenizer, "bos_token_id", None)
+                if bos_id is not None:
+                    input_ids = torch.tensor([[bos_id]], dtype=torch.long, device=device)
+                else:
+                    input_ids = torch.tensor([[0]], dtype=torch.long, device=device)
+            inp_len = input_ids.shape[-1]
+            pad_id = getattr(self.tokenizer, "pad_token_id", None) or getattr(self.tokenizer, "eos_token_id", None)
+            for p in range(self.n_particles):
+                temp = self.temperatures[p]
+                with torch.no_grad():
+                    gen_kwargs: Dict[str, Any] = {
+                        "max_new_tokens": self.max_clause_tokens,
+                        "do_sample": True,
+                        "temperature": temp,
+                        "top_p": 0.9,
+                    }
+                    if pad_id is not None:
+                        gen_kwargs["pad_token_id"] = pad_id
+                    out = self.model.generate(input_ids, **gen_kwargs)
+                new_tokens = out[0, inp_len:]
+                text = self.tokenizer.decode(new_tokens, skip_special_tokens=True)
+                m_punct = re.search(r"[、。！？!?]", text)
+                if m_punct:
+                    c_text = text[:m_punct.end()]
+                else:
+                    c_text = text.strip() + "、"
+                cands.append(c_text)
+            return cands
+        else:
+            # Heuristic diverse candidate palette for CPU/offline testing
+            palette = [
+                "静かな風が木立を抜け、",
+                "確かな論理の歩みを進め、",
+                "冷涼な夜気が石畳を覆い、",
+                "微かな光が遠くで揺らめき、",
+                "遥かな山脈が稜線を現し、",
+                "穏やかな川面が月影を映し、",
+            ]
+            if target_end:
+                t_sub = target_end[:3] if len(target_end) >= 3 else target_end
+                palette[2] = f"{t_sub}へと近づき、"
+            cands = list(palette[:self.n_particles])
+            while len(cands) < self.n_particles:
+                cands.append(f"静けさが深まる節_{len(cands)+1}、")
+            return cands
+
+    def compute_particle_weights(
+        self,
+        prefix: str,
+        candidates: Sequence[Union[str, Dict[str, Any]]],
+        target_end: Optional[str] = None,
+        target_q: Optional[np.ndarray] = None,
+        resample_method: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Computes twisted importance weights w^{(p)} for P candidate clauses.
+
+        w^{(p)} = ln P_LLM(c^{(p)} | w_{<=m})
+                + gamma_reach * ln P_LLM(W_{end}^* | w_{<=m} o c^{(p)})
+                - (beta_steer / 2) * ||hat{q}(w_{<=m} o c^{(p)}) - q_{m+1}^*||_{G_style}^2
+        """
+        if not candidates:
+            raise ValueError("candidates sequence must not be empty")
+
+        target = self.integrator.q if target_q is None else np.asarray(target_q, dtype=np.float64).ravel()
+        method = self.resample_method if resample_method is None else str(resample_method).lower()
+
+        term1_llm: List[float] = []
+        term2_reach: List[float] = []
+        term3_style: List[float] = []
+        cand_texts: List[str] = []
+        cand_q_list: List[np.ndarray] = []
+
+        q_end_target = None
+        if target_end:
+            try:
+                q_end_target = self.feature_extractor(target_end)
+            except Exception:
+                q_end_target = None
+
+        for p_idx, cand in enumerate(candidates):
+            if isinstance(cand, dict):
+                c_text = str(cand.get("text", cand.get("clause", "")))
+                explicit_llm = cand.get("llm_logprob", cand.get("logprob"))
+                explicit_reach = cand.get("reach_logprob")
+                explicit_q = cand.get("q")
+            else:
+                c_text = str(cand)
+                explicit_llm = None
+                explicit_reach = None
+                explicit_q = None
+
+            cand_texts.append(c_text)
+            full_text = prefix + c_text
+
+            # 1. Candidate style vector q_c
+            if explicit_q is not None:
+                q_c = np.asarray(explicit_q, dtype=np.float64).ravel()
+            else:
+                q_c = self.feature_extractor(full_text)
+            cand_q_list.append(q_c)
+
+            # 2. Term 1: ln P_LLM(c^{(p)} | w_{<=m})
+            if explicit_llm is not None:
+                ln_p_llm = float(explicit_llm)
+            elif self.model is not None and self.tokenizer is not None and TORCH_AVAILABLE:
+                ln_p_llm = self._compute_hf_logprob(prefix, c_text)
+            else:
+                # Heuristic fluency score based on clause length and punctuation
+                c_len = len(c_text)
+                len_penalty = -0.05 * abs(c_len - 14)
+                punct_bonus = 0.5 if c_text.endswith(("、", "。")) else -0.5
+                ln_p_llm = -1.0 + len_penalty + punct_bonus
+            term1_llm.append(ln_p_llm)
+
+            # 3. Term 2: gamma_reach * ln P_LLM(W_{end}^* | w_{<=m} o c^{(p)})
+            if explicit_reach is not None:
+                ln_p_reach = float(explicit_reach)
+            elif target_end is None:
+                ln_p_reach = 0.0
+            elif self.model is not None and self.tokenizer is not None and TORCH_AVAILABLE:
+                ln_p_reach = self._compute_hf_logprob(full_text, target_end)
+            else:
+                if q_end_target is not None:
+                    d_diff = q_c - q_end_target
+                    d_end = math.sqrt(max(0.0, float(d_diff.T @ self.G_style @ d_diff)))
+                    ln_p_reach = -d_end
+                else:
+                    ln_p_reach = 0.0
+            term2_reach.append(self.gamma_reach * ln_p_reach)
+
+            # 4. Term 3: - (beta_steer / 2) * ||hat{q} - q_{m+1}^*||_{G_style}^2
+            diff = q_c - target
+            style_err = float(diff.T @ self.G_style @ diff)
+            style_penalty = -0.5 * self.beta_steer * style_err
+            term3_style.append(style_penalty)
+
+        w = np.array(term1_llm) + np.array(term2_reach) + np.array(term3_style)
+
+        # Numerical stabilization for softmax normalized weights
+        max_w = np.max(w)
+        exp_w = np.exp(w - max_w)
+        sum_exp = np.sum(exp_w)
+        if sum_exp > 0:
+            norm_w = exp_w / sum_exp
+        else:
+            norm_w = np.full(len(w), 1.0 / len(w))
+
+        # Effective Sample Size (ESS)
+        ess = float(1.0 / max(1e-12, np.sum(norm_w**2)))
+
+        # Particle selection (MAP or stochastic resampling)
+        if method in ("multinomial", "systematic", "sample"):
+            best_idx = int(self.rng.choice(len(candidates), p=norm_w))
+        else:
+            best_idx = int(np.argmax(w))
+
+        return {
+            "weights": w,
+            "normalized_weights": norm_w,
+            "ess": ess,
+            "selected_idx": best_idx,
+            "selected_clause": cand_texts[best_idx],
+            "candidate_texts": cand_texts,
+            "candidate_q": cand_q_list,
+            "term1_llm": term1_llm,
+            "term2_reach": term2_reach,
+            "term3_style": term3_style,
+        }
+
+    def step_smc_clause(
+        self,
+        prefix: str,
+        candidate_clauses: Optional[Sequence[Union[str, Dict[str, Any]]]] = None,
+        target_end: Optional[str] = None,
+        target_q: Optional[np.ndarray] = None,
+        phi_bridge: Optional[np.ndarray] = None,
+        h_syntax: Optional[float] = None,
+        resample_method: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Runs one step of Clause Twisted SMC: generates/evaluates candidates, selects best, steps BAOAB."""
+        if not candidate_clauses:
+            cands: Sequence[Union[str, Dict[str, Any]]] = self.generate_candidate_clauses(prefix, target_end=target_end)
+        else:
+            cands = list(candidate_clauses)
+
+        weights_info = self.compute_particle_weights(
+            prefix=prefix,
+            candidates=cands,
+            target_end=target_end,
+            target_q=target_q,
+            resample_method=resample_method,
+        )
+
+        chosen_clause = weights_info["selected_clause"]
+        chosen_idx = weights_info["selected_idx"]
+        next_prefix = prefix + chosen_clause
+
+        # Extract measured style of next prefix to feed into outer loop
+        q_meas = self.feature_extractor(next_prefix)
+
+        # Estimate syntax entropy if not explicitly provided
+        if h_syntax is None:
+            h_syn = 0.3 if chosen_clause.endswith("。") and len(chosen_clause) < 6 else 1.2
+        else:
+            h_syn = float(h_syntax)
+
+        # Step Adaptive-BAOAB Integrator
+        baoab_step = self.integrator.step_clause(
+            q_measured=q_meas,
+            h_syntax=h_syn,
+            phi_bridge=phi_bridge,
+        )
+
+        return {
+            "selected_clause": chosen_clause,
+            "selected_idx": chosen_idx,
+            "next_prefix": next_prefix,
+            "weights": weights_info["weights"],
+            "normalized_weights": weights_info["normalized_weights"],
+            "ess": weights_info["ess"],
+            "term1_llm": weights_info["term1_llm"],
+            "term2_reach": weights_info["term2_reach"],
+            "term3_style": weights_info["term3_style"],
+            "candidate_texts": weights_info["candidate_texts"],
+            "baoab_result": baoab_step,
+            "q_next_target": baoab_step.q,
+            "delta_q": baoab_step.delta_q,
+            "q_shrunk": baoab_step.q_shrunk,
+        }
+
+    def generate_with_clause_twisted_smc(
+        self,
+        prefix: str,
+        target_end: Optional[str] = None,
+        max_clauses: int = 8,
+        phi_bridge: Optional[np.ndarray] = None,
+        candidate_generator: Optional[Callable[[str, int, float], str]] = None,
+        early_stop_on_punct: bool = True,
+        resample_method: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Full multi-clause generation using Clause-Level Twisted SMC and Adaptive-BAOAB."""
+        current_text = prefix
+        telemetry: List[Dict[str, Any]] = []
+        clauses: List[str] = []
+
+        for m in range(max_clauses):
+            if candidate_generator is not None:
+                cands: Optional[List[str]] = [candidate_generator(current_text, p, self.temperatures[p]) for p in range(self.n_particles)]
+            else:
+                cands = None
+
+            step_res = self.step_smc_clause(
+                prefix=current_text,
+                candidate_clauses=cands,
+                target_end=target_end,
+                phi_bridge=phi_bridge,
+                resample_method=resample_method,
+            )
+            telemetry.append(step_res)
+            clauses.append(step_res["selected_clause"])
+            current_text = step_res["next_prefix"]
+
+            if early_stop_on_punct and (
+                (target_end is not None and target_end in current_text)
+                or step_res["selected_clause"].endswith("。")
+            ):
+                break
+
+        return {
+            "welded_text": current_text,
+            "text": current_text,
+            "clauses": clauses,
+            "telemetry": telemetry,
+            "final_q": self.integrator.q,
+            "n_clauses": len(clauses),
+        }
+
 

@@ -47,6 +47,7 @@ export * from './presets/canonicalParticles.js';
 // Stage 3 Dynamics, HSMM & Closed-Loop
 export * from './dynamics/closedLoopCorpus.js';
 export * from './dynamics/trajectoryHsmm.js';
+export * from './dynamics/hsmmLongformDirector.js';
 export * from './dynamics/presalesShowcase.js';
 
 // Stage 3 Style Genome Algebra & Compiler

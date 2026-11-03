@@ -46,6 +46,12 @@ from .hth_lexicon import (
     jump_distance_64bit,
     lca_depth_64bit,
 )
+from .hsmm_longform_director import (
+    HSMMLongformDirector,
+    PhaseWell,
+    compute_cv_l,
+    compute_wundt_berlyne_utility,
+)
 
 __all__ = [
     "HTHPolyLexicon",
@@ -92,4 +98,8 @@ __all__ = [
     "CASE_2_ESSAY",
     "CASE_3_B2B_PROPOSAL",
     "PRESALES_SHOWCASE_CASES",
+    "HSMMLongformDirector",
+    "PhaseWell",
+    "compute_cv_l",
+    "compute_wundt_berlyne_utility",
 ]

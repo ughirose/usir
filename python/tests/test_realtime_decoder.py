@@ -10,6 +10,7 @@ Verifies:
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 import numpy as np
 import pytest
@@ -18,6 +19,11 @@ from usir_py.realtime_decoder import (
     LogitsStepper,
     USIRPyTorchLogitsProcessor,
     TORCH_AVAILABLE,
+    AdaptiveBAOABIntegrator,
+    ClauseTwistedSMCDecoder,
+    step_baoab_clause,
+    generate_1_over_f_noise,
+    BAOABStepResult,
 )
 from colab.run_v4_bidirectional_experiment import (
     detect_execution_tier,
@@ -295,3 +301,292 @@ def test_colab_notebook_json_and_cell_integrity():
 
     for c in cells:
         assert len(c.get("source", [])) > 0
+
+
+# ==============================================================================
+# 5. Phase B WS-B1: Adaptive-BAOAB Integrator & Clause Twisted SMC Tests
+# ==============================================================================
+
+def test_adaptive_baoab_integrator_thermal_equilibrium():
+    """Verify Theorem 5.1: 5-Stage Adaptive-BAOAB thermal equilibrium, ghost history, and syntax brake."""
+    dim = 12
+    mu_star = np.full(dim, 0.5, dtype=float)
+    integrator = AdaptiveBAOABIntegrator(
+        dim=dim,
+        mu_star=mu_star,
+        dt=0.25,
+        tau=0.04,
+        eps_syn=0.6,
+        gamma_low=1.2,
+        gamma_high=50.0,
+        lambda_bridge=1.0,
+        L_ghost=16,
+        variance_ghost=0.02,
+        seed=123,
+    )
+
+    # 1. Ghost history verification (OPEN-08)
+    assert len(integrator.ghost_history) == 16
+    ghost_arr = np.array(list(integrator.ghost_history))
+    assert ghost_arr.shape == (16, 12)
+    diff_ghost = ghost_arr - mu_star
+    mean_ghost = np.mean(diff_ghost, axis=0)
+    assert np.all(np.abs(mean_ghost) < 0.1)  # Zero mean within statistical bounds
+    var_ghost = np.var(diff_ghost, axis=0)
+    assert np.all(var_ghost > 0.005) and np.all(var_ghost < 0.05)  # Matches variance ~0.02
+
+    # 2. Bayesian shrinkage gain verification (m / (m + 5))
+    q_meas = np.ones(dim, dtype=float) * 0.9
+    shrunk_m0 = integrator.compute_shrinkage(q_meas, m=0)
+    assert np.allclose(shrunk_m0, mu_star)  # alpha_0 = 0.0 -> returns mu_star
+
+    shrunk_m1 = integrator.compute_shrinkage(q_meas, m=1)
+    alpha_1 = 1.0 / 6.0
+    expected_m1 = alpha_1 * q_meas + (1.0 - alpha_1) * mu_star
+    assert np.allclose(shrunk_m1, expected_m1)
+
+    shrunk_m5 = integrator.compute_shrinkage(q_meas, m=5)
+    alpha_5 = 5.0 / 10.0  # 0.5
+    expected_m5 = 0.5 * q_meas + 0.5 * mu_star
+    assert np.allclose(shrunk_m5, expected_m5)
+
+    # 3. Variable friction brake verification (Stage O)
+    # Case A: Low syntax entropy H_syntax < eps_syn (0.2 < 0.6) -> Strong brake gamma_t = 50.0
+    integrator.p = np.full(dim, 2.0, dtype=float)  # High initial momentum
+    step_low = integrator.step_clause(q_measured=q_meas, h_syntax=0.2)
+    assert step_low.gamma_t == 50.0
+    assert step_low.theta_t == pytest.approx(math.exp(-0.25 * 50.0))  # exp(-12.5) ~ 3.7e-6
+    assert step_low.alpha_m == pytest.approx(1.0 / 6.0)
+    assert isinstance(step_low, BAOABStepResult)
+    assert len(step_low.delta_q) == dim
+
+    # Case B: High syntax entropy H_syntax >= eps_syn (1.2 >= 0.6) -> Underdamped gamma_t = 1.2
+    integrator.p = np.full(dim, 2.0, dtype=float)
+    step_high = integrator.step_clause(q_measured=q_meas, h_syntax=1.2)
+    assert step_high.gamma_t == 1.2
+    assert step_high.theta_t == pytest.approx(math.exp(-0.25 * 1.2))  # exp(-0.3) ~ 0.7408
+
+    # 4. Theorem 5.1: Thermal equilibrium invariant measure under variable friction
+    eq_res = integrator.verify_invariant_momentum_measure(n_steps=10000, tau=0.04, seed=42)
+    assert eq_res["passed"]
+    assert eq_res["max_abs_mean"] < 0.05
+    assert eq_res["cov_relative_error"] < 0.15
+
+
+def test_clause_twisted_smc_decoder_particle_selection():
+    """Verify Clause-Level Twisted SMC P=4 particle evaluation, resampling, and anchor tracking."""
+    dim = 12
+    mu_star = np.full(dim, 0.5, dtype=float)
+    integrator = AdaptiveBAOABIntegrator(dim=dim, mu_star=mu_star, seed=42)
+
+    decoder = ClauseTwistedSMCDecoder(
+        integrator=integrator,
+        n_particles=4,
+        temperatures=(0.65, 0.72, 0.80, 0.88),
+        gamma_reach=2.0,
+        beta_steer=1.5,
+        seed=42,
+    )
+
+    prefix = "深い霧が立ち込める森で、"
+    target_end = "無事に出口へと到達した。"
+
+    # Setup 4 distinct candidates with controlled style and likelihood
+    q_target = mu_star.copy()
+    q_good = q_target + 0.01  # Very close to target
+    q_bad_style = q_target + 2.0  # Huge style discrepancy
+    q_mediocre = q_target + 0.5
+
+    candidates = [
+        # Candidate 0: Good local fluency, but terrible style and terrible reachability
+        {"text": "鳥のさえずりが遠く途絶え、", "llm_logprob": -0.1, "reach_logprob": -5.0, "q": q_bad_style},
+        # Candidate 1: Moderate fluency, moderate style, poor reachability
+        {"text": "足元を踏みしめて前へ進み、", "llm_logprob": -1.0, "reach_logprob": -3.0, "q": q_mediocre},
+        # Candidate 2: Optimal particle (good fluency, minimal style error, excellent reachability to W_end^*)
+        {"text": "微かな光の導きを見出し、", "llm_logprob": -0.4, "reach_logprob": -0.1, "q": q_good},
+        # Candidate 3: Poor local fluency distractor
+        {"text": "風雪が強く吹き荒れて、", "llm_logprob": -8.0, "reach_logprob": -2.0, "q": q_mediocre},
+    ]
+
+    # Execute single SMC clause step
+    step_res = decoder.step_smc_clause(
+        prefix=prefix,
+        candidate_clauses=candidates,
+        target_end=target_end,
+        target_q=q_target,
+    )
+
+    # 1. Verification of particle weights and terms
+    assert len(step_res["weights"]) == 4
+    assert len(step_res["term1_llm"]) == 4
+    assert len(step_res["term2_reach"]) == 4
+    assert len(step_res["term3_style"]) == 4
+
+    # Candidate 2 must have highest overall weight w^{(2)}
+    assert step_res["selected_idx"] == 2
+    assert step_res["selected_clause"] == "微かな光の導きを見出し、"
+    assert step_res["next_prefix"] == prefix + "微かな光の導きを見出し、"
+
+    # Normalized weights sum to 1.0
+    norm_w = step_res["normalized_weights"]
+    assert np.sum(norm_w) == pytest.approx(1.0)
+    assert 1.0 <= step_res["ess"] <= 4.0
+
+    # Verify BAOAB state updated
+    assert integrator.m == 1
+    assert len(integrator.history_q) == 1
+
+    # 2. Multi-step generation rollout with mock/heuristic generator
+    gen_res = decoder.generate_with_clause_twisted_smc(
+        prefix="静かな夕暮れの街角で、",
+        target_end="やがて街灯が灯った。",
+        max_clauses=3,
+    )
+    assert "welded_text" in gen_res
+    assert len(gen_res["clauses"]) >= 1
+    assert len(gen_res["telemetry"]) >= 1
+    assert gen_res["final_q"].shape == (12,)
+    assert np.all(np.isfinite(gen_res["final_q"]))
+
+
+def test_adaptive_baoab_integrator_bridge_attraction_and_full_invariant():
+    """Verify bridge attraction force lambda_bridge * phi_bridge and full 5-stage BAOAB Theorem 5.1."""
+    dim = 12
+    mu_star = np.full(dim, 0.5, dtype=float)
+
+    # 1. Bridge attraction steering test
+    phi_pull = np.zeros(dim, dtype=float)
+    phi_pull[0] = 2.0  # Strong positive bridge pull on dim 0
+
+    integrator_nobridge = AdaptiveBAOABIntegrator(dim=dim, mu_star=mu_star, lambda_bridge=0.0, seed=10)
+    integrator_bridge = AdaptiveBAOABIntegrator(dim=dim, mu_star=mu_star, lambda_bridge=2.0, phi_bridge=phi_pull, seed=10)
+
+    # Freeze noise for deterministic comparison
+    zero_rng = np.random.default_rng(999)
+    step_nobridge = integrator_nobridge.step_clause(q_measured=mu_star, h_syntax=1.2, rng=zero_rng)
+
+    zero_rng2 = np.random.default_rng(999)
+    step_bridge = integrator_bridge.step_clause(q_measured=mu_star, h_syntax=1.2, rng=zero_rng2)
+
+    # Dim 0 must be pulled positively in the direction of phi_pull
+    assert step_bridge.q[0] > step_nobridge.q[0]
+    assert step_bridge.p[0] > step_nobridge.p[0]
+
+    # 2. Theorem 5.1: Full 5-stage coupled Hamiltonian Langevin equilibrium
+    eq_full = integrator_bridge.verify_invariant_momentum_measure(
+        n_steps=10000,
+        tau=0.04,
+        seed=42,
+        full_baoab=True,
+    )
+    assert eq_full["passed"]
+    assert eq_full["max_abs_mean"] < 0.05
+    assert eq_full["cov_relative_error"] < 0.15
+
+
+def test_adaptive_baoab_integrator_edge_cases():
+    """Probe edge cases: zero/negative L, zero variance, dim mismatch, non-identity mass matrix."""
+    dim = 12
+
+    # 1. generate_1_over_f_noise edge cases
+    noise_zero = generate_1_over_f_noise(L=0, dim=dim)
+    assert noise_zero.shape == (0, dim)
+
+    noise_neg = generate_1_over_f_noise(L=-3, dim=dim)
+    assert noise_neg.shape == (0, dim)
+
+    noise_zero_dim = generate_1_over_f_noise(L=16, dim=0)
+    assert noise_zero_dim.shape == (16, 0)
+
+    noise_zero_var = generate_1_over_f_noise(L=16, dim=dim, variance=0.0)
+    assert np.all(noise_zero_var == 0.0)
+
+    # 2. Dimension mismatch check in step_baoab_clause
+    with pytest.raises(ValueError, match="Dimension mismatch"):
+        step_baoab_clause(q=np.zeros(12), p=np.zeros(8))
+
+    # 3. compute_shrinkage edge values
+    integrator = AdaptiveBAOABIntegrator(dim=dim, seed=42)
+    q_meas = np.full(dim, 1.0)
+    shrunk_neg = integrator.compute_shrinkage(q_meas, m=-2)
+    assert np.allclose(shrunk_neg, integrator.mu_star)  # m <= 0 gives alpha = 0
+
+    shrunk_large = integrator.compute_shrinkage(q_meas, m=995)
+    assert np.allclose(shrunk_large, q_meas, atol=0.01)  # alpha = 995/1000 = 0.995
+
+    # 4. Non-identity diagonal mass matrix M = 2.0 * I
+    M_custom = np.eye(dim) * 2.0
+    integrator_m = AdaptiveBAOABIntegrator(dim=dim, mass_matrix=M_custom, seed=42)
+    assert np.allclose(integrator_m.M_inv, np.eye(dim) * 0.5)
+    res_m = integrator_m.step_clause(q_measured=integrator_m.mu_star)
+    assert res_m.q.shape == (dim,)
+    assert res_m.p.shape == (dim,)
+
+    # 5. Integrator reset
+    integrator.reset(seed=99)
+    assert integrator.m == 0
+    assert len(integrator.history_q) == 0
+    assert len(integrator.ghost_history) == 16
+
+
+def test_clause_twisted_smc_decoder_edge_cases_and_resampling():
+    """Verify raw string inputs, empty candidate recovery, stochastic resampling, and steering limits."""
+    dim = 12
+    decoder = ClauseTwistedSMCDecoder(dim=dim, n_particles=4, seed=42)
+
+    # 1. Raw string candidates (without dict wrapper)
+    raw_candidates = [
+        "静かな風が通り抜け、",
+        "熱い思いを胸に秘め、",
+        "冷ややかな視線を交わし、",
+        "遠くの鐘の音が響き、",
+    ]
+    res_raw = decoder.step_smc_clause(prefix="旅人は歩き出し、", candidate_clauses=raw_candidates)
+    assert res_raw["selected_clause"] in raw_candidates
+    assert len(res_raw["weights"]) == 4
+    assert np.sum(res_raw["normalized_weights"]) == pytest.approx(1.0)
+
+    # 2. Empty candidate clauses list -> recovers via fallback palette without crashing
+    res_empty = decoder.step_smc_clause(prefix="旅人は歩き出し、", candidate_clauses=[])
+    assert len(res_empty["candidate_texts"]) == 4
+    assert res_empty["selected_clause"] != ""
+
+    # 3. Direct call to compute_particle_weights with empty list raises ValueError
+    with pytest.raises(ValueError, match="candidates sequence must not be empty"):
+        decoder.compute_particle_weights(prefix="旅人は歩き出し、", candidates=[])
+
+    # 4. Stochastic resampling vs MAP
+    weights_map = decoder.compute_particle_weights(
+        prefix="テスト、",
+        candidates=raw_candidates,
+        resample_method="map",
+    )
+    assert weights_map["selected_idx"] == int(np.argmax(weights_map["weights"]))
+
+    # Multinomial resampling must select a valid index
+    weights_sample = decoder.compute_particle_weights(
+        prefix="テスト、",
+        candidates=raw_candidates,
+        resample_method="multinomial",
+    )
+    assert 0 <= weights_sample["selected_idx"] < 4
+
+    # 5. Extreme reachability dominance
+    decoder_reach = ClauseTwistedSMCDecoder(dim=dim, gamma_reach=100.0, beta_steer=0.01, seed=42)
+    cands_reach = [
+        {"text": "節A、", "llm_logprob": -0.1, "reach_logprob": -10.0, "q": np.zeros(dim)},
+        {"text": "節B、", "llm_logprob": -0.5, "reach_logprob": -0.01, "q": np.zeros(dim)},
+    ]
+    res_reach = decoder_reach.step_smc_clause(prefix="前文、", candidate_clauses=cands_reach)
+    assert res_reach["selected_idx"] == 1  # Candidate with superior reachability dominates
+
+    # 6. Extreme steering dominance
+    q_target = np.full(dim, 0.8)
+    decoder_steer = ClauseTwistedSMCDecoder(dim=dim, gamma_reach=0.01, beta_steer=100.0, seed=42)
+    cands_steer = [
+        {"text": "節A、", "llm_logprob": -0.01, "reach_logprob": -0.1, "q": np.full(dim, 0.0)},
+        {"text": "節B、", "llm_logprob": -2.0, "reach_logprob": -0.5, "q": q_target.copy()},
+    ]
+    res_steer = decoder_steer.step_smc_clause(prefix="前文、", candidate_clauses=cands_steer, target_q=q_target)
+    assert res_steer["selected_idx"] == 1  # Candidate matching target style dominates
+
