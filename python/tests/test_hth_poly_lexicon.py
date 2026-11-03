@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sqlite3
 import time
 from pathlib import Path
 
@@ -132,17 +133,29 @@ def test_resolve_sense_dynamic_selection(lexicon: HTHPolyLexicon):
     assert hth_low == entry.secondary_abstract_hth
     assert np.allclose(vec_low, entry.secondary_sensory_vector)
 
+    # OPEN-01 Attenuation Product: secondary sensory scaled by C(u)
+    res_damped = lexicon.resolve_sense("冷たい", context_concreteness=0.20, apply_damping=True)
+    assert res_damped is not None
+    _, vec_damped, slot_damped = res_damped
+    assert slot_damped == "secondary_abstract"
+    assert np.allclose(vec_damped, entry.secondary_sensory_vector * 0.20)
+
     # Transition band 0.30 <= C(u) < 0.45 -> Soft blended transition
     res_mid = lexicon.resolve_sense("冷たい", context_concreteness=0.375)
     assert res_mid is not None
     _, vec_mid, slot_mid = res_mid
-    alpha = (0.375 - 0.30) / 0.15  # 0.50
     expected_blended = 0.5 * entry.primary_sensory_vector + 0.5 * entry.secondary_sensory_vector
     assert np.allclose(vec_mid, expected_blended, atol=1e-5)
 
-    # Boundary test at exactly 0.45 and 0.30
+    # Exact boundary tests: 0.45 and 0.30
     assert lexicon.resolve_sense("冷たい", 0.45)[2] == "primary_physical"
+    assert lexicon.resolve_sense("冷たい", 0.30)[2] == "secondary_abstract"
     assert lexicon.resolve_sense("冷たい", 0.299)[2] == "secondary_abstract"
+
+    # Extreme / NaN values
+    res_nan = lexicon.resolve_sense("冷たい", float("nan"))
+    assert res_nan is not None
+    assert not np.isnan(res_nan[1]).any()
 
     # Missing word
     assert lexicon.resolve_sense("未知語_ABC", 0.5) is None
@@ -160,15 +173,30 @@ def test_discrete_jump_distance(lexicon: HTHPolyLexicon):
     assert dist_related is not None
     assert dist_related < 1.0, f"Expected LCA >= 1 for 氷 and 雪, got jump {dist_related}"
 
+    # Explicit primary_physical slot string (returned by resolve_sense)
+    dist_pri_phys = lexicon.discrete_jump("氷", "雪", slot="primary_physical")
+    assert dist_pri_phys == dist_related
+
     # Words in completely different octants
     dist_distant = lexicon.discrete_jump("冷たい", "単位")
     assert dist_distant is not None
     assert dist_distant == 1.0, f"Expected LCA == 0 for 冷たい and 単位, got {dist_distant}"
 
-    # Secondary slot jump
+    # Secondary slot jump (both 'secondary' and 'secondary_abstract')
     dist_sec = lexicon.discrete_jump("冷たい", "態度", slot="secondary")
+    dist_sec_abs = lexicon.discrete_jump("冷たい", "態度", slot="secondary_abstract")
     assert dist_sec is not None
+    assert dist_sec == dist_sec_abs
     assert 0.0 <= dist_sec <= 1.0
+
+    # Cross-slot jump (primary of u, secondary of v)
+    dist_cross = lexicon.discrete_jump("冷たい", "態度", slot="primary", slot_v="secondary")
+    assert dist_cross is not None
+    assert 0.0 <= dist_cross <= 1.0
+
+    # Invalid slot raises ValueError
+    with pytest.raises(ValueError):
+        lexicon.discrete_jump("冷たい", "雪", slot="invalid_slot_123")
 
     # Missing word
     assert lexicon.discrete_jump("冷たい", "未知語_ZZZ") is None
@@ -249,3 +277,92 @@ def test_bitfield_packing_roundtrip():
     # 5. LCA depth and jump distance bit invariants
     assert lca_depth_64bit(packed_64, packed_64) == 10
     assert jump_distance_64bit(packed_64, packed_64) == 0.0
+
+
+def test_lexicon_error_paths_and_whitespace(tmp_path: Path):
+    """Verify robust whitespace lookup and file corruption error paths."""
+    lex = HTHPolyLexicon()
+    try:
+        # Whitespace-padded word lookup
+        assert lex.lookup("  冷たい  ") is not None
+        assert lex.lookup("冷たい\n") is not None
+        assert lex.lookup("") is None
+        assert lex.lookup("   ") is None
+    finally:
+        lex.close()
+
+    # Corrupt / invalid binary size
+    corrupt_bin = tmp_path / "corrupt.bin"
+    corrupt_bin.write_bytes(b"\x00" * 1024)
+    with pytest.raises(ValueError, match="Binary size mismatch"):
+        HTHPolyLexicon(bin_path=corrupt_bin)
+
+    # Missing binary file
+    missing_bin = tmp_path / "non_existent.bin"
+    with pytest.raises(FileNotFoundError):
+        HTHPolyLexicon(bin_path=missing_bin)
+
+
+def test_compile_real_db_mode(tmp_path: Path):
+    """Verify compiler real data mode with WordNet SQLite and Lancaster norms."""
+    from scripts.compile_hth_clean_poly import compile_hth_lexicon
+
+    # 1. Mock wnjpn.db
+    mock_db = tmp_path / "mock_wnjpn.db"
+    conn = sqlite3.connect(str(mock_db))
+    c = conn.cursor()
+    c.execute("CREATE TABLE word (wordid INTEGER PRIMARY KEY, lang TEXT, lemma TEXT, pos TEXT)")
+    c.execute("CREATE TABLE sense (synset TEXT, wordid INTEGER, lang TEXT, rank INTEGER, lexid INTEGER, freq INTEGER, src TEXT)")
+
+    # Insert anchor & sample words
+    words_data = [
+        (1, "jpn", "冷たい", "a"),
+        (2, "jpn", "氷", "n"),
+        (3, "jpn", "雪", "n"),
+        (4, "jpn", "青空", "n"),
+        (5, "eng", "cold", "a"),
+        (6, "eng", "ice", "n"),
+        (7, "eng", "snow", "n"),
+    ]
+    c.executemany("INSERT INTO word VALUES (?, ?, ?, ?)", [(d[0], d[1], d[2], d[3]) for d in words_data])
+    senses_data = [
+        ("001-a", 1, "jpn"),
+        ("001-a", 5, "eng"),
+        ("002-n", 2, "jpn"),
+        ("002-n", 6, "eng"),
+        ("002-n", 3, "jpn"),
+        ("002-n", 7, "eng"),
+        ("003-n", 4, "jpn"),
+    ]
+    c.executemany("INSERT INTO sense (synset, wordid, lang) VALUES (?, ?, ?)", senses_data)
+    conn.commit()
+    conn.close()
+
+    # 2. Mock Lancaster CSV
+    mock_csv = tmp_path / "mock_lancaster.csv"
+    mock_csv.write_text(
+        "Word,Visual,Auditory,Haptic,Gustatory,Kinetic,Spatial,Affective,Cognitive\n"
+        "cold,0.4,0.1,0.9,0.5,0.2,0.3,0.1,0.2\n"
+        "ice,0.8,0.2,0.95,0.4,0.1,0.4,0.1,0.2\n"
+        "snow,0.9,0.1,0.9,0.2,0.2,0.5,0.1,0.3\n",
+        encoding="utf-8",
+    )
+
+    out_bin = tmp_path / "real_hth.bin"
+    out_meta = tmp_path / "real_hth_meta.json"
+
+    # Compile with real DB mode
+    compile_hth_lexicon(
+        out_bin=out_bin,
+        out_meta=out_meta,
+        synthetic=False,
+        wnjpn_path=mock_db,
+        lancaster_path=mock_csv,
+    )
+
+    assert out_bin.stat().st_size == EXPECTED_BINARY_SIZE
+    with HTHPolyLexicon(bin_path=out_bin, meta_path=out_meta) as lex_real:
+        assert len(lex_real) == TOTAL_WORDS
+        entry = lex_real.lookup("氷")
+        assert entry is not None
+        assert len(entry.primary_sensory_nibbles) == 8

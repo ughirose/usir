@@ -35,8 +35,18 @@ from .presales_showcase import (
     CASE_3_B2B_PROPOSAL,
     PRESALES_SHOWCASE_CASES,
 )
+from .hth_lexicon import (
+    DualSenseEntry,
+    HTHPolyLexicon,
+    jump_distance_64bit,
+    lca_depth_64bit,
+)
 
 __all__ = [
+    "HTHPolyLexicon",
+    "DualSenseEntry",
+    "jump_distance_64bit",
+    "lca_depth_64bit",
     "CORPUS",
     "PHASE_ORDER",
     "PHASE_NAMES_JA",

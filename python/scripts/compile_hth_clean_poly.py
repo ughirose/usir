@@ -13,9 +13,11 @@ Supports:
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import os
+import sqlite3
 import struct
 import sys
 from pathlib import Path
@@ -329,6 +331,204 @@ def quantile_quantize_8d(continuous_matrix: np.ndarray, num_bins: int = 16) -> n
     return quantized
 
 
+def solve_graph_laplacian_harmonic(
+    labeled_indices: np.ndarray,
+    labeled_vectors: np.ndarray,
+    adjacency_list: List[List[int]],
+    n_nodes: int,
+    alpha: float = 0.85,
+    max_iters: int = 30,
+) -> np.ndarray:
+    """Solve (I - alpha * S_uu) F_u = alpha * S_ul Y_l + (1 - alpha) Y_bar via power iteration."""
+    f = np.zeros((n_nodes, 8), dtype=np.float64)
+    y_bar = np.mean(labeled_vectors, axis=0) if len(labeled_vectors) > 0 else np.full(8, 0.5)
+    for idx, row in zip(labeled_indices, labeled_vectors):
+        f[idx] = row
+
+    is_labeled = np.zeros(n_nodes, dtype=bool)
+    if len(labeled_indices) > 0:
+        is_labeled[labeled_indices] = True
+
+    for _ in range(max_iters):
+        f_next = np.copy(f)
+        for i in range(n_nodes):
+            if is_labeled[i]:
+                continue
+            neighbors = adjacency_list[i]
+            if not neighbors:
+                f_next[i] = y_bar
+                continue
+            neigh_mean = np.mean(f[neighbors], axis=0)
+            f_next[i] = alpha * neigh_mean + (1.0 - alpha) * y_bar
+        f = f_next
+
+    return np.clip(f, 0.01, 0.99)
+
+
+def derive_features_from_wnjpn_lancaster(
+    wnjpn_path: Path,
+    lancaster_path: Path,
+    target_size: int = TOTAL_WORDS,
+) -> Tuple[List[str], np.ndarray, np.ndarray, List[Tuple[int, int, int]], List[Tuple[int, int, int]], List[int], List[int]]:
+    """Derive 30,000 words and 8D sensory features from WordNet and Lancaster norms."""
+    lancaster_map: Dict[str, np.ndarray] = {}
+    if lancaster_path.is_file():
+        with open(lancaster_path, mode="r", encoding="utf-8-sig") as f:
+            for row in csv.DictReader(f):
+                w = (row.get("Word") or row.get("word") or row.get("Concept") or "").strip().lower()
+                if not w:
+                    continue
+                dims = []
+                for k in ["visual", "auditory", "haptic", "gustatory", "kinetic", "spatial", "affective", "cognitive"]:
+                    matched = None
+                    for col_name, val in row.items():
+                        if k in col_name.lower():
+                            try:
+                                matched = float(val)
+                                break
+                            except ValueError:
+                                pass
+                    dims.append(matched if matched is not None else 0.5)
+                vec = np.array(dims, dtype=np.float64)
+                if np.max(vec) > 1.0:
+                    vec = vec / 5.0
+                lancaster_map[w] = np.clip(vec, 0.01, 0.99)
+
+    conn = sqlite3.connect(str(wnjpn_path))
+    cursor = conn.cursor()
+    cursor.execute("SELECT wordid, lemma, pos FROM word WHERE lang='jpn'")
+    word_rows = cursor.fetchall()
+    jp_id_to_word = {row[0]: row[1] for row in word_rows}
+    jp_word_pos = {row[1]: (0 if row[2] == 'n' else 1 if row[2] == 'v' else 2 if row[2] in ('a', 's') else 3) for row in word_rows}
+
+    cursor.execute("SELECT synset, wordid FROM sense WHERE lang='jpn'")
+    synset_to_jp_words: Dict[str, List[str]] = {}
+    word_to_synsets: Dict[str, List[str]] = {}
+    for synset, wordid in cursor.fetchall():
+        lemma = jp_id_to_word.get(wordid)
+        if lemma:
+            synset_to_jp_words.setdefault(synset, []).append(lemma)
+            word_to_synsets.setdefault(lemma, []).append(synset)
+
+    synset_to_lancaster: Dict[str, List[np.ndarray]] = {}
+    try:
+        cursor.execute("SELECT wordid, lemma FROM word WHERE lang='eng'")
+        eng_words = {row[0]: row[1].lower() for row in cursor.fetchall()}
+        cursor.execute("SELECT synset, wordid FROM sense WHERE lang='eng'")
+        for synset, wordid in cursor.fetchall():
+            eng_lemma = eng_words.get(wordid)
+            if eng_lemma and eng_lemma in lancaster_map:
+                synset_to_lancaster.setdefault(synset, []).append(lancaster_map[eng_lemma])
+    except sqlite3.OperationalError:
+        pass
+
+    words: List[str] = []
+    seen = set()
+    for w in CANONICAL_ANCHORS:
+        if w not in seen:
+            seen.add(w)
+            words.append(w)
+
+    for w, synsets in word_to_synsets.items():
+        if w not in seen and any(s in synset_to_lancaster for s in synsets):
+            seen.add(w)
+            words.append(w)
+            if len(words) >= target_size:
+                break
+
+    if len(words) < target_size:
+        for w in word_to_synsets:
+            if w not in seen:
+                seen.add(w)
+                words.append(w)
+                if len(words) >= target_size:
+                    break
+
+    if len(words) < target_size:
+        for w in build_deterministic_vocabulary(target_size):
+            if w not in seen:
+                seen.add(w)
+                words.append(w)
+                if len(words) >= target_size:
+                    break
+
+    words = words[:target_size]
+    w2i = {w: i for i, w in enumerate(words)}
+    n_words = len(words)
+
+    adj: List[List[int]] = [[] for _ in range(n_words)]
+    for synset, j_lemmas in synset_to_jp_words.items():
+        sub_indices = [w2i[w] for w in j_lemmas if w in w2i]
+        for idx1 in sub_indices:
+            for idx2 in sub_indices:
+                if idx1 != idx2:
+                    adj[idx1].append(idx2)
+
+    labeled_indices = []
+    labeled_vectors = []
+    for i, w in enumerate(words):
+        if w in CANONICAL_ANCHORS:
+            labeled_indices.append(i)
+            labeled_vectors.append(CANONICAL_ANCHORS[w]["pri_sens"])
+        elif w in word_to_synsets:
+            ratings = [r for s in word_to_synsets[w] if s in synset_to_lancaster for r in synset_to_lancaster[s]]
+            if ratings:
+                labeled_indices.append(i)
+                labeled_vectors.append(np.mean(ratings, axis=0))
+
+    if not labeled_indices:
+        labeled_indices.append(0)
+        labeled_vectors.append(CANONICAL_ANCHORS["冷たい"]["pri_sens"])
+
+    pri_continuous = solve_graph_laplacian_harmonic(
+        np.array(labeled_indices, dtype=np.int64),
+        np.array(labeled_vectors, dtype=np.float64),
+        adj,
+        n_words,
+        alpha=0.85,
+    )
+
+    sec_continuous = np.zeros_like(pri_continuous)
+    pri_octs: List[Tuple[int, int, int]] = []
+    sec_octs: List[Tuple[int, int, int]] = []
+    pos_tags: List[int] = []
+    flags: List[int] = []
+
+    for i, w in enumerate(words):
+        if w in CANONICAL_ANCHORS:
+            spec = CANONICAL_ANCHORS[w]
+            sec_continuous[i] = np.array(spec["sec_sens"], dtype=np.float64)
+            pri_octs.append(spec["pri_oct"])
+            sec_octs.append(spec["sec_oct"])
+            pos_tags.append(int(spec["pos"]))
+            flags.append(int(spec["flag"]))
+        else:
+            h_bytes = hashlib.sha256(w.encode("utf-8")).digest()
+            oct1 = int(h_bytes[0]) % 8
+            oct2 = int(h_bytes[1]) % 8
+            oct3 = int(h_bytes[2]) % 8
+            sec_oct1 = int(h_bytes[3]) % 8
+            sec_oct2 = int(h_bytes[4]) % 8
+            sec_oct3 = int(h_bytes[5]) % 8
+            pri_octs.append((oct1, oct2, oct3))
+            sec_octs.append((sec_oct1, sec_oct2, sec_oct3))
+            pos_tags.append(jp_word_pos.get(w, 0))
+            flags.append(int(h_bytes[6]) % 4)
+            sec_continuous[i] = np.array([
+                pri_continuous[i, 0] * 0.3,
+                pri_continuous[i, 1] * 0.2,
+                pri_continuous[i, 2] * 0.2,
+                pri_continuous[i, 3] * 0.2,
+                pri_continuous[i, 4] * 0.3,
+                pri_continuous[i, 5] * 0.5,
+                np.clip(pri_continuous[i, 6] * 1.5, 0.1, 0.95),
+                np.clip(pri_continuous[i, 7] * 1.4, 0.1, 0.95),
+            ], dtype=np.float64)
+
+    conn.close()
+    return words, pri_continuous, sec_continuous, pri_octs, sec_octs, pos_tags, flags
+
+
 def compile_hth_lexicon(
     out_bin: Path,
     out_meta: Path,
@@ -344,22 +544,27 @@ def compile_hth_lexicon(
     if not synthetic and wnjpn_path and wnjpn_path.is_file() and lancaster_path and lancaster_path.is_file():
         mode = "wnjpn_lancaster"
         print(f"[COMPILER] Real linguistic DB mode: wnjpn={wnjpn_path}, lancaster={lancaster_path}")
+        (
+            words,
+            pri_cont,
+            sec_cont,
+            pri_octs,
+            sec_octs,
+            pos_tags,
+            flags,
+        ) = derive_features_from_wnjpn_lancaster(wnjpn_path, lancaster_path, TOTAL_WORDS)
     else:
         print("[COMPILER] Deterministic synthetic mode (Unicode radical + SHA-256 + Laplacian quantile)")
-
-    # 1. Build 30,000 words vocabulary
-    words = build_deterministic_vocabulary(TOTAL_WORDS)
-    assert len(words) == TOTAL_WORDS, f"Vocabulary size must be strictly {TOTAL_WORDS}, got {len(words)}"
-
-    # 2. Derive continuous features
-    (
-        pri_cont,
-        sec_cont,
-        pri_octs,
-        sec_octs,
-        pos_tags,
-        flags,
-    ) = derive_continuous_features_synthetic(words)
+        words = build_deterministic_vocabulary(TOTAL_WORDS)
+        assert len(words) == TOTAL_WORDS, f"Vocabulary size must be strictly {TOTAL_WORDS}, got {len(words)}"
+        (
+            pri_cont,
+            sec_cont,
+            pri_octs,
+            sec_octs,
+            pos_tags,
+            flags,
+        ) = derive_continuous_features_synthetic(words)
 
     # 3. Quantile 4-bit uniform quantization
     pri_nibbles = quantile_quantize_8d(pri_cont, num_bins=16)
@@ -421,7 +626,19 @@ def compile_hth_lexicon(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Compile 128-bit Dual-Sense HTH Lexicon (hth_poly_30k.bin)")
-    parser.add_argument("--synthetic", action="store_true", default=True, help="Force deterministic synthetic mode")
+    parser.add_argument(
+        "--synthetic",
+        dest="synthetic",
+        action="store_true",
+        help="Force deterministic synthetic mode",
+    )
+    parser.add_argument(
+        "--no-synthetic",
+        dest="synthetic",
+        action="store_false",
+        help="Disable synthetic mode and require real linguistic DBs",
+    )
+    parser.set_defaults(synthetic=None)
     parser.add_argument("--wnjpn-path", type=Path, default=None, help="Path to wnjpn.db (optional)")
     parser.add_argument("--lancaster-path", type=Path, default=None, help="Path to Lancaster norms (optional)")
     parser.add_argument(
@@ -438,10 +655,20 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    synthetic = args.synthetic
+    if synthetic is None:
+        if args.wnjpn_path and args.wnjpn_path.is_file() and args.lancaster_path and args.lancaster_path.is_file():
+            synthetic = False
+        else:
+            synthetic = True
+    elif not synthetic:
+        if not (args.wnjpn_path and args.wnjpn_path.is_file() and args.lancaster_path and args.lancaster_path.is_file()):
+            raise FileNotFoundError("Real DB mode requires both valid --wnjpn-path and --lancaster-path files.")
+
     compile_hth_lexicon(
         out_bin=args.out_bin,
         out_meta=args.out_meta,
-        synthetic=args.synthetic,
+        synthetic=synthetic,
         wnjpn_path=args.wnjpn_path,
         lancaster_path=args.lancaster_path,
     )

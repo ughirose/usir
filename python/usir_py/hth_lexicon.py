@@ -268,7 +268,11 @@ class HTHPolyLexicon:
 
     def lookup(self, word: str) -> Optional[DualSenseEntry]:
         """O(1) dictionary query returning full DualSenseEntry."""
+        if not word:
+            return None
         idx = self.word_to_index.get(word)
+        if idx is None:
+            idx = self.word_to_index.get(word.strip())
         if idx is None:
             return None
         return self.lookup_by_index(idx)
@@ -277,35 +281,65 @@ class HTHPolyLexicon:
         self,
         word: str,
         context_concreteness: float,
+        apply_damping: bool = False,
     ) -> Optional[Tuple[int, np.ndarray, str]]:
         """Dynamic sense slot selection governed by context concreteness C(u) (OPEN-01).
 
         - If C(u) >= 0.45: select High 64-bit (Primary Physical Sense)
         - If C(u) < 0.30:  select Low 64-bit (Secondary Abstract Sense)
         - If 0.30 <= C(u) < 0.45: soft blended transition
+        - If apply_damping is True: scales secondary sensory components by C(u) (OPEN-01 attenuation product).
         """
         entry = self.lookup(word)
         if entry is None:
             return None
 
-        if context_concreteness >= 0.45:
-            return entry.primary_physical_hth, entry.primary_sensory_vector, "primary_physical"
-        elif context_concreteness < 0.30:
-            return entry.secondary_abstract_hth, entry.secondary_sensory_vector, "secondary_abstract"
+        # Guard against NaN / Inf
+        if np.isnan(context_concreteness) or np.isinf(context_concreteness):
+            c_u = 0.50
         else:
-            # Linear interpolation in transition band
-            alpha = (context_concreteness - 0.30) / 0.15
-            blended_vec = alpha * entry.primary_sensory_vector + (1.0 - alpha) * entry.secondary_sensory_vector
+            c_u = float(np.clip(context_concreteness, 0.0, 1.0))
+
+        if c_u >= 0.45:
+            return entry.primary_physical_hth, entry.primary_sensory_vector, "primary_physical"
+        elif c_u < 0.30:
+            vec = entry.secondary_sensory_vector * c_u if apply_damping else entry.secondary_sensory_vector
+            return entry.secondary_abstract_hth, vec, "secondary_abstract"
+        else:
+            # Linear interpolation in transition band [0.30, 0.45)
+            alpha = (c_u - 0.30) / 0.15
+            sec_vec = entry.secondary_sensory_vector * c_u if apply_damping else entry.secondary_sensory_vector
+            blended_vec = alpha * entry.primary_sensory_vector + (1.0 - alpha) * sec_vec
             chosen_hth = entry.primary_physical_hth if alpha >= 0.5 else entry.secondary_abstract_hth
             slot = "primary_physical" if alpha >= 0.5 else "secondary_abstract"
             return chosen_hth, blended_vec, slot
 
-    def discrete_jump(self, word_u: str, word_v: str, slot: str = "primary") -> Optional[float]:
-        """Calculate discrete hyperbolic jump distance between two words."""
+    def discrete_jump(
+        self,
+        word_u: str,
+        word_v: str,
+        slot: str = "primary",
+        slot_v: Optional[str] = None,
+    ) -> Optional[float]:
+        """Calculate discrete hyperbolic tree jump distance between two words.
+
+        Accepts slot='primary'/'primary_physical' or 'secondary'/'secondary_abstract'.
+        """
         entry_u = self.lookup(word_u)
         entry_v = self.lookup(word_v)
         if entry_u is None or entry_v is None:
             return None
-        hu = entry_u.primary_physical_hth if slot == "primary" else entry_u.secondary_abstract_hth
-        hv = entry_v.primary_physical_hth if slot == "primary" else entry_v.secondary_abstract_hth
+
+        def _pick_hth(entry: DualSenseEntry, s: str) -> int:
+            s_clean = s.lower().strip()
+            if s_clean in ("primary", "primary_physical", "physical", "pri", "1"):
+                return entry.primary_physical_hth
+            elif s_clean in ("secondary", "secondary_abstract", "abstract", "sec", "2"):
+                return entry.secondary_abstract_hth
+            raise ValueError(
+                f"Unknown HTH sense slot '{s}'. Must be 'primary'/'primary_physical' or 'secondary'/'secondary_abstract'."
+            )
+
+        hu = _pick_hth(entry_u, slot)
+        hv = _pick_hth(entry_v, slot_v if slot_v is not None else slot)
         return jump_distance_64bit(hu, hv)
