@@ -383,6 +383,9 @@ class HSMMLongformDirector:
         decoder: Optional[Any] = None,
         feature_extractor: Optional[Callable[[str], Dict[str, Any]]] = None,
         max_clauses_per_paragraph: Optional[int] = None,
+        min_clauses_per_paragraph: int = 0,
+        climax_only_steering: bool = False,
+        paragraph_hook: Optional[Callable[[int], None]] = None,
     ) -> Dict[str, Any]:
         """Generates 3,000-char longform prose switching wells per paragraph.
 
@@ -399,6 +402,7 @@ class HSMMLongformDirector:
         # Start at Well 0 (Narrative)
         current_well_idx = 0
 
+        prev_well_idx = -1
         for k in range(n_paras):
             # 1. Determine current well
             if k == 0:
@@ -437,6 +441,11 @@ class HSMMLongformDirector:
                 max_c = max(8, int(chars_per_para / 16))
                 if max_clauses_per_paragraph is not None:
                     max_c = max(1, int(max_clauses_per_paragraph))
+                if climax_only_steering and hasattr(decoder, "steering_active"):
+                    # Steering gain / temperature coupling act only in the Climax paragraph and the one after it.
+                    decoder.steering_active = bool(well_idx == 2 or prev_well_idx == 2)
+                if paragraph_hook is not None:
+                    paragraph_hook(k)
 
                 def _smc_cand_gen(ctx: str, p_idx: int, temp: float) -> str:
                     c_count = ctx.count("、") + ctx.count("。") + ctx.count("」")
@@ -470,6 +479,7 @@ class HSMMLongformDirector:
                     max_clauses=max_c,
                     candidate_generator=cand_gen,
                     early_stop_on_punct=False,
+                    min_clauses=int(min_clauses_per_paragraph),
                 )
                 para_text = smc_res["welded_text"]
                 tel = smc_res["telemetry"]
@@ -522,6 +532,8 @@ class HSMMLongformDirector:
                 )
             else:
                 accumulated_delta = np.zeros(self.dim, dtype=np.float64)
+
+            prev_well_idx = well_idx
 
             # 6. Aesthetic utility calculation
             if self.verbose:

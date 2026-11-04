@@ -279,3 +279,27 @@ def test_run_v4_longform_director_wiring_with_worldcraft_arbitration():
 
     plain = mod.run_longform_director("静謐な山寺の夜明け", seed=3, target_paragraphs=6, use_arbitrator=False)
     assert plain["total_cut_momentum_norm"] == 0.0
+
+
+def test_climax_only_steering_schedule_and_paragraph_hook():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder, AdaptiveBAOABIntegrator
+
+    forced = np.array([[0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]])
+    dec = ClauseTwistedSMCDecoder(integrator=AdaptiveBAOABIntegrator(dim=12, seed=0), seed=0, auto_gain=True)
+    seen, hooked = [], []
+    director = HSMMLongformDirector(transition_matrix=forced, seed=0)
+    orig_gen = dec.generate_with_clause_twisted_smc
+
+    def spy(*a, **k):
+        seen.append(dec.steering_active)
+        return orig_gen(*a, max_clauses=3, **{x: v for x, v in k.items() if x != "max_clauses"})
+
+    dec.generate_with_clause_twisted_smc = spy
+    res = director.generate_longform(
+        target_paragraphs=6, decoder=dec, climax_only_steering=True,
+        paragraph_hook=lambda k: hooked.append(k), min_clauses_per_paragraph=2,
+    )
+    wells = res["wells"]
+    expected = [bool(w == 2 or (i > 0 and wells[i - 1] == 2)) for i, w in enumerate(wells)]
+    assert seen == expected
+    assert hooked == list(range(6))

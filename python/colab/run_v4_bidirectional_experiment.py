@@ -1230,6 +1230,33 @@ def generate_experiment_report_markdown(
     return "\n".join(lines)
 
 
+def _make_reseed_hook(seed: int):
+    import torch
+
+    return lambda k: torch.manual_seed(seed * 1000 + k)
+
+
+def plan_longform_constraints(seed: int, n_paragraphs: int = 6) -> Dict[str, Any]:
+    """Wells the director will visit for this seed and the scene constraints placed before the first Climax.
+
+    Constraints go on the (up to two) paragraphs preceding the first Climax well, in the order
+    stillness, evidence, so that the cut momentum is banked before it is released.
+    """
+    from usir_py.hsmm_longform_director import HSMMLongformDirector
+
+    probe = HSMMLongformDirector(seed=seed)
+    wells, cur = [0], 0
+    for _ in range(1, n_paragraphs):
+        cur = probe.step_transition(cur)
+        wells.append(cur)
+    first_climax = wells.index(2) if 2 in wells else None
+    constraints: Dict[int, List[str]] = {}
+    if first_climax is not None:
+        for i, mode in zip(range(0, min(2, first_climax)), ("stillness", "evidence")):
+            constraints[i] = [mode]
+    return {"wells": wells, "first_climax": first_climax, "constraints": constraints}
+
+
 def run_longform_director(
     theme: str,
     model: Optional[Any] = None,
@@ -1242,6 +1269,8 @@ def run_longform_director(
     max_clauses_per_paragraph: Optional[int] = None,
     verbose: bool = False,
     steering: bool = True,
+    min_clauses_per_paragraph: int = 0,
+    reseed_per_paragraph: bool = False,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
@@ -1279,6 +1308,10 @@ def run_longform_director(
             # trailing 120 chars, candidate temperature tied to ||p||. steering=False = legacy decoder.
             auto_gain=steering, steer_balance=1.0, style_window_chars=120 if steering else None,
             temp_gain=0.15 if steering else 0.0,
+            # Bounded control: gain <= 5, temperature multiplier in [0.85, 1.10], repetition / latin guards.
+            gain_max=5.0, temp_min=0.85, temp_max=1.10,
+            repeat_guard=steering, ascii_guard=steering,
+            repeat_window_chars=400, script_guard=steering,
         )
         generator = "llm_clause_smc"
         decoder.verbose = verbose
@@ -1291,6 +1324,10 @@ def run_longform_director(
         decoder=decoder,
         feature_extractor=extract_usir_24d,
         max_clauses_per_paragraph=max_clauses_per_paragraph,
+        min_clauses_per_paragraph=min_clauses_per_paragraph,
+        # Steering gain/temperature act only in the Climax paragraph and the one after it.
+        climax_only_steering=steering,
+        paragraph_hook=_make_reseed_hook(seed) if (reseed_per_paragraph and TORCH_AVAILABLE) else None,
     )
     wall = time.time() - t0
 

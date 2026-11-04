@@ -1,0 +1,340 @@
+{
+ "setup": {
+  "gpu": "Colab L4",
+  "model": "Qwen2.5-1.5B-Instruct fp16",
+  "paragraphs": 6,
+  "target_total_chars": 3000,
+  "min_clauses_per_paragraph": 20,
+  "max_clauses": 31,
+  "controls": "auto_gain<=5.0 (balance 1.0), temp multiplier in [0.85,1.10], eos_penalty 10, steering only in Climax paragraph and the next, per-paragraph reseed torch.manual_seed(seed*1000+k)"
+ },
+ "round_A_spec": {
+  "3": {
+   "wells": [
+    0,
+    0,
+    0,
+    2,
+    0,
+    1
+   ],
+   "total_chars": {
+    "constrained": 2232,
+    "plain": 2232
+   },
+   "overall_cv_l": {
+    "constrained": 0.4841,
+    "plain": 0.4841
+   },
+   "qda": "Critical/Critical",
+   "latin_words": 0,
+   "repeated_8gram_types": {
+    "constrained": 0,
+    "plain": 0
+   },
+   "para_end_period": [
+    true,
+    false,
+    true,
+    true,
+    true,
+    true
+   ],
+   "para_n_clauses": [
+    21,
+    31,
+    31,
+    23,
+    20,
+    20
+   ],
+   "para_identical": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "discharged_climax": {
+    "constrained": 0.354,
+    "plain": 0.097
+   }
+  },
+  "42": {
+   "wells": [
+    0,
+    1,
+    1,
+    2,
+    0,
+    1
+   ],
+   "total_chars": {
+    "constrained": 1871,
+    "plain": 2123
+   },
+   "overall_cv_l": {
+    "constrained": 0.3816,
+    "plain": 0.3992
+   },
+   "qda": "Deadzone(constrained d3=0.710)/Critical(plain d3=0.424)",
+   "latin_words": 0,
+   "repeated_8gram_types": {
+    "constrained": 3,
+    "plain": 8
+   },
+   "max_8gram_count": {
+    "constrained": 5,
+    "plain": 3
+   },
+   "para_identical": [
+    true,
+    true,
+    true,
+    false,
+    false,
+    false
+   ],
+   "para_similarity": [
+    1.0,
+    1.0,
+    1.0,
+    0.48,
+    0.09,
+    0.637
+   ],
+   "climax_cv_l": {
+    "constrained": [
+     0.407,
+     0.349
+    ],
+    "plain": [
+     0.366,
+     0.308
+    ]
+   },
+   "climax_shock": {
+    "constrained": [
+     0.081,
+     0.124
+    ],
+    "plain": [
+     0.158,
+     0.389
+    ]
+   },
+   "discharged_climax": {
+    "constrained": 1.157,
+    "plain": 0.951
+   },
+   "note": "plain paragraph 5 contained a Chinese-language passage (script collapse)"
+  }
+ },
+ "round_B_extended_guards": {
+  "3": {
+   "wells": [
+    0,
+    0,
+    0,
+    2,
+    0,
+    1
+   ],
+   "constraints": {
+    "0": [
+     "stillness"
+    ],
+    "1": [
+     "evidence"
+    ]
+   },
+   "total_chars": {
+    "constrained": 2077,
+    "plain": 2077
+   },
+   "overall_cv_l": {
+    "constrained": 0.4007,
+    "plain": 0.4007
+   },
+   "qda": "Critical/Critical",
+   "latin_words": 0,
+   "cjk_leak_chars_metric": 0,
+   "repeated_8gram_types": {
+    "constrained": 2,
+    "plain": 2
+   },
+   "para_end_period": [
+    true,
+    true,
+    true,
+    false,
+    false,
+    true
+   ],
+   "para_n_clauses": [
+    21,
+    22,
+    23,
+    31,
+    31,
+    20
+   ],
+   "para_identical": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "discharged_climax": {
+    "constrained": 0.336,
+    "plain": 0.065
+   },
+   "cut_norm": 0.457,
+   "wall_sec": [
+    108.2,
+    106.5
+   ]
+  },
+  "42": {
+   "wells": [
+    0,
+    1,
+    1,
+    2,
+    0,
+    1
+   ],
+   "constraints": {
+    "0": [
+     "stillness"
+    ],
+    "1": [
+     "evidence"
+    ]
+   },
+   "total_chars": {
+    "constrained": 2091,
+    "plain": 2113
+   },
+   "overall_cv_l": {
+    "constrained": 0.4417,
+    "plain": 0.4358
+   },
+   "qda": "Critical/Critical",
+   "latin_words": 0,
+   "cjk_leak_chars_metric": 0,
+   "repeated_8gram_types": {
+    "constrained": 11,
+    "plain": 11
+   },
+   "para_end_period": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "para_n_clauses": [
+    28,
+    23,
+    21,
+    25,
+    29,
+    26
+   ],
+   "para_identical": [
+    true,
+    true,
+    true,
+    false,
+    true,
+    true
+   ],
+   "para_similarity": [
+    1.0,
+    1.0,
+    1.0,
+    0.61,
+    1.0,
+    1.0
+   ],
+   "climax_cv_l": {
+    "constrained": 0.435,
+    "plain": 0.389
+   },
+   "climax_shock": {
+    "constrained": 0.124,
+    "plain": 0.12
+   },
+   "discharged_climax": {
+    "constrained": 1.835,
+    "plain": 1.539
+   },
+   "cut_norm": 0.773,
+   "note": "simplified character '变' ('一变し') in paragraph 5 of both conditions: not in the guard set, metric blind to it"
+  },
+  "137": {
+   "wells": [
+    0,
+    2,
+    0,
+    0,
+    1,
+    2
+   ],
+   "constraints": {
+    "0": [
+     "stillness"
+    ]
+   },
+   "total_chars": {
+    "constrained": 2193,
+    "plain": 2193
+   },
+   "overall_cv_l": {
+    "constrained": 0.4301,
+    "plain": 0.4301
+   },
+   "qda": "Critical/Critical",
+   "latin_words": 0,
+   "cjk_leak_chars_metric": 0,
+   "repeated_8gram_types": {
+    "constrained": 15,
+    "plain": 15
+   },
+   "para_end_period": [
+    false,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "para_n_clauses": [
+    31,
+    21,
+    28,
+    31,
+    26,
+    20
+   ],
+   "para_identical": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "discharged_climax_paragraph1": {
+    "constrained": 0.265,
+    "plain": 0.005
+   },
+   "cut_norm": 0.265
+  }
+ }
+}

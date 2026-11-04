@@ -815,6 +815,10 @@ class AdaptiveBAOABIntegrator:
         }
 
 
+# Simplified-Chinese-only characters (their Japanese forms differ) and the full-width comma.
+_SIMPLIFIED_ONLY_RE = re.compile("[这们个说时对从为关还经现样么该应让给过开书长门车东马鸟鱼风飞发，]")
+
+
 class ClauseTwistedSMCDecoder:
     """Clause-Level Twisted Sequential Monte Carlo (SMC) Decoder (P=4 Particles, Phase B WS-B1).
 
@@ -847,7 +851,39 @@ class ClauseTwistedSMCDecoder:
         style_window_chars: Optional[int] = None,
         temp_gain: float = 0.0,
         p_ref: float = 0.5,
+        gain_max: Optional[float] = None,
+        temp_min: float = 0.8,
+        temp_max: float = 1.35,
+        repeat_guard: bool = False,
+        repeat_ngram: int = 6,
+        repeat_max: int = 2,
+        ascii_guard: bool = False,
+        eos_penalty: float = 10.0,
+        repeat_window_chars: Optional[int] = None,
+        script_guard: bool = False,
     ) -> None:
+        # repeat_window_chars: window used by repeat_guard (default: the style window / 120 chars)
+        # script_guard       : also block candidates containing simplified-Chinese-only characters or the
+        #                      full-width comma (script collapse into Chinese), in addition to latin words
+        self.repeat_window_chars = None if repeat_window_chars is None else int(repeat_window_chars)
+        self.script_guard = bool(script_guard)
+        # Stability guards (all off by default = legacy behaviour):
+        #   gain_max      : upper clip of the auto_gain factor (no unbounded amplification of tiny style differences)
+        #   temp_min/max  : bounds of the momentum-coupled temperature multiplier
+        #   repeat_guard  : candidate whose repeat_ngram-char substring already occurs >= repeat_max times in the
+        #                   trailing style window gets weight -inf (3rd occurrence of the same phrase is blocked)
+        #   ascii_guard   : candidate containing a 3+ letter latin word is blocked when the context has none
+        #   eos_penalty   : subtracted from EOS logits while fewer than min_clauses clauses were generated
+        self.gain_max = None if gain_max is None else float(gain_max)
+        self.temp_min = float(temp_min)
+        self.temp_max = float(temp_max)
+        self.repeat_guard = bool(repeat_guard)
+        self.repeat_ngram = int(repeat_ngram)
+        self.repeat_max = int(repeat_max)
+        self.ascii_guard = bool(ascii_guard)
+        self.eos_penalty = float(eos_penalty)
+        self.steering_active = True
+        self._suppress_eos = False
         # Steering controls (all off by default = legacy behaviour):
         #   auto_gain         : rescale the style term so that std_p(style) = steer_balance * std_p(ln P_LLM)
         #   style_window_chars: measure candidate style on the trailing window only (a cumulative prefix
@@ -947,14 +983,39 @@ class ClauseTwistedSMCDecoder:
             self.stats["logprob_errors"] += 1
             return -20.0
 
+    def _blocked_candidates(self, prefix: str, cand_texts: Sequence[str]) -> np.ndarray:
+        """Boolean mask of candidates rejected by the repetition / latin-word guards."""
+        blocked = np.zeros(len(cand_texts), dtype=bool)
+        if not (self.repeat_guard or self.ascii_guard or self.script_guard):
+            return blocked
+        win_len = self.repeat_window_chars or self.style_window_chars or 120
+        window = prefix[-win_len:]
+        ctx_has_latin = re.search(r"[A-Za-z]{3,}", prefix) is not None
+        n = self.repeat_ngram
+        for i, c in enumerate(cand_texts):
+            body = re.sub(r"[、。！？!?\s]+", "", c)
+            if self.ascii_guard and not ctx_has_latin and re.search(r"[A-Za-z]{3,}", c):
+                blocked[i] = True
+                continue
+            if self.script_guard and _SIMPLIFIED_ONLY_RE.search(c):
+                blocked[i] = True
+                continue
+            if self.repeat_guard and len(body) >= n:
+                win = re.sub(r"[、。！？!?\s]+", "", window)
+                for j in range(0, len(body) - n + 1):
+                    if win.count(body[j:j + n]) >= self.repeat_max:
+                        blocked[i] = True
+                        break
+        return blocked
+
     def _temperature_scale(self) -> float:
         """Candidate-temperature multiplier tied to the momentum norm ||p|| of the integrator."""
-        if self.temp_gain == 0.0:
+        if self.temp_gain == 0.0 or not self.steering_active:
             return 1.0
         p_norm = float(np.linalg.norm(np.asarray(self.integrator.p, dtype=np.float64)))
         if p_norm <= 1e-9:
             return 1.0
-        return float(np.clip(1.0 + self.temp_gain * math.log(p_norm / self.p_ref), 0.8, 1.35))
+        return float(np.clip(1.0 + self.temp_gain * math.log(p_norm / self.p_ref), self.temp_min, self.temp_max))
 
     def _generate_candidates_batched(self, prefix: str) -> List[str]:
         """Generates P candidate clauses in ONE batched generate() call with per-row temperatures.
@@ -990,6 +1051,22 @@ class ClauseTwistedSMCDecoder:
                 tails = tokenizer_ref.batch_decode(ids[:, n_ctx:], skip_special_tokens=True)
                 return torch.tensor([bool(CLAUSE_PUNCT_RE.search(s)) for s in tails], device=ids.device)
 
+        eos_pen = self.eos_penalty if self._suppress_eos else 0.0
+        eos_tok_ids = [t for t in ([tokenizer_ref.eos_token_id] if not isinstance(getattr(tokenizer_ref, "eos_token_id", None), (list, tuple)) else list(tokenizer_ref.eos_token_id)) if t is not None]
+        for extra in ("<|im_end|>", "<|endoftext|>"):
+            try:
+                tid = tokenizer_ref.convert_tokens_to_ids(extra)
+                if isinstance(tid, int) and tid >= 0 and tid not in eos_tok_ids and tid != getattr(tokenizer_ref, "unk_token_id", None):
+                    eos_tok_ids.append(tid)
+            except Exception:
+                pass
+
+        class _EosPenalty(LogitsProcessor):
+            def __call__(self_inner, ids, scores):  # noqa: N805
+                if eos_pen > 0.0 and eos_tok_ids:
+                    scores[:, eos_tok_ids] = scores[:, eos_tok_ids] - eos_pen
+                return scores
+
         class _RowTemp(LogitsProcessor):
             def __call__(self_inner, ids, scores):  # noqa: N805
                 return scores / temps.to(scores.dtype).unsqueeze(-1)
@@ -1001,7 +1078,7 @@ class ClauseTwistedSMCDecoder:
             "top_p": 1.0,
             "top_k": 50,
             "attention_mask": torch.ones_like(input_ids),
-            "logits_processor": [_RowTemp()],
+            "logits_processor": [_EosPenalty(), _RowTemp()],
             "stopping_criteria": StoppingCriteriaList([_ClausePunctStop()]),
         }
         if pad_id is not None:
@@ -1154,16 +1231,22 @@ class ClauseTwistedSMCDecoder:
             term3_style.append(style_penalty)
 
         steer_gain = 1.0
-        if self.auto_gain and len(term1_llm) > 1:
+        if self.auto_gain and self.steering_active and len(term1_llm) > 1:
             # term3_style = -0.5 * beta * err, so the beta-free part is term3 / beta.
             raw = np.array(term3_style) / (self.beta_steer if self.beta_steer != 0 else 1.0)
             sd_style = float(np.std(raw))
             sd_llm = float(np.std(np.array(term1_llm) + np.array(term2_reach)))
             if sd_style > 1e-9 and sd_llm > 1e-9:
                 steer_gain = self.steer_balance * sd_llm / sd_style
+                if self.gain_max is not None:
+                    steer_gain = min(steer_gain, self.gain_max)
                 term3_style = [float(steer_gain * r) for r in raw]
 
         w = np.array(term1_llm) + np.array(term2_reach) + np.array(term3_style)
+
+        blocked = self._blocked_candidates(prefix, cand_texts)
+        if blocked.any() and not blocked.all():
+            w = np.where(blocked, -np.inf, w)
 
         # Numerical stabilization for softmax normalized weights
         max_w = np.max(w)
@@ -1269,6 +1352,7 @@ class ClauseTwistedSMCDecoder:
         candidate_generator: Optional[Callable[[str, int, float], str]] = None,
         early_stop_on_punct: bool = True,
         resample_method: Optional[str] = None,
+        min_clauses: int = 0,
     ) -> Dict[str, Any]:
         """Full multi-clause generation using Clause-Level Twisted SMC and Adaptive-BAOAB."""
         current_text = prefix
@@ -1276,6 +1360,8 @@ class ClauseTwistedSMCDecoder:
         clauses: List[str] = []
 
         for m in range(max_clauses):
+            # Min-clause guard: EOS logits are penalised until min_clauses clauses exist.
+            self._suppress_eos = m < int(min_clauses)
             if candidate_generator is not None:
                 cands: Optional[List[str]] = [candidate_generator(current_text, p, self.temperatures[p]) for p in range(self.n_particles)]
             else:
@@ -1308,6 +1394,7 @@ class ClauseTwistedSMCDecoder:
             ):
                 break
 
+        self._suppress_eos = False
         return {
             "welded_text": current_text,
             "text": current_text,

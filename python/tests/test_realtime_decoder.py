@@ -646,3 +646,107 @@ def test_temperature_scale_follows_momentum_norm():
     high = dec._temperature_scale()
     assert low < 1.0 < high <= 1.35
     assert ClauseTwistedSMCDecoder(dim=12, seed=0)._temperature_scale() == 1.0
+
+
+# ==============================================================================
+# Stability guards: gain clip, temperature bounds, repetition / latin guards, steering switch
+# ==============================================================================
+
+def test_gain_max_clips_auto_gain():
+    cands = _cands(-1.0, -1.4, 0.5001, 0.5000)  # almost identical style -> huge raw gain
+    free = ClauseTwistedSMCDecoder(dim=12, seed=0, auto_gain=True)
+    clipped = ClauseTwistedSMCDecoder(dim=12, seed=0, auto_gain=True, gain_max=5.0)
+    g_free = free.compute_particle_weights("", cands, target_q=np.full(12, 0.5))["steer_gain"]
+    r = clipped.compute_particle_weights("", cands, target_q=np.full(12, 0.5))
+    assert g_free > 5.0
+    assert r["steer_gain"] == 5.0
+    # the style term can never exceed steer_balance x the LLM spread
+    assert np.std(r["term3_style"]) <= np.std(r["term1_llm"]) + 1e-9
+
+
+def test_temperature_scale_respects_bounds_and_steering_switch():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, temp_gain=0.15, p_ref=0.5, temp_min=0.85, temp_max=1.10)
+    dec.integrator.p = np.full(12, 3.0)
+    assert dec._temperature_scale() == pytest.approx(1.10)
+    dec.integrator.p = np.full(12, 0.01)
+    assert dec._temperature_scale() == pytest.approx(0.85)
+    dec.steering_active = False
+    assert dec._temperature_scale() == 1.0
+
+
+def test_steering_inactive_disables_auto_gain():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, auto_gain=True)
+    dec.steering_active = False
+    r = dec.compute_particle_weights("", _cands(-1.0, -1.4, 0.56, 0.52), target_q=np.full(12, 0.5))
+    assert r["steer_gain"] == 1.0
+
+
+def test_repeat_guard_blocks_third_occurrence():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, repeat_guard=True, style_window_chars=120)
+    phrase = "その光が寺内を照らし出す瞬間は、"
+    prefix = phrase + "静かだった。" + phrase
+    cands = [
+        {"text": phrase, "llm_logprob": -0.5, "q": np.full(12, 0.5)},
+        {"text": "霧が低く流れていた、", "llm_logprob": -2.0, "q": np.full(12, 0.5)},
+    ]
+    r = dec.compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))
+    assert r["selected_clause"] == "霧が低く流れていた、"
+    assert np.isneginf(r["weights"][0])
+
+
+def test_repeat_guard_off_by_default_and_never_blocks_all():
+    cands = [{"text": "同じ言葉が続く、", "llm_logprob": -1.0, "q": np.full(12, 0.5)}] * 2
+    prefix = "同じ言葉が続く、同じ言葉が続く、"
+    off = ClauseTwistedSMCDecoder(dim=12, seed=0).compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))
+    assert np.all(np.isfinite(off["weights"]))
+    on = ClauseTwistedSMCDecoder(dim=12, seed=0, repeat_guard=True).compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))
+    assert np.all(np.isfinite(on["weights"]))  # all blocked -> guard is skipped, no NaN
+
+
+def test_ascii_guard_blocks_latin_word_when_context_has_none():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, ascii_guard=True)
+    cands = [
+        {"text": "寺の鐘 sounded した、", "llm_logprob": -0.5, "q": np.full(12, 0.5)},
+        {"text": "寺の鐘が鳴った、", "llm_logprob": -1.5, "q": np.full(12, 0.5)},
+    ]
+    r = dec.compute_particle_weights("静かな朝、", cands, target_q=np.full(12, 0.5))
+    assert r["selected_clause"] == "寺の鐘が鳴った、"
+
+
+def test_min_clauses_toggles_eos_suppression_flag():
+    flags = []
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    orig = dec.step_smc_clause
+
+    def spy(*a, **k):
+        flags.append(dec._suppress_eos)
+        return orig(*a, **k)
+
+    dec.step_smc_clause = spy
+    dec.generate_with_clause_twisted_smc("", max_clauses=5, min_clauses=3, early_stop_on_punct=False)
+    assert flags == [True, True, True, False, False]
+    assert dec._suppress_eos is False
+
+
+def test_script_guard_blocks_simplified_chinese_and_fullwidth_comma():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, script_guard=True)
+    cands = [
+        {"text": "这座古老的寺庙，", "llm_logprob": -0.5, "q": np.full(12, 0.5)},
+        {"text": "古い寺の朝、", "llm_logprob": -1.5, "q": np.full(12, 0.5)},
+    ]
+    r = dec.compute_particle_weights("静かな朝、", cands, target_q=np.full(12, 0.5))
+    assert r["selected_clause"] == "古い寺の朝、"
+
+
+def test_repeat_window_can_exceed_style_window():
+    phrase = "その光が寺内を照らし出す瞬間は、"
+    filler = "あ" * 60
+    prefix = phrase + filler + phrase + filler  # two earlier occurrences ~150 chars back
+    cands = [
+        {"text": phrase, "llm_logprob": -0.5, "q": np.full(12, 0.5)},
+        {"text": "霧が低く流れていた、", "llm_logprob": -2.0, "q": np.full(12, 0.5)},
+    ]
+    short = ClauseTwistedSMCDecoder(dim=12, seed=0, repeat_guard=True, style_window_chars=120)
+    long_ = ClauseTwistedSMCDecoder(dim=12, seed=0, repeat_guard=True, style_window_chars=120, repeat_window_chars=400)
+    assert short.compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))["selected_clause"] == phrase
+    assert long_.compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))["selected_clause"] == "霧が低く流れていた、"
