@@ -29,9 +29,15 @@ Critical 中央2.73(2.19–3.80) / Void 1.44–2.67 / Turbulent 1.40–3.55 / De
 - 因果接続詞前後の文を文字bigram Jaccard>0.70 かつ新規概念≤10% で同語反復と判定し、warrant 加点を除去、`tautology_penalty`(重み1.5)を加算。形態素解析は使わないため精度は粗い。
 - 主述ねじれの SyntaxTreeFrame ベース一般化は試作したが、正当な文(「彼は走ったが、私は疲れた」)の誤検出と、真陽性を作れない設計であったため採用せず撤回。既存ルールのまま(未達)。
 
+## ⑥ クロスモーダル関手(実装済み)
+- 共役運動量: 視覚は `patch_features`/`patchFeatures`(画像の g×g ブロック列, g=min(3, 短辺/16))、音楽は `bar_features`/`barFeatures`(推定テンポ4拍ごとの小節窓, 無音小節も保持)の q 系列から、全12次元を窓間 RMS 変動速度として算出。TS 抽出器 (`extractVisualFeaturesFromImage`, `extractMusicFeaturesFromNotes`) が窓系列を自動生成。
+- 限界: 窓系列を持たないサマリ入力では時間情報が無いため p は計測不能。従来の4次元プロキシ(p[0,2,6,11])を残し、他8次元は 0 のまま(仕様の「サマリ入力時も12次元」は未達)。
+- 逆音楽関手: 固定ペンタトニック(`step % 5`)を撤廃。16スロットの八分格子で、Flux=音数密度, Void=休符(スロット除去), Lattice=跳躍抑制, Shock=跳躍確率/幅・五度圏の主音移動・三全音→半音解決, syncopation=1/4拍ずらし。黄金比系列による決定論的選択で乱数不使用。出力音数は可変(旧テストの「必ず8音」は撤回)。
+- Python/TS パリティ: 同一状態で音列12音・time・gain の一致をテストで固定。テスト: pytest 269 passed/4 skipped, pnpm 343 passed。
+
 ## 未完了
-- ⑥⑤⑦、主述ねじれの一般化(④の残り)。TS 側に構文ドライバは存在しないため③の移植は不要。
+- ⑤⑦、主述ねじれの一般化(④の残り)、サマリ入力時の p。TS 側に構文ドライバは存在しないため③の移植は不要。
 - `scripts/harness.py` は自動モード分類器に拒否されたため、pytest(262 passed/4 skipped)・pnpm test(338 passed)・scan_cleanroom_copyright(FAIL=0, WARN=5)を個別実行して確認。
 
 ## 次の一手
-- ⑥ 関手の p 全12次元算出と音楽逆関手の24D駆動化(Python→TS)。
+- ⑤ `compile_constraint_jacobian` と HSMM 結線。

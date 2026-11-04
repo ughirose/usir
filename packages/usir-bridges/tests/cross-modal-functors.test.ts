@@ -182,7 +182,7 @@ describe('Phase E WS-E1: Cross-Modal Visual & Music Functors', () => {
       expect(audioCalm.harmonicTension).toBeLessThan(0.30);
       expect(audioCalm.reverbDecay).toBeGreaterThan(2.5);
       expect(audioCalm.bpm).toBeLessThan(100.0);
-      expect(audioCalm.webAudioSequence.length).toBe(8);
+      expect(audioCalm.webAudioSequence.length).toBeGreaterThanOrEqual(1);
 
       // Case B: Climax battle sequence (high dissonance, high syncopation, high BPM)
       const tenseFeats: MusicFeatures = {
@@ -254,6 +254,83 @@ describe('Phase E WS-E1: Cross-Modal Visual & Music Functors', () => {
       expect(vParams.cfgScale).toBeGreaterThan(0);
       const mParams = musicFunctorInverse(zF32);
       expect(mParams.bpm).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Conjugate momentum from window series and 24D-driven music sequence', () => {
+    const mkPatch = (chiaro: number, color: number, quad: number, gabor: [number, number, number, number]): VisualFeatures2D => ({
+      gaborFrequencies: gabor,
+      colorEntropy: color,
+      chiaroscuroGradient: chiaro,
+      quadtreeDepthEntropy: quad,
+      saliencyScanpath: [
+        { x: 0.1, y: 0.1, intensity: 0.5 },
+        { x: 0.1 + chiaro * 0.5, y: 0.4, intensity: 0.5 },
+      ],
+    });
+
+    it('measures all 12 momentum coordinates from patch series (non-negative, not a copy of q)', () => {
+      const patches = [
+        mkPatch(0.1, 0.2, 0.3, [0.1, 0.2, 0.3, 0.4]),
+        mkPatch(0.7, 0.6, 0.8, [0.5, 0.1, 0.2, 0.9]),
+        mkPatch(0.3, 0.9, 0.1, [0.2, 0.8, 0.1, 0.3]),
+      ];
+      const z = visualFunctorForward({ ...patches[0]!, patchFeatures: patches });
+      const p = z.slice(12);
+      expect(p.every((v) => v >= 0)).toBe(true);
+      expect(p.filter((v) => v !== 0).length).toBe(12);
+    });
+
+    it('measures all 12 momentum coordinates from bar series and stays 0 for constant bars', () => {
+      const mk = (t: number, d: number, s: number, r: number, bpm: number): MusicFeatures => ({
+        torusDistance: t, dissonance: d, syncopation: s, restRatio: r, bpm,
+      });
+      const bars = [mk(0.1, 0.1, 0.2, 0.1, 80), mk(0.6, 0.5, 0.7, 0.4, 120), mk(0.3, 0.9, 0.1, 0.8, 100)];
+      const z = musicFunctorForward({ ...bars[0]!, barFeatures: bars });
+      expect(z.slice(12).filter((v) => v !== 0).length).toBe(12);
+      const flat = mk(0.3, 0.2, 0.2, 0.2, 100);
+      const zFlat = musicFunctorForward({ ...flat, barFeatures: [flat, flat, flat] });
+      expect(zFlat.slice(12).every((v) => v === 0)).toBe(true);
+    });
+
+    it('image extractor yields patchFeatures and non-zero momentum on a textured image', () => {
+      const w = 48, h = 48;
+      const data = new Uint8Array(w * h);
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          data[y * w + x] = Math.floor(((x * 7 + y * 13 + (x >> 4) * 90 + (y >> 4) * 40) % 256));
+        }
+      }
+      const feats = extractVisualFeaturesFromImage({ width: w, height: h, data });
+      expect(feats.patchFeatures?.length).toBe(9);
+      const z = visualFunctorForward(feats);
+      expect(z.slice(12).filter((v) => v > 0).length).toBeGreaterThanOrEqual(8);
+    });
+
+    it('note extractor yields per-bar features', () => {
+      const notes: MusicNoteEvent[] = [];
+      for (let i = 0; i < 24; i++) {
+        notes.push({ pitch: 60 + ((i * 7) % 12), duration: i < 12 ? 0.5 : 0.1, velocity: 80, startTime: i * 0.6 });
+      }
+      const feats = extractMusicFeaturesFromNotes(notes);
+      expect((feats.barFeatures?.length ?? 0)).toBeGreaterThanOrEqual(2);
+    });
+
+    it('music sequence: Void removes notes, deterministic, matches the Python implementation', () => {
+      const mk = (rest: number, diss: number, synco = 0.3, bpm = 110): MusicFeatures => ({
+        torusDistance: 0.4, dissonance: diss, syncopation: synco, restRatio: rest, bpm,
+      });
+      const dense = musicFunctorInverse(musicFunctorForward(mk(0.05, 0.3))).webAudioSequence;
+      const sparse = musicFunctorInverse(musicFunctorForward(mk(0.9, 0.3))).webAudioSequence;
+      expect(sparse.length).toBeLessThan(dense.length);
+      expect(sparse.length).toBeGreaterThanOrEqual(1);
+
+      // Reference values produced by python/usir_py/nishiki_unified_field.py for the same state.
+      const z = musicFunctorForward(mk(0.05, 0.5, 0.8, 170));
+      const seq = musicFunctorInverse(z).webAudioSequence;
+      expect(seq.map((n) => n.note)).toEqual([65, 64, 65, 60, 60, 59, 57, 62, 64, 66, 64, 69]);
+      expect(seq[0]!.time).toBeCloseTo(0.09627942044378301, 9);
+      expect(seq[0]!.gain).toBeCloseTo(0.806258473896996, 9);
     });
   });
 });

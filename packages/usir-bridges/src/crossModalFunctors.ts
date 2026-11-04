@@ -34,6 +34,8 @@ export interface VisualFeatures2D {
   quadtreeDepthEntropy: number;   // Spatial quadtree depth distribution entropy in [0.0, 1.0]
   saliencyScanpath: SaliencyFixation[];
   compositionMarginRatio?: number; // Background / margin whitespace in [0.0, 1.0]
+  /** Ordered local blocks / fixation patches. With >= 2, all 12 momentum coordinates are measured. */
+  patchFeatures?: VisualFeatures2D[];
 }
 
 export interface ImageData2D {
@@ -57,7 +59,7 @@ export interface VisualGenerativeParams {
  * Extracts 2D visual features from a raw pixel buffer using Gabor filters,
  * color entropy, chiaroscuro contrast gradient, and spatial quadtree decomposition.
  */
-export function extractVisualFeaturesFromImage(image: ImageData2D): VisualFeatures2D {
+function extractVisualSummary(image: ImageData2D): VisualFeatures2D {
   const { width, height, data } = image;
   const numPixels = width * height;
   if (numPixels === 0) {
@@ -244,16 +246,77 @@ export function extractVisualFeaturesFromImage(image: ImageData2D): VisualFeatur
 }
 
 /**
- * Forward Visual Functor F_visual: Maps 2D visual features to 24D USIR symplectic state z = (q, p).
+ * Extracts 2D visual features for the whole image and, for images large enough, for a g x g grid of
+ * local blocks in row-major order (patchFeatures). The block series gives the window-to-window
+ * variation from which all 12 momentum coordinates are measured.
  */
-export function visualFunctorForward(features: VisualFeatures2D): number[] {
+export function extractVisualFeaturesFromImage(image: ImageData2D): VisualFeatures2D {
+  const summary = extractVisualSummary(image);
+  const { width, height, data } = image;
+  const g = Math.min(3, Math.floor(Math.min(width, height) / 16));
+  if (g < 2) return summary;
+
+  const numPixels = width * height;
+  const channels = data.length >= numPixels * 3 ? (data.length >= numPixels * 4 ? 4 : 3) : 1;
+  const patches: VisualFeatures2D[] = [];
+  for (let by = 0; by < g; by++) {
+    for (let bx = 0; bx < g; bx++) {
+      const x0 = Math.floor((bx * width) / g);
+      const x1 = Math.floor(((bx + 1) * width) / g);
+      const y0 = Math.floor((by * height) / g);
+      const y1 = Math.floor(((by + 1) * height) / g);
+      const w = x1 - x0;
+      const h = y1 - y0;
+      const sub = new Array<number>(w * h * channels);
+      let o = 0;
+      for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+          for (let c = 0; c < channels; c++) {
+            sub[o++] = data[(y * width + x) * channels + c] as number;
+          }
+        }
+      }
+      patches.push(extractVisualSummary({ width: w, height: h, data: sub }));
+    }
+  }
+  return { ...summary, patchFeatures: patches };
+}
+
+const clamp01 = (x: number): number => Math.max(0.0, Math.min(1.0, x));
+
+/**
+ * p_i = sqrt(1/(M-1) sum_m (q_{m+1,i} - q_{m,i})^2): window-to-window RMS velocity of each element.
+ * Needs M >= 2 windows; returns zeros otherwise. Non-negative and not a copy of static q.
+ */
+export function momentumFromWindowSeries(qSeries: number[][]): number[] {
+  const p = new Array<number>(12).fill(0);
+  if (qSeries.length < 2) return p;
+  for (let i = 0; i < 12; i++) {
+    let sum = 0.0;
+    for (let m = 1; m < qSeries.length; m++) {
+      const d = qSeries[m]![i]! - qSeries[m - 1]![i]!;
+      sum += d * d;
+    }
+    p[i] = Math.sqrt(sum / (qSeries.length - 1));
+  }
+  return p;
+}
+
+interface VisualQTerms {
+  q: number[];
+  saccadeMean: number;
+  gaborVar: number;
+  chiaro: number;
+  marginRatio: number;
+}
+
+function visualQAndTerms(features: VisualFeatures2D): VisualQTerms {
   const gabor = features.gaborFrequencies;
-  const colorEnt = Math.max(0.0, Math.min(1.0, features.colorEntropy));
-  const chiaro = Math.max(0.0, Math.min(1.0, features.chiaroscuroGradient));
-  const quadEnt = Math.max(0.0, Math.min(1.0, features.quadtreeDepthEntropy));
+  const colorEnt = clamp01(features.colorEntropy);
+  const chiaro = clamp01(features.chiaroscuroGradient);
+  const quadEnt = clamp01(features.quadtreeDepthEntropy);
   const scanpath = features.saliencyScanpath;
 
-  // Saccade velocity and motion dynamics
   let saccadeMean = 0.2;
   if (scanpath && scanpath.length >= 2) {
     let sumDist = 0.0;
@@ -274,40 +337,49 @@ export function visualFunctorForward(features: VisualFeatures2D): number[] {
     4.0;
 
   const marginRatio =
-    features.compositionMarginRatio !== undefined
-      ? Math.max(0.0, Math.min(1.0, features.compositionMarginRatio))
-      : 1.0 - chiaro;
+    features.compositionMarginRatio !== undefined ? clamp01(features.compositionMarginRatio) : 1.0 - chiaro;
 
   const q = new Array<number>(12).fill(0);
-  const p = new Array<number>(12).fill(0);
+  // Group I: Flux
+  q[0] = clamp01(0.5 * saccadeMean + 0.5 * gaborVar * 4.0);
+  q[3] = clamp01(0.4 * gabor[0] + 0.6 * saccadeMean);
+  q[7] = clamp01(0.6 * gaborVar + 0.4 * colorEnt);
+  // Group II: Lattice
+  q[1] = clamp01(quadEnt);
+  q[4] = clamp01(0.5 * (1.0 - gaborVar * 2.0) + 0.5 * quadEnt);
+  q[8] = clamp01(0.7 * (1.0 - colorEnt) + 0.3 * quadEnt);
+  // Group III: Void
+  q[2] = clamp01(marginRatio);
+  q[5] = clamp01(0.6 * marginRatio + 0.4 * (1.0 - quadEnt));
+  q[9] = clamp01(0.8 * marginRatio + 0.2 * (1.0 - chiaro));
+  // Group IV: Shock
+  q[6] = clamp01(chiaro);
+  q[10] = clamp01(0.7 * chiaro + 0.3 * colorEnt);
+  q[11] = clamp01(0.8 * chiaro + 0.2 * gaborVar * 5.0);
 
-  // Group I: Flux (Sg-01, Sg-04, Sg-08) -> spatial frequency dynamics and saccade pace
-  q[0] = Math.max(0.0, Math.min(1.0, 0.5 * saccadeMean + 0.5 * gaborVar * 4.0));
-  q[3] = Math.max(0.0, Math.min(1.0, 0.4 * gabor[0] + 0.6 * saccadeMean));
-  q[7] = Math.max(0.0, Math.min(1.0, 0.6 * gaborVar + 0.4 * colorEnt));
+  return { q, saccadeMean, gaborVar, chiaro, marginRatio };
+}
 
-  // Group II: Lattice (Sg-02, Sg-05, Sg-09) -> Quadtree depth entropy and structural symmetry
-  q[1] = Math.max(0.0, Math.min(1.0, quadEnt));
-  q[4] = Math.max(0.0, Math.min(1.0, 0.5 * (1.0 - gaborVar * 2.0) + 0.5 * quadEnt));
-  q[8] = Math.max(0.0, Math.min(1.0, 0.7 * (1.0 - colorEnt) + 0.3 * quadEnt));
-
-  // Group III: Void (Sg-03, Sg-06, Sg-10) -> Composition margin & negative space
-  q[2] = Math.max(0.0, Math.min(1.0, marginRatio));
-  q[5] = Math.max(0.0, Math.min(1.0, 0.6 * marginRatio + 0.4 * (1.0 - quadEnt)));
-  q[9] = Math.max(0.0, Math.min(1.0, 0.8 * marginRatio + 0.2 * (1.0 - chiaro)));
-
-  // Group IV: Shock (Sg-04/07/11/12) -> Chiaroscuro gradient and high-frequency rupture
-  q[6] = Math.max(0.0, Math.min(1.0, chiaro));
-  q[10] = Math.max(0.0, Math.min(1.0, 0.7 * chiaro + 0.3 * colorEnt));
-  q[11] = Math.max(0.0, Math.min(1.0, 0.8 * chiaro + 0.2 * gaborVar * 5.0));
-
-  // 12 Momentum coordinates p >= 0
-  p[0] = saccadeMean * 1.5;
-  p[2] = marginRatio * 0.8;
-  p[6] = chiaro * 1.8;
-  p[11] = chiaro * 2.0 + gaborVar;
-
-  return [...q, ...p];
+/**
+ * Forward Visual Functor F_visual: Maps 2D visual features to 24D USIR symplectic state z = (q, p).
+ * With >= 2 patchFeatures all 12 momentum coordinates are the RMS patch-to-patch change of the
+ * per-patch elements. Without patches p falls back to the legacy 4-coordinate proxy
+ * (p[1,3,4,5,7,8,9,10] stay 0: not measurable from a summary).
+ */
+export function visualFunctorForward(features: VisualFeatures2D): number[] {
+  const t = visualQAndTerms(features);
+  let p: number[];
+  const patches = features.patchFeatures ?? [];
+  if (patches.length >= 2) {
+    p = momentumFromWindowSeries(patches.map((pf) => visualQAndTerms(pf).q));
+  } else {
+    p = new Array<number>(12).fill(0);
+    p[0] = t.saccadeMean * 1.5;
+    p[2] = t.marginRatio * 0.8;
+    p[6] = t.chiaro * 1.8;
+    p[11] = t.chiaro * 2.0 + t.gaborVar;
+  }
+  return [...t.q, ...p];
 }
 
 /**
@@ -397,6 +469,8 @@ export interface MusicFeatures {
   syncopation: number;     // Metric syncopation degree in [0.0, 1.0]
   restRatio: number;       // Silence / pause ratio in [0.0, 1.0]
   bpm?: number;            // Tempo in BPM (default 100)
+  /** Ordered per-bar (time-window) features. With >= 2, all 12 momentum coordinates are measured. */
+  barFeatures?: MusicFeatures[];
 }
 
 export interface WebAudioNoteDirective {
@@ -452,7 +526,7 @@ export function intervalDissonance(p1: number, p2: number): number {
 /**
  * Extracts musical features from a note sequence.
  */
-export function extractMusicFeaturesFromNotes(notes: MusicNoteEvent[]): MusicFeatures {
+function extractMusicSummary(notes: MusicNoteEvent[]): MusicFeatures {
   if (notes.length === 0) {
     return {
       torusDistance: 0.2,
@@ -542,49 +616,165 @@ export function extractMusicFeaturesFromNotes(notes: MusicNoteEvent[]): MusicFea
   };
 }
 
-/**
- * Forward Music Functor F_music: Maps musical features to 24D USIR symplectic state z = (q, p).
- */
-export function musicFunctorForward(features: MusicFeatures): number[] {
-  const torusDist = Math.max(0.0, Math.min(1.0, features.torusDistance));
-  const diss = Math.max(0.0, Math.min(1.0, features.dissonance));
-  const synco = Math.max(0.0, Math.min(1.0, features.syncopation));
-  const rest = Math.max(0.0, Math.min(1.0, features.restRatio));
-  const bpm = features.bpm ?? 100.0;
+interface MusicQTerms {
+  q: number[];
+  normBpm: number;
+  rest: number;
+  diss: number;
+  torusDist: number;
+}
 
-  const normBpm = Math.max(0.0, Math.min(1.0, (bpm - 60.0) / 120.0));
+function musicQAndTerms(features: MusicFeatures): MusicQTerms {
+  const torusDist = clamp01(features.torusDistance);
+  const diss = clamp01(features.dissonance);
+  const synco = clamp01(features.syncopation);
+  const rest = clamp01(features.restRatio);
+  const bpm = features.bpm ?? 100.0;
+  const normBpm = clamp01((bpm - 60.0) / 120.0);
 
   const q = new Array<number>(12).fill(0);
-  const p = new Array<number>(12).fill(0);
-
-  // Group I: Flux -> tempo and syncopation drive
-  q[0] = Math.max(0.0, Math.min(1.0, 0.6 * normBpm + 0.4 * synco));
-  q[3] = Math.max(0.0, Math.min(1.0, 0.5 * synco + 0.5 * torusDist));
-  q[7] = Math.max(0.0, Math.min(1.0, 0.7 * synco + 0.3 * normBpm));
-
-  // Group II: Lattice -> harmonic consonance (1 - dissonance) and key stability
+  q[0] = clamp01(0.6 * normBpm + 0.4 * synco);
+  q[3] = clamp01(0.5 * synco + 0.5 * torusDist);
+  q[7] = clamp01(0.7 * synco + 0.3 * normBpm);
   const consonance = 1.0 - diss;
-  q[1] = Math.max(0.0, Math.min(1.0, consonance));
-  q[4] = Math.max(0.0, Math.min(1.0, 0.6 * consonance + 0.4 * (1.0 - torusDist)));
-  q[8] = Math.max(0.0, Math.min(1.0, 0.8 * consonance + 0.2 * (1.0 - synco)));
+  q[1] = clamp01(consonance);
+  q[4] = clamp01(0.6 * consonance + 0.4 * (1.0 - torusDist));
+  q[8] = clamp01(0.8 * consonance + 0.2 * (1.0 - synco));
+  q[2] = clamp01(rest);
+  q[5] = clamp01(0.7 * rest + 0.3 * (1.0 - normBpm));
+  q[9] = clamp01(0.9 * rest + 0.1 * (1.0 - diss));
+  q[6] = clamp01(diss);
+  q[10] = clamp01(0.6 * diss + 0.4 * torusDist);
+  q[11] = clamp01(0.7 * diss + 0.3 * synco);
+  return { q, normBpm, rest, diss, torusDist };
+}
 
-  // Group III: Void -> rest ratio & pause spacing
-  q[2] = Math.max(0.0, Math.min(1.0, rest));
-  q[5] = Math.max(0.0, Math.min(1.0, 0.7 * rest + 0.3 * (1.0 - normBpm)));
-  q[9] = Math.max(0.0, Math.min(1.0, 0.9 * rest + 0.1 * (1.0 - diss)));
+/**
+ * Extracts whole-piece music features and per-bar features (4 beats at the estimated tempo).
+ * Bars containing no note onset are kept as silent windows so Void changes enter the momentum.
+ */
+export function extractMusicFeaturesFromNotes(notes: MusicNoteEvent[]): MusicFeatures {
+  const summary = extractMusicSummary(notes);
+  if (notes.length === 0) return summary;
+  const barSec = (4 * 60.0) / (summary.bpm ?? 100.0);
+  let endT = 0.0;
+  for (const n of notes) endT = Math.max(endT, n.startTime + n.duration);
+  const t0 = notes.reduce((m, n) => Math.min(m, n.startTime), Infinity);
+  const nBars = Math.ceil((endT - t0) / barSec);
+  if (nBars < 2) return summary;
 
-  // Group IV: Shock -> dissonance and Circle of Fifths rupture
-  q[6] = Math.max(0.0, Math.min(1.0, diss));
-  q[10] = Math.max(0.0, Math.min(1.0, 0.6 * diss + 0.4 * torusDist));
-  q[11] = Math.max(0.0, Math.min(1.0, 0.7 * diss + 0.3 * synco));
+  const bars: MusicFeatures[] = [];
+  for (let b = 0; b < nBars; b++) {
+    const lo = t0 + b * barSec;
+    const hi = lo + barSec;
+    const inBar = notes
+      .filter((n) => n.startTime >= lo && n.startTime < hi)
+      .map((n) => ({ ...n, startTime: n.startTime - lo }));
+    if (inBar.length === 0) {
+      bars.push({ torusDistance: summary.torusDistance, dissonance: 0.0, syncopation: 0.0, restRatio: 1.0, bpm: summary.bpm });
+    } else {
+      const f = extractMusicSummary(inBar);
+      // Rest ratio is measured against the fixed bar length, not the span of the notes present.
+      const active = inBar.reduce((a, n) => a + Math.min(n.duration, barSec), 0.0);
+      bars.push({ ...f, restRatio: clamp01(1.0 - active / barSec), bpm: summary.bpm });
+    }
+  }
+  return { ...summary, barFeatures: bars };
+}
 
-  // Momentum p >= 0
-  p[0] = normBpm * 1.5;
-  p[2] = rest * 0.9;
-  p[6] = diss * 1.6;
-  p[11] = diss * 1.8 + torusDist;
+/**
+ * Forward Music Functor F_music: Maps musical features to 24D USIR symplectic state z = (q, p).
+ * With >= 2 barFeatures all 12 momentum coordinates are the RMS bar-to-bar change of the per-bar
+ * elements; otherwise p falls back to the legacy 4-coordinate proxy.
+ */
+export function musicFunctorForward(features: MusicFeatures): number[] {
+  const t = musicQAndTerms(features);
+  let p: number[];
+  const bars = features.barFeatures ?? [];
+  if (bars.length >= 2) {
+    p = momentumFromWindowSeries(bars.map((bf) => musicQAndTerms(bf).q));
+  } else {
+    p = new Array<number>(12).fill(0);
+    p[0] = t.normBpm * 1.5;
+    p[2] = t.rest * 0.9;
+    p[6] = t.diss * 1.6;
+    p[11] = t.diss * 1.8 + t.torusDist;
+  }
+  return [...t.q, ...p];
+}
 
-  return [...q, ...p];
+const MAJOR_SCALE = [0, 2, 4, 5, 7, 9, 11];
+// Low-discrepancy (golden-ratio family) sequences: deterministic and identical to the Python port.
+const PHI = 0.6180339887498949;
+const PLASTIC = 0.7548776662466927;
+const PLASTIC2 = 0.5698402909980532;
+const SILVER = 0.3819660112501051;
+const frac = (x: number): number => x - Math.floor(x);
+
+/**
+ * 24D-driven note sequence on an eighth-note grid. Flux sets onset density, Void removes slots
+ * (real rests), Lattice damps leaps (voice-leading), Shock drives leaps / circle-of-fifths tonic
+ * motion / tritone resolution, syncopation displaces onsets by a quarter beat.
+ */
+export function synthesizeMusicSequence(
+  q: number[],
+  p: number[],
+  bpm: number,
+  harmonicTension: number,
+  restInterval: number,
+  solitonAccentGain: number,
+  nSlots = 16
+): WebAudioNoteDirective[] {
+  const beatSec = 60.0 / bpm;
+  const slotSec = beatSec / 2.0;
+  const flux = 0.5 * q[0]! + 0.3 * q[3]! + 0.2 * q[7]!;
+  const lattice = (q[1]! + q[4]! + q[8]!) / 3.0;
+  const density = Math.max(0.1, Math.min(1.0, 0.35 + 0.6 * flux - 0.7 * restInterval));
+  const leapProb = Math.max(
+    0.0,
+    Math.min(0.95, 0.1 + 0.8 * harmonicTension * (1.0 - 0.5 * lattice) + 0.3 * Math.tanh(p[11]!))
+  );
+  const leapSize = 2 + Math.floor(harmonicTension * 4.0);
+  const fifthsSteps = Math.floor(q[10]! * 3.0);
+  const syncoProb = Math.max(0.0, Math.min(0.9, 0.8 * q[7]! + 0.2 * Math.tanh(p[7]!)));
+  const gainBase = Math.max(0.1, Math.min(1.0, 0.4 + 0.3 * solitonAccentGain));
+
+  let onsets: number[] = [];
+  for (let sl = 0; sl < nSlots; sl++) {
+    if (frac(sl * PHI + 0.5) < density) onsets.push(sl);
+  }
+  if (onsets.length === 0) onsets = [0];
+
+  const seq: WebAudioNoteDirective[] = [];
+  let degree = 0;
+  for (let k = 0; k < onsets.length; k++) {
+    const slot = onsets[k]!;
+    const phase = Math.floor(k / 4);
+    let tonic = 60 + ((7 * fifthsSteps * phase) % 12);
+    if (tonic > 66) tonic -= 12;
+    const direction = frac(k * PLASTIC2 + 0.1) < 0.5 ? 1 : -1;
+    if (frac(k * PLASTIC + 0.2) < leapProb) {
+      degree += direction * leapSize;
+    } else {
+      degree += direction;
+    }
+    degree = Math.max(-7, Math.min(14, degree));
+    const octave = Math.floor(degree / 7);
+    const idx = degree - octave * 7;
+    let pitch = tonic + 12 * octave + MAJOR_SCALE[idx]!;
+    if (harmonicTension > 0.6 && k % 4 === 2) {
+      pitch = tonic + 6;
+    } else if (harmonicTension > 0.6 && k % 4 === 3) {
+      pitch = tonic + 7;
+    }
+    pitch = Math.max(36, Math.min(96, pitch));
+
+    const onsetOffset = frac(k * SILVER + 0.3) < syncoProb ? beatSec / 4.0 : 0.0;
+    const duration = slotSec * (1.0 - restInterval * 0.5);
+    const gain = Math.max(0.1, Math.min(1.0, gainBase + (k % 4 === 0 ? 0.2 * solitonAccentGain : 0.0)));
+    seq.push({ note: pitch, time: slot * slotSec + onsetOffset, duration, gain });
+  }
+  return seq;
 }
 
 /**
@@ -646,32 +836,14 @@ export function musicFunctorInverse(z24d: number[] | Float32Array | Float64Array
     )
   );
 
-  // WebAudio Sequence Synthesis
-  const baseScale = [60, 62, 64, 67, 69]; // Pentatonic baseline (C, D, E, G, A)
-  const webAudioSequence: WebAudioNoteDirective[] = [];
-  const beatSec = 60.0 / bpm;
-  let currTime = 0.0;
-
-  for (let step = 0; step < 8; step++) {
-    // Pitch selection: Higher shock injects chromatic tension
-    const scaleIdx = step % baseScale.length;
-    let pitch = baseScale[scaleIdx]!;
-    if (harmonicTension > 0.5 && step % 3 === 2) {
-      pitch += 1; // Semitone dissonant step
-    }
-
-    const duration = beatSec * (1.0 - restInterval * 0.6);
-    const gain = Math.max(0.1, Math.min(1.0, 0.4 + 0.3 * solitonAccentGain));
-
-    webAudioSequence.push({
-      note: pitch,
-      time: currTime,
-      duration,
-      gain,
-    });
-
-    currTime += beatSec;
-  }
+  const webAudioSequence = synthesizeMusicSequence(
+    q.map((v) => v || 0),
+    p.map((v) => v || 0),
+    bpm,
+    harmonicTension,
+    restInterval,
+    solitonAccentGain
+  );
 
   return {
     bpm,

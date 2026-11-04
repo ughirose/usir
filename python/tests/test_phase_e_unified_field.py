@@ -337,7 +337,7 @@ def test_music_functor_inverse_sequence():
     z[0] = 0.5
     res = music_functor_inverse(z)
     assert "web_audio_sequence" in res
-    assert len(res["web_audio_sequence"]) == 8
+    assert 1 <= len(res["web_audio_sequence"]) <= 16
     first = res["web_audio_sequence"][0]
     assert "note" in first and "time" in first and "duration" in first and "gain" in first
 
@@ -370,3 +370,87 @@ def test_toulmin_progressing_argument_is_not_tautology():
     assert res.tautology_count == 0
     assert res.warrant_score > 0.0
     assert res.u_toulmin < evaluate_toulmin_components(TAUTOLOGY_TEXT).u_toulmin
+
+
+# ==============================================================================
+# Conjugate momentum from window series and 24D-driven music sequence
+# ==============================================================================
+
+def _patch(chiaro, color, quad, gabor):
+    return {
+        "gabor_frequencies": gabor,
+        "color_entropy": color,
+        "chiaroscuro_gradient": chiaro,
+        "quadtree_depth_entropy": quad,
+        "saliency_scanpath": [{"x": 0.1, "y": 0.1, "intensity": 0.5}, {"x": 0.1 + chiaro * 0.5, "y": 0.4, "intensity": 0.5}],
+    }
+
+
+def test_visual_momentum_all_twelve_dims_from_patches():
+    patches = [
+        _patch(0.1, 0.2, 0.3, [0.1, 0.2, 0.3, 0.4]),
+        _patch(0.7, 0.6, 0.8, [0.5, 0.1, 0.2, 0.9]),
+        _patch(0.3, 0.9, 0.1, [0.2, 0.8, 0.1, 0.3]),
+    ]
+    feats = {**patches[0], "patch_features": patches}
+    z = visual_functor_forward_24d(feats)
+    p = z[12:]
+    assert p.shape == (12,)
+    assert np.all(p >= 0.0)
+    assert np.count_nonzero(p) == 12
+    assert not np.allclose(p, z[:12])  # not a copy of static q
+
+
+def test_music_momentum_all_twelve_dims_from_bars():
+    bars = [
+        {"torus_distance": 0.1, "dissonance": 0.1, "syncopation": 0.2, "rest_ratio": 0.1, "bpm": 80},
+        {"torus_distance": 0.6, "dissonance": 0.5, "syncopation": 0.7, "rest_ratio": 0.4, "bpm": 120},
+        {"torus_distance": 0.3, "dissonance": 0.9, "syncopation": 0.1, "rest_ratio": 0.8, "bpm": 100},
+    ]
+    z = music_functor_forward_24d({**bars[0], "bar_features": bars})
+    assert np.count_nonzero(z[12:]) == 12
+
+
+def test_momentum_is_zero_for_constant_window_series():
+    bar = {"torus_distance": 0.3, "dissonance": 0.2, "syncopation": 0.2, "rest_ratio": 0.2, "bpm": 100}
+    z = music_functor_forward_24d({**bar, "bar_features": [bar, bar, bar]})
+    assert np.allclose(z[12:], 0.0)
+
+
+def _z_music(rest, diss, synco=0.3, bpm=110.0):
+    return music_functor_forward_24d(
+        {"torus_distance": 0.4, "dissonance": diss, "syncopation": synco, "rest_ratio": rest, "bpm": bpm}
+    )
+
+
+def test_music_inverse_void_removes_notes():
+    dense = music_functor_inverse(_z_music(rest=0.05, diss=0.3))["web_audio_sequence"]
+    sparse = music_functor_inverse(_z_music(rest=0.9, diss=0.3))["web_audio_sequence"]
+    assert len(sparse) < len(dense)
+    assert len(sparse) >= 1
+
+
+def test_music_inverse_is_not_a_fixed_pentatonic_loop():
+    seq = music_functor_inverse(_z_music(rest=0.05, diss=0.5, synco=0.8, bpm=170.0))["web_audio_sequence"]
+    notes = [n["note"] for n in seq]
+    assert len(set(notes)) > 5
+    assert notes != [[60, 62, 64, 67, 69][i % 5] for i in range(len(notes))]
+
+
+def test_music_inverse_shock_increases_leaps_and_tritone():
+    calm = music_functor_inverse(_z_music(rest=0.1, diss=0.05))["web_audio_sequence"]
+    tense = music_functor_inverse(_z_music(rest=0.1, diss=0.95))["web_audio_sequence"]
+
+    def mean_leap(seq):
+        n = [x["note"] for x in seq]
+        return float(np.mean([abs(b - a) for a, b in zip(n, n[1:])]))
+
+    assert mean_leap(tense) > mean_leap(calm)
+
+
+def test_music_inverse_is_deterministic_and_time_ordered_slots():
+    z = _z_music(rest=0.2, diss=0.4)
+    a = music_functor_inverse(z)["web_audio_sequence"]
+    b = music_functor_inverse(z)["web_audio_sequence"]
+    assert a == b
+    assert all(n["duration"] > 0.0 and 36 <= n["note"] <= 96 for n in a)

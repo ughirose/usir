@@ -472,23 +472,14 @@ class MomentumBank:
 # 4. Universal Cross-Modal Visual and Music Functors (Python Interop)
 # ==============================================================================
 
-def visual_functor_forward_24d(visual_features: Dict[str, Any]) -> np.ndarray:
-    r"""Maps 2D image features to 24D USIR symplectic state z = (q, p).
-
-    Expected features:
-    - gabor_frequencies: list of 4 floats [E_0, E_45, E_90, E_135]
-    - color_entropy: float in [0, 1]
-    - chiaroscuro_gradient: float in [0, 1]
-    - quadtree_depth_entropy: float in [0, 1]
-    - saliency_scanpath: list of dicts with 'x', 'y', 'intensity'
-    """
+def _visual_q_and_terms(visual_features: Dict[str, Any]) -> Tuple[np.ndarray, Dict[str, float]]:
+    """12-element position q for one image (or one local patch) plus the terms used by the legacy p proxy."""
     gabor = np.asarray(visual_features.get("gabor_frequencies", [0.25, 0.25, 0.25, 0.25]), dtype=np.float64)
     color_ent = float(visual_features.get("color_entropy", 0.5))
     chiaro = float(visual_features.get("chiaroscuro_gradient", 0.4))
     quad_ent = float(visual_features.get("quadtree_depth_entropy", 0.5))
     scanpath = visual_features.get("saliency_scanpath", [])
 
-    # Saliency path motion dynamics
     if len(scanpath) >= 2:
         dists = [
             math.hypot(scanpath[i]["x"] - scanpath[i - 1]["x"], scanpath[i]["y"] - scanpath[i - 1]["y"])
@@ -499,37 +490,60 @@ def visual_functor_forward_24d(visual_features: Dict[str, Any]) -> np.ndarray:
         saccade_mean = 0.2
 
     gabor_var = float(np.var(gabor))
+    margin_ratio = float(visual_features.get("composition_margin_ratio", 1.0 - chiaro))
 
-    # 12 Position coordinates q in [0, 1]
     q = np.zeros(12, dtype=np.float64)
-    # Group I: Flux (Sg-01, Sg-04, Sg-08) -> spatial frequency dynamics and saccade pace
+    # Group I: Flux
     q[0] = np.clip(0.5 * saccade_mean + 0.5 * gabor_var * 4.0, 0.0, 1.0)
     q[3] = np.clip(0.4 * gabor[0] + 0.6 * saccade_mean, 0.0, 1.0)
     q[7] = np.clip(0.6 * gabor_var + 0.4 * color_ent, 0.0, 1.0)
-
-    # Group II: Lattice (Sg-02, Sg-05, Sg-09) -> Quadtree depth entropy and structural symmetry
+    # Group II: Lattice
     q[1] = np.clip(quad_ent, 0.0, 1.0)
     q[4] = np.clip(0.5 * (1.0 - gabor_var * 2.0) + 0.5 * quad_ent, 0.0, 1.0)
     q[8] = np.clip(0.7 * (1.0 - color_ent) + 0.3 * quad_ent, 0.0, 1.0)
-
-    # Group III: Void (Sg-03, Sg-06, Sg-10) -> Composition margin & low density
-    margin_ratio = float(visual_features.get("composition_margin_ratio", 1.0 - chiaro))
+    # Group III: Void
     q[2] = np.clip(margin_ratio, 0.0, 1.0)
     q[5] = np.clip(0.6 * margin_ratio + 0.4 * (1.0 - quad_ent), 0.0, 1.0)
     q[9] = np.clip(0.8 * margin_ratio + 0.2 * (1.0 - chiaro), 0.0, 1.0)
-
-    # Group IV: Shock (Sg-04/07/11/12) -> Chiaroscuro gradient and high-frequency rupture
+    # Group IV: Shock
     q[6] = np.clip(chiaro, 0.0, 1.0)
     q[10] = np.clip(0.7 * chiaro + 0.3 * color_ent, 0.0, 1.0)
     q[11] = np.clip(0.8 * chiaro + 0.2 * gabor_var * 5.0, 0.0, 1.0)
+    return q, {"saccade_mean": saccade_mean, "gabor_var": gabor_var, "chiaro": chiaro, "margin_ratio": margin_ratio}
 
-    # 12 Momentum coordinates p >= 0
-    p = np.zeros(12, dtype=np.float64)
-    p[0] = float(saccade_mean * 1.5)
-    p[2] = float(margin_ratio * 0.8)
-    p[6] = float(chiaro * 1.8)
-    p[11] = float(chiaro * 2.0 + gabor_var)
 
+def momentum_from_window_series(q_series: Sequence[np.ndarray]) -> np.ndarray:
+    r"""p_i = sqrt(1/(M-1) sum_m (q_{m+1,i} - q_{m,i})^2): window-to-window RMS velocity of each element.
+
+    Needs M >= 2 windows; returns zeros otherwise. p >= 0 by construction and is not a copy of static q.
+    """
+    if len(q_series) < 2:
+        return np.zeros(12, dtype=np.float64)
+    arr = np.asarray(q_series, dtype=np.float64)
+    diffs = np.diff(arr, axis=0)
+    return np.sqrt(np.mean(diffs ** 2, axis=0))
+
+
+def visual_functor_forward_24d(visual_features: Dict[str, Any]) -> np.ndarray:
+    r"""Maps 2D image features to 24D USIR symplectic state z = (q, p).
+
+    Expected features: gabor_frequencies, color_entropy, chiaroscuro_gradient, quadtree_depth_entropy,
+    saliency_scanpath, composition_margin_ratio (summary of the whole image), and optionally
+    patch_features: ordered list of the same feature dicts for local blocks / fixation patches.
+    With >= 2 patches all 12 momentum coordinates are the RMS step-to-step change of the per-patch
+    elements. Without patches the input has no temporal information and p falls back to the legacy
+    4-coordinate proxy (p[1,3,4,5,7,8,9,10] stay 0.0: not measurable from a summary).
+    """
+    q, t = _visual_q_and_terms(visual_features)
+    patches = visual_features.get("patch_features") or []
+    if len(patches) >= 2:
+        p = momentum_from_window_series([_visual_q_and_terms(pf)[0] for pf in patches])
+    else:
+        p = np.zeros(12, dtype=np.float64)
+        p[0] = float(t["saccade_mean"] * 1.5)
+        p[2] = float(t["margin_ratio"] * 0.8)
+        p[6] = float(t["chiaro"] * 1.8)
+        p[11] = float(t["chiaro"] * 2.0 + t["gabor_var"])
     return np.concatenate([q, p])
 
 
@@ -557,54 +571,129 @@ def visual_functor_inverse(z_24d: np.ndarray) -> Dict[str, float]:
     }
 
 
-def music_functor_forward_24d(music_features: Dict[str, Any]) -> np.ndarray:
-    r"""Maps note/chord sequence features to 24D USIR symplectic state z = (q, p).
-
-    Expected features:
-    - torus_distance: Circle of Fifths torus distance in [0, 1]
-    - dissonance: Sensory/interval dissonance in [0, 1]
-    - syncopation: Metric syncopation degree in [0, 1]
-    - rest_ratio: Void silence ratio in [0, 1]
-    - bpm: Base tempo in BPM (e.g. 60 - 180)
-    """
+def _music_q_and_terms(music_features: Dict[str, Any]) -> Tuple[np.ndarray, Dict[str, float]]:
     torus_dist = float(music_features.get("torus_distance", 0.3))
     diss = float(music_features.get("dissonance", 0.2))
     synco = float(music_features.get("syncopation", 0.25))
     rest = float(music_features.get("rest_ratio", 0.2))
     bpm = float(music_features.get("bpm", 100.0))
-
     norm_bpm = float(np.clip((bpm - 60.0) / 120.0, 0.0, 1.0))
 
     q = np.zeros(12, dtype=np.float64)
-    # Group I: Flux -> syncopation and tempo momentum
     q[0] = np.clip(0.6 * norm_bpm + 0.4 * synco, 0.0, 1.0)
     q[3] = np.clip(0.5 * synco + 0.5 * torus_dist, 0.0, 1.0)
     q[7] = np.clip(0.7 * synco + 0.3 * norm_bpm, 0.0, 1.0)
-
-    # Group II: Lattice -> harmonic consonance (1 - dissonance) and key stability
     consonance = 1.0 - diss
     q[1] = np.clip(consonance, 0.0, 1.0)
     q[4] = np.clip(0.6 * consonance + 0.4 * (1.0 - torus_dist), 0.0, 1.0)
     q[8] = np.clip(0.8 * consonance + 0.2 * (1.0 - synco), 0.0, 1.0)
-
-    # Group III: Void -> rest ratio & pause spacing
     q[2] = np.clip(rest, 0.0, 1.0)
     q[5] = np.clip(0.7 * rest + 0.3 * (1.0 - norm_bpm), 0.0, 1.0)
     q[9] = np.clip(0.9 * rest + 0.1 * (1.0 - diss), 0.0, 1.0)
-
-    # Group IV: Shock -> dissonance and Circle of Fifths rupture
     q[6] = np.clip(diss, 0.0, 1.0)
     q[10] = np.clip(0.6 * diss + 0.4 * torus_dist, 0.0, 1.0)
     q[11] = np.clip(0.7 * diss + 0.3 * synco, 0.0, 1.0)
+    return q, {"norm_bpm": norm_bpm, "rest": rest, "diss": diss, "torus_dist": torus_dist}
 
-    # Momentum p >= 0
-    p = np.zeros(12, dtype=np.float64)
-    p[0] = float(norm_bpm * 1.5)
-    p[2] = float(rest * 0.9)
-    p[6] = float(diss * 1.6)
-    p[11] = float(diss * 1.8 + torus_dist)
 
+def music_functor_forward_24d(music_features: Dict[str, Any]) -> np.ndarray:
+    r"""Maps note/chord sequence features to 24D USIR symplectic state z = (q, p).
+
+    Expected features: torus_distance, dissonance, syncopation, rest_ratio, bpm (whole piece), and
+    optionally bar_features: ordered per-bar (time-window) feature dicts of the same keys. With >= 2
+    bars all 12 momentum coordinates are the RMS bar-to-bar change of the per-bar elements. Without
+    bars p falls back to the legacy 4-coordinate proxy (the other 8 are not measurable from a summary).
+    """
+    q, t = _music_q_and_terms(music_features)
+    bars = music_features.get("bar_features") or []
+    if len(bars) >= 2:
+        p = momentum_from_window_series([_music_q_and_terms(bf)[0] for bf in bars])
+    else:
+        p = np.zeros(12, dtype=np.float64)
+        p[0] = float(t["norm_bpm"] * 1.5)
+        p[2] = float(t["rest"] * 0.9)
+        p[6] = float(t["diss"] * 1.6)
+        p[11] = float(t["diss"] * 1.8 + t["torus_dist"])
     return np.concatenate([q, p])
+
+
+_MAJOR_SCALE = (0, 2, 4, 5, 7, 9, 11)
+# Low-discrepancy (golden-ratio family) sequences: deterministic, monotone in their threshold,
+# and bit-identical between the Python and TypeScript implementations.
+_PHI = 0.6180339887498949
+_PLASTIC = 0.7548776662466927
+_PLASTIC2 = 0.5698402909980532
+_SILVER = 0.3819660112501051
+
+
+def _frac(x: float) -> float:
+    return x - math.floor(x)
+
+
+def _synthesize_music_sequence(
+    q: np.ndarray,
+    p: np.ndarray,
+    bpm: float,
+    harmonic_tension: float,
+    rest_interval: float,
+    soliton_accent_gain: float,
+    n_slots: int = 16,
+) -> List[Dict[str, float]]:
+    """24D-driven note sequence on an eighth-note grid of n_slots slots.
+
+    Flux (q0,q3,q7)      -> onset density: a slot sounds when a golden-ratio sequence value is below it.
+    Void (rest_interval) -> lowers density; skipped slots are real rests (no note is emitted).
+    Lattice (q1,q4,q8)   -> voice-leading: stepwise motion, damps leaps.
+    Shock (tension,q10)  -> leap probability/size, circle-of-fifths tonic motion every 4 notes,
+                            tritone (+6) on the third note of a group resolved up a semitone to the fifth.
+    Syncopation (q7,p7)  -> onsets displaced by a quarter beat.
+    """
+    beat_sec = 60.0 / bpm
+    slot_sec = beat_sec / 2.0
+    flux = 0.5 * q[0] + 0.3 * q[3] + 0.2 * q[7]
+    lattice = (q[1] + q[4] + q[8]) / 3.0
+    density = float(np.clip(0.35 + 0.6 * flux - 0.7 * rest_interval, 0.1, 1.0))
+    leap_prob = float(np.clip(0.1 + 0.8 * harmonic_tension * (1.0 - 0.5 * lattice) + 0.3 * math.tanh(p[11]), 0.0, 0.95))
+    leap_size = 2 + int(math.floor(harmonic_tension * 4.0))
+    fifths_steps = int(math.floor(q[10] * 3.0))
+    synco_prob = float(np.clip(0.8 * q[7] + 0.2 * math.tanh(p[7]), 0.0, 0.9))
+    gain_base = float(np.clip(0.4 + 0.3 * soliton_accent_gain, 0.1, 1.0))
+
+    onsets = [sl for sl in range(n_slots) if _frac(sl * _PHI + 0.5) < density]
+    if not onsets:
+        onsets = [0]
+
+    seq: List[Dict[str, float]] = []
+    degree = 0
+    for k, slot in enumerate(onsets):
+        phase = k // 4
+        tonic = 60 + ((7 * fifths_steps * phase) % 12)
+        if tonic > 66:
+            tonic -= 12
+        direction = 1 if _frac(k * _PLASTIC2 + 0.1) < 0.5 else -1
+        if _frac(k * _PLASTIC + 0.2) < leap_prob:
+            degree += direction * leap_size
+        else:
+            degree += direction
+        degree = max(-7, min(14, degree))
+        octave, idx = divmod(degree, 7)
+        pitch = tonic + 12 * octave + _MAJOR_SCALE[idx]
+        if harmonic_tension > 0.6 and k % 4 == 2:
+            pitch = tonic + 6
+        elif harmonic_tension > 0.6 and k % 4 == 3:
+            pitch = tonic + 7
+        pitch = max(36, min(96, pitch))
+
+        onset_offset = beat_sec / 4.0 if _frac(k * _SILVER + 0.3) < synco_prob else 0.0
+        duration = slot_sec * (1.0 - rest_interval * 0.5)
+        gain = float(np.clip(gain_base + (0.2 * soliton_accent_gain if k % 4 == 0 else 0.0), 0.1, 1.0))
+        seq.append({
+            "note": int(pitch),
+            "time": float(slot * slot_sec + onset_offset),
+            "duration": float(duration),
+            "gain": gain,
+        })
+    return seq
 
 
 def music_functor_inverse(z_24d: np.ndarray) -> Dict[str, Any]:
@@ -627,25 +716,10 @@ def music_functor_inverse(z_24d: np.ndarray) -> Dict[str, Any]:
     rubato_depth = float(np.clip(0.1 + 0.5 * q[7] + 0.2 * math.tanh(p[7]), 0.0, 1.0))
     soliton_accent_gain = float(np.clip(0.6 * q[11] + 0.4 * q[6] + 0.3 * math.tanh(p[11]), 0.0, 2.0))
 
-    # WebAudio sequence synthesis
-    base_scale = [60, 62, 64, 67, 69]
-    web_audio_seq = []
-    beat_sec = 60.0 / bpm
-    curr_time = 0.0
-    for step in range(8):
-        scale_idx = step % len(base_scale)
-        pitch = base_scale[scale_idx]
-        if harmonic_tension > 0.5 and step % 3 == 2:
-            pitch += 1
-        duration = beat_sec * (1.0 - rest_interval * 0.6)
-        gain = float(np.clip(0.4 + 0.3 * soliton_accent_gain, 0.1, 1.0))
-        web_audio_seq.append({
-            "note": int(pitch),
-            "time": float(curr_time),
-            "duration": float(duration),
-            "gain": float(gain),
-        })
-        curr_time += beat_sec
+    web_audio_seq = _synthesize_music_sequence(
+        q, p, bpm=bpm, harmonic_tension=harmonic_tension, rest_interval=rest_interval,
+        soliton_accent_gain=soliton_accent_gain,
+    )
 
     return {
         "bpm": bpm,
