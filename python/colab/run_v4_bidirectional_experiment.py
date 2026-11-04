@@ -1230,6 +1230,19 @@ def generate_experiment_report_markdown(
     return "\n".join(lines)
 
 
+def _make_hook(seed: int, decoder: Any, reseed: bool, p_jitter: float):
+    """Per-paragraph hook: reseed torch; optionally scale integrator.p by (1 + p_jitter) (noise-floor control)."""
+    base = _make_reseed_hook(seed) if (reseed and TORCH_AVAILABLE) else None
+
+    def hook(k: int) -> None:
+        if base is not None:
+            base(k)
+        if p_jitter and decoder is not None:
+            decoder.integrator.p = decoder.integrator.p * (1.0 + p_jitter)
+
+    return hook if (base is not None or p_jitter) else None
+
+
 def _make_reseed_hook(seed: int):
     import torch
 
@@ -1271,6 +1284,8 @@ def run_longform_director(
     steering: bool = True,
     min_clauses_per_paragraph: int = 0,
     reseed_per_paragraph: bool = False,
+    proposal_injection: bool = False,
+    p_jitter: float = 0.0,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
@@ -1312,6 +1327,11 @@ def run_longform_director(
             gain_max=5.0, temp_min=0.85, temp_max=1.10,
             repeat_guard=steering, ascii_guard=steering,
             repeat_window_chars=400, script_guard=steering,
+            # Proposal-side momentum injection (Climax only): spread temperatures, short-clause bias, N=8 pool,
+            # sentence closing after clause 28, trailing "、" -> "。".
+            spread_temps=proposal_injection, short_bias=proposal_injection,
+            climax_particles=8 if proposal_injection else None,
+            close_after=28 if proposal_injection else None, normalize_end=proposal_injection,
         )
         generator = "llm_clause_smc"
         decoder.verbose = verbose
@@ -1327,7 +1347,7 @@ def run_longform_director(
         min_clauses_per_paragraph=min_clauses_per_paragraph,
         # Steering gain/temperature act only in the Climax paragraph and the one after it.
         climax_only_steering=steering,
-        paragraph_hook=_make_reseed_hook(seed) if (reseed_per_paragraph and TORCH_AVAILABLE) else None,
+        paragraph_hook=_make_hook(seed, decoder, reseed_per_paragraph, p_jitter),
     )
     wall = time.time() - t0
 

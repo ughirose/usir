@@ -815,8 +815,37 @@ class AdaptiveBAOABIntegrator:
         }
 
 
-# Simplified-Chinese-only characters (their Japanese forms differ) and the full-width comma.
-_SIMPLIFIED_ONLY_RE = re.compile("[这们个说时对从为关还经现样么该应让给过开书长门车东马鸟鱼风飞发，]")
+def has_non_jis_kanji(text: str) -> bool:
+    """True if text contains an ideograph outside JIS X 0208 (strict Shift_JIS).
+
+    Simplified-Chinese-only forms (这, 们, 变, ...) are not encodable in JIS X 0208, so no character list
+    has to be maintained: the boundary is the Japanese kanji standard itself.
+    """
+    for ch in text:
+        o = ord(ch)
+        if ch in "\uff0c\uff0e":  # full-width comma / full stop: Chinese-style punctuation, not 、。
+            return True
+        if 0x4E00 <= o <= 0x9FFF or 0x3400 <= o <= 0x4DBF or 0xF900 <= o <= 0xFAFF:
+            try:
+                ch.encode("shift_jis")
+            except UnicodeEncodeError:
+                return True
+    return False
+
+
+def count_non_jis_kanji(text: str) -> int:
+    n = 0
+    for ch in text:
+        o = ord(ch)
+        if ch in "\uff0c\uff0e":
+            n += 1
+            continue
+        if 0x4E00 <= o <= 0x9FFF or 0x3400 <= o <= 0x4DBF or 0xF900 <= o <= 0xFAFF:
+            try:
+                ch.encode("shift_jis")
+            except UnicodeEncodeError:
+                n += 1
+    return n
 
 
 class ClauseTwistedSMCDecoder:
@@ -861,7 +890,36 @@ class ClauseTwistedSMCDecoder:
         eos_penalty: float = 10.0,
         repeat_window_chars: Optional[int] = None,
         script_guard: bool = False,
+        spread_temps: bool = False,
+        temp_spread_lo: float = 0.7,
+        temp_spread_hi_max: float = 1.3,
+        short_bias: bool = False,
+        period_bias_max: float = 4.0,
+        climax_particles: Optional[int] = None,
+        close_after: Optional[int] = None,
+        close_period_boost: float = 5.0,
+        normalize_end: bool = False,
     ) -> None:
+        # Proposal-side momentum injection (Climax / steering_active only):
+        #   spread_temps    : per-candidate temperatures linspace(temp_spread_lo, t_hi), t_hi grows with ln(||p||/p_ref)
+        #   short_bias      : per-row bias that raises the "。" logit and lowers "、" (rows ordered short -> long),
+        #                     scaled by the momentum factor, so short assertive clauses are always in the pool
+        #   climax_particles: candidate pool size used while steering is active (director toggles n_particles)
+        #   close_after     : from this clause index on, "、" is suppressed and "。" boosted (finish the sentence)
+        #   normalize_end   : a text that still ends with "、" gets its last mark replaced by "。"
+        self.spread_temps = bool(spread_temps)
+        self.temp_spread_lo = float(temp_spread_lo)
+        self.temp_spread_hi_max = float(temp_spread_hi_max)
+        self.short_bias = bool(short_bias)
+        self.period_bias_max = float(period_bias_max)
+        self.climax_particles = None if climax_particles is None else int(climax_particles)
+        self.close_after = None if close_after is None else int(close_after)
+        self.close_period_boost = float(close_period_boost)
+        self.normalize_end = bool(normalize_end)
+        self._force_close = False
+        self._punct_id_cache = None
+        self.discharge_norm = None
+        self.discharge_ref = 0.5
         # repeat_window_chars: window used by repeat_guard (default: the style window / 120 chars)
         # script_guard       : also block candidates containing simplified-Chinese-only characters or the
         #                      full-width comma (script collapse into Chinese), in addition to latin words
@@ -900,6 +958,7 @@ class ClauseTwistedSMCDecoder:
         self.stats: Dict[str, int] = {"candidates": 0, "incomplete": 0, "logprob_errors": 0}
         self.dim = int(dim)
         self.n_particles = int(n_particles)
+        self.base_n_particles = self.n_particles
         self.temperatures = list(temperatures)[:self.n_particles]
         while len(self.temperatures) < self.n_particles:
             self.temperatures.append(0.72)
@@ -997,7 +1056,7 @@ class ClauseTwistedSMCDecoder:
             if self.ascii_guard and not ctx_has_latin and re.search(r"[A-Za-z]{3,}", c):
                 blocked[i] = True
                 continue
-            if self.script_guard and _SIMPLIFIED_ONLY_RE.search(c):
+            if self.script_guard and has_non_jis_kanji(c):
                 blocked[i] = True
                 continue
             if self.repeat_guard and len(body) >= n:
@@ -1007,6 +1066,57 @@ class ClauseTwistedSMCDecoder:
                         blocked[i] = True
                         break
         return blocked
+
+    def _momentum_factor(self) -> float:
+        """Strength of the proposal-side injection in [0, 1).
+
+        With a released momentum (discharge_norm set by the director) the factor is 1 - exp(-||p_discharge|| / d0):
+        smooth and non-saturating, so different banked amounts give different proposal distributions.
+        Without it, a log-scale function of ||p|| (0 at p_ref, 1 at 5 p_ref) is used.
+        """
+        if self.discharge_norm is not None:
+            return float(1.0 - math.exp(-max(0.0, self.discharge_norm) / self.discharge_ref))
+        p_norm = float(np.linalg.norm(np.asarray(self.integrator.p, dtype=np.float64)))
+        if p_norm <= self.p_ref:
+            return 0.0
+        return float(np.clip(math.log(p_norm / self.p_ref) / math.log(5.0), 0.0, 1.0))
+
+    def _candidate_temperatures(self, P: int) -> List[float]:
+        """Temperature of each of the P candidates.
+
+        Spread mode (steering active): linspace(lo, t_hi) with t_hi = 1.0 + 0.3 * momentum factor ... capped at
+        temp_spread_hi_max, so a large ||p|| puts bold (high-temperature) candidates into the pool.
+        """
+        if self.spread_temps and self.steering_active:
+            t_hi = min(self.temp_spread_hi_max, 1.0 + 0.3 * self._momentum_factor() * (self.temp_spread_hi_max - 1.0) / 0.3)
+            t_hi = max(t_hi, self.temp_spread_lo)
+            if P == 1:
+                return [self.temp_spread_lo]
+            return [float(self.temp_spread_lo + (t_hi - self.temp_spread_lo) * i / (P - 1)) for i in range(P)]
+        base = [self.temperatures[i % len(self.temperatures)] for i in range(P)]
+        sc = self._temperature_scale()
+        return [float(t * sc) for t in base]
+
+    def _row_period_bias(self, P: int) -> List[float]:
+        """Per-row logit bias for "。" (and the opposite for "、"); 0 when inactive."""
+        if not (self.short_bias and self.steering_active) or P < 2:
+            return [0.0] * P
+        mf = self._momentum_factor()
+        return [float(self.period_bias_max * mf * i / (P - 1)) for i in range(P)]
+
+    def _punct_ids(self):
+        if self._punct_id_cache is None:
+            tk = self.tokenizer
+
+            def ids(ch):
+                try:
+                    e = tk.encode(ch, add_special_tokens=False)
+                    return e if len(e) == 1 else []
+                except Exception:
+                    return []
+
+            self._punct_id_cache = (ids("。"), ids("、"))
+        return self._punct_id_cache
 
     def _temperature_scale(self) -> float:
         """Candidate-temperature multiplier tied to the momentum norm ||p|| of the integrator."""
@@ -1039,7 +1149,11 @@ class ClauseTwistedSMCDecoder:
         pad_id = getattr(self.tokenizer, "pad_token_id", None)
         if pad_id is None:
             pad_id = getattr(self.tokenizer, "eos_token_id", None)
-        temps = torch.tensor(self.temperatures[:P], dtype=torch.float32, device=device) * self._temperature_scale()
+        temps = torch.tensor(self._candidate_temperatures(P), dtype=torch.float32, device=device)
+        row_bias = torch.tensor(self._row_period_bias(P), dtype=torch.float32, device=device)
+        period_ids, comma_ids = self._punct_ids()
+        force_close = self._force_close
+        close_boost = self.close_period_boost
 
         n_ctx = inp_len
         tokenizer_ref = self.tokenizer
@@ -1067,6 +1181,21 @@ class ClauseTwistedSMCDecoder:
                     scores[:, eos_tok_ids] = scores[:, eos_tok_ids] - eos_pen
                 return scores
 
+        class _BoundaryBias(LogitsProcessor):
+            """Momentum-scaled short-clause bias and end-of-paragraph sentence closing."""
+
+            def __call__(self_inner, ids, scores):  # noqa: N805
+                if period_ids and bool((row_bias > 0).any()):
+                    scores[:, period_ids] = scores[:, period_ids] + row_bias.to(scores.dtype).unsqueeze(-1)
+                    if comma_ids:
+                        scores[:, comma_ids] = scores[:, comma_ids] - row_bias.to(scores.dtype).unsqueeze(-1)
+                if force_close:
+                    if comma_ids:
+                        scores[:, comma_ids] = scores[:, comma_ids] - 30.0
+                    if period_ids:
+                        scores[:, period_ids] = scores[:, period_ids] + close_boost
+                return scores
+
         class _RowTemp(LogitsProcessor):
             def __call__(self_inner, ids, scores):  # noqa: N805
                 return scores / temps.to(scores.dtype).unsqueeze(-1)
@@ -1078,7 +1207,7 @@ class ClauseTwistedSMCDecoder:
             "top_p": 1.0,
             "top_k": 50,
             "attention_mask": torch.ones_like(input_ids),
-            "logits_processor": [_EosPenalty(), _RowTemp()],
+            "logits_processor": [_EosPenalty(), _BoundaryBias(), _RowTemp()],
             "stopping_criteria": StoppingCriteriaList([_ClausePunctStop()]),
         }
         if pad_id is not None:
@@ -1362,8 +1491,9 @@ class ClauseTwistedSMCDecoder:
         for m in range(max_clauses):
             # Min-clause guard: EOS logits are penalised until min_clauses clauses exist.
             self._suppress_eos = m < int(min_clauses)
+            self._force_close = self.close_after is not None and m >= self.close_after
             if candidate_generator is not None:
-                cands: Optional[List[str]] = [candidate_generator(current_text, p, self.temperatures[p]) for p in range(self.n_particles)]
+                cands: Optional[List[str]] = [candidate_generator(current_text, p, self.temperatures[p % len(self.temperatures)]) for p in range(self.n_particles)]
             else:
                 cands = None
 
@@ -1379,6 +1509,8 @@ class ClauseTwistedSMCDecoder:
             telemetry.append(step_res)
             clauses.append(step_res["selected_clause"])
             current_text = step_res["next_prefix"]
+            if self.close_after is not None and m >= self.close_after and step_res["selected_clause"].rstrip().endswith("。"):
+                break  # the sentence has been closed: stop instead of generating further clauses
             if self.verbose:
                 # Streamed progress keeps long remote runs from looking idle to the gateway.
                 sys.stdout.write(
@@ -1395,6 +1527,13 @@ class ClauseTwistedSMCDecoder:
                 break
 
         self._suppress_eos = False
+        self._force_close = False
+        if self.normalize_end:
+            stripped = current_text.rstrip()
+            if stripped and stripped[-1] in "、，,":
+                current_text = stripped[:-1] + "。"
+                if clauses:
+                    clauses[-1] = clauses[-1].rstrip()[:-1] + "。" if clauses[-1].rstrip()[-1:] in ("、", "，", ",") else clauses[-1]
         return {
             "welded_text": current_text,
             "text": current_text,

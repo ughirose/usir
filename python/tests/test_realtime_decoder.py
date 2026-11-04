@@ -750,3 +750,120 @@ def test_repeat_window_can_exceed_style_window():
     long_ = ClauseTwistedSMCDecoder(dim=12, seed=0, repeat_guard=True, style_window_chars=120, repeat_window_chars=400)
     assert short.compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))["selected_clause"] == phrase
     assert long_.compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))["selected_clause"] == "霧が低く流れていた、"
+
+
+# ==============================================================================
+# Proposal-side momentum injection, JIS boundary, sentence closing
+# ==============================================================================
+
+def test_jis_boundary_flags_simplified_forms_without_a_character_list():
+    from usir_py.realtime_decoder import has_non_jis_kanji, count_non_jis_kanji
+
+    assert has_non_jis_kanji("雰囲気が一变した")        # 变: simplified form, not in JIS X 0208
+    assert has_non_jis_kanji("这座古老的寺庙")
+    assert not has_non_jis_kanji("雰囲気が一変した")
+    assert not has_non_jis_kanji("静謐な山寺の夜明けは、僧侶たちの祈りを包む。")
+    assert count_non_jis_kanji("这们变") == 3
+
+
+def test_spread_temperatures_follow_momentum_and_require_active_steering():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, spread_temps=True, p_ref=0.5)
+    dec.integrator.p = np.full(12, 0.05)
+    cold = dec._candidate_temperatures(8)
+    dec.integrator.p = np.full(12, 1.2)
+    hot = dec._candidate_temperatures(8)
+    assert cold[0] == pytest.approx(0.7) and hot[0] == pytest.approx(0.7)
+    assert hot[-1] == pytest.approx(1.3) and cold[-1] < hot[-1]
+    assert hot == sorted(hot)
+    dec.steering_active = False
+    assert dec._candidate_temperatures(4) == [dec.temperatures[i % len(dec.temperatures)] for i in range(4)]
+
+
+def test_row_period_bias_orders_rows_short_to_long_and_scales_with_momentum():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, short_bias=True, p_ref=0.5, period_bias_max=4.0)
+    dec.integrator.p = np.full(12, 1.2)
+    b = dec._row_period_bias(8)
+    assert b[0] == 0.0 and b == sorted(b) and b[-1] == pytest.approx(4.0)
+    dec.integrator.p = np.full(12, 0.05)
+    assert dec._row_period_bias(8) == [0.0] * 8
+    dec.steering_active = False
+    assert dec._row_period_bias(8) == [0.0] * 8
+
+
+def test_close_after_sets_force_close_flag_and_normalize_end_replaces_trailing_comma():
+    flags = []
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, close_after=3, normalize_end=True)
+    orig = dec.step_smc_clause
+
+    def spy(*a, **k):
+        flags.append(dec._force_close)
+        return orig(*a, **k)
+
+    dec.step_smc_clause = spy
+    res = dec.generate_with_clause_twisted_smc(
+        "", max_clauses=5, early_stop_on_punct=False,
+        candidate_generator=lambda ctx, p, t: "静かな朝、",
+    )
+    assert flags == [False, False, False, True, True]
+    assert res["welded_text"].endswith("。") and not res["welded_text"].endswith("、。")
+    assert res["clauses"][-1].endswith("。")
+    assert dec._force_close is False
+
+
+def test_director_switches_pool_size_for_climax_only():
+    from usir_py.realtime_decoder import AdaptiveBAOABIntegrator
+
+    forced = np.array([[0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]])
+    dec = ClauseTwistedSMCDecoder(integrator=AdaptiveBAOABIntegrator(dim=12, seed=0), seed=0, climax_particles=8)
+    sizes = []
+    orig = dec.generate_with_clause_twisted_smc
+
+    def spy(*a, **k):
+        sizes.append(dec.n_particles)
+        return orig(*a, **{x: v for x, v in k.items() if x != "max_clauses"}, max_clauses=2)
+
+    dec.generate_with_clause_twisted_smc = spy
+    from usir_py.hsmm_longform_director import HSMMLongformDirector
+
+    res = HSMMLongformDirector(transition_matrix=forced, seed=0).generate_longform(
+        target_paragraphs=6, decoder=dec, climax_only_steering=True
+    )
+    expected = [8 if (w == 2 or (i > 0 and res["wells"][i - 1] == 2)) else 4 for i, w in enumerate(res["wells"])]
+    assert sizes == expected
+
+
+def test_momentum_factor_uses_released_momentum_and_does_not_saturate():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, spread_temps=True, short_bias=True)
+    dec.integrator.p = np.full(12, 3.0)  # a large ||p|| would saturate the ||p||-based factor
+    dec.discharge_norm = 0.265
+    a = dec._momentum_factor()
+    dec.discharge_norm = 0.007
+    b = dec._momentum_factor()
+    assert 0.0 < b < a < 0.6
+    assert dec._candidate_temperatures(8)[-1] < dec._row_period_bias(8)[-1] + 1.3  # sanity of ranges
+    # two different banked amounts give different proposal distributions
+    dec.discharge_norm = 0.265
+    t1, b1 = dec._candidate_temperatures(8), dec._row_period_bias(8)
+    dec.discharge_norm = 0.007
+    t2, b2 = dec._candidate_temperatures(8), dec._row_period_bias(8)
+    assert t1 != t2 and b1 != b2
+    dec.discharge_norm = 0.0
+    assert dec._row_period_bias(8) == [0.0] * 8
+
+
+def test_fullwidth_comma_is_outside_japanese_punctuation():
+    from usir_py.realtime_decoder import has_non_jis_kanji
+
+    assert has_non_jis_kanji("この夜明け，それが")
+    assert not has_non_jis_kanji("この夜明け、それが。")
+
+
+def test_close_after_stops_generation_once_the_sentence_is_closed():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, close_after=2, normalize_end=True)
+    seq = iter(["静かな朝、", "霧が晴れ、", "光が差した。", "余計な文。", "さらに続く。"])
+    res = dec.generate_with_clause_twisted_smc(
+        "", max_clauses=6, early_stop_on_punct=False,
+        candidate_generator=lambda ctx, p, t: seq.__next__() if p == 0 else "静かな朝、",
+    )
+    assert res["welded_text"].endswith("光が差した。")
+    assert "余計な文" not in res["welded_text"]

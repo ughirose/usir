@@ -444,6 +444,12 @@ class HSMMLongformDirector:
                 if climax_only_steering and hasattr(decoder, "steering_active"):
                     # Steering gain / temperature coupling act only in the Climax paragraph and the one after it.
                     decoder.steering_active = bool(well_idx == 2 or prev_well_idx == 2)
+                    cp = getattr(decoder, "climax_particles", None)
+                    if cp:
+                        decoder.n_particles = int(cp) if decoder.steering_active else int(getattr(decoder, "base_n_particles", decoder.n_particles))
+                if hasattr(decoder, "discharge_norm"):
+                    # Proposal injection is driven by the momentum released in THIS paragraph.
+                    decoder.discharge_norm = float(np.linalg.norm(discharged_p))
                 if paragraph_hook is not None:
                     paragraph_hook(k)
 
