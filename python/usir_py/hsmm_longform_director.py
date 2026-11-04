@@ -185,7 +185,14 @@ class HSMMLongformDirector:
         transition_matrix: Optional[np.ndarray] = None,
         refractory_cooldown: int = 1,
         seed: Optional[int] = None,
+        arbitrator: Optional[Any] = None,
+        scene_constraints: Optional[Dict[int, Sequence[str]]] = None,
     ) -> None:
+        # arbitrator: WorldCraftArbitrator-like (compile_constraint_jacobian, arbitrate_momentum).
+        # scene_constraints: {paragraph_index: constraint mode names}; unlisted paragraphs fall back to
+        # cue-based mode selection from the paragraph text of the previous run (none -> unconstrained).
+        self.arbitrator = arbitrator
+        self.scene_constraints = dict(scene_constraints) if scene_constraints else {}
         self.dim = int(dim)
         self.rng = np.random.default_rng(seed)
         self.wells = wells if wells is not None else create_default_wells(self.dim)
@@ -267,6 +274,30 @@ class HSMMLongformDirector:
         boosted = base_p + discharged
         self.p_banked.fill(0.0)
         return boosted, discharged
+
+    def arbitrate_scene_momentum(
+        self,
+        target_p: np.ndarray,
+        paragraph_index: int,
+        context_text: str = "",
+    ) -> Tuple[np.ndarray, np.ndarray, List[str]]:
+        """WorldCraft null-space arbitration of a paragraph's target momentum.
+
+        Returns (safe_target_p, cut_p, modes). The component cut by the scene constraints is stored
+        in p_banked so that it is released in a later Climax well (OPEN-09).
+        """
+        t = np.asarray(target_p, dtype=np.float64).ravel()
+        if self.arbitrator is None:
+            return t.copy(), np.zeros(self.dim, dtype=np.float64), []
+        modes = list(self.scene_constraints.get(paragraph_index, []))
+        j_c = self.arbitrator.compile_constraint_jacobian(
+            context_text, active_constraints=modes if paragraph_index in self.scene_constraints else None
+        )
+        if j_c.shape[0] == 0:
+            return t.copy(), np.zeros(self.dim, dtype=np.float64), modes
+        safe, cut, _ = self.arbitrator.arbitrate_momentum(t[:self.dim], j_c)
+        self.p_banked += np.maximum(0.0, cut)
+        return safe, cut, modes
 
     def get_banked_energy(self) -> float:
         """Computes kinetic energy of banked momentum: 0.5 * ||p_banked||_2^2."""
@@ -388,6 +419,11 @@ class HSMMLongformDirector:
                 discharged_p = np.zeros(self.dim, dtype=np.float64)
                 was_discharged = False
 
+            # 2b. WorldCraft arbitration: scene constraints freeze elements; the cut is banked
+            effective_target_p, cut_p, scene_modes = self.arbitrate_scene_momentum(
+                effective_target_p, k, context_text=prompt if k == 0 else ""
+            )
+
             # 3. Generate paragraph text
             if decoder is not None and hasattr(decoder, "generate_with_clause_twisted_smc"):
                 # Synchronize well target attractor and momentum state into decoder's integrator
@@ -493,6 +529,8 @@ class HSMMLongformDirector:
                 "discharged_momentum_norm": float(np.linalg.norm(discharged_p)),
                 "accumulated_delta_norm": float(np.linalg.norm(accumulated_delta)),
                 "refractory_counter_after": self.refractory_counter,
+                "constraint_modes": scene_modes,
+                "cut_momentum_norm": float(np.linalg.norm(cut_p)),
             })
 
         # Calculate document-wide metrics
@@ -515,4 +553,5 @@ class HSMMLongformDirector:
             "is_healthy": is_healthy,
             "banked_history": banked_history,
             "final_banked_energy": self.get_banked_energy(),
+            "total_cut_momentum_norm": float(sum(p["cut_momentum_norm"] for p in paragraphs_data)),
         }

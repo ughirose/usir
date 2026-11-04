@@ -35,9 +35,19 @@ Critical 中央2.73(2.19–3.80) / Void 1.44–2.67 / Turbulent 1.40–3.55 / De
 - 逆音楽関手: 固定ペンタトニック(`step % 5`)を撤廃。16スロットの八分格子で、Flux=音数密度, Void=休符(スロット除去), Lattice=跳躍抑制, Shock=跳躍確率/幅・五度圏の主音移動・三全音→半音解決, syncopation=1/4拍ずらし。黄金比系列による決定論的選択で乱数不使用。出力音数は可変(旧テストの「必ず8音」は撤回)。
 - Python/TS パリティ: 同一状態で音列12音・time・gain の一致をテストで固定。テスト: pytest 269 passed/4 skipped, pnpm 343 passed。
 
+## ⑤ WorldCraft 零空間調停(実装済み)
+- `WorldCraftArbitrator.compile_constraint_jacobian(context_text, active_constraints)`: モード→凍結要素の単位行から J_C∈R^{k×12} を構築。evidence=Sg-08,12(idx 7,11), logic_voice=Sg-02,06(idx 1,5), stillness=Sg-03,07,11(idx 2,6,10)。未指定時は文面キーワードで選択、該当なしは k=0(P_null=I)、未知モードは ValueError。
+- `HSMMLongformDirector(arbitrator=, scene_constraints={段落idx: [モード]})`: 段落の目標運動量を零空間へ射影し、切り捨て成分を `p_banked` に蓄電(Climax で放出)。統合テスト: 強制 Narrative→Climax で、調停ありの Climax 放出量が調停なしより大きいことを確認。
+- 限界: ヤコビアンは単位行(要素凍結)のみ。要素間の線形結合制約は未対応。モード→要素の対応は設計上の仮定で、データによる検証なし。TS 側に Arbitrator は無く移植なし。
+
+## ⑦ 監査結果(修正なし、事実のみ)
+- `HSMMLongformDirector` は tests と `__init__` の export 以外から呼ばれていない(本番スクリプトに結線なし)。`run_v4_bidirectional_experiment.py` は `run_authentic_grpo_lora_forge` と実デコーダを使用しているが、長尺生成は Director 経由ではない。
+- `evaluate_llm_judge`: run_v4:945 は `judge_model` を渡さないため、常にオフライン決定論ルーブリック(文長・接続詞・bigram 多様性・定型句)で採点。USIR 特徴は使わないが、ベースライン定数(4.2 等)の手調整ヒューリスティックで、LLM 審査ではない。
+- `usir_forge` の Cholesky 精度行列: 実共分散(Welford M2)から算出されるが、固定シュリンケージ 0.2·S+0.8·I により、40チャンクで実測すると Σ の 0.8·I からの相対ずれは 7.7%、精度行列対角は 1.19–1.25(≒1.25·I)、非対角最大 0.056。特徴の分散(平均0.097)に対し単位行列項が支配的で、事実上単位行列に近い。Python/TS のバイナリ互換に影響するため、シュリンケージ方式の変更は未実施(設計判断が必要)。
+
 ## 未完了
-- ⑤⑦、主述ねじれの一般化(④の残り)、サマリ入力時の p。TS 側に構文ドライバは存在しないため③の移植は不要。
+- 主述ねじれの一般化(④の残り)、サマリ入力時の p、usir_forge のシュリンケージ再設計(Python/TS 同時)、HSMM Director の本番結線、LLM ジャッジの実モデル化。TS 側に構文ドライバは存在しないため③の移植は不要。
 - `scripts/harness.py` は自動モード分類器に拒否されたため、pytest(262 passed/4 skipped)・pnpm test(338 passed)・scan_cleanroom_copyright(FAIL=0, WARN=5)を個別実行して確認。
 
 ## 次の一手
-- ⑤ `compile_constraint_jacobian` と HSMM 結線。
+- usir_forge のシュリンケージ方式の判断(上記⑦)。

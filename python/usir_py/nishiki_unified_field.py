@@ -309,6 +309,25 @@ def compute_unified_field_energy(
 # 3. OPEN-09: WorldCraft Ontology Constraints and Null-Space Arbitration
 # ==============================================================================
 
+# WorldCraft constraint modes -> frozen style elements (0-based index = Sg number - 1).
+# Each mode contributes unit rows e_i to the constraint Jacobian J_C in R^{k x 12}.
+CONSTRAINT_MODE_ELEMENTS: Dict[str, Tuple[int, ...]] = {
+    # Fact / evidence-conveying scene: no figurative leap (Sg-08 Lp) and no rupture (Sg-12 Ru).
+    "evidence": (7, 11),
+    # Hard-logic character speech: keep Lattice regularity (Sg-02 Cr, Sg-06 Sy).
+    "logic_voice": (1, 5),
+    # Stillness / concealment scene: hold Void (Sg-03 Pr, Sg-07 Cs, Sg-11 Ma).
+    "stillness": (2, 6, 10),
+}
+
+# Surface cues used only to pick a constraint mode when none is given explicitly.
+_CONSTRAINT_MODE_CUES: Dict[str, Tuple[str, ...]] = {
+    "evidence": ("証拠", "データ", "事実", "記録", "報告", "検証", "調査", "計測", "実測"),
+    "logic_voice": ("論理", "証明", "したがって", "ゆえに", "仮定", "定理", "前提", "結論"),
+    "stillness": ("静寂", "沈黙", "息をひそ", "潜", "身を隠", "無音", "闇", "しじま"),
+}
+
+
 @dataclass
 class WorldCraftOntologyRule:
     """Specifies Tier 1 hard constraints on characters, facts, and spoiler boundaries."""
@@ -374,6 +393,32 @@ class WorldCraftArbitrator:
             else:
                 mask_flags.append(False)
         return valid_candidates, mask_flags
+
+    @staticmethod
+    def compile_constraint_jacobian(
+        context_text: str = "",
+        active_constraints: Optional[Sequence[str]] = None,
+    ) -> np.ndarray:
+        r"""Builds the constraint Jacobian J_C in R^{k x 12} for a scene.
+
+        Each active mode freezes a set of style elements (see CONSTRAINT_MODE_ELEMENTS), adding one
+        unit row e_i per element, so that J_C P_null = 0 and the frozen elements receive no momentum.
+        When active_constraints is None the modes are chosen from surface cues in context_text; when
+        no cue matches, J_C has k = 0 rows (unconstrained scene, P_null = I).
+        """
+        if active_constraints is None:
+            modes = [m for m, cues in _CONSTRAINT_MODE_CUES.items() if any(c in context_text for c in cues)]
+        else:
+            modes = list(active_constraints)
+            unknown = [m for m in modes if m not in CONSTRAINT_MODE_ELEMENTS]
+            if unknown:
+                raise ValueError(f"Unknown constraint mode(s): {unknown}; known: {sorted(CONSTRAINT_MODE_ELEMENTS)}")
+
+        indices = sorted({i for m in modes for i in CONSTRAINT_MODE_ELEMENTS[m]})
+        j_c = np.zeros((len(indices), 12), dtype=np.float64)
+        for row, idx in enumerate(indices):
+            j_c[row, idx] = 1.0
+        return j_c
 
     @staticmethod
     def compute_null_space_projector(

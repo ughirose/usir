@@ -454,3 +454,56 @@ def test_music_inverse_is_deterministic_and_time_ordered_slots():
     b = music_functor_inverse(z)["web_audio_sequence"]
     assert a == b
     assert all(n["duration"] > 0.0 and 36 <= n["note"] <= 96 for n in a)
+
+
+# ==============================================================================
+# WorldCraft constraint Jacobian compiler and HSMM integration
+# ==============================================================================
+
+def test_compile_constraint_jacobian_modes():
+    arb = WorldCraftArbitrator()
+    j = arb.compile_constraint_jacobian(active_constraints=["evidence"])
+    assert j.shape == (2, 12)
+    assert set(np.flatnonzero(j.sum(axis=0))) == {7, 11}
+
+    j_all = arb.compile_constraint_jacobian(active_constraints=["evidence", "logic_voice", "stillness"])
+    assert j_all.shape == (7, 12)
+    assert np.allclose(j_all @ j_all.T, np.eye(7))
+
+    assert arb.compile_constraint_jacobian("晴れた朝。", None).shape == (0, 12)
+    assert arb.compile_constraint_jacobian("検証した記録を報告する。", None).shape == (2, 12)
+    with pytest.raises(ValueError):
+        arb.compile_constraint_jacobian(active_constraints=["no_such_mode"])
+
+
+def test_compiled_jacobian_freezes_elements_in_null_space():
+    arb = WorldCraftArbitrator()
+    j = arb.compile_constraint_jacobian(active_constraints=["stillness"])
+    dq = np.linspace(0.2, 1.4, 12)
+    safe, cut, _ = arb.arbitrate_momentum(dq, j)
+    assert np.allclose(safe[[2, 6, 10]], 0.0, atol=1e-4)
+    assert np.allclose(safe[[0, 1, 3]], dq[[0, 1, 3]], atol=1e-4)
+    assert np.allclose(safe + cut, dq)
+
+
+def test_hsmm_director_banks_cut_momentum_and_releases_in_climax():
+    from usir_py.hsmm_longform_director import HSMMLongformDirector
+
+    # Paragraph 0 (Narrative) -> forced Climax at paragraph 1.
+    forced = np.array([[0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]])
+
+    base = HSMMLongformDirector(transition_matrix=forced, seed=1).generate_longform(target_paragraphs=6)
+    arb = HSMMLongformDirector(
+        transition_matrix=forced,
+        seed=1,
+        arbitrator=WorldCraftArbitrator(),
+        scene_constraints={0: ["stillness"]},
+    ).generate_longform(target_paragraphs=6)
+
+    assert base["wells"][:2] == [0, 2] and arb["wells"][:2] == [0, 2]
+    assert base["paragraphs"][0]["cut_momentum_norm"] == 0.0
+    assert arb["paragraphs"][0]["cut_momentum_norm"] > 0.0
+    assert arb["paragraphs"][0]["constraint_modes"] == ["stillness"]
+    # The cut momentum is released at the Climax: more is discharged than without arbitration.
+    assert arb["paragraphs"][1]["was_discharged"]
+    assert arb["paragraphs"][1]["discharged_momentum_norm"] > base["paragraphs"][1]["discharged_momentum_norm"]
