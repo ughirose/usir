@@ -30,12 +30,23 @@ except ImportError:
     TORCH_AVAILABLE = False
 
 try:
-    from transformers import LogitsProcessor
+    from transformers import LogitsProcessor, StoppingCriteria, StoppingCriteriaList
 except ImportError:
+    class StoppingCriteria:  # type: ignore[no-redef]
+        pass
+
+    class StoppingCriteriaList(list):  # type: ignore[no-redef]
+        pass
+
     class LogitsProcessor:  # type: ignore[no-redef]
         """Fallback base class when transformers is not installed."""
         def __call__(self, input_ids: Any, scores: Any) -> Any:
             return scores
+
+
+# Clause boundary punctuation: ASCII and full-width variants (models emit U+FF0C / U+FF0E freely).
+CLAUSE_PUNCT = ("\u3001", "\u3002", "\uff0c", "\uff0e", "\uff01", "\uff1f", "!", "?")
+CLAUSE_PUNCT_RE = re.compile("[\u3001\u3002\uff0c\uff0e\uff01\uff1f!?]")
 
 
 # Canonical Japanese and punctuation characters for refractory period gating
@@ -829,7 +840,11 @@ class ClauseTwistedSMCDecoder:
         resample_method: str = "map",
         dim: int = 12,
         seed: Optional[int] = None,
+        chat_prefix: str = "",
     ) -> None:
+        self.chat_prefix = str(chat_prefix)
+        self.eos_reached = False
+        self.stats: Dict[str, int] = {"candidates": 0, "incomplete": 0, "logprob_errors": 0}
         self.dim = int(dim)
         self.n_particles = int(n_particles)
         self.temperatures = list(temperatures)[:self.n_particles]
@@ -878,7 +893,7 @@ class ClauseTwistedSMCDecoder:
             return 0.0
         try:
             device = next(self.model.parameters()).device
-            ctx_ids = self.tokenizer.encode(context, add_special_tokens=False) if context else []
+            ctx_ids = self.tokenizer.encode(self.chat_prefix + context, add_special_tokens=False) if (self.chat_prefix or context) else []
             tgt_ids = self.tokenizer.encode(target, add_special_tokens=False) if target else []
             if not tgt_ids:
                 return 0.0
@@ -911,7 +926,89 @@ class ClauseTwistedSMCDecoder:
             token_logprobs = log_probs.gather(1, target_labels.unsqueeze(-1)).squeeze(-1)
             return float(token_logprobs.mean().item())
         except Exception:
-            return 0.0
+            # Never report an error as log-prob 0.0 (= certainty); use a strongly negative sentinel.
+            self.stats["logprob_errors"] += 1
+            return -20.0
+
+    def _generate_candidates_batched(self, prefix: str) -> List[str]:
+        """Generates P candidate clauses in ONE batched generate() call with per-row temperatures.
+
+        - chat_prefix (e.g. chat-template header) is prepended to the model input but never to the returned text.
+        - Clause boundary = first punctuation in CLAUSE_PUNCT (ASCII + full-width variants).
+        - Candidates that hit max_clause_tokens without punctuation are NOT given a fabricated comma;
+          they are dropped when at least one complete clause exists (counted in self.stats).
+        """
+        device = next(self.model.parameters()).device
+        text_in = self.chat_prefix + prefix
+        if text_in:
+            enc = self.tokenizer(text_in, return_tensors="pt", add_special_tokens=not self.chat_prefix)
+            input_ids = enc["input_ids"].to(device)
+        else:
+            bos_id = getattr(self.tokenizer, "bos_token_id", None)
+            input_ids = torch.tensor([[0 if bos_id is None else bos_id]], dtype=torch.long, device=device)
+        P = self.n_particles
+        input_ids = input_ids.expand(P, -1).contiguous()
+        inp_len = input_ids.shape[-1]
+        pad_id = getattr(self.tokenizer, "pad_token_id", None)
+        if pad_id is None:
+            pad_id = getattr(self.tokenizer, "eos_token_id", None)
+        temps = torch.tensor(self.temperatures[:P], dtype=torch.float32, device=device)
+
+        n_ctx = inp_len
+        tokenizer_ref = self.tokenizer
+
+        class _ClausePunctStop(StoppingCriteria):
+            """Per-row stop once a clause punctuation char has been generated (cheap vs. stop_strings)."""
+
+            def __call__(self_inner, ids, scores, **kwargs):  # noqa: N805
+                tails = tokenizer_ref.batch_decode(ids[:, n_ctx:], skip_special_tokens=True)
+                return torch.tensor([bool(CLAUSE_PUNCT_RE.search(s)) for s in tails], device=ids.device)
+
+        class _RowTemp(LogitsProcessor):
+            def __call__(self_inner, ids, scores):  # noqa: N805
+                return scores / temps.to(scores.dtype).unsqueeze(-1)
+
+        gen_kwargs: Dict[str, Any] = {
+            "max_new_tokens": self.max_clause_tokens,
+            "do_sample": True,
+            "temperature": 1.0,
+            "top_p": 1.0,
+            "top_k": 50,
+            "attention_mask": torch.ones_like(input_ids),
+            "logits_processor": [_RowTemp()],
+            "stopping_criteria": StoppingCriteriaList([_ClausePunctStop()]),
+        }
+        if pad_id is not None:
+            gen_kwargs["pad_token_id"] = pad_id
+        with torch.no_grad():
+            out = self.model.generate(input_ids, **gen_kwargs)
+        eos_id = getattr(self.tokenizer, "eos_token_id", None)
+        eos_ids = set(eos_id) if isinstance(eos_id, (list, tuple)) else ({eos_id} if eos_id is not None else set())
+        self.eos_reached = False
+        complete: List[str] = []
+        incomplete: List[str] = []
+        n_ended = 0
+        for p in range(P):
+            row = out[p, inp_len:]
+            ended = bool(eos_ids) and any(int(t) in eos_ids for t in row.tolist())
+            n_ended += int(ended)
+            text = self.tokenizer.decode(row, skip_special_tokens=True)
+            m = CLAUSE_PUNCT_RE.search(text)
+            if m:
+                complete.append(text[: m.end()])
+            else:
+                incomplete.append(text.strip())
+        self.stats["candidates"] += P
+        self.stats["incomplete"] += len(incomplete)
+        self.stats["eos_rows"] = self.stats.get("eos_rows", 0) + n_ended
+        non_empty = [c for c in complete if c.strip()]
+        if n_ended * 2 >= P and not non_empty:
+            # Majority of particles ended the sequence with nothing new to say: story is finished.
+            self.eos_reached = True
+            return [""]
+        if complete:
+            return complete
+        return [c for c in incomplete if c] or ["\u3002"]
 
     def generate_candidate_clauses(
         self,
@@ -920,39 +1017,7 @@ class ClauseTwistedSMCDecoder:
     ) -> List[str]:
         """Generates P=4 candidate clauses from prefix."""
         if self.model is not None and self.tokenizer is not None and TORCH_AVAILABLE:
-            cands = []
-            device = next(self.model.parameters()).device
-            if prefix:
-                input_ids = self.tokenizer.encode(prefix, return_tensors="pt").to(device)
-            else:
-                bos_id = getattr(self.tokenizer, "bos_token_id", None)
-                if bos_id is not None:
-                    input_ids = torch.tensor([[bos_id]], dtype=torch.long, device=device)
-                else:
-                    input_ids = torch.tensor([[0]], dtype=torch.long, device=device)
-            inp_len = input_ids.shape[-1]
-            pad_id = getattr(self.tokenizer, "pad_token_id", None) or getattr(self.tokenizer, "eos_token_id", None)
-            for p in range(self.n_particles):
-                temp = self.temperatures[p]
-                with torch.no_grad():
-                    gen_kwargs: Dict[str, Any] = {
-                        "max_new_tokens": self.max_clause_tokens,
-                        "do_sample": True,
-                        "temperature": temp,
-                        "top_p": 0.9,
-                    }
-                    if pad_id is not None:
-                        gen_kwargs["pad_token_id"] = pad_id
-                    out = self.model.generate(input_ids, **gen_kwargs)
-                new_tokens = out[0, inp_len:]
-                text = self.tokenizer.decode(new_tokens, skip_special_tokens=True)
-                m_punct = re.search(r"[、。！？!?]", text)
-                if m_punct:
-                    c_text = text[:m_punct.end()]
-                else:
-                    c_text = text.strip() + "、"
-                cands.append(c_text)
-            return cands
+            return self._generate_candidates_batched(prefix)
         else:
             # Heuristic diverse candidate palette for CPU/offline testing
             palette = [
@@ -1183,6 +1248,8 @@ class ClauseTwistedSMCDecoder:
                 phi_bridge=phi_bridge,
                 resample_method=resample_method,
             )
+            if self.eos_reached:
+                break
             telemetry.append(step_res)
             clauses.append(step_res["selected_clause"])
             current_text = step_res["next_prefix"]

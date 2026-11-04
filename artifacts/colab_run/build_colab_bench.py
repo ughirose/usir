@@ -114,7 +114,60 @@ d["dup_clause_ratio"] = round(1 - len(set(r["clauses"])) / max(1, len(r["clauses
 print("RESULT_JSON", json.dumps({"usir_smc": d}, ensure_ascii=True, default=float))
 '''
 
-body = COMMON + (VANILLA if MODE == "vanilla" else SMC)
+SMCB = r'''
+from usir_py.grpo_reward import PHASE_CENTROIDS_24D
+from usir_py.realtime_decoder import ClauseTwistedSMCDecoder, AdaptiveBAOABIntegrator
+NCL = int(os.environ.get("NCL", "12"))
+mu = np.asarray(PHASE_CENTROIDS_24D["II_Critical"][:12], dtype=float)
+out_all = {}
+for seed in (0, 1, 2):
+    torch.manual_seed(seed)
+    integ = AdaptiveBAOABIntegrator(dim=12, mu_star=mu, seed=seed)
+    dec = ClauseTwistedSMCDecoder(integrator=integ, model=model, tokenizer=tok, seed=seed, chat_prefix=chat)
+    t = time.time()
+    r = dec.generate_with_clause_twisted_smc("", max_clauses=NCL, early_stop_on_punct=False)
+    wall = round(time.time() - t, 1)
+    d = metrics(r["text"])
+    d["wall_sec"] = wall
+    d["sec_per_char"] = round(wall / max(1, d["chars"]), 3)
+    d["n_clauses"] = r["n_clauses"]
+    d["stats"] = dict(dec.stats)
+    d["mean_ess"] = round(float(np.mean([float(x["ess"]) for x in r["telemetry"]])), 2)
+    d["dup_clause_ratio"] = round(1 - len(set(r["clauses"])) / max(1, len(r["clauses"])), 3)
+    out_all["smc_batched_s%d" % seed] = d
+print("RESULT_JSON", json.dumps(out_all, ensure_ascii=True, default=float))
+'''
+
+PROF = r'''
+from transformers import LogitsProcessor, StoppingCriteria, StoppingCriteriaList
+P_ = ("\u3001", "\u3002", "\uff0c", "\uff0e", "\uff01", "\uff1f", "!", "?")
+ids = tok(chat, return_tensors="pt", add_special_tokens=False)["input_ids"].to("cuda").expand(4, -1).contiguous()
+n0 = ids.shape[1]
+class Stop(StoppingCriteria):
+    def __call__(self, input_ids, scores, **kw):
+        tail = tok.batch_decode(input_ids[:, n0:], skip_special_tokens=True)
+        return torch.tensor([any(c in s for c in P_) for s in tail], device=input_ids.device)
+def run(label, **kw):
+    torch.cuda.synchronize(); t = time.time()
+    out = model.generate(ids, attention_mask=torch.ones_like(ids), max_new_tokens=20, do_sample=True, temperature=1.0, top_p=1.0, top_k=50, pad_token_id=tok.eos_token_id, **kw)
+    torch.cuda.synchronize()
+    return {"sec": round(time.time() - t, 2), "new_tokens": int(out.shape[1] - n0)}
+res = {}
+res["warm_nostop"] = run("w")
+res["nostop"] = run("n")
+res["stop_strings_1st"] = run("s1", stop_strings=list(P_), tokenizer=tok)
+res["stop_strings_2nd"] = run("s2", stop_strings=list(P_), tokenizer=tok)
+res["custom_stop"] = run("c", stopping_criteria=StoppingCriteriaList([Stop()]))
+print("RESULT_JSON", json.dumps(res))
+'''
+
+body = COMMON + (VANILLA if MODE == "vanilla" else PROF if MODE == "prof" else SMCB if MODE == "smcb" else SMC)
+if MODE == "smcb":
+    # argv: smcb <seed> <n_clauses> -- one seed per call to stay inside the ~120 s colab-exec window
+    _seed = sys.argv[2] if len(sys.argv) > 2 else "0"
+    _ncl = sys.argv[3] if len(sys.argv) > 3 else "8"
+    body = body.replace("for seed in (0, 1, 2):", "for seed in (%s,):" % _seed)
+    body = body.replace('os.environ.get("NCL", "12")', '"%s"' % _ncl)
 OUT.write_text("B64 = " + repr(b64) + "\n" + body, encoding="utf-8")
 assert "港町" in OUT.read_text(encoding="utf-8"), "Japanese prompt missing from generated script"
 print("built", OUT.name, OUT.stat().st_size, "bytes; japanese ok")
