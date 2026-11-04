@@ -60,9 +60,30 @@ Critical 中央2.73(2.19–3.80) / Void 1.44–2.67 / Turbulent 1.40–3.55 / De
 - 実測(テンプレート, seed=3, 6段落, wells=[0,0,0,2,0,1]): CV_L 0.530, QDA d_3phase 0.195(Critical)。制約 {0:stillness, 1:evidence} で切り捨て運動量ノルム 0.457、段落3(Climax)の放出量 0.327(制約なしは 0.0)。テンプレート生成では本文は制約の有無で変わらない(運動量の会計のみ変わる)。
 - 未検証: モデル有りの経路(`llm_clause_smc`)は本セッションで未実行。GPU/Colab での長尺実機、制約が本文に与える影響、CLI 全体の実走は未実施。テスト: `tests/test_hsmm_longform.py` に結線テスト追加。pytest 275 passed/4 skipped。
 
+## Colab 実機検証 `--longform`(LLM 経路, 2026-11-04)
+- 環境: Colab L4, Qwen2.5-1.5B-Instruct fp16, seed=3, 6段落, wells=[0,0,0,2,0,1](Narrative×3→Climax→Narrative→Dialogue), `generator=llm_clause_smc`。`ClauseTwistedSMCDecoder`(P=4, 節単位 SMC)が GPU で完走。1実行 約75秒(モデル読込 37秒+生成 37秒)。数値の全体: `docs/handoff/2026-11-04_longform_colab_result.json`。
+- 条件: colab-exec は接続窓が約160秒で、1回の呼び出しごとに別VM(ファイルは残らない)。1回目(段落あたり約21節・1800字目標)は接続切れで結果なし。そのため `max_clauses_per_paragraph=8` を追加(Director の新引数)して実行。**全体は731/771字で、依頼の1,800〜3,000字・Qwen2.5-3B/7B には未達**。段落が節数上限で「、」止まりのものがある。
+- 比較(制約 {0:stillness, 1:evidence} あり / なし, 同一seed):
+
+| 指標 | 制約あり | 制約なし |
+|---|---|---|
+| 総文字数 | 731 | 771 |
+| 全体 CV_L | 0.538 | 0.564 |
+| QDA d_3phase / 判定 | 0.411 / Critical | 0.481 / Critical |
+| 切り捨て運動量ノルム | 0.457 | 0.0 |
+| Climax(段落4)放出ノルム | 0.407 | 0.239 |
+| Climax の CV_L / Shock平均 | 0.578 / 0.101 | 0.578 / 0.101 |
+| 段落5 CV_L / Shock | 0.548 / 0.170 | 0.493 / 0.097 |
+| 段落6 CV_L / Shock | 0.393 / 0.271 | 0.641 / 0.088 |
+
+- 観測: 段落1〜4(Climax 含む)の本文は2条件で**文字単位で同一**。制約・蓄電・放出は運動量の会計には反映されたが(放出 0.407 vs 0.239)、Climax の本文には現れていない。差が出たのは段落5以降だが、RNG 状態が分岐した後であり、制約の効果か標本のばらつきかは n=1 では区別できない。「Climax の勢いに質的な差が出た」とは言えない。
+- 考えられる原因(未検証): ESS が 4 中 3.2〜3.6 とほぼ選別になっていない(既知)。`integrator.p` を書き換えても候補選択への影響が小さい可能性。
+- 本文の品質(目視): 「静謐」「静寂」の反復、「東京の渋滞と騒音」の混入、「露つづれ」「目にする」など不自然な語、Climax 段落も落ち着いた描写のまま。Shock 平均は全段落 0.08〜0.27 で破調は小さい。
+- 未実施: 複数 seed、3B/7B、1,800字以上、vanilla との同条件比較。
+
 ## 未完了
 - 主述ねじれの一般化(④の残り)、サマリ入力時の p、LLM ジャッジの実モデル化。TS 側に構文ドライバは存在しないため③の移植は不要。
 - `scripts/harness.py` は自動モード分類器に拒否されたため、pytest(262 passed/4 skipped)・pnpm test(338 passed)・scan_cleanroom_copyright(FAIL=0, WARN=5)を個別実行して確認。
 
 ## 次の一手
-- Colab で `--longform` を実機実行し、llm_clause_smc 経路と制約の本文への影響を測る。
+- 複数seed・3B以上・1,800字以上で制約の本文への影響を再測定(接続窓対策として段落ごとの分割実行が要る)。ESS が選別になっていない原因の調査。

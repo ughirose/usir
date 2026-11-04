@@ -380,6 +380,7 @@ class HSMMLongformDirector:
         target_total_chars: int = 3000,
         decoder: Optional[Any] = None,
         feature_extractor: Optional[Callable[[str], Dict[str, Any]]] = None,
+        max_clauses_per_paragraph: Optional[int] = None,
     ) -> Dict[str, Any]:
         """Generates 3,000-char longform prose switching wells per paragraph.
 
@@ -432,6 +433,8 @@ class HSMMLongformDirector:
                     decoder.integrator.p = effective_target_p.copy()
 
                 max_c = max(8, int(chars_per_para / 16))
+                if max_clauses_per_paragraph is not None:
+                    max_c = max(1, int(max_clauses_per_paragraph))
 
                 def _smc_cand_gen(ctx: str, p_idx: int, temp: float) -> str:
                     c_count = ctx.count("、") + ctx.count("。") + ctx.count("」")

@@ -1239,6 +1239,7 @@ def run_longform_director(
     target_total_chars: int = 3000,
     scene_constraints: Optional[Dict[int, List[str]]] = None,
     use_arbitrator: bool = True,
+    max_clauses_per_paragraph: Optional[int] = None,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
@@ -1262,8 +1263,15 @@ def run_longform_director(
     if model is not None and tokenizer is not None:
         mu = np.asarray(PHASE_CENTROIDS_24D["II_Critical"][:12], dtype=float)
         integ = AdaptiveBAOABIntegrator(dim=12, mu_star=mu, seed=seed)
+        chat = theme
+        if hasattr(tokenizer, "apply_chat_template"):
+            chat = tokenizer.apply_chat_template(
+                [{"role": "user", "content": f"{theme}を題材に、日本語の小説の一節を書いてください。"}],
+                add_generation_prompt=True,
+                tokenize=False,
+            )
         decoder = ClauseTwistedSMCDecoder(
-            integrator=integ, model=model, tokenizer=tokenizer, seed=seed, chat_prefix=theme
+            integrator=integ, model=model, tokenizer=tokenizer, seed=seed, chat_prefix=chat
         )
         generator = "llm_clause_smc"
 
@@ -1274,6 +1282,7 @@ def run_longform_director(
         target_total_chars=target_total_chars,
         decoder=decoder,
         feature_extractor=extract_usir_24d,
+        max_clauses_per_paragraph=max_clauses_per_paragraph,
     )
     wall = time.time() - t0
 
@@ -1295,6 +1304,20 @@ def run_longform_director(
         "constraint_modes": [p["constraint_modes"] for p in res["paragraphs"]],
         "discharged_momentum_norms": [p["discharged_momentum_norm"] for p in res["paragraphs"]],
         "qda": {k: qda[k] for k in ("d_3phase", "phase_regime", "sigma_norm", "penalty_freeze", "penalty_chaos", "penalty_shock")},
+        "paragraphs": [
+            {
+                "index": p["paragraph_index"],
+                "well": p["well_name"],
+                "chars": p["char_count"],
+                "cv_l": p["cv_l"],
+                "shock_mean": float(np.mean(np.asarray(extract_usir_24d(p["text"])["q"])[[3, 7, 11]])),
+                "discharged_momentum_norm": p["discharged_momentum_norm"],
+                "cut_momentum_norm": p["cut_momentum_norm"],
+                "constraint_modes": p["constraint_modes"],
+                "text": p["text"],
+            }
+            for p in res["paragraphs"]
+        ],
         "full_text": full_text,
     }
     return res_summary

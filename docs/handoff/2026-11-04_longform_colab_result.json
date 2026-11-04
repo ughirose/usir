@@ -1,0 +1,110 @@
+{
+ "setup": {
+  "gpu": "Colab L4",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct (fp16)",
+  "seed": 3,
+  "paragraphs": 6,
+  "max_clauses_per_paragraph": 8,
+  "theme": "静謐な山寺の夜明け",
+  "generator": "llm_clause_smc",
+  "note": "clause cap forced by the ~160 s colab-exec window; not the 1800-3000 chars target"
+ },
+ "constrained": {
+  "constraints": {
+   "0": [
+    "stillness"
+   ],
+   "1": [
+    "evidence"
+   ]
+  },
+  "wall_sec": 36.96,
+  "load_sec": 36.8,
+  "total_sec": 74.6,
+  "total_chars": 731,
+  "overall_cv_l": 0.5381,
+  "qda_d3phase": 0.4109,
+  "qda_regime": "Phase_II_Critical",
+  "sigma_norm": 1.628,
+  "total_cut_momentum_norm": 0.4569,
+  "wells": [
+   0,
+   0,
+   0,
+   2,
+   0,
+   1
+  ],
+  "discharged_climax_norm": 0.4066,
+  "paragraph_cv_l": [
+   0.427,
+   0.4168,
+   0.5702,
+   0.5784,
+   0.5482,
+   0.3926
+  ],
+  "paragraph_shock_mean": [
+   0.1418,
+   0.0793,
+   0.2472,
+   0.1014,
+   0.1699,
+   0.2713
+  ],
+  "paragraph_chars": [
+   135,
+   116,
+   137,
+   125,
+   99,
+   119
+  ]
+ },
+ "plain": {
+  "constraints": {},
+  "wall_sec": 37.01,
+  "load_sec": 38.3,
+  "total_sec": 76.1,
+  "total_chars": 771,
+  "overall_cv_l": 0.5637,
+  "qda_d3phase": 0.4815,
+  "qda_regime": "Phase_II_Critical",
+  "sigma_norm": 1.482,
+  "total_cut_momentum_norm": 0.0,
+  "wells": [
+   0,
+   0,
+   0,
+   2,
+   0,
+   1
+  ],
+  "discharged_climax_norm": 0.2392,
+  "paragraph_cv_l": [
+   0.427,
+   0.4168,
+   0.5702,
+   0.5784,
+   0.4925,
+   0.6406
+  ],
+  "paragraph_shock_mean": [
+   0.1418,
+   0.0793,
+   0.2472,
+   0.1014,
+   0.0974,
+   0.0882
+  ],
+  "paragraph_chars": [
+   135,
+   116,
+   137,
+   125,
+   131,
+   127
+  ]
+ },
+ "observation": "Paragraphs 1-4 (incl. Climax) are textually identical between the two runs; they diverge from paragraph 5."
+}
