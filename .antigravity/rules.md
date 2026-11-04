@@ -1,5 +1,8 @@
 # USIR / Nishiki Architecture & Implementation Rules (.antigravity/rules.md)
 
+## 0. Handoff (引継ぎ台帳)
+作業開始時に `docs/handoff/` の最新MDを読み、決定事項と未完了を引き継ぐ。節目に同フォルダへ追記する（形式は `docs/handoff/README.md`、自動importはしない）。
+
 ## 1. Core Architectural Invariants (絶対遵守事項)
 1. **Standalone Zero-Coupling**: `packages/usir-core` and `packages/usir-mcp` MUST have ZERO runtime dependencies on `worldcraft`, `plotailor`, or DOM/browser APIs. They must run in pure Node.js, Web Workers, and edge runtimes.
 2. **Strict 4-Group Orthogonality (4族の完全直交性)**:
