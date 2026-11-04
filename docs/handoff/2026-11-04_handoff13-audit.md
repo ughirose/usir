@@ -54,9 +54,15 @@ Critical 中央2.73(2.19–3.80) / Void 1.44–2.67 / Turbulent 1.40–3.55 / De
 - テスト追加: 非スカラー精度・条件数<500、Python/TS コレスキー一致(rtol 1e-3)。pytest 274 passed/4 skipped, pnpm 343 passed。
 - 未検証: 実コーパスでの下流効果(蒸留バイナリを使った生成/判別への影響)は測っていない。
 
+## HSMM Director の本番ランナー結線(実装済み)
+- `python/colab/run_v4_bidirectional_experiment.py`: `run_longform_director(theme, model, tokenizer, seed, target_paragraphs, scene_constraints, use_arbitrator)` と CLI `--longform --longform-theme --longform-paragraphs --longform-constraints '{"0":["stillness"]}'` を追加。結果は出力 JSON の `longform` に保存(`generator`, wells, CV_L, 蓄電エネルギー, 切り捨て運動量, 段落別放出量, 全文の QDA 距離)。失敗しても本体ベンチは継続。
+- モデルがある(Tier_1 GPU)場合のみ `ClauseTwistedSMCDecoder` で段落生成(`generator="llm_clause_smc"`)。無い場合は Director の手続き型テンプレート(`"procedural_template"`)で、LLM 文ではない。
+- 実測(テンプレート, seed=3, 6段落, wells=[0,0,0,2,0,1]): CV_L 0.530, QDA d_3phase 0.195(Critical)。制約 {0:stillness, 1:evidence} で切り捨て運動量ノルム 0.457、段落3(Climax)の放出量 0.327(制約なしは 0.0)。テンプレート生成では本文は制約の有無で変わらない(運動量の会計のみ変わる)。
+- 未検証: モデル有りの経路(`llm_clause_smc`)は本セッションで未実行。GPU/Colab での長尺実機、制約が本文に与える影響、CLI 全体の実走は未実施。テスト: `tests/test_hsmm_longform.py` に結線テスト追加。pytest 275 passed/4 skipped。
+
 ## 未完了
-- 主述ねじれの一般化(④の残り)、サマリ入力時の p、HSMM Director の本番結線、LLM ジャッジの実モデル化。TS 側に構文ドライバは存在しないため③の移植は不要。
+- 主述ねじれの一般化(④の残り)、サマリ入力時の p、LLM ジャッジの実モデル化。TS 側に構文ドライバは存在しないため③の移植は不要。
 - `scripts/harness.py` は自動モード分類器に拒否されたため、pytest(262 passed/4 skipped)・pnpm test(338 passed)・scan_cleanroom_copyright(FAIL=0, WARN=5)を個別実行して確認。
 
 ## 次の一手
-- HSMM Director の本番スクリプト結線(run_v4)。
+- Colab で `--longform` を実機実行し、llm_clause_smc 経路と制約の本文への影響を測る。

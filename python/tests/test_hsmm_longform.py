@@ -248,3 +248,34 @@ def test_paragraph_text_diversity_across_same_well():
             for i in range(len(t_list)):
                 for j in range(i + 1, len(t_list)):
                     assert t_list[i] != t_list[j], f"Well {w} produced identical text at paragraphs {i} and {j}"
+
+
+# ==============================================================================
+# Production runner wiring (run_v4_bidirectional_experiment.run_longform_director)
+# ==============================================================================
+
+def test_run_v4_longform_director_wiring_with_worldcraft_arbitration():
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[1] / "colab" / "run_v4_bidirectional_experiment.py"
+    spec = importlib.util.spec_from_file_location("run_v4_for_test", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    res = mod.run_longform_director(
+        "静謐な山寺の夜明け",
+        seed=3,
+        target_paragraphs=6,
+        scene_constraints={0: ["stillness"], 1: ["evidence"]},
+    )
+    assert res["generator"] == "procedural_template"  # no model: must not be labelled as LLM text
+    assert res["paragraph_count"] == 6
+    assert res["constraint_modes"][0] == ["stillness"]
+    assert res["constraint_modes"][1] == ["evidence"]
+    assert res["total_cut_momentum_norm"] > 0.0
+    assert res["qda"]["phase_regime"] in {"Phase_I_Deadzone", "Phase_II_Critical", "Phase_III_Chaos"}
+    assert len(res["full_text"]) > 1000
+
+    plain = mod.run_longform_director("静謐な山寺の夜明け", seed=3, target_paragraphs=6, use_arbitrator=False)
+    assert plain["total_cut_momentum_norm"] == 0.0
