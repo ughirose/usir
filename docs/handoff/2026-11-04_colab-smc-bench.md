@@ -1,7 +1,7 @@
 # ClauseTwistedSMCDecoder Colab 実機ベンチ修正の引継ぎ (2026-11-04, 記入者: Claude Code)
 
 ## 決定事項
-- 修正をコミット済み: `4e19fb8`（`realtime_decoder.py`, `build_colab_bench.py`）。push は未実施。
+- 修正をコミット・push 済み: `4e19fb8`（`realtime_decoder.py`, `build_colab_bench.py`）。整理コミット `1a5b87f`、台帳 `ccc6054`/`9a1687c`、skills `4e14cfd` も push 済み（`main` = `origin/main` を確認）。
   - 内容: 全角句読点対応、1回バッチ生成（4粒子）、EOS 停止、ログ確率エラー時 -20.0、smcb/prof モード追加。
   - コミット前ゲート: Python 253 passed / 4 skipped、Vitest 337 passed（Claude Code 側で再実行）。
 - 「コミットが exit 1 で失敗」の原因: コミット自体は実行されていなかった。Antigravity 履歴 Step 372-377 で exit 1 だったのはコミットではなく、`python scripts/harness.py test | Select-String` のバックグラウンドタスク。出力は 253 passed / 337 passed / `[HARNESS] SUCCESS` で、テスト失敗はない。exit 1 の直接原因は未確認（PowerShell のパイプ/stderr 扱いが疑わしいが、確かめていない）。pre-commit hook は無く、CRLF→LF 警告のみで、コミットは通った。
@@ -34,10 +34,9 @@
 - `usir_5phase_empirical_verification.png`: `usir_5phase_benchmark_suite.py:700` の出力と判明。日本語が豆腐（フォント欠落）で表示され、再生成可能なため削除。再生成時は日本語フォントの指定が要る（未対応）。
 
 ## 未完了
-- push（ユーザー確認後）。
 - `scripts/harness.py test` が exit 1 を返す原因の調査（テストは通過している）。
+- ESS が選別になっていない原因の調査、vanilla との同条件比較（未計測）。
 
 ## 次の一手
-- 上の整理についてユーザー確認を取り、実行する。
 - ESS が選別になっていない原因（尤度の温度、リサンプリング条件、G_style）を調べ、vanilla との比較を同条件で測る。
 - 「同一節数」が要るなら、EOS を許さず節数を揃える方式（または節数で正規化した指標）を決める。
