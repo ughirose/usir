@@ -27,11 +27,13 @@
 - ベースライン（vanilla 生成）と μ* までの距離は、今回計測していない。SMC が vanilla より目標に近いかは未検証。
 - 推論時間は約 0.05 s/文字（T4 ではなく L4）。T4 実機での時間は未計測。
 
+## 作業ツリー整理（実施済み）
+- `v4_*`・`blind_evaluation_sheet.*`・`table2_progress.json`: ローカル CPU `--quick` の上書き。内容は `artifacts/_local_cpu_quick/`（README 付き）へ退避してコミットし、元の場所は `git checkout` で T4 実機版に戻した（`device: cuda` を確認）。CPU 版は実 LLM 出力ではなく事前候補の評価。
+- `colab_bench*.py`（生成物）: `.gitignore` に追加。
+- `patch_*.py` 4本: 適用済みのため削除。
+- `usir_5phase_empirical_verification.png`: `usir_5phase_benchmark_suite.py:700` の出力と判明。日本語が豆腐（フォント欠落）で表示され、再生成可能なため削除。再生成時は日本語フォントの指定が要る（未対応）。
+
 ## 未完了
-- 作業ツリーの整理（ユーザー確認待ち。破棄は取り消せない）:
-  - `v4_bidirectional_experiment_*`、`blind_evaluation_sheet.*`、`table2_progress.json`: `git checkout` で戻す案（`--quick` の CPU 結果が GPU 実機結果を上書きしたもの。コミットしない）。
-  - 未追跡の `artifacts/colab_run/patch_*.py`（適用済み）と `colab_bench*.py`（生成物 約1.1MB×5）: 削除、または `.gitignore` に追加。
-  - `artifacts/usir_5phase_empirical_verification.png`: 出所不明。扱いを決める。
 - push（ユーザー確認後）。
 - `scripts/harness.py test` が exit 1 を返す原因の調査（テストは通過している）。
 
