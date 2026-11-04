@@ -1,0 +1,3501 @@
+{
+  "timestamp": 1793697449.669386,
+  "runtime_environment": {
+    "tier": "Tier_3_Offline_Lattice_Solver",
+    "device": "cpu"
+  },
+  "n_benchmark_instances": 30,
+  "results": [
+    {
+      "id": "novel-01",
+      "domain": "novel",
+      "theme": "風雪の峠道と廃屋の灯り",
+      "title": "文芸・情景描写（峠道）",
+      "anchors": {
+        "x_0": "風雪の峠道と廃屋の灯りの気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて風雪の峠道と廃屋の灯りの余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて風雪の峠道と廃屋の灯りの余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.9720306284177513,
+          "kamae_diff": 0.630694310300088,
+          "d_3phase": 0.9752466231933238,
+          "reach_dist": 0.5588596133502066,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.8175657508105534,
+          "r_grpo": 0.22334220943084954,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.1,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.61,
+            "normalized_quality": 60.1
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.8253913071058299,
+          "r_grpo": 0.37401033273712264,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.85,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.73,
+            "normalized_quality": 67.1
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7638307764721542,
+          "r_grpo": 0.3967668648335397,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.83,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.46,
+            "normalized_quality": 77.9
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.722972591511496,
+        "m_bridge": 0.11322502449404193,
+        "collision_matrix": [
+          [
+            4.069390251390305
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-02",
+      "domain": "novel",
+      "theme": "夜明け前の港町と濡れた石畳",
+      "title": "文芸・情景描写（未明の漁港）",
+      "anchors": {
+        "x_0": "夜明け前の港町と濡れた石畳の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて夜明け前の港町と濡れた石畳の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて夜明け前の港町と濡れた石畳の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.9137025949630275,
+          "kamae_diff": 0.5499508616666129,
+          "d_3phase": 1.0392906665611845,
+          "reach_dist": 0.5594790443463821,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.8233766218064849,
+          "r_grpo": 0.2249296203096226,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.13,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.64,
+            "normalized_quality": 60.3
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7106637984453504,
+          "r_grpo": 0.32202374974454784,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.8,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.68,
+            "normalized_quality": 66.8
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.712725247005612,
+          "r_grpo": 0.37022043422786316,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.82,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.45,
+            "normalized_quality": 77.8
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.5559352912775513,
+        "m_bridge": 0.1294127677376395,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-03",
+      "domain": "novel",
+      "theme": "雨上がりの古寺と苔の庭",
+      "title": "文芸・情景描写（山寺の夕立）",
+      "anchors": {
+        "x_0": "雨上がりの古寺と苔の庭の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて雨上がりの古寺と苔の庭の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて雨上がりの古寺と苔の庭の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.904621763675467,
+          "kamae_diff": 0.581730453050333,
+          "d_3phase": 0.9225466017860974,
+          "reach_dist": 0.5456832067724491,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7974262751228833,
+          "r_grpo": 0.21784051737439572,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.12,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.63,
+            "normalized_quality": 60.2
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.8204592843592489,
+          "r_grpo": 0.37177548067042976,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.88,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.77,
+            "normalized_quality": 67.3
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7652478603306874,
+          "r_grpo": 0.39750295970831445,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.87,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.49,
+            "normalized_quality": 78.1
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.388917960545565,
+        "m_bridge": 0.14791250411714563,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-04",
+      "domain": "novel",
+      "theme": "冬枯れの干拓地と渡り鳥の影",
+      "title": "文芸・情景描写（湿原と羽音）",
+      "anchors": {
+        "x_0": "冬枯れの干拓地と渡り鳥の影の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて冬枯れの干拓地と渡り鳥の影の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて冬枯れの干拓地と渡り鳥の影の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.9264872579929855,
+          "kamae_diff": 0.5887671754696214,
+          "d_3phase": 0.9649145214953257,
+          "reach_dist": 0.5124254825373826,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.8196281665733527,
+          "r_grpo": 0.22390561915388638,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.15,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.66,
+            "normalized_quality": 60.4
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7247370508946156,
+          "r_grpo": 0.32840077575139953,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.82,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.71,
+            "normalized_quality": 66.9
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6964908621271222,
+          "r_grpo": 0.3617875899524738,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.83,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.45,
+            "normalized_quality": 77.8
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.5458776880358034,
+        "m_bridge": 0.1304582338686809,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-05",
+      "domain": "novel",
+      "theme": "深夜の山あいの無人駅と霧雨",
+      "title": "文芸・情景描写（無人駅の裸電球）",
+      "anchors": {
+        "x_0": "深夜の山あいの無人駅と霧雨の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて深夜の山あいの無人駅と霧雨の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて深夜の山あいの無人駅と霧雨の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.9499047994683041,
+          "kamae_diff": 0.5939275300660548,
+          "d_3phase": 1.017077912577855,
+          "reach_dist": 0.6208782233351837,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6941431987208148,
+          "r_grpo": 0.18962569739498292,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.09,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.6,
+            "normalized_quality": 60.0
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7018169467443647,
+          "r_grpo": 0.31801496758283143,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.84,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.72,
+            "normalized_quality": 67.0
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7328615585731819,
+          "r_grpo": 0.3806801086165755,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.89,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.51,
+            "normalized_quality": 78.2
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.302214965944943,
+        "m_bridge": 0.15853625514190373,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-06",
+      "domain": "novel",
+      "theme": "初秋の杉木立と木漏れ日の参道",
+      "title": "文芸・情景描写（神社の静けさ）",
+      "anchors": {
+        "x_0": "初秋の杉木立と木漏れ日の参道の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて初秋の杉木立と木漏れ日の参道の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて初秋の杉木立と木漏れ日の参道の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.8392493752404047,
+          "kamae_diff": 0.48622752062660096,
+          "d_3phase": 1.0086338703251536,
+          "reach_dist": 0.4405195678590276,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7732663231726425,
+          "r_grpo": 0.2112405135912623,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.17,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.68,
+            "normalized_quality": 60.5
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.62631750317471,
+          "r_grpo": 0.28380383430840067,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.81,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.69,
+            "normalized_quality": 66.8
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6188656906268217,
+          "r_grpo": 0.32146570599986657,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.83,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.45,
+            "normalized_quality": 77.8
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.868679755978544,
+        "m_bridge": 0.10076705573578054,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-07",
+      "domain": "novel",
+      "theme": "凍てつく湖畔と氷下の気泡",
+      "title": "文芸・情景描写（結氷湖の底鳴り）",
+      "anchors": {
+        "x_0": "凍てつく湖畔と氷下の気泡の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて凍てつく湖畔と氷下の気泡の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて凍てつく湖畔と氷下の気泡の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 1.1436976329912742,
+          "kamae_diff": 0.7519942881737788,
+          "d_3phase": 1.119152413764273,
+          "reach_dist": 0.5599525388765678,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7344926746085199,
+          "r_grpo": 0.20064834735946882,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.08,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.59,
+            "normalized_quality": 60.0
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7576380810646988,
+          "r_grpo": 0.3433092502354047,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.84,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.73,
+            "normalized_quality": 67.0
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7202568723163159,
+          "r_grpo": 0.3741326873782674,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.84,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.47,
+            "normalized_quality": 77.9
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.4952972842918406,
+        "m_bridge": 0.13584539689261343,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-08",
+      "domain": "novel",
+      "theme": "夕暮れの古い商店街と路地の陰影",
+      "title": "文芸・情景描写（日暮れの残光）",
+      "anchors": {
+        "x_0": "夕暮れの古い商店街と路地の陰影の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて夕暮れの古い商店街と路地の陰影の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて夕暮れの古い商店街と路地の陰影の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.7780202006411434,
+          "kamae_diff": 0.49553777342570837,
+          "d_3phase": 0.8070926491869574,
+          "reach_dist": 0.48443827832494485,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6746000642989045,
+          "r_grpo": 0.18428691355201232,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.08,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.59,
+            "normalized_quality": 59.9
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7114553772497687,
+          "r_grpo": 0.3223824385864091,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.85,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.73,
+            "normalized_quality": 67.1
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6929917422263658,
+          "r_grpo": 0.35996999517171363,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.86,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.48,
+            "normalized_quality": 78.0
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.7504619941841577,
+        "m_bridge": 0.11076221359749748,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-09",
+      "domain": "novel",
+      "theme": "晩秋の廃鉱山と錆びた鉄橋",
+      "title": "文芸・情景描写（谷あいの遺構）",
+      "anchors": {
+        "x_0": "晩秋の廃鉱山と錆びた鉄橋の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて晩秋の廃鉱山と錆びた鉄橋の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて晩秋の廃鉱山と錆びた鉄橋の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.9474036093250793,
+          "kamae_diff": 0.5821944284735443,
+          "d_3phase": 1.0434548024329573,
+          "reach_dist": 0.441405896310695,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7128754802211328,
+          "r_grpo": 0.19474297283590472,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.11,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.62,
+            "normalized_quality": 60.1
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6857640437679798,
+          "r_grpo": 0.3107409006864319,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.83,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.71,
+            "normalized_quality": 67.0
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6383445753485185,
+          "r_grpo": 0.33158388434452163,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.82,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.45,
+            "normalized_quality": 77.8
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.564563595004632,
+        "m_bridge": 0.1285225535546469,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "novel-10",
+      "domain": "novel",
+      "theme": "春先の残雪と芽吹く蕗の薹",
+      "title": "文芸・情景描写（雪解けの小川）",
+      "anchors": {
+        "x_0": "春先の残雪と芽吹く蕗の薹の気配が漂い、張り詰めた冷気が指先をかすかに凍らせていた。",
+        "x_T": "やがて春先の残雪と芽吹く蕗の薹の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "やがて春先の残雪と芽吹く蕗の薹の余韻が静かに沈殿し、凍てついた空間に深い均衡と静寂が定着した。",
+          "score": 0.9103593295448609,
+          "kamae_diff": 0.5221230933736759,
+          "d_3phase": 1.1092463890605284,
+          "reach_dist": 0.6877836003177927,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。雪は次第に激しさを増していき、周囲の視界を白く遮断していった。冷たい風が吹き荒れる中で、遠くの街並みの光や現代の社会的な課題についても考えを巡らせていた。しかし寒さは増すばかりであり、寒さに耐えながら歩みを進めることが重要な課題であるといえるだろう。このような過酷な環境においては、適切な装備と冷静な判断が求められているにほかならない。雪山の厳しさは自然の猛威を物語っており、我々の生活や意識のあり方に深い問いを投げかけているといえるだろう。",
+          "text_length": 268,
+          "order_params": {
+            "psi_order": 0.8889545573714723,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 2.432976312317293,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3450766699206718,
+          "brownian_ratio": 1.472233738103796,
+          "m_geodesic": 0.922066432095177,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7594249712754373,
+          "r_grpo": 0.20745933989218449,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.1,
+            "structural_sophistication": 2.24,
+            "absence_of_slop": 2.89,
+            "total_score": 13.61,
+            "normalized_quality": 60.0
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先から落ちる氷柱が鈍い光を放ち、雪を踏みしめる靴音が凍てついた谷あいに乾いた音を響かせる。古い板壁の隙間から漏れる風が低く唸りを上げ、暗がりの中で小さな火影が揺らめいている。土間に置かれた鉄鍋から湯気が立ち上り、微かな薪の爆ぜる音が室内の沈黙をわずかに揺らしていた。手袋を外して指先を温めながら、外の嵐が通り過ぎるのをただじっと待ち続けていた。",
+          "text_length": 220,
+          "order_params": {
+            "psi_order": 0.6207550264645585,
+            "phi_void": 0.6441115165855109,
+            "kappa_kin": 0.11576267487404544
+          },
+          "d_3phase": 1.3295397076667472,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.3704468372345916,
+          "brownian_ratio": 1.4545656176462385,
+          "m_geodesic": 0.8809060428574137,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7507580234090198,
+          "r_grpo": 0.3401916832936424,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.48,
+            "logical_validity": 3.83,
+            "structural_sophistication": 1.4,
+            "absence_of_slop": 5.0,
+            "total_score": 14.72,
+            "normalized_quality": 67.0
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "風雪の峠道と廃屋の灯りの気配が濃く漂い、張り詰めた冷気が指先と肌の表面をかすかに凍らせていた。軒先からの雨垂れが規則正しく踏み石を打ち鳴らし、暗がりの奥で老陶工の静かな呼吸が湿った空気に混ざる。作業台に積もった陶土の匂いが立ち込め、古い轆轤が低く軋みながら規則的な回転を刻み始める。削り屑が濡れた板張りの床へと静かに積もる。窯の焚口から漏れ出す微かな熱気が作業場全体の冷気を徐々に押し広げていく。手の中で滑らかに立ち上がる器の輪郭を確かめながら、言葉のない沈黙の時間がゆっくりと沈殿していった。やがて暗闇の底で炎の残像が静かに溶け落ち、冷気の奥に張り詰めていた研ぎ澄まされた緊張が静かに解き放たれていく。火勢の衰えとともに影が伸び、土と炎の対話が終わりを告げる頃、冷気は再び澄み渡り、作業場の隅々まで穏やかな静けさが満ちていった。微かな軋みとともにすべての輪郭が沈み、あとに冷たい沈黙と不動の平衡だけが残った。",
+          "text_length": 405,
+          "order_params": {
+            "psi_order": 0.4879644508645792,
+            "phi_void": 0.3297922472704762,
+            "kappa_kin": 0.050979162739183646
+          },
+          "d_3phase": 1.030774962021587,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.37756106716525606,
+          "brownian_ratio": 1.4902387490633942,
+          "m_geodesic": 0.8696974200291723,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7970253959295721,
+          "r_grpo": 0.4140095912294199,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.51,
+            "logical_validity": 3.89,
+            "structural_sophistication": 3.13,
+            "absence_of_slop": 4.99,
+            "total_score": 16.52,
+            "normalized_quality": 78.2
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.2828478792248434,
+        "m_bridge": 0.16101169073389623,
+        "collision_matrix": [
+          [
+            4.289495034981804
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-01",
+      "domain": "article",
+      "theme": "リモート組織における知識伝達と非同期コミュニケーションの最適化",
+      "title": "論説・組織論（非同期コミュニケーション）",
+      "anchors": {
+        "x_0": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがってリモート組織における知識伝達と非同期コミュニケーションの最適化の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがってリモート組織における知識伝達と非同期コミュニケーションの最適化の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 1.5794059110799543,
+          "kamae_diff": 0.8133319784115701,
+          "d_3phase": 2.188782664766812,
+          "reach_dist": 0.6086744064474967,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6792145756743575,
+          "r_grpo": 0.15369660684991007,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.65,
+            "logical_validity": 4.24,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.5,
+            "total_score": 16.57,
+            "normalized_quality": 78.6
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5592885307030024,
+          "r_grpo": 0.01100184734464651,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.2,
+            "logical_validity": 3.6,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 5.0,
+            "total_score": 15.92,
+            "normalized_quality": 74.5
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.765257920213547,
+          "r_grpo": 0.017325610319892132,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.31,
+            "logical_validity": 3.93,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.96,
+            "total_score": 17.42,
+            "normalized_quality": 83.8
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.592492873795548,
+        "m_bridge": 0.12568276323064653,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-02",
+      "domain": "article",
+      "theme": "分散システムにおける強整合性と結果整合性のトレードオフ構造",
+      "title": "論説・技術論（分散データ整合性）",
+      "anchors": {
+        "x_0": "分散システムにおける強整合性と結果整合性のトレードオフ構造に関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがって分散システムにおける強整合性と結果整合性のトレードオフ構造の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがって分散システムにおける強整合性と結果整合性のトレードオフ構造の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 0.9490831339668915,
+          "kamae_diff": 0.7333571350501085,
+          "d_3phase": 0.6163599969050945,
+          "reach_dist": 0.8470668140747427,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.4565540875127366,
+          "r_grpo": 0.10331170237990768,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.31,
+            "logical_validity": 4.27,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 2.82,
+            "total_score": 15.59,
+            "normalized_quality": 72.4
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.3850130420741173,
+          "r_grpo": 0.007573648451673253,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 2.86,
+            "logical_validity": 3.67,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 4.32,
+            "total_score": 14.97,
+            "normalized_quality": 68.6
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5122780486478796,
+          "r_grpo": 0.01159808949619387,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.31,
+            "logical_validity": 3.95,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.96,
+            "total_score": 17.43,
+            "normalized_quality": 83.9
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.3955724673302097,
+        "m_bridge": 0.1471271685704407,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-03",
+      "domain": "article",
+      "theme": "オープンソースエコノミクスにおけるコモンズの悲劇と持続可能性",
+      "title": "論説・経済論（OSSコモンズ設計）",
+      "anchors": {
+        "x_0": "オープンソースエコノミクスにおけるコモンズの悲劇と持続可能性に関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがってオープンソースエコノミクスにおけるコモンズの悲劇と持続可能性の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがってオープンソースエコノミクスにおけるコモンズの悲劇と持続可能性の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 5.8504134394846306,
+          "kamae_diff": 0.9033836503232627,
+          "d_3phase": 14.134370826175337,
+          "reach_dist": 0.9167713614398807,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5214930206536128,
+          "r_grpo": 0.11800646016877923,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.65,
+            "logical_validity": 4.25,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.5,
+            "total_score": 16.58,
+            "normalized_quality": 78.6
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.4220215521873679,
+          "r_grpo": 0.008301648323594467,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.2,
+            "logical_validity": 3.63,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 5.0,
+            "total_score": 15.95,
+            "normalized_quality": 74.7
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5587554570985934,
+          "r_grpo": 0.012650348409464343,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.89,
+            "logical_validity": 3.91,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.13,
+            "total_score": 16.14,
+            "normalized_quality": 75.9
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.686056468849008,
+        "m_bridge": 0.11661875428451565,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-04",
+      "domain": "article",
+      "theme": "大規模言語モデルの出力信頼性とハルシネーション抑制の幾何学的アプローチ",
+      "title": "論説・AI論（幾何学的アライメント）",
+      "anchors": {
+        "x_0": "大規模言語モデルの出力信頼性とハルシネーション抑制の幾何学的アプローチに関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがって大規模言語モデルの出力信頼性とハルシネーション抑制の幾何学的アプローチの本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがって大規模言語モデルの出力信頼性とハルシネーション抑制の幾何学的アプローチの本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 0.9816307802105304,
+          "kamae_diff": 0.6741608881708733,
+          "d_3phase": 0.8784854058275919,
+          "reach_dist": 0.6503303996767069,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.4928335085381689,
+          "r_grpo": 0.11152121982813394,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.65,
+            "logical_validity": 4.25,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.5,
+            "total_score": 16.58,
+            "normalized_quality": 78.6
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.43745230780694133,
+          "r_grpo": 0.008605188997896697,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.2,
+            "logical_validity": 3.66,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 5.0,
+            "total_score": 15.98,
+            "normalized_quality": 74.9
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5471822739771204,
+          "r_grpo": 0.012388328957424642,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.97,
+            "logical_validity": 3.95,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.29,
+            "total_score": 16.42,
+            "normalized_quality": 77.6
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.3834771319903942,
+        "m_bridge": 0.14855772056415584,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-05",
+      "domain": "article",
+      "theme": "ソフトウェアアーキテクチャにおける技術的負債の本質と複利効果",
+      "title": "論説・工学論（技術的負債の本質）",
+      "anchors": {
+        "x_0": "ソフトウェアアーキテクチャにおける技術的負債の本質と複利効果に関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがってソフトウェアアーキテクチャにおける技術的負債の本質と複利効果の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがってソフトウェアアーキテクチャにおける技術的負債の本質と複利効果の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 3.429634784180087,
+          "kamae_diff": 0.8609330157015425,
+          "d_3phase": 7.339147909938699,
+          "reach_dist": 0.8811370037377422,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.3756293778656076,
+          "r_grpo": 0.08499959052522761,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.61,
+            "logical_validity": 4.21,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.42,
+            "total_score": 16.42,
+            "normalized_quality": 77.7
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.26413130004823454,
+          "r_grpo": 0.005195765839183335,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.16,
+            "logical_validity": 3.58,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 4.92,
+            "total_score": 15.78,
+            "normalized_quality": 73.6
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.4793849791107294,
+          "r_grpo": 0.01085338305151343,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.91,
+            "logical_validity": 3.86,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.17,
+            "total_score": 16.16,
+            "normalized_quality": 76.0
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.8376437446012073,
+        "m_bridge": 0.10330030031167375,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-06",
+      "domain": "article",
+      "theme": "プロダクトマネジメントにおける定量的指標の形骸化とグッドハートの法則",
+      "title": "論説・戦略論（指標の形骸化）",
+      "anchors": {
+        "x_0": "プロダクトマネジメントにおける定量的指標の形骸化とグッドハートの法則に関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがってプロダクトマネジメントにおける定量的指標の形骸化とグッドハートの法則の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがってプロダクトマネジメントにおける定量的指標の形骸化とグッドハートの法則の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 1.3571230592171841,
+          "kamae_diff": 0.829104455110149,
+          "d_3phase": 1.508624583162958,
+          "reach_dist": 0.6927279518099629,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6192739934950616,
+          "r_grpo": 0.14013290485717944,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.65,
+            "logical_validity": 4.27,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.5,
+            "total_score": 16.6,
+            "normalized_quality": 78.8
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.48307497100960173,
+          "r_grpo": 0.009502639148324388,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.2,
+            "logical_validity": 3.62,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 5.0,
+            "total_score": 15.94,
+            "normalized_quality": 74.6
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6199369747100933,
+          "r_grpo": 0.014035511639948343,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.31,
+            "logical_validity": 3.92,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.96,
+            "total_score": 17.4,
+            "normalized_quality": 83.8
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.6379029856889926,
+        "m_bridge": 0.12119888700075276,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-07",
+      "domain": "article",
+      "theme": "スタートアップ組織における認知負荷の局在化と自律分散型チーム設計",
+      "title": "論説・組織論（認知負荷の平滑化）",
+      "anchors": {
+        "x_0": "スタートアップ組織における認知負荷の局在化と自律分散型チーム設計に関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがってスタートアップ組織における認知負荷の局在化と自律分散型チーム設計の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがってスタートアップ組織における認知負荷の局在化と自律分散型チーム設計の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 1.8157503233598566,
+          "kamae_diff": 0.982730391762861,
+          "d_3phase": 2.3800569474199875,
+          "reach_dist": 0.5770356804539022,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.626827272581196,
+          "r_grpo": 0.14184210458243066,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.65,
+            "logical_validity": 4.25,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.5,
+            "total_score": 16.58,
+            "normalized_quality": 78.6
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5117231241451781,
+          "r_grpo": 0.010066181202561574,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.2,
+            "logical_validity": 3.62,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 5.0,
+            "total_score": 15.93,
+            "normalized_quality": 74.6
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6126685471873206,
+          "r_grpo": 0.013870952816613593,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.93,
+            "logical_validity": 3.9,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.22,
+            "total_score": 16.27,
+            "normalized_quality": 76.7
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.708676000824158,
+        "m_bridge": 0.114527443823513,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-08",
+      "domain": "article",
+      "theme": "暗号技術と分散型台帳におけるゼロ知識証明の実用境界線",
+      "title": "論説・セキュリティ（ゼロ知識検証）",
+      "anchors": {
+        "x_0": "暗号技術と分散型台帳におけるゼロ知識証明の実用境界線に関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがって暗号技術と分散型台帳におけるゼロ知識証明の実用境界線の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがって暗号技術と分散型台帳におけるゼロ知識証明の実用境界線の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 1.2713981434037689,
+          "kamae_diff": 0.7840310689559037,
+          "d_3phase": 1.3924773555653291,
+          "reach_dist": 0.5726248460333305,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.4790067695850342,
+          "r_grpo": 0.10839242528071664,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.65,
+            "logical_validity": 4.26,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.5,
+            "total_score": 16.59,
+            "normalized_quality": 78.7
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.33224685363654494,
+          "r_grpo": 0.006535676960608835,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.2,
+            "logical_validity": 3.6,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 5.0,
+            "total_score": 15.92,
+            "normalized_quality": 74.5
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.427115640667569,
+          "r_grpo": 0.00966999354893625,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.31,
+            "logical_validity": 3.85,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.96,
+            "total_score": 17.33,
+            "normalized_quality": 83.3
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 3.0913510815397327,
+        "m_bridge": 0.08432466546674594,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-09",
+      "domain": "article",
+      "theme": "マイクロサービス移行に伴うネットワークレイテンシと障害ドメインの拡大",
+      "title": "論説・基盤論（障害ドメイン分離）",
+      "anchors": {
+        "x_0": "マイクロサービス移行に伴うネットワークレイテンシと障害ドメインの拡大に関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがってマイクロサービス移行に伴うネットワークレイテンシと障害ドメインの拡大の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがってマイクロサービス移行に伴うネットワークレイテンシと障害ドメインの拡大の本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 2.603372528644026,
+          "kamae_diff": 0.9078214612184015,
+          "d_3phase": 4.844431621216071,
+          "reach_dist": 0.7460541648709557,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6115271949639092,
+          "r_grpo": 0.13837991443142797,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.45,
+            "logical_validity": 4.22,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.1,
+            "total_score": 15.95,
+            "normalized_quality": 74.7
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5050545718446416,
+          "r_grpo": 0.009935003124713142,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.0,
+            "logical_validity": 3.59,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 4.6,
+            "total_score": 15.31,
+            "normalized_quality": 70.7
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.7053233263851254,
+          "r_grpo": 0.015968677722497417,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.22,
+            "logical_validity": 3.93,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.78,
+            "total_score": 17.14,
+            "normalized_quality": 82.1
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.6005107990596006,
+        "m_bridge": 0.12487917124003675,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "article-10",
+      "domain": "article",
+      "theme": "エンジニアリング組織におけるコードレビューの非同期化と品質フィードバックループ",
+      "title": "論説・開発論（非同期レビュー）",
+      "anchors": {
+        "x_0": "エンジニアリング組織におけるコードレビューの非同期化と品質フィードバックループに関する最新の観測データは、従来の想定と明確に乖離している。",
+        "x_T": "したがってエンジニアリング組織におけるコードレビューの非同期化と品質フィードバックループの本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "したがってエンジニアリング組織におけるコードレビューの非同期化と品質フィードバックループの本質的な構造優位は、非同期的な自律分散制御の確立に帰着するのである。",
+          "score": 1.1645943701497468,
+          "kamae_diff": 0.8889768702363083,
+          "d_3phase": 0.7874785711812525,
+          "reach_dist": 0.8504699077195944,
+          "tautology_penalty": 0.0,
+          "domain_penalty": 0.0
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。近年のリモートワークの普及に伴い、様々なコミュニケーションツールが導入されているが、多くの組織では依然として課題が山積しているといえるだろう。常に迅速な返答を求める文化は個人の集中力を著しく阻害し、業務の質を低下させる要因となっているにほかならない。コミュニケーションの効率化は組織全体の生産性向上において重要な課題であり、適切なツールの選定と柔軟な運用ガイドラインの策定が強く求められているといえるだろう。",
+          "text_length": 269,
+          "order_params": {
+            "psi_order": 0.4166886375562263,
+            "phi_void": 0.0,
+            "kappa_kin": 0.14811999224774494
+          },
+          "d_3phase": 0.9137484613977426,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5870379725331745,
+          "brownian_ratio": 1.9270116164316673,
+          "m_geodesic": 0.494067915597274,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6213268941623643,
+          "r_grpo": 0.14059744710651365,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.65,
+            "logical_validity": 4.23,
+            "structural_sophistication": 4.19,
+            "absence_of_slop": 3.5,
+            "total_score": 16.56,
+            "normalized_quality": 78.5
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "組織の非同期コミュニケーションと生産性に関する観測データは従来の想定と乖離する。即時チャットは認知的過負荷を招き文脈を散逸させる。同期会議の削減が深い思考時間を生み出し業務品質を底上げする。テキストベースの意思決定プロセスを形式化することにより、情報の非対称性が緩和され、各メンバーの自律的なタスク遂行が促進される。ログの可視化と検索性の向上は暗黙知の共有を加速し、部門間の連携摩擦を大幅に低減させる。",
+          "text_length": 201,
+          "order_params": {
+            "psi_order": 0.013885973609303447,
+            "phi_void": 0.0,
+            "kappa_kin": 1.0916977116969848
+          },
+          "d_3phase": 0.784869231103794,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.8000107005571718,
+          "brownian_ratio": 2.355592089156134,
+          "m_geodesic": 0.20134613888788921,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5188080580473915,
+          "r_grpo": 0.010205549984433581,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.2,
+            "logical_validity": 3.61,
+            "structural_sophistication": 4.12,
+            "absence_of_slop": 5.0,
+            "total_score": 15.93,
+            "normalized_quality": 74.5
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "リモート組織における知識伝達と非同期コミュニケーションの最適化に関する最新の観測データは、従来の想定モデルと明確に乖離している。即時性を偏重した常時接続チャットは認知負荷を指数関数的に高める。その結果、文脈の断片化と合意形成の劣化が不可避となる。同期的な会議体を極小化し構造化されたドキュメントを主軸に据えることで、非同期的な思考の反復と自律分散的な意思決定が可能となる。情報ハブの局所集中を解体し透明なログ共有をプロトコル化すれば、属人性に依存しない高密度な知識創造サイクルが自然に駆動する。非同期化は単なるツール変更ではない。それは組織の知的代謝プロセスの根本的な再設計を意味している。このようなプロトコルの徹底は調整コストの爆発を未然に遮断し、スケールに伴う組織の知性劣化を完全に防護する。したがって、本質的な競争優位は構造の非対称性と非同期プロトコルによる同期コスト削減に帰着する。",
+          "text_length": 395,
+          "order_params": {
+            "psi_order": -0.6571751281656334,
+            "phi_void": 0.0,
+            "kappa_kin": 1.2802701820803006
+          },
+          "d_3phase": 0.9206747765114871,
+          "phase_regime": "Phase_III_Chaos",
+          "mean_curvature": 0.6735178935903778,
+          "brownian_ratio": 2.371599705252145,
+          "m_geodesic": 0.24801852084841325,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6706780269002975,
+          "r_grpo": 0.015184300400244306,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.23,
+            "logical_validity": 3.93,
+            "structural_sophistication": 4.22,
+            "absence_of_slop": 4.81,
+            "total_score": 17.18,
+            "normalized_quality": 82.4
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.595022115019118,
+        "m_bridge": 0.12542871471662762,
+        "collision_matrix": [
+          [
+            3.9181751117841657
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-01",
+      "domain": "cot_reasoning",
+      "theme": "有界閉区間上の連続関数列の一様収束と微分可能性の保存定理",
+      "title": "推論・解析学（一様収束微分保存定理）",
+      "anchors": {
+        "x_0": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.6519483547169472,
+          "kamae_diff": 0.540447581283891,
+          "d_3phase": 0.8788687542833192,
+          "reach_dist": 0.6379119173496324,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.3973624831901773,
+          "r_grpo": 9.166984206723378e-05,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.23,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.75,
+            "normalized_quality": 67.2
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.3337501905961017,
+          "r_grpo": 0.015954181953152947,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.46,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.95,
+            "normalized_quality": 68.4
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.8416995085134873,
+          "r_grpo": 0.11609210204309649,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.79,
+            "logical_validity": 4.66,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.51,
+            "total_score": 18.05,
+            "normalized_quality": 87.8
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.761668556519119,
+        "m_bridge": 0.1097736406996158,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-02",
+      "domain": "cot_reasoning",
+      "theme": "ヒルベルト空間における閉部分空間への直交射影定理の証明",
+      "title": "推論・関数解析（直交射影定理）",
+      "anchors": {
+        "x_0": "前提：問題設定「ヒルベルト空間における閉部分空間への直交射影定理の証明」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「ヒルベルト空間における閉部分空間への直交射影定理の証明」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「ヒルベルト空間における閉部分空間への直交射影定理の証明」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.5475301972097708,
+          "kamae_diff": 0.7042760966853662,
+          "d_3phase": 0.7091248745853228,
+          "reach_dist": 0.665261044131786,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.4927479849966462,
+          "r_grpo": 0.00011367487338247747,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.22,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.74,
+            "normalized_quality": 67.1
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.2789053401536785,
+          "r_grpo": 0.013332446452151253,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.34,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.83,
+            "normalized_quality": 67.7
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.7300680152598422,
+          "r_grpo": 0.1006952358516061,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.79,
+            "logical_validity": 4.68,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.51,
+            "total_score": 18.07,
+            "normalized_quality": 87.9
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.530323316357281,
+        "m_bridge": 0.13209173269672703,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-03",
+      "domain": "cot_reasoning",
+      "theme": "コンパクトHausdorff位相群上の左不変Haar測度の存在と一意性",
+      "title": "推論・位相幾何（Haar測度一意性）",
+      "anchors": {
+        "x_0": "前提：問題設定「コンパクトHausdorff位相群上の左不変Haar測度の存在と一意性」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「コンパクトHausdorff位相群上の左不変Haar測度の存在と一意性」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「コンパクトHausdorff位相群上の左不変Haar測度の存在と一意性」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.030473451440025334,
+          "kamae_diff": 0.710320193215358,
+          "d_3phase": 2.1691610152703333,
+          "reach_dist": 0.8063535361907161,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5467951596350733,
+          "r_grpo": 0.00012614332768522954,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.28,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.8,
+            "normalized_quality": 67.5
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.35938296961444355,
+          "r_grpo": 0.017179499666659485,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.42,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.91,
+            "normalized_quality": 68.2
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.7649245640869049,
+          "r_grpo": 0.10550285422653911,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.79,
+            "logical_validity": 4.69,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.51,
+            "total_score": 18.08,
+            "normalized_quality": 88.0
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.474694651552123,
+        "m_bridge": 0.1381029688125197,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-04",
+      "domain": "cot_reasoning",
+      "theme": "素数が無限に存在することのFurstenbergトポロジー的証明",
+      "title": "推論・整数論（位相空間素数論）",
+      "anchors": {
+        "x_0": "前提：問題設定「素数が無限に存在することのFurstenbergトポロジー的証明」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「素数が無限に存在することのFurstenbergトポロジー的証明」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「素数が無限に存在することのFurstenbergトポロジー的証明」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.712832386257076,
+          "kamae_diff": 0.4980292124386536,
+          "d_3phase": 0.8261097180122009,
+          "reach_dist": 0.8009115930430909,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.49686464130577335,
+          "r_grpo": 0.00011462456855921653,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.25,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.77,
+            "normalized_quality": 67.3
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.25905463194354167,
+          "r_grpo": 0.012383527711107787,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.36,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.85,
+            "normalized_quality": 67.8
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.8293988163095897,
+          "r_grpo": 0.11439551887999402,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.79,
+            "logical_validity": 4.74,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.51,
+            "total_score": 18.13,
+            "normalized_quality": 88.3
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.183598853882943,
+        "m_bridge": 0.17431712465704946,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-05",
+      "domain": "cot_reasoning",
+      "theme": "自己随伴作用素のスペクトル分解定理とレゾルベント解析接続",
+      "title": "推論・作用素論（スペクトル定理）",
+      "anchors": {
+        "x_0": "前提：問題設定「自己随伴作用素のスペクトル分解定理とレゾルベント解析接続」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「自己随伴作用素のスペクトル分解定理とレゾルベント解析接続」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「自己随伴作用素のスペクトル分解定理とレゾルベント解析接続」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.8275364728451682,
+          "kamae_diff": 0.38846730215981784,
+          "d_3phase": 0.8114177857000399,
+          "reach_dist": 0.6997695466630601,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.4959187892844339,
+          "r_grpo": 0.00011440636450351643,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.21,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.73,
+            "normalized_quality": 67.1
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.3434410760131389,
+          "r_grpo": 0.016417433072064436,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.38,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.87,
+            "normalized_quality": 67.9
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.697073326713634,
+          "r_grpo": 0.09614441609842428,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.79,
+            "logical_validity": 4.71,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.51,
+            "total_score": 18.09,
+            "normalized_quality": 88.1
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.562527334928097,
+        "m_bridge": 0.12873208845111844,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-06",
+      "domain": "cot_reasoning",
+      "theme": "ビザンチン将軍問題における耐障害性下限3m+1の合意可能性証明",
+      "title": "推論・分散計算（耐障害性下限）",
+      "anchors": {
+        "x_0": "前提：問題設定「ビザンチン将軍問題における耐障害性下限3m+1の合意可能性証明」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「ビザンチン将軍問題における耐障害性下限3m+1の合意可能性証明」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「ビザンチン将軍問題における耐障害性下限3m+1の合意可能性証明」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.44194591762481994,
+          "kamae_diff": 0.7022557161527416,
+          "d_3phase": 1.0165667606355384,
+          "reach_dist": 0.7509898294739352,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5583262398672479,
+          "r_grpo": 0.00012880349906140384,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.27,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.79,
+            "normalized_quality": 67.5
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.3409010010376464,
+          "r_grpo": 0.016296010464750633,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.39,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.88,
+            "normalized_quality": 68.0
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.6805936367444613,
+          "r_grpo": 0.09387144120632936,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.38,
+            "logical_validity": 4.66,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 3.71,
+            "total_score": 16.83,
+            "normalized_quality": 80.2
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.925759053973889,
+        "m_bridge": 0.09626916168575601,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-07",
+      "domain": "cot_reasoning",
+      "theme": "バナッハの不動点定理を用いた非線形常微分方程式の局所一意存在証明",
+      "title": "推論・微分方程式（ピカール・リンデレフ）",
+      "anchors": {
+        "x_0": "前提：問題設定「バナッハの不動点定理を用いた非線形常微分方程式の局所一意存在証明」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「バナッハの不動点定理を用いた非線形常微分方程式の局所一意存在証明」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「バナッハの不動点定理を用いた非線形常微分方程式の局所一意存在証明」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": 0.30521184200555296,
+          "kamae_diff": 0.9979387522347271,
+          "d_3phase": 2.3064945422023597,
+          "reach_dist": 0.789267957260928,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.33776532070306936,
+          "r_grpo": 7.792102907163514e-05,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.61,
+            "logical_validity": 3.17,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 3.9,
+            "total_score": 14.29,
+            "normalized_quality": 64.3
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.10397212639995003,
+          "r_grpo": 0.004970155132131316,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 3.57,
+            "logical_validity": 3.28,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.6,
+            "total_score": 14.37,
+            "normalized_quality": 64.8
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.6735650647137512,
+          "r_grpo": 0.09290201958596095,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.58,
+            "logical_validity": 4.68,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.11,
+            "total_score": 17.45,
+            "normalized_quality": 84.1
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.4942625788806967,
+        "m_bridge": 0.13595789141946335,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-08",
+      "domain": "cot_reasoning",
+      "theme": "Shannonの通信路符号化定理におけるランダムコーディング論法",
+      "title": "推論・情報理論（通信路容量定理）",
+      "anchors": {
+        "x_0": "前提：問題設定「Shannonの通信路符号化定理におけるランダムコーディング論法」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「Shannonの通信路符号化定理におけるランダムコーディング論法」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「Shannonの通信路符号化定理におけるランダムコーディング論法」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.554152054551954,
+          "kamae_diff": 0.6059048840306848,
+          "d_3phase": 0.9712658897638891,
+          "reach_dist": 0.6713917242795145,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.4807531308869336,
+          "r_grpo": 0.00011090771133680793,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.2,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.73,
+            "normalized_quality": 67.0
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.2856362668988639,
+          "r_grpo": 0.013654203362055129,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.34,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.83,
+            "normalized_quality": 67.7
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.7838955339603682,
+          "r_grpo": 0.10811944096340936,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.79,
+            "logical_validity": 4.74,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.51,
+            "total_score": 18.12,
+            "normalized_quality": 88.3
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.3702493476360633,
+        "m_bridge": 0.15013813958601296,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-09",
+      "domain": "cot_reasoning",
+      "theme": "Cook-Levinの定理における3-SATのNP完全性還元ステップの論理検証",
+      "title": "推論・計算複雑性（NP完全性還元）",
+      "anchors": {
+        "x_0": "前提：問題設定「Cook-Levinの定理における3-SATのNP完全性還元ステップの論理検証」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「Cook-Levinの定理における3-SATのNP完全性還元ステップの論理検証」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「Cook-Levinの定理における3-SATのNP完全性還元ステップの論理検証」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.862111954772576,
+          "kamae_diff": 0.501529212183165,
+          "d_3phase": 0.38959666584073993,
+          "reach_dist": 0.7316789504600839,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.5378344573113369,
+          "r_grpo": 0.00012407613160714566,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.27,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.79,
+            "normalized_quality": 67.5
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.3545789889621955,
+          "r_grpo": 0.01694985610813896,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.42,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.91,
+            "normalized_quality": 68.2
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.7863126733139507,
+          "r_grpo": 0.10845282691130434,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.79,
+            "logical_validity": 4.69,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.51,
+            "total_score": 18.08,
+            "normalized_quality": 88.0
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.4776013156033123,
+        "m_bridge": 0.13778220674823072,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cot-10",
+      "domain": "cot_reasoning",
+      "theme": "熱伝導方程式の初期値境界値問題における最大値原理と解の一意性",
+      "title": "推論・数理物理（最大値原理）",
+      "anchors": {
+        "x_0": "前提：問題設定「熱伝導方程式の初期値境界値問題における最大値原理と解の一意性」における初期条件および束縛条件を確定する。",
+        "x_T": "ゆえに「熱伝導方程式の初期値境界値問題における最大値原理と解の一意性」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。"
+      },
+      "endogenous_goal_ranking": [
+        {
+          "candidate_idx": 0,
+          "text": "ゆえに「熱伝導方程式の初期値境界値問題における最大値原理と解の一意性」において目標命題 $\\lim_{n\\to\\infty} \\|u_n - u^*\\| = 0$ の一意存在と正則性が完全に証明された Q.E.D.。",
+          "score": -0.23725836337185102,
+          "kamae_diff": 0.920095264039052,
+          "d_3phase": 0.9789896359688485,
+          "reach_dist": 0.6514122493442721,
+          "tautology_penalty": 0.0,
+          "domain_penalty": -1.5
+        }
+      ],
+      "methods": {
+        "vanilla_unidirectional": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。この測度の存在は数理物理学や調和解析において極めて重要な基盤であり、社会や科学技術の発展にも多大な影響を与えているといえるだろう。様々な応用分野においてモデル化の基礎として活用されており、数学的な厳密性の確保が強く求められているにほかならない。",
+          "text_length": 181,
+          "order_params": {
+            "psi_order": 0.6071955032835498,
+            "phi_void": 0.0,
+            "kappa_kin": 0.04
+          },
+          "d_3phase": 14.854379103019546,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.5633460127784481,
+          "brownian_ratio": 1.8943319794492322,
+          "m_geodesic": 0.5762456702645012,
+          "m_syntax": 1.0,
+          "m_bridge": 0.6092254942176949,
+          "r_grpo": 0.0001405457414849603,
+          "is_rejected": true,
+          "judge_evaluation": {
+            "coherence_flow": 4.75,
+            "logical_validity": 3.23,
+            "structural_sophistication": 2.6,
+            "absence_of_slop": 4.17,
+            "total_score": 14.76,
+            "normalized_quality": 67.2
+          }
+        },
+        "usir_v3_forward_only": {
+          "text": "前提確定：コンパクト群上の不変測度の存在証明。ステップ1：ハール測度の左不変性を仮定し、畳み込み代数の性質を精査する。ステップ2：可換代数の極大イデアルを構成し、ゲルファント変換によりスペクトルを確定する。ステップ3：リース・マルコフ・カクタニの表現定理を適用することにより、正値線形汎関数から正則ボレル測度が誘導される。",
+          "text_length": 161,
+          "order_params": {
+            "psi_order": 0.7037762615484682,
+            "phi_void": 0.0,
+            "kappa_kin": 0.5360309049014859
+          },
+          "d_3phase": 3.3713628690816733,
+          "phase_regime": "Phase_I_Deadzone",
+          "mean_curvature": 0.7250310964650977,
+          "brownian_ratio": 1.9916119886048405,
+          "m_geodesic": 0.3832796651837122,
+          "m_syntax": 1.0,
+          "m_bridge": 0.3791057983865808,
+          "r_grpo": 0.018122305416970966,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 3.7,
+            "logical_validity": 3.35,
+            "structural_sophistication": 2.92,
+            "absence_of_slop": 4.87,
+            "total_score": 14.84,
+            "normalized_quality": 67.7
+          }
+        },
+        "usir_v4_bidirectional_collision": {
+          "text": "前提：問題設定「有界閉区間上の連続関数列の一様収束と微分可能性の保存定理」における初期条件および束縛条件を確定する。有界閉区間 $[a, b]$ 上で微分可能な関数列 $\\{f_n\\}$ に対し、導関数列 $\\{f'_n\\}$ がある連続関数 $g$ へ一様収束し、ある点 $x_0$ で $\\{f_n(x_0)\\}$ が収束すると仮定する。平均値の定理を差分列 $\\{f_n(x) - f_m(x)\\}$ に適用することにより、任意の $\\epsilon > 0$ に対し十分大きな $N$ をとれば区間全体で一様コーシー性が成立する。完備性より関数列 $\\{f_n\\}$ は連続関数 $f$ へ一様収束し、差分商の極限操作と導関数の極限操作の可換性が厳密に保証される。極限関数 $f$ の微分係数は各点において $g(x)$ と完全に一致し、有界閉集合上での一様収束性によって導関数の連続性が保存される。ゆえに目標命題の一意存在と正則性が完全に証明された Q.E.D.。",
+          "text_length": 437,
+          "order_params": {
+            "psi_order": -0.39622036183744375,
+            "phi_void": 0.0,
+            "kappa_kin": 1.5313797509139595
+          },
+          "d_3phase": 1.0676391458349472,
+          "phase_regime": "Phase_II_Critical",
+          "mean_curvature": 0.5531372239639871,
+          "brownian_ratio": 1.7486878804040595,
+          "m_geodesic": 0.6990224222722858,
+          "m_syntax": 0.5,
+          "m_bridge": 0.6096771627455496,
+          "r_grpo": 0.0840902277771352,
+          "is_rejected": false,
+          "judge_evaluation": {
+            "coherence_flow": 4.63,
+            "logical_validity": 4.66,
+            "structural_sophistication": 4.09,
+            "absence_of_slop": 4.2,
+            "total_score": 17.58,
+            "normalized_quality": 84.9
+          }
+        }
+      },
+      "collision_stats": {
+        "optimal_pair": [
+          0,
+          0
+        ],
+        "min_action": 2.7718338723238234,
+        "m_bridge": 0.10888455375949677,
+        "collision_matrix": [
+          [
+            5.088116221406402
+          ]
+        ]
+      }
+    }
+  ],
+  "spearman_correlations": {
+    "overall": {
+      "n_samples": 90,
+      "rho_d_3phase_vs_quality": -0.5847,
+      "p_val_d_3phase": 1.4342e-09,
+      "rho_curvature_vs_quality": 0.3336,
+      "p_val_curvature": 0.0013152,
+      "rho_grpo_vs_quality": -0.0046,
+      "p_val_grpo": 0.96572
+    },
+    "by_domain": {
+      "novel": {
+        "n_samples": 30,
+        "rho_d_3phase_vs_quality": -0.9464,
+        "p_val_d_3phase": 2.8529e-15,
+        "rho_curvature_vs_quality": 0.9464,
+        "p_val_curvature": 2.8529e-15,
+        "rho_grpo_vs_quality": 0.9274,
+        "p_val_grpo": 1.7829e-13
+      },
+      "article": {
+        "n_samples": 30,
+        "rho_d_3phase_vs_quality": 0.749,
+        "p_val_d_3phase": 1.9212e-06,
+        "rho_curvature_vs_quality": -0.534,
+        "p_val_curvature": 0.0023711,
+        "rho_grpo_vs_quality": 0.5213,
+        "p_val_grpo": 0.0031336
+      },
+      "cot_reasoning": {
+        "n_samples": 30,
+        "rho_d_3phase_vs_quality": -0.9022,
+        "p_val_d_3phase": 9.7932e-12,
+        "rho_curvature_vs_quality": -0.5149,
+        "p_val_curvature": 0.0036001,
+        "rho_grpo_vs_quality": 0.9359,
+        "p_val_grpo": 3.2295e-14
+      }
+    }
+  },
+  "grpo_training": null
+}
