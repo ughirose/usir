@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import collections
 import math
+import sys
 import re
 from typing import Any, Callable, Dict, List, NamedTuple, Optional, Sequence, Set, Tuple, Union
 
@@ -841,8 +842,24 @@ class ClauseTwistedSMCDecoder:
         dim: int = 12,
         seed: Optional[int] = None,
         chat_prefix: str = "",
+        auto_gain: bool = False,
+        steer_balance: float = 1.0,
+        style_window_chars: Optional[int] = None,
+        temp_gain: float = 0.0,
+        p_ref: float = 0.5,
     ) -> None:
+        # Steering controls (all off by default = legacy behaviour):
+        #   auto_gain         : rescale the style term so that std_p(style) = steer_balance * std_p(ln P_LLM)
+        #   style_window_chars: measure candidate style on the trailing window only (a cumulative prefix
+        #                       dilutes the difference between candidates as the paragraph grows)
+        #   temp_gain         : candidate temperatures scaled by clip(1 + temp_gain * ln(||p|| / p_ref), 0.8, 1.35)
+        self.auto_gain = bool(auto_gain)
+        self.steer_balance = float(steer_balance)
+        self.style_window_chars = None if style_window_chars is None else int(style_window_chars)
+        self.temp_gain = float(temp_gain)
+        self.p_ref = float(p_ref)
         self.chat_prefix = str(chat_prefix)
+        self.verbose = False
         self.eos_reached = False
         self.stats: Dict[str, int] = {"candidates": 0, "incomplete": 0, "logprob_errors": 0}
         self.dim = int(dim)
@@ -930,6 +947,15 @@ class ClauseTwistedSMCDecoder:
             self.stats["logprob_errors"] += 1
             return -20.0
 
+    def _temperature_scale(self) -> float:
+        """Candidate-temperature multiplier tied to the momentum norm ||p|| of the integrator."""
+        if self.temp_gain == 0.0:
+            return 1.0
+        p_norm = float(np.linalg.norm(np.asarray(self.integrator.p, dtype=np.float64)))
+        if p_norm <= 1e-9:
+            return 1.0
+        return float(np.clip(1.0 + self.temp_gain * math.log(p_norm / self.p_ref), 0.8, 1.35))
+
     def _generate_candidates_batched(self, prefix: str) -> List[str]:
         """Generates P candidate clauses in ONE batched generate() call with per-row temperatures.
 
@@ -952,7 +978,7 @@ class ClauseTwistedSMCDecoder:
         pad_id = getattr(self.tokenizer, "pad_token_id", None)
         if pad_id is None:
             pad_id = getattr(self.tokenizer, "eos_token_id", None)
-        temps = torch.tensor(self.temperatures[:P], dtype=torch.float32, device=device)
+        temps = torch.tensor(self.temperatures[:P], dtype=torch.float32, device=device) * self._temperature_scale()
 
         n_ctx = inp_len
         tokenizer_ref = self.tokenizer
@@ -1088,7 +1114,8 @@ class ClauseTwistedSMCDecoder:
             if explicit_q is not None:
                 q_c = np.asarray(explicit_q, dtype=np.float64).ravel()
             else:
-                q_c = self.feature_extractor(full_text)
+                style_text = full_text[-self.style_window_chars:] if self.style_window_chars else full_text
+                q_c = self.feature_extractor(style_text)
             cand_q_list.append(q_c)
 
             # 2. Term 1: ln P_LLM(c^{(p)} | w_{<=m})
@@ -1126,6 +1153,16 @@ class ClauseTwistedSMCDecoder:
             style_penalty = -0.5 * self.beta_steer * style_err
             term3_style.append(style_penalty)
 
+        steer_gain = 1.0
+        if self.auto_gain and len(term1_llm) > 1:
+            # term3_style = -0.5 * beta * err, so the beta-free part is term3 / beta.
+            raw = np.array(term3_style) / (self.beta_steer if self.beta_steer != 0 else 1.0)
+            sd_style = float(np.std(raw))
+            sd_llm = float(np.std(np.array(term1_llm) + np.array(term2_reach)))
+            if sd_style > 1e-9 and sd_llm > 1e-9:
+                steer_gain = self.steer_balance * sd_llm / sd_style
+                term3_style = [float(steer_gain * r) for r in raw]
+
         w = np.array(term1_llm) + np.array(term2_reach) + np.array(term3_style)
 
         # Numerical stabilization for softmax normalized weights
@@ -1157,6 +1194,7 @@ class ClauseTwistedSMCDecoder:
             "term1_llm": term1_llm,
             "term2_reach": term2_reach,
             "term3_style": term3_style,
+            "steer_gain": steer_gain,
         }
 
     def step_smc_clause(
@@ -1213,6 +1251,8 @@ class ClauseTwistedSMCDecoder:
             "term1_llm": weights_info["term1_llm"],
             "term2_reach": weights_info["term2_reach"],
             "term3_style": weights_info["term3_style"],
+            "steer_gain": weights_info["steer_gain"],
+            "greedy_agree": bool(chosen_idx == int(np.argmax(weights_info["term1_llm"]))),
             "candidate_texts": weights_info["candidate_texts"],
             "baoab_result": baoab_step,
             "q_next_target": baoab_step.q,
@@ -1253,6 +1293,14 @@ class ClauseTwistedSMCDecoder:
             telemetry.append(step_res)
             clauses.append(step_res["selected_clause"])
             current_text = step_res["next_prefix"]
+            if self.verbose:
+                # Streamed progress keeps long remote runs from looking idle to the gateway.
+                sys.stdout.write(
+                    f"  [smc] clause {m + 1}/{max_clauses} ess={step_res['ess']:.2f} "
+                    f"t1_std={float(np.std(step_res['term1_llm'])):.3f} t3_std={float(np.std(step_res['term3_style'])):.4f} "
+                    f"gain={step_res['steer_gain']:.1f} greedy={int(step_res['greedy_agree'])}\n"
+                )
+                sys.stdout.flush()
 
             if early_stop_on_punct and (
                 (target_end is not None and target_end in current_text)

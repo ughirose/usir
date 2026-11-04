@@ -590,3 +590,59 @@ def test_clause_twisted_smc_decoder_edge_cases_and_resampling():
     res_steer = decoder_steer.step_smc_clause(prefix="前文、", candidate_clauses=cands_steer, target_q=q_target)
     assert res_steer["selected_idx"] == 1  # Candidate matching target style dominates
 
+
+
+# ==============================================================================
+# Steering gain, trailing style window and momentum-coupled temperature
+# ==============================================================================
+
+def _cands(llm_a, llm_b, qa, qb):
+    return [
+        {"text": "A、", "llm_logprob": llm_a, "q": np.full(12, qa)},
+        {"text": "B、", "llm_logprob": llm_b, "q": np.full(12, qb)},
+    ]
+
+
+def test_auto_gain_lets_style_term_overrule_a_small_llm_preference():
+    target = np.full(12, 0.50)
+    # LLM prefers A by 0.4 nats; the style of B is closer to the target, but only slightly.
+    cands = _cands(-1.0, -1.4, 0.56, 0.52)
+
+    legacy = ClauseTwistedSMCDecoder(dim=12, beta_steer=1.0, seed=0)
+    r_legacy = legacy.compute_particle_weights("", cands, target_q=target)
+    assert r_legacy["selected_clause"] == "A、"  # style term is ~0.02: cannot compete
+
+    steered = ClauseTwistedSMCDecoder(dim=12, beta_steer=1.0, seed=0, auto_gain=True, steer_balance=2.0)
+    r_steer = steered.compute_particle_weights("", cands, target_q=target)
+    assert r_steer["selected_clause"] == "B、"
+    assert r_steer["steer_gain"] > 10.0
+    # std of the rescaled style term equals steer_balance * std of the LLM term
+    assert np.std(r_steer["term3_style"]) == pytest.approx(2.0 * np.std(r_steer["term1_llm"]), rel=1e-6)
+
+
+def test_auto_gain_off_by_default_keeps_weights():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    r = dec.compute_particle_weights("", _cands(-1.0, -1.4, 0.56, 0.52), target_q=np.full(12, 0.5))
+    assert r["steer_gain"] == 1.0
+
+
+def test_style_window_uses_trailing_text_only():
+    seen = []
+
+    def fe(text):
+        seen.append(text)
+        return np.full(12, 0.5)
+
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, feature_extractor=fe, style_window_chars=10)
+    dec.compute_particle_weights("あ" * 100, ["い、", "う、"], target_q=np.full(12, 0.5))
+    assert all(len(t) == 10 for t in seen)
+
+
+def test_temperature_scale_follows_momentum_norm():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, temp_gain=0.15, p_ref=0.5)
+    dec.integrator.p = np.full(12, 0.1)
+    low = dec._temperature_scale()
+    dec.integrator.p = np.full(12, 0.7)
+    high = dec._temperature_scale()
+    assert low < 1.0 < high <= 1.35
+    assert ClauseTwistedSMCDecoder(dim=12, seed=0)._temperature_scale() == 1.0

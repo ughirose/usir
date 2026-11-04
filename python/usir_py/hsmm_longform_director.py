@@ -22,6 +22,7 @@ Phase B WS-B2 implementation based on Blueprint Section 3:
 from __future__ import annotations
 
 import math
+import sys
 import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
@@ -191,6 +192,7 @@ class HSMMLongformDirector:
         # arbitrator: WorldCraftArbitrator-like (compile_constraint_jacobian, arbitrate_momentum).
         # scene_constraints: {paragraph_index: constraint mode names}; unlisted paragraphs fall back to
         # cue-based mode selection from the paragraph text of the previous run (none -> unconstrained).
+        self.verbose = False
         self.arbitrator = arbitrator
         self.scene_constraints = dict(scene_constraints) if scene_constraints else {}
         self.dim = int(dim)
@@ -470,7 +472,17 @@ class HSMMLongformDirector:
                     early_stop_on_punct=False,
                 )
                 para_text = smc_res["welded_text"]
+                tel = smc_res["telemetry"]
+                smc_summary = {
+                    "n_clauses": len(tel),
+                    "mean_ess": float(np.mean([t["ess"] for t in tel])) if tel else 0.0,
+                    "greedy_agree_rate": float(np.mean([t["greedy_agree"] for t in tel])) if tel else 0.0,
+                    "mean_term1_std": float(np.mean([np.std(t["term1_llm"]) for t in tel])) if tel else 0.0,
+                    "mean_term3_std": float(np.mean([np.std(t["term3_style"]) for t in tel])) if tel else 0.0,
+                    "mean_term1_mean": float(np.mean([np.mean(t["term1_llm"]) for t in tel])) if tel else 0.0,
+                }
             else:
+                smc_summary = None
                 # Standalone high-fidelity procedural generation
                 para_text = self._generate_standalone_paragraph(
                     well=well,
@@ -512,6 +524,9 @@ class HSMMLongformDirector:
                 accumulated_delta = np.zeros(self.dim, dtype=np.float64)
 
             # 6. Aesthetic utility calculation
+            if self.verbose:
+                sys.stdout.write(f"[longform] paragraph {k + 1}/{n_paras} well={well.name} chars={len(para_text)}\n")
+                sys.stdout.flush()
             utility = compute_wundt_berlyne_utility(
                 arousal=order_params.get("kappa_kin", well.target_kappa_kin),
                 a_star=0.60,
@@ -532,6 +547,7 @@ class HSMMLongformDirector:
                 "discharged_momentum_norm": float(np.linalg.norm(discharged_p)),
                 "accumulated_delta_norm": float(np.linalg.norm(accumulated_delta)),
                 "refractory_counter_after": self.refractory_counter,
+                "smc": smc_summary,
                 "constraint_modes": scene_modes,
                 "cut_momentum_norm": float(np.linalg.norm(cut_p)),
             })

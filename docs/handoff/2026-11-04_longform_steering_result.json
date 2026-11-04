@@ -1,0 +1,163 @@
+{
+ "setup": {
+  "gpu": "Colab L4",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct fp16",
+  "seed": 3,
+  "paragraphs": 6,
+  "target_total_chars": 3000,
+  "max_clauses_per_paragraph": "none (31 from target)",
+  "steering": "auto_gain(steer_balance=1.0)+style_window_chars=120+temp_gain=0.15"
+ },
+ "unsteered_constrained_diagnostic": {
+  "total_chars": 1485,
+  "overall_cv_l": 0.4525,
+  "climax_cv_l": 0.504,
+  "climax_shock": 0.055,
+  "greedy_agree_rate_per_paragraph": [
+   0.842,
+   0.929,
+   0.905,
+   0.929,
+   0.938,
+   1.0
+  ],
+  "mean_term1_std": [
+   0.52,
+   0.33,
+   0.4,
+   0.42,
+   0.44,
+   0.42
+  ],
+  "mean_term3_std": [
+   0.056,
+   0.074,
+   0.037,
+   0.104,
+   0.052,
+   0.084
+  ],
+  "mean_ess": [
+   2.94,
+   3.42,
+   3.33,
+   3.1,
+   3.25,
+   2.94
+  ],
+  "total_sec": 107.4
+ },
+ "steered_constrained": {
+  "constraints": {
+   "0": [
+    "stillness"
+   ],
+   "1": [
+    "evidence"
+   ]
+  },
+  "total_chars": 1709,
+  "overall_cv_l": 0.4849,
+  "qda_d3phase": 0.3155,
+  "qda_regime": "Phase_II_Critical",
+  "sigma_norm": 1.723,
+  "total_cut_momentum_norm": 0.4569,
+  "climax_discharged_norm": 0.393,
+  "paragraph_chars": [
+   413,
+   170,
+   365,
+   227,
+   266,
+   268
+  ],
+  "paragraph_cv_l": [
+   0.487,
+   0.356,
+   0.344,
+   0.462,
+   0.37,
+   0.467
+  ],
+  "paragraph_shock_mean": [
+   0.154,
+   0.105,
+   0.207,
+   0.191,
+   0.141,
+   0.152
+  ],
+  "greedy_agree_rate": [
+   0.645,
+   0.733,
+   0.583,
+   0.75,
+   0.714,
+   0.625
+  ],
+  "mean_ess": [
+   2.87,
+   2.95,
+   2.78,
+   2.7,
+   3.03,
+   2.75
+  ],
+  "total_sec": 128.2
+ },
+ "steered_plain": {
+  "constraints": {},
+  "total_chars": 1440,
+  "overall_cv_l": 0.5096,
+  "qda_d3phase": 0.2832,
+  "qda_regime": "Phase_II_Critical",
+  "sigma_norm": 1.821,
+  "total_cut_momentum_norm": 0.0,
+  "climax_discharged_norm": 0.407,
+  "paragraph_chars": [
+   285,
+   216,
+   230,
+   204,
+   327,
+   178
+  ],
+  "paragraph_cv_l": [
+   0.571,
+   0.508,
+   0.351,
+   0.39,
+   0.425,
+   0.256
+  ],
+  "paragraph_shock_mean": [
+   0.135,
+   0.268,
+   0.129,
+   0.175,
+   0.189,
+   0.172
+  ],
+  "greedy_agree_rate": [
+   0.684,
+   0.364,
+   0.65,
+   0.643,
+   0.565,
+   0.556
+  ],
+  "mean_ess": [
+   2.96,
+   2.92,
+   3.09,
+   3.01,
+   3.16,
+   2.94
+  ],
+  "total_sec": 108.4
+ },
+ "connection_tests": {
+  "heartbeat_240s_with_flush": "ok",
+  "silent_230s": "Connection lost / Timed out waiting for kernel execution"
+ }
+}

@@ -1240,6 +1240,8 @@ def run_longform_director(
     scene_constraints: Optional[Dict[int, List[str]]] = None,
     use_arbitrator: bool = True,
     max_clauses_per_paragraph: Optional[int] = None,
+    verbose: bool = False,
+    steering: bool = True,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
@@ -1258,6 +1260,7 @@ def run_longform_director(
         arbitrator=WorldCraftArbitrator() if use_arbitrator else None,
         scene_constraints=scene_constraints or {},
     )
+    director.verbose = verbose
     decoder = None
     generator = "procedural_template"
     if model is not None and tokenizer is not None:
@@ -1271,9 +1274,14 @@ def run_longform_director(
                 tokenize=False,
             )
         decoder = ClauseTwistedSMCDecoder(
-            integrator=integ, model=model, tokenizer=tokenizer, seed=seed, chat_prefix=chat
+            integrator=integ, model=model, tokenizer=tokenizer, seed=seed, chat_prefix=chat,
+            # Calibrated steering: style term rescaled to the LLM term's spread, measured on the
+            # trailing 120 chars, candidate temperature tied to ||p||. steering=False = legacy decoder.
+            auto_gain=steering, steer_balance=1.0, style_window_chars=120 if steering else None,
+            temp_gain=0.15 if steering else 0.0,
         )
         generator = "llm_clause_smc"
+        decoder.verbose = verbose
 
     t0 = time.time()
     res = director.generate_longform(
@@ -1291,6 +1299,7 @@ def run_longform_director(
     res_summary = {
         "theme": theme,
         "generator": generator,
+        "steering": steering,
         "seed": seed,
         "wall_sec": round(wall, 2),
         "total_chars": res["total_chars"],
@@ -1314,6 +1323,7 @@ def run_longform_director(
                 "discharged_momentum_norm": p["discharged_momentum_norm"],
                 "cut_momentum_norm": p["cut_momentum_norm"],
                 "constraint_modes": p["constraint_modes"],
+                "smc": p.get("smc"),
                 "text": p["text"],
             }
             for p in res["paragraphs"]
