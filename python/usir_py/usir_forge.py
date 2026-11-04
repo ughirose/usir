@@ -117,6 +117,9 @@ def align_polar_fourier_phase(
 
 # ==============================================================================
 # 2. 24D CHOLESKY FACTOR SERIALIZATION (300 Lower-Triangular Elements)
+SHRINKAGE_ALPHA: float = 0.75  # weight of the sample covariance in the Tier-M precision estimate
+
+
 # ==============================================================================
 
 def compute_packed_cholesky_24d(A: np.ndarray) -> List[float]:
@@ -519,8 +522,15 @@ class OSWEStreamingCompiler:
             else:
                 S_k = np.zeros((24, 24), dtype=np.float64)
 
-            # Ledoit-Wolf shrinkage: Sigma_k = 0.20 * S_k + 0.80 * I
-            Sigma_k = 0.20 * S_k + 0.80 * np.eye(24, dtype=np.float64)
+            # Scaled-identity shrinkage: Sigma_k = a * S_k + (1 - a) * (tr(S_k)/24) * I, a = 0.75.
+            # The target is scaled to the data variance, so the sample correlations stay dominant.
+            # For PSD S_k, cond(Sigma_k) <= (24a + 1 - a)/(1 - a) = 73 < 500. Modes with no usable
+            # variance (N_k <= 1 or identical samples) keep the legacy 0.8 * I.
+            mean_var = float(np.trace(S_k)) / 24.0
+            if mean_var < 1e-8:
+                Sigma_k = 0.80 * np.eye(24, dtype=np.float64)
+            else:
+                Sigma_k = SHRINKAGE_ALPHA * S_k + (1.0 - SHRINKAGE_ALPHA) * mean_var * np.eye(24, dtype=np.float64)
 
             # Precision matrix Lambda_k = Sigma_k^-1
             Lambda_k = np.linalg.inv(Sigma_k)

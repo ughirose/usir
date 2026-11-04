@@ -30,6 +30,9 @@ import {
   precisionMatrixFromPackedCholesky24d,
 } from '../algebra/genomeCompiler.js';
 import { invertMatrixGaussJordan } from '../dynamics/landauPhase.js';
+
+/** Weight of the sample covariance in the Tier-M precision estimate (rest: scaled identity). */
+export const SHRINKAGE_ALPHA = 0.75;
 import { extractUsir24d } from '../sensor/symplectic24d.js';
 import { splitSentences } from '../sensor/dictionaries.js';
 
@@ -492,11 +495,19 @@ export class OSWEStreamingCompiler {
         }
       }
 
-      // Ledoit-Wolf shrinkage: Sigma_k = 0.20 * S_k + 0.80 * I
+      // Scaled-identity shrinkage: Sigma_k = a * S_k + (1 - a) * (tr(S_k)/24) * I, a = 0.75.
+      // For PSD S_k, cond(Sigma_k) <= 73 < 500. Modes without usable variance keep the legacy 0.8 * I.
+      let trace = 0.0;
+      for (let r = 0; r < 24; r++) trace += S_k[r]![r]!;
+      const meanVar = trace / 24.0;
       const Sigma_k: number[][] = new Array(24).fill(0).map((_, r) => {
         const row = new Array(24).fill(0.0);
         for (let c = 0; c < 24; c++) {
-          row[c] = 0.2 * S_k[r]![c]! + (r === c ? 0.8 : 0.0);
+          if (meanVar < 1e-8) {
+            row[c] = r === c ? 0.8 : 0.0;
+          } else {
+            row[c] = SHRINKAGE_ALPHA * S_k[r]![c]! + (r === c ? (1.0 - SHRINKAGE_ALPHA) * meanVar : 0.0);
+          }
         }
         return row;
       });

@@ -335,3 +335,63 @@ def test_composite_wave_with_harmonics():
     a2 = np.array(align_polar_fourier_phase(w2))
     assert np.ptp((a1 + a2) / 2.0) >= 1.95
 
+
+
+# ==============================================================================
+# Shrinkage: precision must reflect the data covariance, not a scaled identity
+# ==============================================================================
+
+def _correlated_samples(n=90, seed=3):
+    rng = np.random.default_rng(seed)
+    loadings = rng.normal(size=(2, 24))
+    latent = rng.normal(size=(n, 2))
+    return np.clip(0.5 + 0.12 * latent @ loadings + 0.03 * rng.normal(size=(n, 24)), 0.0, 1.0)
+
+
+def _compile_samples(samples):
+    compiler = OSWEStreamingCompiler(min_clusters=5)
+    for i, vec in enumerate(samples):
+        compiler.add_sample(vec, mode=i % 3, cluster_id=f"cluster_{i % 5}")
+    return compiler, compiler.compile_tier_m_binary()
+
+
+def test_tier_m_precision_reflects_covariance_and_is_well_conditioned():
+    from usir_py.usir_forge import precision_matrix_from_packed_cholesky_24d
+
+    compiler, binary = _compile_samples(_correlated_samples())
+    decoded = compiler.load_tier_m_binary(binary)
+    for k in range(3):
+        lam = precision_matrix_from_packed_cholesky_24d(decoded["cholesky_factors"][k])
+        diag = np.diag(lam)
+        off = lam - np.diag(diag)
+        # Not a scaled identity: element-specific scales and non-zero correlations
+        assert diag.max() / diag.min() > 1.5
+        assert np.abs(off).max() > 0.1 * diag.mean()
+        # Bounded condition number of the covariance (guaranteed <= 73 for PSD sample covariance)
+        eig = np.linalg.eigvalsh(np.linalg.inv(lam))
+        assert eig.min() > 0.0
+        assert eig.max() / eig.min() < 500.0
+
+
+def test_tier_m_precision_python_typescript_parity():
+    samples = _correlated_samples()
+    compiler, py_binary = _compile_samples(samples)
+    node_script = f"""
+    import {{ OSWEStreamingCompiler }} from './packages/usir-core/dist/index.js';
+    import fs from 'fs';
+    const samples = JSON.parse(fs.readFileSync(0, 'utf8'));
+    const c = new OSWEStreamingCompiler({{ minClusters: 5 }});
+    samples.forEach((v, i) => c.addSample(v, i % 3, `cluster_${{i % 5}}`));
+    process.stdout.write(Buffer.from(c.compileTierMBinary()));
+    """
+    proc = subprocess.run(
+        ["node", "--input-type=module", "-e", node_script],
+        input=json.dumps(samples.tolist()).encode("utf-8"),
+        cwd=REPO_ROOT, capture_output=True, check=True,
+    )
+    ts_dec = load_tier_m_binary(proc.stdout)
+    py_dec = load_tier_m_binary(py_binary)
+    for k in range(3):
+        a = np.asarray(py_dec["cholesky_factors"][k])
+        b = np.asarray(ts_dec["cholesky_factors"][k])
+        assert np.allclose(a, b, rtol=1e-3, atol=1e-3)
