@@ -340,3 +340,33 @@ def test_music_functor_inverse_sequence():
     assert len(res["web_audio_sequence"]) == 8
     first = res["web_audio_sequence"][0]
     assert "note" in first and "time" in first and "duration" in first and "gain" in first
+
+
+# ==============================================================================
+# Tautology (non-progressing warrant) detection
+# ==============================================================================
+
+TAUTOLOGY_TEXT = (
+    "データの数値は100%である。"
+    "なぜならデータの数値は100%だからである。"
+    "したがってデータの数値は100%であると結論づけられる。"
+)
+PROGRESSING_TEXT = (
+    "実測では応答時間が120msであった。"
+    "なぜなら通信経路が3段から1段に短縮されたからである。"
+    "したがって遅延の主因は経路長であると結論づけられる。"
+)
+
+
+def test_toulmin_tautology_gets_no_warrant_credit():
+    res = evaluate_toulmin_components(TAUTOLOGY_TEXT)
+    assert res.tautology_count == 2
+    assert res.warrant_score == 0.0
+    assert res.tautology_penalty > 0.0
+
+
+def test_toulmin_progressing_argument_is_not_tautology():
+    res = evaluate_toulmin_components(PROGRESSING_TEXT)
+    assert res.tautology_count == 0
+    assert res.warrant_score > 0.0
+    assert res.u_toulmin < evaluate_toulmin_components(TAUTOLOGY_TEXT).u_toulmin

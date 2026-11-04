@@ -38,6 +38,10 @@ TOPIC_PARTICLES: Set[str] = {"は", "も"}
 CONJUNCTION_MARKERS: Set[str] = {"て", "で", "ば", "ながら", "けれど", "のに", "たり", "ても"}
 
 
+# Process-wide default lexicon: the 480KB dictionary is loaded once, not per driver.
+_DEFAULT_LEXICON: Optional[HTHPolyLexicon] = None
+
+
 class SyntaxDriver:
     """Hexagonal Adapter: converts natural text into pure SyntaxTreeFrame."""
 
@@ -59,7 +63,10 @@ class SyntaxDriver:
 
     def _get_lexicon(self) -> HTHPolyLexicon:
         if self.lexicon is None:
-            self.lexicon = HTHPolyLexicon()
+            global _DEFAULT_LEXICON
+            if _DEFAULT_LEXICON is None:
+                _DEFAULT_LEXICON = HTHPolyLexicon()
+            self.lexicon = _DEFAULT_LEXICON
         return self.lexicon
 
     def parse_sentence(self, text: str, sentence_id: int = 0) -> SyntaxTreeFrame:
@@ -262,8 +269,22 @@ class SyntaxDriver:
             target_id = root_id
             relation = "mod"
 
+            # Rule 0: Adnominal (relative) clause. A predicate chunk in attributive form
+            # (ending た/る/い) with no comma, immediately followed by a noun chunk,
+            # modifies that noun. Verb chunks keep their inflection inside the stem
+            # (tail == ""), so the surface ending is checked, not the tail.
+            surf_k = re.sub(r'[。！？!?\s]+$', '', src.surface)
+            if (
+                src.pos in ("動詞", "形容詞")
+                and k + 1 < K
+                and nodes[k + 1].pos == "名詞"
+                and not surf_k.endswith(("、", "，"))
+                and surf_k.endswith(("た", "る", "い"))
+            ):
+                target_id = k + 1
+                relation = "mod"
             # Rule 1: Adnominal modification
-            if tail_k == "の" or any(tail_k.endswith(x) for x in ("な", "た", "る", "い")):
+            elif tail_k == "の" or any(tail_k.endswith(x) for x in ("な", "た", "る", "い")):
                 target_id = k + 1
                 relation = "mod"
             # Rule 2: Adverbs & Mimetics

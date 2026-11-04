@@ -52,8 +52,14 @@ _MU_COT[9:12] = np.array([0.85, 0.20, 0.25])
 DOMAIN_QDA_PROFILES: Dict[str, Dict[str, Any]] = {
     "novel": {
         "mu_crit": _MU_CRIT,
-        "sigma_crit_low": 0.35,
-        "sigma_crit_high": 1.25,
+        # Calibrated on the 40-chunk corpus (||p||_2): Critical 2.19-3.80, Void 1.44-2.67,
+        # Turbulent 1.40-3.55, Deadzone 0.10-0.19. ||p|| separates only the Deadzone
+        # (freeze wall below Void min 1.44); chaos is rejected by the Shock gate
+        # (shock_mean_max) and the Mahalanobis term, not by ||p||.
+        "sigma_crit_low": 1.40,
+        "sigma_crit_high": 3.90,
+        # Mean of Shock-group position q[3,7,11]: Critical max 0.51, Turbulent min 0.76.
+        "shock_mean_max": 0.60,
     },
     "article": {
         "mu_crit": _MU_ARTICLE,
@@ -82,6 +88,8 @@ def compute_three_phase_qda_distance(
     gamma_chaos: float = 12.0,
     sigma_crit_low: Optional[float] = None,
     sigma_crit_high: Optional[float] = None,
+    shock_mean_max: Optional[float] = None,
+    gamma_shock: float = 30.0,
 ) -> Dict[str, Any]:
     r"""Computes the domain-conditioned 3-phase QDA asymmetric double-well barrier distance functional:
 
@@ -134,11 +142,19 @@ def compute_three_phase_qda_distance(
     chaos_excess = max(0.0, calc_sigma_norm - eff_sigma_high)
     penalty_chaos = gamma_chaos * (chaos_excess ** 2)
 
-    total_d_3phase = float(d_mahalanobis + penalty_freeze + penalty_chaos)
+    # Shock-family over-excitation gate (purple prose / punctuation spam / excess rupture).
+    eff_shock_max = shock_mean_max if shock_mean_max is not None else profile.get("shock_mean_max")
+    shock_excess = 0.0
+    if eff_shock_max is not None and len(z_vec) >= 12:
+        shock_mean = float(np.mean(z_vec[[3, 7, 11]]))
+        shock_excess = max(0.0, shock_mean - float(eff_shock_max))
+    penalty_shock = gamma_shock * (shock_excess ** 2)
+
+    total_d_3phase = float(d_mahalanobis + penalty_freeze + penalty_chaos + penalty_shock)
 
     if freeze_defect > 0.05:
         regime = "Phase_I_Deadzone"
-    elif chaos_excess > 0.05:
+    elif chaos_excess > 0.05 or shock_excess > 0.02:
         regime = "Phase_III_Chaos"
     else:
         regime = "Phase_II_Critical"
@@ -148,9 +164,10 @@ def compute_three_phase_qda_distance(
         "d_mahalanobis": d_mahalanobis,
         "penalty_freeze": penalty_freeze,
         "penalty_chaos": penalty_chaos,
+        "penalty_shock": penalty_shock,
         "sigma_norm": calc_sigma_norm,
         "phase_regime": regime,
-        "is_healthy_critical": (freeze_defect == 0.0 and chaos_excess == 0.0),
+        "is_healthy_critical": (freeze_defect == 0.0 and chaos_excess == 0.0 and shock_excess == 0.0),
     }
 
 

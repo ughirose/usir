@@ -71,6 +71,55 @@ TWIST_REASON_HEAD_RE = re.compile(r'(?:理由は|原因は|目的は|課題は|�
 TWIST_REASON_VALID_TAIL_RE = re.compile(r'(?:からだ|ためだ|ことだ|である|にある|にあった|ためである|からである)[。！？!?]?$')
 DANGLING_TOPIC_RE = re.compile(r'^[^\s、,]+は[、,\s].+?[^\s、,]+は[、,\s]')
 
+# Backward warrant markers: the marker sentence is the premise, the previous sentence the conclusion.
+_BACKWARD_WARRANT_RE = re.compile(r'^(?:なぜなら|というのも|理由として|根拠として)')
+# Forward warrant markers: the marker sentence is the conclusion, the previous sentence the premise.
+_FORWARD_WARRANT_RE = re.compile(r'^(?:したがって|ゆえに|よって|それゆえ|だから|このため|これにより|以上の理由から|結果として)')
+# Function material that carries no new concept (copulas, meta-conclusion phrases, particles).
+_NOISE_RE = re.compile(
+    r'(?:なぜなら|というのも|したがって|ゆえに|よって|それゆえ|だから|このため|これにより|以上の理由から|結果として|理由として|根拠として'
+    r'|と結論づけられる|と結論される|と言える|といえる|と考えられる|と判断される|ことになる|のである|からである|ためである|である|であり|です|だからである|だから|だ)'
+)
+_PARTICLE_RE = re.compile(r'[はがをにでとのもへやかてで、，,。！？!?\s]')
+
+
+def _content_bigrams(sentence: str) -> set:
+    """Character bigrams of the content material of a sentence (function words removed)."""
+    core = _NOISE_RE.sub('', sentence)
+    core = _PARTICLE_RE.sub('', core)
+    if len(core) < 2:
+        return {core} if core else set()
+    return {core[i:i + 2] for i in range(len(core) - 1)}
+
+
+def _is_restatement(premise: str, conclusion: str, jaccard_min: float = 0.70, novelty_max: float = 0.10) -> bool:
+    """True when the conclusion repeats the premise: high bigram Jaccard and no new concept.
+
+    novelty = share of the conclusion's bigrams absent from the premise.
+    """
+    a, b = _content_bigrams(premise), _content_bigrams(conclusion)
+    if not a or not b:
+        return False
+    jac = len(a & b) / len(a | b)
+    novelty = len(b - a) / len(b)
+    return jac > jaccard_min and novelty <= novelty_max
+
+
+def _count_tautological_warrants(sents: List[str]) -> int:
+    """Counts adjacent (premise, conclusion) pairs joined by a causal marker that restate each other."""
+    count = 0
+    for i in range(1, len(sents)):
+        cur, prev = sents[i], sents[i - 1]
+        if _BACKWARD_WARRANT_RE.match(cur):
+            prem, conc = cur, prev
+        elif _FORWARD_WARRANT_RE.match(cur):
+            prem, conc = prev, cur
+        else:
+            continue
+        # Restatement in either direction: conclusion adds nothing beyond the premise, or vice versa.
+        if _is_restatement(prem, conc) or _is_restatement(conc, prem):
+            count += 1
+    return count
 
 @dataclass
 class ToulminAuditResult:
@@ -85,6 +134,8 @@ class ToulminAuditResult:
     twist_count: int           # Number of subject-predicate twists detected
     twist_penalty: float       # Twist penalty
     u_toulmin: float           # Total potential U_Toulmin(x) >= 0
+    tautology_count: int = 0       # Warrant pairs whose premise and conclusion are restatements
+    tautology_penalty: float = 0.0  # tautology_count / n_sents
 
 
 def evaluate_toulmin_components(text: str) -> ToulminAuditResult:
@@ -132,7 +183,9 @@ def evaluate_toulmin_components(text: str) -> ToulminAuditResult:
     data_score = max(0.0, min(1.0, raw_data_density))
 
     # 3. Warrant evaluation (因果接続詞)
-    warrant_hits = len(WARRANT_RE.findall(clean))
+    tautology_count = _count_tautological_warrants(sents)
+    # A causal marker that only restates the premise is not a warrant.
+    warrant_hits = max(0, len(WARRANT_RE.findall(clean)) - tautology_count * 2)
     raw_warrant_density = warrant_hits / max(1, n_sents * 0.5)
     warrant_score = max(0.0, min(1.0, raw_warrant_density))
 
@@ -171,7 +224,8 @@ def evaluate_toulmin_components(text: str) -> ToulminAuditResult:
     twist_penalty = float(twist_count / max(1, n_sents))
 
     # Total Toulmin Potential U_Toulmin(x)
-    u_toulmin = float(triad_deficiency + 0.5 * depth_penalty + 1.2 * twist_penalty)
+    tautology_penalty = float(tautology_count / max(1, n_sents))
+    u_toulmin = float(triad_deficiency + 0.5 * depth_penalty + 1.2 * twist_penalty + 1.5 * tautology_penalty)
 
     return ToulminAuditResult(
         claim_score=claim_score,
@@ -184,6 +238,8 @@ def evaluate_toulmin_components(text: str) -> ToulminAuditResult:
         twist_count=twist_count,
         twist_penalty=twist_penalty,
         u_toulmin=u_toulmin,
+        tautology_count=tautology_count,
+        tautology_penalty=tautology_penalty,
     )
 
 
@@ -201,8 +257,8 @@ def compute_usir_style_energy(text: str) -> float:
     extracted = extract_usir_24d(text)
     z_24d = extracted["z_24d"]
     # Double-well barrier to literary critical manifold
-    # Calibrated sigma_crit_high=3.5 to accommodate natural 24D literary momentum (norm ~ 2.3-2.7)
-    d_3phase = compute_three_phase_qda_distance(z_24d, sigma_crit_high=3.5)["d_3phase"]
+    # Novel profile is calibrated to the corpus momentum scale (see DOMAIN_QDA_PROFILES)
+    d_3phase = compute_three_phase_qda_distance(z_24d)["d_3phase"]
     # Void defect and cadence deadness penalties
     phi_void = float(extracted["order_params"]["phi_void"])
     cadence_alive = float(extracted["cadence_alive"])

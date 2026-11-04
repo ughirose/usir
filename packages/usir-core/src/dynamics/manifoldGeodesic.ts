@@ -35,6 +35,7 @@ export interface ThreePhaseQdaResult {
   d_mahalanobis: number;
   penalty_freeze: number;
   penalty_chaos: number;
+  penalty_shock: number;
   sigma_norm: number;
   phase_regime: 'Phase_I_Deadzone' | 'Phase_II_Critical' | 'Phase_III_Chaos';
   is_healthy_critical: boolean;
@@ -82,11 +83,15 @@ export const DEFAULT_SIGMA_CRIT_DIAG: readonly number[] = [
   0.4864, 0.1204, 0.3870, 0.2511, 0.4628, 0.1505, 0.3519, 0.3580, 0.4813, 0.3384, 0.1495, 0.5067,
 ];
 
-export const DOMAIN_QDA_PROFILES: Record<string, { mu_crit: readonly number[]; sigma_crit_low: number; sigma_crit_high: number }> = {
+export const DOMAIN_QDA_PROFILES: Record<string, { mu_crit: readonly number[]; sigma_crit_low: number; sigma_crit_high: number; shock_mean_max?: number }> = {
   novel: {
     mu_crit: DEFAULT_MU_CRIT,
-    sigma_crit_low: 0.35,
-    sigma_crit_high: 1.25,
+    // Calibrated on the 40-chunk corpus (||p||_2): Critical 2.19-3.80, Void 1.44-2.67,
+    // Turbulent 1.40-3.55, Deadzone 0.10-0.19. ||p|| separates only the Deadzone;
+    // chaos is rejected by the Shock gate (shock_mean_max) and the Mahalanobis term.
+    sigma_crit_low: 1.40,
+    sigma_crit_high: 3.90,
+    shock_mean_max: 0.60,
   },
   article: {
     mu_crit: [
@@ -129,6 +134,8 @@ export function computeThreePhaseQdaDistance(
     gamma_chaos?: number;
     sigma_crit_low?: number;
     sigma_crit_high?: number;
+    shock_mean_max?: number;
+    gamma_shock?: number;
   }
 ): ThreePhaseQdaResult {
   const domain = options?.domain ?? 'novel';
@@ -186,12 +193,21 @@ export function computeThreePhaseQdaDistance(
   const chaosExcess = Math.max(0.0, calcSigmaNorm - sigmaHigh);
   const penaltyChaos = gammaChaos * (chaosExcess ** 2);
 
-  const totalD3Phase = dMahalanobis + penaltyFreeze + penaltyChaos;
+  // Shock-family over-excitation gate
+  const shockMax = options?.shock_mean_max ?? profile.shock_mean_max;
+  let shockExcess = 0.0;
+  if (shockMax !== undefined && zVec.length >= 12) {
+    const shockMean = ((zVec[3] ?? 0) + (zVec[7] ?? 0) + (zVec[11] ?? 0)) / 3.0;
+    shockExcess = Math.max(0.0, shockMean - shockMax);
+  }
+  const penaltyShock = (options?.gamma_shock ?? 30.0) * (shockExcess ** 2);
+
+  const totalD3Phase = dMahalanobis + penaltyFreeze + penaltyChaos + penaltyShock;
 
   let regime: 'Phase_I_Deadzone' | 'Phase_II_Critical' | 'Phase_III_Chaos' = 'Phase_II_Critical';
   if (freezeDefect > 0.05) {
     regime = 'Phase_I_Deadzone';
-  } else if (chaosExcess > 0.05) {
+  } else if (chaosExcess > 0.05 || shockExcess > 0.02) {
     regime = 'Phase_III_Chaos';
   }
 
@@ -200,9 +216,10 @@ export function computeThreePhaseQdaDistance(
     d_mahalanobis: dMahalanobis,
     penalty_freeze: penaltyFreeze,
     penalty_chaos: penaltyChaos,
+    penalty_shock: penaltyShock,
     sigma_norm: calcSigmaNorm,
     phase_regime: regime,
-    is_healthy_critical: freezeDefect === 0.0 && chaosExcess === 0.0,
+    is_healthy_critical: freezeDefect === 0.0 && chaosExcess === 0.0 && shockExcess === 0.0,
   };
 }
 

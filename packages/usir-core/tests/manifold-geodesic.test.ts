@@ -42,23 +42,33 @@ describe('USIR v4.0 Manifold Geodesic & 3-Phase QDA Engine (TS)', () => {
     expect(res.is_healthy_critical).toBe(true);
   });
 
-  it('switches centroids and volatility bounds by domain (novel, article, cot_reasoning)', () => {
-    const zCot = new Array<number>(24).fill(0.0);
-    zCot[9] = 0.85;
-    zCot[10] = 0.20;
-    zCot[11] = 0.25;
-    for (let i = 12; i < 24; i++) zCot[i] = 0.45; // norm ~ 1.5588
+  it('uses distinct momentum bands per domain: novel 1.40-3.90, cot_reasoning 1.35-2.65', () => {
+    const z = new Array<number>(24).fill(0.0);
+    z[9] = 0.85;
+    z[10] = 0.20;
+    z[11] = 0.25;
+    for (let i = 12; i < 24; i++) z[i] = 0.9; // norm ~ 3.118
 
-    const resNovel = computeThreePhaseQdaDistance(zCot, { domain: 'novel' });
-    const resArticle = computeThreePhaseQdaDistance(zCot, { domain: 'article' });
-    const resCot = computeThreePhaseQdaDistance(zCot, { domain: 'cot_reasoning' });
+    const resNovel = computeThreePhaseQdaDistance(z, { domain: 'novel' });
+    const resCot = computeThreePhaseQdaDistance(z, { domain: 'cot_reasoning' });
 
-    expect(resNovel.penalty_chaos).toBeGreaterThan(0.0);
-    expect(resNovel.phase_regime).toBe('Phase_III_Chaos');
-    expect(resArticle.penalty_chaos).toBeGreaterThan(0.0);
-    expect(resCot.penalty_chaos).toBe(0.0);
-    expect(resCot.phase_regime).toBe('Phase_II_Critical');
-    expect(resCot.d_3phase).toBeLessThan(resNovel.d_3phase);
+    expect(resNovel.penalty_chaos).toBe(0.0);
+    expect(resNovel.penalty_freeze).toBe(0.0);
+    expect(resCot.penalty_chaos).toBeGreaterThan(0.0);
+    expect(resCot.phase_regime).toBe('Phase_III_Chaos');
+  });
+
+  it('penalizes Shock-group over-excitation independently of momentum norm', () => {
+    const z = new Array<number>(24).fill(0.0);
+    for (let i = 12; i < 24; i++) z[i] = 0.7; // norm ~ 2.42, inside the novel band
+    z[3] = 0.9;
+    z[7] = 0.9;
+    z[11] = 0.9;
+    const res = computeThreePhaseQdaDistance(z, { domain: 'novel' });
+    expect(res.penalty_chaos).toBe(0.0);
+    expect(res.penalty_shock).toBeGreaterThan(0.0);
+    expect(res.phase_regime).toBe('Phase_III_Chaos');
+    expect(res.is_healthy_critical).toBe(false);
   });
 
   it('measures low curvature and low Brownian ratio on smooth intentional narrative', () => {

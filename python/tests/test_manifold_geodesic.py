@@ -61,24 +61,61 @@ def test_qda_healthy_critical_well():
 
 
 def test_domain_conditioned_three_phase_qda():
-    """Verify domain-specific volatility bounds and target centroids across novel, article, and cot_reasoning."""
-    # Momentum sigma_norm = sqrt(12 * 0.45^2) ~ 1.5588
-    # In novel (high=1.25) and article (high=1.40), this triggers Chaos penalty.
-    # In cot_reasoning (high=1.85), high symbol/formula variance is accommodated without Chaos penalty.
-    z_cot_state = np.zeros(24)
-    z_cot_state[9:12] = np.array([0.85, 0.20, 0.25])
-    z_cot_state[12:24] = 0.45
+    """Domain profiles carry distinct momentum bands: novel (1.40-3.90), cot_reasoning (1.35-2.65)."""
+    z = np.zeros(24)
+    z[9:12] = np.array([0.85, 0.20, 0.25])
+    z[12:24] = 0.90  # ||p||_2 ~ 3.118: inside the novel band, above the cot_reasoning band
 
-    res_novel = compute_three_phase_qda_distance(z_cot_state, domain="novel")
-    res_article = compute_three_phase_qda_distance(z_cot_state, domain="article")
-    res_cot = compute_three_phase_qda_distance(z_cot_state, domain="cot_reasoning")
+    res_novel = compute_three_phase_qda_distance(z, domain="novel")
+    res_cot = compute_three_phase_qda_distance(z, domain="cot_reasoning")
 
-    assert res_novel["penalty_chaos"] > 0.0
-    assert res_novel["phase_regime"] == "Phase_III_Chaos"
-    assert res_article["penalty_chaos"] > 0.0
-    assert res_cot["penalty_chaos"] == 0.0
-    assert res_cot["phase_regime"] == "Phase_II_Critical"
-    assert res_cot["d_3phase"] < res_novel["d_3phase"]
+    assert res_novel["penalty_chaos"] == 0.0
+    assert res_novel["penalty_freeze"] == 0.0
+    assert res_cot["penalty_chaos"] > 0.0
+    assert res_cot["phase_regime"] == "Phase_III_Chaos"
+
+
+# ==============================================================================
+# 1b. Real-corpus invariants (40-chunk Golden Corpus, physical scale of ||p||_2)
+# ==============================================================================
+
+@pytest.fixture(scope="module")
+def corpus_qda():
+    from usir_py.corpus_40_benchmark import CORPUS
+    from usir_py.extractor_24d import extract_usir_24d
+
+    out = {}
+    for item in CORPUS:
+        ext = extract_usir_24d(item["text"])
+        out.setdefault(item["phase"], []).append(compute_three_phase_qda_distance(ext, domain="novel"))
+    return out
+
+
+def test_corpus_critical_is_healthy(corpus_qda):
+    for res in corpus_qda["II_Critical"]:
+        assert res["is_healthy_critical"], res
+        assert res["penalty_freeze"] == 0.0 and res["penalty_chaos"] == 0.0 and res["penalty_shock"] == 0.0
+
+
+def test_corpus_void_has_no_freeze_or_chaos_penalty(corpus_qda):
+    for res in corpus_qda["III_Void"]:
+        assert res["penalty_freeze"] == 0.0
+        assert res["penalty_chaos"] == 0.0
+
+
+def test_corpus_deadzone_hits_freeze_wall(corpus_qda):
+    for res in corpus_qda["V_Deadzone"]:
+        assert res["penalty_freeze"] > 5.0
+        assert res["phase_regime"] == "Phase_I_Deadzone"
+
+
+def test_corpus_turbulent_rejected_by_shock_gate_not_momentum(corpus_qda):
+    crit_max = max(r["d_3phase"] for r in corpus_qda["II_Critical"])
+    for res in corpus_qda["IV_Turbulent"]:
+        assert res["penalty_chaos"] == 0.0  # ||p|| cannot separate Turbulent from Critical
+        assert res["penalty_shock"] > 0.0
+        assert res["phase_regime"] == "Phase_III_Chaos"
+        assert res["d_3phase"] > 3.0 * crit_max
 
 
 # ==============================================================================
