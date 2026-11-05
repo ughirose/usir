@@ -1292,6 +1292,8 @@ def run_longform_director(
     rep_penalty: float = 1.13,
     rhythm: bool = True,
     lex_decay: float = 2.5,
+    case_frame_gate: bool = True,
+    stem_guard: bool = True,
     cv_gain: float = 25.0,
     min_para_chars: int = 0,
     max_para_chars: int = 0,
@@ -1360,6 +1362,7 @@ def run_longform_director(
             rhythm=bool(rhythm), cv_gain=cv_gain if anti_repeat else 0.0,
             ngram_soft=4 if anti_repeat else 0, ngram_soft_penalty=4.0,
             char8_max=2 if anti_repeat else 0, syntactic_gate=bool(finality_gate),
+            case_frame_gate=bool(case_frame_gate), stem_guard=bool(stem_guard) and anti_repeat,
             min_p=0.04 if anti_repeat else 0.0,
         )
         decoder.repeat_use_context = bool(carry_context)

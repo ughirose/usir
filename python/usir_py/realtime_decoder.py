@@ -911,6 +911,296 @@ def count_non_jis_kanji(text: str) -> int:
     return n
 
 
+# ---------------------------------------------------------------------------------------------------------------
+# Logits processors (module level; work on numpy arrays and torch tensors alike: per-row python loops, no torch.where)
+# ---------------------------------------------------------------------------------------------------------------
+_CASE_PARTICLE_RE = re.compile("(?:[一-鿿ァ-ヺ々ー]|それ|これ|あれ|どれ)[がはも](?![るりれらっろ])")
+_NOUN_END_RE = re.compile("[一-鿿ァ-ヺ々ー]{2,}$")
+_NOUN_RE = re.compile("[一-鿿ァ-ヺ]")
+
+
+def narration_row_flags(tails: Sequence[str], init_depth: int) -> Tuple[List[bool], List[bool]]:
+    """Per row: (narr, stem). narr = quote depth <= 0 (outside 「」); stem = tail ends with a polite stem (まし/でし/ませ)."""
+    narr: List[bool] = []
+    stem: List[bool] = []
+    for t in tails:
+        depth = init_depth + t.count("「") + t.count("『") - t.count("」") - t.count("』")
+        narr.append(depth <= 0)
+        stem.append(bool(t) and t.endswith(_POLITE_STEMS))
+    return narr, stem
+
+
+def case_frame_ok(sentence: str) -> bool:
+    """True when the sentence has a case-marked subject / topic (noun + が/は/も, それ・これ・あれ・どれ + が/は/も)
+    or ends with a noun run (>= 2 kanji / katakana chars, 体言止め).
+
+    A particle directly followed by る/り/れ/ら/っ/ろ is read as okurigana of a verb (広がった, 上がる, 曲がり), not as a case particle."""
+    if _CASE_PARTICLE_RE.search(sentence):
+        return True
+    return bool(_NOUN_END_RE.search(sentence.rstrip()))
+
+
+def kanji_bigrams(text: str) -> "collections.Counter":
+    """Counter of consecutive kanji pairs (C1, C2) in `text`."""
+    cnt: "collections.Counter" = collections.Counter()
+    for a, b in zip(text, text[1:]):
+        if "一" <= a <= "鿿" and "一" <= b <= "鿿":
+            cnt[(a, b)] += 1
+    return cnt
+
+
+def lex_bigram_targets(text: str, min_count: int = 1) -> Set[str]:
+    """If the last char C1 of `text` is a kanji: {C2 : count of (C1, C2) in text >= min_count}, else empty."""
+    if not text or not ("一" <= text[-1] <= "鿿"):
+        return set()
+    c1 = text[-1]
+    return {c2 for (a, c2), n in kanji_bigrams(text).items() if a == c1 and n >= min_count}
+
+
+def _idx_list(x: Any) -> List[int]:
+    """Index container (list / numpy array / torch tensor / None) -> list of python ints."""
+    if x is None:
+        return []
+    if hasattr(x, "tolist"):
+        x = x.tolist()
+    return [int(i) for i in x]
+
+
+def _tail_texts(tokenizer: Any, ids: Any, n_ctx: int) -> List[str]:
+    """Decoded generated tail (ids[:, n_ctx:]) of every row."""
+    return list(tokenizer.batch_decode(ids[:, n_ctx:].tolist(), skip_special_tokens=True))
+
+
+def _add(scores: Any, r: int, idx: List[int], v: float) -> None:
+    if idx:
+        scores[r, idx] = scores[r, idx] + v
+
+
+_ProcBase = LogitsProcessor if TORCH_AVAILABLE else object
+
+
+class NarrationStyleLogitsMask(_ProcBase):  # type: ignore[misc,valid-type]
+    """Outside 「」 (per row, tracked on the generated tail) polite auxiliaries / meta marks get `narr_bias`;
+    right after a polite stem (まし/でし/ませ) the completing tokens are suppressed as well."""
+
+    def __init__(self, tokenizer: Any, n_ctx: int, init_depth: int, bad_ids: Any, post_ids: Any, narr_bias: float) -> None:
+        self.tokenizer = tokenizer
+        self.n_ctx = int(n_ctx)
+        self.init_depth = int(init_depth)
+        self.bad_ids = _idx_list(bad_ids)
+        self.post_ids = _idx_list(post_ids)
+        self.narr_bias = float(narr_bias)
+
+    def __call__(self, ids: Any, scores: Any) -> Any:
+        tails = _tail_texts(self.tokenizer, ids, self.n_ctx)
+        narr, stem = narration_row_flags(tails, self.init_depth)
+        V = scores.shape[-1]
+        b = [t for t in self.bad_ids if t < V]
+        pt = [t for t in self.post_ids if t < V]
+        for r in range(len(tails)):
+            if not narr[r]:
+                continue
+            _add(scores, r, b, self.narr_bias)
+            if stem[r]:
+                _add(scores, r, pt, self.narr_bias)
+        return scores
+
+
+class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
+    """Repetition penalty on content-word tokens only + kanji-bigram lexical decay.
+
+    lex decay: when the paragraph text so far (prefix + this row's tail) ends with a kanji C1, every token whose first
+    char is a kanji C2 with count(C1 C2) >= lex_min_count in that text gets logit -lex_decay (the same bigram is not
+    repeated)."""
+
+    def __init__(self, tokenizer: Any, n_ctx: int, content_mask: Sequence[bool], first_kanji_map: Dict[str, List[int]],
+                 para_prefix: str, content_rep_penalty: float, lex_decay: float, lex_min_count: int = 1) -> None:
+        self.tokenizer = tokenizer
+        self.n_ctx = int(n_ctx)
+        self.content_mask = list(content_mask)
+        self.first_kanji_map = first_kanji_map
+        self.para_prefix = para_prefix
+        self.cr_pen = float(content_rep_penalty)
+        self.lex_dec = float(lex_decay)
+        self.lex_min_count = int(lex_min_count)
+
+    def __call__(self, ids: Any, scores: Any) -> Any:
+        V = scores.shape[-1]
+        rows = ids.tolist()
+        tails = _tail_texts(self.tokenizer, ids, self.n_ctx) if self.lex_dec > 0 else None
+        cm = self.content_mask
+        nc = len(cm)
+        for r, seq in enumerate(rows):
+            if self.cr_pen > 1.0:
+                sel = sorted(t for t in set(seq) if t < V and t < nc and cm[t])
+                if sel:
+                    sc = scores[r, sel]            # advanced indexing -> copy
+                    pos = sc > 0
+                    neg = ~pos
+                    sc[pos] = sc[pos] / self.cr_pen
+                    sc[neg] = sc[neg] * self.cr_pen
+                    scores[r, sel] = sc
+            if self.lex_dec > 0 and tails is not None:
+                targets = lex_bigram_targets(self.para_prefix + tails[r], self.lex_min_count)
+                lst: List[int] = []
+                for c2 in sorted(targets):
+                    lst.extend(self.first_kanji_map.get(c2, ()))
+                lst = sorted({t for t in lst if t < V})
+                _add(scores, r, lst, -self.lex_dec)
+        return scores
+
+
+class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
+    """-1e4 on any token that would re-create an n-gram already seen in history / prompt / this row (plus the soft
+    -soft_pen decay for the shorter n-gram). stem_guard: when the text so far ends with a hiragana, hiragana-only
+    tokens are exempt from both (okurigana / conjugation endings may repeat; punctuation / kanji stay banned)."""
+
+    def __init__(self, tokenizer: Any, n_ctx: int, ngram_n: int, hist_map: Dict[Any, Any], soft_n: int, soft_pen: float,
+                 soft_map: Dict[Any, Any], first_ban: Any = None, hira_only: Optional[Sequence[bool]] = None,
+                 stem_guard: bool = False, ctx_tail: str = "") -> None:
+        self.tokenizer = tokenizer
+        self.n_ctx = int(n_ctx)
+        self.ngram_n = int(ngram_n)
+        self.hist_map = hist_map
+        self.soft_n = int(soft_n)
+        self.soft_pen = float(soft_pen)
+        self.soft_map = soft_map
+        self.first_ban = _idx_list(first_ban)
+        self.hira_only = list(hira_only) if hira_only is not None else None
+        self.stem_guard = bool(stem_guard) and self.hira_only is not None
+        self.ctx_tail = ctx_tail
+
+    def __call__(self, ids: Any, scores: Any) -> Any:
+        V = scores.shape[-1]
+        if self.first_ban and ids.shape[1] == self.n_ctx:
+            fb = [t for t in self.first_ban if t < V]
+            for r in range(ids.shape[0]):
+                _add(scores, r, fb, -1e4)
+        if self.ngram_n < 2 and not self.soft_n:
+            return scores
+        ends_hira = [False] * ids.shape[0]
+        if self.stem_guard:
+            tails = _tail_texts(self.tokenizer, ids, self.n_ctx)
+            for r, t in enumerate(tails):
+                s = self.ctx_tail + t
+                ends_hira[r] = bool(s) and "ぁ" <= s[-1] <= "ゟ"
+        hira = self.hira_only
+        nh = len(hira) if hira is not None else 0
+
+        def _keep(t: int, r: int) -> bool:
+            if t >= V:
+                return False
+            return not (ends_hira[r] and t < nh and hira[t])  # type: ignore[index]
+
+        for r in range(ids.shape[0]):
+            seq = ids[r].tolist()
+            if self.soft_n:
+                sn = self.soft_n
+                ks = tuple(seq[-(sn - 1):])
+                sb = set(self.soft_map.get(ks, ()))
+                for i in range(len(seq) - sn + 1):
+                    if tuple(seq[i:i + sn - 1]) == ks:
+                        sb.add(seq[i + sn - 1])
+                _add(scores, r, [t for t in sb if _keep(t, r)], -self.soft_pen)
+            if self.ngram_n < 2:
+                continue
+            n = self.ngram_n
+            key = tuple(seq[-(n - 1):])
+            banned = set(self.hist_map.get(key, ()))
+            for i in range(len(seq) - n + 1):
+                if tuple(seq[i:i + n - 1]) == key:
+                    banned.add(seq[i + n - 1])
+            _add(scores, r, [t for t in banned if _keep(t, r)], -1e4)
+        return scores
+
+
+class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
+    """Momentum-scaled short-clause bias, syntactic finality gate and end-of-paragraph sentence closing."""
+
+    def __init__(self, tokenizer: Any, n_ctx: int, caps: Sequence[float], row_bias: Sequence[float],
+                 period_ids: Any, comma_ids: Any, ph_period: float = 0.0, ph_comma: float = 0.0,
+                 dyn_len: bool = False, dir_d: float = 0.0, ramp_gain: float = 0.0,
+                 force_close: bool = False, close_boost: float = 0.0,
+                 gate_on: bool = False, gate_val: float = -12.0, ctx_tail: str = "",
+                 noun_req: bool = False, sent_tail0: str = "", case_frame_gate: bool = False) -> None:
+        self.tokenizer = tokenizer
+        self.n_ctx = int(n_ctx)
+        self.caps = [float(c) for c in caps]
+        self.row_bias = [float(b) for b in row_bias]
+        self.period_ids = _idx_list(period_ids)
+        self.comma_ids = _idx_list(comma_ids)
+        self.ph_period = float(ph_period)
+        self.ph_comma = float(ph_comma)
+        self.dyn_len = bool(dyn_len)
+        self.dir_d = float(dir_d)
+        self.ramp_gain = float(ramp_gain)
+        self.force_close = bool(force_close)
+        self.close_boost = float(close_boost)
+        self.gate_on = bool(gate_on)
+        self.gate_val = float(gate_val)
+        self.ctx_tail = ctx_tail
+        self.noun_req = bool(noun_req)
+        self.sent_tail0 = sent_tail0
+        self.case_frame_gate = bool(case_frame_gate)
+
+    def __call__(self, ids: Any, scores: Any) -> Any:
+        P = ids.shape[0]
+        pids, cids = self.period_ids, self.comma_ids
+        tails = _tail_texts(self.tokenizer, ids, self.n_ctx) if (self.noun_req or self.gate_on) else None
+        noun: Optional[List[bool]] = None
+        conn: Optional[List[bool]] = None
+        term: Optional[List[bool]] = None
+        if self.noun_req and tails is not None:
+            # a positive '。' bias fires only once the current sentence has a subject (case_frame_gate) / a noun
+            if self.case_frame_gate:
+                noun = [case_frame_ok(self.sent_tail0 + t) for t in tails]
+            else:
+                noun = [bool(_NOUN_RE.search(self.sent_tail0 + t)) for t in tails]
+        if self.gate_on and tails is not None:
+            ends = [(self.ctx_tail + t)[-8:] for t in tails]
+            conn = [_is_connective_end(e) for e in ends]
+            term = [_is_terminal_end(e) for e in ends]
+        step = float(ids.shape[1] - self.n_ctx)
+        has_row_bias = any(b != 0 for b in self.row_bias)
+        for r in range(P):
+            cap = self.caps[r] if r < len(self.caps) else self.caps[-1]
+            if self.ph_period and pids:
+                if self.ph_period > 0:
+                    t_rel = step / cap
+                    scale = min(max((t_rel - 0.2) / 0.4, 0.0), 1.0) * 1.6 - 0.6
+                    pb = self.ph_period * scale
+                    if self.gate_on and term is not None and not term[r]:
+                        pb = min(pb, 0.0)
+                    if noun is not None and not noun[r]:
+                        pb = min(pb, 0.0)
+                    _add(scores, r, pids, pb)
+                else:
+                    _add(scores, r, pids, self.ph_period)
+            if self.ph_comma and cids:
+                _add(scores, r, cids, self.ph_comma)
+            if self.dyn_len and (pids or cids):
+                ramp = min(max((step - 0.6 * cap) / (0.4 * cap), 0.0), 1.0) * self.ramp_gain
+                for grp in ((pids,) if self.dir_d > 0 else (pids, cids)):
+                    if grp:
+                        r_g = ramp
+                        if self.gate_on and grp is pids and conn is not None and conn[r]:
+                            r_g = 0.0
+                        _add(scores, r, grp, r_g)
+            if pids and has_row_bias:
+                rb = self.row_bias[r] if r < len(self.row_bias) else 0.0
+                _add(scores, r, pids, rb)
+                if cids:
+                    _add(scores, r, cids, -rb)
+            if self.force_close:
+                if cids:
+                    _add(scores, r, cids, -30.0)
+                if pids:
+                    _add(scores, r, pids, self.close_boost)
+            if self.gate_on and pids and conn is not None and conn[r]:
+                _add(scores, r, pids, self.gate_val)
+        return scores
+
+
 class ClauseTwistedSMCDecoder:
     """Clause-Level Twisted Sequential Monte Carlo (SMC) Decoder (P=4 Particles, Phase B WS-B1).
 
@@ -991,6 +1281,9 @@ class ClauseTwistedSMCDecoder:
         rhythm: bool = False,
         cv_gain: float = 0.0,
         cv_floor: float = 0.42,
+        lex_min_count: int = 1,
+        stem_guard: bool = False,
+        case_frame_gate: bool = False,
     ) -> None:
         # cv_gain / cv_floor : SMC log-weight term -cv_gain * max(0, cv_floor - CV_L^(k)), where CV_L^(k) is the coefficient of
         #                      variation of the sentence lengths of the paragraph (confirmed + the sentence completed by candidate k)
@@ -999,11 +1292,20 @@ class ClauseTwistedSMCDecoder:
         # content_rep_penalty : repetition penalty applied ONLY to content-word tokens (contain a kanji, or are katakana
         #                       words of >= 2 chars); single hiragana / punctuation / multi-hiragana grammar tokens are exempt
         #                       (okurigana, conjugation endings and particles are never penalised)
-        # lex_decay           : logit -lex_decay for tokens with >= 2 kanji that already occurred >= 2 times in the current paragraph
+        # lex_decay           : kanji-bigram decay. If the paragraph text so far (prefix + the row's tail) ends with a kanji C1, every
+        #                       token whose first char is a kanji C2 with count(C1 C2) >= lex_min_count in that text gets logit
+        #                       -lex_decay (Qwen splits kanji into single tokens, so the bigram is checked on text, not on token ids)
+        # stem_guard          : when the text so far ends with a hiragana, hiragana-only tokens are exempt from the n-gram soft decay / hard
+        #                       ban (okurigana / conjugation stems may repeat; punctuation and kanji tokens stay banned)
+        # case_frame_gate     : the positive '。' bias in the short rhythm phase fires only when the sentence has a case-marked
+        #                       subject / topic (noun + が/は/も) or ends with a noun run (replaces the 'contains any noun' test)
         # rhythm              : base 3-beat sentence rhythm (short 1 clause / medium 2 clauses / long 3-4 clauses) outside the
         #                       Shock/Flux regimes
         self.content_rep_penalty = float(content_rep_penalty)
         self.lex_decay = float(lex_decay)
+        self.lex_min_count = int(lex_min_count)
+        self.stem_guard = bool(stem_guard)
+        self.case_frame_gate = bool(case_frame_gate)
         self.rhythm = bool(rhythm)
         self._tok_class = None
         self._cur_prefix = ""
@@ -1349,18 +1651,25 @@ class ClauseTwistedSMCDecoder:
         return temps
 
     def _token_classes(self):
-        """(content_mask, kanji2_mask) lists over the vocabulary, cached per decoder."""
+        """(content_mask, first_kanji_map, hira_only_mask) over the vocabulary, cached per decoder.
+
+        first_kanji_map: {kanji char: [token ids whose stripped surface starts with that kanji]};
+        hira_only_mask : stripped surface is non-empty and consists of hiragana (U+3041-U+309F) only.
+        """
         if self._tok_class is None:
             tk = self.tokenizer
             surfaces = tk.batch_decode([[i] for i in range(len(tk))], skip_special_tokens=False)
-            content, kanji2 = [], []
-            for sf in surfaces:
+            content, hira_only = [], []
+            first_kanji: Dict[str, List[int]] = {}
+            for i, sf in enumerate(surfaces):
                 st = sf.strip()
-                nk = sum(1 for ch in st if "\u4e00" <= ch <= "\u9fff")
-                kata = sum(1 for ch in st if "\u30a1" <= ch <= "\u30fa")
+                nk = sum(1 for ch in st if "一" <= ch <= "鿿")
+                kata = sum(1 for ch in st if "ァ" <= ch <= "ヺ")
                 content.append(nk >= 1 or (len(st) >= 2 and kata >= 2))
-                kanji2.append(nk >= 2)
-            self._tok_class = (content, kanji2)
+                hira_only.append(bool(st) and all("ぁ" <= ch <= "ゟ" for ch in st))
+                if st and "一" <= st[0] <= "鿿":
+                    first_kanji.setdefault(st[0], []).append(i)
+            self._tok_class = (content, first_kanji, hira_only)
         return self._tok_class
 
     def _regime_active(self) -> bool:
@@ -1511,7 +1820,6 @@ class ClauseTwistedSMCDecoder:
         if pad_id is None:
             pad_id = getattr(self.tokenizer, "eos_token_id", None)
         temps = torch.tensor(self._candidate_temperatures(P), dtype=torch.float32, device=device)
-        row_bias = torch.tensor(self._row_period_bias(P), dtype=torch.float32, device=device)
         period_ids, comma_ids = self._punct_ids()
         force_close = self._force_close
         close_boost = self.close_period_boost
@@ -1519,7 +1827,6 @@ class ClauseTwistedSMCDecoder:
         n_ctx = inp_len
         tokenizer_ref = self.tokenizer
         caps = self._row_caps(P)
-        caps_t = torch.tensor(caps, dtype=torch.float32, device=device)
         rhythm_on = self._rhythm_params(prefix) is not None
         dyn_len = any(c != self.max_clause_tokens for c in caps) and not rhythm_on
         dir_d = self._direction() if dyn_len else 0.0
@@ -1527,8 +1834,6 @@ class ClauseTwistedSMCDecoder:
         use_mask = self.narration_mask
         if use_mask:
             bad_ids, post_ids = self._forbidden_token_ids()
-            bad_t = torch.tensor(bad_ids, dtype=torch.long, device=device)
-            post_t = torch.tensor(post_ids, dtype=torch.long, device=device)
         init_depth = text_in.count("「") + text_in.count("『") - text_in.count("」") - text_in.count("』")
         narr_bias = self.narration_bias
 
@@ -1555,169 +1860,44 @@ class ClauseTwistedSMCDecoder:
                     scores[:, eos_tok_ids] = scores[:, eos_tok_ids] - eos_pen
                 return scores
 
-        class _NarrationStyleLogitsMask(LogitsProcessor):
-            """Outside 「」 (per row, tracked on the generated tail) polite auxiliaries / meta marks get a large negative logit bias."""
-
-            def __call__(self_inner, ids, scores):  # noqa: N805
-                tails = tokenizer_ref.batch_decode(ids[:, n_ctx:], skip_special_tokens=True)
-                depth = torch.tensor(
-                    [init_depth + t.count("「") + t.count("『") - t.count("」") - t.count("』") for t in tails],
-                    device=scores.device,
-                )
-                narr = (depth <= 0).to(scores.dtype).unsqueeze(-1)
-                v = scores.shape[-1]
-                b = bad_t[bad_t < v]
-                scores[:, b] = scores[:, b] + narr * narr_bias
-                # right after a polite stem token (まし/でし/ませ) the completing token is suppressed as well
-                stem = torch.tensor(
-                    [bool(t) and t.endswith(_POLITE_STEMS) for t in tails], device=scores.device
-                ).to(scores.dtype).unsqueeze(-1)
-                if post_t.numel():
-                    pt = post_t[post_t < v]
-                    scores[:, pt] = scores[:, pt] + narr * stem * narr_bias
-                return scores
+        narr_proc = NarrationStyleLogitsMask(tokenizer_ref, n_ctx, init_depth, bad_ids, post_ids, narr_bias) if use_mask else None
 
         cr_pen = self.content_rep_penalty
         lex_dec = self.lex_decay
-        need_cls = (cr_pen > 1.0) or lex_dec > 0 or (self.ngram_soft >= 2)
+        stem_on = bool(self.stem_guard)
+        need_cls = (cr_pen > 1.0) or lex_dec > 0 or stem_on
         if need_cls:
-            content_l, kanji2_l = self._token_classes()
-            content_t = torch.tensor(content_l, dtype=torch.bool, device=device)
-            kanji2_t = torch.tensor(kanji2_l, dtype=torch.bool, device=device)
-            para_ids_t = torch.tensor(self.tokenizer.encode(prefix, add_special_tokens=False) if prefix else [], dtype=torch.long, device=device)
+            content_l, first_kanji_map, hira_l = self._token_classes()
         else:
-            content_l = None
-
-        class _ContentRep(LogitsProcessor):
-            """Repetition penalty on content-word tokens only + lexical-diversity decay for repeated kanji words."""
-
-            def __call__(self_inner, ids, scores):  # noqa: N805
-                V = scores.shape[-1]
-                ct, kt = content_t, kanji2_t
-                if ct.numel() < V:  # logits are padded beyond len(tokenizer)
-                    ct = torch.nn.functional.pad(ct, (0, V - ct.numel()))
-                    kt = torch.nn.functional.pad(kt, (0, V - kt.numel()))
-                ct, kt = ct[:V], kt[:V]
-                for r in range(ids.shape[0]):
-                    if cr_pen > 1.0:
-                        u = torch.unique(ids[r])
-                        u = u[u < V]
-                        sel = u[ct[u]]
-                        if sel.numel():
-                            sc = scores[r, sel]
-                            scores[r, sel] = torch.where(sc > 0, sc / cr_pen, sc * cr_pen)
-                    if lex_dec > 0:
-                        pids = torch.cat([para_ids_t, ids[r, n_ctx:]])
-                        pids = pids[pids < V]
-                        if pids.numel():
-                            cnt = torch.bincount(pids, minlength=V)
-                            idx = torch.nonzero((cnt >= 2) & kt).squeeze(-1)
-                            if idx.numel():
-                                scores[r, idx] = scores[r, idx] - lex_dec
-                return scores
+            content_l, first_kanji_map, hira_l = None, {}, None
+        content_proc = ContentRepLogits(
+            tokenizer_ref, n_ctx, content_l or [], first_kanji_map, prefix, cr_pen, lex_dec, self.lex_min_count,
+        ) if (cr_pen > 1.0 or lex_dec > 0) else None
 
         ngram_n = self.ngram_ban
         hist_map = self._history_ngram_map() if ngram_n >= 2 else {}
         soft_n = self.ngram_soft if (self.ngram_soft >= 2 and (ngram_n < 2 or self.ngram_soft < ngram_n)) else 0
         soft_pen = self.ngram_soft_penalty
         soft_map = self._history_ngram_map(soft_n) if soft_n else {}
-        first_ban = torch.tensor(self._first_ban_ids, dtype=torch.long, device=device) if self._first_ban_ids else None
-
-        class _ContextNgramBan(LogitsProcessor):
-            """-1e4 on any token that would re-create an n-gram already seen in history / prompt / this row."""
-
-            def __call__(self_inner, ids, scores):  # noqa: N805
-                if first_ban is not None and ids.shape[1] == n_ctx:
-                    scores[:, first_ban] = scores[:, first_ban] - 1e4
-                if ngram_n < 2 and not soft_n:
-                    return scores
-                for r in range(ids.shape[0]):
-                    seq = ids[r].tolist()
-                    if soft_n:
-                        # moderate decay (-soft_pen) for the shorter n-gram; the hard ban below overrides
-                        ks = tuple(seq[-(soft_n - 1):])
-                        sb = set(soft_map.get(ks, ()))
-                        for i in range(len(seq) - soft_n + 1):
-                            if tuple(seq[i:i + soft_n - 1]) == ks:
-                                sb.add(seq[i + soft_n - 1])
-                        if sb:
-                            sl = [t for t in sb if t < scores.shape[-1]]
-                            scores[r, sl] = scores[r, sl] - soft_pen
-                    if ngram_n < 2:
-                        continue
-                    n = ngram_n
-                    key = tuple(seq[-(n - 1):])
-                    banned = set(hist_map.get(key, ()))
-                    for i in range(len(seq) - n + 1):
-                        if tuple(seq[i:i + n - 1]) == key:
-                            banned.add(seq[i + n - 1])
-                    if banned:
-                        bl = [t for t in banned if t < scores.shape[-1]]
-                        scores[r, bl] = scores[r, bl] - 1e4
-                return scores
+        first_ban = self._first_ban_ids if self._first_ban_ids else None
+        ctx_tail = text_in[-8:]
+        ngram_proc = ContextNgramBan(
+            tokenizer_ref, n_ctx, ngram_n, hist_map, soft_n, soft_pen, soft_map, first_ban=first_ban,
+            hira_only=hira_l if stem_on else None, stem_guard=stem_on, ctx_tail=ctx_tail,
+        ) if (ngram_n >= 2 or soft_n or first_ban is not None) else None
 
         ph_period, ph_comma = self._phase_bias(prefix)
         gate_on = bool(self.syntactic_gate)
         gate_val = float(self.gate_bias)
-        ctx_tail = text_in[-8:]
         _rp = self._rhythm_params(prefix)
         noun_req = bool(_rp is not None and _rp[3])
         sent_tail0 = re.split("[。！？!?]", prefix)[-1]
-        _noun_re = re.compile("[一-鿿ァ-ヺ]")
-
-        class _BoundaryBias(LogitsProcessor):
-            """Momentum-scaled short-clause bias and end-of-paragraph sentence closing."""
-
-            def __call__(self_inner, ids, scores):  # noqa: N805
-                conn = term = noun = None
-                if noun_req:
-                    # a positive '。' bias fires only once the current sentence contains a noun (kanji / katakana)
-                    _tl = tokenizer_ref.batch_decode(ids[:, n_ctx:], skip_special_tokens=True)
-                    noun = torch.tensor([float(bool(_noun_re.search(sent_tail0 + t))) for t in _tl], device=scores.device, dtype=scores.dtype)
-                if gate_on:
-                    # Syntactic Finality Gate: classify the end of each row's text so far
-                    tails = tokenizer_ref.batch_decode(ids[:, n_ctx:], skip_special_tokens=True)
-                    ends = [(ctx_tail + t)[-8:] for t in tails]
-                    conn = torch.tensor([float(_is_connective_end(e)) for e in ends], device=scores.device, dtype=scores.dtype)
-                    term = torch.tensor([float(_is_terminal_end(e)) for e in ends], device=scores.device, dtype=scores.dtype)
-                if ph_period and period_ids:
-                    if ph_period > 0:
-                        # Shock: '。' is mildly held back at the start of the clause (a sentence needs a subject and a
-                        # predicate: 8-20 chars) and pushed up from ~40% of the clause token target on
-                        t_rel = (float(ids.shape[1] - n_ctx)) / caps_t
-                        scale = torch.clamp((t_rel - 0.2) / 0.4, 0.0, 1.0) * 1.6 - 0.6
-                        pb = (ph_period * scale).to(scores.dtype)
-                        if gate_on:
-                            # positive '。' bias only after a terminal form / noun; never after a connective ending
-                            pb = torch.where(term > 0, pb, torch.clamp(pb, max=0.0))
-                        if noun is not None:
-                            pb = torch.where(noun > 0, pb, torch.clamp(pb, max=0.0))
-                        scores[:, period_ids] = scores[:, period_ids] + pb.unsqueeze(-1)
-                    else:
-                        scores[:, period_ids] = scores[:, period_ids] + ph_period
-                if ph_comma and comma_ids:
-                    scores[:, comma_ids] = scores[:, comma_ids] + ph_comma
-                if dyn_len and (period_ids or comma_ids):
-                    step = float(ids.shape[1] - n_ctx)
-                    ramp = torch.clamp((step - 0.6 * caps_t) / (0.4 * caps_t), 0.0, 1.0) * ramp_gain
-                    for grp in ((period_ids,) if dir_d > 0 else (period_ids, comma_ids)):
-                        if grp:
-                            r_g = ramp.to(scores.dtype)
-                            if gate_on and grp is period_ids:
-                                r_g = r_g * (1.0 - conn)
-                            scores[:, grp] = scores[:, grp] + r_g.unsqueeze(-1)
-                if period_ids and bool((row_bias != 0).any()):
-                    scores[:, period_ids] = scores[:, period_ids] + row_bias.to(scores.dtype).unsqueeze(-1)
-                    if comma_ids:
-                        scores[:, comma_ids] = scores[:, comma_ids] - row_bias.to(scores.dtype).unsqueeze(-1)
-                if force_close:
-                    if comma_ids:
-                        scores[:, comma_ids] = scores[:, comma_ids] - 30.0
-                    if period_ids:
-                        scores[:, period_ids] = scores[:, period_ids] + close_boost
-                if gate_on and period_ids:
-                    scores[:, period_ids] = scores[:, period_ids] + (conn * gate_val).unsqueeze(-1)
-                return scores
+        boundary_proc = BoundaryBiasLogits(
+            tokenizer_ref, n_ctx, caps, self._row_period_bias(P), period_ids, comma_ids,
+            ph_period=ph_period, ph_comma=ph_comma, dyn_len=dyn_len, dir_d=dir_d, ramp_gain=ramp_gain,
+            force_close=force_close, close_boost=close_boost, gate_on=gate_on, gate_val=gate_val, ctx_tail=ctx_tail,
+            noun_req=noun_req, sent_tail0=sent_tail0, case_frame_gate=self.case_frame_gate,
+        )
 
         class _RowTemp(LogitsProcessor):
             def __call__(self_inner, ids, scores):  # noqa: N805
@@ -1740,8 +1920,8 @@ class ClauseTwistedSMCDecoder:
             "top_p": 1.0,
             "top_k": 50,
             "attention_mask": torch.ones_like(input_ids),
-            "logits_processor": ([_NarrationStyleLogitsMask()] if use_mask else []) + (
-                [_ContextNgramBan()] if (ngram_n >= 2 or soft_n or first_ban is not None) else []) + ([_ContentRep()] if (cr_pen > 1.0 or lex_dec > 0) else []) + [_EosPenalty(), _BoundaryBias(), _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
+            "logits_processor": ([narr_proc] if narr_proc is not None else []) + (
+                [ngram_proc] if ngram_proc is not None else []) + ([content_proc] if content_proc is not None else []) + [_EosPenalty(), boundary_proc, _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
             "stopping_criteria": StoppingCriteriaList([_ClausePunctStop()]),
         }
         if self.rep_penalty and self.rep_penalty != 1.0:

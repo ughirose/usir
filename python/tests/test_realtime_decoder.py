@@ -1142,9 +1142,10 @@ def test_token_classes_exempt_single_hiragana_and_grammar_tokens():
             return [self.vocab[i[0]] for i in ids]
     dec = ClauseTwistedSMCDecoder(dim=12, seed=0)
     dec.tokenizer = Tk()
-    content, kanji2 = dec._token_classes()
+    content, first_kanji, hira_only = dec._token_classes()
     assert content == [False, False, False, False, True, True, True, False, False]
-    assert kanji2 == [False, False, False, False, True, False, False, False, False]
+    assert first_kanji == {"静": [4], "山": [5]}
+    assert hira_only == [True, True, True, True, False, False, False, False, False]
 
 
 def test_soft_landing_closes_at_first_sentence_end_after_floor():
