@@ -54,7 +54,9 @@ describe('M17 WorldCraftArbitrator SVD parity (Python fixture)', () => {
         const { safe, cut } = arb.arbitrateMomentum(m, j);
         expect(maxAbsDiff(safe, exp.svd_safe)).toBeLessThan(TOL);
         expect(maxAbsDiff(cut, exp.svd_cut)).toBeLessThan(TOL);
-        const tik = new WorldCraftArbitrator().arbitrateMomentum(m, j);
+        expect(new WorldCraftArbitrator().projectorMethod).toBe('svd');
+        expect(maxAbsDiff(new WorldCraftArbitrator().arbitrateMomentum(m, j).safe, exp.svd_safe)).toBeLessThan(TOL);
+        const tik = new WorldCraftArbitrator({ projectorMethod: 'tikhonov' }).arbitrateMomentum(m, j);
         expect(maxAbsDiff(tik.safe, exp.tik_safe)).toBeLessThan(TOL);
       });
     });

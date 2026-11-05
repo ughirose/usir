@@ -47,14 +47,18 @@ def test_arbitration_matches_fixture(name):
 
 
 def test_unit_rows_legacy_default_unchanged():
-    """Default (tikhonov) path on unit rows is the closed form I - (1/(1+eps)) sum e_i e_i^T."""
+    """Explicit tikhonov path on unit rows is the closed form I - (1/(1+eps)) sum e_i e_i^T; default is svd."""
     j = np.array(FX["constraint_sets"]["unit_evidence"]["rows"])
     p = WorldCraftArbitrator.compute_null_space_projector(j)
     expected = I12.copy()
     for i in (7, 11):
         expected[i, i] = 1.0 - 1.0 / (1.0 + 1e-6)
     assert np.allclose(p, expected, atol=1e-12)
-    assert WorldCraftArbitrator().projector_method == "tikhonov"
+    assert WorldCraftArbitrator().projector_method == "svd"
+    assert WorldCraftArbitrator(projector_method="tikhonov").projector_method == "tikhonov"
+    dq = np.arange(1.0, 13.0)
+    safe_def, _, _ = WorldCraftArbitrator().arbitrate_momentum(dq, j)
+    assert np.max(np.abs(j @ safe_def)) < 1e-12
     # SVD on unit rows is the exact coordinate projector
     ps = WorldCraftArbitrator.compute_null_space_projector_svd(j)
     exact = I12.copy()

@@ -236,7 +236,7 @@ export class WorldCraftArbitrator {
   public readonly projectorMethod: ProjectorMethod;
 
   constructor(options?: { projectorMethod?: ProjectorMethod }) {
-    this.projectorMethod = options?.projectorMethod ?? 'tikhonov';
+    this.projectorMethod = options?.projectorMethod ?? 'svd';
   }
 
   compileConstraintJacobian(contextText = '', activeConstraints?: readonly string[] | null): Matrix {

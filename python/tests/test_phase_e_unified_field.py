@@ -193,7 +193,7 @@ def test_worldcraft_null_space_projection_zero_violation():
 
     # 3. Mathematical proof of zero infringement: J_C * Delta q_safe = 0
     infringement = j_c @ dq_safe
-    assert np.linalg.norm(infringement) < 1e-5
+    assert np.linalg.norm(infringement) < 1e-12
 
     # 4. Orthogonality: dq_safe and dq_cut must be strictly orthogonal
     inner_prod = np.dot(dq_safe, dq_cut)

@@ -355,13 +355,13 @@ class WorldCraftArbitrator:
     def __init__(
         self,
         rule: Optional[WorldCraftOntologyRule] = None,
-        projector_method: str = "tikhonov",
+        projector_method: str = "svd",
     ) -> None:
         if projector_method not in ("tikhonov", "svd"):
             raise ValueError(f"projector_method must be 'tikhonov' or 'svd', got {projector_method!r}")
         self.rule = rule if rule is not None else WorldCraftOntologyRule()
-        # "tikhonov": legacy regularised projector (eps-biased by ~eps for unit rows; default, unchanged).
-        # "svd": exact projector I - J^+ J via SVD pseudo-inverse (rank-deficient / general rows).
+        # "svd" (default): exact projector I - J^+ J via SVD pseudo-inverse (rank-deficient / general rows).
+        # "tikhonov": legacy regularised projector (eps-biased by ~eps for unit rows); explicit opt-in.
         self.projector_method = projector_method
 
     def check_tier1_violations(self, candidate_text: str) -> List[str]:

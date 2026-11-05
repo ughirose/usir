@@ -815,8 +815,36 @@ class AdaptiveBAOABIntegrator:
         }
 
 
+_JIS_TABLE_ANOMALIES = frozenset("梦")
+
+
+def _is_jis_x0208(ch: str) -> bool:
+    """True if `ch` is encodable in JIS X 0208 (strict: iso2022_jp covers JIS X 0208 + ASCII/JIS-Roman only).
+
+    Measured: iso2022_jp (and shift_jis / cp932 / euc_jp alike) accept 6356 ideographs in U+3400-4DBF, U+4E00-9FFF,
+    U+F900-FAFF, one more than the 6355 kanji of JIS X 0208; the extra one is U+68A6 (simplified-Chinese 梦, mapped to
+    JIS 0x546D in CPython's table). No codec rejects it, so it is excluded explicitly (_JIS_TABLE_ANOMALIES).
+    """
+    if ch in _JIS_TABLE_ANOMALIES:
+        return False
+    try:
+        ch.encode("iso2022_jp")
+    except UnicodeEncodeError:
+        return False
+    return True
+
+
+def _has_non_jis_ideograph(text: str) -> bool:
+    """True if text contains an ideograph (U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF) outside JIS X 0208 (punctuation ignored)."""
+    for ch in text:
+        o = ord(ch)
+        if (0x4E00 <= o <= 0x9FFF or 0x3400 <= o <= 0x4DBF or 0xF900 <= o <= 0xFAFF) and not _is_jis_x0208(ch):
+            return True
+    return False
+
+
 def has_non_jis_kanji(text: str) -> bool:
-    """True if text contains an ideograph outside JIS X 0208 (strict Shift_JIS).
+    """True if text contains an ideograph outside JIS X 0208 (strict, via iso2022_jp).
 
     Simplified-Chinese-only forms (这, 们, 变, ...) are not encodable in JIS X 0208, so no character list
     has to be maintained: the boundary is the Japanese kanji standard itself.
@@ -826,9 +854,7 @@ def has_non_jis_kanji(text: str) -> bool:
         if ch in "\uff0c\uff0e":  # full-width comma / full stop: Chinese-style punctuation, not 、。
             return True
         if 0x4E00 <= o <= 0x9FFF or 0x3400 <= o <= 0x4DBF or 0xF900 <= o <= 0xFAFF:
-            try:
-                ch.encode("shift_jis")
-            except UnicodeEncodeError:
+            if not _is_jis_x0208(ch):
                 return True
     return False
 
@@ -904,9 +930,7 @@ def count_non_jis_kanji(text: str) -> int:
             n += 1
             continue
         if 0x4E00 <= o <= 0x9FFF or 0x3400 <= o <= 0x4DBF or 0xF900 <= o <= 0xFAFF:
-            try:
-                ch.encode("shift_jis")
-            except UnicodeEncodeError:
+            if not _is_jis_x0208(ch):
                 n += 1
     return n
 
@@ -1122,7 +1146,8 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
                  dyn_len: bool = False, dir_d: float = 0.0, ramp_gain: float = 0.0,
                  force_close: bool = False, close_boost: float = 0.0,
                  gate_on: bool = False, gate_val: float = -12.0, ctx_tail: str = "",
-                 noun_req: bool = False, sent_tail0: str = "", case_frame_gate: bool = False) -> None:
+                 noun_req: bool = False, sent_tail0: str = "", case_frame_gate: bool = False,
+                 case_frame_penalty: float = 6.0, case_frame_min_chars: int = 18) -> None:
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
         self.caps = [float(c) for c in caps]
@@ -1142,6 +1167,8 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
         self.noun_req = bool(noun_req)
         self.sent_tail0 = sent_tail0
         self.case_frame_gate = bool(case_frame_gate)
+        self.case_frame_penalty = float(case_frame_penalty)
+        self.case_frame_min_chars = int(case_frame_min_chars)
 
     def __call__(self, ids: Any, scores: Any) -> Any:
         P = ids.shape[0]
@@ -1196,6 +1223,10 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
                     _add(scores, r, pids, rb)
                 if cids:
                     _add(scores, r, cids, -rb)
+            if (self.case_frame_gate and not self.force_close and pids and noun is not None and tails is not None
+                    and not noun[r] and len(self.sent_tail0 + tails[r]) < self.case_frame_min_chars):
+                # short sentence without a case frame: '。' is suppressed regardless of the ending
+                _add(scores, r, pids, -self.case_frame_penalty)
             if self.force_close:
                 if cids:
                     _add(scores, r, cids, -30.0)
@@ -1289,7 +1320,13 @@ class ClauseTwistedSMCDecoder:
         lex_min_count: int = 1,
         stem_guard: bool = False,
         case_frame_gate: bool = False,
+        case_frame_penalty: float = 6.0,
+        case_frame_min_chars: int = 18,
     ) -> None:
+        # case_frame_penalty / case_frame_min_chars : with case_frame_gate, a sentence < case_frame_min_chars chars that has no
+        #                       case frame gets -case_frame_penalty on '。' (not under force_close)
+        self.case_frame_penalty = float(case_frame_penalty)
+        self.case_frame_min_chars = int(case_frame_min_chars)
         # cv_gain / cv_floor : SMC log-weight term -cv_gain * max(0, cv_floor - CV_L^(k)), where CV_L^(k) is the coefficient of
         #                      variation of the sentence lengths of the paragraph (confirmed + the sentence completed by candidate k)
         self.cv_gain = float(cv_gain)
@@ -1571,7 +1608,7 @@ class ClauseTwistedSMCDecoder:
             tk = self.tokenizer
             n = len(tk)
             surfaces = tk.batch_decode([[i] for i in range(n)], skip_special_tokens=False)
-            bad = [i for i, s in enumerate(surfaces) if any(f in s for f in _FORBIDDEN_SURFACES)]
+            bad = [i for i, s in enumerate(surfaces) if any(f in s for f in _FORBIDDEN_SURFACES) or _has_non_jis_ideograph(s)]
             tail_next = [i for i, s in enumerate(surfaces) if s in _POST_POLITE_TOKENS]
             self._forbidden_cache = (bad, tail_next)
         return self._forbidden_cache
@@ -1905,6 +1942,7 @@ class ClauseTwistedSMCDecoder:
             ph_period=ph_period, ph_comma=ph_comma, dyn_len=dyn_len, dir_d=dir_d, ramp_gain=ramp_gain,
             force_close=force_close, close_boost=close_boost, gate_on=gate_on, gate_val=gate_val, ctx_tail=ctx_tail,
             noun_req=noun_req, sent_tail0=sent_tail0, case_frame_gate=self.case_frame_gate,
+            case_frame_penalty=self.case_frame_penalty, case_frame_min_chars=self.case_frame_min_chars,
         )
 
         class _RowTemp(LogitsProcessor):

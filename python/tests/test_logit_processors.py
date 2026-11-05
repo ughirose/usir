@@ -14,6 +14,8 @@ from usir_py.realtime_decoder import (
     _is_connective_end,
     _is_terminal_end,
     case_frame_ok,
+    count_non_jis_kanji,
+    has_non_jis_kanji,
     kanji_bigrams,
     lex_bigram_targets,
     narration_row_flags,
@@ -163,8 +165,9 @@ def test_boundary_short_phase_case_frame_gate():
     on = BoundaryBiasLogits(TK, N_CTX, [5] * 3, [0] * 3, case_frame_gate=True, **kw)
     sc = _scores(3)
     on(ids, sc)
-    assert [float(sc[r, TID["。"]]) for r in range(3)] == [0.0, 8.0, 0.0]
-    off = BoundaryBiasLogits(TK, N_CTX, [5] * 3, [0] * 3, case_frame_gate=False, **kw)
+    # rows without a case frame and < 18 chars additionally get the -6.0 case-frame penalty
+    assert [float(sc[r, TID["。"]]) for r in range(3)] == [-6.0, 8.0, -6.0]
+    off =BoundaryBiasLogits(TK, N_CTX, [5] * 3, [0] * 3, case_frame_gate=False, **kw)
     sc = _scores(3)
     off(ids, sc)
     # legacy: any kanji / katakana in the sentence counts as a noun
@@ -178,12 +181,75 @@ def test_boundary_row_bias_respects_case_frame_gate():
     on = BoundaryBiasLogits(TK, N_CTX, [5, 5], [3.0, 3.0], case_frame_gate=True, **kw)
     sc = _scores(2)
     on(ids, sc)
-    assert [float(sc[r, TID["。"]]) for r in range(2)] == [0.0, 3.0]
+    assert [float(sc[r, TID["。"]]) for r in range(2)] == [-6.0, 3.0]  # row0: 0.0 (withheld) + -6.0 penalty
     assert [float(sc[r, TID["、"]]) for r in range(2)] == [-3.0, -3.0]
     off = BoundaryBiasLogits(TK, N_CTX, [5, 5], [3.0, 3.0], case_frame_gate=False, **kw)
     sc = _scores(2)
     off(ids, sc)
     assert [float(sc[r, TID["。"]]) for r in range(2)] == [3.0, 3.0]
+
+
+def test_case_frame_short_sentence_penalty():
+    P = TID["。"]
+    kw = dict(period_ids=[P], comma_ids=[], noun_req=True)
+
+    def run(tails, sent_tail0="", **extra):
+        proc = BoundaryBiasLogits(TK, N_CTX, [5] * len(tails), [0] * len(tails), sent_tail0=sent_tail0, **kw, **extra)
+        sc = _scores(len(tails))
+        proc(_ids(*tails), sc)
+        return [float(sc[r, P]) for r in range(len(tails))]
+
+    # no case frame, < 18 chars, connective (に) and terminal (た) endings alike: -6.0
+    assert run(["窓の外に"], case_frame_gate=True) == [-6.0]
+    assert run(["やがて広がった"], case_frame_gate=True) == [-6.0]
+    # gate off: no penalty
+    assert run(["窓の外に"], case_frame_gate=False) == [0.0]
+    assert run(["やがて広がった"], case_frame_gate=False) == [0.0]
+    # case frame present: no penalty (positive push is covered by the ph_period tests)
+    assert run(["雨が降った"], case_frame_gate=True) == [0.0]
+    ph = BoundaryBiasLogits(TK, N_CTX, [5], [0], period_ids=[P], comma_ids=[], ph_period=8.0, noun_req=True, case_frame_gate=True)
+    sc = _scores(1)
+    ph(_ids("雨が降った"), sc)
+    assert float(sc[0, P]) == pytest.approx(8.0)
+    # sent_tail0 counts toward the length: 14 + 4 = 18 chars -> no penalty; 13 + 4 = 17 -> penalty
+    assert run(["窓の外に"], sent_tail0="あ" * 14, case_frame_gate=True) == [0.0]
+    assert run(["窓の外に"], sent_tail0="あ" * 13, case_frame_gate=True) == [-6.0]
+    # force_close: paragraph end must be able to close -> no penalty (close_boost applies as before)
+    assert run(["窓の外に"], case_frame_gate=True, force_close=True, close_boost=2.0) == [2.0]
+    # configurable params
+    assert run(["窓の外に"], case_frame_gate=True, case_frame_penalty=3.0) == [-3.0]
+    assert run(["窓の外に"], case_frame_gate=True, case_frame_min_chars=4) == [0.0]
+
+
+def test_decoder_case_frame_params_default():
+    dec = _decoder()
+    assert dec.case_frame_penalty == 6.0 and dec.case_frame_min_chars == 18
+
+
+# ---------------------------------------------------------------------------------------------------------------
+@pytest.mark.parametrize("ch", list("梦变这们说时"))
+def test_count_non_jis_kanji_detects_simplified(ch):
+    assert count_non_jis_kanji(ch) == 1
+    assert has_non_jis_kanji("夜の" + ch)
+
+
+def test_count_non_jis_kanji_normal_japanese_is_zero():
+    for s in ("々髪嘘", "カタカナのテスト", "ひらがなだけ", "「静かな夜」。窓の外、雨が降る。", "夢と変化と説明と時間"):
+        assert count_non_jis_kanji(s) == 0, s
+        assert not has_non_jis_kanji(s), s
+    assert count_non_jis_kanji("，．") == 2  # full-width comma / full stop still counted
+
+
+def test_forbidden_token_ids_ban_non_jis_ideograph_tokens():
+    vocab = VOCAB + ["梦", "变", "这", "们", "说", "时", "夢", "髪", "々", "夜这", "，"]
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    dec.tokenizer = MockTokenizer(vocab=vocab)
+    bad, _ = dec._forbidden_token_ids()
+    idx = {s: i for i, s in enumerate(vocab)}
+    for s in ("梦", "变", "这", "们", "说", "时", "夜这"):
+        assert idx[s] in bad, s
+    for s in ("夢", "髪", "々", "静", "雨", "，"):
+        assert idx[s] not in bad, s
 
 
 # ---------------------------------------------------------------------------------------------------------------
