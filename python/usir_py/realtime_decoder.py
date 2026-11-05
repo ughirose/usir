@@ -1376,6 +1376,78 @@ class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
         return scores
 
 
+def sentence_finished(text: str) -> bool:
+    """True when `text` ends a sentence: last char 。！？!? or a closing 」』 and every 「 / 『 is closed."""
+    t = (text or "").rstrip()
+    if not t:
+        return True
+    if t.count("「") > t.count("」") or t.count("『") > t.count("』"):
+        return False
+    return t[-1] in "。！？!?」』"
+
+
+def last_sentence_end(text: str) -> int:
+    """Index just after the last position where `text[:i]` is sentence_finished (0 when none)."""
+    for i in range(len(text), 0, -1):
+        if text[i - 1] in "。！？!?」』" and sentence_finished(text[:i]):
+            return i
+    return 0
+
+
+SIMILE_MARKERS = ("まるで", "あたかも", "さながら", "かのよう", "みたいに")
+
+
+def count_similes(text: str) -> int:
+    """Occurrences of the simile markers in `text` (non-overlapping per marker)."""
+    return sum(text.count(m) for m in SIMILE_MARKERS)
+
+
+def body_compounds(text: str, max_len: int = 6) -> List[str]:
+    """Kanji / katakana runs of length 2..max_len already used in the story body (protected compounds)."""
+    out: List[str] = []
+    seen: Set[str] = set()
+    for w in _PROTECT_RUN_RE.findall(text or ""):
+        if 2 <= len(w) <= max_len and w not in seen:
+            seen.add(w)
+            out.append(w)
+    return out
+
+
+class SimileDecayLogits(_ProcBase):  # type: ignore[misc,valid-type]
+    """Logit decay on simile markers (まるで / あたかも / さながら / かのよう / みたいに): once a marker has been used in
+    the current paragraph every marker token gets -pen_para; once two have been used in the whole story (history +
+    paragraph) -pen_story. Marker tokens = tokens whose surface starts with a marker or is a >= 2-char prefix of one."""
+
+    def __init__(self, tokenizer: Any, n_ctx: int, marker_ids: Sequence[int], para_prefix: str, hist_count: int,
+                 pen_para: float = 8.0, pen_story: float = 12.0, tail_cache: Optional[TailCache] = None) -> None:
+        self.tokenizer = tokenizer
+        self.n_ctx = int(n_ctx)
+        self.ids = IdxSet(list(marker_ids))
+        self.para_prefix = para_prefix
+        self.hist_count = int(hist_count)
+        self.pen_para = float(pen_para)
+        self.pen_story = float(pen_story)
+        self.tail_cache = tail_cache
+
+    def __call__(self, ids: Any, scores: Any) -> Any:
+        if not self.ids:
+            return scores
+        tails = _tail_texts(self.tokenizer, ids, self.n_ctx, self.tail_cache)
+        rows_p: List[int] = []
+        rows_s: List[int] = []
+        for r, t in enumerate(tails):
+            n_para = count_similes(self.para_prefix + t)
+            if n_para + self.hist_count >= 2:
+                rows_s.append(r)
+            elif n_para >= 1:
+                rows_p.append(r)
+        if rows_p:
+            _add_set(scores, rows_p, self.ids, -self.pen_para)
+        if rows_s:
+            _add_set(scores, rows_s, self.ids, -self.pen_story)
+        return scores
+
+
 _ADNOMINAL_END_CHARS = "たるいだな"
 
 
@@ -1615,6 +1687,12 @@ class ClauseTwistedSMCDecoder:
         ngram_protect_text: str = "",
         kv_share: bool = False,
         batch_score: bool = False,
+        simile_decay: bool = False,
+        simile_pen_para: float = 8.0,
+        simile_pen_story: float = 12.0,
+        body_compound_protect: bool = False,
+        grace_close: bool = False,
+        grace_clauses: int = 3,
     ) -> None:
         # cr_paragraph_scope / cr_exempt_text : see ContentRepLogits (Phase 23: prompt theme / role tokens were penalised
         #                       from the first mention, producing coinages such as 懐中時鐘 / 青年人)
@@ -1634,6 +1712,21 @@ class ClauseTwistedSMCDecoder:
         self.kv_share = bool(kv_share)
         self.batch_score = bool(batch_score) or self.kv_share
         self._pkv: Optional[Tuple[Tuple[int, ...], Any, Any]] = None
+        # Phase 25:
+        #   simile_decay          : SimileDecayLogits (-simile_pen_para after 1 marker in the paragraph, -simile_pen_story
+        #                           once 2 markers exist in the story)
+        #   body_compound_protect : kanji / katakana words (2..6 chars) already used in the story are protected words
+        #                           of the n-gram ban (their completion is exempt), in addition to theme / role words
+        #   grace_close           : a paragraph whose clause loop ended (EOS / clause budget) inside an unfinished sentence
+        #                           gets up to grace_clauses extra forced-closing clauses ('、' -30, EOS suppressed); if it
+        #                           is still unfinished the text is cut back to the last sentence end
+        self.simile_decay = bool(simile_decay)
+        self.simile_pen_para = float(simile_pen_para)
+        self.simile_pen_story = float(simile_pen_story)
+        self._simile_ids: Optional[List[int]] = None
+        self.body_compound_protect = bool(body_compound_protect)
+        self.grace_close = bool(grace_close)
+        self.grace_clauses = int(grace_clauses)
         # rhythm_profile      : "cycle" (default; short/medium/long by sentence index mod 3), "steady" (no positive '。' push and no
         #                       '、' push; '。' sealed -12 below steady_min_chars, +3 above steady_max_chars, '、' -4 once the sentence
         #                       has >= steady_max_commas commas) or "pulse" (cycle with positive '。' pushes capped at +3 and no
@@ -2172,6 +2265,21 @@ class ClauseTwistedSMCDecoder:
             self._demo_ids = {d: v for d, v in m.items() if v}
         return self._demo_ids
 
+    def _simile_token_ids(self) -> List[int]:
+        """Token ids whose stripped surface starts with a simile marker or is a >= 2-char prefix of one (cached)."""
+        if self._simile_ids is None:
+            tk = self.tokenizer
+            surfaces = tk.batch_decode([[i] for i in range(len(tk))], skip_special_tokens=False)
+            out: List[int] = []
+            for i, sf in enumerate(surfaces):
+                st = sf.strip().lstrip("\u2581").strip()
+                if not st:
+                    continue
+                if any(st.startswith(m) or (len(st) >= 2 and m.startswith(st)) for m in SIMILE_MARKERS):
+                    out.append(i)
+            self._simile_ids = out
+        return self._simile_ids
+
     def _regime_active(self) -> bool:
         return bool(self.direction_steer and self.steering_active and abs(self._direction()) > self.phase_thr)
 
@@ -2445,8 +2553,14 @@ class ClauseTwistedSMCDecoder:
             hira_only=hira_l if stem_on else None, stem_guard=stem_on, ctx_tail=ctx_tail, tail_cache=tail_cache,
             scan_start=((n_ctx - len(tokenizer_ref.encode(prefix, add_special_tokens=False)) if prefix else n_ctx)
                         if getattr(self, "ngram_paragraph_scope", False) else 0),
-            protect_words=getattr(self, "ngram_protect_words", None),
+            protect_words=(list(getattr(self, "ngram_protect_words", None) or [])
+                           + (body_compounds(self.history_text + prefix) if getattr(self, "body_compound_protect", False) else [])),
         ) if (ngram_n >= 2 or soft_n or first_ban is not None) else None
+
+        simile_proc = SimileDecayLogits(
+            tokenizer_ref, n_ctx, self._simile_token_ids(), prefix, count_similes(self.history_text),
+            pen_para=self.simile_pen_para, pen_story=self.simile_pen_story, tail_cache=tail_cache,
+        ) if getattr(self, "simile_decay", False) else None
 
         ph_period, ph_comma = self._phase_bias(prefix)
         gate_on = bool(self.syntactic_gate)
@@ -2492,7 +2606,8 @@ class ClauseTwistedSMCDecoder:
             "top_k": 50,
             "attention_mask": torch.ones_like(input_ids),
             "logits_processor": ([narr_proc] if narr_proc is not None else []) + (
-                [ngram_proc] if ngram_proc is not None else []) + ([content_proc] if content_proc is not None else []) + [_EosPenalty(), boundary_proc, _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
+                [ngram_proc] if ngram_proc is not None else []) + ([content_proc] if content_proc is not None else []) + (
+                [simile_proc] if simile_proc is not None else []) + [_EosPenalty(), boundary_proc, _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
             "stopping_criteria": StoppingCriteriaList([_ClausePunctStop()]),
         }
         if self.rep_penalty and self.rep_penalty != 1.0:
@@ -2962,6 +3077,28 @@ class ClauseTwistedSMCDecoder:
             ):
                 break
 
+        if getattr(self, "grace_close", False) and not sentence_finished(current_text[len(prefix):]):
+            self.stats["grace_paragraphs"] = self.stats.get("grace_paragraphs", 0) + 1
+            for _g in range(max(0, self.grace_clauses)):
+                self._force_close = True
+                self._suppress_eos = True
+                self.eos_reached = False
+                step_res = self.step_smc_clause(prefix=current_text, candidate_clauses=None, target_end=target_end,
+                                                phi_bridge=phi_bridge, resample_method=resample_method)
+                if self.eos_reached:
+                    break
+                telemetry.append(step_res)
+                clauses.append(step_res["selected_clause"])
+                current_text = step_res["next_prefix"]
+                if sentence_finished(current_text[len(prefix):]):
+                    break
+            self.eos_reached = False
+            if not sentence_finished(current_text[len(prefix):]):
+                gen = current_text[len(prefix):]
+                cut = last_sentence_end(gen)
+                if cut > 0:
+                    self.stats["grace_cuts"] = self.stats.get("grace_cuts", 0) + 1
+                    current_text = prefix + gen[:cut]
         self._suppress_eos = False
         self._force_close = False
         if self.normalize_end:
