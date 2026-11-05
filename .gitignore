@@ -12,3 +12,6 @@ build/
 .claude/settings.local.json
 artifacts/colab_run/colab_bench*.py
 artifacts/colab_run/colab_longform*.py
+
+# Phase 18/20: Aozora raw/cleaned text cache (not committed; see data/aozora_manifest.json)
+data/aozora_cache/
