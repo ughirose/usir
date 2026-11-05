@@ -71,3 +71,6 @@ export * from './algebra/styleAlgebra.js';
 export * from './v2/index.js';
 
 
+
+// Linguistic Gates OPEN-01 / OPEN-02 / OPEN-04 (parser-free TS port)
+export * from "./linguistics/openGates.js";

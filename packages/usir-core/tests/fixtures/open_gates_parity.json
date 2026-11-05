@@ -1,0 +1,1895 @@
+{
+ "concreteness": [
+  {
+   "surface": "石",
+   "lemma": "",
+   "sensory": [
+    0.2,
+    0.7,
+    0.0,
+    0.0,
+    0.1,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "expected": 0.8049999999999999
+  },
+  {
+   "surface": "概念",
+   "lemma": "",
+   "sensory": [
+    0.2,
+    0.7,
+    0.0,
+    0.0,
+    0.1,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "expected": 0.02
+  },
+  {
+   "surface": "構造的",
+   "lemma": "",
+   "sensory": null,
+   "expected": 0.1
+  },
+  {
+   "surface": "走った",
+   "lemma": "走る",
+   "sensory": [],
+   "expected": 0.35
+  },
+  {
+   "surface": "光",
+   "lemma": "",
+   "sensory": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "expected": 1.0
+  },
+  {
+   "surface": "状態",
+   "lemma": "",
+   "sensory": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "expected": 0.15
+  },
+  {
+   "surface": "冷たさ",
+   "lemma": "冷たい",
+   "sensory": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.5,
+    -0.8,
+    0.0
+   ],
+   "expected": 0.87
+  }
+ ],
+ "polysemy": [
+  {
+   "c_u": 0.8,
+   "v_pri": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "v_sec": [
+    0.1,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.0,
+    0.1,
+    0.0
+   ],
+   "u_vec": null,
+   "mimetic": false,
+   "expected": {
+    "case": "case1_physical",
+    "slot": "primary_physical",
+    "effective_sensory": [
+     0.9,
+     0.1,
+     0.2,
+     0.0,
+     0.1,
+     0.3,
+     0.2,
+     0.0
+    ],
+    "damping_factor": 1.0,
+    "metaphor_bonus": 0.0,
+    "concreteness_u": 0.8
+   }
+  },
+  {
+   "c_u": 0.2,
+   "v_pri": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "v_sec": [
+    0.1,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.0,
+    0.1,
+    0.0
+   ],
+   "u_vec": null,
+   "mimetic": false,
+   "expected": {
+    "case": "case3_abstract_transfer",
+    "slot": "secondary_abstract",
+    "effective_sensory": [
+     0.020000000000000004,
+     0.0,
+     0.0,
+     0.0,
+     0.04000000000000001,
+     0.0,
+     0.020000000000000004,
+     0.0
+    ],
+    "damping_factor": 0.2,
+    "metaphor_bonus": 0.0,
+    "concreteness_u": 0.2
+   }
+  },
+  {
+   "c_u": 0.2,
+   "v_pri": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "v_sec": null,
+   "u_vec": null,
+   "mimetic": false,
+   "expected": {
+    "case": "case3_abstract_transfer",
+    "slot": "secondary_abstract",
+    "effective_sensory": [
+     0.054000000000000006,
+     0.006,
+     0.012,
+     0.0,
+     0.006,
+     0.018,
+     0.012,
+     0.0
+    ],
+    "damping_factor": 0.2,
+    "metaphor_bonus": 0.0,
+    "concreteness_u": 0.2
+   }
+  },
+  {
+   "c_u": 0.2,
+   "v_pri": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "v_sec": [
+    0.1,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.0,
+    0.1,
+    0.0
+   ],
+   "u_vec": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "mimetic": false,
+   "expected": {
+    "case": "case2_synesthetic_metaphor",
+    "slot": "primary_physical",
+    "effective_sensory": [
+     0.9,
+     0.1,
+     0.2,
+     0.0,
+     0.1,
+     0.3,
+     0.2,
+     0.0
+    ],
+    "damping_factor": 1.0,
+    "metaphor_bonus": 0.35,
+    "concreteness_u": 0.2
+   }
+  },
+  {
+   "c_u": 0.2,
+   "v_pri": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "v_sec": [
+    0.1,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.0,
+    0.1,
+    0.0
+   ],
+   "u_vec": [
+    0.1,
+    0.0,
+    0.1,
+    0.0,
+    0.0,
+    0.9,
+    0.1,
+    0.0
+   ],
+   "mimetic": false,
+   "expected": {
+    "case": "case2_synesthetic_metaphor",
+    "slot": "primary_physical",
+    "effective_sensory": [
+     0.9,
+     0.1,
+     0.2,
+     0.0,
+     0.1,
+     0.3,
+     0.2,
+     0.0
+    ],
+    "damping_factor": 1.0,
+    "metaphor_bonus": 0.35,
+    "concreteness_u": 0.2
+   }
+  },
+  {
+   "c_u": 0.35,
+   "v_pri": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "v_sec": [
+    0.1,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.0,
+    0.1,
+    0.0
+   ],
+   "u_vec": null,
+   "mimetic": false,
+   "expected": {
+    "case": "case_transition",
+    "slot": "secondary_abstract",
+    "effective_sensory": [
+     0.32333333333333325,
+     0.033333333333333326,
+     0.06666666666666665,
+     0.0,
+     0.07999999999999999,
+     0.09999999999999998,
+     0.08999999999999998,
+     0.0
+    ],
+    "damping_factor": 0.5666666666666667,
+    "metaphor_bonus": 0.0,
+    "concreteness_u": 0.35
+   }
+  },
+  {
+   "c_u": 0.4,
+   "v_pri": [
+    0.1,
+    0.0,
+    0.1,
+    0.0,
+    0.0,
+    0.9,
+    0.1,
+    0.0
+   ],
+   "v_sec": null,
+   "u_vec": [],
+   "mimetic": false,
+   "expected": {
+    "case": "case_transition",
+    "slot": "primary_physical",
+    "effective_sensory": [
+     0.07066666666666668,
+     0.0,
+     0.07066666666666668,
+     0.0,
+     0.0,
+     0.6360000000000002,
+     0.07066666666666668,
+     0.0
+    ],
+    "damping_factor": 0.8000000000000002,
+    "metaphor_bonus": 0.0,
+    "concreteness_u": 0.4
+   }
+  },
+  {
+   "c_u": 0.1,
+   "v_pri": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "v_sec": [
+    0.1,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.0,
+    0.1,
+    0.0
+   ],
+   "u_vec": null,
+   "mimetic": true,
+   "expected": {
+    "case": "mimetic_immunity",
+    "slot": "primary_physical",
+    "effective_sensory": [
+     0.9,
+     0.1,
+     0.2,
+     0.0,
+     0.1,
+     0.3,
+     0.2,
+     0.0
+    ],
+    "damping_factor": 1.0,
+    "metaphor_bonus": 0.0,
+    "concreteness_u": 0.1
+   }
+  },
+  {
+   "c_u": 1.7,
+   "v_pri": [
+    0.1,
+    0.0,
+    0.1,
+    0.0,
+    0.0,
+    0.9,
+    0.1,
+    0.0
+   ],
+   "v_sec": [
+    0.1,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.0,
+    0.1,
+    0.0
+   ],
+   "u_vec": null,
+   "mimetic": false,
+   "expected": {
+    "case": "case1_physical",
+    "slot": "primary_physical",
+    "effective_sensory": [
+     0.1,
+     0.0,
+     0.1,
+     0.0,
+     0.0,
+     0.9,
+     0.1,
+     0.0
+    ],
+    "damping_factor": 1.0,
+    "metaphor_bonus": 0.0,
+    "concreteness_u": 1.0
+   }
+  },
+  {
+   "c_u": 0.45,
+   "v_pri": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "v_sec": [
+    0.1,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.0,
+    0.1,
+    0.0
+   ],
+   "u_vec": [
+    0.9,
+    0.1,
+    0.2,
+    0.0,
+    0.1,
+    0.3,
+    0.2,
+    0.0
+   ],
+   "mimetic": false,
+   "expected": {
+    "case": "case1_physical",
+    "slot": "primary_physical",
+    "effective_sensory": [
+     0.9,
+     0.1,
+     0.2,
+     0.0,
+     0.1,
+     0.3,
+     0.2,
+     0.0
+    ],
+    "damping_factor": 1.0,
+    "metaphor_bonus": 0.0,
+    "concreteness_u": 0.45
+   }
+  }
+ ],
+ "modality": [
+  {
+   "tail": "赤かった",
+   "neg": false,
+   "spec": false,
+   "expected_alpha": 1.0,
+   "tensor": {
+    "red": {
+     "alpha_mod": 1.0,
+     "s_plus": [
+      0.9,
+      0.1,
+      0.2,
+      0.0,
+      0.1,
+      0.3,
+      0.2,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": false
+    },
+    "cold": {
+     "alpha_mod": 1.0,
+     "s_plus": [
+      0.1,
+      0.0,
+      0.1,
+      0.0,
+      0.0,
+      0.9,
+      0.1,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": false
+    }
+   }
+  },
+  {
+   "tail": "見えなかった",
+   "neg": false,
+   "spec": false,
+   "expected_alpha": -0.5,
+   "tensor": {
+    "red": {
+     "alpha_mod": -0.5,
+     "s_plus": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "s_minus": 0.5,
+     "s_minus_vec": [
+      0.45,
+      0.05,
+      0.1,
+      0.0,
+      0.05,
+      0.15,
+      0.1,
+      0.0
+     ],
+     "is_negated": true,
+     "is_speculative": false
+    },
+    "cold": {
+     "alpha_mod": -0.5,
+     "s_plus": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "s_minus": 0.45825756949558405,
+     "s_minus_vec": [
+      0.05,
+      0.0,
+      0.05,
+      0.0,
+      0.0,
+      0.45,
+      0.05,
+      0.0
+     ],
+     "is_negated": true,
+     "is_speculative": false
+    }
+   }
+  },
+  {
+   "tail": "雨が降るだろう",
+   "neg": false,
+   "spec": false,
+   "expected_alpha": 0.6,
+   "tensor": {
+    "red": {
+     "alpha_mod": 0.6,
+     "s_plus": [
+      0.54,
+      0.06,
+      0.12,
+      0.0,
+      0.06,
+      0.18,
+      0.12,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": true
+    },
+    "cold": {
+     "alpha_mod": 0.6,
+     "s_plus": [
+      0.06,
+      0.0,
+      0.06,
+      0.0,
+      0.0,
+      0.54,
+      0.06,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": true
+    }
+   }
+  },
+  {
+   "tail": "雨の気配がした",
+   "neg": false,
+   "spec": false,
+   "expected_alpha": 0.6,
+   "tensor": {
+    "red": {
+     "alpha_mod": 0.6,
+     "s_plus": [
+      0.54,
+      0.06,
+      0.12,
+      0.0,
+      0.06,
+      0.18,
+      0.12,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": true
+    },
+    "cold": {
+     "alpha_mod": 0.6,
+     "s_plus": [
+      0.06,
+      0.0,
+      0.06,
+      0.0,
+      0.0,
+      0.54,
+      0.06,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": true
+    }
+   }
+  },
+  {
+   "tail": "静かだった",
+   "neg": true,
+   "spec": false,
+   "expected_alpha": -0.5,
+   "tensor": {
+    "red": {
+     "alpha_mod": -0.5,
+     "s_plus": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "s_minus": 0.5,
+     "s_minus_vec": [
+      0.45,
+      0.05,
+      0.1,
+      0.0,
+      0.05,
+      0.15,
+      0.1,
+      0.0
+     ],
+     "is_negated": true,
+     "is_speculative": false
+    },
+    "cold": {
+     "alpha_mod": -0.5,
+     "s_plus": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "s_minus": 0.45825756949558405,
+     "s_minus_vec": [
+      0.05,
+      0.0,
+      0.05,
+      0.0,
+      0.0,
+      0.45,
+      0.05,
+      0.0
+     ],
+     "is_negated": true,
+     "is_speculative": false
+    }
+   }
+  },
+  {
+   "tail": "静かだった",
+   "neg": false,
+   "spec": true,
+   "expected_alpha": 0.6,
+   "tensor": {
+    "red": {
+     "alpha_mod": 0.6,
+     "s_plus": [
+      0.54,
+      0.06,
+      0.12,
+      0.0,
+      0.06,
+      0.18,
+      0.12,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": true
+    },
+    "cold": {
+     "alpha_mod": 0.6,
+     "s_plus": [
+      0.06,
+      0.0,
+      0.06,
+      0.0,
+      0.0,
+      0.54,
+      0.06,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": true
+    }
+   }
+  },
+  {
+   "tail": "ではないかもしれない",
+   "neg": false,
+   "spec": false,
+   "expected_alpha": -0.5,
+   "tensor": {
+    "red": {
+     "alpha_mod": -0.5,
+     "s_plus": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "s_minus": 0.5,
+     "s_minus_vec": [
+      0.45,
+      0.05,
+      0.1,
+      0.0,
+      0.05,
+      0.15,
+      0.1,
+      0.0
+     ],
+     "is_negated": true,
+     "is_speculative": false
+    },
+    "cold": {
+     "alpha_mod": -0.5,
+     "s_plus": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "s_minus": 0.45825756949558405,
+     "s_minus_vec": [
+      0.05,
+      0.0,
+      0.05,
+      0.0,
+      0.0,
+      0.45,
+      0.05,
+      0.0
+     ],
+     "is_negated": true,
+     "is_speculative": false
+    }
+   }
+  },
+  {
+   "tail": "",
+   "neg": false,
+   "spec": false,
+   "expected_alpha": 1.0,
+   "tensor": {
+    "red": {
+     "alpha_mod": 1.0,
+     "s_plus": [
+      0.9,
+      0.1,
+      0.2,
+      0.0,
+      0.1,
+      0.3,
+      0.2,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": false
+    },
+    "cold": {
+     "alpha_mod": 1.0,
+     "s_plus": [
+      0.1,
+      0.0,
+      0.1,
+      0.0,
+      0.0,
+      0.9,
+      0.1,
+      0.0
+     ],
+     "s_minus": 0.0,
+     "s_minus_vec": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "is_negated": false,
+     "is_speculative": false
+    }
+   }
+  }
+ ],
+ "speaker": [
+  {
+   "before": "彼女は静かに頷いた。田中は",
+   "after": "と言った",
+   "expected": "田中"
+  },
+  {
+   "before": "そのとき佐藤が笑って",
+   "after": "",
+   "expected": null
+  },
+  {
+   "before": "。鈴木って",
+   "after": "",
+   "expected": "鈴木"
+  },
+  {
+   "before": "沈黙。",
+   "after": "と山本は叫んだ。",
+   "expected": "山本は"
+  },
+  {
+   "before": "沈黙。",
+   "after": "、高橋が答えた。",
+   "expected": "高橋"
+  },
+  {
+   "before": "しかしは",
+   "after": "声がした",
+   "expected": null
+  },
+  {
+   "before": "",
+   "after": "",
+   "expected": null
+  }
+ ],
+ "bakhtin": [
+  {
+   "text": "田中は「俺は行くぜ！てめえも来いよ！」と叫んだ。佐藤は「わたしは参りますが、よろしいでしょうか。」と静かに言った。",
+   "threshold": 0.15,
+   "expected": {
+    "narration_text": "田中は と叫んだ。佐藤は と静かに言った。",
+    "speaker_utterances": [
+     [
+      "田中",
+      [
+       "俺は行くぜ！てめえも来いよ！"
+      ]
+     ],
+     [
+      "佐藤",
+      [
+       "わたしは参りますが、よろしいでしょうか。"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "田中",
+      [
+       0.28,
+       2.0,
+       0.21428571428571427,
+       0.6428571428571429,
+       0.0,
+       0.0,
+       2.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.07
+      ]
+     ],
+     [
+      "佐藤",
+      [
+       0.4,
+       0.0,
+       0.05,
+       0.85,
+       0.0,
+       2.0,
+       0.0,
+       -1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.1
+      ]
+     ]
+    ],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": [
+     [
+      "田中",
+      "佐藤",
+      4.010635605385221
+     ]
+    ]
+   }
+  },
+  {
+   "text": "田中は「俺は行くぜ！てめえも来いよ！」と叫んだ。佐藤は「わたしは参りますが、よろしいでしょうか。」と静かに言った。",
+   "threshold": 5.0,
+   "expected": {
+    "narration_text": "田中は と叫んだ。佐藤は と静かに言った。",
+    "speaker_utterances": [
+     [
+      "田中",
+      [
+       "俺は行くぜ！てめえも来いよ！"
+      ]
+     ],
+     [
+      "佐藤",
+      [
+       "わたしは参りますが、よろしいでしょうか。"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "田中",
+      [
+       0.28,
+       2.0,
+       0.21428571428571427,
+       0.6428571428571429,
+       0.0,
+       0.0,
+       2.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.07
+      ]
+     ],
+     [
+      "佐藤",
+      [
+       0.4,
+       0.0,
+       0.05,
+       0.85,
+       0.0,
+       2.0,
+       0.0,
+       -1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.1
+      ]
+     ]
+    ],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": true,
+    "pairwise_distances": [
+     [
+      "田中",
+      "佐藤",
+      4.010635605385221
+     ]
+    ]
+   }
+  },
+  {
+   "text": "田中は「そうですね。行きましょう。」と言った。佐藤は「そうですね。行きましょう。」と言った。",
+   "threshold": 0.15,
+   "expected": {
+    "narration_text": "田中は と言った。佐藤は と言った。",
+    "speaker_utterances": [
+     [
+      "田中",
+      [
+       "そうですね。行きましょう。"
+      ]
+     ],
+     [
+      "佐藤",
+      [
+       "そうですね。行きましょう。"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "田中",
+      [
+       0.26,
+       0.0,
+       0.07692307692307693,
+       0.7692307692307693,
+       0.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.065
+      ]
+     ],
+     [
+      "佐藤",
+      [
+       0.26,
+       0.0,
+       0.07692307692307693,
+       0.7692307692307693,
+       0.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.065
+      ]
+     ]
+    ],
+    "min_voice_distance": 0.0,
+    "dialogic_collapse_detected": true,
+    "pairwise_distances": [
+     [
+      "田中",
+      "佐藤",
+      0.0
+     ]
+    ]
+   }
+  },
+  {
+   "text": "田中は「そうですね。行きましょう。」と言った。佐藤は「そうですね。行きましょう。」と言った。",
+   "threshold": 5.0,
+   "expected": {
+    "narration_text": "田中は と言った。佐藤は と言った。",
+    "speaker_utterances": [
+     [
+      "田中",
+      [
+       "そうですね。行きましょう。"
+      ]
+     ],
+     [
+      "佐藤",
+      [
+       "そうですね。行きましょう。"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "田中",
+      [
+       0.26,
+       0.0,
+       0.07692307692307693,
+       0.7692307692307693,
+       0.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.065
+      ]
+     ],
+     [
+      "佐藤",
+      [
+       0.26,
+       0.0,
+       0.07692307692307693,
+       0.7692307692307693,
+       0.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.065
+      ]
+     ]
+    ],
+    "min_voice_distance": 0.0,
+    "dialogic_collapse_detected": true,
+    "pairwise_distances": [
+     [
+      "田中",
+      "佐藤",
+      0.0
+     ]
+    ]
+   }
+  },
+  {
+   "text": "雨が降っていた。「寒いな」「そうだね」「帰ろうか」「うん」風が止んだ。",
+   "threshold": 0.15,
+   "expected": {
+    "narration_text": "雨が降っていた。 風が止んだ。",
+    "speaker_utterances": [
+     [
+      "Speaker_A",
+      [
+       "寒いな",
+       "帰ろうか"
+      ]
+     ],
+     [
+      "Speaker_B",
+      [
+       "そうだね",
+       "うん"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "Speaker_A",
+      [
+       0.08,
+       0.0,
+       0.25,
+       0.625,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.04
+      ]
+     ],
+     [
+      "Speaker_B",
+      [
+       0.07,
+       0.0,
+       0.0,
+       0.8571428571428571,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.035
+      ]
+     ]
+    ],
+    "min_voice_distance": 0.3413433844714864,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": [
+     [
+      "Speaker_A",
+      "Speaker_B",
+      0.3413433844714864
+     ]
+    ]
+   }
+  },
+  {
+   "text": "雨が降っていた。「寒いな」「そうだね」「帰ろうか」「うん」風が止んだ。",
+   "threshold": 5.0,
+   "expected": {
+    "narration_text": "雨が降っていた。 風が止んだ。",
+    "speaker_utterances": [
+     [
+      "Speaker_A",
+      [
+       "寒いな",
+       "帰ろうか"
+      ]
+     ],
+     [
+      "Speaker_B",
+      [
+       "そうだね",
+       "うん"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "Speaker_A",
+      [
+       0.08,
+       0.0,
+       0.25,
+       0.625,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.04
+      ]
+     ],
+     [
+      "Speaker_B",
+      [
+       0.07,
+       0.0,
+       0.0,
+       0.8571428571428571,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.035
+      ]
+     ]
+    ],
+    "min_voice_distance": 0.3413433844714864,
+    "dialogic_collapse_detected": true,
+    "pairwise_distances": [
+     [
+      "Speaker_A",
+      "Speaker_B",
+      0.3413433844714864
+     ]
+    ]
+   }
+  },
+  {
+   "text": "鈴木って『おい、何だよ！』と怒鳴った。夜は更けた。",
+   "threshold": 0.15,
+   "expected": {
+    "narration_text": "鈴木って と怒鳴った。夜は更けた。",
+    "speaker_utterances": [
+     [
+      "鈴木",
+      [
+       "おい、何だよ！"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "鈴木",
+      [
+       0.14,
+       2.0,
+       0.14285714285714285,
+       0.5714285714285714,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0,
+       1.0,
+       0.035
+      ]
+     ]
+    ],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": []
+   }
+  },
+  {
+   "text": "鈴木って『おい、何だよ！』と怒鳴った。夜は更けた。",
+   "threshold": 5.0,
+   "expected": {
+    "narration_text": "鈴木って と怒鳴った。夜は更けた。",
+    "speaker_utterances": [
+     [
+      "鈴木",
+      [
+       "おい、何だよ！"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "鈴木",
+      [
+       0.14,
+       2.0,
+       0.14285714285714285,
+       0.5714285714285714,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0,
+       1.0,
+       0.035
+      ]
+     ]
+    ],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": []
+   }
+  },
+  {
+   "text": "海は凪いでいた。雲が低く垂れ込めていた。",
+   "threshold": 0.15,
+   "expected": {
+    "narration_text": "海は凪いでいた。雲が低く垂れ込めていた。",
+    "speaker_utterances": [],
+    "speaker_vectors": [],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": []
+   }
+  },
+  {
+   "text": "海は凪いでいた。雲が低く垂れ込めていた。",
+   "threshold": 5.0,
+   "expected": {
+    "narration_text": "海は凪いでいた。雲が低く垂れ込めていた。",
+    "speaker_utterances": [],
+    "speaker_vectors": [],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": []
+   }
+  },
+  {
+   "text": "",
+   "threshold": 0.15,
+   "expected": {
+    "narration_text": "",
+    "speaker_utterances": [],
+    "speaker_vectors": [],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": []
+   }
+  },
+  {
+   "text": "",
+   "threshold": 5.0,
+   "expected": {
+    "narration_text": "",
+    "speaker_utterances": [],
+    "speaker_vectors": [],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": []
+   }
+  },
+  {
+   "text": "山本は「あっ、えっ、うーん」\n高橋が「私は僕ではなくおれだ」と言った。 中村は「ゼロ」と答えた。",
+   "threshold": 0.15,
+   "expected": {
+    "narration_text": "山本は 高橋が と言った。 中村は と答えた。",
+    "speaker_utterances": [
+     [
+      "山本",
+      [
+       "あっ、えっ、うーん"
+      ]
+     ],
+     [
+      "高橋",
+      [
+       "私は僕ではなくおれだ"
+      ]
+     ],
+     [
+      "中村",
+      [
+       "ゼロ"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "山本",
+      [
+       0.18,
+       0.0,
+       0.0,
+       0.6666666666666666,
+       0.1111111111111111,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       2.0,
+       0.0,
+       0.045
+      ]
+     ],
+     [
+      "高橋",
+      [
+       0.2,
+       0.0,
+       0.2,
+       0.8,
+       0.0,
+       0.0,
+       0.0,
+       0.5,
+       0.0,
+       0.0,
+       0.0,
+       0.05
+      ]
+     ],
+     [
+      "中村",
+      [
+       0.04,
+       0.0,
+       0.0,
+       0.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.01
+      ]
+     ]
+    ],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": false,
+    "pairwise_distances": [
+     [
+      "山本",
+      "高橋",
+      2.07859290309337
+     ],
+     [
+      "山本",
+      "中村",
+      2.2924643729477165
+     ],
+     [
+      "高橋",
+      "中村",
+      1.3989996426018128
+     ]
+    ]
+   }
+  },
+  {
+   "text": "山本は「あっ、えっ、うーん」\n高橋が「私は僕ではなくおれだ」と言った。 中村は「ゼロ」と答えた。",
+   "threshold": 5.0,
+   "expected": {
+    "narration_text": "山本は 高橋が と言った。 中村は と答えた。",
+    "speaker_utterances": [
+     [
+      "山本",
+      [
+       "あっ、えっ、うーん"
+      ]
+     ],
+     [
+      "高橋",
+      [
+       "私は僕ではなくおれだ"
+      ]
+     ],
+     [
+      "中村",
+      [
+       "ゼロ"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "山本",
+      [
+       0.18,
+       0.0,
+       0.0,
+       0.6666666666666666,
+       0.1111111111111111,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       2.0,
+       0.0,
+       0.045
+      ]
+     ],
+     [
+      "高橋",
+      [
+       0.2,
+       0.0,
+       0.2,
+       0.8,
+       0.0,
+       0.0,
+       0.0,
+       0.5,
+       0.0,
+       0.0,
+       0.0,
+       0.05
+      ]
+     ],
+     [
+      "中村",
+      [
+       0.04,
+       0.0,
+       0.0,
+       0.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.01
+      ]
+     ]
+    ],
+    "min_voice_distance": 1.0,
+    "dialogic_collapse_detected": true,
+    "pairwise_distances": [
+     [
+      "山本",
+      "高橋",
+      2.07859290309337
+     ],
+     [
+      "山本",
+      "中村",
+      2.2924643729477165
+     ],
+     [
+      "高橋",
+      "中村",
+      1.3989996426018128
+     ]
+    ]
+   }
+  },
+  {
+   "text": "𠮷野は「ありがとうございます。」と言った。𠮷田は「いたします。」と述べた。",
+   "threshold": 0.15,
+   "expected": {
+    "narration_text": "𠮷野は と言った。𠮷田は と述べた。",
+    "speaker_utterances": [
+     [
+      "Speaker_A",
+      [
+       "ありがとうございます。"
+      ]
+     ],
+     [
+      "Speaker_B",
+      [
+       "いたします。"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "Speaker_A",
+      [
+       0.22,
+       0.0,
+       0.0,
+       0.9090909090909091,
+       0.0,
+       2.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.055
+      ]
+     ],
+     [
+      "Speaker_B",
+      [
+       0.12,
+       0.0,
+       0.0,
+       0.8333333333333334,
+       0.0,
+       2.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.03
+      ]
+     ]
+    ],
+    "min_voice_distance": 0.1279226730672277,
+    "dialogic_collapse_detected": true,
+    "pairwise_distances": [
+     [
+      "Speaker_A",
+      "Speaker_B",
+      0.1279226730672277
+     ]
+    ]
+   }
+  },
+  {
+   "text": "𠮷野は「ありがとうございます。」と言った。𠮷田は「いたします。」と述べた。",
+   "threshold": 5.0,
+   "expected": {
+    "narration_text": "𠮷野は と言った。𠮷田は と述べた。",
+    "speaker_utterances": [
+     [
+      "Speaker_A",
+      [
+       "ありがとうございます。"
+      ]
+     ],
+     [
+      "Speaker_B",
+      [
+       "いたします。"
+      ]
+     ]
+    ],
+    "speaker_vectors": [
+     [
+      "Speaker_A",
+      [
+       0.22,
+       0.0,
+       0.0,
+       0.9090909090909091,
+       0.0,
+       2.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.055
+      ]
+     ],
+     [
+      "Speaker_B",
+      [
+       0.12,
+       0.0,
+       0.0,
+       0.8333333333333334,
+       0.0,
+       2.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.03
+      ]
+     ]
+    ],
+    "min_voice_distance": 0.1279226730672277,
+    "dialogic_collapse_detected": true,
+    "pairwise_distances": [
+     [
+      "Speaker_A",
+      "Speaker_B",
+      0.1279226730672277
+     ]
+    ]
+   }
+  }
+ ]
+}
