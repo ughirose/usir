@@ -1,0 +1,117 @@
+[
+ {
+  "run": "Qwen2.5-1.5B-Instruct_s3",
+  "file": "w10_15b.json",
+  "variant": "new_c",
+  "total_chars": 2096,
+  "bigram": 0.5896,
+  "max_8gram": 2,
+  "cv_l": 0.5504,
+  "register": {
+   "polite": 0,
+   "meta": 0,
+   "paren": 0
+  },
+  "fragments": 0,
+  "inflection_anomalies": 0,
+  "d_realised": 1.0,
+  "dS": 0.0557,
+  "dF": -0.2995,
+  "delta_sf": 0.3552,
+  "d_realised_reg": 0.9984,
+  "cos_p_dq": 0.6003,
+  "climax_mean_sentence_len": 12.74
+ },
+ {
+  "run": "Qwen2.5-3B-Instruct_s3",
+  "file": "w8_b.json",
+  "variant": "new_c",
+  "total_chars": 2083,
+  "bigram": 0.5787,
+  "max_8gram": 2,
+  "cv_l": 0.5732,
+  "register": {
+   "polite": 0,
+   "meta": 0,
+   "paren": 0
+  },
+  "fragments": 0,
+  "inflection_anomalies": 0,
+  "d_realised": 1.0,
+  "dS": 0.039,
+  "dF": -0.2699,
+  "delta_sf": 0.3089,
+  "d_realised_reg": 0.9959,
+  "cos_p_dq": 0.6079,
+  "climax_mean_sentence_len": 13.88
+ },
+ {
+  "run": "Qwen2.5-7B-Instruct_s3",
+  "file": "w8_a.json",
+  "variant": "new_c",
+  "total_chars": 2161,
+  "bigram": 0.6046,
+  "max_8gram": 2,
+  "cv_l": 0.5242,
+  "register": {
+   "polite": 0,
+   "meta": 0,
+   "paren": 0
+  },
+  "fragments": 0,
+  "inflection_anomalies": 0,
+  "d_realised": 1.0,
+  "dS": 0.1103,
+  "dF": -0.1933,
+  "delta_sf": 0.3036,
+  "d_realised_reg": 0.9954,
+  "cos_p_dq": 0.747,
+  "climax_mean_sentence_len": 13.15
+ },
+ {
+  "run": "Qwen2.5-3B-Instruct_s42 steered",
+  "file": "w8_b.json",
+  "variant": "new_c",
+  "total_chars": 2115,
+  "bigram": 0.5625,
+  "max_8gram": 2,
+  "cv_l": 0.5162,
+  "register": {
+   "polite": 0,
+   "meta": 0,
+   "paren": 0
+  },
+  "fragments": 0,
+  "inflection_anomalies": 0,
+  "d_realised": 1.0,
+  "dS": 0.1043,
+  "dF": -0.1275,
+  "delta_sf": 0.2318,
+  "d_realised_reg": 0.9808,
+  "cos_p_dq": 0.5763,
+  "climax_mean_sentence_len": 12.74
+ },
+ {
+  "run": "Qwen2.5-3B-Instruct_s42 ctrl",
+  "file": "w8_b.json",
+  "variant": "ctrl",
+  "total_chars": 2109,
+  "bigram": 0.5763,
+  "max_8gram": 1,
+  "cv_l": 0.5701,
+  "register": {
+   "polite": 0,
+   "meta": 0,
+   "paren": 0
+  },
+  "fragments": 0,
+  "inflection_anomalies": 0,
+  "d_realised": 1.0,
+  "dS": 0.0367,
+  "dF": -0.0174,
+  "delta_sf": 0.0541,
+  "d_realised_reg": 0.4937,
+  "cos_p_dq": 0.3378,
+  "climax_mean_sentence_len": 19.11
+ }
+]

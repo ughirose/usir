@@ -867,3 +867,311 @@ def test_close_after_stops_generation_once_the_sentence_is_closed():
     )
     assert res["welded_text"].endswith("光が差した。")
     assert "余計な文" not in res["welded_text"]
+
+
+# ---- assistant-register guards / direction steering ----
+
+def _qc(text, lp=-1.0):
+    return {"text": text, "llm_logprob": lp, "q": np.full(12, 0.5)}
+
+
+def test_meta_guard_blocks_omission_and_parenthetical_notes():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, meta_guard=True)
+    cands = [_qc("（残りは省略）", -0.2), _qc("（続く）", -0.3), _qc("霧が低く流れていた、", -2.0)]
+    r = dec.compute_particle_weights("静かな朝、", cands, target_q=np.full(12, 0.5))
+    assert r["selected_clause"] == "霧が低く流れていた、"
+
+
+def test_polite_guard_blocks_narration_but_allows_quoted_speech():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, polite_guard=True)
+    cands = [_qc("大切ですね。", -0.2), _qc("「行きますよ」と彼は言った、", -1.0)]
+    r = dec.compute_particle_weights("朝が来た。", cands, target_q=np.full(12, 0.5))
+    assert r["selected_clause"] == "「行きますよ」と彼は言った、"
+    # candidate that begins inside an already-open quote is exempt up to the closing bracket
+    r2 = dec.compute_particle_weights("彼は「", [_qc("行きます」と言った、", -0.5), _qc("遠くを見た、", -3.0)], target_q=np.full(12, 0.5))
+    assert r2["selected_clause"] == "行きます」と言った、"
+
+
+def test_meta_polite_guards_off_by_default():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    r = dec.compute_particle_weights("", [_qc("（残りは省略）", -0.1), _qc("風が吹いた、", -2.0)], target_q=np.full(12, 0.5))
+    assert r["selected_clause"] == "（残りは省略）"
+
+
+def test_count_narration_meta():
+    from usir_py.realtime_decoder import count_narration_meta
+    c = count_narration_meta("「ありますよ」と言った。大切ですね。（残りは省略）")
+    assert c["polite"] == 1 and c["meta"] == 1 and c["paren"] == 1
+
+
+def test_regen_when_all_candidates_blocked():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, meta_guard=True, max_regen=2)
+    batches = [["（省略）", "（続く）"], ["水面が揺れた、", "（略）"]]
+    calls = []
+    orig = dec.generate_candidate_clauses
+    dec.generate_candidate_clauses = lambda prefix, target_end=None: (calls.append(1) or batches[min(len(calls) - 1, 1)])
+    res = dec.step_smc_clause("朝、")
+    assert res["selected_clause"] == "水面が揺れた、"
+    assert dec.stats.get("regen", 0) >= 1
+
+
+def _dir_dec(vec):
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, direction_steer=True)
+    dec.discharge_norm = float(np.linalg.norm(vec))
+    dec.discharge_vec = np.asarray(vec, dtype=float)
+    return dec
+
+
+def _vec(shock=0.0, flux=0.0):
+    v = np.zeros(12); v[[3, 7, 11]] = shock; v[[0, 4, 8]] = flux
+    return v
+
+
+def test_phase_bias_shock_forbids_commas_flux_suppresses_early_periods():
+    sp, sc = _dir_dec(_vec(shock=1.0))._phase_bias("")
+    assert sp > 4.0 and sc < -7.0                       # Shock: '。' +5d, '、' -8d  (single-clause sentences)
+    fp, fc = _dir_dec(_vec(flux=1.0))._phase_bias("\u9759\u304b\u306a\u591c\u3001")
+    assert fp < -4.0 and fc > 0                         # Flux, first clause of the sentence: '。' suppressed, '、' up
+    fp2, fc2 = _dir_dec(_vec(flux=1.0))._phase_bias("\u9759\u304b\u306a\u3001\u591c\u306e\u3001")
+    assert (fp2, fc2) == (0.0, 0.0)                     # after 2 commas the sentence may close
+    assert _dir_dec(_vec(shock=1.0, flux=0.9))._phase_bias("") == (0.0, 0.0)  # inside |d| <= 0.25: no modulation
+
+
+def test_direction_default_off_and_row_bias_not_graded():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    off = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    off.discharge_vec = _vec(shock=1.0)
+    assert off._phase_bias("") == (0.0, 0.0) and off._row_period_bias(4) == [0.0] * 4
+    assert _dir_dec(_vec(shock=1.0))._row_period_bias(4) == [0.0] * 4
+
+
+def test_shock_clause_targets_cycle_for_sentence_length_variety_and_flux_is_long():
+    dec = _dir_dec(_vec(shock=1.0))
+    caps = []
+    for m in range(3):
+        dec._clause_idx = m
+        caps.append(dec._row_caps(4)[0])
+    assert caps[1] < caps[0] < caps[2] and min(caps) >= 6      # short / very short / medium
+    cf = _dir_dec(_vec(flux=1.0))._row_caps(4)
+    assert max(cf) == 32 and min(cf) > 20
+    ts, tf = _dir_dec(_vec(shock=1.0))._candidate_temperatures(4), _dir_dec(_vec(flux=1.0))._candidate_temperatures(4)
+    assert ts[-1] > tf[-1]
+
+
+def test_local_potential_prefers_candidate_whose_sentence_moves_along_p():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+
+    def fe(t):
+        q = np.full(12, 0.5)
+        q[3] = 0.9 if "B" in t else 0.1
+        return q
+
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, direction_steer=True, feature_extractor=fe)
+    dec.discharge_vec = _vec(shock=1.0)
+    cands = [{"text": "A\u3001", "llm_logprob": -1.0}, {"text": "B\u3001", "llm_logprob": -1.0}]
+    r = dec.compute_particle_weights("\u524d\u6587\u3002", cands, target_q=np.full(12, 0.5))
+    assert r["align_active"] and r["align_cos"][1] > 0.5 and r["align_cos"][0] < -0.5
+    assert r["term4_align"][1] > 0 > r["term4_align"][0] and r["selected_clause"] == "B\u3001"
+    # gamma_dir >= 5 couples strongly: |term4| exceeds an LLM log-prob gap of 1.0
+    assert abs(r["term4_align"][1] - r["term4_align"][0]) > 1.0
+
+
+def test_register_penalty_has_no_all_blocked_passthrough():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, polite_guard=True)
+    r = dec.compute_particle_weights("", [_qc("良いですね、", -0.1), _qc("風が吹いた、", -3.0)], target_q=np.full(12, 0.5))
+    assert r["weights"][0] < -9000 and r["selected_clause"] == "風が吹いた、"
+    r2 = dec.compute_particle_weights("", [_qc("良いですね、", -0.1), _qc("悪いですね、", -0.1)], target_q=np.full(12, 0.5))
+    assert np.all(r2["weights"] < -9000)  # penalised even when every candidate violates
+
+
+def test_forbidden_token_ids_from_surfaces():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+
+    class Tok:
+        surf = ["静か", "です", "ますね", "（", "た", "風", "ょう", "ん", "※"]
+        def __len__(self): return len(self.surf)
+        def batch_decode(self, ids, skip_special_tokens=False): return [self.surf[i[0]] for i in ids]
+
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, tokenizer=Tok(), narration_mask=True)
+    bad, post = dec._forbidden_token_ids()
+    assert set(bad) == {1, 2, 3, 8} and set(post) == {4, 6, 7}
+
+
+def test_repeat_guard_window_covers_carried_context_when_enabled():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    phrase = "彼は自己認識を深めることで逃げ方を選ぶ"
+    kw = dict(dim=12, seed=0, repeat_guard=True, repeat_window_chars=400, chat_prefix=phrase + phrase + "。")
+    cands = [_qc(phrase + "、", -0.1), _qc("霧が低く流れていた、", -2.0)]
+    off = ClauseTwistedSMCDecoder(**kw)
+    assert off.compute_particle_weights("", cands, target_q=np.full(12, 0.5))["selected_clause"] == phrase + "、"
+    on = ClauseTwistedSMCDecoder(**kw)
+    on.repeat_use_context = True
+    assert on.compute_particle_weights("", cands, target_q=np.full(12, 0.5))["selected_clause"] == "霧が低く流れていた、"
+
+
+def test_history_ngram_map_and_first_token_ban_state():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+
+    class Tok:
+        def encode(self, t, add_special_tokens=False): return [ord(c) % 997 for c in t]
+
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, tokenizer=Tok(), ngram_ban=4)
+    dec.history_text = "ABCDEF"
+    m = dec._history_ngram_map()
+    assert (65 % 997, 66 % 997, 67 % 997) in m and (68 % 997) in m[(65 % 997, 66 % 997, 67 % 997)]
+    dec.history_text = "XYZW"
+    assert (65 % 997, 66 % 997, 67 % 997) not in dec._history_ngram_map()  # cache refreshed on new history
+
+
+def test_all_repeat_blocked_is_penalised_not_passed_through():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    phrase = "同じ言葉が続く、"
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, repeat_guard=True)
+    r = dec.compute_particle_weights(phrase * 3, [_qc(phrase, -1.0), _qc(phrase, -1.2)], target_q=np.full(12, 0.5))
+    assert np.all(r["weights"] < -9000) and dec.stats.get("repeat_unresolved") == 1
+
+
+def test_chosen_clause_local_deviation_is_reported():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+
+    def fe(t):
+        q = np.full(12, 0.5)
+        q[3] = 0.9 if "A" in t else 0.5
+        return q
+
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, direction_steer=True, feature_extractor=fe)
+    dec.discharge_vec = _vec(shock=1.0)
+    res = dec.step_smc_clause("\u524d\u6587\u3002", [{"text": "A\u3001", "llm_logprob": -1.0}, {"text": "B\u3001", "llm_logprob": -1.5}])
+    assert res["align_active"] and abs(res["chosen_dq"][3] - 0.2) < 1e-9 and res["chosen_d_local"] is not None
+
+
+def test_connective_and_terminal_endings_and_fragment_regex():
+    from usir_py.realtime_decoder import _FRAGMENT_RE, _is_connective_end, _is_terminal_end
+    for s in ("光が昇り始めるにつれ", "走って", "静かで", "雲を", "歩きながら", "降り出したから", "進まず", "音もなく"):
+        assert _is_connective_end(s) and not _is_terminal_end(s), s
+    assert not _is_connective_end("風が吹く")
+    for s in ("扉が開いた", "夜だ", "風が鳴る", "冷たい", "山寺", "カメラ"):
+        assert _is_terminal_end(s), s
+    assert len(_FRAGMENT_RE.findall("光が昇り始めるにつれ。金色に染まった天辺。走って。歩きながら。")) == 3
+    assert _FRAGMENT_RE.findall("扉が開いた。風が吹く。") == []
+
+
+def test_fragment_candidates_are_blocked_and_char8_ceiling():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, syntactic_gate=True, char8_max=2)
+    assert dec._blocked_candidates("", ["光が昇り始めるにつれ。", "扉が開いた。"]).tolist() == [True, False]
+    off = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    assert not off._blocked_candidates("", ["光が昇り始めるにつれ。"]).any()
+    # 8-char substring: allowed twice, rejected on the third occurrence
+    dec.history_text = "朝の光が山を染める。\n朝の光が山を染める。"
+    assert dec._char8_hits("", ["朝の光が山を染める。", "雨が静かに降る。"]).tolist() == [True, False]
+    dec.history_text = "朝の光が山を染める。"
+    assert dec._char8_hits("", ["朝の光が山を染める。"]).tolist() == [False]
+
+
+def test_min_chars_floor_keeps_generating_and_max_chars_forces_close():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, close_after=2, normalize_end=True)
+    flags = []
+
+    def gen(ctx, p, t):
+        flags.append((dec._suppress_eos, dec._force_close))
+        return "あいうえお。"
+    r = dec.generate_with_clause_twisted_smc("", max_clauses=10, early_stop_on_punct=False,
+                                             candidate_generator=gen, min_chars=20)
+    assert len(r["text"]) >= 20 and r["n_clauses"] >= 4
+    assert flags[0][0] is True                       # below the char floor: EOS suppressed
+    dec2 = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    r2 = dec2.generate_with_clause_twisted_smc("", max_clauses=10, early_stop_on_punct=False,
+                                               candidate_generator=lambda c, p, t: "あいうえお。", max_chars=10)
+    assert r2["n_clauses"] == 3
+
+
+def test_soft_ngram_map_is_cached_per_n():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+
+    class Tk:
+        def encode(self, t, add_special_tokens=False):
+            return [ord(c) for c in t]
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, ngram_ban=5, ngram_soft=4)
+    dec.tokenizer = Tk()
+    dec.history_text = "abcdefg"
+    m4, m5 = dec._history_ngram_map(4), dec._history_ngram_map(5)
+    assert (ord("a"), ord("b"), ord("c")) in m4 and (ord("a"), ord("b"), ord("c"), ord("d")) in m5
+    assert dec._history_ngram_map(4) is m4
+
+
+def test_text_audit_detects_inflection_collapse():
+    from usir_py.text_audit import audit_text
+    assert audit_text("静けかな風が吹き荒れる。")["inflection_anomalies"] == ["静けかな"]
+    assert audit_text("静かな風が吹く。静けさが満ちる。")["inflection_anomalies"] == []
+
+
+def test_rhythm_cycles_short_medium_long_and_yields_to_regime():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, rhythm=True)
+    short = dec._rhythm_params("")
+    assert short[0] > 0 > short[1] and short[2] <= 18                 # sentence 1: short, period pushed
+    med1 = dec._rhythm_params("光が差した。")
+    med2 = dec._rhythm_params("光が差した。風が、")
+    assert med1[0] < 0 and med2[0] > 0                                # sentence 2: 2 clauses
+    lng = dec._rhythm_params("a。b。")
+    assert lng[0] < 0 and dec._rhythm_params("a。b。" + "あ" * 70)[0] > 0   # sentence 3: long, closes after ~65 chars
+    assert ClauseTwistedSMCDecoder(dim=12, seed=0)._rhythm_params("") is None   # default off
+    dec.direction_steer = True
+    dec.discharge_vec = np.array([0, 0, 0, 1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0])
+    assert dec._rhythm_params("") is None                              # Shock regime owns the bias
+
+
+def test_token_classes_exempt_single_hiragana_and_grammar_tokens():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+
+    class Tk:
+        vocab = ["さ", "か", "な", "ている", "静寂", "山", "カメラ", "、", "ー"]
+
+        def __len__(self):
+            return len(self.vocab)
+
+        def batch_decode(self, ids, skip_special_tokens=False):
+            return [self.vocab[i[0]] for i in ids]
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    dec.tokenizer = Tk()
+    content, kanji2 = dec._token_classes()
+    assert content == [False, False, False, False, True, True, True, False, False]
+    assert kanji2 == [False, False, False, False, True, False, False, False, False]
+
+
+def test_soft_landing_closes_at_first_sentence_end_after_floor():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0)
+    seq = iter(["あいうえお、", "かきくけこ、", "さしすせそ。", "たちつてと。"] * 3)
+    r = dec.generate_with_clause_twisted_smc("", max_clauses=10, early_stop_on_punct=False,
+                                             candidate_generator=lambda c, p, t: next(seq), min_chars=10)
+    assert r["text"].endswith("さしすせそ。") and r["n_clauses"] == 3
+
+
+def test_rhythm_long_seal_short_sentence_and_ngram_soft_all_tokens():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, rhythm=True)
+    sp, sc, scap, need_noun = dec._rhythm_params("")
+    assert sp > 0 and sc <= -12.0 and scap == 13 and need_noun                          # short: single clause, commas sealed
+    long_p = dec._rhythm_params("a。b。" + "あ、" * 2 + "い" * 20)             # long sentence, 24 chars < 55
+    assert long_p[0] <= -12.0 and long_p[1] > 0
+    assert dec._rhythm_params("a。b。" + "あ" * 60)[0] > 0                  # >= 55: seal released
+    assert dec._rhythm_params("a。b。" + "あ" * 90)[0] >= 10.0              # >= 85: pushed to close
+
+
+def test_cv_potential_penalises_uniform_sentence_lengths():
+    from usir_py.realtime_decoder import ClauseTwistedSMCDecoder
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, cv_gain=25.0, cv_floor=0.42)
+    prefix = "あいうえおかきくけこ。さしすせそたちつてと。なにぬねのはひふへほ。"
+    cands = [{"text": "まみむめもやゆよらり。", "llm_logprob": -1.0},       # same length -> CV stays ~0
+             {"text": "まみむめもやゆよらりるれろわをんあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろ。", "llm_logprob": -1.0}]
+    r = dec.compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))
+    assert r["weights"][0] < r["weights"][1] - 5.0

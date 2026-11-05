@@ -386,6 +386,10 @@ class HSMMLongformDirector:
         min_clauses_per_paragraph: int = 0,
         climax_only_steering: bool = False,
         paragraph_hook: Optional[Callable[[int], None]] = None,
+        carry_context: bool = False,
+        context_chars: int = 250,
+        min_para_chars: int = 0,
+        max_para_chars: int = 0,
     ) -> Dict[str, Any]:
         """Generates 3,000-char longform prose switching wells per paragraph.
 
@@ -441,6 +445,9 @@ class HSMMLongformDirector:
                 max_c = max(8, int(chars_per_para / 16))
                 if max_clauses_per_paragraph is not None:
                     max_c = max(1, int(max_clauses_per_paragraph))
+                if min_para_chars:
+                    # Short Shock clauses must not exhaust the clause budget before the character floor is met
+                    max_c = max(max_c, 50)
                 if climax_only_steering and hasattr(decoder, "steering_active"):
                     # Steering gain / temperature coupling act only in the Climax paragraph and the one after it.
                     decoder.steering_active = bool(well_idx == 2 or prev_well_idx == 2)
@@ -450,6 +457,30 @@ class HSMMLongformDirector:
                 if hasattr(decoder, "discharge_norm"):
                     # Proposal injection is driven by the momentum released in THIS paragraph.
                     decoder.discharge_norm = float(np.linalg.norm(discharged_p))
+                if hasattr(decoder, "discharge_vec"):
+                    # Direction (Shock vs Flux) of the released momentum, for direction_steer.
+                    decoder.discharge_vec = discharged_p.copy()
+                para_prefix = f"【第{k+1}段落】"
+                if hasattr(decoder, "history_text"):
+                    # Context-wide n-gram exclusion reads ALL previous paragraphs (not only the prefill window)
+                    decoder.history_text = "\n".join(full_paragraphs_text)
+                if carry_context and hasattr(decoder, "chat_prefix"):
+                    # Assistant prefill: the last 1-2 sentences of the previous paragraph (sliding window,
+                    # <= context_chars) are placed at the start of the assistant turn; the model continues from there.
+                    # Model-only context: never returned in the paragraph text.
+                    if not hasattr(decoder, "_base_chat_prefix"):
+                        decoder._base_chat_prefix = decoder.chat_prefix
+                    tail = ""
+                    if full_paragraphs_text:
+                        sents = split_sentences_japanese(full_paragraphs_text[-1])
+                        for sent in reversed(sents[-2:]):
+                            if len(sent) + len(tail) <= int(context_chars):
+                                tail = sent + tail
+                        if not tail and sents:
+                            tail = sents[-1][-int(context_chars):]
+                    sep = "\n　" if tail else ""
+                    decoder.chat_prefix = decoder._base_chat_prefix + tail + sep
+                    para_prefix = ""
                 if paragraph_hook is not None:
                     paragraph_hook(k)
 
@@ -480,12 +511,18 @@ class HSMMLongformDirector:
                     return cands[p_idx % len(cands)]
 
                 cand_gen = _smc_cand_gen if getattr(decoder, "model", None) is None else None
+                extra_kw: Dict[str, Any] = {}
+                if min_para_chars:
+                    extra_kw["min_chars"] = int(min_para_chars)
+                if max_para_chars:
+                    extra_kw["max_chars"] = int(max_para_chars)
                 smc_res = decoder.generate_with_clause_twisted_smc(
-                    prefix=f"【第{k+1}段落】",
+                    prefix=para_prefix,
                     max_clauses=max_c,
                     candidate_generator=cand_gen,
                     early_stop_on_punct=False,
                     min_clauses=int(min_clauses_per_paragraph),
+                    **extra_kw,
                 )
                 para_text = smc_res["welded_text"]
                 tel = smc_res["telemetry"]
@@ -496,6 +533,11 @@ class HSMMLongformDirector:
                     "mean_term1_std": float(np.mean([np.std(t["term1_llm"]) for t in tel])) if tel else 0.0,
                     "mean_term3_std": float(np.mean([np.std(t["term3_style"]) for t in tel])) if tel else 0.0,
                     "mean_term1_mean": float(np.mean([np.mean(t["term1_llm"]) for t in tel])) if tel else 0.0,
+                    # clause-level displacement of the chosen clauses (same quantity the SMC alignment term uses)
+                    "mean_dq": (lambda ds: [float(x) for x in np.mean(ds, axis=0)] if ds else None)(
+                        [t["chosen_dq"] for t in tel if t.get("chosen_dq") is not None]),
+                    "mean_chosen_align_cos": (lambda cs: float(np.mean(cs)) if cs else None)(
+                        [t["chosen_align_cos"] for t in tel if t.get("chosen_align_cos") is not None and t.get("align_active")]),
                 }
             else:
                 smc_summary = None
@@ -563,6 +605,7 @@ class HSMMLongformDirector:
                 "banked_energy_before": energy_before,
                 "was_discharged": was_discharged,
                 "discharged_momentum_norm": float(np.linalg.norm(discharged_p)),
+                "discharged_momentum": [float(x) for x in discharged_p],
                 "accumulated_delta_norm": float(np.linalg.norm(accumulated_delta)),
                 "refractory_counter_after": self.refractory_counter,
                 "smc": smc_summary,

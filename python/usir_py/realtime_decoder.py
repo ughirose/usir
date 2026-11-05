@@ -833,6 +833,69 @@ def has_non_jis_kanji(text: str) -> bool:
     return False
 
 
+_QUOTE_RE = re.compile(r"[「『][^」』]*[」』]")
+# Narration (outside quotes) must not use assistant-style registers. Syntactic classes only (no work-specific words):
+#   polite   : desu/masu-family clause endings, volitional/imperative polite forms
+#   meta     : omission / continuation / summary / second-person-address markers
+#   paren    : parenthetical annotation (...) / （...） inside prose
+_POLITE_RE = re.compile(r"(?:です|ます|でした|ました|でしょう|ましょう|ください|ません|ませんでした)(?:[ねよわ])?[、。！？!?]")
+_META_RE = re.compile(r"省略|以下の|続きは|ご覧|いかがでしょう|参考にし|※|お楽しみ|ご紹介|解説|[【】]")
+# Surfaces suppressed at sampling time outside quotes (token ids whose decoded text contains one of these)
+_FORBIDDEN_SURFACES = ("です", "ます", "でした", "ました", "ましょう", "ですね", "ますね", "ください",
+                       "（", "）", "(", ")", "【", "】", "※", "省略",
+                       # review / commentary vocabulary (logit suppression only, never string censorship of output)
+                       "小説", "作品", "読者", "筆者", "著者", "物語", "描写", "表現")
+# tokens that complete a polite form after a stem token ("まし"+"た"); suppressed right after a stem
+_POST_POLITE_TOKENS = ("た", "ょう", "ん")
+_POLITE_STEMS = ("まし", "でし", "ませ")
+# Syntactic Finality Gate: endings after which a sentence cannot close ('。' suppressed) and terminal forms after which it can.
+_CONNECTIVE_SUFFIXES = ("つれ", "ながら", "から", "ので", "たら", "なら", "つつ")
+_CONNECTIVE_CHARS = "てでにをがはもとばしりず"  # 'く' is handled separately (hiragana + く: なく よく; kanji + く: 吹く is terminal)
+_TERMINAL_CHARS = "ただるいう"
+_FRAGMENT_RE = re.compile("(?:" + "|".join(_CONNECTIVE_SUFFIXES) + "|[" + _CONNECTIVE_CHARS + "]|(?<=[ぁ-ゟ])く)。")
+
+
+def _is_connective_end(s: str) -> bool:
+    """True when `s` ends with a connective / case-particle / continuative form (a sentence cannot end here)."""
+    s = s.rstrip()
+    if not s:
+        return False
+    if s[-1] == "く":
+        return len(s) > 1 and "ぁ" <= s[-2] <= "ゟ"
+    return s.endswith(_CONNECTIVE_SUFFIXES) or s[-1] in _CONNECTIVE_CHARS
+
+
+def _is_terminal_end(s: str) -> bool:
+    """True when `s` ends with a terminal / past form (た だ る い う) or a noun (kanji / katakana)."""
+    s = s.rstrip()
+    if not s:
+        return False
+    ch = s[-1]
+    return ch in _TERMINAL_CHARS or ("一" <= ch <= "鿿") or ("ァ" <= ch <= "ー")
+_PAREN_RE = re.compile(r"[（(][^）)]*[）)]|[（(][^）)]*$")
+
+
+def narration_text(text: str, in_quote: bool = False) -> str:
+    """Text with quoted speech removed. If in_quote, the text starts inside an already-open 「."""
+    if in_quote:
+        m = re.search(r"[」』]", text)
+        text = text[m.end():] if m else ""
+    text = _QUOTE_RE.sub("", text)
+    # a quote opened and not yet closed at the end: drop the open tail
+    m = re.search(r"[「『][^」』]*$", text)
+    return text[: m.start()] if m else text
+
+
+def count_narration_meta(text: str) -> Dict[str, int]:
+    """Counts assistant-style marks in narration (outside quotes): polite endings, meta words, parentheses."""
+    nar = narration_text(text)
+    return {
+        "polite": len(_POLITE_RE.findall(nar)),
+        "meta": len(_META_RE.findall(nar)),
+        "paren": len(_PAREN_RE.findall(nar)),
+    }
+
+
 def count_non_jis_kanji(text: str) -> int:
     n = 0
     for ch in text:
@@ -899,7 +962,112 @@ class ClauseTwistedSMCDecoder:
         close_after: Optional[int] = None,
         close_period_boost: float = 5.0,
         normalize_end: bool = False,
+        meta_guard: bool = False,
+        polite_guard: bool = False,
+        max_regen: int = 0,
+        direction_steer: bool = False,
+        narration_mask: bool = False,
+        narration_bias: float = -15.0,
+        register_penalty: float = 1e4,
+        direction_kappa: float = 2.5,
+        len_gain: float = 0.9,
+        len_ramp: float = 6.0,
+        temp_dir_gain: float = 0.25,
+        align_balance: float = 1.0,
+        ngram_ban: int = 0,
+        rep_penalty: float = 1.0,
+        rep_regen: int = 3,
+        min_cap: int = 8,
+        gamma_dir: float = 5.0,
+        min_p: float = 0.0,
+        phase_thr: float = 0.25,
+        syntactic_gate: bool = False,
+        gate_bias: float = -12.0,
+        ngram_soft: int = 0,
+        ngram_soft_penalty: float = 4.0,
+        char8_max: int = 0,
+        content_rep_penalty: float = 1.0,
+        lex_decay: float = 0.0,
+        rhythm: bool = False,
+        cv_gain: float = 0.0,
+        cv_floor: float = 0.42,
     ) -> None:
+        # cv_gain / cv_floor : SMC log-weight term -cv_gain * max(0, cv_floor - CV_L^(k)), where CV_L^(k) is the coefficient of
+        #                      variation of the sentence lengths of the paragraph (confirmed + the sentence completed by candidate k)
+        self.cv_gain = float(cv_gain)
+        self.cv_floor = float(cv_floor)
+        # content_rep_penalty : repetition penalty applied ONLY to content-word tokens (contain a kanji, or are katakana
+        #                       words of >= 2 chars); single hiragana / punctuation / multi-hiragana grammar tokens are exempt
+        #                       (okurigana, conjugation endings and particles are never penalised)
+        # lex_decay           : logit -lex_decay for tokens with >= 2 kanji that already occurred >= 2 times in the current paragraph
+        # rhythm              : base 3-beat sentence rhythm (short 1 clause / medium 2 clauses / long 3-4 clauses) outside the
+        #                       Shock/Flux regimes
+        self.content_rep_penalty = float(content_rep_penalty)
+        self.lex_decay = float(lex_decay)
+        self.rhythm = bool(rhythm)
+        self._tok_class = None
+        self._cur_prefix = ""
+        # syntactic_gate : Syntactic Finality Gate. Logit stage: '。' gets `gate_bias` (-12) after a connective /
+        #                  continuative ending (て で に を が は も と から ので ば たら なら つつ つれ ながら し り く ず ...);
+        #                  the positive '。' bias fires only after a terminal form (た だ る い う) or a noun (kanji/katakana).
+        #                  SMC stage: candidates ending in "<continuative>。" get register_penalty.
+        # ngram_soft     : n of the soft token n-gram decay (logit -ngram_soft_penalty); ngram_ban (hard, -1e4) is separate
+        # char8_max      : a candidate that would make any 8-char substring occur more than char8_max times in the
+        #                  text so far (history + current paragraph) is rejected (SMC -register_penalty + resample)
+        self.syntactic_gate = bool(syntactic_gate)
+        self.gate_bias = float(gate_bias)
+        self.ngram_soft = int(ngram_soft)
+        self.ngram_soft_penalty = float(ngram_soft_penalty)
+        self.char8_max = int(char8_max)
+        # gamma_dir : coupling of the local Shock/Flux potential gamma_dir * <p_hat, q_local(y_k) - mean_k q_local>
+        # min_p     : Min-p filter on the tempered proposal distribution (p < min_p * p_max -> -inf)
+        # phase_thr : |d| above which the punctuation-phase modulation is active
+        #   Shock (d > thr): '、' -8d, '。' +5d, clause token targets cycle short / very short / medium (one clause = one sentence)
+        #   Flux  (d < -thr): '。' -5|d| and '、' +3|d| while the current sentence has < 2 clauses (long compound sentences)
+        self.gamma_dir = float(gamma_dir)
+        self.min_p = float(min_p)
+        self.phase_thr = float(phase_thr)
+        self._clause_idx = 0
+        # ngram_ban   : context-wide token n-gram exclusion at proposal time (logit -1e4 for any token that would
+        #               re-create an n-gram already present in history_text / the prompt / the row so far)
+        # rep_penalty : HF repetition_penalty on tokens already in the row context
+        # rep_regen   : when every candidate repeats recent text -> temperature +0.3, first tokens of the repeated
+        #               candidates masked (-1e4), resample (up to rep_regen times)
+        self.ngram_ban = int(ngram_ban)
+        self.rep_penalty = float(rep_penalty)
+        self.rep_regen = int(rep_regen)
+        self.min_cap = int(min_cap)
+        self.history_text = ""
+        self._hist_cache = (None, None)
+        self._temp_boost = 0.0
+        self._first_ban_ids = []
+        # narration_mask : NarrationStyleLogitsMask - outside 「」 the logits of polite-auxiliary / meta-mark tokens
+        #                  get `narration_bias` (pre-generation control, not post-hoc string matching)
+        # direction_steer (continuous, no dead band): d = tanh(kappa (S-F)/(S+F)) modulates the '。'/'、' bias,
+        #   the per-candidate clause length cap (exp(-len_gain d ...), soft punctuation ramp `len_ramp`), the temperature
+        #   spread (temp_dir_gain), and an SMC term align_balance * <p_discharge_hat, dq_hat_k> (cosine alignment)
+        self.repeat_use_context = False
+        self.narration_mask = bool(narration_mask)
+        self.narration_bias = float(narration_bias)
+        self.register_penalty = float(register_penalty)
+        self.direction_kappa = float(direction_kappa)
+        self.len_gain = float(len_gain)
+        self.len_ramp = float(len_ramp)
+        self.temp_dir_gain = float(temp_dir_gain)
+        self.align_balance = float(align_balance)
+        self._forbidden_cache = None
+        # Assistant-register guards (narration only; quoted speech is exempt):
+        #   meta_guard   : block candidates with meta words (omission/summary/address) or parenthetical notes
+        #   polite_guard : block candidates with desu/masu-family endings
+        #   max_regen    : when every candidate is blocked, regenerate up to this many times before giving up
+        # Direction steering (needs steering_active): d = (S - F) / (S + F) from the discharged momentum vector,
+        #   S = mean|p[Shock 3,7,11]|, F = mean|p[Flux 0,4,8]|. d > 0 -> '。' bias (short assertions),
+        #   d < 0 -> '、' bias (long flowing sentences); |d| < direction_min -> no bias.
+        self.meta_guard = bool(meta_guard)
+        self.polite_guard = bool(polite_guard)
+        self.max_regen = int(max_regen)
+        self.direction_steer = bool(direction_steer)
+        self.discharge_vec = None
         # Proposal-side momentum injection (Climax / steering_active only):
         #   spread_temps    : per-candidate temperatures linspace(temp_spread_lo, t_hi), t_hi grows with ln(||p||/p_ref)
         #   short_bias      : per-row bias that raises the "。" logit and lowers "、" (rows ordered short -> long),
@@ -1045,10 +1213,14 @@ class ClauseTwistedSMCDecoder:
     def _blocked_candidates(self, prefix: str, cand_texts: Sequence[str]) -> np.ndarray:
         """Boolean mask of candidates rejected by the repetition / latin-word guards."""
         blocked = np.zeros(len(cand_texts), dtype=bool)
+        # exact 8-char substring ceiling (count would exceed char8_max) and continuative-ending fragments
+        blocked |= self._char8_hits(prefix, cand_texts)
+        blocked |= self._fragment_hits(cand_texts) > 0
         if not (self.repeat_guard or self.ascii_guard or self.script_guard):
             return blocked
         win_len = self.repeat_window_chars or self.style_window_chars or 120
-        window = prefix[-win_len:]
+        # With carried story context the repetition window must also cover the carried paragraphs
+        window = ((self.chat_prefix if self.repeat_use_context else "") + prefix)[-win_len:]
         ctx_has_latin = re.search(r"[A-Za-z]{3,}", prefix) is not None
         n = self.repeat_ngram
         for i, c in enumerate(cand_texts):
@@ -1066,6 +1238,75 @@ class ClauseTwistedSMCDecoder:
                         blocked[i] = True
                         break
         return blocked
+
+    def _register_hits(self, context: str, cand_texts: Sequence[str]) -> np.ndarray:
+        """Number of assistant-register violations per candidate (narration only; quoted speech exempt).
+
+        Last line of defence behind NarrationStyleLogitsMask: every hit costs `register_penalty` in the SMC weight.
+        There is no all-blocked pass-through: the penalty is always applied.
+        """
+        hits = np.zeros(len(cand_texts), dtype=np.float64)
+        if not (self.meta_guard or self.polite_guard):
+            return hits
+        full = self.chat_prefix + context
+        in_quote = (full.count("「") + full.count("『")) > (full.count("」") + full.count("』"))
+        for i, c in enumerate(cand_texts):
+            nar = narration_text(c, in_quote=in_quote)
+            if self.meta_guard:
+                hits[i] += len(_META_RE.findall(nar)) + len(_PAREN_RE.findall(nar))
+            if self.polite_guard:
+                hits[i] += len(_POLITE_RE.findall(nar))
+        return hits
+
+    def _forbidden_token_ids(self):
+        """Token ids whose surface contains a polite auxiliary / meta mark (cached per decoder)."""
+        if self._forbidden_cache is None:
+            tk = self.tokenizer
+            n = len(tk)
+            surfaces = tk.batch_decode([[i] for i in range(n)], skip_special_tokens=False)
+            bad = [i for i, s in enumerate(surfaces) if any(f in s for f in _FORBIDDEN_SURFACES)]
+            tail_next = [i for i, s in enumerate(surfaces) if s in _POST_POLITE_TOKENS]
+            self._forbidden_cache = (bad, tail_next)
+        return self._forbidden_cache
+
+    def _row_caps(self, P: int) -> List[int]:
+        """Per-candidate max clause length in tokens.
+
+        Shock (d > phase_thr): targets cycle over the clause index (short / very short / medium) so that sentence
+        lengths vary (CV_L) while every clause is a short single sentence. Flux: long ceiling. Otherwise graded by d.
+        """
+        base = self.max_clause_tokens
+        rp = self._rhythm_params(self._cur_prefix)
+        if rp is not None:
+            return [int(rp[2])] * P
+        if not (self.direction_steer and self.steering_active) or P < 2:
+            return [base] * P
+        d = self._direction()
+        if d > self.phase_thr:
+            target = base * (0.7, 0.4, 1.0)[self._clause_idx % 3]
+            return [int(np.clip(round(target * (1.0 - 0.25 * i / (P - 1))), self.min_cap, int(1.6 * base))) for i in range(P)]
+        mf = self._momentum_factor()
+        caps = []
+        for i in range(P):
+            c = base * math.exp(-self.len_gain * d * mf * (1.0 + i / (P - 1)))
+            caps.append(int(np.clip(round(c), self.min_cap, int(1.6 * base))))
+        return caps
+
+    def _phase_bias(self, prefix: str):
+        """(period_bias, comma_bias) of the punctuation-phase modulation; (0, 0) when inactive."""
+        rp = self._rhythm_params(prefix)
+        if rp is not None:
+            return rp[0], rp[1]
+        if not (self.direction_steer and self.steering_active):
+            return 0.0, 0.0
+        d = self._direction()
+        if d > self.phase_thr:
+            return 5.0 * d, -8.0 * d
+        if d < -self.phase_thr:
+            tail = prefix.rsplit("\u3002", 1)[-1]
+            if tail.count("\u3001") < 2:
+                return -5.0 * abs(d), 3.0 * abs(d)
+        return 0.0, 0.0
 
     def _momentum_factor(self) -> float:
         """Strength of the proposal-side injection in [0, 1).
@@ -1091,15 +1332,134 @@ class ClauseTwistedSMCDecoder:
             t_hi = min(self.temp_spread_hi_max, 1.0 + 0.3 * self._momentum_factor() * (self.temp_spread_hi_max - 1.0) / 0.3)
             t_hi = max(t_hi, self.temp_spread_lo)
             if P == 1:
-                return [self.temp_spread_lo]
-            return [float(self.temp_spread_lo + (t_hi - self.temp_spread_lo) * i / (P - 1)) for i in range(P)]
-        base = [self.temperatures[i % len(self.temperatures)] for i in range(P)]
-        sc = self._temperature_scale()
-        return [float(t * sc) for t in base]
+                temps = [self.temp_spread_lo]
+            else:
+                temps = [float(self.temp_spread_lo + (t_hi - self.temp_spread_lo) * i / (P - 1)) for i in range(P)]
+        else:
+            base = [self.temperatures[i % len(self.temperatures)] for i in range(P)]
+            sc = self._temperature_scale()
+            temps = [float(t * sc) for t in base]
+        if self.direction_steer and self.steering_active and P >= 2:
+            # Shock-dominant -> bolder (hotter) later rows, Flux-dominant -> calmer: continuous in d and ||p||
+            d = self._direction()
+            mf = self._momentum_factor()
+            temps = [float(np.clip(t * (1.0 + self.temp_dir_gain * d * mf * i / (P - 1)), 0.5, 1.5)) for i, t in enumerate(temps)]
+        if self._temp_boost:
+            temps = [float(t + self._temp_boost) for t in temps]
+        return temps
+
+    def _token_classes(self):
+        """(content_mask, kanji2_mask) lists over the vocabulary, cached per decoder."""
+        if self._tok_class is None:
+            tk = self.tokenizer
+            surfaces = tk.batch_decode([[i] for i in range(len(tk))], skip_special_tokens=False)
+            content, kanji2 = [], []
+            for sf in surfaces:
+                st = sf.strip()
+                nk = sum(1 for ch in st if "\u4e00" <= ch <= "\u9fff")
+                kata = sum(1 for ch in st if "\u30a1" <= ch <= "\u30fa")
+                content.append(nk >= 1 or (len(st) >= 2 and kata >= 2))
+                kanji2.append(nk >= 2)
+            self._tok_class = (content, kanji2)
+        return self._tok_class
+
+    def _regime_active(self) -> bool:
+        return bool(self.direction_steer and self.steering_active and abs(self._direction()) > self.phase_thr)
+
+    def _rhythm_params(self, prefix: str):
+        """(period_bias, comma_bias, clause_token_cap) of the base 3-beat rhythm, or None when not applicable.
+
+        Sentence mode cycles with the sentence index in the paragraph: short (1 clause, ~10-20 chars) -> medium
+        (2 clauses, ~30-45 chars) -> long (3-4 clauses, ~65-95 chars; the period is held back, commas link the clauses).
+        """
+        if not self.rhythm or self._regime_active():
+            return None
+        n_sent = len(re.findall("[\u3002\uff01\uff1f!?]", prefix))
+        tail = re.split("[\u3002\uff01\uff1f!?]", prefix)[-1]
+        commas = tail.count("\u3001")
+        mode = n_sent % 3
+        if mode == 0:        # short: single clause, 8-18 chars: commas forbidden, '。' pushed
+            return (8.0, -12.0, 13, True)
+        if mode == 1:        # medium: two clauses
+            return (-12.0, 4.0, 20, False) if commas < 1 else (8.0, -10.0, 20, True)
+        # long (55-85 chars): '。' hard-sealed (-12) while the sentence is shorter than 55 chars (commas link the clauses;
+        # at >= 5 commas the seal is released as a runaway guard); released after 55; pushed to close beyond 85
+        slen = len(tail)
+        if slen < 55 and commas < 5:
+            return (-12.0, 4.0, 22, False)
+        if slen >= 85:
+            return (10.0, -10.0, 14, False)
+        return (6.0, -6.0, 18, False)
+
+    def _history_ngram_map(self, n: Optional[int] = None):
+        """{(t1,..,t_{n-1}): {t_n,...}} over history_text (all previous paragraphs), cached by (text, n)."""
+        txt = self.history_text
+        n = self.ngram_ban if n is None else int(n)
+        if self._hist_cache[0] != txt:
+            self._hist_cache = (txt, {})
+        cache = self._hist_cache[1]
+        if n not in cache:
+            ids = self.tokenizer.encode(txt, add_special_tokens=False) if txt else []
+            m = {}
+            for i in range(len(ids) - n + 1):
+                m.setdefault(tuple(ids[i:i + n - 1]), set()).add(ids[i + n - 1])
+            cache[n] = m
+        return cache[n]
+
+    def _char8_hits(self, prefix: str, cand_texts: Sequence[str]) -> np.ndarray:
+        """1 where a candidate would create a (char8_max+1)-th occurrence of some 8-char substring.
+
+        Existing text = history_text (all previous paragraphs) + current paragraph prefix. Whitespace, punctuation and
+        quote marks are removed before counting (same normalisation as the max_8gram_count metric).
+        """
+        hits = np.zeros(len(cand_texts), dtype=bool)
+        if self.char8_max <= 0:
+            return hits
+        norm = lambda s: re.sub(r"[\s、。！？!?「」『』（）()]", "", s)
+        existing = norm(self.history_text + "\n" + prefix)
+        counts: Dict[str, int] = {}
+        for i in range(len(existing) - 7):
+            g = existing[i:i + 8]
+            counts[g] = counts.get(g, 0) + 1
+        tail = existing[-7:]
+        for k, c in enumerate(cand_texts):
+            joined = tail + norm(c)
+            own: Dict[str, int] = {}
+            for i in range(len(joined) - 7):
+                g = joined[i:i + 8]
+                own[g] = own.get(g, 0) + 1
+            for g, n_own in own.items():
+                if counts.get(g, 0) + n_own > self.char8_max:
+                    hits[k] = True
+                    break
+        return hits
+
+    def _fragment_hits(self, cand_texts: Sequence[str]) -> np.ndarray:
+        """Number of continuative-ending fragments ("...につれ。", "...て。") in each candidate."""
+        h = np.zeros(len(cand_texts), dtype=np.float64)
+        if not self.syntactic_gate:
+            return h
+        for i, c in enumerate(cand_texts):
+            h[i] = len(_FRAGMENT_RE.findall(c))
+        return h
+
+    def _direction(self) -> float:
+        """Shock-vs-Flux direction of the momentum vector, smooth in (-1, 1): tanh(kappa * (S - F) / (S + F))."""
+        v = self.discharge_vec if self.discharge_vec is not None else self.integrator.p
+        v = np.abs(np.asarray(v, dtype=np.float64).ravel())
+        if v.size < 12:
+            return 0.0
+        s = float(np.mean(v[[3, 7, 11]]))
+        f = float(np.mean(v[[0, 4, 8]]))
+        return float(math.tanh(self.direction_kappa * (s - f) / (s + f + 1e-9)))
 
     def _row_period_bias(self, P: int) -> List[float]:
         """Per-row logit bias for "。" (and the opposite for "、"); 0 when inactive."""
-        if not (self.short_bias and self.steering_active) or P < 2:
+        if P < 2 or not self.steering_active:
+            return [0.0] * P
+        if self.direction_steer:
+            return [0.0] * P  # replaced by the uniform punctuation-phase modulation (_phase_bias)
+        if not self.short_bias:
             return [0.0] * P
         mf = self._momentum_factor()
         return [float(self.period_bias_max * mf * i / (P - 1)) for i in range(P)]
@@ -1136,6 +1496,7 @@ class ClauseTwistedSMCDecoder:
           they are dropped when at least one complete clause exists (counted in self.stats).
         """
         device = next(self.model.parameters()).device
+        self._cur_prefix = prefix
         text_in = self.chat_prefix + prefix
         if text_in:
             enc = self.tokenizer(text_in, return_tensors="pt", add_special_tokens=not self.chat_prefix)
@@ -1157,6 +1518,19 @@ class ClauseTwistedSMCDecoder:
 
         n_ctx = inp_len
         tokenizer_ref = self.tokenizer
+        caps = self._row_caps(P)
+        caps_t = torch.tensor(caps, dtype=torch.float32, device=device)
+        rhythm_on = self._rhythm_params(prefix) is not None
+        dyn_len = any(c != self.max_clause_tokens for c in caps) and not rhythm_on
+        dir_d = self._direction() if dyn_len else 0.0
+        ramp_gain = self.len_ramp
+        use_mask = self.narration_mask
+        if use_mask:
+            bad_ids, post_ids = self._forbidden_token_ids()
+            bad_t = torch.tensor(bad_ids, dtype=torch.long, device=device)
+            post_t = torch.tensor(post_ids, dtype=torch.long, device=device)
+        init_depth = text_in.count("「") + text_in.count("『") - text_in.count("」") - text_in.count("』")
+        narr_bias = self.narration_bias
 
         class _ClausePunctStop(StoppingCriteria):
             """Per-row stop once a clause punctuation char has been generated (cheap vs. stop_strings)."""
@@ -1181,11 +1555,158 @@ class ClauseTwistedSMCDecoder:
                     scores[:, eos_tok_ids] = scores[:, eos_tok_ids] - eos_pen
                 return scores
 
+        class _NarrationStyleLogitsMask(LogitsProcessor):
+            """Outside 「」 (per row, tracked on the generated tail) polite auxiliaries / meta marks get a large negative logit bias."""
+
+            def __call__(self_inner, ids, scores):  # noqa: N805
+                tails = tokenizer_ref.batch_decode(ids[:, n_ctx:], skip_special_tokens=True)
+                depth = torch.tensor(
+                    [init_depth + t.count("「") + t.count("『") - t.count("」") - t.count("』") for t in tails],
+                    device=scores.device,
+                )
+                narr = (depth <= 0).to(scores.dtype).unsqueeze(-1)
+                v = scores.shape[-1]
+                b = bad_t[bad_t < v]
+                scores[:, b] = scores[:, b] + narr * narr_bias
+                # right after a polite stem token (まし/でし/ませ) the completing token is suppressed as well
+                stem = torch.tensor(
+                    [bool(t) and t.endswith(_POLITE_STEMS) for t in tails], device=scores.device
+                ).to(scores.dtype).unsqueeze(-1)
+                if post_t.numel():
+                    pt = post_t[post_t < v]
+                    scores[:, pt] = scores[:, pt] + narr * stem * narr_bias
+                return scores
+
+        cr_pen = self.content_rep_penalty
+        lex_dec = self.lex_decay
+        need_cls = (cr_pen > 1.0) or lex_dec > 0 or (self.ngram_soft >= 2)
+        if need_cls:
+            content_l, kanji2_l = self._token_classes()
+            content_t = torch.tensor(content_l, dtype=torch.bool, device=device)
+            kanji2_t = torch.tensor(kanji2_l, dtype=torch.bool, device=device)
+            para_ids_t = torch.tensor(self.tokenizer.encode(prefix, add_special_tokens=False) if prefix else [], dtype=torch.long, device=device)
+        else:
+            content_l = None
+
+        class _ContentRep(LogitsProcessor):
+            """Repetition penalty on content-word tokens only + lexical-diversity decay for repeated kanji words."""
+
+            def __call__(self_inner, ids, scores):  # noqa: N805
+                V = scores.shape[-1]
+                ct, kt = content_t, kanji2_t
+                if ct.numel() < V:  # logits are padded beyond len(tokenizer)
+                    ct = torch.nn.functional.pad(ct, (0, V - ct.numel()))
+                    kt = torch.nn.functional.pad(kt, (0, V - kt.numel()))
+                ct, kt = ct[:V], kt[:V]
+                for r in range(ids.shape[0]):
+                    if cr_pen > 1.0:
+                        u = torch.unique(ids[r])
+                        u = u[u < V]
+                        sel = u[ct[u]]
+                        if sel.numel():
+                            sc = scores[r, sel]
+                            scores[r, sel] = torch.where(sc > 0, sc / cr_pen, sc * cr_pen)
+                    if lex_dec > 0:
+                        pids = torch.cat([para_ids_t, ids[r, n_ctx:]])
+                        pids = pids[pids < V]
+                        if pids.numel():
+                            cnt = torch.bincount(pids, minlength=V)
+                            idx = torch.nonzero((cnt >= 2) & kt).squeeze(-1)
+                            if idx.numel():
+                                scores[r, idx] = scores[r, idx] - lex_dec
+                return scores
+
+        ngram_n = self.ngram_ban
+        hist_map = self._history_ngram_map() if ngram_n >= 2 else {}
+        soft_n = self.ngram_soft if (self.ngram_soft >= 2 and (ngram_n < 2 or self.ngram_soft < ngram_n)) else 0
+        soft_pen = self.ngram_soft_penalty
+        soft_map = self._history_ngram_map(soft_n) if soft_n else {}
+        first_ban = torch.tensor(self._first_ban_ids, dtype=torch.long, device=device) if self._first_ban_ids else None
+
+        class _ContextNgramBan(LogitsProcessor):
+            """-1e4 on any token that would re-create an n-gram already seen in history / prompt / this row."""
+
+            def __call__(self_inner, ids, scores):  # noqa: N805
+                if first_ban is not None and ids.shape[1] == n_ctx:
+                    scores[:, first_ban] = scores[:, first_ban] - 1e4
+                if ngram_n < 2 and not soft_n:
+                    return scores
+                for r in range(ids.shape[0]):
+                    seq = ids[r].tolist()
+                    if soft_n:
+                        # moderate decay (-soft_pen) for the shorter n-gram; the hard ban below overrides
+                        ks = tuple(seq[-(soft_n - 1):])
+                        sb = set(soft_map.get(ks, ()))
+                        for i in range(len(seq) - soft_n + 1):
+                            if tuple(seq[i:i + soft_n - 1]) == ks:
+                                sb.add(seq[i + soft_n - 1])
+                        if sb:
+                            sl = [t for t in sb if t < scores.shape[-1]]
+                            scores[r, sl] = scores[r, sl] - soft_pen
+                    if ngram_n < 2:
+                        continue
+                    n = ngram_n
+                    key = tuple(seq[-(n - 1):])
+                    banned = set(hist_map.get(key, ()))
+                    for i in range(len(seq) - n + 1):
+                        if tuple(seq[i:i + n - 1]) == key:
+                            banned.add(seq[i + n - 1])
+                    if banned:
+                        bl = [t for t in banned if t < scores.shape[-1]]
+                        scores[r, bl] = scores[r, bl] - 1e4
+                return scores
+
+        ph_period, ph_comma = self._phase_bias(prefix)
+        gate_on = bool(self.syntactic_gate)
+        gate_val = float(self.gate_bias)
+        ctx_tail = text_in[-8:]
+        _rp = self._rhythm_params(prefix)
+        noun_req = bool(_rp is not None and _rp[3])
+        sent_tail0 = re.split("[。！？!?]", prefix)[-1]
+        _noun_re = re.compile("[一-鿿ァ-ヺ]")
+
         class _BoundaryBias(LogitsProcessor):
             """Momentum-scaled short-clause bias and end-of-paragraph sentence closing."""
 
             def __call__(self_inner, ids, scores):  # noqa: N805
-                if period_ids and bool((row_bias > 0).any()):
+                conn = term = noun = None
+                if noun_req:
+                    # a positive '。' bias fires only once the current sentence contains a noun (kanji / katakana)
+                    _tl = tokenizer_ref.batch_decode(ids[:, n_ctx:], skip_special_tokens=True)
+                    noun = torch.tensor([float(bool(_noun_re.search(sent_tail0 + t))) for t in _tl], device=scores.device, dtype=scores.dtype)
+                if gate_on:
+                    # Syntactic Finality Gate: classify the end of each row's text so far
+                    tails = tokenizer_ref.batch_decode(ids[:, n_ctx:], skip_special_tokens=True)
+                    ends = [(ctx_tail + t)[-8:] for t in tails]
+                    conn = torch.tensor([float(_is_connective_end(e)) for e in ends], device=scores.device, dtype=scores.dtype)
+                    term = torch.tensor([float(_is_terminal_end(e)) for e in ends], device=scores.device, dtype=scores.dtype)
+                if ph_period and period_ids:
+                    if ph_period > 0:
+                        # Shock: '。' is mildly held back at the start of the clause (a sentence needs a subject and a
+                        # predicate: 8-20 chars) and pushed up from ~40% of the clause token target on
+                        t_rel = (float(ids.shape[1] - n_ctx)) / caps_t
+                        scale = torch.clamp((t_rel - 0.2) / 0.4, 0.0, 1.0) * 1.6 - 0.6
+                        pb = (ph_period * scale).to(scores.dtype)
+                        if gate_on:
+                            # positive '。' bias only after a terminal form / noun; never after a connective ending
+                            pb = torch.where(term > 0, pb, torch.clamp(pb, max=0.0))
+                        if noun is not None:
+                            pb = torch.where(noun > 0, pb, torch.clamp(pb, max=0.0))
+                        scores[:, period_ids] = scores[:, period_ids] + pb.unsqueeze(-1)
+                    else:
+                        scores[:, period_ids] = scores[:, period_ids] + ph_period
+                if ph_comma and comma_ids:
+                    scores[:, comma_ids] = scores[:, comma_ids] + ph_comma
+                if dyn_len and (period_ids or comma_ids):
+                    step = float(ids.shape[1] - n_ctx)
+                    ramp = torch.clamp((step - 0.6 * caps_t) / (0.4 * caps_t), 0.0, 1.0) * ramp_gain
+                    for grp in ((period_ids,) if dir_d > 0 else (period_ids, comma_ids)):
+                        if grp:
+                            r_g = ramp.to(scores.dtype)
+                            if gate_on and grp is period_ids:
+                                r_g = r_g * (1.0 - conn)
+                            scores[:, grp] = scores[:, grp] + r_g.unsqueeze(-1)
+                if period_ids and bool((row_bias != 0).any()):
                     scores[:, period_ids] = scores[:, period_ids] + row_bias.to(scores.dtype).unsqueeze(-1)
                     if comma_ids:
                         scores[:, comma_ids] = scores[:, comma_ids] - row_bias.to(scores.dtype).unsqueeze(-1)
@@ -1194,22 +1715,37 @@ class ClauseTwistedSMCDecoder:
                         scores[:, comma_ids] = scores[:, comma_ids] - 30.0
                     if period_ids:
                         scores[:, period_ids] = scores[:, period_ids] + close_boost
+                if gate_on and period_ids:
+                    scores[:, period_ids] = scores[:, period_ids] + (conn * gate_val).unsqueeze(-1)
                 return scores
 
         class _RowTemp(LogitsProcessor):
             def __call__(self_inner, ids, scores):  # noqa: N805
                 return scores / temps.to(scores.dtype).unsqueeze(-1)
 
+        min_p_val = self.min_p
+
+        class _MinP(LogitsProcessor):
+            """Min-p tail cut on the tempered distribution: p < min_p * p_max -> -inf."""
+
+            def __call__(self_inner, ids, scores):  # noqa: N805
+                probs = torch.softmax(scores.float(), dim=-1)
+                pmax = probs.max(dim=-1, keepdim=True).values
+                return scores.masked_fill(probs < min_p_val * pmax, float("-inf"))
+
         gen_kwargs: Dict[str, Any] = {
-            "max_new_tokens": self.max_clause_tokens,
+            "max_new_tokens": int(max(caps)),
             "do_sample": True,
             "temperature": 1.0,
             "top_p": 1.0,
             "top_k": 50,
             "attention_mask": torch.ones_like(input_ids),
-            "logits_processor": [_EosPenalty(), _BoundaryBias(), _RowTemp()],
+            "logits_processor": ([_NarrationStyleLogitsMask()] if use_mask else []) + (
+                [_ContextNgramBan()] if (ngram_n >= 2 or soft_n or first_ban is not None) else []) + ([_ContentRep()] if (cr_pen > 1.0 or lex_dec > 0) else []) + [_EosPenalty(), _BoundaryBias(), _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
             "stopping_criteria": StoppingCriteriaList([_ClausePunctStop()]),
         }
+        if self.rep_penalty and self.rep_penalty != 1.0:
+            gen_kwargs["repetition_penalty"] = self.rep_penalty
         if pad_id is not None:
             gen_kwargs["pad_token_id"] = pad_id
         with torch.no_grad():
@@ -1371,11 +1907,78 @@ class ClauseTwistedSMCDecoder:
                     steer_gain = min(steer_gain, self.gain_max)
                 term3_style = [float(steer_gain * r) for r in raw]
 
-        w = np.array(term1_llm) + np.array(term2_reach) + np.array(term3_style)
+        # Term 4: local Shock/Flux potential gamma_dir * <p_hat, q_local(y_k) - mean_k q_local>, where q_local is the
+        # feature vector of the sentence in progress completed by candidate y_k (not a sliding-window difference)
+        term4_align = [0.0] * len(term1_llm)
+        align_cos = [0.0] * len(term1_llm)
+        dq_list = [None] * len(term1_llm)
+        d_local = [0.0] * len(term1_llm)
+        align_active = False
+        dv = self.discharge_vec
+        if self.direction_steer and self.steering_active and dv is not None and len(term1_llm) > 1:
+            pv = np.asarray(dv, dtype=np.float64).ravel()[: self.dim]
+            pn = float(np.linalg.norm(pv))
+            if pn > 1e-9 and pv.size == self.dim:
+                sent_tail = prefix.rsplit("\u3002", 1)[-1]
+                ql = []
+                for c_text in cand_texts:
+                    try:
+                        ql.append(np.asarray(self.feature_extractor(sent_tail + c_text), dtype=np.float64).ravel()[: self.dim])
+                    except Exception:
+                        ql.append(np.full(self.dim, 0.5))
+                qbar = np.mean(ql, axis=0)
+                phat = pv / pn
+                align_active = True
+                for ci, q_l in enumerate(ql):
+                    dev = q_l - qbar
+                    dq_list[ci] = [float(x) for x in dev]
+                    term4_align[ci] = float(self.gamma_dir * (phat @ dev))
+                    dn = float(np.linalg.norm(dev))
+                    align_cos[ci] = float(phat @ dev) / dn if dn > 1e-12 else 0.0
+                    aq = np.abs(q_l)
+                    s_, f_ = float(np.mean(aq[[3, 7, 11]])), float(np.mean(aq[[0, 4, 8]]))
+                    d_local[ci] = (s_ - f_) / (s_ + f_ + 1e-9)
+
+        w = np.array(term1_llm) + np.array(term2_reach) + np.array(term3_style) + np.array(term4_align)
+
+        # CV_L potential: sentence-length dispersion of the paragraph if candidate k closes its sentence
+        if self.cv_gain > 0 and len(cand_texts) > 1:
+            done = [x for x in re.split("(?<=[。！？!?])", prefix) if x.strip()]
+            tail_open = bool(done) and not re.search(r"[。！？!?]\s*$", prefix)
+            confirmed = [len(x.strip()) for x in (done[:-1] if tail_open else done)]
+            cur = done[-1] if tail_open else ""
+            cvp = np.zeros(len(cand_texts))
+            for ci, c_text in enumerate(cand_texts):
+                lens = list(confirmed)
+                sent = cur + c_text
+                if re.search(r"[。！？!?]\s*$", sent):
+                    lens.append(len(sent.strip()))
+                if len(lens) >= 3:
+                    mu = float(np.mean(lens))
+                    cv = float(np.std(lens) / mu) if mu > 0 else 0.0
+                    cvp[ci] = -self.cv_gain * max(0.0, self.cv_floor - cv)
+            if cvp.any():
+                w = w + cvp
+                self.stats["cv_potential_applied"] = self.stats.get("cv_potential_applied", 0) + 1
+
+        # Register penalty (last line of defence behind the logit mask): always applied, no all-blocked pass-through
+        reg_hits = self._register_hits(prefix, cand_texts)
+        if reg_hits.any():
+            w = w - self.register_penalty * reg_hits
+            self.stats["register_hits"] = self.stats.get("register_hits", 0) + int(reg_hits.sum())
 
         blocked = self._blocked_candidates(prefix, cand_texts)
+        if self.syntactic_gate:
+            self.stats["fragment_cands"] = self.stats.get("fragment_cands", 0) + int((self._fragment_hits(cand_texts) > 0).sum())
+        if self.char8_max > 0:
+            self.stats["char8_cands"] = self.stats.get("char8_cands", 0) + int(self._char8_hits(prefix, cand_texts).sum())
         if blocked.any() and not blocked.all():
             w = np.where(blocked, -np.inf, w)
+        elif blocked.all():
+            # no pass-through: every candidate is rejected -> flat penalty recorded; step_smc_clause has already
+            # tried temperature-boosted resampling with the repeated first tokens masked
+            w = w - self.register_penalty
+            self.stats["repeat_unresolved"] = self.stats.get("repeat_unresolved", 0) + 1
 
         # Numerical stabilization for softmax normalized weights
         max_w = np.max(w)
@@ -1406,6 +2009,12 @@ class ClauseTwistedSMCDecoder:
             "term1_llm": term1_llm,
             "term2_reach": term2_reach,
             "term3_style": term3_style,
+            "term4_align": term4_align,
+            "align_cos": align_cos,
+            "d_local": d_local,
+            "dq_list": dq_list,
+            "align_active": align_active,
+            "register_hits": reg_hits,
             "steer_gain": steer_gain,
         }
 
@@ -1424,6 +2033,37 @@ class ClauseTwistedSMCDecoder:
             cands: Sequence[Union[str, Dict[str, Any]]] = self.generate_candidate_clauses(prefix, target_end=target_end)
         else:
             cands = list(candidate_clauses)
+
+        if not candidate_clauses and self.max_regen > 0 and (self.meta_guard or self.polite_guard):
+            texts = [str(c.get("text", "")) if isinstance(c, dict) else str(c) for c in cands]
+            tries = 0
+            while tries < self.max_regen and (self._register_hits(prefix, texts) > 0).all():
+                tries += 1
+                self.stats["regen"] = self.stats.get("regen", 0) + 1
+                cands = self.generate_candidate_clauses(prefix, target_end=target_end)
+                texts = [str(c.get("text", "")) if isinstance(c, dict) else str(c) for c in cands]
+            if (self._register_hits(prefix, texts) > 0).all():
+                self.stats["meta_unresolved"] = self.stats.get("meta_unresolved", 0) + 1
+
+        if not candidate_clauses and self.rep_regen > 0 and self.repeat_guard and self.model is not None:
+            texts = [str(c.get("text", "")) if isinstance(c, dict) else str(c) for c in cands]
+            tries = 0
+            ban = []
+            try:
+                while tries < self.rep_regen and texts and self._blocked_candidates(prefix, texts).all():
+                    tries += 1
+                    self.stats["rep_regen"] = self.stats.get("rep_regen", 0) + 1
+                    self._temp_boost += 0.3
+                    for t in texts:
+                        e = self.tokenizer.encode(t, add_special_tokens=False)
+                        if e:
+                            ban.append(int(e[0]))
+                    self._first_ban_ids = sorted(set(ban))
+                    cands = self.generate_candidate_clauses(prefix, target_end=target_end)
+                    texts = [str(c.get("text", "")) if isinstance(c, dict) else str(c) for c in cands]
+            finally:
+                self._temp_boost = 0.0
+                self._first_ban_ids = []
 
         weights_info = self.compute_particle_weights(
             prefix=prefix,
@@ -1463,6 +2103,12 @@ class ClauseTwistedSMCDecoder:
             "term1_llm": weights_info["term1_llm"],
             "term2_reach": weights_info["term2_reach"],
             "term3_style": weights_info["term3_style"],
+            "term4_align": weights_info["term4_align"],
+            "align_cos": weights_info["align_cos"],
+            "chosen_align_cos": float(weights_info["align_cos"][chosen_idx]),
+            "chosen_dq": weights_info["dq_list"][chosen_idx],
+            "chosen_d_local": weights_info["d_local"][chosen_idx],
+            "align_active": weights_info["align_active"],
             "steer_gain": weights_info["steer_gain"],
             "greedy_agree": bool(chosen_idx == int(np.argmax(weights_info["term1_llm"]))),
             "candidate_texts": weights_info["candidate_texts"],
@@ -1482,16 +2128,26 @@ class ClauseTwistedSMCDecoder:
         early_stop_on_punct: bool = True,
         resample_method: Optional[str] = None,
         min_clauses: int = 0,
+        min_chars: int = 0,
+        max_chars: int = 0,
     ) -> Dict[str, Any]:
-        """Full multi-clause generation using Clause-Level Twisted SMC and Adaptive-BAOAB."""
+        """Full multi-clause generation using Clause-Level Twisted SMC and Adaptive-BAOAB.
+
+        min_chars: EOS suppression and sentence closing are released only when the generated text has at least
+        min_chars characters AND min_clauses clauses exist. max_chars (0 = off): once reached, closing is forced.
+        """
         current_text = prefix
         telemetry: List[Dict[str, Any]] = []
         clauses: List[str] = []
 
         for m in range(max_clauses):
-            # Min-clause guard: EOS logits are penalised until min_clauses clauses exist.
-            self._suppress_eos = m < int(min_clauses)
-            self._force_close = self.close_after is not None and m >= self.close_after
+            # Min-clause / min-chars guard: EOS logits are penalised until both floors are met.
+            self._clause_idx = m
+            gen_chars = len(current_text) - len(prefix)
+            chars_ok = gen_chars >= int(min_chars)
+            self._suppress_eos = m < int(min_clauses) or not chars_ok
+            self._force_close = (self.close_after is not None and m >= self.close_after and chars_ok) or (
+                int(max_chars) > 0 and gen_chars >= int(max_chars) and m >= int(min_clauses))
             if candidate_generator is not None:
                 cands: Optional[List[str]] = [candidate_generator(current_text, p, self.temperatures[p % len(self.temperatures)]) for p in range(self.n_particles)]
             else:
@@ -1509,8 +2165,11 @@ class ClauseTwistedSMCDecoder:
             telemetry.append(step_res)
             clauses.append(step_res["selected_clause"])
             current_text = step_res["next_prefix"]
-            if self.close_after is not None and m >= self.close_after and step_res["selected_clause"].rstrip().endswith("。"):
+            if self._force_close and step_res["selected_clause"].rstrip().endswith("。"):
                 break  # the sentence has been closed: stop instead of generating further clauses
+            if (int(min_chars) > 0 and m + 1 >= int(min_clauses) and len(current_text) - len(prefix) >= int(min_chars)
+                    and step_res["selected_clause"].rstrip().endswith("\u3002")):
+                break  # soft landing: char floor met -> close at the next natural sentence end (no forced cut)
             if self.verbose:
                 # Streamed progress keeps long remote runs from looking idle to the gateway.
                 sys.stdout.write(

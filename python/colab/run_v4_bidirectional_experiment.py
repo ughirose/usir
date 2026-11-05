@@ -188,20 +188,14 @@ def get_transformers_model() -> tuple[Any, Any]:
         from transformers import AutoModelForCausalLM, AutoTokenizer
         import torch
 
+        # Fail-fast: the requested model is loaded or an exception propagates. No silent fallback to another model.
         model_name = os.environ.get("USIR_MODEL_NAME", "Qwen/Qwen2.5-3B-Instruct")
-        try:
-            _CACHED_TOK = AutoTokenizer.from_pretrained(model_name)
-            _CACHED_MODEL = AutoModelForCausalLM.from_pretrained(
-                model_name,
-                torch_dtype=torch.float16 if torch.cuda.is_available() else "auto",
-            ).to("cuda" if torch.cuda.is_available() else "cpu")
-        except Exception:
-            fallback_name = "Qwen/Qwen2.5-1.5B-Instruct"
-            _CACHED_TOK = AutoTokenizer.from_pretrained(fallback_name)
-            _CACHED_MODEL = AutoModelForCausalLM.from_pretrained(
-                fallback_name,
-                torch_dtype=torch.float16 if torch.cuda.is_available() else "auto",
-            ).to("cuda" if torch.cuda.is_available() else "cpu")
+        dtype_name = os.environ.get("USIR_DTYPE", "float16")
+        dtype = getattr(torch, dtype_name) if torch.cuda.is_available() else "auto"
+        _CACHED_TOK = AutoTokenizer.from_pretrained(model_name)
+        _CACHED_MODEL = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=dtype).to(
+            "cuda" if torch.cuda.is_available() else "cpu"
+        )
     return _CACHED_MODEL, _CACHED_TOK
 
 
@@ -1286,6 +1280,21 @@ def run_longform_director(
     reseed_per_paragraph: bool = False,
     proposal_injection: bool = False,
     p_jitter: float = 0.0,
+    completion_mode: bool = True,
+    carry_context: bool = True,
+    meta_guard: bool = True,
+    polite_guard: bool = True,
+    narration_mask: bool = True,
+    anti_repeat: bool = True,
+    direction_steer: bool = True,
+    max_regen: int = 2,
+    finality_gate: bool = True,
+    rep_penalty: float = 1.13,
+    rhythm: bool = True,
+    lex_decay: float = 2.5,
+    cv_gain: float = 25.0,
+    min_para_chars: int = 0,
+    max_para_chars: int = 0,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
@@ -1296,7 +1305,7 @@ def run_longform_director(
     """
     from usir_py.hsmm_longform_director import HSMMLongformDirector
     from usir_py.nishiki_unified_field import WorldCraftArbitrator
-    from usir_py.realtime_decoder import AdaptiveBAOABIntegrator, ClauseTwistedSMCDecoder
+    from usir_py.realtime_decoder import AdaptiveBAOABIntegrator, ClauseTwistedSMCDecoder, count_narration_meta
     from usir_py.grpo_reward import PHASE_CENTROIDS_24D
 
     director = HSMMLongformDirector(
@@ -1311,7 +1320,18 @@ def run_longform_director(
         mu = np.asarray(PHASE_CENTROIDS_24D["II_Critical"][:12], dtype=float)
         integ = AdaptiveBAOABIntegrator(dim=12, mu_star=mu, seed=seed)
         chat = theme
-        if hasattr(tokenizer, "apply_chat_template"):
+        if completion_mode:
+            # Instruct chat frame + assistant prefill: system/user pin the register (third-person plain-form fiction
+            # body only); the director appends the previous paragraph's last 1-2 sentences to the assistant turn.
+            chat = tokenizer.apply_chat_template(
+                [
+                    {"role": "system", "content": "あなたは小説家です。三人称・常体の小説本文だけを書きます。解説、要約、挨拶、感想、見出し、括弧書きは書きません。特定の登場人物名や固有名詞を勝手に登場させず、無名の視点または情景・身体感覚の描写に徹します。"},
+                    {"role": "user", "content": f"題材：{theme}\n三人称・常体で、この題材の小説本文の続きだけを書いてください。人名・固有名詞は出さず、無名の視点か情景・身体感覚の描写に徹してください。"},
+                ],
+                add_generation_prompt=True,
+                tokenize=False,
+            )
+        elif hasattr(tokenizer, "apply_chat_template"):
             chat = tokenizer.apply_chat_template(
                 [{"role": "user", "content": f"{theme}を題材に、日本語の小説の一節を書いてください。"}],
                 add_generation_prompt=True,
@@ -1325,14 +1345,24 @@ def run_longform_director(
             temp_gain=0.15 if steering else 0.0,
             # Bounded control: gain <= 5, temperature multiplier in [0.85, 1.10], repetition / latin guards.
             gain_max=5.0, temp_min=0.85, temp_max=1.10,
-            repeat_guard=steering, ascii_guard=steering,
-            repeat_window_chars=400, script_guard=steering,
+            repeat_guard=(steering or anti_repeat), ascii_guard=(steering or anti_repeat),
+            repeat_window_chars=400, script_guard=(steering or anti_repeat),
             # Proposal-side momentum injection (Climax only): spread temperatures, short-clause bias, N=8 pool,
             # sentence closing after clause 28, trailing "、" -> "。".
             spread_temps=proposal_injection, short_bias=proposal_injection,
             climax_particles=8 if proposal_injection else None,
             close_after=28 if proposal_injection else None, normalize_end=proposal_injection,
+            meta_guard=meta_guard, polite_guard=polite_guard,
+            max_regen=max_regen if (meta_guard or polite_guard) else 0,
+            direction_steer=direction_steer, narration_mask=narration_mask,
+            ngram_ban=5 if anti_repeat else 0, rep_penalty=1.0,
+            content_rep_penalty=rep_penalty if anti_repeat else 1.0, lex_decay=lex_decay if anti_repeat else 0.0,
+            rhythm=bool(rhythm), cv_gain=cv_gain if anti_repeat else 0.0,
+            ngram_soft=4 if anti_repeat else 0, ngram_soft_penalty=4.0,
+            char8_max=2 if anti_repeat else 0, syntactic_gate=bool(finality_gate),
+            min_p=0.04 if anti_repeat else 0.0,
         )
+        decoder.repeat_use_context = bool(carry_context)
         generator = "llm_clause_smc"
         decoder.verbose = verbose
 
@@ -1348,6 +1378,9 @@ def run_longform_director(
         # Steering gain/temperature act only in the Climax paragraph and the one after it.
         climax_only_steering=steering,
         paragraph_hook=_make_hook(seed, decoder, reseed_per_paragraph, p_jitter),
+        carry_context=carry_context,
+        min_para_chars=min_para_chars,
+        max_para_chars=max_para_chars,
     )
     wall = time.time() - t0
 
@@ -1357,6 +1390,12 @@ def run_longform_director(
         "theme": theme,
         "generator": generator,
         "steering": steering,
+        "model": getattr(getattr(model, "config", None), "_name_or_path", None),
+        "flags": {"completion_mode": completion_mode, "carry_context": carry_context, "meta_guard": meta_guard,
+                  "polite_guard": polite_guard, "narration_mask": narration_mask, "anti_repeat": anti_repeat, "direction_steer": direction_steer,
+                  "max_regen": max_regen},
+        "decoder_stats": dict(decoder.stats) if decoder is not None else None,
+        "narration_meta": count_narration_meta(full_text),
         "seed": seed,
         "wall_sec": round(wall, 2),
         "total_chars": res["total_chars"],
@@ -1381,13 +1420,70 @@ def run_longform_director(
                 "cut_momentum_norm": p["cut_momentum_norm"],
                 "constraint_modes": p["constraint_modes"],
                 "smc": p.get("smc"),
+                "discharged_momentum": p.get("discharged_momentum"),
                 "text": p["text"],
             }
             for p in res["paragraphs"]
         ],
         "full_text": full_text,
     }
+    res_summary["direction"] = _direction_metrics(res_summary["paragraphs"])
     return res_summary
+
+
+def _direction_metrics(paragraphs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Direction audit measured on the generated TEXT of each paragraph (no window differences, no telescoping means).
+
+    q_para = q(paragraph text). Shock S = mean q[3,7,11], Flux F = mean q[0,4,8].
+    - d_text      : (S - F) / (S + F) of the paragraph itself (absolute; Flux features have a much larger baseline,
+                    so it is negative for ordinary prose)
+    - d_realised  : baseline-relative signed direction. dq = q_para - q_base, where q_base is the mean q of the
+                    paragraphs that were NOT steered (no released momentum and not the paragraph after it);
+                    d_realised = (mean dq[S] - mean dq[F]) / (|mean dq[S]| + |mean dq[F]|)  in [-1, 1].
+    - cos_p_dq    : cosine between the released momentum vector and dq
+    - mean_sentence_len : mean sentence length in chars (short assertions <-> Shock)
+    Only paragraphs with a released momentum (and the one after it) are scored for d_realised / cos.
+    """
+    from usir_py.hsmm_longform_director import split_sentences_japanese
+
+    def sd(v):
+        v = np.asarray(v, dtype=float)
+        sv, fv = float(np.mean(v[[3, 7, 11]])), float(np.mean(v[[0, 4, 8]]))
+        return sv, fv
+
+    qs = [np.asarray(extract_usir_24d(p["text"])["q"], dtype=float)[:12] for p in paragraphs]
+    disch = [float(np.linalg.norm(p["discharged_momentum"])) if p.get("discharged_momentum") is not None else 0.0 for p in paragraphs]
+    steered = set()
+    for i, dn in enumerate(disch):
+        if dn > 1e-9:
+            steered.update({i, i + 1})
+    base_idx = [i for i in range(len(paragraphs)) if i not in steered]
+    q_base = np.mean([qs[i] for i in base_idx], axis=0) if base_idx else None
+    out: List[Dict[str, Any]] = []
+    for i, p in enumerate(paragraphs):
+        sv, fv = sd(np.abs(qs[i]))
+        sents = [x for x in split_sentences_japanese(p["text"]) if x.strip()]
+        rec: Dict[str, Any] = {
+            "index": p["index"], "well": p["well"], "steered": i in steered,
+            "d_text": round((sv - fv) / (sv + fv + 1e-9), 4),
+            "mean_sentence_len": round(float(np.mean([len(x) for x in sents])), 2) if sents else 0.0,
+        }
+        if disch[i] > 1e-9 and q_base is not None:
+            dvn = np.asarray(p["discharged_momentum"], dtype=float)
+            dq = qs[i] - q_base
+            ds, df = sd(dq)
+            na, nb = float(np.linalg.norm(dvn)), float(np.linalg.norm(dq))
+            rec.update({
+                "d_target": round(float((np.mean(np.abs(dvn)[[3, 7, 11]]) - np.mean(np.abs(dvn)[[0, 4, 8]])) /
+                                        (np.mean(np.abs(dvn)[[3, 7, 11]]) + np.mean(np.abs(dvn)[[0, 4, 8]]) + 1e-9)), 4),
+                "d_realised": round((ds - df) / (abs(ds) + abs(df) + 1e-9), 4),
+                "cos_p_dq": round(float(dvn @ dq) / (na * nb) if na > 1e-12 and nb > 1e-12 else 0.0, 4),
+                "dS": round(ds, 4), "dF": round(df, 4),
+                # non-saturating direction measures: raw shift ΔS-ΔF and its scale-regularised index tanh((ΔS-ΔF)/0.10)
+                "delta_sf": round(ds - df, 4), "d_realised_reg": round(float(np.tanh((ds - df) / 0.10)), 4),
+            })
+        out.append(rec)
+    return out
 
 
 def main() -> None:

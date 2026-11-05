@@ -1,0 +1,144 @@
+{
+  "date": "2026-11-04",
+  "gpu": "NVIDIA L4",
+  "seed": 3,
+  "wells": [
+    0,
+    0,
+    0,
+    2,
+    0,
+    1
+  ],
+  "constraints": {
+    "0": [
+      "stillness"
+    ],
+    "1": [
+      "evidence"
+    ]
+  },
+  "note": "Metrics copied from Colab RESULT_JSON outputs. Full paragraph texts were returned by the tool but not archived to disk; only short excerpts are kept. n=1 seed per cell.",
+  "runs": {
+    "1.5B_old_chat_template": {
+      "model": "Qwen/Qwen2.5-1.5B-Instruct",
+      "dtype": "float16",
+      "total_chars": 2136,
+      "cv_l": 0.4128,
+      "qda": "Critical d3=0.3297",
+      "narration_meta": {
+        "polite": 6,
+        "meta": 12,
+        "paren": 0
+      },
+      "repeated_8gram_types": 4,
+      "max_8gram_count": 6,
+      "distinct_char_bigram": 0.522,
+      "distinct_chars": 319,
+      "climax_direction": {
+        "d_target": 1.0,
+        "d_realised": -0.7062,
+        "cos_p_dq": 0.508
+      },
+      "peak_vram_gib": 3.16,
+      "elapsed_sec": 121.5,
+      "load_sec": 37.0,
+      "excerpt": "(para3) 「この一節は、静寂と自然との調和…を表現しています。…と言えるでしょう。」 -> assistant register present"
+    },
+    "1.5B_new_r1_header=theme_only": {
+      "total_chars": 2177,
+      "cv_l": 0.3941,
+      "qda": "Critical d3=0.0912",
+      "narration_meta": {
+        "polite": 0,
+        "meta": 0,
+        "paren": 0
+      },
+      "decoder_stats": {
+        "register_hits": 1,
+        "eos_rows": 0
+      },
+      "repeated_8gram_types": 200,
+      "max_8gram_count": 8,
+      "distinct_char_bigram": 0.2945,
+      "distinct_chars": 201,
+      "climax_direction": {
+        "d_target": 1.0,
+        "d_realised": -0.6421,
+        "cos_p_dq": -0.3383
+      },
+      "peak_vram_gib": 3.31,
+      "elapsed_sec": 141.0,
+      "excerpt": "para1 starts with an unrelated quote 「すみません、お父さん。」 and a different story (theme lost); paras 3-6 loop on 「彼は、自己認識を深めることで…」"
+    },
+    "1.5B_new_r2_header=短編小説『theme』+repeat window covers carried context": {
+      "total_chars": 2586,
+      "cv_l": 0.4232,
+      "qda": "Deadzone d3=0.9445",
+      "narration_meta": {
+        "polite": 0,
+        "meta": 0,
+        "paren": 0
+      },
+      "decoder_stats": {
+        "register_hits": 3,
+        "eos_rows": 0,
+        "incomplete": 31
+      },
+      "repeated_8gram_types": 322,
+      "max_8gram_count": 11,
+      "distinct_char_bigram": 0.2151,
+      "distinct_chars": 192,
+      "climax_direction": {
+        "d_target": 0.3107,
+        "d_realised": -0.7706,
+        "cos_p_dq": 0.1482
+      },
+      "peak_vram_gib": 3.41,
+      "elapsed_sec": 170.1,
+      "excerpt": "paras 2-6 become a book review in plain form: 「この小説は、禅の思想や瞑想について書かれている。」 (not caught by polite/meta rules); repeated sentences"
+    },
+    "3B_new_r2": {
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "dtype": "float16",
+      "total_chars": 1451,
+      "cv_l": 0.4591,
+      "qda": "Deadzone d3=18.94",
+      "narration_meta": {
+        "polite": 0,
+        "meta": 0,
+        "paren": 0
+      },
+      "decoder_stats": {
+        "register_hits": 1,
+        "eos_rows": 0
+      },
+      "repeated_8gram_types": 105,
+      "max_8gram_count": 22,
+      "distinct_char_bigram": 0.2118,
+      "distinct_chars": 103,
+      "para_cv_l": [
+        0.384,
+        0.444,
+        0.0,
+        0.311,
+        0.279,
+        0.317
+      ],
+      "climax_direction": {
+        "d_target": 0.0494,
+        "d_realised": -0.3399,
+        "cos_p_dq": 0.7083
+      },
+      "vram_after_load_gib": 5.75,
+      "peak_vram_gib": 6.37,
+      "elapsed_sec": 221.9,
+      "load_sec": 45.8,
+      "excerpt": "para3 (CV_L 0.0): 「彼は、自己の存在が鳴り響くのを感じた。」 repeated 14 times; paras 5-6 repeat 「彼は、淡々と、静かに、彼の世界を観察した。」"
+    },
+    "7B": {
+      "status": "NOT RUN",
+      "reason": "3B with the same config already shows loop collapse; 7B bf16 (~15GB download + load) would not fit one 600s call reliably and would only re-measure the same defect. Run after the loop fix."
+    }
+  }
+}
