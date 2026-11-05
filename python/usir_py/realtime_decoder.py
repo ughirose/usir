@@ -20,6 +20,8 @@ from typing import Any, Callable, Dict, List, NamedTuple, Optional, Sequence, Se
 
 import numpy as np
 
+from usir_py.text_metrics import max_kanji_repeat, max_word2_repeat
+
 # Conditional PyTorch / Transformers imports
 try:
     import torch
@@ -1141,6 +1143,29 @@ class NarrationStyleLogitsMask(_ProcBase):  # type: ignore[misc,valid-type]
         return scores
 
 
+_WORD_RUN_CH = "[一-鿿ァ-ヺ々ー]"
+_WORD_RUN_RE = re.compile(_WORD_RUN_CH + "+")
+_WORD_RUN_END_RE = re.compile(_WORD_RUN_CH + "+$")
+
+
+def sentence_collapse(sent: str) -> bool:
+    """True when one kanji occurs >= 3 times or a 2-char kanji/katakana string occurs >= 3 times in `sent`."""
+    return max_kanji_repeat(sent) >= 3 or max_word2_repeat(sent) >= 3
+
+
+def _lex_compound_filter(text: str, targets: Set[str]) -> Set[str]:
+    """Drops from `targets` every C2 for which (trailing kanji/katakana run R of `text`) + C2 is a prefix of a
+    kanji/katakana run (length >= 2) that occurs earlier in `text` (completing an already-used word is allowed)."""
+    m = _WORD_RUN_END_RE.search(text)
+    if not m:
+        return targets
+    run = m.group(0)
+    earlier = {w for w in _WORD_RUN_RE.findall(text[: m.start()]) if len(w) >= 2}
+    if not earlier:
+        return targets
+    return {c2 for c2 in targets if not any(w.startswith(run + c2) for w in earlier)}
+
+
 class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
     """Repetition penalty on content-word tokens only + kanji-bigram lexical decay.
 
@@ -1151,9 +1176,10 @@ class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
     def __init__(self, tokenizer: Any, n_ctx: int, content_mask: Sequence[bool], first_kanji_map: Dict[str, List[int]],
                  para_prefix: str, content_rep_penalty: float, lex_decay: float, lex_min_count: int = 1,
                  tail_cache: Optional[TailCache] = None, demo_ids: Optional[Dict[str, List[int]]] = None,
-                 demo_pen1: float = 4.0, demo_pen2: float = 10.0) -> None:
+                 demo_pen1: float = 4.0, demo_pen2: float = 10.0, compound_exempt: bool = False) -> None:
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
+        self.compound_exempt = bool(compound_exempt)
         self.demo_ids = demo_ids or {}
         self.demo_pen1 = float(demo_pen1)
         self.demo_pen2 = float(demo_pen2)
@@ -1206,7 +1232,10 @@ class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
         if self.lex_dec > 0 and tails is not None:
             lex_rows: List[List[int]] = []
             for r in range(len(rows)):
-                targets = lex_bigram_targets(self.para_prefix + tails[r], self.lex_min_count)
+                txt_r = self.para_prefix + tails[r]
+                targets = lex_bigram_targets(txt_r, self.lex_min_count)
+                if self.compound_exempt and targets:
+                    targets = _lex_compound_filter(txt_r, targets)
                 lst: List[int] = []
                 for c2 in sorted(targets):
                     lst.extend(self.first_kanji_map.get(c2, ()))
@@ -1286,6 +1315,9 @@ class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
         return scores
 
 
+_ADNOMINAL_END_CHARS = "たるいだな"
+
+
 class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
     """Momentum-scaled short-clause bias, syntactic finality gate and end-of-paragraph sentence closing."""
 
@@ -1297,7 +1329,14 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
                  noun_req: bool = False, sent_tail0: str = "", case_frame_gate: bool = False,
                  case_frame_penalty: float = 6.0, case_frame_min_chars: int = 18,
                  tail_cache: Optional[TailCache] = None, prev_len: Optional[int] = None,
-                 short_prev_gate: bool = False, short_prev_chars: int = 15) -> None:
+                 short_prev_gate: bool = False, short_prev_chars: int = 15,
+                 adnominal_guard: bool = False, adnominal_max_chars: int = 90, adnominal_cap: float = 2.0) -> None:
+        # adnominal_guard: the net positive '。' bias is capped at adnominal_cap when the text so far ends in
+        # た/る/い/だ/な (ambiguous 終止/連体) and the current sentence is shorter than adnominal_max_chars.
+        # Negative biases are unaffected; force_close (end-of-paragraph closing) is exempt.
+        self.adnominal_guard = bool(adnominal_guard)
+        self.adnominal_max_chars = int(adnominal_max_chars)
+        self.adnominal_cap = float(adnominal_cap)
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
         self.prev_len = prev_len
@@ -1329,7 +1368,7 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
     def __call__(self, ids: Any, scores: Any) -> Any:
         P = ids.shape[0]
         pids, cids = self.period_ids, self.comma_ids
-        tails = _tail_texts(self.tokenizer, ids, self.n_ctx, self.tail_cache) if (self.noun_req or self.gate_on) else None
+        tails = _tail_texts(self.tokenizer, ids, self.n_ctx, self.tail_cache) if (self.noun_req or self.gate_on or self.adnominal_guard) else None
         noun: Optional[List[bool]] = None
         conn: Optional[List[bool]] = None
         term: Optional[List[bool]] = None
@@ -1395,6 +1434,13 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
                     o.append(("p", self.close_boost))
             if self.gate_on and pids and conn is not None and conn[r]:
                 o.append(("p", self.gate_val))
+            if self.adnominal_guard and pids and tails is not None and not self.force_close:
+                full = self.ctx_tail + tails[r]
+                if (full[-1:] in _ADNOMINAL_END_CHARS
+                        and len(self.sent_tail0 + tails[r]) < self.adnominal_max_chars):
+                    net = sum(v for k_, v in o if k_ == "p")
+                    if net > self.adnominal_cap:
+                        o.append(("p", self.adnominal_cap - net))
         for j in range(max(len(o) for o in ops) if ops else 0):
             for key, iset in (("p", self.period_set), ("c", self.comma_set)):
                 sel = [(r, ops[r][j][1]) for r in range(P) if len(ops[r]) > j and ops[r][j][0] == key and ops[r][j][1] != 0.0]
@@ -1493,7 +1539,36 @@ class ClauseTwistedSMCDecoder:
         demo_pen2: float = 10.0,
         short_prev_gate: bool = False,
         short_prev_chars: int = 15,
+        rhythm_profile: str = "cycle",
+        steady_min_chars: int = 16,
+        steady_max_chars: int = 90,
+        steady_max_commas: int = 3,
+        adnominal_guard: bool = False,
+        cv_ceil: Optional[float] = None,
+        lex_compound_exempt: bool = False,
+        collapse_guard: bool = False,
+        collapse_penalty: float = 8.0,
     ) -> None:
+        # rhythm_profile      : "cycle" (default; short/medium/long by sentence index mod 3), "steady" (no positive '。' push and no
+        #                       '、' push; '。' sealed -12 below steady_min_chars, +3 above steady_max_chars, '、' -4 once the sentence
+        #                       has >= steady_max_commas commas) or "pulse" (cycle with positive '。' pushes capped at +3 and no
+        #                       long-mode comma push). Settable per paragraph (plain attribute).
+        # adnominal_guard     : positive '。' bias capped at +2.0 after た/る/い/だ/な while the sentence is < steady_max_chars
+        # cv_ceil             : optional upper edge of the CV_L band: SMC term -cv_gain * max(0, CV - cv_ceil) (None = floor only)
+        # lex_compound_exempt : lex_decay is not applied to a kanji C2 that completes (trailing run + C2) a kanji/katakana
+        #                       word already used earlier in the paragraph
+        # collapse_guard      : SMC log-weight -collapse_penalty for a candidate whose sentence contains one kanji >= 3 times or a
+        #                       2-char kanji/katakana string >= 3 times
+        self.rhythm_profile = rhythm_profile
+        self.steady_min_chars = int(steady_min_chars)
+        self.steady_max_chars = int(steady_max_chars)
+        self.steady_max_commas = int(steady_max_commas)
+        self.adnominal_guard = bool(adnominal_guard)
+        self.cv_ceil = None if cv_ceil is None else float(cv_ceil)
+        self.lex_compound_exempt = bool(lex_compound_exempt)
+        self.collapse_guard = bool(collapse_guard)
+        self.collapse_penalty = float(collapse_penalty)
+        self.current_well_idx = None  # set by the director before each paragraph (0 Narrative, 1 Dialogue, 2 Climax)
         # demo_decay          : demonstrative decay (それ その そこ あれ あの これ この). Within the paragraph so far, a token starting with a
         #                       demonstrative that already occurred once gets -demo_pen1, twice or more -demo_pen2 (independent of cr_pen / lex_decay)
         # short_prev_gate     : with case_frame_gate, a sentence that follows a complete sentence of <= short_prev_chars chars is not
@@ -1885,7 +1960,7 @@ class ClauseTwistedSMCDecoder:
             content, hira_only = [], []
             first_kanji: Dict[str, List[int]] = {}
             for i, sf in enumerate(surfaces):
-                st = sf.strip()
+                st = sf.strip().lstrip("\u2581").strip()
                 nk = sum(1 for ch in st if "一" <= ch <= "鿿")
                 kata = sum(1 for ch in st if "ァ" <= ch <= "ヺ")
                 content.append(nk >= 1 or (len(st) >= 2 and kata >= 2))
@@ -1902,7 +1977,7 @@ class ClauseTwistedSMCDecoder:
             surfaces = tk.batch_decode([[i] for i in range(len(tk))], skip_special_tokens=False)
             m: Dict[str, List[int]] = {d: [] for d in DEMONSTRATIVES}
             for i, sf in enumerate(surfaces):
-                st = sf.strip()
+                st = sf.strip().lstrip("\u2581").strip()
                 for d in DEMONSTRATIVES:
                     if st.startswith(d):
                         m[d].append(i)
@@ -1912,6 +1987,16 @@ class ClauseTwistedSMCDecoder:
 
     def _regime_active(self) -> bool:
         return bool(self.direction_steer and self.steering_active and abs(self._direction()) > self.phase_thr)
+
+    @property
+    def rhythm_profile(self) -> str:
+        return self._rhythm_profile
+
+    @rhythm_profile.setter
+    def rhythm_profile(self, value: str) -> None:
+        if value not in ("cycle", "steady", "pulse"):
+            raise ValueError(f"rhythm_profile must be cycle/steady/pulse, got {value!r}")
+        self._rhythm_profile = value
 
     def _rhythm_params(self, prefix: str):
         """(period_bias, comma_bias, clause_token_cap) of the base 3-beat rhythm, or None when not applicable.
@@ -1924,19 +2009,33 @@ class ClauseTwistedSMCDecoder:
         n_sent = len(re.findall("[\u3002\uff01\uff1f!?]", prefix))
         tail = re.split("[\u3002\uff01\uff1f!?]", prefix)[-1]
         commas = tail.count("\u3001")
+        slen = len(tail)
+        prof = self.rhythm_profile
+        if prof == "steady":
+            # no positive '。' push, no '、' push; hold below steady_min_chars, mild push above steady_max_chars
+            if slen < self.steady_min_chars:
+                pb = -12.0
+            elif slen > self.steady_max_chars:
+                pb = 3.0
+            else:
+                pb = 0.0
+            cb = -4.0 if commas >= self.steady_max_commas else 0.0
+            return (pb, cb, 20, False)
         mode = n_sent % 3
         if mode == 0:        # short: single clause, 8-18 chars: commas forbidden, '。' pushed
-            return (8.0, -12.0, 13, True)
+            return (3.0 if prof == "pulse" else 8.0, -12.0, 13, True)
         if mode == 1:        # medium: two clauses
-            return (-12.0, 4.0, 20, False) if commas < 1 else (8.0, -10.0, 20, True)
+            if commas < 1:
+                return (-12.0, 4.0, 20, False)
+            return (3.0 if prof == "pulse" else 8.0, -10.0, 20, True)
         # long (55-85 chars): '。' hard-sealed (-12) while the sentence is shorter than 55 chars (commas link the clauses;
         # at >= 5 commas the seal is released as a runaway guard); released after 55; pushed to close beyond 85
-        slen = len(tail)
+        # (pulse: pushes capped at +3, no comma push in the sealed phase)
         if slen < 55 and commas < 5:
-            return (-12.0, 4.0, 22, False)
+            return (-12.0, 0.0 if prof == "pulse" else 4.0, 22, False)
         if slen >= 85:
-            return (10.0, -10.0, 14, False)
-        return (6.0, -6.0, 18, False)
+            return (3.0 if prof == "pulse" else 10.0, -10.0, 14, False)
+        return (3.0 if prof == "pulse" else 6.0, -6.0, 18, False)
 
     def _history_ngram_map(self, n: Optional[int] = None):
         """{(t1,..,t_{n-1}): {t_n,...}} over history_text (all previous paragraphs), cached by (text, n)."""
@@ -1952,6 +2051,16 @@ class ClauseTwistedSMCDecoder:
                 m.setdefault(tuple(ids[i:i + n - 1]), set()).add(ids[i + n - 1])
             cache[n] = m
         return cache[n]
+
+    def _collapse_hits(self, prefix: str, cand_texts: Sequence[str]) -> np.ndarray:
+        """1 where the sentence a candidate would complete / extend (open sentence of `prefix` + candidate, cut at its
+        first sentence end) contains one kanji >= 3 times or a 2-char kanji/katakana string >= 3 times
+        (short-range collapse such as 歯と歯が歯を噛んだ)."""
+        hits = np.zeros(len(cand_texts), dtype=bool)
+        open_sent = re.split("[。！？!?]", prefix)[-1]
+        for i, c in enumerate(cand_texts):
+            hits[i] = sentence_collapse(re.split("[。！？!?]", open_sent + c)[0])
+        return hits
 
     def _char8_hits(self, prefix: str, cand_texts: Sequence[str]) -> np.ndarray:
         """1 where a candidate would create a (char8_max+1)-th occurrence of some 8-char substring.
@@ -2131,7 +2240,7 @@ class ClauseTwistedSMCDecoder:
             tokenizer_ref, n_ctx, content_l or [], first_kanji_map, prefix, cr_pen, lex_dec, self.lex_min_count,
             tail_cache=tail_cache,
             demo_ids=self._demo_token_ids() if self.demo_decay else None,
-            demo_pen1=self.demo_pen1, demo_pen2=self.demo_pen2,
+            demo_pen1=self.demo_pen1, demo_pen2=self.demo_pen2, compound_exempt=self.lex_compound_exempt,
         ) if (cr_pen > 1.0 or lex_dec > 0 or self.demo_decay) else None
 
         ngram_n = self.ngram_ban
@@ -2164,7 +2273,8 @@ class ClauseTwistedSMCDecoder:
             noun_req=noun_req, sent_tail0=sent_tail0, case_frame_gate=self.case_frame_gate,
             case_frame_penalty=self.case_frame_penalty, case_frame_min_chars=self.case_frame_min_chars,
             tail_cache=tail_cache, prev_len=prev_len, short_prev_gate=self.short_prev_gate,
-            short_prev_chars=self.short_prev_chars,
+            short_prev_chars=self.short_prev_chars, adnominal_guard=self.adnominal_guard,
+            adnominal_max_chars=self.steady_max_chars,
         )
 
         class _RowTemp(LogitsProcessor):
@@ -2405,6 +2515,8 @@ class ClauseTwistedSMCDecoder:
                     mu = float(np.mean(lens))
                     cv = float(np.std(lens) / mu) if mu > 0 else 0.0
                     cvp[ci] = -self.cv_gain * max(0.0, self.cv_floor - cv)
+                    if self.cv_ceil is not None:
+                        cvp[ci] -= self.cv_gain * max(0.0, cv - self.cv_ceil)
             if cvp.any():
                 w = w + cvp
                 self.stats["cv_potential_applied"] = self.stats.get("cv_potential_applied", 0) + 1
@@ -2414,6 +2526,12 @@ class ClauseTwistedSMCDecoder:
         if reg_hits.any():
             w = w - self.register_penalty * reg_hits
             self.stats["register_hits"] = self.stats.get("register_hits", 0) + int(reg_hits.sum())
+
+        if self.collapse_guard:
+            col = self._collapse_hits(prefix, cand_texts)
+            if col.any():
+                w = w - self.collapse_penalty * col
+                self.stats["collapse_cands"] = self.stats.get("collapse_cands", 0) + int(col.sum())
 
         blocked = self._blocked_candidates(prefix, cand_texts)
         if self.syntactic_gate:

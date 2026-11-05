@@ -1283,17 +1283,42 @@ def generate_experiment_report_markdown(
     return "\n".join(lines)
 
 
-def _make_hook(seed: int, decoder: Any, reseed: bool, p_jitter: float):
-    """Per-paragraph hook: reseed torch; optionally scale integrator.p by (1 + p_jitter) (noise-floor control)."""
+def _make_hook(seed: int, decoder: Any, reseed: bool, p_jitter: float,
+               rhythm_profile: Optional[str] = None, climax_rhythm_profile: Optional[str] = None):
+    """Per-paragraph hook: reseed torch; optionally scale integrator.p by (1 + p_jitter) (noise-floor control);
+    optionally set decoder.rhythm_profile per paragraph (climax_rhythm_profile when the director marked the paragraph
+    Climax, i.e. decoder.current_well_idx == 2, else rhythm_profile)."""
     base = _make_reseed_hook(seed) if (reseed and TORCH_AVAILABLE) else None
+    prof_on = decoder is not None and (rhythm_profile is not None or climax_rhythm_profile is not None)
 
     def hook(k: int) -> None:
         if base is not None:
             base(k)
         if p_jitter and decoder is not None:
             decoder.integrator.p = decoder.integrator.p * (1.0 + p_jitter)
+        if prof_on:
+            is_climax = getattr(decoder, "current_well_idx", None) == 2
+            prof = climax_rhythm_profile if (is_climax and climax_rhythm_profile) else (rhythm_profile or "cycle")
+            decoder.rhythm_profile = prof
 
-    return hook if (base is not None or p_jitter) else None
+    return hook if (base is not None or p_jitter or prof_on) else None
+
+
+_THINK_RE = re.compile(r"<think>.*?</think>\s*", re.DOTALL)
+
+
+def strip_think(text: str) -> str:
+    """Removes <think>...</think> blocks (reasoning models) from generated text."""
+    return _THINK_RE.sub("", text) if text and "<think>" in text else text
+
+
+def apply_chat_template_compat(tokenizer: Any, messages: List[Dict[str, str]], **kwargs: Any) -> str:
+    """tokenizer.apply_chat_template with enable_thinking=False when the template/tokenizer accepts it
+    (Qwen3-style); falls back to the plain call on TypeError."""
+    try:
+        return tokenizer.apply_chat_template(messages, enable_thinking=False, **kwargs)
+    except TypeError:
+        return tokenizer.apply_chat_template(messages, **kwargs)
 
 
 def _make_reseed_hook(seed: int):
@@ -1363,12 +1388,25 @@ def run_longform_director(
     scene_beats: Optional[List[str]] = None,
     roles: Optional[List[str]] = None,
     style_genome: Optional[Any] = None,
+    rhythm_profile: Optional[str] = None,
+    climax_rhythm_profile: Optional[str] = None,
+    adnominal_guard: bool = False,
+    cv_ceil: Optional[float] = None,
+    lex_compound_exempt: bool = False,
+    collapse_guard: bool = False,
+    target_line_chars: Optional[int] = None,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
 
     scene_beats / roles (Phase 21): paragraph k is generated with an extra instruction in the chat-template
     user text (not in the narrated text): "第k段落の筋: <beat k>。登場人物は役割名（<roles>）で呼び、固有名詞を作らない。"
+    Phase 23: rhythm_profile ("cycle"/"steady"/"pulse"; None = decoder default "cycle") is applied to every paragraph,
+    climax_rhythm_profile to the paragraph(s) whose well is Climax (director well index 2, passed through
+    decoder.current_well_idx). adnominal_guard / cv_ceil / lex_compound_exempt / collapse_guard are forwarded to the
+    decoder. target_line_chars (not None) adds ``formatted_text`` (usir_py.text_format.format_novel). Chat templates are
+    rendered with enable_thinking=False when accepted; <think>...</think> is stripped from the returned texts.
+
     Beat k is clamped to the last beat when there are fewer beats than paragraphs; the beat used is returned in
     ``paragraphs[k]["beat"]``. The runner supplies the per-paragraph chat prompt to the director through
     ``paragraph_prompt_fn``. Both None = previous behaviour (system/user text unchanged).
@@ -1431,13 +1469,15 @@ def run_longform_director(
             if extra:
                 sys_txt = "あなたは小説家です。三人称・常体の小説本文だけを書きます。解説、要約、挨拶、感想、見出し、括弧書きは書きません。登場人物は指示された役割名でのみ呼び、人名や固有名詞を勝手に作らず、情景・身体感覚の描写に徹します。"
                 usr_txt = f"題材：{theme}\n{extra}\n三人称・常体で、この筋に沿った小説本文の続きだけを書いてください。人名・固有名詞は出さないでください。"
-            return tokenizer.apply_chat_template(
+            return apply_chat_template_compat(
+                tokenizer,
                 [{"role": "system", "content": sys_txt}, {"role": "user", "content": usr_txt}],
                 add_generation_prompt=True,
                 tokenize=False,
             )
         if hasattr(tokenizer, "apply_chat_template"):
-            return tokenizer.apply_chat_template(
+            return apply_chat_template_compat(
+                tokenizer,
                 [{"role": "user", "content": f"{theme}を題材に、日本語の小説の一節を書いてください。{extra}"}],
                 add_generation_prompt=True,
                 tokenize=False,
@@ -1474,6 +1514,8 @@ def run_longform_director(
             case_frame_min_chars=int(case_frame_min_chars), stem_guard=bool(stem_guard) and anti_repeat,
             min_p=0.04 if anti_repeat else 0.0,
             demo_decay=bool(demo_decay), short_prev_gate=bool(short_prev_gate),
+            rhythm_profile=rhythm_profile or "cycle", adnominal_guard=bool(adnominal_guard), cv_ceil=cv_ceil,
+            lex_compound_exempt=bool(lex_compound_exempt), collapse_guard=bool(collapse_guard),
         )
         decoder.repeat_use_context = bool(carry_context)
         generator = "llm_clause_smc"
@@ -1490,7 +1532,7 @@ def run_longform_director(
         min_clauses_per_paragraph=min_clauses_per_paragraph,
         # Steering gain/temperature act only in the Climax paragraph and the one after it.
         climax_only_steering=steering,
-        paragraph_hook=_make_hook(seed, decoder, reseed_per_paragraph, p_jitter),
+        paragraph_hook=_make_hook(seed, decoder, reseed_per_paragraph, p_jitter, rhythm_profile, climax_rhythm_profile),
         carry_context=carry_context,
         min_para_chars=min_para_chars,
         max_para_chars=max_para_chars,
@@ -1500,7 +1542,9 @@ def run_longform_director(
     )
     wall = time.time() - t0
 
-    full_text = res["full_text"]
+    for _p in res["paragraphs"]:
+        _p["text"] = strip_think(_p["text"])
+    full_text = strip_think(res["full_text"])
     qda = compute_three_phase_qda_distance(full_text, domain="novel")
     res_summary = {
         "theme": theme,
@@ -1544,6 +1588,14 @@ def run_longform_director(
         ],
         "full_text": full_text,
     }
+    res_summary["rhythm"] = {"rhythm_profile": rhythm_profile, "climax_rhythm_profile": climax_rhythm_profile,
+                             "adnominal_guard": adnominal_guard, "cv_ceil": cv_ceil,
+                             "lex_compound_exempt": lex_compound_exempt, "collapse_guard": collapse_guard}
+    if target_line_chars:
+        from usir_py.text_format import format_novel
+
+        res_summary["formatted_text"] = format_novel([p["text"] for p in res_summary["paragraphs"]],
+                                                     int(target_line_chars), seed)
     res_summary["direction"] = _direction_metrics(res_summary["paragraphs"])
     res_summary["scene_beats"] = res.get("scene_beats")
     res_summary["roles"] = res.get("roles")

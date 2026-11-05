@@ -577,6 +577,8 @@ class HSMMLongformDirector:
                     sep = "\n　" if tail else ""
                     decoder.chat_prefix = decoder._base_chat_prefix + tail + sep
                     para_prefix = ""
+                if hasattr(decoder, "current_well_idx"):
+                    decoder.current_well_idx = int(well_idx)   # lets a paragraph hook switch decoder profiles for Climax
                 if paragraph_hook is not None:
                     paragraph_hook(k)
 
