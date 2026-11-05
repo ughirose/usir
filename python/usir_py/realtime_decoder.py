@@ -878,7 +878,11 @@ _POLITE_STEMS = ("まし", "でし", "ませ")
 _CONNECTIVE_SUFFIXES = ("つれ", "ながら", "から", "ので", "たら", "なら", "つつ")
 _CONNECTIVE_CHARS = "てでにをがはもとばしりず"  # 'く' is handled separately (hiragana + く: なく よく; kanji + く: 吹く is terminal)
 _TERMINAL_CHARS = "ただるいう"
-_FRAGMENT_RE = re.compile("(?:" + "|".join(_CONNECTIVE_SUFFIXES) + "|[" + _CONNECTIVE_CHARS + "]|(?<=[ぁ-ゟ])く)。")
+# single-kanji i-adjective stems whose stem+く is overwhelmingly the 連用形 (薄く 白く 高く), never a godan verb terminal.
+# Excluded on purpose: godan-verb stems (行 書 聞 吹 鳴 咲 開 動 歩 届 続 輝 響 傾 乾 抱 描 築 導 除 省 頷 囁 置 引 泣 働 浮 向 着 焼 招 磨 解 敷 吐 突 付 就 退 空 巻 裂 嘆 湧 沸 拭 叩 欠)
+# and nouns that end sentences (近く 遠く).
+_I_ADJ_STEMS = frozenset("薄白黒赤青暗重軽深高低強弱鋭鈍広狭浅濃淡長短早速遅古若熱厚固硬堅太細多良悪痛甘辛苦寒暑丸粗荒緩温酸渋憎怖眩無")
+_FRAGMENT_RE = re.compile("(?:" + "|".join(_CONNECTIVE_SUFFIXES) + "|[" + _CONNECTIVE_CHARS + "]|(?<=[ぁ-ゟ])く|(?<=[" + "".join(sorted(_I_ADJ_STEMS)) + "])く)。")
 
 
 def _is_connective_end(s: str) -> bool:
@@ -887,7 +891,7 @@ def _is_connective_end(s: str) -> bool:
     if not s:
         return False
     if s[-1] == "く":
-        return len(s) > 1 and "ぁ" <= s[-2] <= "ゟ"
+        return len(s) > 1 and ("ぁ" <= s[-2] <= "ゟ" or s[-2] in _I_ADJ_STEMS)
     return s.endswith(_CONNECTIVE_SUFFIXES) or s[-1] in _CONNECTIVE_CHARS
 
 
@@ -941,6 +945,7 @@ def count_non_jis_kanji(text: str) -> int:
 _CASE_PARTICLE_RE = re.compile("(?:[一-鿿ァ-ヺ々ー]|それ|これ|あれ|どれ)[がはも](?![るりれらっろ])")
 _NOUN_END_RE = re.compile("[一-鿿ァ-ヺ々ー]{2,}$")
 _NOUN_RE = re.compile("[一-鿿ァ-ヺ]")
+DEMONSTRATIVES = ("それ", "その", "そこ", "あれ", "あの", "これ", "この")
 # a single formal-noun kanji after a particle / kana (…の中, …た時): the predicate is missing, whatever the subject
 _FORMAL_NOUN_END_RE = re.compile("(?<![一-鿿ァ-ヺ々ー])[中時事物所為様方上下前後間]$")
 
@@ -956,15 +961,20 @@ def narration_row_flags(tails: Sequence[str], init_depth: int) -> Tuple[List[boo
     return narr, stem
 
 
-def case_frame_ok(sentence: str) -> bool:
+def case_frame_ok(sentence: str, prev_len: Optional[int] = None, short_prev: int = 15) -> bool:
     """True when the sentence has a case-marked subject / topic (noun + が/は/も, それ・これ・あれ・どれ + が/は/も)
     or ends with a noun run (>= 2 kanji / katakana chars, 体言止め).
     A sentence ending in a single formal-noun kanji (中 時 事 物 所 為 様 方 上 下 前 後 間) after a particle / kana
     (雨が降った時, 彼は部屋の中) has no predicate and is rejected regardless of its subject.
 
-    A particle directly followed by る/り/れ/ら/っ/ろ is read as okurigana of a verb (広がった, 上がる, 曲がり), not as a case particle."""
+    A particle directly followed by る/り/れ/ら/っ/ろ is read as okurigana of a verb (広がった, 上がる, 曲がり), not as a case particle.
+
+    prev_len (length of the preceding complete sentence): when given and <= short_prev, a sentence ending in a noun run is NOT ok
+    (a predicate ending is required after a short sentence; a subject is not)."""
     if _FORMAL_NOUN_END_RE.search(sentence.rstrip()):
         return False
+    if prev_len is not None and prev_len <= short_prev:
+        return not _NOUN_END_RE.search(sentence.rstrip())
     if _CASE_PARTICLE_RE.search(sentence):
         return True
     return bool(_NOUN_END_RE.search(sentence.rstrip()))
@@ -1140,9 +1150,13 @@ class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
 
     def __init__(self, tokenizer: Any, n_ctx: int, content_mask: Sequence[bool], first_kanji_map: Dict[str, List[int]],
                  para_prefix: str, content_rep_penalty: float, lex_decay: float, lex_min_count: int = 1,
-                 tail_cache: Optional[TailCache] = None) -> None:
+                 tail_cache: Optional[TailCache] = None, demo_ids: Optional[Dict[str, List[int]]] = None,
+                 demo_pen1: float = 4.0, demo_pen2: float = 10.0) -> None:
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
+        self.demo_ids = demo_ids or {}
+        self.demo_pen1 = float(demo_pen1)
+        self.demo_pen2 = float(demo_pen2)
         self.content_mask = list(content_mask)
         self._cm_arr = np.asarray(self.content_mask, dtype=bool)
         self.first_kanji_map = first_kanji_map
@@ -1155,7 +1169,7 @@ class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
     def __call__(self, ids: Any, scores: Any) -> Any:
         V = scores.shape[-1]
         rows = ids.tolist()
-        tails = _tail_texts(self.tokenizer, ids, self.n_ctx, self.tail_cache) if self.lex_dec > 0 else None
+        tails = _tail_texts(self.tokenizer, ids, self.n_ctx, self.tail_cache) if (self.lex_dec > 0 or self.demo_ids) else None
         nc = len(self._cm_arr)
         if self.cr_pen > 1.0:
             per_row: List[List[int]] = []
@@ -1171,6 +1185,24 @@ class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
                 sc[pos] = sc[pos] / self.cr_pen
                 sc[neg] = sc[neg] * self.cr_pen
                 scores[r_i, c_i] = sc
+        if self.demo_ids and tails is not None:
+            # demonstrative decay (paragraph scope): a demonstrative already used once gets -demo_pen1, twice or more -demo_pen2
+            rows1: List[List[int]] = []
+            rows2: List[List[int]] = []
+            for r in range(len(rows)):
+                txt = self.para_prefix + tails[r]
+                l1: List[int] = []
+                l2: List[int] = []
+                for d, tids in self.demo_ids.items():
+                    c = txt.count(d)
+                    if c == 1:
+                        l1.extend(tids)
+                    elif c >= 2:
+                        l2.extend(tids)
+                rows1.append(l1)
+                rows2.append(l2)
+            _add_pairs(scores, rows1, -self.demo_pen1)
+            _add_pairs(scores, rows2, -self.demo_pen2)
         if self.lex_dec > 0 and tails is not None:
             lex_rows: List[List[int]] = []
             for r in range(len(rows)):
@@ -1264,9 +1296,13 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
                  gate_on: bool = False, gate_val: float = -12.0, ctx_tail: str = "",
                  noun_req: bool = False, sent_tail0: str = "", case_frame_gate: bool = False,
                  case_frame_penalty: float = 6.0, case_frame_min_chars: int = 18,
-                 tail_cache: Optional[TailCache] = None) -> None:
+                 tail_cache: Optional[TailCache] = None, prev_len: Optional[int] = None,
+                 short_prev_gate: bool = False, short_prev_chars: int = 15) -> None:
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
+        self.prev_len = prev_len
+        self.short_prev_gate = bool(short_prev_gate)
+        self.short_prev_chars = int(short_prev_chars)
         self.caps = [float(c) for c in caps]
         self.row_bias = [float(b) for b in row_bias]
         self.period_set = _as_idxset(period_ids)
@@ -1300,7 +1336,8 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
         if self.noun_req and tails is not None:
             # a positive '。' bias fires only once the current sentence has a subject (case_frame_gate) / a noun
             if self.case_frame_gate:
-                noun = [case_frame_ok(self.sent_tail0 + t) for t in tails]
+                pl = self.prev_len if self.short_prev_gate else None
+                noun = [case_frame_ok(self.sent_tail0 + t, pl, self.short_prev_chars) for t in tails]
             else:
                 noun = [bool(_NOUN_RE.search(self.sent_tail0 + t)) for t in tails]
         if self.gate_on and tails is not None:
@@ -1451,7 +1488,22 @@ class ClauseTwistedSMCDecoder:
         case_frame_gate: bool = False,
         case_frame_penalty: float = 6.0,
         case_frame_min_chars: int = 18,
+        demo_decay: bool = False,
+        demo_pen1: float = 4.0,
+        demo_pen2: float = 10.0,
+        short_prev_gate: bool = False,
+        short_prev_chars: int = 15,
     ) -> None:
+        # demo_decay          : demonstrative decay (それ その そこ あれ あの これ この). Within the paragraph so far, a token starting with a
+        #                       demonstrative that already occurred once gets -demo_pen1, twice or more -demo_pen2 (independent of cr_pen / lex_decay)
+        # short_prev_gate     : with case_frame_gate, a sentence that follows a complete sentence of <= short_prev_chars chars is not
+        #                       case-frame ok when it ends in a noun run (a predicate ending is required; a subject is not)
+        self.demo_decay = bool(demo_decay)
+        self.demo_pen1 = float(demo_pen1)
+        self.demo_pen2 = float(demo_pen2)
+        self.short_prev_gate = bool(short_prev_gate)
+        self.short_prev_chars = int(short_prev_chars)
+        self._demo_ids = None
         # case_frame_penalty / case_frame_min_chars : with case_frame_gate, a sentence < case_frame_min_chars chars that has no
         #                       case frame gets -case_frame_penalty on '。' (not under force_close)
         self.case_frame_penalty = float(case_frame_penalty)
@@ -1843,6 +1895,21 @@ class ClauseTwistedSMCDecoder:
             self._tok_class = (content, first_kanji, hira_only)
         return self._tok_class
 
+    def _demo_token_ids(self) -> Dict[str, List[int]]:
+        """{demonstrative: [token ids whose stripped surface starts with it]}, cached per decoder."""
+        if self._demo_ids is None:
+            tk = self.tokenizer
+            surfaces = tk.batch_decode([[i] for i in range(len(tk))], skip_special_tokens=False)
+            m: Dict[str, List[int]] = {d: [] for d in DEMONSTRATIVES}
+            for i, sf in enumerate(surfaces):
+                st = sf.strip()
+                for d in DEMONSTRATIVES:
+                    if st.startswith(d):
+                        m[d].append(i)
+                        break
+            self._demo_ids = {d: v for d, v in m.items() if v}
+        return self._demo_ids
+
     def _regime_active(self) -> bool:
         return bool(self.direction_steer and self.steering_active and abs(self._direction()) > self.phase_thr)
 
@@ -2063,7 +2130,9 @@ class ClauseTwistedSMCDecoder:
         content_proc = ContentRepLogits(
             tokenizer_ref, n_ctx, content_l or [], first_kanji_map, prefix, cr_pen, lex_dec, self.lex_min_count,
             tail_cache=tail_cache,
-        ) if (cr_pen > 1.0 or lex_dec > 0) else None
+            demo_ids=self._demo_token_ids() if self.demo_decay else None,
+            demo_pen1=self.demo_pen1, demo_pen2=self.demo_pen2,
+        ) if (cr_pen > 1.0 or lex_dec > 0 or self.demo_decay) else None
 
         ngram_n = self.ngram_ban
         hist_map = self._history_ngram_map() if ngram_n >= 2 else {}
@@ -2086,13 +2155,16 @@ class ClauseTwistedSMCDecoder:
             # Shock regime (Climax short assertions): the positive '。' push also requires a case frame
             noun_req = True
         sent_tail0 = re.split("[。！？!?]", prefix)[-1]
+        _done = [x.strip() for x in re.split("[。！？!?]", prefix)[:-1] if x.strip()]
+        prev_len = len(_done[-1]) if _done else None
         boundary_proc = BoundaryBiasLogits(
             tokenizer_ref, n_ctx, caps, self._row_period_bias(P), period_ids, comma_ids,
             ph_period=ph_period, ph_comma=ph_comma, dyn_len=dyn_len, dir_d=dir_d, ramp_gain=ramp_gain,
             force_close=force_close, close_boost=close_boost, gate_on=gate_on, gate_val=gate_val, ctx_tail=ctx_tail,
             noun_req=noun_req, sent_tail0=sent_tail0, case_frame_gate=self.case_frame_gate,
             case_frame_penalty=self.case_frame_penalty, case_frame_min_chars=self.case_frame_min_chars,
-            tail_cache=tail_cache,
+            tail_cache=tail_cache, prev_len=prev_len, short_prev_gate=self.short_prev_gate,
+            short_prev_chars=self.short_prev_chars,
         )
 
         class _RowTemp(LogitsProcessor):

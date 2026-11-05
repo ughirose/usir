@@ -1358,6 +1358,8 @@ def run_longform_director(
     cv_gain: float = 25.0,
     min_para_chars: int = 0,
     max_para_chars: int = 0,
+    demo_decay: bool = False,
+    short_prev_gate: bool = False,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
@@ -1426,6 +1428,7 @@ def run_longform_director(
             case_frame_gate=bool(case_frame_gate), case_frame_penalty=float(case_frame_penalty),
             case_frame_min_chars=int(case_frame_min_chars), stem_guard=bool(stem_guard) and anti_repeat,
             min_p=0.04 if anti_repeat else 0.0,
+            demo_decay=bool(demo_decay), short_prev_gate=bool(short_prev_gate),
         )
         decoder.repeat_use_context = bool(carry_context)
         generator = "llm_clause_smc"
