@@ -15,6 +15,7 @@ Usage:  cd python && uv run python ../scripts/build_aozora_style_atlas.py
 
 from __future__ import annotations
 
+import argparse
 import json
 import pickle
 import sys
@@ -50,13 +51,15 @@ def featurize_all(entries: List[Dict]) -> Dict[str, Dict[str, Dict]]:
     return out
 
 
-def lowo(author_ids, works_by_author, feats, shrinkage: str, full_gmms: Dict[str, sa.Gmm]) -> Dict:
+def lowo(author_ids, works_by_author, feats, shrinkage: str, full_gmms: Dict[str, sa.Gmm],
+         mode_assign: str = "rule", dialogue: Dict = None) -> Dict:
     rows = []
     for aid in author_ids:
         wids = [w for w in works_by_author[aid] if len(feats[aid][w]["Z"])]
         for held in wids:
             rest = [(w, feats[aid][w]["Z"]) for w in wids if w != held]
-            reduced = sa.Gmm.from_binary(sa.distill_genome(rest, shrinkage=shrinkage))
+            dlg = {w: dialogue[(aid, w)] for w, _ in rest} if mode_assign == "quantile" else None
+            reduced = sa.Gmm.from_binary(sa.distill_genome(rest, shrinkage=shrinkage, mode_assign=mode_assign, dialogue=dlg))
             gm = dict(full_gmms)
             gm[aid] = reduced
             Z = feats[aid][held]["Z"]
@@ -72,6 +75,7 @@ def lowo(author_ids, works_by_author, feats, shrinkage: str, full_gmms: Dict[str
                       "correct": sum(r["correct"] for r in rows if r["author_id"] == a)} for a in author_ids}
     return {
         "shrinkage": shrinkage,
+        "mode_assign": mode_assign,
         "n_works": n,
         "accuracy": sum(r["correct"] for r in rows) / n,
         "top3_accuracy": sum(r["rank_of_truth"] <= 3 for r in rows) / n,
@@ -82,7 +86,66 @@ def lowo(author_ids, works_by_author, feats, shrinkage: str, full_gmms: Dict[str
     }
 
 
+def main_quantile() -> None:
+    """Phase 26.1: quantile 3-mode genomes -> artifacts/style_atlas/quantile/ (existing files untouched)."""
+    qdir = OUT_DIR / "quantile"
+    entries = load_manifest_texts("novel")
+    labels = {e["author_id"]: e["author_ja"] for e in entries}
+    author_ids = sorted(labels)
+    feats = featurize_all(entries)
+    works_by_author = {a: [e["work_id"] for e in entries if e["author_id"] == a] for a in author_ids}
+    author_works = {a: [(e["work_id"], e["text"]) for e in entries if e["author_id"] == a] for a in author_ids}
+    dialogue = {(e["author_id"], e["work_id"]): sa.quote_ratios(e["text"]) for e in entries}
+
+    built = sa.build_atlas(author_works, qdir, features=feats, mode_assign="quantile")
+    failed = [(a, sh) for a, v in built.items() for sh, au in v["audit"].items() if not au["passed"]]
+    print("cleanroom gate (quantile):", "all passed" if not failed else f"FAILED {failed}")
+
+    gm_q = {"scaled": sa.load_atlas_gmms(qdir), "legacy": sa.load_atlas_gmms(qdir / "legacy")}
+    gm_rule = {"scaled": sa.load_atlas_gmms(OUT_DIR), "legacy": sa.load_atlas_gmms(OUT_DIR / "legacy")}
+    dist_q = {sh: sa.distance_matrices(g) for sh, g in gm_q.items()}
+    lowo_q = {sh: lowo(author_ids, works_by_author, feats, sh, gm_q[sh], "quantile", dialogue) for sh in gm_q}
+    lowo_rule = {sh: lowo(author_ids, works_by_author, feats, sh, gm_rule[sh]) for sh in gm_rule}
+    for tag, res in (("quantile", lowo_q), ("rule", lowo_rule)):
+        for sh, r in res.items():
+            print(f"LOWO[{tag}/{sh}] acc={r['accuracy']:.3f} top3={r['top3_accuracy']:.3f} n={r['n_works']}")
+
+    def mw2_vs_w2(d):
+        a, b = np.array(d["mw2"]), np.array(d["w2_single_gaussian"])
+        iu = np.triu_indices(len(a), 1)
+        diff = np.abs(a - b)[iu]
+        return {"mean_abs_diff": float(diff.mean()), "max_abs_diff": float(diff.max()),
+                "mean_mw2": float(a[iu].mean()), "mean_w2": float(b[iu].mean())}
+
+    authors = {}
+    for a in author_ids:
+        authors[a] = {
+            "label_ja": labels[a],
+            "n_windows": built[a]["profile"]["n_windows"],
+            "mode_weights_quantile": {sh: [float(x) for x in gm_q[sh][a].weights] for sh in gm_q},
+            "mode_weights_rule": [float(x) for x in gm_rule["scaled"][a].weights],
+            "centroid_distance_between_modes": {
+                f"{i}-{j}": float(np.linalg.norm(gm_q["scaled"][a].means[i] - gm_q["scaled"][a].means[j]))
+                for i in range(3) for j in range(i + 1, 3)},
+            "cleanroom_gate": {sh: au["passed"] for sh, au in built[a]["audit"].items()},
+        }
+    out = {
+        "mode_assign": "quantile (Dialogue top25% by quote ratio; Climax top25% of rest by z(g_shock)+z(||p||); rest Narration)",
+        "authors": authors,
+        "mw2_vs_single_gaussian": {"quantile": {sh: mw2_vs_w2(d) for sh, d in dist_q.items()},
+                                   "rule": {sh: mw2_vs_w2(sa.distance_matrices(g)) for sh, g in gm_rule.items()}},
+        "distances_quantile": dist_q,
+        "lowo": {"quantile": lowo_q, "rule": lowo_rule},
+    }
+    (qdir / "atlas.json").write_text(json.dumps(out, ensure_ascii=False, indent=1) + chr(10), encoding="utf-8")
+    print(f"-> {qdir / 'atlas.json'}")
+
+
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--mode-assign", choices=["rule", "quantile"], default="rule")
+    if ap.parse_args().mode_assign == "quantile":
+        return main_quantile()
     entries = load_manifest_texts("novel")
     labels = {e["author_id"]: e["author_ja"] for e in entries}
     titles = {(e["author_id"], e["work_id"]): e["title"] for e in entries}

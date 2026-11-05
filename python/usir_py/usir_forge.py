@@ -315,6 +315,57 @@ def classify_mode_24d(z: Union[Sequence[float], np.ndarray]) -> int:
         return 0  # Narration
 
 
+QUANTILE_MIN_WINDOWS = 20
+QUANTILE_DIALOGUE_FRACTION = 0.25
+QUANTILE_CLIMAX_FRACTION = 0.25
+
+
+def _zscore(x: np.ndarray) -> np.ndarray:
+    sd = float(np.std(x))
+    if sd < 1e-12:
+        return np.zeros_like(x, dtype=np.float64)
+    return (x - float(np.mean(x))) / sd
+
+
+def _top_k_indices(values: np.ndarray, candidates: np.ndarray, k: int) -> np.ndarray:
+    """Indices (from ``candidates``) of the k largest values; ties broken by smaller index."""
+    order = sorted(candidates.tolist(), key=lambda i: (-float(values[i]), i))
+    return np.asarray(order[:k], dtype=np.int64)
+
+
+def assign_modes_quantile(Z: Union[np.ndarray, Sequence[Sequence[float]]], dialogue: Sequence[float]) -> Optional[np.ndarray]:
+    """Corpus-level quantile 3-mode assignment (mode_assign="quantile").
+
+    Z: (n, 24) window vectors of ONE corpus (one author); dialogue: (n,) per-window dialogue
+    signal (quote-character ratio).  Mode 1 (Dialogue) = top 25% by ``dialogue``; of the rest,
+    Mode 2 (Climax) = top 25% by z(g_shock) + z(||p||) (z-scored within the corpus, equal weights;
+    g_shock and ||p|| are the quantities classify_mode_24d uses); the rest = Mode 0 (Narration).
+    Ties are broken by smaller index.  Returns None (caller falls back to the "rule") when
+    n < QUANTILE_MIN_WINDOWS.
+    """
+    Z = np.asarray(Z, dtype=np.float64).reshape(-1, 24)
+    n = len(Z)
+    d = np.asarray(dialogue, dtype=np.float64).reshape(-1)
+    if d.shape[0] != n:
+        raise ValueError(f"dialogue length {d.shape[0]} != number of windows {n}")
+    if n < QUANTILE_MIN_WINDOWS:
+        return None
+    q, p = Z[:, :12], Z[:, 12:]
+    g_shock = (q[:, 3] + q[:, 7] + q[:, 11]) / 3.0
+    p_norm = np.linalg.norm(p, axis=1)
+    shock_score = _zscore(g_shock) + _zscore(p_norm)
+
+    modes = np.zeros(n, dtype=np.int64)
+    k1 = int(round(QUANTILE_DIALOGUE_FRACTION * n))
+    idx1 = _top_k_indices(d, np.arange(n), k1)
+    modes[idx1] = 1
+    rest = np.where(modes == 0)[0]
+    k2 = int(round(QUANTILE_CLIMAX_FRACTION * len(rest)))
+    idx2 = _top_k_indices(shock_score, rest, k2)
+    modes[idx2] = 2
+    return modes
+
+
 class OSWEStreamingCompiler:
     """OSWE Streaming Style Genome Compiler with Polar-Fourier Alignment & K>=5 Anonymity Gate.
 

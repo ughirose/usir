@@ -212,6 +212,68 @@ export function classifyMode24d(z: number[]): number {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Quantile 3-mode assignment (Phase 26.1; parity with usir_forge.assign_modes_quantile)
+// -----------------------------------------------------------------------------
+
+export const QUANTILE_MIN_WINDOWS = 20;
+export const QUANTILE_DIALOGUE_FRACTION = 0.25;
+export const QUANTILE_CLIMAX_FRACTION = 0.25;
+
+function zscoreVec(x: number[]): number[] {
+  const n = x.length;
+  let mean = 0;
+  for (const v of x) mean += v;
+  mean /= n;
+  let varSum = 0;
+  for (const v of x) varSum += (v - mean) * (v - mean);
+  const sd = Math.sqrt(varSum / n);
+  if (sd < 1e-12) return x.map(() => 0);
+  return x.map((v) => (v - mean) / sd);
+}
+
+function topKIndices(values: number[], candidates: number[], k: number): number[] {
+  return [...candidates].sort((a, b) => values[b]! - values[a]! || a - b).slice(0, k);
+}
+
+/** Python round(): half to even. */
+function roundHalfEven(x: number): number {
+  const f = Math.floor(x);
+  const d = x - f;
+  if (d < 0.5) return f;
+  if (d > 0.5) return f + 1;
+  return f % 2 === 0 ? f : f + 1;
+}
+
+/**
+ * Corpus-level quantile assignment: Dialogue (1) = top 25% by `dialogue`; of the rest Climax (2) =
+ * top 25% by z(g_shock)+z(||p||); remaining Narration (0). Ties -> smaller index.
+ * Returns null (caller falls back to the rule) for fewer than QUANTILE_MIN_WINDOWS windows.
+ */
+export function assignModesQuantile(Z: number[][], dialogue: number[]): number[] | null {
+  const n = Z.length;
+  if (dialogue.length !== n) throw new Error(`dialogue length ${dialogue.length} != windows ${n}`);
+  if (n < QUANTILE_MIN_WINDOWS) return null;
+  const gShock = Z.map((z) => ((z[3] ?? 0) + (z[7] ?? 0) + (z[11] ?? 0)) / 3.0);
+  const pNorm = Z.map((z) => {
+    let s = 0;
+    for (let i = 12; i < 24; i++) s += (z[i] ?? 0) * (z[i] ?? 0);
+    return Math.sqrt(s);
+  });
+  const zg = zscoreVec(gShock);
+  const zp = zscoreVec(pNorm);
+  const shockScore = zg.map((v, i) => v + zp[i]!);
+
+  const modes = new Array<number>(n).fill(0);
+  const all = Array.from({ length: n }, (_, i) => i);
+  const k1 = roundHalfEven(QUANTILE_DIALOGUE_FRACTION * n);
+  for (const i of topKIndices(dialogue, all, k1)) modes[i] = 1;
+  const rest = all.filter((i) => modes[i] === 0);
+  const k2 = roundHalfEven(QUANTILE_CLIMAX_FRACTION * rest.length);
+  for (const i of topKIndices(shockScore, rest, k2)) modes[i] = 2;
+  return modes;
+}
+
 // =============================================================================
 // 4. OSWE STREAMING COMPILER
 // =============================================================================

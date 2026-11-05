@@ -21,6 +21,7 @@ from .grpo_reward import PHASE_CENTROIDS_24D, _FEATURE_STD
 from .hsmm_longform_director import compute_cv_l
 from .usir_forge import (
     OSWEStreamingCompiler,
+    assign_modes_quantile,
     classify_mode_24d,
     load_tier_m_binary,
     unpack_cholesky_24d,
@@ -138,17 +139,42 @@ def concat_features(parts: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
 # Genome distillation (existing forge) and GMM view of a Tier-M binary
 # ---------------------------------------------------------------------------
 
-def distill_genome(works: Sequence[Tuple[str, np.ndarray]], shrinkage: str = "scaled") -> bytes:
+def quote_ratios(text: str) -> np.ndarray:
+    """Per-window dialogue signal: fraction of characters that are quotation brackets (「」『』)."""
+    return np.array([sum(w.count(c) for c in "「」『』") / max(len(w), 1) for w in make_windows(text)], dtype=float)
+
+
+def distill_genome(
+    works: Sequence[Tuple[str, np.ndarray]],
+    shrinkage: str = "scaled",
+    mode_assign: str = "rule",
+    dialogue: Optional[Dict[str, np.ndarray]] = None,
+) -> bytes:
     """Distill one Tier-M binary from per-work window matrices [(work_id, Z[n,24]), ...].
 
     The K>=5 cluster anonymity gate is disabled: an atlas genome is deliberately attributed to a
     single (public-domain) author.  Windows are added in text order; work boundaries reset the
     transition tracker.  Mode assignment is the forge's own classify_mode_24d.
     """
+    if mode_assign not in ("rule", "quantile"):
+        raise ValueError(f"Unknown mode_assign '{mode_assign}'; expected 'rule' or 'quantile'")
+    modes_by_work: Dict[str, Optional[np.ndarray]] = {}
+    if mode_assign == "quantile":
+        if dialogue is None:
+            raise ValueError("mode_assign='quantile' requires per-work dialogue signals")
+        allZ = np.concatenate([Z for _, Z in works], axis=0)
+        allD = np.concatenate([np.asarray(dialogue[w], dtype=float) for w, _ in works])
+        allM = assign_modes_quantile(allZ, allD)  # None -> fewer than 20 windows -> "rule"
+        if allM is not None:
+            off = 0
+            for w, Z in works:
+                modes_by_work[w] = allM[off:off + len(Z)]
+                off += len(Z)
     comp = OSWEStreamingCompiler()
     for work_id, Z in works:
-        for z in Z:
-            comp.add_sample(z, mode=None, cluster_id=work_id)
+        ms = modes_by_work.get(work_id)
+        for i, z in enumerate(Z):
+            comp.add_sample(z, mode=None if ms is None else int(ms[i]), cluster_id=work_id)
     return comp.compile_tier_m_binary(enforce_anonymity=False, shrinkage=shrinkage)
 
 
@@ -287,10 +313,13 @@ def build_atlas(
     out_dir,
     shrinkages: Sequence[str] = ("scaled", "legacy"),
     features: Optional[Dict[str, Dict[str, Dict[str, Any]]]] = None,
+    mode_assign: str = "rule",
 ) -> Dict[str, Any]:
     """Distill genomes for {author_id: [(work_id, text), ...]} into ``out_dir`` (scaled) and
     ``out_dir/legacy``; returns per-author profile + audit info.  ``features`` may supply cached
-    {author_id: {work_id: featurize_text() result}}."""
+    {author_id: {work_id: featurize_text() result}}.  ``mode_assign`` ("rule"|"quantile") selects
+    the forge mode assignment; with "quantile", only ``shrinkages`` genomes are written to ``out_dir``
+    (scaled) / ``out_dir/legacy`` as before."""
     from pathlib import Path
 
     out_dir = Path(out_dir)
@@ -305,7 +334,8 @@ def build_atlas(
         source = "".join(t for _, t in works)
         entry: Dict[str, Any] = {"profile": profile_from_features(allF), "audit": {}}
         for sh in shrinkages:
-            blob = distill_genome(per_work, shrinkage=sh)
+            dlg = {wid: quote_ratios(t) for wid, t in works} if mode_assign == "quantile" else None
+            blob = distill_genome(per_work, shrinkage=sh, mode_assign=mode_assign, dialogue=dlg)
             d = out_dir if sh == "scaled" else out_dir / sh
             d.mkdir(parents=True, exist_ok=True)
             (d / f"{aid}.usir").write_bytes(blob)
