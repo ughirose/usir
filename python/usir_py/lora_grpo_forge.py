@@ -376,6 +376,7 @@ def run_authentic_grpo_lora_forge(
     per_rollout_backward: bool = False,
     prompts_per_step: Optional[int] = None,
     progress_fn: Optional[Callable[[Dict[str, Any]], None]] = None,
+    ppl_completion_only: bool = False,
 ) -> Dict[str, Any]:
     r"""Executes authentic USIR-GRPO fine-tuning loop for AttachedLoRALinear weights.
 
@@ -394,6 +395,9 @@ def run_authentic_grpo_lora_forge(
         prompts_per_step: if set, each optimisation step uses a rotating window of this many prompts
             (step s uses prompts[(s*k + j) % len(prompts)]); otherwise every step uses all prompts.
         progress_fn: called with each step_logs entry (e.g. for heartbeat logging on long Colab jobs).
+    Phase 33 addition:
+        ppl_completion_only: compute the reference perplexity (LoRA disabled) used by the M_semantic barrier over the
+            completion tokens only, instead of prompt + completion. Matters for long chat-template prompts.
     Caller responsibility: the authentic path optimises every parameter with requires_grad=True. Freeze the base
     model (p.requires_grad_(False) for all parameters) BEFORE attach_lora_to_model, otherwise the optimizer is
     built over the entire model.
@@ -484,6 +488,12 @@ def run_authentic_grpo_lora_forge(
                         ref_out = model(**enc)
                         shift_logits = ref_out.logits[:, :-1, :].float().contiguous()
                         shift_labels = enc["input_ids"][:, 1:].contiguous()
+                        if ppl_completion_only:
+                            _pl = int(tokenizer(p_text, return_tensors="pt")["input_ids"].shape[1])
+                            _gs = max(0, _pl - 1)
+                            if _gs < shift_labels.shape[1]:
+                                shift_logits = shift_logits[:, _gs:, :].contiguous()
+                                shift_labels = shift_labels[:, _gs:].contiguous()
                         ce_loss = F.cross_entropy(
                             shift_logits.view(-1, shift_logits.size(-1)),
                             shift_labels.view(-1),

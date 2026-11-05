@@ -411,7 +411,7 @@ def calibrate_steerer(model: Any, tok: Any, cfg: Cfg, log: Callable[[str], None]
         h = out.hidden_states[st.layer_idx + 1][0].float()
         h = h[1:] if h.shape[0] > 1 else h
         hs.append(h.mean(dim=0).cpu().numpy())
-    v = st.calibrate_12_element_axes(hidden_states_list=hs, corpus=texts)
+    v = st.calibrate_12_element_axes(hidden_states_list=hs, corpus=texts, axis_mode="qr")  # Phase 28 behaviour (Phase 33 uses independent axes)
     hc = np.stack(hs) - np.mean(hs, axis=0, keepdims=True)
     sv = np.linalg.svd(hc, compute_uv=False)
     info = {

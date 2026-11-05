@@ -46,7 +46,17 @@ class SymplecticActivationSteerer:
         num_layers: int = 28,
         layer_ratio: float = 0.65,
         v_steer: Optional[Union[np.ndarray, Any]] = None,
+        inject_positions: str = "all",
     ):
+        self._v_steer: Optional[np.ndarray] = None
+        self._v_version = 0
+        self._steer_cache: Optional[Dict[str, Any]] = None
+        if inject_positions not in ("all", "last"):
+            raise ValueError(f"inject_positions must be 'all' or 'last', got {inject_positions!r}")
+        self.inject_positions = inject_positions
+        self.calibration_info: Optional[Dict[str, Any]] = None
+        self.q_mean: Optional[np.ndarray] = None
+        self.q_std: Optional[np.ndarray] = None
         self.d_model = int(d_model)
         if self.d_model < 12:
             raise ValueError(f"d_model must be at least 12 to embed 12-element symplectic space, got {self.d_model}")
@@ -67,6 +77,32 @@ class SymplecticActivationSteerer:
         self._active_hook_handle: Any = None
         self._current_delta_q: Optional[np.ndarray] = None
         self._current_alpha: float = 0.15
+
+    @property
+    def v_steer(self) -> np.ndarray:
+        return self._v_steer  # type: ignore[return-value]
+
+    @v_steer.setter
+    def v_steer(self, value: np.ndarray) -> None:
+        # Any change of V invalidates the device-side steering-vector cache.
+        self._v_steer = value
+        self._v_version += 1
+        self._steer_cache = None
+
+    def _cached_steer_vec(self, device: Any, dq: np.ndarray, alpha: float) -> Any:
+        """alpha * (V_steer @ dq) as a float32 torch tensor on `device`; rebuilt only when V, dq, alpha or device change.
+
+        No host->device copy happens on a cache hit (audit item D-6).
+        """
+        dev = torch.device(device)
+        dq_key = dq.tobytes()
+        c = self._steer_cache
+        if (c is not None and c["device"] == dev and c["v_version"] == self._v_version
+                and c["dq"] == dq_key and c["alpha"] == float(alpha)):
+            return c["vec"]
+        vec = torch.as_tensor(float(alpha) * (self._v_steer @ dq), dtype=torch.float32).to(dev)
+        self._steer_cache = {"device": dev, "v_version": self._v_version, "dq": dq_key, "alpha": float(alpha), "vec": vec}
+        return vec
 
     def _ensure_orthonormal(self, v: Union[np.ndarray, Any]) -> np.ndarray:
         """Enforces strict column-orthonormality: V^T V = I_12 via QR factorization."""
@@ -99,15 +135,26 @@ class SymplecticActivationSteerer:
         corpus: Optional[Sequence[str]] = None,
         hidden_states_list: Optional[Sequence[Any]] = None,
         ridge_lambda: float = 1e-3,
-    ) -> np.ndarray:
+        axis_mode: str = "independent",
+        return_info: bool = False,
+        cv_folds: int = 5,
+    ) -> Union[np.ndarray, Tuple[np.ndarray, Dict[str, Any]]]:
         """Calibrates 12-element steering axes from corpus or paired hidden states.
 
         For each sentence m:
         - Extracts 12-element symplectic vector q_m from extract_usir_24d(m)['q_12d']
         - Extracts residual stream hidden state h_m in R^{d_model}
         - Solves ridge regression / cross-covariance W = (H^T H + lambda I)^{-1} H^T Q
-        - Orthonormalizes columns to form V_steer with V^T V = I_12.
+        - axis_mode="independent" (default): each axis k is an independent ridge regression
+          v_k = (H^T H + lam I)^{-1} H^T q_k (H column-centred, q_k standardised; dual form since N << d_model),
+          then v_k / ||v_k||. No QR / Gram-Schmidt, so axis k depends on q_k only. Here lam = ridge_lambda *
+          mean(diag(H H^T)) (relative ridge). Columns are unit-norm but not orthogonal.
+        - axis_mode="qr": previous behaviour (absolute ridge, QR of the 12 columns, V^T V = I_12).
+        Per-axis in-sample R^2 and `cv_folds`-fold CV R^2 are stored in self.calibration_info
+        (and returned as the second element when return_info=True).
         """
+        if axis_mode not in ("independent", "qr"):
+            raise ValueError(f"axis_mode must be 'independent' or 'qr', got {axis_mode!r}")
         if corpus is None:
             corpus = [
                 "静かな雨が庭の青苔を濡らし、かすかな湿気が古い板壁を包み込む。",
@@ -162,60 +209,116 @@ class SymplecticActivationSteerer:
                 proj = q_matrix[i] @ rng.randn(12, self.d_model).astype(np.float32)
                 h_matrix[i] = base_vec + proj
 
-        # 3. Ridge Regression / Cross-Covariance
+        # 3. Ridge Regression
         h_centered = h_matrix - np.mean(h_matrix, axis=0, keepdims=True)
         q_centered = q_matrix - np.mean(q_matrix, axis=0, keepdims=True)
 
-        # Dual Ridge Regression: W = H^T (H H^T + lambda I)^{-1} Q
-        if ridge_lambda > 0.0 and m_samples > 1:
-            gram_hh = h_centered @ h_centered.T  # (M, M)
-            reg_eye = np.eye(m_samples, dtype=np.float32) * float(ridge_lambda)
-            try:
-                inv_kernel = np.linalg.solve(gram_hh + reg_eye, q_centered)  # (M, 12)
-                w_ridge = h_centered.T @ inv_kernel  # (d_model, 12)
-            except np.linalg.LinAlgError:
-                w_ridge = h_centered.T @ q_centered
+        if axis_mode == "independent":
+            q64 = q_matrix.astype(np.float64)
+            q_std = np.std(q64, axis=0)
+            q_z = (q64 - q64.mean(axis=0)) / np.where(q_std > 1e-12, q_std, 1.0)
+            q_z[:, q_std <= 1e-12] = 0.0
+            h64 = h_centered.astype(np.float64)
+            w = self._ridge_dual(h64, q_z, ridge_lambda)  # (d_model, 12), one independent regression per column
+            norms = np.linalg.norm(w, axis=0)
+            v_calib = (w / np.where(norms > 1e-12, norms, 1.0)).astype(np.float32)
+            r2_in = self._r2(q_z, h64 @ w)
+            r2_cv = self._cv_r2(h64, q_z, ridge_lambda, cv_folds)
+            self.q_mean = q64.mean(axis=0)
+            self.q_std = q_std
+            self.calibration_info = {
+                "axis_mode": "independent", "n_samples": int(m_samples), "ridge_lambda_relative": float(ridge_lambda),
+                "r2_in_sample": [float(x) for x in r2_in], "r2_cv": [float(x) for x in r2_cv], "cv_folds": int(cv_folds),
+                "q_std": [float(x) for x in q_std],
+            }
+            self.v_steer = v_calib
         else:
-            w_ridge = h_centered.T @ q_centered
-
-        # Orthonormalize w_ridge columns via QR
-        v_calib = self._ensure_orthonormal(w_ridge)
-        self.v_steer = v_calib
+            # Dual Ridge Regression: W = H^T (H H^T + lambda I)^{-1} Q
+            if ridge_lambda > 0.0 and m_samples > 1:
+                gram_hh = h_centered @ h_centered.T  # (M, M)
+                reg_eye = np.eye(m_samples, dtype=np.float32) * float(ridge_lambda)
+                try:
+                    inv_kernel = np.linalg.solve(gram_hh + reg_eye, q_centered)  # (M, 12)
+                    w_ridge = h_centered.T @ inv_kernel  # (d_model, 12)
+                except np.linalg.LinAlgError:
+                    w_ridge = h_centered.T @ q_centered
+            else:
+                w_ridge = h_centered.T @ q_centered
+            # Orthonormalize w_ridge columns via QR
+            self.calibration_info = {"axis_mode": "qr", "n_samples": int(m_samples), "ridge_lambda_absolute": float(ridge_lambda)}
+            self.v_steer = self._ensure_orthonormal(w_ridge)
+        if return_info:
+            return self.v_steer, self.calibration_info
         return self.v_steer
+
+    @staticmethod
+    def _ridge_dual(h: np.ndarray, q: np.ndarray, lam_rel: float) -> np.ndarray:
+        """W = H^T (H H^T + lam I)^{-1} Q with lam = lam_rel * mean(diag(H H^T)); H (N, d) must be column-centred."""
+        n = h.shape[0]
+        g = h @ h.T
+        lam = float(lam_rel) * float(np.trace(g)) / max(n, 1)
+        a = np.linalg.solve(g + lam * np.eye(n), q)
+        return h.T @ a
+
+    @staticmethod
+    def _r2(y: np.ndarray, yhat: np.ndarray) -> np.ndarray:
+        sst = np.sum((y - y.mean(axis=0)) ** 2, axis=0)
+        sse = np.sum((y - yhat) ** 2, axis=0)
+        return np.where(sst > 1e-12, 1.0 - sse / np.where(sst > 1e-12, sst, 1.0), 0.0)
+
+    def _cv_r2(self, h: np.ndarray, q: np.ndarray, lam_rel: float, folds: int) -> np.ndarray:
+        """k-fold CV R^2 per axis (strided folds; H and q re-centred on the training part of each fold)."""
+        n = h.shape[0]
+        folds = max(2, min(int(folds), n))
+        pred = np.zeros_like(q)
+        for f in range(folds):
+            te = np.arange(n) % folds == f
+            tr = ~te
+            hm, qm = h[tr].mean(axis=0), q[tr].mean(axis=0)
+            w = self._ridge_dual(h[tr] - hm, q[tr] - qm, lam_rel)
+            pred[te] = (h[te] - hm) @ w + qm
+        return self._r2(q, pred)
 
     def steer_tensor(
         self,
         h: Union[np.ndarray, Any],
         delta_q_star: Union[np.ndarray, Sequence[float]],
         alpha_act: float = 0.15,
+        positions: Optional[str] = None,
     ) -> Any:
         r"""Applies direct activation steering injection:
 
             h' = h + alpha_act * ||h||_2 * (V_steer * Delta q*)
 
         Supports both PyTorch tensors [B, T, d_model] and NumPy arrays.
+        positions: "all" (every position) or "last" (only the last sequence position); default self.inject_positions.
         """
         dq = np.asarray(delta_q_star, dtype=np.float32).reshape(12)
+        pos = positions or self.inject_positions
+        if pos not in ("all", "last"):
+            raise ValueError(f"positions must be 'all' or 'last', got {pos!r}")
 
         if TORCH_AVAILABLE and isinstance(h, torch.Tensor):
-            device = h.device
             dtype = h.dtype
-            v_t = torch.tensor(self.v_steer, device=device, dtype=torch.float32)
-            dq_t = torch.tensor(dq, device=device, dtype=torch.float32)
-            # Injection direction in hidden space: (d_model,)
-            steer_dir = v_t @ dq_t
-
-            # L2 norm along hidden dimension
+            # cached alpha * (V @ dq) on h.device (no per-call host->device copy)
+            inj_dir = self._cached_steer_vec(h.device, dq, alpha_act)
             h_fp32 = h.to(torch.float32)
-            norm_h = torch.norm(h_fp32, p=2, dim=-1, keepdim=True) + 1e-8
-
-            # Broadcast steer_dir across batch and sequence dimensions
-            injection = float(alpha_act) * norm_h * steer_dir
-            h_steered = h_fp32 + injection
+            if pos == "last" and h.dim() >= 2:
+                h_last = h_fp32[..., -1:, :]
+                norm_h = torch.norm(h_last, p=2, dim=-1, keepdim=True) + 1e-8
+                h_steered = torch.cat([h_fp32[..., :-1, :], h_last + norm_h * inj_dir], dim=-2)
+            else:
+                norm_h = torch.norm(h_fp32, p=2, dim=-1, keepdim=True) + 1e-8
+                h_steered = h_fp32 + norm_h * inj_dir
             return h_steered.to(dtype)
         else:
             h_arr = np.asarray(h, dtype=np.float32)
             steer_dir = self.v_steer @ dq  # (d_model,)
+            if pos == "last" and h_arr.ndim >= 2:
+                out = h_arr.copy()
+                last = h_arr[..., -1:, :]
+                out[..., -1:, :] = last + float(alpha_act) * (np.linalg.norm(last, axis=-1, keepdims=True) + 1e-8) * steer_dir
+                return out.astype(h_arr.dtype)
             norm_h = np.linalg.norm(h_arr, axis=-1, keepdims=True) + 1e-8
             injection = float(alpha_act) * norm_h * steer_dir
             return (h_arr + injection).astype(h_arr.dtype)
@@ -246,6 +349,7 @@ class SymplecticActivationSteerer:
         delta_q_star: Union[np.ndarray, Sequence[float]],
         alpha_act: float = 0.15,
         model: Optional[Any] = None,
+        inject_positions: Optional[str] = None,
     ):
         """Context manager for temporary forward-hook activation steering during inference.
 
@@ -255,6 +359,7 @@ class SymplecticActivationSteerer:
         """
         self._current_delta_q = np.asarray(delta_q_star, dtype=np.float32).reshape(12)
         self._current_alpha = float(alpha_act)
+        _pos = inject_positions or self.inject_positions
 
         hook_handle = None
         if model is not None:
@@ -264,13 +369,13 @@ class SymplecticActivationSteerer:
                     # Output can be a tensor, tuple (hidden_states, ...), or ModelOutput
                     if isinstance(output, tuple):
                         h_out = output[0]
-                        steered_h = self.steer_tensor(h_out, self._current_delta_q, self._current_alpha)
+                        steered_h = self.steer_tensor(h_out, self._current_delta_q, self._current_alpha, _pos)
                         return (steered_h,) + output[1:]
                     elif hasattr(output, "hidden_states") and output.hidden_states is not None:
-                        output.hidden_states = self.steer_tensor(output.hidden_states, self._current_delta_q, self._current_alpha)
+                        output.hidden_states = self.steer_tensor(output.hidden_states, self._current_delta_q, self._current_alpha, _pos)
                         return output
                     else:
-                        return self.steer_tensor(output, self._current_delta_q, self._current_alpha)
+                        return self.steer_tensor(output, self._current_delta_q, self._current_alpha, _pos)
 
                 hook_handle = target_layer.register_forward_hook(hook_fn)
                 self._active_hook_handle = hook_handle

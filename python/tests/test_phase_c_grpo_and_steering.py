@@ -261,7 +261,16 @@ def test_symplectic_activation_steerer_orthonormality():
         "激しい閃光が大気を切り裂き、爆音とともに建物の屋根が激しく揺れた。",
         "二人は黙って互いを見つめ合い、言葉にならぬ合意が交わされた。",
     ] * 4  # 12 samples
-    v_calib = steerer.calibrate_12_element_axes(corpus=corpus)
+    # default (independent per-element ridge): unit-norm columns, not orthogonalised
+    v_ind = steerer.calibrate_12_element_axes(corpus=corpus)
+    assert v_ind.shape == (128, 12)
+    norms = np.linalg.norm(v_ind, axis=0)
+    # an axis whose q has zero variance on the corpus (3 distinct texts here) gets a zero column, never a made-up direction
+    assert np.all((np.abs(norms - 1.0) < 1e-4) | (norms < 1e-6))
+    assert (np.abs(norms - 1.0) < 1e-4).sum() >= 6
+
+    # legacy QR mode: strict column-orthonormality
+    v_calib = steerer.calibrate_12_element_axes(corpus=corpus, axis_mode="qr")
     assert v_calib.shape == (128, 12)
 
     v_calib_info = steerer.verify_orthonormality()
@@ -532,9 +541,9 @@ def test_independent_judge_empty_string_and_technical_terms():
 
 
 def test_dual_ridge_regression_calibration():
-    """Verifies calibrate_12_element_axes applies dual ridge regression and yields orthonormal basis."""
+    """Verifies calibrate_12_element_axes applies dual ridge regression and yields orthonormal basis (qr mode)."""
     steerer = SymplecticActivationSteerer(d_model=64, num_layers=10)
-    v = steerer.calibrate_12_element_axes(ridge_lambda=1e-2)
+    v = steerer.calibrate_12_element_axes(ridge_lambda=1e-2, axis_mode="qr")
     assert v.shape == (64, 12)
     info = steerer.verify_orthonormality()
     assert info["is_orthonormal"] is True
