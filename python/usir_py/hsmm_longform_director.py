@@ -130,6 +130,13 @@ def create_default_wells(dim: int = 12) -> Dict[int, PhaseWell]:
     }
 
 
+def beat_for_paragraph(scene_beats: Optional[Sequence[str]], k: int) -> Optional[str]:
+    """Scene beat for paragraph k (0-based); clamps to the last beat when there are fewer beats than paragraphs."""
+    if not scene_beats:
+        return None
+    return str(scene_beats[min(int(k), len(scene_beats) - 1)])
+
+
 def compute_wundt_berlyne_utility(arousal: float, a_star: float = 0.60) -> float:
     """Computes normalized Wundt-Berlyne inverted-U aesthetic utility U(a).
 
@@ -224,6 +231,14 @@ class HSMMLongformDirector:
         # OPEN-10 State: Refractory period tracking
         self.refractory_counter: int = 0
         self.history: List[Dict[str, Any]] = []
+
+    def translate_wells(self, delta_q: np.ndarray) -> None:
+        """Translates every well's target_q centroid by ``delta_q`` (first ``self.dim`` dims), preserving the
+        relative phase structure between wells. Used to move the wells onto a style genome's centroid."""
+        d = np.asarray(delta_q, dtype=np.float64).ravel()[:self.dim]
+        d = np.pad(d, (0, self.dim - len(d)))
+        for w in self.wells.values():
+            w.target_q = np.asarray(w.target_q, dtype=np.float64) + d
 
     def is_in_refractory(self) -> bool:
         """Checks if refractory period gate is currently active."""
@@ -450,10 +465,21 @@ class HSMMLongformDirector:
         min_para_chars: int = 0,
         max_para_chars: int = 0,
         climax_base_momentum: Optional[bool] = None,
+        scene_beats: Optional[List[str]] = None,
+        roles: Optional[List[str]] = None,
+        paragraph_prompt_fn: Optional[Callable[[int], str]] = None,
     ) -> Dict[str, Any]:
         """Generates 3,000-char longform prose switching wells per paragraph.
 
         Guarantees overall CV_L in [0.40, 0.70] and avoids Deadzone (< 0.28).
+
+        scene_beats / roles (Phase 21): paragraph k is associated with beat k (clamped to the last beat when
+        there are fewer beats than paragraphs); the beat used is recorded in ``paragraphs[k]["scene_beat"]``
+        (None by default). ``roles`` (generic role nouns) is recorded in the result. Neither enters the narrated
+        text. To condition generation, pass ``paragraph_prompt_fn(k) -> str``: when given and the decoder has a
+        ``chat_prefix``, the decoder's chat prefix is replaced by that string before paragraph k (before the
+        carry_context prefill is appended), so the runner owns the chat-template logic. With all three None the
+        behaviour is unchanged.
         """
         n_paras = max(6, min(8, int(target_paragraphs)))
         chars_per_para = max(350, int(target_total_chars / n_paras))
@@ -530,6 +556,10 @@ class HSMMLongformDirector:
                 if hasattr(decoder, "history_text"):
                     # Context-wide n-gram exclusion reads ALL previous paragraphs (not only the prefill window)
                     decoder.history_text = "\n".join(full_paragraphs_text)
+                if paragraph_prompt_fn is not None and hasattr(decoder, "chat_prefix"):
+                    # Per-paragraph prompt (scene beat k): model-only context, never part of the returned text.
+                    decoder._base_chat_prefix = str(paragraph_prompt_fn(k))
+                    decoder.chat_prefix = decoder._base_chat_prefix
                 if carry_context and hasattr(decoder, "chat_prefix"):
                     # Assistant prefill: the last 1-2 sentences of the previous paragraph (sliding window,
                     # <= context_chars) are placed at the start of the assistant turn; the model continues from there.
@@ -677,6 +707,7 @@ class HSMMLongformDirector:
                 "smc": smc_summary,
                 "constraint_modes": scene_modes,
                 "cut_momentum_norm": float(np.linalg.norm(cut_p)),
+                "scene_beat": beat_for_paragraph(scene_beats, k),
             })
 
         # Calculate document-wide metrics
@@ -700,4 +731,6 @@ class HSMMLongformDirector:
             "banked_history": banked_history,
             "final_banked_energy": self.get_banked_energy(),
             "total_cut_momentum_norm": float(sum(p["cut_momentum_norm"] for p in paragraphs_data)),
+            "scene_beats": list(scene_beats) if scene_beats else None,
+            "roles": list(roles) if roles else None,
         }

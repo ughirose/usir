@@ -19,3 +19,6 @@ data/aozora_cache/
 # Colab raw stdout/stderr (decoded JSON is kept)
 artifacts/qda_calibration/*.stdout.txt
 artifacts/qda_calibration/*.stderr.txt
+
+# Phase 21 generated Colab payloads (built by artifacts/colab_run/build_colab_p21.py)
+artifacts/colab_run/p21_*.py
