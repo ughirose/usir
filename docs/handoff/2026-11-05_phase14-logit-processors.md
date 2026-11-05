@@ -34,3 +34,25 @@
 
 ## 次の一手
 - Phase 16: Colab で 1.5B の1本を流し、Phase 14 の torch 経路(動作・速度)を確認する。その後、5 seeds × {Steered, Ctrl} を回す。
+
+# Phase 16: Colab 複数シード統計 (2026-11-05, 記入者: Claude Code)
+
+## 決定事項
+- fe7433c: case_frame_gate を Shock 域(Climax 短文の row bias / ramp)にも適用。きっかけは、2878d5d の 3B で Steered の主語・体言止め欠落が Ctrl より多かったこと(32.8 対 20.2/本)。
+- 結果(Steered−Ctrl、seed 対応、多重比較補正なし。詳細は `docs/handoff/v6/phase16_all_summary.json`):
+  - delta_sf: 1.5B +0.236(d=2.56, p=.014, Ctrl n=4)/ 3B +0.287(d=4.88, p=.0004)/ 7B +0.169(d=2.17, p=.008)。3モデルとも Phase 16 の完了条件 d>1.0 を満たす。
+  - 全 run で敬体・メタ・括弧・断片・活用崩壊は 0、8gram 最大は 2 以下。
+  - bigram 未達(<0.55): 1.5B s3 の Steered(0.540)と Ctrl(0.479)。3B は fe7433c 後に 0 本(前回は 2 本)。
+- Colab wall 累計 9156s(smoke 242 + 3B 2370 + p16b 6544)。全セッション成功。CU は取得していない。
+
+## 未完了・注意
+- Shock 域へのゲート拡張の効果は小さい。3B の case_frame 不合格は 32.8→30.8/本で、Ctrl 20.2 との差は残る。7B では Steered 24.8 / Ctrl 23.2 とほぼ同等。
+- 3B s137 Steered は delta_sf 0.131 で基準未達(Climax 文長 18.0)。ゲートの副作用か seed 内のばらつきかは未分離。
+- 1.5B s3 Ctrl: Climax の direction 指標が記録されていない。原因は未調査。
+- `count_non_jis_kanji` は「梦」(U+68A6)を検出できない。Python の shift_jis でエンコードできてしまうため、JIS 判定は簡体字の除外として不完全。
+- 3B Ctrl は前回データの再利用(fe7433c の影響を受けない前提で、未確認)。新規 run の本文は目視していない。
+
+## 次の一手
+- 簡体字の判定を、shift_jis ではなく JIS X 0208 の明示表に置き換えるかを検討する。
+- 格フレーム不合格の差を分離するため、Steered の case_frame_gate=False の対照を組む。
+- Phase 17: TS への WorldCraftArbitrator / HSMM 移植。
