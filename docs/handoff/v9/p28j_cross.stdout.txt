@@ -1,0 +1,57 @@
+config.json:   0%|          | 0.00/1.54k [00:00<?, ?B/s]
+tokenizer_config.json:   0%|          | 0.00/5.43k [00:00<?, ?B/s]
+vocab.json:   0%|          | 0.00/2.78M [00:00<?, ?B/s]
+merges.txt:   0%|          | 0.00/1.67M [00:00<?, ?B/s]
+tokenizer.json: reconstructing file:   0%|          |  0.00B / 11.4MB            
+tokenizer.json: downloading bytes:           |  0.00B            
+added_tokens.json:   0%|          | 0.00/707 [00:00<?, ?B/s]
+special_tokens_map.json:   0%|          | 0.00/613 [00:00<?, ?B/s]
+chat_template.jinja:   0%|          | 0.00/4.17k [00:00<?, ?B/s]
+hb 15s
+model.safetensors.index.json:   0%|          | 0.00/32.9k [00:00<?, ?B/s]
+Downloading bytes:           |  0.00B            
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]
+hb 30s
+hb 45s
+hb 60s
+Loading weights:   0%|          | 0/399 [00:00<?, ?it/s]
+generation_config.json:   0%|          | 0.00/244 [00:00<?, ?B/s]
+judge tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2 loaded in 72s for generator qwen3_8b
+hb 75s
+hb 90s
+qwen3_8b watch_s3: {"min": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.6, "n_matches": 1}, "new_ctrl": {"wins": 3, "losses": 0, "ties": 0, "mean_score_diff": 0.43333333333333335, "n_matches": 3}, "gA_scaled": {"wins": 1, "losses": 1, "ties": 0, "mean_score_diff": 0.0, "n_matches": 2}, "gA_legacy": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.2, "n_matches": 1}, "gB_scaled": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.5, "n_matches": 1}} t=97s
+hb 105s
+hb 120s
+qwen3_8b watch_s42: {"min": {"wins": 1, "losses": 0, "ties": 0, "mean_score_diff": 0.2, "n_matches": 1}, "new_ctrl": {"wins": 2, "losses": 1, "ties": 0, "mean_score_diff": 0.2333333333333333, "n_matches": 3}, "gA_scaled": {"wins": 0, "losses": 2, "ties": 0, "mean_score_diff": -0.8999999999999999, "n_matches": 2}, "gA_legacy": {"wins": 1, "losses": 0, "ties": 0, "mean_score_diff": 1.4, "n_matches": 1}, "gB_scaled": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.5, "n_matches": 1}} t=120s
+hb 135s
+qwen3_8b station_s3: {"min": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.4, "n_matches": 1}, "new_ctrl": {"wins": 1, "losses": 1, "ties": 1, "mean_score_diff": 0.0, "n_matches": 3}, "gA_scaled": {"wins": 0, "losses": 1, "ties": 1, "mean_score_diff": -0.2, "n_matches": 2}, "gA_legacy": {"wins": 1, "losses": 0, "ties": 0, "mean_score_diff": 0.4, "n_matches": 1}, "gB_scaled": {"wins": 1, "losses": 0, "ties": 0, "mean_score_diff": 0.4, "n_matches": 1}} t=143s
+hb 150s
+hb 165s
+qwen3_8b station_s42: {"min": {"wins": 1, "losses": 0, "ties": 0, "mean_score_diff": 0.5, "n_matches": 1}, "new_ctrl": {"wins": 1, "losses": 2, "ties": 0, "mean_score_diff": -0.16666666666666666, "n_matches": 3}, "gA_scaled": {"wins": 1, "losses": 1, "ties": 0, "mean_score_diff": -0.1, "n_matches": 2}, "gA_legacy": {"wins": 1, "losses": 0, "ties": 0, "mean_score_diff": 0.5, "n_matches": 1}, "gB_scaled": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.3, "n_matches": 1}} t=167s
+config.json:   0%|          | 0.00/728 [00:00<?, ?B/s]
+tokenizer_config.json:   0%|          | 0.00/9.73k [00:00<?, ?B/s]
+vocab.json:   0%|          | 0.00/2.78M [00:00<?, ?B/s]
+merges.txt:   0%|          | 0.00/1.67M [00:00<?, ?B/s]
+model.safetensors.index.json:   0%|          | 0.00/32.9k [00:00<?, ?B/s]
+Downloading bytes:           |  0.00B            
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]
+hb 180s
+hb 195s
+hb 210s
+Loading weights:   0%|          | 0/399 [00:00<?, ?it/s]
+generation_config.json:   0%|          | 0.00/239 [00:00<?, ?B/s]
+judge Qwen/Qwen3-8B loaded in 53s for generator swallow_8b
+hb 225s
+hb 240s
+swallow_8b watch_s3: {"min": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.9, "n_matches": 1}, "new_ctrl": {"wins": 1, "losses": 1, "ties": 1, "mean_score_diff": 0.20000000000000004, "n_matches": 3}, "gA_scaled": {"wins": 2, "losses": 0, "ties": 0, "mean_score_diff": 0.3, "n_matches": 2}, "gA_legacy": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.3, "n_matches": 1}, "gB_scaled": {"wins": 0, "losses": 0, "ties": 1, "mean_score_diff": 0.0, "n_matches": 1}} t=244s
+hb 255s
+swallow_8b watch_s42: {"min": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -1.2, "n_matches": 1}, "new_ctrl": {"wins": 3, "losses": 0, "ties": 0, "mean_score_diff": 1.0333333333333334, "n_matches": 3}, "gA_scaled": {"wins": 0, "losses": 1, "ties": 1, "mean_score_diff": -0.75, "n_matches": 2}, "gA_legacy": {"wins": 0, "losses": 0, "ties": 1, "mean_score_diff": 0.0, "n_matches": 1}, "gB_scaled": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.4, "n_matches": 1}} t=268s
+hb 270s
+hb 285s
+swallow_8b station_s3: {"min": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.4, "n_matches": 1}, "new_ctrl": {"wins": 2, "losses": 1, "ties": 0, "mean_score_diff": 0.06666666666666667, "n_matches": 3}, "gA_scaled": {"wins": 1, "losses": 0, "ties": 1, "mean_score_diff": 0.2, "n_matches": 2}, "gA_legacy": {"wins": 0, "losses": 0, "ties": 1, "mean_score_diff": 0.0, "n_matches": 1}, "gB_scaled": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.2, "n_matches": 1}} t=292s
+hb 300s
+hb 315s
+swallow_8b station_s42: {"min": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.2, "n_matches": 1}, "new_ctrl": {"wins": 3, "losses": 0, "ties": 0, "mean_score_diff": 1.2666666666666666, "n_matches": 3}, "gA_scaled": {"wins": 1, "losses": 1, "ties": 0, "mean_score_diff": -0.6000000000000001, "n_matches": 2}, "gA_legacy": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -0.4, "n_matches": 1}, "gB_scaled": {"wins": 0, "losses": 1, "ties": 0, "mean_score_diff": -2.0, "n_matches": 1}} t=316s
+ARCHIVE_B64 17f08cf2 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
