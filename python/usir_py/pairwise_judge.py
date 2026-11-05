@@ -184,3 +184,58 @@ def tournament(
             "n_matches": s["n"],
         }
     return {"summary": summary, "matches": matches, "skipped_matches": skipped}
+
+
+# ---------------------------------------------------------------------------
+# Phase 32: logit-debiased pairwise judge
+# ---------------------------------------------------------------------------
+# s(X, Y) = ln P("1" | X shown first, Y second) - ln P("2" | ...), read from ONE forward pass at the answer slot.
+# Preference(A > B) = (s(A, B) - s(B, A)) / 2 ;  position term b = (s(A, B) + s(B, A)) / 2.
+# If s(X, Y) = d(X, Y) + b with d antisymmetric (d(Y, X) = -d(X, Y)) and b independent of the contents, the
+# preference equals d(A, B) exactly and b is removed.  A position effect that depends on the contents (an interaction)
+# is NOT removed; it remains in the preference and is visible as the spread of b across pairs.
+
+LOGIT_ANSWER_STEM = "より優れている作品の番号（1 または 2）は、「"
+
+
+def build_logit_prompt(text_1: str, text_2: str, criteria: Optional[Sequence[str]] = None) -> str:
+    crit = "、".join(criteria if criteria is not None else DEFAULT_AXES)
+    return (
+        "[匿名ペア比較評価]\n次の2つの作品は出所不明で匿名です。順序や長さではなく内容で比較してください。\n"
+        f"観点: {crit}\n\n作品1:\n\"\"\"\n{text_1}\n\"\"\"\n\n作品2:\n\"\"\"\n{text_2}\n\"\"\"\n\n"
+        "観点を総合して、より優れている作品の番号を 1 か 2 で答えてください。"
+    )
+
+
+def logit_preference(text_a: str, text_b: str, score_fn: Callable[[str], Tuple[float, float]],
+                     criteria: Optional[Sequence[str]] = None) -> Dict[str, Any]:
+    """score_fn(user_prompt) -> (ln P("1"), ln P("2")) at the answer slot that follows LOGIT_ANSWER_STEM."""
+    l1_ab, l2_ab = score_fn(build_logit_prompt(text_a, text_b, criteria))
+    l1_ba, l2_ba = score_fn(build_logit_prompt(text_b, text_a, criteria))
+    s_ab, s_ba = float(l1_ab - l2_ab), float(l1_ba - l2_ba)
+    return {"s_ab": s_ab, "s_ba": s_ba, "preference": (s_ab - s_ba) / 2.0, "position_bias": (s_ab + s_ba) / 2.0,
+            "lp_ab": [float(l1_ab), float(l2_ab)], "lp_ba": [float(l1_ba), float(l2_ba)]}
+
+
+def logit_preference_paragraphs(paras_a: Sequence[str], paras_b: Sequence[str],
+                                score_fn: Callable[[str], Tuple[float, float]],
+                                criteria: Optional[Sequence[str]] = None) -> Dict[str, Any]:
+    """Paragraph-aligned comparison: the k-th paragraph of A against the k-th of B (same scene beat)."""
+    n = min(len(paras_a), len(paras_b))
+    per = [logit_preference(paras_a[k], paras_b[k], score_fn, criteria) for k in range(n)]
+    prefs = [p["preference"] for p in per]
+    return {"per_paragraph": per, "preference_mean": float(np.mean(prefs)) if prefs else None,
+            "n_wins_a": int(sum(p > 0 for p in prefs)), "n": n,
+            "position_bias_mean": float(np.mean([p["position_bias"] for p in per])) if per else None}
+
+
+def logit_tournament(texts: Dict[str, Any], pairs: Sequence[Tuple[str, str]],
+                     score_fn: Callable[[str], Tuple[float, float]], paragraphs: Optional[Dict[str, Sequence[str]]] = None,
+                     criteria: Optional[Sequence[str]] = None) -> Dict[str, Any]:
+    matches = []
+    for a, b in pairs:
+        m: Dict[str, Any] = {"a": a, "b": b, "full": logit_preference(texts[a], texts[b], score_fn, criteria)}
+        if paragraphs is not None:
+            m["paragraph"] = logit_preference_paragraphs(paragraphs[a], paragraphs[b], score_fn, criteria)
+        matches.append(m)
+    return {"matches": matches}
