@@ -1400,6 +1400,7 @@ def run_longform_director(
     simile_decay: bool = False,
     body_compound_protect: bool = False,
     grace_close: bool = False,
+    genome_modes: bool = False,
     target_line_chars: Optional[int] = None,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
@@ -1450,7 +1451,13 @@ def run_longform_director(
         m_genome = genome_centroid(style_genome)
         genome_shift = m_genome - np.asarray(PHASE_CENTROIDS_24D["II_Critical"], dtype=float)
         mu = np.asarray(m_genome[:12], dtype=float)
-        director.translate_wells(genome_shift[:director.dim])
+        if genome_modes:
+            # Phase 26: per-well genome mode centroid + trace-normalised precision block as G_style
+            from usir_py.genome_fit import genome_modes as _gm
+
+            director.set_genome_modes(_gm(style_genome, dim=director.dim))
+        else:
+            director.translate_wells(genome_shift[:director.dim])
     beats_on = bool(scene_beats) or bool(roles)
     role_text = "、".join(roles) if roles else ""
 

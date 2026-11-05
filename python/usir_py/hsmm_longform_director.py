@@ -240,6 +240,20 @@ class HSMMLongformDirector:
         for w in self.wells.values():
             w.target_q = np.asarray(w.target_q, dtype=np.float64) + d
 
+    def set_genome_modes(self, modes: Sequence[Dict[str, Any]]) -> None:
+        """Phase 26: well k (0 Narrative / 1 Dialogue / 2 Climax) takes the target centroid and the metric G_style of
+        genome mode k (genome_fit.genome_modes; quantile-forged genomes use the same mode order). Wells whose mode is
+        missing keep their default target and the identity metric."""
+        self.well_G: Dict[int, np.ndarray] = {}
+        for m in modes:
+            k = int(m["mode"])
+            if k not in self.wells:
+                continue
+            c = np.asarray(m["centroid"], dtype=np.float64).ravel()[:self.dim]
+            self.wells[k].target_q = np.pad(c, (0, self.dim - len(c)))
+            G = np.asarray(m["G"], dtype=np.float64)[:self.dim, :self.dim]
+            self.well_G[k] = G
+
     def is_in_refractory(self) -> bool:
         """Checks if refractory period gate is currently active."""
         return self.refractory_counter > 0
@@ -533,6 +547,12 @@ class HSMMLongformDirector:
                 if hasattr(decoder, "integrator") and decoder.integrator is not None:
                     decoder.integrator.mu_star = well.target_q.copy()
                     decoder.integrator.p = effective_target_p.copy()
+                well_G = getattr(self, "well_G", None)
+                if well_G and well_idx in well_G:
+                    # Phase 26: the well's genome-mode precision block replaces the identity metric (BAOAB + SMC)
+                    decoder.G_style = well_G[well_idx].copy()
+                    if getattr(decoder, "integrator", None) is not None:
+                        decoder.integrator.G_style = well_G[well_idx].copy()
 
                 max_c = max(8, int(chars_per_para / 16))
                 if max_clauses_per_paragraph is not None:
