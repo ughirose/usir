@@ -1,5 +1,7 @@
 ### 4.6 Table 3: Zero-Overhead Style-LoRA & USIR-GRPO Forge
 
+> **注記（2026-11-06 監査）**: この節の数値（4.17 ms、0.00 ms、100% escape、Qwen-2.5-7B、N=200）は実モデルの計測値ではない。出典 `python/colab/run_experiment_c_lora_forge.py` は mock 専用で、`--mock_mode` は無効化できない。生成文は固定文、遅延は定数または乱数、escape は手設定ルールによる。詳細は `docs/handoff/2026-11-06_phase28_phase_c_audit.md`。実モデルでの計測は `python/colab/run_phase28_phase_c_real.py`（Phase 28）で行い、結果は `docs/handoff/2026-11-06_usir_v4_grand_completion_report.md` に記録する。この節を論文に使う場合は、実測値で書き直すこと。
+
 While inference-time Adaptive-BAOAB steering achieves remarkable dynamical control, performing online Jacobian logit steering incurs non-zero per-token latency ($4.17$ ms per step), which can constrain real-time deployment in high-throughput environments. To eliminate this runtime overhead while preserving the full geometric control of USIR v3.0, we developed the **Zero-Overhead Style-LoRA & USIR-GRPO Forge**. 
 
 Using a clean-room dataset of $N=200$ verified preference pairs ($DPO / GRPO$) synthesized with strict copyright boundary verification (zero 7-gram overlap against copyrighted materials), we distilled the 24D Hamiltonian reward directly into the model weights of Qwen-2.5-7B via Group Relative Policy Optimization (GRPO) and Low-Rank Adaptation (LoRA).
