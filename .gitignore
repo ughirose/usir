@@ -39,3 +39,8 @@ docs/handoff/v8/*.stderr.txt
 
 # Phase 28: generated Phase C Colab payloads (built by artifacts/colab_run/build_colab_p28c.py)
 artifacts/colab_run/p28c_*.py
+# Phase 23-28 generated Colab payloads (built by build_colab_p23*.py / p24 / p27 / p28j)
+artifacts/colab_run/p23[a-z]_*.py
+artifacts/colab_run/p24_*.py
+artifacts/colab_run/p27_*.py
+artifacts/colab_run/p28j_*.py
