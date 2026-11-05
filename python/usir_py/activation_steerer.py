@@ -145,8 +145,9 @@ class SymplecticActivationSteerer:
                 enc = tokenizer(text, return_tensors="pt").to(device)
                 with torch.no_grad():
                     out = model(**enc, output_hidden_states=True)
-                    # Pick intermediate layer
-                    l_idx = min(self.layer_idx, len(out.hidden_states) - 1)
+                    # hidden_states[0] is the embedding output; the hook sits on the output of decoder layer
+                    # `layer_idx`, which is hidden_states[layer_idx + 1].
+                    l_idx = min(self.layer_idx + 1, len(out.hidden_states) - 1)
                     # Last token hidden state
                     h_last = out.hidden_states[l_idx][0, -1, :].cpu().numpy().astype(np.float32)
                     collected_h.append(h_last[:self.d_model])
