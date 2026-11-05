@@ -102,6 +102,14 @@ def delta_fisher(text: str, fm: FisherMetric, a: Hashable, b: Hashable, window: 
     wins = make_windows(text, window, stride)
     if not wins:
         return 0.0
-    Y = fm.project(np.stack([fisher_features(w) for w in wins]))
+    feats = []
+    for w in wins:
+        try:
+            feats.append(fisher_features(w))
+        except Exception:  # extract_usir_24d raises on windows without a complete sentence
+            continue
+    if not feats:
+        return 0.0
+    Y = fm.project(np.stack(feats))
     d = -0.5 * ((Y - fm.means[a]) ** 2).sum(1) + 0.5 * ((Y - fm.means[b]) ** 2).sum(1)
     return float(d.mean())

@@ -110,3 +110,13 @@ def test_delta_fisher_sign():
     long_text = "古い工房の奥で、青年は長いあいだ黙って時計の針を見つめていたのだった。" * 20
     short_text = "雨だ。風だ。夜だ。" * 60
     assert delta_fisher(long_text, fm, "a", "b") > delta_fisher(short_text, fm, "a", "b")
+
+
+def test_fisher_term_skips_windows_the_extractor_rejects():
+    rng = np.random.default_rng(2)
+    fm = fit_fisher({"a": rng.normal(0, 1, (50, 51)), "b": rng.normal(1, 1, (50, 51))})
+    d = ClauseTwistedSMCDecoder(dim=12, seed=0, fisher_metric=fm, fisher_author="a", fisher_gamma=1.0)
+    assert d._fisher_term("", ["雨", "、"]) is None          # Phase 31 Colab crash: 1-char paragraph-start window
+    assert d.stats["fisher_skipped"] == 1
+    w = d.compute_particle_weights("", ["雨", "、"])
+    assert w["term5_fisher"] == [0.0, 0.0]

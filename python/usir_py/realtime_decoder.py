@@ -2412,7 +2412,12 @@ class ClauseTwistedSMCDecoder:
             return None
         from .fisher_atlas import fisher_features
         base = (self.history_text + "\n" + prefix) if self.history_text else prefix
-        Y = np.stack([fm.project(fisher_features((base + c)[-self.fisher_window_chars:]))[0] for c in cand_texts])
+        try:
+            Y = np.stack([fm.project(fisher_features((base + c)[-self.fisher_window_chars:]))[0] for c in cand_texts])
+        except Exception as exc:  # extract_usir_24d raises on windows without a complete sentence; skip this step
+            self.stats["fisher_skipped"] = self.stats.get("fisher_skipped", 0) + 1
+            self.stats.setdefault("fisher_error", repr(exc)[:200])
+            return None
         v = fm.means[a] - fm.mu_bar
         n = float(np.linalg.norm(v))
         if n <= 1e-12:
