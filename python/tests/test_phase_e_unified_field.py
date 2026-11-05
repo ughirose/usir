@@ -507,3 +507,45 @@ def test_hsmm_director_banks_cut_momentum_and_releases_in_climax():
     # The cut momentum is released at the Climax: more is discharged than without arbitration.
     assert arb["paragraphs"][1]["was_discharged"]
     assert arb["paragraphs"][1]["discharged_momentum_norm"] > base["paragraphs"][1]["discharged_momentum_norm"]
+
+
+# --- Equilibrium Momentum Reconstruction (summary-only input) ----------------------------------
+_EQ_VIS = dict(
+    gabor_frequencies=[0.1, 0.2, 0.3, 0.4], color_entropy=0.6, chiaroscuro_gradient=0.7,
+    quadtree_depth_entropy=0.3,
+    saliency_scanpath=[dict(x=0.1, y=0.1, intensity=0.5), dict(x=0.45, y=0.4, intensity=0.5)],
+    composition_margin_ratio=0.25,
+)
+_EQ_MUS_A = dict(torus_distance=0.4, dissonance=0.5, syncopation=0.8, rest_ratio=0.05, bpm=170.0)
+_EQ_MUS_B = dict(torus_distance=0.3, dissonance=0.2, syncopation=0.2, rest_ratio=0.2, bpm=100.0)
+
+
+def test_equilibrium_momentum_all_dims_nonzero_deterministic():
+    from usir_py.nishiki_unified_field import (
+        momentum_from_summary, music_functor_forward_24d, visual_functor_forward_24d,
+    )
+    for z in (visual_functor_forward_24d(_EQ_VIS), music_functor_forward_24d(_EQ_MUS_A),
+              music_functor_forward_24d(_EQ_MUS_B)):
+        q, p = z[:12], z[12:]
+        assert np.all(p > 0.0)
+        assert not np.allclose(p, q)
+    assert np.array_equal(music_functor_forward_24d(_EQ_MUS_A), music_functor_forward_24d(dict(_EQ_MUS_A)))
+    assert np.all(momentum_from_summary(np.full(12, 0.5)) > 0.0)
+
+
+def test_equilibrium_momentum_windowed_path_unchanged():
+    from usir_py.nishiki_unified_field import music_functor_forward_24d
+    flat = dict(_EQ_MUS_B)
+    z = music_functor_forward_24d({**flat, "bar_features": [flat, flat, flat]})
+    assert np.all(z[12:] == 0.0)
+
+
+def test_equilibrium_momentum_reference_values_match_ts():
+    """Same literals are asserted in packages/usir-bridges/tests/cross-modal-functors.test.ts (<1e-6)."""
+    from usir_py.nishiki_unified_field import music_functor_forward_24d, visual_functor_forward_24d
+    ref_vis = [1.1309242357175378, 0.6121768020580459, 0.8736334870176883, 0.800947064730499, 0.10093831623631767, 0.5737830483282648, 1.2925365509605016, 0.9071981859740382, 0.504715083761545, 0.8350535249114451, 0.24262946252225254, 1.4159508466954225]
+    ref_a = [1.602984978095553, 0.11847362575695912, 1.3654512074768548, 0.4093714694504248, 0.06541070248820138, 1.3493175904878734, 0.805114054032098, 0.7701579123790134, 0.20712740040854083, 1.2954474477955484, 0.14751488060531387, 1.3020999808002456]
+    ref_b = [1.0962577981478627, 0.5276377924296175, 1.1003150276170912, 1.0217478358186036, 0.46628064510549877, 0.8701132110248645, 1.199316888899677, 1.0371337618648813, 0.5276377924296177, 0.993175130578691, 1.094284953748337, 1.3310000000000002]
+    assert np.allclose(visual_functor_forward_24d(_EQ_VIS)[12:], ref_vis, atol=1e-9)
+    assert np.allclose(music_functor_forward_24d(_EQ_MUS_A)[12:], ref_a, atol=1e-9)
+    assert np.allclose(music_functor_forward_24d(_EQ_MUS_B)[12:], ref_b, atol=1e-9)

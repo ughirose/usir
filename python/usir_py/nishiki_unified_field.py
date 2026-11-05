@@ -28,6 +28,8 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, Union
 
 import numpy as np
 
+from usir_py.clause_twist import count_clause_twists
+
 from usir_py.drivers.syntax_driver import SyntaxDriver
 from usir_py.extractor_24d import extract_usir_24d
 from usir_py.manifold_geodesic import compute_three_phase_qda_distance
@@ -136,9 +138,10 @@ class ToulminAuditResult:
     u_toulmin: float           # Total potential U_Toulmin(x) >= 0
     tautology_count: int = 0       # Warrant pairs whose premise and conclusion are restatements
     tautology_penalty: float = 0.0  # tautology_count / n_sents
+    clause_twist_count: int = 0     # Clause-local subject/predicate selectional twists (included in twist_count)
 
 
-def evaluate_toulmin_components(text: str) -> ToulminAuditResult:
+def evaluate_toulmin_components(text: str, clause_twist: bool = True) -> ToulminAuditResult:
     """Evaluates Toulmin argumentative triad (Claim, Data, Warrant) and syntactic penalties."""
     clean = text.strip()
     if not clean:
@@ -221,6 +224,8 @@ def evaluate_toulmin_components(text: str) -> ToulminAuditResult:
         if re.search(r'(?:て|で|が|のに|けれど|ながら)[、,\s]*$', s):
             twist_count += 1
 
+    clause_twist_count = count_clause_twists(sents) if clause_twist else 0
+    twist_count += clause_twist_count
     twist_penalty = float(twist_count / max(1, n_sents))
 
     # Total Toulmin Potential U_Toulmin(x)
@@ -240,6 +245,7 @@ def evaluate_toulmin_components(text: str) -> ToulminAuditResult:
         u_toulmin=u_toulmin,
         tautology_count=tautology_count,
         tautology_penalty=tautology_penalty,
+        clause_twist_count=clause_twist_count,
     )
 
 
@@ -569,6 +575,51 @@ def momentum_from_window_series(q_series: Sequence[np.ndarray]) -> np.ndarray:
     return np.sqrt(np.mean(diffs ** 2, axis=0))
 
 
+# --- Equilibrium Momentum Reconstruction (summary-only path) -------------------------------------
+# Quadratic style potential U(q) = 1/2 (q-mu)^T Lambda (q-mu). The trained Forge/GMM precision is not
+# available to the cross-modal functors (no fitted model at this layer), so Lambda is a fixed
+# 4-group coupling matrix: unit diagonal, EQ_W_WITHIN between elements of the same group
+# (Flux {0,3,7}, Lattice {1,4,8}, Void {2,5,9}, Shock {6,10,11}) and EQ_W_CROSS across groups.
+# Eigenvalues: 0.7 (x8), 1.3 (x3), 2.5 (x1) -> positive definite. mu = 0.5 matches the Hamiltonian
+# default q* in dynamics/hamiltonian.ts. Mirrored 1:1 in packages/usir-bridges/src/crossModalFunctors.ts.
+EQ_GROUPS = ((0, 3, 7), (1, 4, 8), (2, 5, 9), (6, 10, 11))
+EQ_W_WITHIN = 0.3
+EQ_W_CROSS = 0.1
+EQ_MU = 0.5
+EQ_FLOOR = 0.02   # equipartition floor: keeps every coordinate strictly positive when grad U_i = 0
+EQ_SCALE = 2.2    # calibrated: mean windowed RMS p / mean reconstruction = 2.19 (51 bar series, LCG seed 12345)
+
+
+def _equilibrium_coupling() -> np.ndarray:
+    group_of = {i: gi for gi, g in enumerate(EQ_GROUPS) for i in g}
+    lam = np.empty((12, 12), dtype=np.float64)
+    for i in range(12):
+        for j in range(12):
+            lam[i, j] = 1.0 if i == j else (EQ_W_WITHIN if group_of[i] == group_of[j] else EQ_W_CROSS)
+    return lam
+
+
+_EQ_LAMBDA = _equilibrium_coupling()
+
+
+def momentum_from_summary(q: np.ndarray, legacy_proxy: Optional[np.ndarray] = None) -> np.ndarray:
+    r"""Equilibrium Momentum Reconstruction: 12-D p from a single summary q (no window series).
+
+    g = grad U(q) = Lambda (q - mu);  r_i = EQ_SCALE * sqrt(g_i^2 + EQ_FLOOR^2)  (> 0 for all i).
+    A summary displaced from the style equilibrium would relax with force -g, so |g_i| is the
+    momentum scale it carries; EQ_FLOOR is the equipartition floor. The legacy 4 proxy dims
+    (p[0,2,6,11], summary statistics, not temporal momenta) combine as hypot(proxy_i, r_i).
+    Deterministic; not a copy of q (depends on the coupled displacement from mu).
+    """
+    q = np.asarray(q, dtype=np.float64)
+    g = _EQ_LAMBDA @ (q - EQ_MU)
+    p = EQ_SCALE * np.sqrt(g * g + EQ_FLOOR * EQ_FLOOR)
+    if legacy_proxy is not None:
+        proxy = np.asarray(legacy_proxy, dtype=np.float64)
+        p = np.where(proxy != 0.0, np.hypot(proxy, p), p)
+    return p
+
+
 def visual_functor_forward_24d(visual_features: Dict[str, Any]) -> np.ndarray:
     r"""Maps 2D image features to 24D USIR symplectic state z = (q, p).
 
@@ -576,8 +627,8 @@ def visual_functor_forward_24d(visual_features: Dict[str, Any]) -> np.ndarray:
     saliency_scanpath, composition_margin_ratio (summary of the whole image), and optionally
     patch_features: ordered list of the same feature dicts for local blocks / fixation patches.
     With >= 2 patches all 12 momentum coordinates are the RMS step-to-step change of the per-patch
-    elements. Without patches the input has no temporal information and p falls back to the legacy
-    4-coordinate proxy (p[1,3,4,5,7,8,9,10] stay 0.0: not measurable from a summary).
+    elements. Without patches the input has no temporal information: p is the Equilibrium Momentum
+    Reconstruction `momentum_from_summary` (all 12 dims > 0; legacy proxy dims p[0,2,6,11] combined).
     """
     q, t = _visual_q_and_terms(visual_features)
     patches = visual_features.get("patch_features") or []
@@ -589,6 +640,7 @@ def visual_functor_forward_24d(visual_features: Dict[str, Any]) -> np.ndarray:
         p[2] = float(t["margin_ratio"] * 0.8)
         p[6] = float(t["chiaro"] * 1.8)
         p[11] = float(t["chiaro"] * 2.0 + t["gabor_var"])
+        p = momentum_from_summary(q, p)
     return np.concatenate([q, p])
 
 
@@ -647,7 +699,7 @@ def music_functor_forward_24d(music_features: Dict[str, Any]) -> np.ndarray:
     Expected features: torus_distance, dissonance, syncopation, rest_ratio, bpm (whole piece), and
     optionally bar_features: ordered per-bar (time-window) feature dicts of the same keys. With >= 2
     bars all 12 momentum coordinates are the RMS bar-to-bar change of the per-bar elements. Without
-    bars p falls back to the legacy 4-coordinate proxy (the other 8 are not measurable from a summary).
+    bars p is the Equilibrium Momentum Reconstruction `momentum_from_summary` (all 12 dims > 0).
     """
     q, t = _music_q_and_terms(music_features)
     bars = music_features.get("bar_features") or []
@@ -659,6 +711,7 @@ def music_functor_forward_24d(music_features: Dict[str, Any]) -> np.ndarray:
         p[2] = float(t["rest"] * 0.9)
         p[6] = float(t["diss"] * 1.6)
         p[11] = float(t["diss"] * 1.8 + t["torus_dist"])
+        p = momentum_from_summary(q, p)
     return np.concatenate([q, p])
 
 

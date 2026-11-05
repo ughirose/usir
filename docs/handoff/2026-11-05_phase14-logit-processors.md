@@ -18,3 +18,19 @@
 ## 次の一手
 - Phase 15(ローカル): M15.1 節スコープ主述ねじれ → M15.2 サマリ入力時12次元 p(Py/TS パリティ)→ M15.3 judge_model 結線(モックテスト)。
 - Phase 16 の最初の Colab 実行で、torch 経路の動作・所要時間・新ゲートの効果を 1.5B で確認する。
+
+# Phase 15: 主述ねじれ・サマリ運動量・LLM Judge 結線 (2026-11-05, 記入者: Claude Code)
+
+## 決定事項
+- M15.1: `python/usir_py/clause_twist.py` を新規作成(`split_clauses`, `detect_clause_twists`, `count_clause_twists`)。節境界(けれど/けど/ながら/のに/ので、述語末の直後の が/から/し、述語形の後の読点)で主語スコープをリセットし、節内の主語主辞と述語を汎用語彙クラス(刺激名詞/抽象名詞 × 知覚・意志動詞/動作主動詞)で照合する。自然現象の主語(擬人法)、コピュラ、補文、受身・使役、引用は対象外。`evaluate_toulmin_components(clause_twist=True)` で既存の `twist_count` に加算し、`clause_twist_count` を別途返す。「彼は走ったが、私は疲れた」=陰性、「風の音が耳を澄ました」=陽性。
+- M15.2: `momentum_from_summary`(Py: nishiki_unified_field.py、TS: crossModalFunctors.ts `momentumFromSummary`)。p_i = 2.2·sqrt(g_i² + 0.02²)、g = Λ(q−0.5)。Λ は固定の4族結合行列(対角 1、同族 0.3、異族 0.1、正定値)。族の割り当てはこのモジュールの既存定義(Flux{0,3,7}/Lattice{1,4,8}/Void{2,5,9}/Shock{6,10,11})に従う。旧プロキシ4次元は hypot で合成。スケール 2.2 は音楽の小節系列51本(LCG 乱数)で窓経路と較正。窓経路は不変。Py/TS の固定参照値は 1e-6 以内で一致。
+- M15.3: `evaluate_llm_judge(judge_fn=...)`, `parse_judge_scores`, `make_hf_judge_fn`、CLI `--judge-reuse-model`(既定 off)。出力に `judge_rubric` / `judge_llm` / `judge_llm_raw` / `judge_source` を追加。旧経路は torch 未 import の NameError を握りつぶしており、一度も動いていなかった。
+- テスト: pytest 391 passed / 4 skipped、pnpm 346 passed。
+
+## 未完了・注意
+- clause_twist は既定 on のため、Toulmin の twist_count が増える入力では既存ベンチのスコアが変わり得る(既存テストは全通過)。語彙クラスは小さく再現率は低い。実コーパスでの誤検出率は未測定。
+- サマリ運動量の Λ は学習済み Forge 精度行列ではない(このモジュールからは参照できない)。視覚側は未較正。音楽の固定12音列テストの参照値(time / gain)は新しい p で再生成した(音高列は同一)。
+- 実モデルでの judge は未実行(Colab が必要)。`--judge-reuse-model` を使うと、Spearman 相関の対象は LLM のスコアに変わる。
+
+## 次の一手
+- Phase 16: Colab で 1.5B の1本を流し、Phase 14 の torch 経路(動作・速度)を確認する。その後、5 seeds × {Steered, Ctrl} を回す。

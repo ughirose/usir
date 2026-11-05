@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   extractVisualFeaturesFromImage,
   visualFunctorForward,
+  momentumFromSummary,
   visualFunctorInverse,
   circleOfFifthsDistance,
   intervalDissonance,
@@ -329,8 +330,51 @@ describe('Phase E WS-E1: Cross-Modal Visual & Music Functors', () => {
       const z = musicFunctorForward(mk(0.05, 0.5, 0.8, 170));
       const seq = musicFunctorInverse(z).webAudioSequence;
       expect(seq.map((n) => n.note)).toEqual([65, 64, 65, 60, 60, 59, 57, 62, 64, 66, 64, 69]);
-      expect(seq[0]!.time).toBeCloseTo(0.09627942044378301, 9);
-      expect(seq[0]!.gain).toBeCloseTo(0.806258473896996, 9);
+      expect(seq[0]!.time).toBeCloseTo(0.09575955446535744, 9);
+      expect(seq[0]!.gain).toBeCloseTo(0.806339418016925, 9);
+    });
+    describe('Equilibrium Momentum Reconstruction (summary-only input)', () => {
+      const vis: VisualFeatures2D = {
+        gaborFrequencies: [0.1, 0.2, 0.3, 0.4],
+        colorEntropy: 0.6,
+        chiaroscuroGradient: 0.7,
+        quadtreeDepthEntropy: 0.3,
+        saliencyScanpath: [
+          { x: 0.1, y: 0.1, intensity: 0.5 },
+          { x: 0.45, y: 0.4, intensity: 0.5 },
+        ],
+        compositionMarginRatio: 0.25,
+      };
+      const musA: MusicFeatures = { torusDistance: 0.4, dissonance: 0.5, syncopation: 0.8, restRatio: 0.05, bpm: 170 };
+      const musB: MusicFeatures = { torusDistance: 0.3, dissonance: 0.2, syncopation: 0.2, restRatio: 0.2, bpm: 100 };
+
+      it('all 12 momentum dims are > 0, deterministic, and not a copy of q', () => {
+        for (const z of [visualFunctorForward(vis), musicFunctorForward(musA), musicFunctorForward(musB)]) {
+          const q = z.slice(0, 12);
+          const p = z.slice(12);
+          expect(p.every((v) => v > 0)).toBe(true);
+          expect(p.some((v, i) => v !== q[i])).toBe(true);
+        }
+        expect(musicFunctorForward(musA)).toEqual(musicFunctorForward({ ...musA }));
+        // fully degenerate q = mu still yields strictly positive p via the equipartition floor
+        expect(momentumFromSummary(new Array(12).fill(0.5)).every((v) => v > 0)).toBe(true);
+      });
+
+      it('windowed path is unchanged (constant bars still give p = 0)', () => {
+        const flat: MusicFeatures = { ...musB };
+        const z = musicFunctorForward({ ...flat, barFeatures: [flat, flat, flat] });
+        expect(z.slice(12).every((v) => v === 0)).toBe(true);
+      });
+
+      it('matches the Python implementation (reference values from nishiki_unified_field.py)', () => {
+        const refVis = [1.1309242357175378, 0.6121768020580459, 0.8736334870176883, 0.800947064730499, 0.10093831623631767, 0.5737830483282648, 1.2925365509605016, 0.9071981859740382, 0.504715083761545, 0.8350535249114451, 0.24262946252225254, 1.4159508466954225];
+        const refMusA = [1.602984978095553, 0.11847362575695912, 1.3654512074768548, 0.4093714694504248, 0.06541070248820138, 1.3493175904878734, 0.805114054032098, 0.7701579123790134, 0.20712740040854083, 1.2954474477955484, 0.14751488060531387, 1.3020999808002456];
+        const refMusB = [1.0962577981478627, 0.5276377924296175, 1.1003150276170912, 1.0217478358186036, 0.46628064510549877, 0.8701132110248645, 1.199316888899677, 1.0371337618648813, 0.5276377924296177, 0.993175130578691, 1.094284953748337, 1.3310000000000002];
+        const cmp = (z: number[], ref: number[]) => ref.forEach((r, i) => expect(Math.abs(z[12 + i]! - r)).toBeLessThan(1e-6));
+        cmp(visualFunctorForward(vis), refVis);
+        cmp(musicFunctorForward(musA), refMusA);
+        cmp(musicFunctorForward(musB), refMusB);
+      });
     });
   });
 });

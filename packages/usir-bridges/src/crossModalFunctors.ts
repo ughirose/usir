@@ -302,6 +302,37 @@ export function momentumFromWindowSeries(qSeries: number[][]): number[] {
   return p;
 }
 
+/**
+ * Equilibrium Momentum Reconstruction (summary-only path). Mirrors python
+ * `momentum_from_summary` in nishiki_unified_field.py. g = Lambda (q - mu) with a fixed 4-group
+ * coupling matrix (unit diagonal, 0.3 within group, 0.1 across groups; eigenvalues 0.7/1.3/2.5,
+ * positive definite); p_i = SCALE * sqrt(g_i^2 + FLOOR^2) > 0. Legacy proxy dims (non-zero) combine
+ * as hypot(proxy_i, p_i).
+ */
+const EQ_GROUPS: number[][] = [[0, 3, 7], [1, 4, 8], [2, 5, 9], [6, 10, 11]];
+const EQ_W_WITHIN = 0.3;
+const EQ_W_CROSS = 0.1;
+const EQ_MU = 0.5;
+const EQ_FLOOR = 0.02;
+const EQ_SCALE = 2.2;
+
+export function momentumFromSummary(q: number[], legacyProxy?: number[]): number[] {
+  const groupOf = new Array<number>(12).fill(0);
+  EQ_GROUPS.forEach((g, gi) => g.forEach((i) => { groupOf[i] = gi; }));
+  const p = new Array<number>(12).fill(0);
+  for (let i = 0; i < 12; i++) {
+    let g = 0.0;
+    for (let j = 0; j < 12; j++) {
+      const lam = i === j ? 1.0 : groupOf[i] === groupOf[j] ? EQ_W_WITHIN : EQ_W_CROSS;
+      g += lam * (q[j]! - EQ_MU);
+    }
+    p[i] = EQ_SCALE * Math.sqrt(g * g + EQ_FLOOR * EQ_FLOOR);
+    const proxy = legacyProxy?.[i] ?? 0.0;
+    if (proxy !== 0.0) p[i] = Math.hypot(proxy, p[i]!);
+  }
+  return p;
+}
+
 interface VisualQTerms {
   q: number[];
   saccadeMean: number;
@@ -363,8 +394,8 @@ function visualQAndTerms(features: VisualFeatures2D): VisualQTerms {
 /**
  * Forward Visual Functor F_visual: Maps 2D visual features to 24D USIR symplectic state z = (q, p).
  * With >= 2 patchFeatures all 12 momentum coordinates are the RMS patch-to-patch change of the
- * per-patch elements. Without patches p falls back to the legacy 4-coordinate proxy
- * (p[1,3,4,5,7,8,9,10] stay 0: not measurable from a summary).
+ * per-patch elements. Without patches p is the Equilibrium Momentum Reconstruction
+ * (momentumFromSummary; all 12 > 0, legacy proxy dims p[0,2,6,11] combined).
  */
 export function visualFunctorForward(features: VisualFeatures2D): number[] {
   const t = visualQAndTerms(features);
@@ -378,6 +409,7 @@ export function visualFunctorForward(features: VisualFeatures2D): number[] {
     p[2] = t.marginRatio * 0.8;
     p[6] = t.chiaro * 1.8;
     p[11] = t.chiaro * 2.0 + t.gaborVar;
+    p = momentumFromSummary(t.q, p);
   }
   return [...t.q, ...p];
 }
@@ -685,7 +717,7 @@ export function extractMusicFeaturesFromNotes(notes: MusicNoteEvent[]): MusicFea
 /**
  * Forward Music Functor F_music: Maps musical features to 24D USIR symplectic state z = (q, p).
  * With >= 2 barFeatures all 12 momentum coordinates are the RMS bar-to-bar change of the per-bar
- * elements; otherwise p falls back to the legacy 4-coordinate proxy.
+ * elements; otherwise p is the Equilibrium Momentum Reconstruction (momentumFromSummary).
  */
 export function musicFunctorForward(features: MusicFeatures): number[] {
   const t = musicQAndTerms(features);
@@ -699,6 +731,7 @@ export function musicFunctorForward(features: MusicFeatures): number[] {
     p[2] = t.rest * 0.9;
     p[6] = t.diss * 1.6;
     p[11] = t.diss * 1.8 + t.torusDist;
+    p = momentumFromSummary(t.q, p);
   }
   return [...t.q, ...p];
 }

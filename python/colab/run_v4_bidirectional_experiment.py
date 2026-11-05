@@ -26,7 +26,7 @@ import sys
 import time
 import traceback
 import urllib.request
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 import numpy as np
 from scipy.stats import spearmanr
@@ -238,6 +238,52 @@ CLEANLINESS: <1.0-5.0>
 """
 
 
+_JUDGE_KEYS = (
+    ("coherence_flow", "COHERENCE"),
+    ("logical_validity", "LOGICAL_VALIDITY"),
+    ("structural_sophistication", "SOPHISTICATION"),
+    ("absence_of_slop", "CLEANLINESS"),
+)
+
+
+def parse_judge_scores(reply: Any) -> Optional[Dict[str, float]]:
+    """Defensively parse a judge reply. Returns None unless all four scores are found.
+
+    Accepts ':' / '：' / '=' separators and a trailing '/5'; clamps each score to [1, 5].
+    Empty, non-string, garbled, or non-finite values give None (never raises).
+    """
+    if not isinstance(reply, str) or not reply.strip():
+        return None
+    out: Dict[str, float] = {}
+    for key, label in _JUDGE_KEYS:
+        m = re.search(label + r"\s*[:：=]\s*\**\s*([0-9]+(?:\.[0-9]+)?)", reply, flags=re.IGNORECASE)
+        if not m:
+            return None
+        try:
+            v = float(m.group(1))
+        except ValueError:
+            return None
+        if not np.isfinite(v):
+            return None
+        out[key] = float(np.clip(v, 1.0, 5.0))
+    return out
+
+
+def make_hf_judge_fn(model: Any, tokenizer: Any, max_new_tokens: int = 64) -> Callable[[str], str]:
+    """Wrap an already-loaded (model, tokenizer) as a greedy judge callable. torch is imported lazily."""
+
+    def _judge(prompt: str) -> str:
+        import torch
+
+        device = next(model.parameters()).device if hasattr(model, "parameters") else "cpu"
+        enc = tokenizer(prompt, return_tensors="pt").to(device)
+        with torch.no_grad():
+            out = model.generate(**enc, max_new_tokens=max_new_tokens, do_sample=False)
+        return tokenizer.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True)
+
+    return _judge
+
+
 def evaluate_llm_judge(
     text: str,
     domain: str,
@@ -245,46 +291,57 @@ def evaluate_llm_judge(
     target_conclusion: Optional[str] = None,
     judge_model: Optional[Any] = None,
     judge_tokenizer: Optional[Any] = None,
+    judge_fn: Optional[Callable[[str], str]] = None,
 ) -> Dict[str, Any]:
-    """Automated independent blind LLM-as-a-Judge quality evaluation routine.
+    """Quality judge: offline rubric always, plus an optional real-LLM judge.
 
-    Grades candidate text strictly against independent rubric criteria without
-    using USIR's internal embedding functions (_embed_sentence_unit) or internal
-    statistical targets (cv_l, compute_three_phase_qda_distance), eliminating
-    self-scoring circularity.
+    Without a judge the result is the offline rubric (unchanged keys) plus
+    judge_rubric (copy of the offline scores), judge_llm=None, judge_llm_raw=None,
+    judge_source="offline_rubric". With judge_fn (str -> str) or (judge_model,
+    judge_tokenizer), the rubric prompt is sent to it; if the reply parses, the
+    top-level scores become the LLM scores (judge_source="llm") and the offline
+    scores stay in judge_rubric. Unparseable replies / exceptions fall back to the
+    offline scores (judge_llm=None) and the raw reply is kept in judge_llm_raw.
     """
-    rubric_prompt = build_independent_judge_rubric_prompt(text, domain, prompt, target_conclusion)
+    res = _evaluate_offline_rubric(text, domain, prompt, target_conclusion)
+    rubric_keys = [k for k, _ in _JUDGE_KEYS] + ["total_score", "normalized_quality"]
+    res["judge_rubric"] = {k: res[k] for k in rubric_keys}
+    res["judge_llm"] = None
+    res["judge_llm_raw"] = None
+    res["judge_source"] = "offline_rubric"
 
-    # 1. Real LLM Blind Evaluation Path (when model and tokenizer are passed)
-    if judge_model is not None and judge_tokenizer is not None and TORCH_AVAILABLE:
-        try:
-            device = next(judge_model.parameters()).device if hasattr(judge_model, "parameters") else "cpu"
-            enc = judge_tokenizer(rubric_prompt, return_tensors="pt").to(device)
-            with torch.no_grad():
-                out = judge_model.generate(**enc, max_new_tokens=128, temperature=0.1)
-                reply = judge_tokenizer.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True)
-            m_flow = re.search(r'COHERENCE:\s*([0-9.]+)', reply)
-            m_logic = re.search(r'LOGICAL_VALIDITY:\s*([0-9.]+)', reply)
-            m_soph = re.search(r'SOPHISTICATION:\s*([0-9.]+)', reply)
-            m_clean = re.search(r'CLEANLINESS:\s*([0-9.]+)', reply)
-            if all([m_flow, m_logic, m_soph, m_clean]):
-                s_flow = float(np.clip(float(m_flow.group(1)), 1.0, 5.0))
-                s_logic = float(np.clip(float(m_logic.group(1)), 1.0, 5.0))
-                s_struct = float(np.clip(float(m_soph.group(1)), 1.0, 5.0))
-                s_clean = float(np.clip(float(m_clean.group(1)), 1.0, 5.0))
-                tot = s_flow + s_logic + s_struct + s_clean
-                norm_q = (tot - 4.0) / 16.0 * 100.0
-                return {
-                    "coherence_flow": round(s_flow, 2),
-                    "logical_validity": round(s_logic, 2),
-                    "structural_sophistication": round(s_struct, 2),
-                    "absence_of_slop": round(s_clean, 2),
-                    "total_score": round(tot, 2),
-                    "normalized_quality": round(norm_q, 1),
-                    "rubric_prompt": rubric_prompt,
-                }
-        except Exception:
-            pass
+    fn = judge_fn
+    if fn is None and judge_model is not None and judge_tokenizer is not None:
+        fn = make_hf_judge_fn(judge_model, judge_tokenizer)
+    if fn is None:
+        return res
+    try:
+        raw = fn(res["rubric_prompt"])
+    except Exception as exc:  # judge failure must not break the benchmark
+        res["judge_llm_raw"] = f"<error: {type(exc).__name__}>"
+        return res
+    res["judge_llm_raw"] = raw if isinstance(raw, str) else None
+    parsed = parse_judge_scores(raw)
+    if parsed is None:
+        return res
+    tot = sum(parsed.values())
+    llm = {k: round(v, 2) for k, v in parsed.items()}
+    llm["total_score"] = round(tot, 2)
+    llm["normalized_quality"] = round((tot - 4.0) / 16.0 * 100.0, 1)
+    res["judge_llm"] = llm
+    res.update(llm)
+    res["judge_source"] = "llm"
+    return res
+
+
+def _evaluate_offline_rubric(
+    text: str,
+    domain: str,
+    prompt: str,
+    target_conclusion: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Deterministic offline rubric scorer (no model)."""
+    rubric_prompt = build_independent_judge_rubric_prompt(text, domain, prompt, target_conclusion)
 
     # 2. Deterministic Offline Independent Rubric Scorer
     if not text or not text.strip():
@@ -526,6 +583,7 @@ TIER3_CI_FIXTURES: Dict[str, Dict[str, Any]] = {
 def run_experiment_on_domain(
     domain_cfg: Dict[str, str],
     tier_info: Dict[str, Any],
+    judge_fn: Optional[Callable[[str], str]] = None,
 ) -> Dict[str, Any]:
     if TORCH_AVAILABLE and tier_info.get("tier") == "Tier_1_GPU_Transformers":
         import torch
@@ -534,12 +592,13 @@ def run_experiment_on_domain(
         import contextlib
         ctx = contextlib.nullcontext()
     with ctx:
-        return _run_experiment_on_domain_impl(domain_cfg, tier_info)
+        return _run_experiment_on_domain_impl(domain_cfg, tier_info, judge_fn=judge_fn)
 
 
 def _run_experiment_on_domain_impl(
     domain_cfg: Dict[str, str],
     tier_info: Dict[str, Any],
+    judge_fn: Optional[Callable[[str], str]] = None,
 ) -> Dict[str, Any]:
     domain = domain_cfg["domain"]
     theme = domain_cfg["theme"]
@@ -936,7 +995,7 @@ def _run_experiment_on_domain_impl(
         geodesic = compute_semantic_geodesic_curvature(text, domain=domain)
         qda = compute_three_phase_qda_distance(text, domain=domain)
         grpo = compute_multiplicative_grpo_reward(text, x_0=anchors.x_0, x_T=optimal_x_T, domain=domain)
-        judge = evaluate_llm_judge(text, domain=domain, prompt=anchors.x_0, target_conclusion=optimal_x_T)
+        judge = evaluate_llm_judge(text, domain=domain, prompt=anchors.x_0, target_conclusion=optimal_x_T, judge_fn=judge_fn)
         return {
             "text": text,
             "text_length": len(text),
@@ -1495,6 +1554,8 @@ def main() -> None:
     parser.add_argument("--report", type=str, default=str(_repo_root / "artifacts" / "v4_bidirectional_experiment_report.md"))
     parser.add_argument("--quick", action="store_true", help="Run fast 3-domain smoke test only")
     parser.add_argument("--quiet", action="store_true")
+    parser.add_argument("--judge-reuse-model", action="store_true",
+                        help="Reuse the already-loaded Tier_1 model as LLM judge (default off: offline rubric only)")
     parser.add_argument("--longform", action="store_true",
                         help="Also run a longform generation through HSMMLongformDirector (HSMM + WorldCraft arbitration + Momentum Banking)")
     parser.add_argument("--longform-theme", type=str, default="静謐な山寺の夜明け")
@@ -1528,6 +1589,17 @@ def main() -> None:
             except Exception:
                 pass
 
+    judge_fn = None
+    if args.judge_reuse_model:
+        if tier_info.get("tier") == "Tier_1_GPU_Transformers":
+            try:
+                j_model, j_tok = get_transformers_model()
+                judge_fn = make_hf_judge_fn(j_model, j_tok)
+            except Exception:
+                judge_fn = None
+        if judge_fn is None and not args.quiet:
+            print("[judge] --judge-reuse-model ignored: no loaded model (offline rubric only)")
+
     completed_ids = {r.get("id") or r.get("title") for r in results}
     for idx, domain_cfg in enumerate(suite):
         if domain_cfg["id"] in completed_ids:
@@ -1536,7 +1608,7 @@ def main() -> None:
             continue
         if not args.quiet:
             print(f"[{idx + 1:02d}/{len(suite)}] Running {domain_cfg['id']} ({domain_cfg['domain']}): {domain_cfg['title']}")
-        res = run_experiment_on_domain(domain_cfg, tier_info)
+        res = run_experiment_on_domain(domain_cfg, tier_info, judge_fn=judge_fn)
         results.append(res)
         completed_ids.add(domain_cfg["id"])
         if not args.quiet:
