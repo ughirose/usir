@@ -57,8 +57,9 @@ SCENE_BEATS = [
 # name -> (generator model id, seeds, conditions)
 SCRIPTS = {
     # p23s: n-gram ban paragraph scope; min is seed-deterministic and unaffected, so only new_* is re-run
-    "p23s_q3_8b": ("Qwen/Qwen3-8B", [3, 42], ["new_ctrl", "new_B"]),
-    "p23s_swallow_8b": ("tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2", [3, 42], ["new_ctrl", "new_B"]),
+    # p23t: + protected theme / role words in the n-gram ban (ngram_protect_text follows ngram_paragraph_scope)
+    "p23t_q3_8b": ("Qwen/Qwen3-8B", [3, 42], ["new_ctrl", "new_B"]),
+    "p23t_swallow_8b": ("tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2", [3, 42], ["new_ctrl", "new_B"]),
 }
 JUDGE_MID = "Qwen/Qwen2.5-7B-Instruct"
 

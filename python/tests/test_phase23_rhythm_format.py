@@ -15,6 +15,8 @@ from usir_py.realtime_decoder import (
     ClauseTwistedSMCDecoder,
     ContentRepLogits,
     ContextNgramBan,
+    protect_words_from_text,
+    protected_remainder,
 )
 from usir_py.text_format import format_novel
 from usir_py.text_metrics import (
@@ -425,3 +427,46 @@ def test_ngram_ban_paragraph_scope_still_bans_in_paragraph_repeats():
     sc = np.zeros((1, len(VOCAB)), dtype=np.float64)
     proc(ids, sc)
     assert sc[0][TID["る"]] == -4.0         # 雨が降る inside the paragraph body is still decayed
+
+
+# ------------------------------------------------------------------ 4d. n-gram ban: protected theme / role words
+def test_protect_words_from_text_extracts_kanji_katakana_runs():
+    assert protect_words_from_text("青年、老職人、止まった懐中時計をめぐる短編") == ["青年", "老職人", "懐中時計", "短編"]
+
+
+def test_protected_remainder_longest_prefix():
+    words = ["老職人", "懐中時計"]
+    assert protected_remainder("止まっていた懐中時", words) == "計"
+    assert protected_remainder("その懐中", words) == "時計"
+    assert protected_remainder("静かな", words) == ""
+    assert protected_remainder("懐中時計", words) == ""        # a completed word has no remainder
+
+
+def _hist_ban(protect):
+    # history paragraph held 懐中時計 -> hist soft 4-gram (懐,中,時)->計 and ban 5-gram (古,懐,中,時)->計
+    soft_map = {(TID["懐"], TID["中"], TID["時"]): {TID["計"]}}
+    hist_map = {(TID["古"], TID["懐"], TID["中"], TID["時"]): {TID["計"]}}
+    proc = ContextNgramBan(TK, 1, 5, hist_map, 4, 4.0, soft_map, scan_start=1,
+                           protect_words=["懐中時計"] if protect else None)
+    ids = np.asarray([[TID["雨"], TID["古"], TID["懐"], TID["中"], TID["時"]]])
+    sc = np.zeros((1, len(VOCAB)), dtype=np.float64)
+    proc(ids, sc)
+    return sc[0]
+
+
+def test_history_ngram_bans_theme_word_without_protection():
+    assert _hist_ban(False)[TID["計"]] < -1e3
+
+
+def test_protected_theme_word_is_exempt_from_history_ban():
+    sc = _hist_ban(True)
+    assert sc[TID["計"]] == 0.0
+
+
+def test_protection_does_not_exempt_other_tokens():
+    soft_map = {(TID["雨"], TID["が"], TID["降"]): {TID["る"]}}
+    proc = ContextNgramBan(TK, 1, 5, {}, 4, 4.0, soft_map, scan_start=1, protect_words=["懐中時計"])
+    ids = np.asarray([[TID["古"], TID["雨"], TID["が"], TID["降"]]])
+    sc = np.zeros((1, len(VOCAB)), dtype=np.float64)
+    proc(ids, sc)
+    assert sc[0][TID["る"]] == -4.0

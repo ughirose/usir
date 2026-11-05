@@ -1257,6 +1257,29 @@ class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
         return scores
 
 
+_PROTECT_RUN_RE = re.compile(r"[一-鿿々ァ-ヶー]{2,}")
+
+
+def protect_words_from_text(text: str) -> List[str]:
+    """Kanji / katakana runs (length >= 2) of theme / role text, e.g. '止まった懐中時計をめぐる短編、青年' -> 懐中時計, 短編, 青年."""
+    out: List[str] = []
+    for w in _PROTECT_RUN_RE.findall(text or ""):
+        if w not in out:
+            out.append(w)
+    return out
+
+
+def protected_remainder(text: str, words: Sequence[str]) -> str:
+    """If `text` ends with a proper prefix of one of `words`, the rest of that word (longest matched prefix wins)."""
+    best_k, rem = 0, ""
+    for w in words:
+        for k in range(len(w) - 1, 0, -1):
+            if k > best_k and text.endswith(w[:k]):
+                best_k, rem = k, w[k:]
+                break
+    return rem
+
+
 class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
     """-1e4 on any token that would re-create an n-gram already seen in history / prompt / this row (plus the soft
     -soft_pen decay for the shorter n-gram). stem_guard: when the text so far ends with a hiragana, hiragana-only
@@ -1265,8 +1288,11 @@ class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
     def __init__(self, tokenizer: Any, n_ctx: int, ngram_n: int, hist_map: Dict[Any, Any], soft_n: int, soft_pen: float,
                  soft_map: Dict[Any, Any], first_ban: Any = None, hira_only: Optional[Sequence[bool]] = None,
                  stem_guard: bool = False, ctx_tail: str = "", tail_cache: Optional[TailCache] = None,
-                 scan_start: int = 0) -> None:
+                 scan_start: int = 0, protect_words: Optional[Sequence[str]] = None) -> None:
         self.tokenizer = tokenizer
+        # protect_words: theme / role words (e.g. 懐中時計, 老職人). When the row text ends inside such a word, tokens that
+        # continue it are exempt from the ban and the soft decay, so the word can be reused in later paragraphs
+        self.protect_words = [w for w in (protect_words or []) if len(w) >= 2]
         self.n_ctx = int(n_ctx)
         # scan_start: first row position scanned for in-row n-grams (0 = whole input incl. the instruction prompt;
         # paragraph scope passes n_ctx - len(paragraph prefix ids) so theme / beat words in the prompt are not banned)
@@ -1297,9 +1323,26 @@ class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
                 ends_hira[r] = bool(s) and "ぁ" <= s[-1] <= "ゟ"
         hira = self.hira_only
         nh = len(hira) if hira is not None else 0
+        rems: List[str] = [""] * ids.shape[0]
+        if self.protect_words:
+            ptails = _tail_texts(self.tokenizer, ids, self.n_ctx, self.tail_cache)
+            for r, t in enumerate(ptails):
+                rems[r] = protected_remainder(self.ctx_tail + t, self.protect_words)
+        tok_txt: Dict[int, str] = {}
+
+        def _continues(t: int, r: int) -> bool:
+            rem = rems[r]
+            if not rem:
+                return False
+            if t not in tok_txt:
+                tok_txt[t] = self.tokenizer.decode([t]).replace("▁", "").strip()
+            x = tok_txt[t]
+            return bool(x) and (x.startswith(rem) or rem.startswith(x))
 
         def _keep(t: int, r: int) -> bool:
             if t >= V:
+                return False
+            if _continues(t, r):
                 return False
             return not (ends_hira[r] and t < nh and hira[t])  # type: ignore[index]
 
@@ -1568,6 +1611,7 @@ class ClauseTwistedSMCDecoder:
         cr_paragraph_scope: bool = False,
         cr_exempt_text: str = "",
         ngram_paragraph_scope: bool = False,
+        ngram_protect_text: str = "",
     ) -> None:
         # cr_paragraph_scope / cr_exempt_text : see ContentRepLogits (Phase 23: prompt theme / role tokens were penalised
         #                       from the first mention, producing coinages such as 懐中時鐘 / 青年人)
@@ -1576,6 +1620,9 @@ class ClauseTwistedSMCDecoder:
         # ngram_paragraph_scope: ContextNgramBan scans only the paragraph body (prefix + tail) of each row, not the
         # instruction prompt (Phase 23: theme word 懐中時計 in the prompt made 計 banned after 懐中時 -> 懐中時針/時報)
         self.ngram_paragraph_scope = bool(ngram_paragraph_scope)
+        # ngram_protect_text: theme / role text; its kanji / katakana words may be continued despite history n-grams
+        # (Phase 23: 懐中時計 used in paragraph 1 was banned in later paragraphs -> 懐中時針 / 懐中時刻)
+        self.ngram_protect_words = protect_words_from_text(ngram_protect_text)
         # rhythm_profile      : "cycle" (default; short/medium/long by sentence index mod 3), "steady" (no positive '。' push and no
         #                       '、' push; '。' sealed -12 below steady_min_chars, +3 above steady_max_chars, '、' -4 once the sentence
         #                       has >= steady_max_commas commas) or "pulse" (cycle with positive '。' pushes capped at +3 and no
@@ -2285,6 +2332,7 @@ class ClauseTwistedSMCDecoder:
             hira_only=hira_l if stem_on else None, stem_guard=stem_on, ctx_tail=ctx_tail, tail_cache=tail_cache,
             scan_start=((n_ctx - len(tokenizer_ref.encode(prefix, add_special_tokens=False)) if prefix else n_ctx)
                         if getattr(self, "ngram_paragraph_scope", False) else 0),
+            protect_words=getattr(self, "ngram_protect_words", None),
         ) if (ngram_n >= 2 or soft_n or first_ban is not None) else None
 
         ph_period, ph_comma = self._phase_bias(prefix)

@@ -1521,6 +1521,7 @@ def run_longform_director(
             cr_paragraph_scope=bool(cr_paragraph_scope),
             cr_exempt_text=("、".join(list(roles or []) + [theme]) if cr_paragraph_scope else ""),
             ngram_paragraph_scope=bool(ngram_paragraph_scope),
+            ngram_protect_text=("、".join(list(roles or []) + [theme]) if ngram_paragraph_scope else ""),
         )
         decoder.repeat_use_context = bool(carry_context)
         generator = "llm_clause_smc"
