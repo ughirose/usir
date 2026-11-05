@@ -477,8 +477,14 @@ class OSWEStreamingCompiler:
 
         return self.add_trajectory(vectors, modes=modes, cluster_id=cluster_id, align_phase=align_phase)
 
-    def compile_tier_m_binary(self, enforce_anonymity: bool = True) -> bytes:
-        """Validates K >= min_clusters anonymity gate and outputs strict 4,096-byte binary."""
+    def compile_tier_m_binary(self, enforce_anonymity: bool = True, shrinkage: str = "scaled") -> bytes:
+        """Validates K >= min_clusters anonymity gate and outputs strict 4,096-byte binary.
+
+        shrinkage="scaled" (default): Sigma = a*S + (1-a)*tr(S)/24*I with a = SHRINKAGE_ALPHA.
+        shrinkage="legacy": the pre-3f288f0 formula Sigma = 0.2*S + 0.8*I (kept for comparison).
+        """
+        if shrinkage not in ("scaled", "legacy"):
+            raise ValueError(f"Unknown shrinkage '{shrinkage}'; expected 'scaled' or 'legacy'")
         if enforce_anonymity and len(self.clusters) < self.min_clusters:
             raise ValueError(
                 f"Cluster anonymity gate failed: K={len(self.clusters)} < {self.min_clusters}. "
@@ -527,7 +533,9 @@ class OSWEStreamingCompiler:
             # For PSD S_k, cond(Sigma_k) <= (24a + 1 - a)/(1 - a) = 73 < 500. Modes with no usable
             # variance (N_k <= 1 or identical samples) keep the legacy 0.8 * I.
             mean_var = float(np.trace(S_k)) / 24.0
-            if mean_var < 1e-8:
+            if shrinkage == "legacy":
+                Sigma_k = 0.20 * S_k + 0.80 * np.eye(24, dtype=np.float64)
+            elif mean_var < 1e-8:
                 Sigma_k = 0.80 * np.eye(24, dtype=np.float64)
             else:
                 Sigma_k = SHRINKAGE_ALPHA * S_k + (1.0 - SHRINKAGE_ALPHA) * mean_var * np.eye(24, dtype=np.float64)
