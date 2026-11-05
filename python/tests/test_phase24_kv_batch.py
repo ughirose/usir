@@ -46,7 +46,9 @@ CTX = "工房の奥で青年は時計を見つめていた。"
 TARGETS = ["針が止まった。", "雨が降る、", "老職人は黙っていた。", "光"]
 
 
-@pytest.mark.parametrize("dtype,atol", [(torch.float32, 1e-5), (torch.bfloat16, 1e-2)])
+# bf16: the one-by-one reference takes log_softmax of bf16 logits, so its values are quantised to the bf16 spacing
+# (0.03125 at |x| ~ 4); the batched path computes log_softmax in fp32. Measured max diff on Colab: 0.016.
+@pytest.mark.parametrize("dtype,atol", [(torch.float32, 1e-5), (torch.bfloat16, 0.035)])
 @pytest.mark.parametrize("kv", [False, True])
 def test_batched_logprob_matches_one_by_one(dtype, atol, kv):
     m = _tiny(dtype)
