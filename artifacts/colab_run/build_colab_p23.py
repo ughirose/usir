@@ -56,9 +56,9 @@ SCENE_BEATS = [
 
 # name -> (generator model id, seeds, conditions)
 SCRIPTS = {
-    "p23_q25_7b": ("Qwen/Qwen2.5-7B-Instruct", [3, 42], ["min", "new_ctrl", "new_B"]),
-    "p23_q3_8b": ("Qwen/Qwen3-8B", [3, 42], ["min", "new_ctrl", "new_B"]),
-    "p23_swallow_8b": ("tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2", [3, 42], ["min", "new_ctrl", "new_B"]),
+    # p23s: n-gram ban paragraph scope; min is seed-deterministic and unaffected, so only new_* is re-run
+    "p23s_q3_8b": ("Qwen/Qwen3-8B", [3, 42], ["new_ctrl", "new_B"]),
+    "p23s_swallow_8b": ("tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2", [3, 42], ["new_ctrl", "new_B"]),
 }
 JUDGE_MID = "Qwen/Qwen2.5-7B-Instruct"
 
@@ -146,7 +146,12 @@ gpu = torch.cuda.get_device_name(0)
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-U", "transformers"], check=False)
 tok = AutoTokenizer.from_pretrained(GEN_MID)
 t_load = time.time()
-model = AutoModelForCausalLM.from_pretrained(GEN_MID, dtype=torch.bfloat16, device_map="cuda")   # fail-fast, no fallback
+try:
+    model = AutoModelForCausalLM.from_pretrained(GEN_MID, dtype=torch.bfloat16, device_map="cuda")
+except Exception as exc:   # Qwen3.5 ships as ImageTextToText; its text path is used
+    log(f"CausalLM load failed ({exc!r}); trying AutoModelForImageTextToText")
+    from transformers import AutoModelForImageTextToText
+    model = AutoModelForImageTextToText.from_pretrained(GEN_MID, dtype=torch.bfloat16, device_map="cuda")
 log(f"loaded {GEN_MID} bf16 on {gpu} in {time.time()-t_load:.0f}s vram={torch.cuda.memory_allocated()/2**30:.2f}GiB")
 
 RUNS = {}
@@ -166,7 +171,8 @@ for SEED in SEEDS:
                           scene_constraints=(plan["constraints"] if steered else {}), direction_steer=steered, anti_repeat=True,
                           rhythm=True, rhythm_profile="steady", climax_rhythm_profile="pulse", adnominal_guard=True, cv_ceil=0.75,
                           lex_compound_exempt=True, collapse_guard=True, rep_penalty=1.10, lex_decay=2.5,
-                          demo_decay=True, short_prev_gate=True)
+                          demo_decay=True, short_prev_gate=True, cr_paragraph_scope=True,
+                          ngram_paragraph_scope=True)
             res = mod.run_longform_director(
                 THEME, model=model, tokenizer=tok, seed=SEED, target_paragraphs=6, target_total_chars=2400,
                 min_clauses_per_paragraph=6, reseed_per_paragraph=True, verbose=False,

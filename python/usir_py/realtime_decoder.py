@@ -1264,9 +1264,13 @@ class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
 
     def __init__(self, tokenizer: Any, n_ctx: int, ngram_n: int, hist_map: Dict[Any, Any], soft_n: int, soft_pen: float,
                  soft_map: Dict[Any, Any], first_ban: Any = None, hira_only: Optional[Sequence[bool]] = None,
-                 stem_guard: bool = False, ctx_tail: str = "", tail_cache: Optional[TailCache] = None) -> None:
+                 stem_guard: bool = False, ctx_tail: str = "", tail_cache: Optional[TailCache] = None,
+                 scan_start: int = 0) -> None:
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
+        # scan_start: first row position scanned for in-row n-grams (0 = whole input incl. the instruction prompt;
+        # paragraph scope passes n_ctx - len(paragraph prefix ids) so theme / beat words in the prompt are not banned)
+        self.scan_start = max(0, int(scan_start))
         self.ngram_n = int(ngram_n)
         self.hist_map = hist_map
         self.soft_n = int(soft_n)
@@ -1307,7 +1311,7 @@ class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
                 sn = self.soft_n
                 ks = tuple(seq[-(sn - 1):])
                 sb = set(self.soft_map.get(ks, ()))
-                for i in range(len(seq) - sn + 1):
+                for i in range(self.scan_start, len(seq) - sn + 1):
                     if tuple(seq[i:i + sn - 1]) == ks:
                         sb.add(seq[i + sn - 1])
                 soft_rows.append([t for t in sb if _keep(t, r)])
@@ -1316,7 +1320,7 @@ class ContextNgramBan(_ProcBase):  # type: ignore[misc,valid-type]
             n = self.ngram_n
             key = tuple(seq[-(n - 1):])
             banned = set(self.hist_map.get(key, ()))
-            for i in range(len(seq) - n + 1):
+            for i in range(self.scan_start, len(seq) - n + 1):
                 if tuple(seq[i:i + n - 1]) == key:
                     banned.add(seq[i + n - 1])
             ban_rows.append([t for t in banned if _keep(t, r)])
@@ -1563,11 +1567,15 @@ class ClauseTwistedSMCDecoder:
         collapse_penalty: float = 8.0,
         cr_paragraph_scope: bool = False,
         cr_exempt_text: str = "",
+        ngram_paragraph_scope: bool = False,
     ) -> None:
         # cr_paragraph_scope / cr_exempt_text : see ContentRepLogits (Phase 23: prompt theme / role tokens were penalised
         #                       from the first mention, producing coinages such as 懐中時鐘 / 青年人)
         self.cr_paragraph_scope = bool(cr_paragraph_scope)
         self.cr_exempt_text = str(cr_exempt_text)
+        # ngram_paragraph_scope: ContextNgramBan scans only the paragraph body (prefix + tail) of each row, not the
+        # instruction prompt (Phase 23: theme word 懐中時計 in the prompt made 計 banned after 懐中時 -> 懐中時針/時報)
+        self.ngram_paragraph_scope = bool(ngram_paragraph_scope)
         # rhythm_profile      : "cycle" (default; short/medium/long by sentence index mod 3), "steady" (no positive '。' push and no
         #                       '、' push; '。' sealed -12 below steady_min_chars, +3 above steady_max_chars, '、' -4 once the sentence
         #                       has >= steady_max_commas commas) or "pulse" (cycle with positive '。' pushes capped at +3 and no
@@ -2275,6 +2283,8 @@ class ClauseTwistedSMCDecoder:
         ngram_proc = ContextNgramBan(
             tokenizer_ref, n_ctx, ngram_n, hist_map, soft_n, soft_pen, soft_map, first_ban=first_ban,
             hira_only=hira_l if stem_on else None, stem_guard=stem_on, ctx_tail=ctx_tail, tail_cache=tail_cache,
+            scan_start=((n_ctx - len(tokenizer_ref.encode(prefix, add_special_tokens=False)) if prefix else n_ctx)
+                        if getattr(self, "ngram_paragraph_scope", False) else 0),
         ) if (ngram_n >= 2 or soft_n or first_ban is not None) else None
 
         ph_period, ph_comma = self._phase_bias(prefix)

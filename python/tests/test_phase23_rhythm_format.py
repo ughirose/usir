@@ -14,6 +14,7 @@ from usir_py.realtime_decoder import (
     BoundaryBiasLogits,
     ClauseTwistedSMCDecoder,
     ContentRepLogits,
+    ContextNgramBan,
 )
 from usir_py.text_format import format_novel
 from usir_py.text_metrics import (
@@ -395,3 +396,32 @@ def test_content_rep_paragraph_scope_ignores_prompt_tokens():
 def test_content_rep_exempt_ids_never_penalised():
     scoped = _cr(True, exempt_ids=[TID["雨"]])
     assert scoped[TID["雨"]] == 1.0
+
+
+# ------------------------------------------------------------------ 4c. n-gram ban: paragraph scope
+def _ngram(scan_start):
+    # prompt (first 4 ids) holds 懐中時計 (theme); the generated tail is 古懐中時 -> next token 計 completes the word
+    n_ctx = 4
+    proc = ContextNgramBan(TK, n_ctx, 5, {}, 4, 4.0, {}, scan_start=scan_start)
+    ids = np.asarray([[TID["懐"], TID["中"], TID["時"], TID["計"], TID["古"], TID["懐"], TID["中"], TID["時"]]])
+    sc = np.zeros((1, len(VOCAB)), dtype=np.float64)
+    proc(ids, sc)
+    return sc[0]
+
+
+def test_ngram_ban_prompt_scope_blocks_theme_word():
+    legacy = _ngram(0)
+    assert legacy[TID["計"]] == -4.0        # legacy: the prompt's 懐中時計 soft-bans 計 after 懐中時 (-> 懐中時針)
+
+
+def test_ngram_ban_paragraph_scope_allows_theme_word():
+    scoped = _ngram(4)
+    assert scoped[TID["計"]] == 0.0         # paragraph scope: prompt n-grams are not scanned
+
+
+def test_ngram_ban_paragraph_scope_still_bans_in_paragraph_repeats():
+    proc = ContextNgramBan(TK, 1, 5, {}, 4, 4.0, {}, scan_start=1)
+    ids = np.asarray([[TID["古"], TID["雨"], TID["が"], TID["降"], TID["る"], TID["雨"], TID["が"], TID["降"]]])
+    sc = np.zeros((1, len(VOCAB)), dtype=np.float64)
+    proc(ids, sc)
+    assert sc[0][TID["る"]] == -4.0         # 雨が降る inside the paragraph body is still decayed
