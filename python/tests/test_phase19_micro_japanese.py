@@ -124,11 +124,11 @@ def test_case_frame_ok_prev_len():
     # unchanged without prev_len
     assert not case_frame_ok("先ほどの") and case_frame_ok("先ほどの光景") and case_frame_ok("彼は窓を見た")
     assert case_frame_ok("先ほどの光景", prev_len=20)
-    # short previous sentence: a noun-ended sentence is rejected even with a subject; a predicate ending needs no subject
+    # short previous sentence: a noun-ended sentence is rejected even with a subject; all other cases are unchanged
     assert not case_frame_ok("先ほどの光景", prev_len=6)
     assert not case_frame_ok("彼は窓の光景", prev_len=15)
     assert case_frame_ok("彼は窓を見た", prev_len=6)
-    assert case_frame_ok("窓を見た", prev_len=6)
+    assert case_frame_ok("窓を見た", prev_len=6) == case_frame_ok("窓を見た")
     assert not case_frame_ok("彼は部屋の中", prev_len=6)
 
 

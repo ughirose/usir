@@ -973,8 +973,8 @@ def case_frame_ok(sentence: str, prev_len: Optional[int] = None, short_prev: int
     (a predicate ending is required after a short sentence; a subject is not)."""
     if _FORMAL_NOUN_END_RE.search(sentence.rstrip()):
         return False
-    if prev_len is not None and prev_len <= short_prev:
-        return not _NOUN_END_RE.search(sentence.rstrip())
+    if prev_len is not None and prev_len <= short_prev and _NOUN_END_RE.search(sentence.rstrip()):
+        return False  # after a short sentence the noun-ending (体言止め) acceptance is disabled; the rest is unchanged
     if _CASE_PARTICLE_RE.search(sentence):
         return True
     return bool(_NOUN_END_RE.search(sentence.rstrip()))
