@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import math
 import re
+import time
 from typing import Any, Callable, Dict, List, Optional, Sequence, Set, Tuple, Union
 
 import numpy as np
@@ -57,8 +58,11 @@ if TORCH_AVAILABLE:
         ):
             super().__init__()
             self.base_layer = base_layer
-            for p in self.base_layer.parameters():
-                p.requires_grad = False
+            _params_fn = getattr(base_layer, "parameters", None)
+            if callable(_params_fn):
+                for p in _params_fn():
+                    if isinstance(p, torch.Tensor):  # duck-typed mocks may yield numpy arrays
+                        p.requires_grad = False
 
             self.in_features = getattr(base_layer, "in_features", None)
             self.out_features = getattr(base_layer, "out_features", None)
@@ -70,8 +74,9 @@ if TORCH_AVAILABLE:
                 self.out_features = 64
 
             weight = getattr(base_layer, "weight", None)
-            dtype = weight.dtype if (weight is not None and hasattr(weight, "dtype")) else torch.float32
-            device = weight.device if (weight is not None and hasattr(weight, "device")) else torch.device("cpu")
+            is_t = isinstance(weight, torch.Tensor)
+            dtype = weight.dtype if is_t else torch.float32
+            device = weight.device if is_t else torch.device("cpu")
 
             self.r = max(1, int(r))
             self.alpha = float(alpha)
@@ -88,6 +93,15 @@ if TORCH_AVAILABLE:
             self.dropout = nn.Dropout(p=dropout) if dropout > 0.0 else nn.Identity()
 
         def forward(self, x: torch.Tensor) -> torch.Tensor:
+            if not isinstance(x, torch.Tensor):
+                # NumPy input (duck-typed base layers used in unit tests): compute with NumPy
+                x_arr = np.asarray(x, dtype=np.float32)
+                base_np = np.asarray(self.base_layer(x_arr))
+                if not self.lora_enabled:
+                    return base_np
+                a_np = self.lora_A.detach().cpu().numpy()
+                b_np = self.lora_B.detach().cpu().numpy()
+                return base_np + (x_arr @ a_np.T @ b_np.T) * self.scaling
             base_out = self.base_layer(x)
             if not self.lora_enabled:
                 return base_out
@@ -273,7 +287,7 @@ def attach_lora_to_model(
                     wrapped = AttachedLoRALinear(old, r=r, alpha=alpha)
                     setattr(model, tgt, wrapped)
                     attached_names.append(tgt)
-                    p_count = (wrapped.lora_A.size + wrapped.lora_B.size) if hasattr(wrapped.lora_A, "size") else 2 * r * 64
+                    p_count = (wrapped.lora_A.numel() + wrapped.lora_B.numel()) if hasattr(wrapped.lora_A, "numel") else (wrapped.lora_A.size + wrapped.lora_B.size)
                     total_params += p_count
 
         # Check sub-attributes (e.g. model.layers)
@@ -289,7 +303,7 @@ def attach_lora_to_model(
                             setattr(layer, tgt, wrapped)
                             full_name = f"layers.{idx}.{tgt}"
                             attached_names.append(full_name)
-                            p_count = (wrapped.lora_A.size + wrapped.lora_B.size) if hasattr(wrapped.lora_A, "size") else 2 * r * 64
+                            p_count = (wrapped.lora_A.numel() + wrapped.lora_B.numel()) if hasattr(wrapped.lora_A, "numel") else (wrapped.lora_A.size + wrapped.lora_B.size)
                             total_params += p_count
 
     return {
@@ -357,6 +371,11 @@ def run_authentic_grpo_lora_forge(
     domain: str = "novel",
     ppl_thresh: float = 45.0,
     alpha_ppl: float = 0.1,
+    max_new_tokens: int = 48,
+    batched_rollouts: bool = False,
+    per_rollout_backward: bool = False,
+    prompts_per_step: Optional[int] = None,
+    progress_fn: Optional[Callable[[Dict[str, Any]], None]] = None,
 ) -> Dict[str, Any]:
     r"""Executes authentic USIR-GRPO fine-tuning loop for AttachedLoRALinear weights.
 
@@ -366,6 +385,18 @@ def run_authentic_grpo_lora_forge(
         L_GRPO = - 1/G \sum_{i=1}^G [ A_i * 1/|y_i| \sum_t \ln \pi_\theta(y_{i,t}) - \beta_KL * D_KL ]
 
     Supports both genuine PyTorch model execution and CPU simulation mode.
+
+    Phase 28 additions (defaults reproduce the previous behaviour; they only affect the authentic PyTorch path):
+        max_new_tokens: completion length of model-generated rollouts (previously fixed at 48).
+        batched_rollouts: draw the G rollouts with one generate(num_return_sequences=G) call instead of G calls.
+        per_rollout_backward: call backward() on (loss_i / (n_prompts * G)) right after each rollout instead of
+            stacking all losses; the accumulated gradient is the same, peak memory is one graph instead of all.
+        prompts_per_step: if set, each optimisation step uses a rotating window of this many prompts
+            (step s uses prompts[(s*k + j) % len(prompts)]); otherwise every step uses all prompts.
+        progress_fn: called with each step_logs entry (e.g. for heartbeat logging on long Colab jobs).
+    Caller responsibility: the authentic path optimises every parameter with requires_grad=True. Freeze the base
+    model (p.requires_grad_(False) for all parameters) BEFORE attach_lora_to_model, otherwise the optimizer is
+    built over the entire model.
     """
     if prompts is None:
         prompts = [
@@ -390,12 +421,21 @@ def run_authentic_grpo_lora_forge(
         all_kls: List[float] = []
 
         for step in range(num_steps):
+            t_step = time.perf_counter()
             optimizer.zero_grad()
             step_rewards: List[float] = []
             step_losses: List[torch.Tensor] = []
             step_kls: List[float] = []
+            step_loss_sum = 0.0
 
-            for p_idx, p_item in enumerate(prompts):
+            if prompts_per_step is not None and 0 < int(prompts_per_step) < len(prompts):
+                k_pps = int(prompts_per_step)
+                step_items = [((step * k_pps + j) % len(prompts), prompts[(step * k_pps + j) % len(prompts)]) for j in range(k_pps)]
+            else:
+                step_items = list(enumerate(prompts))
+            n_loss_expected = max(1, len(step_items) * int(num_rollouts))
+
+            for p_idx, p_item in step_items:
                 p_text = p_item["prompt"] if isinstance(p_item, dict) else str(p_item)
                 x0 = p_item.get("x_0", p_text) if isinstance(p_item, dict) else p_text
                 xT = p_item.get("x_T", None) if isinstance(p_item, dict) else None
@@ -411,16 +451,28 @@ def run_authentic_grpo_lora_forge(
                     prompt_len = in_enc["input_ids"].shape[1]
                     rollout_texts = []
                     with torch.no_grad():
-                        for _ in range(num_rollouts):
+                        if batched_rollouts:
                             out_ids = model.generate(
                                 **in_enc,
-                                max_new_tokens=48,
+                                max_new_tokens=int(max_new_tokens),
                                 do_sample=True,
                                 temperature=0.85,
+                                num_return_sequences=int(num_rollouts),
                                 pad_token_id=getattr(tokenizer, "pad_token_id", 0),
                             )
-                            c_text = tokenizer.decode(out_ids[0][prompt_len:], skip_special_tokens=True)
-                            rollout_texts.append(c_text)
+                            for row in range(out_ids.shape[0]):
+                                rollout_texts.append(tokenizer.decode(out_ids[row][prompt_len:], skip_special_tokens=True))
+                        else:
+                            for _ in range(num_rollouts):
+                                out_ids = model.generate(
+                                    **in_enc,
+                                    max_new_tokens=int(max_new_tokens),
+                                    do_sample=True,
+                                    temperature=0.85,
+                                    pad_token_id=getattr(tokenizer, "pad_token_id", 0),
+                                )
+                                c_text = tokenizer.decode(out_ids[0][prompt_len:], skip_special_tokens=True)
+                                rollout_texts.append(c_text)
 
                 # 2. Compute physical rewards for all completions
                 rewards: List[float] = []
@@ -430,7 +482,7 @@ def run_authentic_grpo_lora_forge(
                     enc = tokenizer(p_text + c_text, return_tensors="pt").to(device)
                     with torch.no_grad():
                         ref_out = model(**enc)
-                        shift_logits = ref_out.logits[:, :-1, :].contiguous()
+                        shift_logits = ref_out.logits[:, :-1, :].float().contiguous()
                         shift_labels = enc["input_ids"][:, 1:].contiguous()
                         ce_loss = F.cross_entropy(
                             shift_logits.view(-1, shift_logits.size(-1)),
@@ -468,12 +520,12 @@ def run_authentic_grpo_lora_forge(
                     # Reference logits (no grad, lora off)
                     set_lora_enabled(model, False)
                     with torch.no_grad():
-                        logits_ref = model(in_ids).logits[:, :-1, :]
+                        logits_ref = model(in_ids).logits[:, :-1, :].float()
                         log_probs_ref = F.log_softmax(logits_ref, dim=-1)
 
                     # Policy logits (grad, lora on)
                     set_lora_enabled(model, True)
-                    logits_theta = model(in_ids).logits[:, :-1, :]
+                    logits_theta = model(in_ids).logits[:, :-1, :].float()
                     log_probs_theta = F.log_softmax(logits_theta, dim=-1)
 
                     # Mask prompt tokens out of GRPO loss: target tokens are in_ids[:, 1:]
@@ -503,9 +555,17 @@ def run_authentic_grpo_lora_forge(
                     # GRPO Objective: Adv * (1/|y_i| \sum_t ln pi_theta) - beta * KL
                     adv_t = float(advantages[i])
                     loss_i = -(adv_t * gen_lp_theta.mean() - beta_kl * mean_kl)
-                    step_losses.append(loss_i)
+                    if per_rollout_backward:
+                        (loss_i / float(n_loss_expected)).backward()
+                        step_loss_sum += float(loss_i.item()) / float(n_loss_expected)
+                    else:
+                        step_losses.append(loss_i)
 
-            if step_losses:
+            if per_rollout_backward:
+                torch.nn.utils.clip_grad_norm_(trainable_params, max_norm=1.0)
+                optimizer.step()
+                loss_val = step_loss_sum
+            elif step_losses:
                 total_loss = torch.stack(step_losses).mean()
                 total_loss.backward()
                 torch.nn.utils.clip_grad_norm_(trainable_params, max_norm=1.0)
@@ -520,13 +580,17 @@ def run_authentic_grpo_lora_forge(
             all_rewards.append(m_rew)
             all_kls.append(m_kl)
 
-            step_logs.append({
+            step_entry = {
                 "step": step + 1,
                 "loss": round(loss_val, 6),
                 "mean_reward": round(m_rew, 4),
                 "std_reward": round(s_rew, 4),
                 "mean_kl": round(m_kl, 6),
-            })
+                "sec": round(time.perf_counter() - t_step, 3),
+            }
+            step_logs.append(step_entry)
+            if progress_fn is not None:
+                progress_fn(step_entry)
 
         return {
             "mode": "authentic_pytorch",
