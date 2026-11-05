@@ -22,3 +22,14 @@ artifacts/qda_calibration/*.stderr.txt
 
 # Phase 21 generated Colab payloads (built by artifacts/colab_run/build_colab_p21.py)
 artifacts/colab_run/p21_*.py
+
+# Phase 22: session worktrees and generated Colab payloads (base64-embedded code, ~1.2MB each)
+.claude/worktrees/
+artifacts/colab_run/v[5-7]*_*.py
+artifacts/colab_run/w[0-9]*_*.py
+artifacts/colab_run/w7_[ab].py
+artifacts/colab_run/w8_[ab].py
+artifacts/colab_run/lexcheck_colab.py
+# Colab raw stdout/stderr next to decoded JSON
+docs/handoff/v7/*.stdout.txt
+docs/handoff/v7/*.stderr.txt

@@ -412,6 +412,7 @@ class TestEndToEndPipeline:
             num_tokens=100,
             mock_mode=True,
             output_path=out_json,
+            checkpoint_path=str(tmp_path / "checkpoints" / "table2_progress.json"),
             seed=42,
         )
 
@@ -450,6 +451,7 @@ class TestEndToEndPipeline:
             num_tokens=50,
             mock_mode=True,
             output_path=out_json,
+            checkpoint_path=str(tmp_path / "checkpoints" / "table2_progress.json"),
             seed=7,
         )
 

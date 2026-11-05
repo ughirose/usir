@@ -1,5 +1,7 @@
 # USIR (Universal Style Genome) v4.0 — 新セッション引き継ぎ仕様書（Handoff 14）
 
+> **[2026-11-05 追記・古い]** この文書は `d546da5` 時点のもの。最新状態は `docs/handoff/2026-11-05_usir_v4_complete_final_report.md` と `docs/handoff/2026-11-05_phase18-22.md` を参照（HEAD 時点 pytest 486 passed / 4 skipped、pnpm 371 passed）。
+
 > **対象リポジトリ**: `C:/dev/usir`（GitHub: `https://github.com/ughirose/usir.git`）  
 > **最新コミット**: `d546da5` on `main`（pytest: 297 passed / 4 skipped）  
 > **直近の検証ログ**: `docs/handoff/2026-11-04_longform_proposal_injection_result.json`、`docs/handoff/2026-11-04_handoff13-audit.md`  
