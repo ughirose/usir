@@ -1176,9 +1176,17 @@ class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
     def __init__(self, tokenizer: Any, n_ctx: int, content_mask: Sequence[bool], first_kanji_map: Dict[str, List[int]],
                  para_prefix: str, content_rep_penalty: float, lex_decay: float, lex_min_count: int = 1,
                  tail_cache: Optional[TailCache] = None, demo_ids: Optional[Dict[str, List[int]]] = None,
-                 demo_pen1: float = 4.0, demo_pen2: float = 10.0, compound_exempt: bool = False) -> None:
+                 demo_pen1: float = 4.0, demo_pen2: float = 10.0, compound_exempt: bool = False,
+                 cr_paragraph_scope: bool = False, cr_exempt_ids: Optional[Sequence[int]] = None) -> None:
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
+        # cr_paragraph_scope: the content-word repetition penalty counts only tokens of the paragraph body (para_prefix +
+        # generated tail), not the instruction prompt (theme / beat / role text); cr_exempt_ids (role / theme tokens) are
+        # never penalised. Off = legacy behaviour (every id in the input, prompt included).
+        self.cr_paragraph_scope = bool(cr_paragraph_scope)
+        self.cr_exempt = np.asarray(sorted(set(int(i) for i in (cr_exempt_ids or []))), dtype=np.int64)
+        self._para_ids = (np.asarray(tokenizer.encode(para_prefix, add_special_tokens=False), dtype=np.int64)
+                          if (self.cr_paragraph_scope and para_prefix) else np.zeros(0, dtype=np.int64))
         self.compound_exempt = bool(compound_exempt)
         self.demo_ids = demo_ids or {}
         self.demo_pen1 = float(demo_pen1)
@@ -1200,7 +1208,12 @@ class ContentRepLogits(_ProcBase):  # type: ignore[misc,valid-type]
         if self.cr_pen > 1.0:
             per_row: List[List[int]] = []
             for seq in rows:
-                u = np.unique(np.asarray(seq, dtype=np.int64))
+                if self.cr_paragraph_scope:
+                    u = np.unique(np.concatenate([self._para_ids, np.asarray(seq[self.n_ctx:], dtype=np.int64)]))
+                    if self.cr_exempt.size:
+                        u = u[~np.isin(u, self.cr_exempt)]
+                else:
+                    u = np.unique(np.asarray(seq, dtype=np.int64))
                 u = u[(u < V) & (u < nc)]
                 per_row.append(u[self._cm_arr[u]].tolist() if u.size else [])
             r_i, c_i = _pairs_index(scores, per_row)
@@ -1548,7 +1561,13 @@ class ClauseTwistedSMCDecoder:
         lex_compound_exempt: bool = False,
         collapse_guard: bool = False,
         collapse_penalty: float = 8.0,
+        cr_paragraph_scope: bool = False,
+        cr_exempt_text: str = "",
     ) -> None:
+        # cr_paragraph_scope / cr_exempt_text : see ContentRepLogits (Phase 23: prompt theme / role tokens were penalised
+        #                       from the first mention, producing coinages such as 懐中時鐘 / 青年人)
+        self.cr_paragraph_scope = bool(cr_paragraph_scope)
+        self.cr_exempt_text = str(cr_exempt_text)
         # rhythm_profile      : "cycle" (default; short/medium/long by sentence index mod 3), "steady" (no positive '。' push and no
         #                       '、' push; '。' sealed -12 below steady_min_chars, +3 above steady_max_chars, '、' -4 once the sentence
         #                       has >= steady_max_commas commas) or "pulse" (cycle with positive '。' pushes capped at +3 and no
@@ -2241,6 +2260,9 @@ class ClauseTwistedSMCDecoder:
             tail_cache=tail_cache,
             demo_ids=self._demo_token_ids() if self.demo_decay else None,
             demo_pen1=self.demo_pen1, demo_pen2=self.demo_pen2, compound_exempt=self.lex_compound_exempt,
+            cr_paragraph_scope=getattr(self, "cr_paragraph_scope", False),
+            cr_exempt_ids=(tokenizer_ref.encode(self.cr_exempt_text, add_special_tokens=False)
+                           if getattr(self, "cr_exempt_text", "") else None),
         ) if (cr_pen > 1.0 or lex_dec > 0 or self.demo_decay) else None
 
         ngram_n = self.ngram_ban

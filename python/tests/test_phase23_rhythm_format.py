@@ -371,3 +371,27 @@ def test_token_classes_strip_sentencepiece_marker():
     d2 = _dec()
     d2.tokenizer = Tok(["<eos>", "▁その", "この", "山"])
     assert d2._demo_token_ids()["その"] == [1]
+
+
+# ------------------------------------------------------------------ 4b. content repetition penalty: paragraph scope
+def _cr(scope, exempt_ids=None):
+    # prompt (first N_CTX ids) holds 懐中 (theme); the paragraph body so far is empty, the generated tail is 雨が
+    proc = ContentRepLogits(TK, N_CTX, [True] * len(VOCAB), {}, "", 2.0, 0.0, 1,
+                            cr_paragraph_scope=scope, cr_exempt_ids=exempt_ids)
+    ids = np.asarray([[TID["懐"], TID["中"], TID["雨"], TID["が"]]])
+    sc = np.ones((1, len(VOCAB)), dtype=np.float64)
+    proc(ids, sc)
+    return sc[0]
+
+
+def test_content_rep_paragraph_scope_ignores_prompt_tokens():
+    legacy = _cr(False)
+    scoped = _cr(True)
+    assert legacy[TID["懐"]] == 0.5          # legacy: a theme token in the prompt is penalised before first use
+    assert scoped[TID["懐"]] == 1.0          # paragraph scope: prompt tokens are not counted
+    assert scoped[TID["雨"]] == 0.5          # tokens generated in the paragraph are still penalised
+
+
+def test_content_rep_exempt_ids_never_penalised():
+    scoped = _cr(True, exempt_ids=[TID["雨"]])
+    assert scoped[TID["雨"]] == 1.0
