@@ -56,3 +56,19 @@
 - 簡体字の判定を、shift_jis ではなく JIS X 0208 の明示表に置き換えるかを検討する。
 - 格フレーム不合格の差を分離するため、Steered の case_frame_gate=False の対照を組む。
 - Phase 17: TS への WorldCraftArbitrator / HSMM 移植。
+
+# Phase 17: WorldCraftArbitrator 一般化と TS 移植 (2026-11-05, 記入者: Claude Code)
+
+## 決定事項
+- Python: `compute_null_space_projector_svd`(P = I − J⁺J、tol = max(k,12)·eps·s_max)、`build_general_jacobian`、`WorldCraftArbitrator(projector_method="tikhonov"|"svd")`。既定は従来の tikhonov のままで、既定動作は不変。director に `arbitrate_with_jacobian` を追加。
+- TS(usir-core): `dynamics/worldcraftArbitrator.ts`(一側 Jacobi SVD、外部依存なし)、`hsmmLongformDirector.ts` に `arbitrateSceneMomentum` / `arbitrateWithJacobian`。
+- パリティ: `packages/usir-core/tests/fixtures/worldcraft_arbitrator_parity.json`(生成は `scripts/gen_worldcraft_parity_fixture.py`)。制約5種(空・単位行・7行・2行線形結合・rank 欠損3行)と director の10ステップ op 列。Py/TS は 1e-6 以内で一致。性質(対称・冪等・J·P≈0・rank)は 1e-12。
+- テスト: pytest 405 passed / 4 skipped、pnpm 359 passed。
+
+## 未完了・注意
+- tikhonov(eps=1e-6)は単位行でも 1e-6 の残差があり、SVD とは約 1e-6 ずれる。既定を SVD に切り替えるかは未決定。
+- 確率的な遷移のパリティは未比較(numpy と TS の乱数系列が異なるため)。Jacobi SVD は fixture の範囲でのみ収束を確認。
+- LLM デコード部、Tier-1 hard mask は TS に移植していない。
+
+## 次の一手
+- 残る判断事項: Arbitrator の既定を SVD に切り替えるか、簡体字の検出を JIS X 0208 の明示表に置き換えるか、Steered の case_frame_gate=False 対照を Colab で回すか。

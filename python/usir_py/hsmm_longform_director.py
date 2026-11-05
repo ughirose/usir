@@ -295,11 +295,24 @@ class HSMMLongformDirector:
         j_c = self.arbitrator.compile_constraint_jacobian(
             context_text, active_constraints=modes if paragraph_index in self.scene_constraints else None
         )
-        if j_c.shape[0] == 0:
-            return t.copy(), np.zeros(self.dim, dtype=np.float64), modes
-        safe, cut, _ = self.arbitrator.arbitrate_momentum(t[:self.dim], j_c)
-        self.p_banked += np.maximum(0.0, cut)
+        safe, cut = self.arbitrate_with_jacobian(t, j_c)
         return safe, cut, modes
+
+    def arbitrate_with_jacobian(
+        self,
+        target_p: np.ndarray,
+        jacobian_c: np.ndarray,
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Null-space arbitration with an explicit (possibly general) J_C in R^{k x 12}.
+
+        Returns (safe_p, cut_p). max(0, (I - P_null) p) is accumulated into p_banked.
+        """
+        t = np.asarray(target_p, dtype=np.float64).ravel()
+        if self.arbitrator is None or np.asarray(jacobian_c).shape[0] == 0:
+            return t.copy(), np.zeros(self.dim, dtype=np.float64)
+        safe, cut, _ = self.arbitrator.arbitrate_momentum(t[:self.dim], jacobian_c)
+        self.p_banked += np.maximum(0.0, cut)
+        return safe, cut
 
     def get_banked_energy(self) -> float:
         """Computes kinetic energy of banked momentum: 0.5 * ||p_banked||_2^2."""

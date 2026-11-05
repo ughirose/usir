@@ -60,6 +60,7 @@ export {
   computeCvL,
   HSMMLongformDirector,
 } from './dynamics/hsmmLongformDirector.js';
+export * from './dynamics/worldcraftArbitrator.js';
 export * from './dynamics/presalesShowcase.js';
 
 // Stage 3 Style Genome Algebra & Compiler

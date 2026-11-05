@@ -32,6 +32,7 @@ import {
   extractUsir24d,
   type Usir24dResult,
 } from '../sensor/symplectic24d.js';
+import { type Matrix, type WorldCraftArbitrator } from './worldcraftArbitrator.js';
 
 export interface PhaseWell {
   index: number;
@@ -178,8 +179,12 @@ export class HSMMLongformDirector {
   public pBanked: number[];
   public refractoryCounter: number;
   private readonly rng: () => number;
+  public readonly arbitrator: WorldCraftArbitrator | null;
+  public readonly sceneConstraints: Record<number, string[]>;
 
   constructor(options?: {
+    arbitrator?: WorldCraftArbitrator | null;
+    sceneConstraints?: Record<number, readonly string[]>;
     dim?: number;
     wells?: Record<number, PhaseWell>;
     transitionMatrix?: number[][];
@@ -201,6 +206,11 @@ export class HSMMLongformDirector {
 
     this.pBanked = new Array(this.dim).fill(0.0);
     this.refractoryCounter = 0;
+    this.arbitrator = options?.arbitrator ?? null;
+    this.sceneConstraints = {};
+    for (const [k, modes] of Object.entries(options?.sceneConstraints ?? {})) {
+      this.sceneConstraints[Number(k)] = [...modes];
+    }
 
     if (options?.seed !== undefined) {
       let s = options.seed >>> 0;
@@ -271,6 +281,33 @@ export class HSMMLongformDirector {
     }
     this.pBanked.fill(0.0);
     return { boostedP, dischargedDeltaP };
+  }
+
+  /**
+   * WorldCraft null-space arbitration of a paragraph target momentum (Python arbitrate_scene_momentum).
+   * The component cut by the constraints is banked: p_banked += max(0, (I - P_null) p).
+   */
+  public arbitrateSceneMomentum(
+    targetP: number[],
+    paragraphIndex: number,
+    contextText = '',
+  ): { safeP: number[]; cutP: number[]; modes: string[] } {
+    if (!this.arbitrator) return { safeP: [...targetP], cutP: new Array(this.dim).fill(0), modes: [] };
+    const has = Object.prototype.hasOwnProperty.call(this.sceneConstraints, paragraphIndex);
+    const modes = has ? [...this.sceneConstraints[paragraphIndex]!] : [];
+    const jC = this.arbitrator.compileConstraintJacobian(contextText, has ? modes : null);
+    const { safeP, cutP } = this.arbitrateWithJacobian(targetP, jC);
+    return { safeP, cutP, modes };
+  }
+
+  /** Arbitration with an explicit (general) J_C in R^{k x 12}; banks max(0, cut). */
+  public arbitrateWithJacobian(targetP: number[], jacobianC: Matrix): { safeP: number[]; cutP: number[] } {
+    if (!this.arbitrator || jacobianC.length === 0) {
+      return { safeP: [...targetP], cutP: new Array(this.dim).fill(0) };
+    }
+    const { safe, cut } = this.arbitrator.arbitrateMomentum(targetP.slice(0, this.dim), jacobianC);
+    for (let i = 0; i < this.dim; i++) this.pBanked[i] = (this.pBanked[i] ?? 0.0) + Math.max(0.0, cut[i] ?? 0.0);
+    return { safeP: safe, cutP: cut };
   }
 
   public getBankedEnergy(): number {

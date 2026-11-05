@@ -352,8 +352,17 @@ class WorldCraftOntologyRule:
 class WorldCraftArbitrator:
     """Tier 1 Hard Masking and Null-Space Projector for WorldCraft Ontology."""
 
-    def __init__(self, rule: Optional[WorldCraftOntologyRule] = None) -> None:
+    def __init__(
+        self,
+        rule: Optional[WorldCraftOntologyRule] = None,
+        projector_method: str = "tikhonov",
+    ) -> None:
+        if projector_method not in ("tikhonov", "svd"):
+            raise ValueError(f"projector_method must be 'tikhonov' or 'svd', got {projector_method!r}")
         self.rule = rule if rule is not None else WorldCraftOntologyRule()
+        # "tikhonov": legacy regularised projector (eps-biased by ~eps for unit rows; default, unchanged).
+        # "svd": exact projector I - J^+ J via SVD pseudo-inverse (rank-deficient / general rows).
+        self.projector_method = projector_method
 
     def check_tier1_violations(self, candidate_text: str) -> List[str]:
         """Audits candidate text against Tier 1 hard constraints."""
@@ -463,18 +472,78 @@ class WorldCraftArbitrator:
         p_null = i_12 - (j_c.T @ gram_inv @ j_c)
         return p_null
 
+    @staticmethod
+    def svd_rank_tolerance(k: int, n: int, s_max: float) -> float:
+        """Rank tolerance for the SVD pseudo-inverse: max(k, n) * machine_eps * s_max."""
+        return float(max(k, n) * np.finfo(np.float64).eps * s_max)
+
+    @staticmethod
+    def compute_null_space_projector_svd(
+        jacobian_c: Optional[np.ndarray],
+        rtol: Optional[float] = None,
+    ) -> np.ndarray:
+        r"""Exact null-space projector P_null = I_12 - J_C^+ J_C for general J_C in R^{k x 12}.
+
+        J_C = U S V^T (thin SVD); J_C^+ = V S^{-1} U^T over singular values s_i > tol, where
+        tol = max(k, 12) * eps_machine * s_max (or rtol * s_max when rtol is given). Singular
+        values <= tol are treated as zero, so rank-deficient / linearly dependent rows are allowed
+        (k <= 12). k = 0 or all-zero J_C gives P_null = I. No eps bias: J_C P_null = 0 to
+        round-off, P_null is symmetric and idempotent.
+        """
+        i_12 = np.eye(12, dtype=np.float64)
+        if jacobian_c is None:
+            return i_12
+        j_c = np.asarray(jacobian_c, dtype=np.float64)
+        if j_c.size == 0:
+            return i_12
+        if j_c.ndim == 1:
+            j_c = j_c.reshape(1, -1)
+        k, n = j_c.shape
+        if n != 12:
+            raise ValueError(f"Constraint Jacobian must have 12 columns, got {n}")
+        if k > 12:
+            raise ValueError(f"Constraint Jacobian must have k <= 12 rows, got {k}")
+
+        u, s, vt = np.linalg.svd(j_c, full_matrices=False)
+        s_max = float(s[0]) if s.size else 0.0
+        if s_max == 0.0:
+            return i_12
+        tol = (
+            WorldCraftArbitrator.svd_rank_tolerance(k, n, s_max)
+            if rtol is None
+            else float(rtol) * s_max
+        )
+        keep = s > tol
+        s_inv = np.where(keep, 1.0 / np.where(keep, s, 1.0), 0.0)
+        j_pinv = (vt.T * s_inv) @ u.T  # J^+ in R^{12 x k}
+        return i_12 - j_pinv @ j_c
+
+    @staticmethod
+    def build_general_jacobian(rows: Sequence[Sequence[float]]) -> np.ndarray:
+        """Builds J_C in R^{k x 12} from arbitrary linear-combination rows (k <= 12)."""
+        j_c = np.asarray(rows, dtype=np.float64)
+        if j_c.size == 0:
+            return np.zeros((0, 12), dtype=np.float64)
+        if j_c.ndim != 2 or j_c.shape[1] != 12:
+            raise ValueError(f"rows must form a k x 12 matrix, got shape {j_c.shape}")
+        if j_c.shape[0] > 12:
+            raise ValueError(f"k must be <= 12, got {j_c.shape[0]}")
+        return j_c
+
     def arbitrate_momentum(
         self,
         target_delta_q: np.ndarray,
         jacobian_c: np.ndarray,
         eps: float = 1e-6,
+        method: Optional[str] = None,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         r"""Arbitrates stylistic momentum Delta q* via null space projection.
 
         Args:
             target_delta_q: Desired 12D style momentum Delta q* in R^12.
             jacobian_c: Constraint Jacobian J_C in R^{k x 12}.
-            eps: Regularization parameter.
+            eps: Regularization parameter (tikhonov method only).
+            method: "tikhonov" or "svd"; None uses self.projector_method.
 
         Returns:
             Tuple of:
@@ -486,7 +555,13 @@ class WorldCraftArbitrator:
         if dq.shape[0] != 12:
             raise ValueError(f"target_delta_q must have 12 elements, got {dq.shape[0]}")
 
-        p_null = self.compute_null_space_projector(jacobian_c, eps=eps)
+        use = self.projector_method if method is None else method
+        if use == "svd":
+            p_null = self.compute_null_space_projector_svd(jacobian_c)
+        elif use == "tikhonov":
+            p_null = self.compute_null_space_projector(jacobian_c, eps=eps)
+        else:
+            raise ValueError(f"method must be 'tikhonov' or 'svd', got {use!r}")
         dq_safe = p_null @ dq
         dq_cut = dq - dq_safe
 
