@@ -1396,6 +1396,7 @@ def run_longform_director(
     collapse_guard: bool = False,
     cr_paragraph_scope: bool = False,
     ngram_paragraph_scope: bool = False,
+    kv_share: bool = False,
     target_line_chars: Optional[int] = None,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
@@ -1522,6 +1523,7 @@ def run_longform_director(
             cr_exempt_text=("、".join(list(roles or []) + [theme]) if cr_paragraph_scope else ""),
             ngram_paragraph_scope=bool(ngram_paragraph_scope),
             ngram_protect_text=("、".join(list(roles or []) + [theme]) if ngram_paragraph_scope else ""),
+            kv_share=bool(kv_share),
         )
         decoder.repeat_use_context = bool(carry_context)
         generator = "llm_clause_smc"

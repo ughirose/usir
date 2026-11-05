@@ -13,6 +13,7 @@ Solves:
 from __future__ import annotations
 
 import collections
+import copy
 import math
 import sys
 import re
@@ -1612,6 +1613,8 @@ class ClauseTwistedSMCDecoder:
         cr_exempt_text: str = "",
         ngram_paragraph_scope: bool = False,
         ngram_protect_text: str = "",
+        kv_share: bool = False,
+        batch_score: bool = False,
     ) -> None:
         # cr_paragraph_scope / cr_exempt_text : see ContentRepLogits (Phase 23: prompt theme / role tokens were penalised
         #                       from the first mention, producing coinages such as 懐中時鐘 / 青年人)
@@ -1623,6 +1626,14 @@ class ClauseTwistedSMCDecoder:
         # ngram_protect_text: theme / role text; its kanji / katakana words may be continued despite history n-grams
         # (Phase 23: 懐中時計 used in paragraph 1 was banned in later paragraphs -> 懐中時針 / 懐中時刻)
         self.ngram_protect_words = protect_words_from_text(ngram_protect_text)
+        # Phase 24 speed-ups (numerically equivalent up to floating-point batching differences):
+        #   batch_score: the P candidate log-likelihoods of one step are computed in ONE batched forward
+        #   kv_share   : the prompt prefix is run once per step (use_cache); generate() and the batched scoring reuse
+        #                that KV cache expanded to P rows. Falls back to the full-prompt path when the cache type
+        #                cannot be cropped / repeated (e.g. hybrid linear-attention caches).
+        self.kv_share = bool(kv_share)
+        self.batch_score = bool(batch_score) or self.kv_share
+        self._pkv: Optional[Tuple[Tuple[int, ...], Any, Any]] = None
         # rhythm_profile      : "cycle" (default; short/medium/long by sentence index mod 3), "steady" (no positive '。' push and no
         #                       '、' push; '。' sealed -12 below steady_min_chars, +3 above steady_max_chars, '、' -4 once the sentence
         #                       has >= steady_max_commas commas) or "pulse" (cycle with positive '。' pushes capped at +3 and no
@@ -1840,6 +1851,108 @@ class ClauseTwistedSMCDecoder:
                             q[i % self.dim] = ((ord(ch) * 31) % 100) / 100.0
                     return q
             self.feature_extractor = _extract_q
+
+    def _prefix_kv(self, ids: Sequence[int]) -> Optional[Tuple[Any, Any]]:
+        """(KV cache, log-softmax of the last position) of the prompt ids, computed once and memoised by ids."""
+        key = tuple(int(i) for i in ids)
+        if self._pkv is not None and self._pkv[0] == key:
+            return self._pkv[1], self._pkv[2]
+        try:
+            device = next(self.model.parameters()).device
+            x = torch.tensor([list(key)], dtype=torch.long, device=device)
+            with torch.no_grad():
+                out = self.model(input_ids=x, use_cache=True)
+            cache = getattr(out, "past_key_values", None)
+            if cache is None:
+                return None
+            last = F.log_softmax(out.logits[0, -1].float(), dim=-1)
+        except Exception:
+            self.stats["kv_fallbacks"] = self.stats.get("kv_fallbacks", 0) + 1
+            return None
+        self._pkv = (key, cache, last)
+        return cache, last
+
+    def _clone_kv(self, cache: Any, batch: int, crop_to: Optional[int] = None) -> Any:
+        """Deep copy of a KV cache, optionally cropped to `crop_to` positions and repeated to `batch` rows.
+        None when the cache type does not support it (caller falls back to the full-prompt path)."""
+        try:
+            c = copy.deepcopy(cache)
+            if crop_to is not None:
+                c.crop(int(crop_to))
+            if batch > 1:
+                c.batch_repeat_interleave(int(batch))
+            return c
+        except Exception:
+            self.stats["kv_fallbacks"] = self.stats.get("kv_fallbacks", 0) + 1
+            return None
+
+    def _compute_hf_logprob_batch(self, context: str, targets: Sequence[str]) -> List[float]:
+        """Mean token log-likelihood of every target given the same context, in one batched forward.
+        Equivalent to [self._compute_hf_logprob(context, t) for t in targets] up to floating-point batching error.
+        With kv_share the context is run once and its KV cache is repeated to the batch; otherwise the
+        context+target sequences are right-padded into one (B, L) batch with an attention mask."""
+        res: List[Optional[float]] = [None] * len(targets)
+        if not TORCH_AVAILABLE or self.model is None or self.tokenizer is None:
+            return [0.0] * len(targets)
+        try:
+            device = next(self.model.parameters()).device
+            ctx_ids = self.tokenizer.encode(self.chat_prefix + context, add_special_tokens=False) if (self.chat_prefix or context) else []
+            if not ctx_ids:
+                # BOS / no-context edge cases keep the exact single-sequence semantics
+                return [self._compute_hf_logprob(context, t) for t in targets]
+            tg = [self.tokenizer.encode(t, add_special_tokens=False) if t else [] for t in targets]
+            rows = [i for i, t in enumerate(tg) if t]
+            for i, t in enumerate(tg):
+                if not t:
+                    res[i] = 0.0
+            if not rows:
+                return [0.0] * len(targets)
+            pad = getattr(self.tokenizer, "pad_token_id", None)
+            if pad is None:
+                pad = getattr(self.tokenizer, "eos_token_id", None)
+            pad = int(pad[0] if isinstance(pad, (list, tuple)) else (pad if pad is not None else 0))
+            B = len(rows)
+            done = False
+            if self.kv_share:
+                pk = self._prefix_kv(ctx_ids)
+                cache = self._clone_kv(pk[0], B) if pk is not None else None
+                if cache is not None:
+                    Lm = max(len(tg[i]) for i in rows)
+                    x = torch.full((B, Lm), pad, dtype=torch.long, device=device)
+                    for b, i in enumerate(rows):
+                        x[b, :len(tg[i])] = torch.tensor(tg[i], dtype=torch.long, device=device)
+                    with torch.no_grad():
+                        logits = self.model(input_ids=x, past_key_values=cache, use_cache=True).logits
+                    lp = F.log_softmax(logits.float(), dim=-1)
+                    last = pk[1]
+                    for b, i in enumerate(rows):
+                        t = tg[i]
+                        vals = [float(last[t[0]])]
+                        if len(t) > 1:
+                            idx = torch.tensor(t[1:], dtype=torch.long, device=device)
+                            vals.extend(lp[b, : len(t) - 1].gather(1, idx.unsqueeze(-1)).squeeze(-1).tolist())
+                        res[i] = float(np.mean(vals))
+                    done = True
+            if not done:
+                Lc = len(ctx_ids)
+                Lm = Lc + max(len(tg[i]) for i in rows)
+                x = torch.full((B, Lm), pad, dtype=torch.long, device=device)
+                am = torch.zeros((B, Lm), dtype=torch.long, device=device)
+                for b, i in enumerate(rows):
+                    seq = ctx_ids + tg[i]
+                    x[b, :len(seq)] = torch.tensor(seq, dtype=torch.long, device=device)
+                    am[b, :len(seq)] = 1
+                with torch.no_grad():
+                    logits = self.model(input_ids=x, attention_mask=am).logits
+                lp = F.log_softmax(logits.float(), dim=-1)
+                for b, i in enumerate(rows):
+                    t = tg[i]
+                    idx = torch.tensor(t, dtype=torch.long, device=device)
+                    res[i] = float(lp[b, Lc - 1: Lc - 1 + len(t)].gather(1, idx.unsqueeze(-1)).squeeze(-1).mean())
+            return [float(r) if r is not None else -20.0 for r in res]
+        except Exception:
+            self.stats["kv_fallbacks"] = self.stats.get("kv_fallbacks", 0) + 1
+            return [self._compute_hf_logprob(context, t) for t in targets]
 
     def _compute_hf_logprob(self, context: str, target: str) -> float:
         """Computes average token log-likelihood of target conditioned on context using HuggingFace model."""
@@ -2386,6 +2499,11 @@ class ClauseTwistedSMCDecoder:
             gen_kwargs["repetition_penalty"] = self.rep_penalty
         if pad_id is not None:
             gen_kwargs["pad_token_id"] = pad_id
+        if self.kv_share and inp_len > 1:
+            pk = self._prefix_kv(input_ids[0].tolist())
+            gcache = self._clone_kv(pk[0], P, crop_to=inp_len - 1) if pk is not None else None
+            if gcache is not None:
+                gen_kwargs["past_key_values"] = gcache
         with torch.no_grad():
             out = self.model.generate(input_ids, **gen_kwargs)
         eos_id = getattr(self.tokenizer, "eos_token_id", None)
@@ -2475,6 +2593,17 @@ class ClauseTwistedSMCDecoder:
             except Exception:
                 q_end_target = None
 
+        batch_llm: Optional[List[Optional[float]]] = None
+        if (self.batch_score and self.model is not None and self.tokenizer is not None and TORCH_AVAILABLE
+                and len(candidates) > 1):
+            _txts = [str(c.get("text", c.get("clause", ""))) if isinstance(c, dict) else str(c) for c in candidates]
+            _need = [i for i, c in enumerate(candidates)
+                     if not (isinstance(c, dict) and c.get("llm_logprob", c.get("logprob")) is not None)]
+            if _need:
+                _vals = self._compute_hf_logprob_batch(prefix, [_txts[i] for i in _need])
+                batch_llm = [None] * len(candidates)
+                for i, v in zip(_need, _vals):
+                    batch_llm[i] = v
         for p_idx, cand in enumerate(candidates):
             if isinstance(cand, dict):
                 c_text = str(cand.get("text", cand.get("clause", "")))
@@ -2501,6 +2630,8 @@ class ClauseTwistedSMCDecoder:
             # 2. Term 1: ln P_LLM(c^{(p)} | w_{<=m})
             if explicit_llm is not None:
                 ln_p_llm = float(explicit_llm)
+            elif batch_llm is not None and batch_llm[p_idx] is not None:
+                ln_p_llm = float(batch_llm[p_idx])
             elif self.model is not None and self.tokenizer is not None and TORCH_AVAILABLE:
                 ln_p_llm = self._compute_hf_logprob(prefix, c_text)
             else:
