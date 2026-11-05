@@ -1959,8 +1959,10 @@ class ClauseTwistedSMCDecoder:
             if cache is None:
                 return None
             last = F.log_softmax(out.logits[0, -1].float(), dim=-1)
-        except Exception:
+        except Exception as exc:
             self.stats["kv_fallbacks"] = self.stats.get("kv_fallbacks", 0) + 1
+            if "kv_error" not in self.stats:
+                self.stats["kv_error"] = repr(exc)[:300]  # type: ignore[assignment]
             return None
         self._pkv = (key, cache, last)
         return cache, last
@@ -1970,13 +1972,29 @@ class ClauseTwistedSMCDecoder:
         None when the cache type does not support it (caller falls back to the full-prompt path)."""
         try:
             c = copy.deepcopy(cache)
-            if crop_to is not None:
-                c.crop(int(crop_to))
-            if batch > 1:
-                c.batch_repeat_interleave(int(batch))
+            layers = getattr(c, "layers", None)
+            if layers is not None and all(hasattr(l, "keys") and hasattr(l, "values") for l in layers):
+                # transformers >= 4.5x DynamicCache: per-layer tensors (batch, heads, seq, head_dim); slicing directly
+                # avoids depending on crop / batch_repeat_interleave signatures that changed across versions
+                for l in layers:
+                    if l.keys is None or not hasattr(l.keys, "shape"):
+                        raise TypeError(f"unsupported cache layer {type(l).__name__}")
+                    k, v = l.keys, l.values
+                    if crop_to is not None:
+                        k, v = k[..., : int(crop_to), :], v[..., : int(crop_to), :]
+                    if batch > 1:
+                        k, v = k.repeat_interleave(int(batch), dim=0), v.repeat_interleave(int(batch), dim=0)
+                    l.keys, l.values = k.contiguous(), v.contiguous()
+            else:
+                if crop_to is not None:
+                    c.crop(int(crop_to))
+                if batch > 1:
+                    c.batch_repeat_interleave(int(batch))
             return c
-        except Exception:
+        except Exception as exc:
             self.stats["kv_fallbacks"] = self.stats.get("kv_fallbacks", 0) + 1
+            if "kv_error" not in self.stats:
+                self.stats["kv_error"] = repr(exc)[:300]  # type: ignore[assignment]
             return None
 
     def _compute_hf_logprob_batch(self, context: str, targets: Sequence[str]) -> List[float]:

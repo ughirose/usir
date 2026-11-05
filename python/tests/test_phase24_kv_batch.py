@@ -68,6 +68,23 @@ def test_kv_path_is_used_and_memoised():
     assert d.stats.get("kv_fallbacks", 0) == 0
 
 
+def test_generate_with_cropped_repeated_cache_matches_plain_generate():
+    m = _tiny(torch.float32)
+    d = _dec(m, kv_share=True)
+    ids = torch.tensor([CharTok().encode("序章：" + CTX)], dtype=torch.long)
+    P, L = 4, ids.shape[1]
+    pk = d._prefix_kv(ids[0].tolist())
+    cache = d._clone_kv(pk[0], P, crop_to=L - 1)
+    assert cache is not None, d.stats.get("kv_error")
+    inp = ids.expand(P, -1).contiguous()
+    kw = dict(max_new_tokens=5, do_sample=False, attention_mask=torch.ones_like(inp), pad_token_id=0)
+    with torch.no_grad():
+        plain = m.generate(inp, **kw)
+        cached = m.generate(inp, past_key_values=cache, **kw)
+    assert torch.equal(plain, cached)
+    assert d.stats.get("kv_fallbacks", 0) == 0
+
+
 def test_clone_kv_falls_back_on_unsupported_cache():
     d = _dec(_tiny(torch.float32), kv_share=True)
     assert d._clone_kv(object(), 4, crop_to=3) is None
