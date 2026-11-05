@@ -16,6 +16,8 @@
  *      (BPM, harmonic tension, rest interval, reverb decay).
  */
 
+import { decodeTierM, type DecodedTierM as TierMDecoded } from '@nishiki/usir-core';
+
 // ============================================================================
 // 1. Visual Modality Interfaces & Functors (F_visual)
 // ============================================================================
@@ -316,17 +318,129 @@ const EQ_MU = 0.5;
 const EQ_FLOOR = 0.02;
 const EQ_SCALE = 2.2;
 
-export function momentumFromSummary(q: number[], legacyProxy?: number[]): number[] {
+/**
+ * LU with partial pivoting on copies of `a` (n x n). Solves a X = b (b is n x m); returns X,
+ * sign(det a) and log|det a|, or null if singular / non-finite.
+ */
+function luSolveLogDet(a: number[][], b: number[][]): { x: number[][]; sign: number; logAbsDet: number } | null {
+  const n = a.length;
+  const m = b[0]?.length ?? 0;
+  const A = a.map((r) => r.slice());
+  const B = b.map((r) => r.slice());
+  let sign = 1;
+  let logAbsDet = 0;
+  for (let c = 0; c < n; c++) {
+    let piv = c;
+    for (let r = c + 1; r < n; r++) if (Math.abs(A[r]![c]!) > Math.abs(A[piv]![c]!)) piv = r;
+    const pv = A[piv]![c]!;
+    if (!Number.isFinite(pv) || pv === 0) return null;
+    if (piv !== c) {
+      [A[piv], A[c]] = [A[c]!, A[piv]!];
+      [B[piv], B[c]] = [B[c]!, B[piv]!];
+      sign = -sign;
+    }
+    const d = A[c]![c]!;
+    if (d < 0) sign = -sign;
+    logAbsDet += Math.log(Math.abs(d));
+    for (let r = c + 1; r < n; r++) {
+      const f = A[r]![c]! / d;
+      if (f === 0) continue;
+      for (let k = c; k < n; k++) A[r]![k]! -= f * A[c]![k]!;
+      for (let k = 0; k < m; k++) B[r]![k]! -= f * B[c]![k]!;
+    }
+  }
+  for (let k = 0; k < m; k++) {
+    for (let r = n - 1; r >= 0; r--) {
+      let acc = B[r]![k]!;
+      for (let c = r + 1; c < n; c++) acc -= A[r]![c]! * B[c]![k]!;
+      B[r]![k] = acc / A[r]![r]!;
+    }
+  }
+  if (!Number.isFinite(logAbsDet)) return null;
+  return { x: B, sign, logAbsDet };
+}
+
+/**
+ * Conditional-Gaussian momentum from a Tier-M genome (mirrors python `_genome_conditional_momentum`).
+ * Mode k: precision Lambda = L L^T over z = (q, p). m_k(q) = mu_p - Lpp^-1 Lpq (q - mu_q);
+ * q-marginal precision S = Lqq - Lqp Lpp^-1 Lpq; r_k ~ w_k N(q; mu_q, S^-1) via log-sum-exp;
+ * p = max(sum r_k m_k, EQ_FLOOR). Returns null if no mode is usable.
+ */
+function genomeConditionalMomentum(q: number[], genome: TierMDecoded | Uint8Array): number[] | null {
+  const g: TierMDecoded = genome instanceof Uint8Array ? decodeTierM(genome) : genome;
+  const logs: number[] = [];
+  const means: number[][] = [];
+  for (let k = 0; k < g.weights.length; k++) {
+    const w = g.weights[k]!;
+    if (!Number.isFinite(w) || w <= 0) continue;
+    const mu = g.centroids[k]!;
+    const packed = g.cholesky_factors[k]!;
+    if (!mu.every(Number.isFinite) || !packed.every(Number.isFinite)) continue;
+    const L: number[][] = Array.from({ length: 24 }, () => new Array<number>(24).fill(0));
+    let idx = 0;
+    for (let i = 0; i < 24; i++) for (let j = 0; j <= i; j++) L[i]![j] = packed[idx++]!;
+    const lam: number[][] = Array.from({ length: 24 }, () => new Array<number>(24).fill(0));
+    for (let i = 0; i < 24; i++) {
+      for (let j = 0; j < 24; j++) {
+        let acc = 0;
+        for (let t = 0; t < 24; t++) acc += L[i]![t]! * L[j]![t]!;
+        lam[i]![j] = acc;
+      }
+    }
+    const lpp = lam.slice(12).map((r) => r.slice(12));
+    const lpq = lam.slice(12).map((r) => r.slice(0, 12));
+    const sol = luSolveLogDet(lpp, lpq); // X = Lpp^-1 Lpq (12 x 12)
+    if (!sol) continue;
+    const X = sol.x;
+    const S: number[][] = Array.from({ length: 12 }, () => new Array<number>(12).fill(0));
+    for (let i = 0; i < 12; i++) {
+      for (let j = 0; j < 12; j++) {
+        let acc = lam[i]![j]!;
+        for (let t = 0; t < 12; t++) acc -= lam[i]![12 + t]! * X[t]![j]!;
+        S[i]![j] = acc;
+      }
+    }
+    const d = q.map((v, i) => v - mu[i]!);
+    const sd = luSolveLogDet(S, d.map((v) => [v])); // only logdet S is used
+    if (!sd || sd.sign <= 0) continue;
+    let quad = 0;
+    for (let i = 0; i < 12; i++) for (let j = 0; j < 12; j++) quad += d[i]! * S[i]![j]! * d[j]!;
+    const logn = -0.5 * quad + 0.5 * sd.logAbsDet - 6.0 * Math.log(2.0 * Math.PI);
+    const m = new Array<number>(12);
+    for (let i = 0; i < 12; i++) {
+      let acc = mu[12 + i]!;
+      for (let j = 0; j < 12; j++) acc -= X[i]![j]! * d[j]!;
+      m[i] = acc;
+    }
+    if (!Number.isFinite(logn) || !m.every(Number.isFinite)) continue;
+    logs.push(Math.log(w) + logn);
+    means.push(m);
+  }
+  if (logs.length === 0) return null;
+  const mx = Math.max(...logs);
+  const r = logs.map((l) => Math.exp(l - mx));
+  const tot = r.reduce((a, b) => a + b, 0);
+  const p = new Array<number>(12).fill(0);
+  for (let k = 0; k < r.length; k++) for (let i = 0; i < 12; i++) p[i]! += (r[k]! / tot) * means[k]![i]!;
+  return p.map((v) => Math.max(v, EQ_FLOOR));
+}
+
+export function momentumFromSummary(q: number[], legacyProxy?: number[], genome?: TierMDecoded | Uint8Array): number[] {
   const groupOf = new Array<number>(12).fill(0);
   EQ_GROUPS.forEach((g, gi) => g.forEach((i) => { groupOf[i] = gi; }));
+  const genomeP = genome !== undefined ? genomeConditionalMomentum(q, genome) : null;
   const p = new Array<number>(12).fill(0);
   for (let i = 0; i < 12; i++) {
-    let g = 0.0;
-    for (let j = 0; j < 12; j++) {
-      const lam = i === j ? 1.0 : groupOf[i] === groupOf[j] ? EQ_W_WITHIN : EQ_W_CROSS;
-      g += lam * (q[j]! - EQ_MU);
+    if (genomeP) {
+      p[i] = genomeP[i]!;
+    } else {
+      let g = 0.0;
+      for (let j = 0; j < 12; j++) {
+        const lam = i === j ? 1.0 : groupOf[i] === groupOf[j] ? EQ_W_WITHIN : EQ_W_CROSS;
+        g += lam * (q[j]! - EQ_MU);
+      }
+      p[i] = EQ_SCALE * Math.sqrt(g * g + EQ_FLOOR * EQ_FLOOR);
     }
-    p[i] = EQ_SCALE * Math.sqrt(g * g + EQ_FLOOR * EQ_FLOOR);
     const proxy = legacyProxy?.[i] ?? 0.0;
     if (proxy !== 0.0) p[i] = Math.hypot(proxy, p[i]!);
   }

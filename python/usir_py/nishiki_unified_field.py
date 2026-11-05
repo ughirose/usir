@@ -677,7 +677,56 @@ def _equilibrium_coupling() -> np.ndarray:
 _EQ_LAMBDA = _equilibrium_coupling()
 
 
-def momentum_from_summary(q: np.ndarray, legacy_proxy: Optional[np.ndarray] = None) -> np.ndarray:
+def _genome_conditional_momentum(q: np.ndarray, genome: Any) -> Optional[np.ndarray]:
+    r"""Conditional-Gaussian momentum from a Tier-M genome; None if no mode is usable.
+
+    Mode k has precision Lambda_k = L_k L_k^T over z = (q, p) (dims 0-11 = q, 12-23 = p).
+    m_k(q) = mu_p - Lpp^-1 Lpq (q - mu_q); q-marginal precision S_k = Lqq - Lqp Lpp^-1 Lpq,
+    so N(q; mu_q, Sigma_qq) has log-density -1/2 d^T S d + 1/2 logdet S - 6 log(2 pi).
+    r_k ~ w_k N_k via log-sum-exp; p = max(sum_k r_k m_k, EQ_FLOOR).
+    """
+    from usir_py.usir_forge import load_tier_m_binary, unpack_cholesky_24d
+
+    if isinstance(genome, (bytes, bytearray, memoryview)):
+        genome = load_tier_m_binary(bytes(genome))
+    logs: List[float] = []
+    means: List[np.ndarray] = []
+    for k in range(len(genome["weights"])):
+        w = float(genome["weights"][k])
+        if not math.isfinite(w) or w <= 0.0:
+            continue
+        mu = np.asarray(genome["centroids"][k], dtype=np.float64)
+        packed = np.asarray(genome["cholesky_factors"][k], dtype=np.float64)
+        if not (np.all(np.isfinite(mu)) and np.all(np.isfinite(packed))):
+            continue
+        L = unpack_cholesky_24d(packed)
+        lam = L @ L.T
+        l_qq, l_qp = lam[:12, :12], lam[:12, 12:]
+        l_pq, l_pp = lam[12:, :12], lam[12:, 12:]
+        try:
+            x = np.linalg.solve(l_pp, l_pq)
+        except np.linalg.LinAlgError:
+            continue
+        s_mat = l_qq - l_qp @ x
+        sign, logdet = np.linalg.slogdet(s_mat)
+        if sign <= 0.0 or not math.isfinite(logdet) or not np.all(np.isfinite(x)):
+            continue
+        d = q - mu[:12]
+        logn = -0.5 * float(d @ s_mat @ d) + 0.5 * logdet - 6.0 * math.log(2.0 * math.pi)
+        m = mu[12:] - x @ d
+        if not (math.isfinite(logn) and np.all(np.isfinite(m))):
+            continue
+        logs.append(math.log(w) + logn)
+        means.append(m)
+    if not logs:
+        return None
+    lg = np.asarray(logs)
+    r = np.exp(lg - lg.max())
+    r /= r.sum()
+    return np.maximum(np.sum(r[:, None] * np.asarray(means), axis=0), EQ_FLOOR)
+
+
+def momentum_from_summary(q: np.ndarray, legacy_proxy: Optional[np.ndarray] = None, genome: Any = None) -> np.ndarray:
     r"""Equilibrium Momentum Reconstruction: 12-D p from a single summary q (no window series).
 
     g = grad U(q) = Lambda (q - mu);  r_i = EQ_SCALE * sqrt(g_i^2 + EQ_FLOOR^2)  (> 0 for all i).
@@ -685,10 +734,16 @@ def momentum_from_summary(q: np.ndarray, legacy_proxy: Optional[np.ndarray] = No
     momentum scale it carries; EQ_FLOOR is the equipartition floor. The legacy 4 proxy dims
     (p[0,2,6,11], summary statistics, not temporal momenta) combine as hypot(proxy_i, r_i).
     Deterministic; not a copy of q (depends on the coupled displacement from mu).
+
+    genome (optional): 4096-byte Tier-M binary or the dict from usir_forge.load_tier_m_binary. When
+    given, p is the responsibility-weighted conditional mean of the 3-mode Gaussian over z = (q, p)
+    (see _genome_conditional_momentum); the fixed-Lambda path is the fallback if no mode is valid.
     """
     q = np.asarray(q, dtype=np.float64)
-    g = _EQ_LAMBDA @ (q - EQ_MU)
-    p = EQ_SCALE * np.sqrt(g * g + EQ_FLOOR * EQ_FLOOR)
+    p = _genome_conditional_momentum(q, genome) if genome is not None else None
+    if p is None:
+        g = _EQ_LAMBDA @ (q - EQ_MU)
+        p = EQ_SCALE * np.sqrt(g * g + EQ_FLOOR * EQ_FLOOR)
     if legacy_proxy is not None:
         proxy = np.asarray(legacy_proxy, dtype=np.float64)
         p = np.where(proxy != 0.0, np.hypot(proxy, p), p)
