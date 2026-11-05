@@ -72,3 +72,28 @@
 
 ## 次の一手
 - 残る判断事項: Arbitrator の既定を SVD に切り替えるか、簡体字の検出を JIS X 0208 の明示表に置き換えるか、Steered の case_frame_gate=False 対照を Colab で回すか。
+
+# Phase 17.5: 最終クリーンアップと Colab 確認 (2026-11-05, 記入者: Claude Code)
+
+## 決定事項
+- 8e285f3:
+  - WorldCraftArbitrator の既定を SVD 厳密射影に変更(Py/TS)。
+  - JIS 判定を iso2022_jp strict + 「梦」の明示除外に変更。Python の変換表は JIS 52-77 を U+68A6 梦 に割り当てており、iso2022_jp 単独では通ってしまうため。
+  - 非 JIS X 0208 漢字を含むトークンを NarrationStyleLogitsMask の禁止集合に追加。
+  - 格フレームのない 18 字未満の文で「。」に -6.0(force_close 中は除外)。
+  - lex_decay の既定を 3.5 に変更。
+- テスト: pytest 415 passed / 4 skipped、pnpm 359 passed。
+- Colab 1 VM(`docs/handoff/v6/p175_*`, wall 769s, 成功):
+  - 1.5B s3 Ctrl(fe7433c): 本文は p16b と完全一致。Climax の方向指標は再び欠落した。原因は Climax 前の bank が 0 で、`_direction_metrics`(run_v4 L1536)が discharge=0 の段落を飛ばすこと。同じ定義のままでは n=5 は埋まらない。
+  - 1.5B s3 Steered(8e285f3): 全基準通過。bigram 0.540→0.574、case_frame 不合格 25→20、短文の不合格 16→12。
+  - 3B s137 Steered(8e285f3): delta_sf 0.131→0.028、bigram 0.582→0.545 で2項目未達。Climax 2段落とも d_target=0.0(p16b では段落1が 1.0)。case_frame 不合格は 39→24。
+  - 3 run とも梦・簡体字・non_jis は 0。敬体・メタ・括弧・断片・活用崩壊は 0。
+
+## 未完了・注意
+- 3B s137 の悪化の原因は未分離(n=1)。Climax の d_target が 0 になっている。SVD 既定化で bank/discharge の方向が変わった可能性があるが、未検証。
+- 生成時間が増えた(1.5B 169.8→202.6s、3B 253.1→320.3s)。原因は未計測。
+- 目視で崩れ語「鳴き嘶いで」(3B)、述語欠落「それがそのような静けさの中。」(1.5B)を確認した。
+- 1.5B Ctrl s3 を n=5 に揃えるには指標の定義変更が要る(例: 同 seed の Steered の discharge 方向で Ctrl の dS/dF を測る)。未決定。
+
+## 次の一手
+- 3B s137 で、Steered を 8e285f3 + projector_method="tikhonov" で回し、SVD 既定化の影響を分離する。
