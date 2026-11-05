@@ -40,14 +40,10 @@ _SIGMA_CRIT_DIAG[_SIGMA_CRIT_DIAG < 1e-4] = 1e-4
 _SIGMA_CRIT_INV = 1.0 / (_SIGMA_CRIT_DIAG ** 2)
 
 # Domain-conditioned 3-Phase QDA target profiles
-_MU_ARTICLE = _MU_CRIT.copy()
-_MU_ARTICLE[9:12] = np.array([0.70, 0.40, 0.35])
-_MU_COT = _MU_CRIT.copy()
-_MU_COT[0] = 0.60
-_MU_COT[2] = 0.08
-_MU_COT[4] = 0.45
-_MU_COT[8] = 0.50
-_MU_COT[9:12] = np.array([0.85, 0.20, 0.25])
+# article / cot_reasoning: calibrated by scripts/calibrate_qda_domains.py (Phase 18 M18.2):
+# per-dimension median of z=(q,p) over real chunks; see artifacts/qda_calibration/qda_domain_calibration.json.
+_MU_ARTICLE = np.array([0.774, 0.467, 0.286, 0.304, 0.467, 0.608, 0.249, 0.381, 0.172, 0.498, 0.297, 0.227, 0.533, 0.255, 0.656, 0.450, 0.658, 0.251, 0.284, 0.598, 0.159, 0.019, 0.031, 0.363])
+_MU_COT = np.array([0.586, 0.404, 0.385, 0.174, 0.419, 0.555, 0.357, 0.218, 0.144, 0.797, 0.502, 0.069, 0.475, 0.290, 0.638, 0.351, 0.610, 0.215, 0.281, 0.331, 0.122, 0.012, 0.038, 0.205])
 
 DOMAIN_QDA_PROFILES: Dict[str, Dict[str, Any]] = {
     "novel": {
@@ -63,13 +59,19 @@ DOMAIN_QDA_PROFILES: Dict[str, Dict[str, Any]] = {
     },
     "article": {
         "mu_crit": _MU_ARTICLE,
-        "sigma_crit_low": 0.30,
-        "sigma_crit_high": 1.40,
+        # Aozora essays/criticism/lectures, 13 works, 507 chunks (<=60 per work):
+        # ||p|| q05/q95, Shock-mean q95.
+        "sigma_crit_low": 1.03,
+        "sigma_crit_high": 2.07,
+        "shock_mean_max": 0.48,
     },
     "cot_reasoning": {
         "mu_crit": _MU_COT,
-        "sigma_crit_low": 1.35,
-        "sigma_crit_high": 2.65,
+        # Qwen2.5-3B-Instruct Japanese chain-of-thought, 40 answers, 48 chunks:
+        # ||p|| q05/q95, Shock-mean q95.
+        "sigma_crit_low": 0.86,
+        "sigma_crit_high": 2.12,
+        "shock_mean_max": 0.46,
     },
 }
 

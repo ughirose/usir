@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import {
   computeThreePhaseQdaDistance,
   computeSemanticGeodesicCurvature,
@@ -6,6 +8,7 @@ import {
   computeMultiplicativeGrpoReward,
   embedSentenceUnit,
   splitIntoTrajectoryUnits,
+  DOMAIN_QDA_PROFILES,
 } from '../src/dynamics/manifoldGeodesic.js';
 
 describe('USIR v4.0 Manifold Geodesic & 3-Phase QDA Engine (TS)', () => {
@@ -42,7 +45,7 @@ describe('USIR v4.0 Manifold Geodesic & 3-Phase QDA Engine (TS)', () => {
     expect(res.is_healthy_critical).toBe(true);
   });
 
-  it('uses distinct momentum bands per domain: novel 1.40-3.90, cot_reasoning 1.35-2.65', () => {
+  it('uses distinct momentum bands per domain: novel 1.40-3.90, cot_reasoning 0.86-2.12', () => {
     const z = new Array<number>(24).fill(0.0);
     z[9] = 0.85;
     z[10] = 0.20;
@@ -151,5 +154,17 @@ describe('USIR v4.0 Manifold Geodesic & 3-Phase QDA Engine (TS)', () => {
     expect(Math.abs(autoRes.mean_curvature - expRes.mean_curvature)).toBeLessThan(1e-6);
     expect(Math.abs(autoRes.brownian_ratio - expRes.brownian_ratio)).toBeLessThan(1e-6);
     expect(Math.abs(autoRes.m_geodesic - expRes.m_geodesic)).toBeLessThan(1e-6);
+  });
+  it('article / cot_reasoning profiles equal the recorded Phase 18 calibration (Py/TS parity)', () => {
+    const path = fileURLToPath(new URL('../../../artifacts/qda_calibration/qda_domain_calibration.json', import.meta.url));
+    const cal = JSON.parse(readFileSync(path, 'utf-8'));
+    for (const dom of ['article', 'cot_reasoning']) {
+      const c = cal[dom].calibrated;
+      const prof = DOMAIN_QDA_PROFILES[dom]!;
+      expect(prof.sigma_crit_low).toBe(c.sigma_crit_low);
+      expect(prof.sigma_crit_high).toBe(c.sigma_crit_high);
+      expect(prof.shock_mean_max).toBe(c.shock_mean_max);
+      prof.mu_crit.forEach((v, i) => expect(v).toBeCloseTo(c.mu_crit[i], 9));
+    }
   });
 });

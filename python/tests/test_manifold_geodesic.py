@@ -61,7 +61,7 @@ def test_qda_healthy_critical_well():
 
 
 def test_domain_conditioned_three_phase_qda():
-    """Domain profiles carry distinct momentum bands: novel (1.40-3.90), cot_reasoning (1.35-2.65)."""
+    """Domain profiles carry distinct momentum bands: novel (1.40-3.90), cot_reasoning (0.86-2.12, Phase 18 calibration)."""
     z = np.zeros(24)
     z[9:12] = np.array([0.85, 0.20, 0.25])
     z[12:24] = 0.90  # ||p||_2 ~ 3.118: inside the novel band, above the cot_reasoning band
@@ -282,3 +282,33 @@ def test_explicit_embeddings_parity():
     assert pytest.approx(auto_res["brownian_ratio"], abs=1e-6) == exp_res["brownian_ratio"]
     assert pytest.approx(auto_res["m_geodesic"], abs=1e-6) == exp_res["m_geodesic"]
 
+
+
+# ==============================================================================
+# 1c. Phase 18 M18.2: article / cot_reasoning profiles = recorded real-data calibration
+# ==============================================================================
+def test_article_cot_profiles_match_recorded_calibration():
+    """Constants equal the q05/q95 / Shock-q95 / median-z rule output (scripts/calibrate_qda_domains.py)."""
+    import json
+    from pathlib import Path
+
+    from usir_py.manifold_geodesic import DOMAIN_QDA_PROFILES
+
+    cal = json.loads((Path(__file__).resolve().parents[2] / "artifacts/qda_calibration/qda_domain_calibration.json").read_text(encoding="utf-8"))
+    for dom in ("article", "cot_reasoning"):
+        c, prof = cal[dom]["calibrated"], DOMAIN_QDA_PROFILES[dom]
+        assert prof["sigma_crit_low"] == c["sigma_crit_low"]
+        assert prof["sigma_crit_high"] == c["sigma_crit_high"]
+        assert prof["shock_mean_max"] == c["shock_mean_max"]
+        np.testing.assert_allclose(prof["mu_crit"], c["mu_crit"], atol=1e-9)
+        # the band holds the central 90% of the measured ||p|| (q05 <= median <= q95)
+        assert c["sigma_crit_low"] < cal[dom]["p_norm"]["median"] < c["sigma_crit_high"]
+
+
+def test_article_median_is_inside_article_band():
+    """z = article mu_crit (median chunk) has no freeze / chaos penalty in the article domain."""
+    from usir_py.manifold_geodesic import DOMAIN_QDA_PROFILES
+
+    z = np.asarray(DOMAIN_QDA_PROFILES["article"]["mu_crit"], dtype=float)
+    res = compute_three_phase_qda_distance(z, domain="article")
+    assert res["penalty_freeze"] == 0.0 and res["penalty_chaos"] == 0.0

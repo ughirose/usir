@@ -15,3 +15,7 @@ artifacts/colab_run/colab_longform*.py
 
 # Phase 18/20: Aozora raw/cleaned text cache (not committed; see data/aozora_manifest.json)
 data/aozora_cache/
+
+# Colab raw stdout/stderr (decoded JSON is kept)
+artifacts/qda_calibration/*.stdout.txt
+artifacts/qda_calibration/*.stderr.txt

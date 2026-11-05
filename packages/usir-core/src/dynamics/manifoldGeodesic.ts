@@ -93,29 +93,18 @@ export const DOMAIN_QDA_PROFILES: Record<string, { mu_crit: readonly number[]; s
     sigma_crit_high: 3.90,
     shock_mean_max: 0.60,
   },
+  // article / cot_reasoning: calibrated by scripts/calibrate_qda_domains.py (Phase 18 M18.2), parity with Python.
   article: {
-    mu_crit: [
-      ...DEFAULT_MU_CRIT.slice(0, 9),
-      0.70, 0.40, 0.35,
-      ...DEFAULT_MU_CRIT.slice(12),
-    ],
-    sigma_crit_low: 0.30,
-    sigma_crit_high: 1.40,
+    mu_crit: [0.774, 0.467, 0.286, 0.304, 0.467, 0.608, 0.249, 0.381, 0.172, 0.498, 0.297, 0.227, 0.533, 0.255, 0.656, 0.450, 0.658, 0.251, 0.284, 0.598, 0.159, 0.019, 0.031, 0.363],
+    sigma_crit_low: 1.03,
+    sigma_crit_high: 2.07,
+    shock_mean_max: 0.48,
   },
   cot_reasoning: {
-    mu_crit: [
-      0.60,
-      DEFAULT_MU_CRIT[1]!,
-      0.08,
-      DEFAULT_MU_CRIT[3]!,
-      0.45,
-      ...DEFAULT_MU_CRIT.slice(5, 8),
-      0.50,
-      0.85, 0.20, 0.25,
-      ...DEFAULT_MU_CRIT.slice(12),
-    ],
-    sigma_crit_low: 1.35,
-    sigma_crit_high: 2.65,
+    mu_crit: [0.586, 0.404, 0.385, 0.174, 0.419, 0.555, 0.357, 0.218, 0.144, 0.797, 0.502, 0.069, 0.475, 0.290, 0.638, 0.351, 0.610, 0.215, 0.281, 0.331, 0.122, 0.012, 0.038, 0.205],
+    sigma_crit_low: 0.86,
+    sigma_crit_high: 2.12,
+    shock_mean_max: 0.46,
   },
 };
 
