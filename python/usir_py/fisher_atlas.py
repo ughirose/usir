@@ -75,3 +75,33 @@ def fit_fisher(X_by_class: Dict[Hashable, np.ndarray], reg: float = 1e-2, n_comp
     proj = {c: (Zs[c] @ W).mean(axis=0) for c in classes}
     return FisherMetric(center=center, scale=scale, W=W, eigvals=vals[order[:k]], means=proj,
                         mu_bar=np.mean(np.stack(list(proj.values())), axis=0))
+
+
+def fisher_features(text: str) -> np.ndarray:
+    """Window feature of the Phase 30 metric: z24 (extract_usir_24d) + extended orthographic prior (27)."""
+    from .extractor_24d import extract_usir_24d
+    from .orthographic_prior import ortho_vector_ext
+    z = np.asarray(extract_usir_24d(text)["z_24d"], dtype=float)
+    return np.concatenate([z, ortho_vector_ext(text)])
+
+
+def load_fisher_artifact(path_or_dict) -> FisherMetric:
+    """FisherMetric from artifacts/style_atlas/fisher_v1.json (or its parsed dict)."""
+    import json
+    from pathlib import Path
+    art = path_or_dict if isinstance(path_or_dict, dict) else json.loads(Path(path_or_dict).read_text(encoding="utf-8"))
+    return FisherMetric(center=np.asarray(art["center"], float), scale=np.asarray(art["scale"], float),
+                        W=np.asarray(art["W"], float), eigvals=np.asarray(art["eigvals"], float),
+                        means={k: np.asarray(v, float) for k, v in art["class_means_proj"].items()},
+                        mu_bar=np.asarray(art["mu_bar_proj"], float))
+
+
+def delta_fisher(text: str, fm: FisherMetric, a: Hashable, b: Hashable, window: int = 600, stride: int = 300) -> float:
+    """Mean over 600-char windows of s_a - s_b (positive: closer to author a in the Fisher metric)."""
+    from .style_atlas import make_windows
+    wins = make_windows(text, window, stride)
+    if not wins:
+        return 0.0
+    Y = fm.project(np.stack([fisher_features(w) for w in wins]))
+    d = -0.5 * ((Y - fm.means[a]) ** 2).sum(1) + 0.5 * ((Y - fm.means[b]) ** 2).sum(1)
+    return float(d.mean())

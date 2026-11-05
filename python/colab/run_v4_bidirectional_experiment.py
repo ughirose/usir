@@ -1402,6 +1402,12 @@ def run_longform_director(
     grace_close: bool = False,
     genome_modes: bool = False,
     target_line_chars: Optional[int] = None,
+    fisher_artifact: Optional[Dict[str, Any]] = None,
+    fisher_author: Optional[str] = None,
+    fisher_gamma: float = 0.0,
+    proposal_kappa: Optional[float] = None,
+    forbidden_words: Optional[List[str]] = None,
+    forbid_years: bool = False,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
@@ -1497,6 +1503,17 @@ def run_longform_director(
             )
         return theme
 
+    _genome_proposal = None
+    _fisher_metric = None
+    if fisher_artifact is not None and fisher_author is not None:
+        from usir_py.fisher_atlas import load_fisher_artifact
+        from usir_py.orthographic_prior import proposal_from_prior
+        if fisher_gamma:
+            _fisher_metric = load_fisher_artifact(fisher_artifact)
+        if proposal_kappa is not None:
+            _ob = fisher_artifact["ortho_by_author"]
+            _genome_proposal = proposal_from_prior(_ob[fisher_author], list(_ob.values()), kappa=float(proposal_kappa))
+
     if model is not None and tokenizer is not None:
         integ = AdaptiveBAOABIntegrator(dim=12, mu_star=mu, seed=seed)
         chat = _build_chat(0 if beats_on else None)
@@ -1537,6 +1554,11 @@ def run_longform_director(
             simile_decay=bool(simile_decay),
             body_compound_protect=bool(body_compound_protect),
             grace_close=bool(grace_close),
+            # Phase 31: genome -> proposal coupling, contrastive Fisher term, forbidden words
+            genome_proposal=_genome_proposal,
+            fisher_metric=_fisher_metric, fisher_author=fisher_author if _fisher_metric is not None else None,
+            fisher_gamma=float(fisher_gamma),
+            forbidden_words=list(forbidden_words or []), forbid_years=bool(forbid_years),
         )
         decoder.repeat_use_context = bool(carry_context)
         generator = "llm_clause_smc"
@@ -1576,6 +1598,7 @@ def run_longform_director(
                   "polite_guard": polite_guard, "narration_mask": narration_mask, "anti_repeat": anti_repeat, "direction_steer": direction_steer,
                   "max_regen": max_regen},
         "decoder_stats": dict(decoder.stats) if decoder is not None else None,
+        "genome_proposal": _genome_proposal,
         "narration_meta": count_narration_meta(full_text),
         "seed": seed,
         "wall_sec": round(wall, 2),

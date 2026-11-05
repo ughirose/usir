@@ -1448,6 +1448,74 @@ class SimileDecayLogits(_ProcBase):  # type: ignore[misc,valid-type]
         return scores
 
 
+_DIGIT_CHARS = "0123456789０１２３４５６７８９〇一二三四五六七八九"
+_YEAR_RE = re.compile("[" + _DIGIT_CHARS + "]{4}")
+
+
+def forbidden_completion_table(surfaces: Sequence[str], words: Sequence[str]) -> Dict[str, List[int]]:
+    """{remainder: [token ids whose stripped surface starts with remainder]} for every suffix f[k:] (k = 0..len-1) of
+    every forbidden word f.  A token is banned after text ending with f[:k] when it starts with f[k:]."""
+    rems = sorted({w[k:] for w in words if w for k in range(len(w))})
+    table: Dict[str, List[int]] = {r: [] for r in rems}
+    for i, sf in enumerate(surfaces):
+        st = sf.strip().lstrip("▁").strip()
+        if not st:
+            continue
+        for r in rems:
+            if st.startswith(r):
+                table[r].append(i)
+    return table
+
+
+class ForbiddenWordsLogits(_ProcBase):  # type: ignore[misc,valid-type]
+    """Phase 31: -penalty on tokens that would complete a forbidden word (e.g. the opposite-gender role word) given
+    the text so far (prefix tail + generated tail of the row); optional ban on tokens that would form a run of four
+    digit characters (Western or kanji numerals: 1968 / 一九六八), i.e. an unscripted calendar year."""
+
+    def __init__(self, tokenizer: Any, n_ctx: int, words: Sequence[str], table: Dict[str, List[int]],
+                 ctx_tail: str, digit_ids: Optional[Dict[int, str]] = None, penalty: float = 15.0,
+                 tail_cache: Optional[TailCache] = None) -> None:
+        self.tokenizer = tokenizer
+        self.n_ctx = int(n_ctx)
+        self.words = [w for w in words if w]
+        self.sets = {r: IdxSet(v) for r, v in table.items() if v}
+        self.ctx_tail = ctx_tail[-12:]
+        self.digit_ids = digit_ids or {}
+        self.penalty = float(penalty)
+        self.tail_cache = tail_cache
+
+    def __call__(self, ids: Any, scores: Any) -> Any:
+        tails = _tail_texts(self.tokenizer, ids, self.n_ctx, self.tail_cache)
+        for r, t in enumerate(tails):
+            text = self.ctx_tail + t
+            for w in self.words:
+                for k in range(len(w)):
+                    if k and not text.endswith(w[:k]):
+                        continue
+                    s = self.sets.get(w[k:])
+                    if s:
+                        _add_set(scores, [r], s, -self.penalty)
+            if self.digit_ids:
+                end = text[-3:]
+                bad = [i for i, sf in self.digit_ids.items() if _YEAR_RE.search(end + sf)]
+                if bad:
+                    _add_set(scores, [r], IdxSet(bad), -self.penalty)
+        return scores
+
+
+class KanjiBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
+    """Phase 31: constant bias on tokens whose surface starts with a CJK ideograph (genome-derived kanji density)."""
+
+    def __init__(self, kanji_ids: Sequence[int], bias: float) -> None:
+        self.ids = IdxSet(list(kanji_ids))
+        self.bias = float(bias)
+
+    def __call__(self, ids: Any, scores: Any) -> Any:
+        if self.ids and self.bias:
+            _add_set(scores, list(range(scores.shape[0])), self.ids, self.bias)
+        return scores
+
+
 _ADNOMINAL_END_CHARS = "たるいだな"
 
 
@@ -1693,6 +1761,14 @@ class ClauseTwistedSMCDecoder:
         body_compound_protect: bool = False,
         grace_close: bool = False,
         grace_clauses: int = 3,
+        genome_proposal: Optional[Dict[str, Any]] = None,
+        fisher_metric: Optional[Any] = None,
+        fisher_author: Optional[str] = None,
+        fisher_gamma: float = 0.0,
+        fisher_window_chars: int = 600,
+        forbidden_words: Optional[Sequence[str]] = None,
+        forbid_years: bool = False,
+        forbidden_penalty: float = 15.0,
     ) -> None:
         # cr_paragraph_scope / cr_exempt_text : see ContentRepLogits (Phase 23: prompt theme / role tokens were penalised
         #                       from the first mention, producing coinages such as 懐中時鐘 / 青年人)
@@ -1727,6 +1803,25 @@ class ClauseTwistedSMCDecoder:
         self.body_compound_protect = bool(body_compound_protect)
         self.grace_close = bool(grace_close)
         self.grace_clauses = int(grace_clauses)
+        # Phase 31:
+        #   genome_proposal : dict from orthographic_prior.proposal_from_prior (steady_min_chars / steady_max_chars /
+        #                     steady_max_commas / comma_target / kanji_bias); overrides the steady band below and adds a
+        #                     '、' push (+comma_push) while the open sentence has fewer than comma_target - 1 commas
+        #   fisher_metric / fisher_author / fisher_gamma : contrastive direction term in the particle weights,
+        #                     + g * <v_author, y(cand) - mean_k y(cand_k)>, y = Fisher projection of the trailing
+        #                     fisher_window_chars of (history + prefix + candidate); g = fisher_gamma * sd(LLM) / sd(raw).
+        #                     Active in every paragraph (unlike the G_style term, which follows steering_active).
+        #   forbidden_words / forbid_years : ForbiddenWordsLogits (-forbidden_penalty)
+        self.genome_proposal = dict(genome_proposal) if genome_proposal else None
+        self.fisher_metric = fisher_metric
+        self.fisher_author = fisher_author
+        self.fisher_gamma = float(fisher_gamma)
+        self.fisher_window_chars = int(fisher_window_chars)
+        self.forbidden_words = [w for w in (forbidden_words or []) if w]
+        self.forbid_years = bool(forbid_years)
+        self.forbidden_penalty = float(forbidden_penalty)
+        self._forbid_cache: Optional[Tuple[Dict[str, List[int]], Dict[int, str]]] = None
+        self._kanji_ids: Optional[List[int]] = None
         # rhythm_profile      : "cycle" (default; short/medium/long by sentence index mod 3), "steady" (no positive '。' push and no
         #                       '、' push; '。' sealed -12 below steady_min_chars, +3 above steady_max_chars, '、' -4 once the sentence
         #                       has >= steady_max_commas commas) or "pulse" (cycle with positive '。' pushes capped at +3 and no
@@ -1741,6 +1836,11 @@ class ClauseTwistedSMCDecoder:
         self.steady_min_chars = int(steady_min_chars)
         self.steady_max_chars = int(steady_max_chars)
         self.steady_max_commas = int(steady_max_commas)
+        if self.genome_proposal:
+            gp = self.genome_proposal
+            self.steady_min_chars = int(gp.get("steady_min_chars", self.steady_min_chars))
+            self.steady_max_chars = int(gp.get("steady_max_chars", self.steady_max_chars))
+            self.steady_max_commas = int(gp.get("steady_max_commas", self.steady_max_commas))
         self.adnominal_guard = bool(adnominal_guard)
         self.cv_ceil = None if cv_ceil is None else float(cv_ceil)
         self.lex_compound_exempt = bool(lex_compound_exempt)
@@ -2283,6 +2383,43 @@ class ClauseTwistedSMCDecoder:
             self._demo_ids = {d: v for d, v in m.items() if v}
         return self._demo_ids
 
+    def _vocab_surfaces(self) -> List[str]:
+        tk = self.tokenizer
+        return list(tk.batch_decode([[i] for i in range(len(tk))], skip_special_tokens=False))
+
+    def _forbidden_tables(self) -> Tuple[Dict[str, List[int]], Dict[int, str]]:
+        if self._forbid_cache is None:
+            surf = self._vocab_surfaces()
+            table = forbidden_completion_table(surf, self.forbidden_words)
+            digits: Dict[int, str] = {}
+            if self.forbid_years:
+                for i, sf in enumerate(surf):
+                    st = sf.strip()
+                    if st and any(c in _DIGIT_CHARS for c in st):
+                        digits[i] = st
+            self._forbid_cache = (table, digits)
+        return self._forbid_cache
+
+    def _kanji_token_ids(self) -> List[int]:
+        if self._kanji_ids is None:
+            self._kanji_ids = [i for i, sf in enumerate(self._vocab_surfaces())
+                               if sf.strip() and "一" <= sf.strip()[0] <= "鿿"]
+        return self._kanji_ids
+
+    def _fisher_term(self, prefix: str, cand_texts: Sequence[str]) -> Optional[np.ndarray]:
+        fm, a = self.fisher_metric, self.fisher_author
+        if fm is None or a is None or self.fisher_gamma == 0.0 or len(cand_texts) < 2:
+            return None
+        from .fisher_atlas import fisher_features
+        base = (self.history_text + "\n" + prefix) if self.history_text else prefix
+        Y = np.stack([fm.project(fisher_features((base + c)[-self.fisher_window_chars:]))[0] for c in cand_texts])
+        v = fm.means[a] - fm.mu_bar
+        n = float(np.linalg.norm(v))
+        if n <= 1e-12:
+            return None
+        raw = (Y - Y.mean(axis=0)) @ (v / n)
+        return raw
+
     def _simile_token_ids(self) -> List[int]:
         """Token ids whose stripped surface starts with a simile marker or is a >= 2-char prefix of one (cached)."""
         if self._simile_ids is None:
@@ -2333,6 +2470,9 @@ class ClauseTwistedSMCDecoder:
             else:
                 pb = 0.0
             cb = -4.0 if commas >= self.steady_max_commas else 0.0
+            gp = self.genome_proposal
+            if gp and cb == 0.0 and slen >= 10 and commas < float(gp.get("comma_target", 0.0)) - 1.0:
+                cb = float(gp.get("comma_push", 1.5))
             return (pb, cb, 20, False)
         mode = n_sent % 3
         if mode == 0:        # short: single clause, 8-18 chars: commas forbidden, '。' pushed
@@ -2580,6 +2720,14 @@ class ClauseTwistedSMCDecoder:
             pen_para=self.simile_pen_para, pen_story=self.simile_pen_story, tail_cache=tail_cache,
         ) if getattr(self, "simile_decay", False) else None
 
+        forbid_proc = None
+        if getattr(self, "forbidden_words", None) or getattr(self, "forbid_years", False):
+            _tab, _dig = self._forbidden_tables()
+            forbid_proc = ForbiddenWordsLogits(tokenizer_ref, n_ctx, self.forbidden_words, _tab, prefix[-12:],
+                                               digit_ids=_dig, penalty=self.forbidden_penalty, tail_cache=tail_cache)
+        _kb = float((getattr(self, "genome_proposal", None) or {}).get("kanji_bias", 0.0))
+        kanji_proc = KanjiBiasLogits(self._kanji_token_ids(), _kb) if _kb else None
+
         ph_period, ph_comma = self._phase_bias(prefix)
         gate_on = bool(self.syntactic_gate)
         gate_val = float(self.gate_bias)
@@ -2625,7 +2773,8 @@ class ClauseTwistedSMCDecoder:
             "attention_mask": torch.ones_like(input_ids),
             "logits_processor": ([narr_proc] if narr_proc is not None else []) + (
                 [ngram_proc] if ngram_proc is not None else []) + ([content_proc] if content_proc is not None else []) + (
-                [simile_proc] if simile_proc is not None else []) + [_EosPenalty(), boundary_proc, _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
+                [simile_proc] if simile_proc is not None else []) + ([forbid_proc] if forbid_proc is not None else []) + (
+                [kanji_proc] if kanji_proc is not None else []) + [_EosPenalty(), boundary_proc, _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
             "stopping_criteria": StoppingCriteriaList([_ClausePunctStop()]),
         }
         if self.rep_penalty and self.rep_penalty != 1.0:
@@ -2843,6 +2992,17 @@ class ClauseTwistedSMCDecoder:
 
         w = np.array(term1_llm) + np.array(term2_reach) + np.array(term3_style) + np.array(term4_align)
 
+        # Term 5 (Phase 31): contrastive Fisher direction toward the target author
+        term5_fisher = [0.0] * len(term1_llm)
+        raw5 = self._fisher_term(prefix, cand_texts) if getattr(self, "fisher_metric", None) is not None else None
+        if raw5 is not None:
+            sd5 = float(np.std(raw5))
+            sd_l = float(np.std(np.array(term1_llm) + np.array(term2_reach)))
+            if sd5 > 1e-9 and sd_l > 1e-9:
+                term5_fisher = [float(self.fisher_gamma * sd_l / sd5 * r) for r in raw5]
+                w = w + np.array(term5_fisher)
+                self.stats["fisher_steps"] = self.stats.get("fisher_steps", 0) + 1
+
         # CV_L potential: sentence-length dispersion of the paragraph if candidate k closes its sentence
         if self.cv_gain > 0 and len(cand_texts) > 1:
             done = [x for x in re.split("(?<=[。！？!?])", prefix) if x.strip()]
@@ -2920,6 +3080,7 @@ class ClauseTwistedSMCDecoder:
             "term2_reach": term2_reach,
             "term3_style": term3_style,
             "term4_align": term4_align,
+            "term5_fisher": term5_fisher,
             "align_cos": align_cos,
             "d_local": d_local,
             "dq_list": dq_list,

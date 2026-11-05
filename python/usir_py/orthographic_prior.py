@@ -89,3 +89,27 @@ def ortho_summary(windows: Sequence[str]) -> Dict[str, float]:
     out["mean_sent_len_chars"] = float(np.mean(allL)) if allL else 0.0
     out["n_windows"] = int(len(M))
     return out
+
+
+def proposal_from_prior(author: Dict[str, float], reference: Sequence[Dict[str, float]], kappa: float = 2.0,
+                        ) -> Dict[str, float]:
+    """Phase 31: decoder proposal parameters from an author's measured orthographic prior.
+
+    The author's deviation from the atlas mean (unweighted over authors) is amplified by kappa:
+      mu*  = exp(r_logL + kappa (logL_a - r_logL))            target mean sentence length (chars)
+      c*   = max(0, r_c + kappa (c_a - r_c))                  target commas per sentence
+      kanji_bias = clip(10 kappa (k_a - r_k), -0.5, 0.5)
+    and mapped to the steady band: min = round(0.55 mu*), max = round(1.6 mu*), max_commas = max(1, round(c* + 1)).
+    Deterministic; documented in docs/handoff/2026-11-06_phase31_genome_proposal.md.
+    """
+    r_logL = float(np.mean([r["log_mean_sent_len"] for r in reference]))
+    r_c = float(np.mean([r["commas_per_sent"] for r in reference]))
+    r_k = float(np.mean([r["kanji_ratio"] for r in reference]))
+    mu = math.exp(r_logL + kappa * (author["log_mean_sent_len"] - r_logL))
+    c = max(0.0, r_c + kappa * (author["commas_per_sent"] - r_c))
+    kb = float(np.clip(10.0 * kappa * (author["kanji_ratio"] - r_k), -0.5, 0.5))
+    return {
+        "target_sent_len": mu, "comma_target": c, "kanji_bias": kb, "comma_push": 1.5,
+        "steady_min_chars": int(round(0.55 * mu)), "steady_max_chars": int(round(1.6 * mu)),
+        "steady_max_commas": int(max(1, round(c + 1.0))), "kappa": float(kappa),
+    }
