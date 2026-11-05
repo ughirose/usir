@@ -94,7 +94,7 @@ describe('M17 WorldCraftArbitrator SVD parity (Python fixture)', () => {
       } else if (rec.op === 'step') {
         expect(d.stepTransition(rec.current_well)).toBe(out.next_well);
       } else if (rec.op === 'discharge') {
-        const r = d.dischargeMomentum(rec.base_climax_p);
+        const r = d.dischargeMomentum(rec.base_climax_p, rec.later_climax ?? false);
         expect(maxAbsDiff(r.boostedP, out.boosted_p)).toBeLessThan(TOL);
         expect(maxAbsDiff(r.dischargedDeltaP, out.discharged_p)).toBeLessThan(TOL);
       }

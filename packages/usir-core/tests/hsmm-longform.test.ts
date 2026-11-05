@@ -144,7 +144,7 @@ describe('Phase B WS-B2: 3-Mode HSMM Multi-Well Director & Longform Generation',
 
       // Discharge burst in Climax
       const baseClimaxP = new Array(12).fill(0.70);
-      const { boostedP, dischargedDeltaP } = director.dischargeMomentum(baseClimaxP);
+      const { boostedP, dischargedDeltaP } = director.dischargeMomentum(baseClimaxP, false, false); // previous behaviour
 
       expect(dischargedDeltaP.every((v) => Math.abs(v - 0.50) < 1e-6)).toBe(true);
       expect(boostedP.every((v) => Math.abs(v - 1.20) < 1e-6)).toBe(true);

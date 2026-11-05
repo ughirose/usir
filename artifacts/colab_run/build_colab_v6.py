@@ -102,7 +102,7 @@ def run_job(MID, SEED, VARIANTS, DTYPE):
             res = mod.run_longform_director("静謐な山寺の夜明け", model=model, tokenizer=tok, seed=SEED, target_paragraphs=6,
                     target_total_chars=3000, scene_constraints=cons, use_arbitrator=arb, steering=steer_on, proposal_injection=steer_on,
                     min_clauses_per_paragraph=6, reseed_per_paragraph=True, verbose=False,
-                    rep_penalty=(1.14 if "1.5B" in MID else 1.13), lex_decay=2.5, min_para_chars=340, max_para_chars=385,
+                    rep_penalty=(1.14 if ("1.5B" in MID or "3B" in MID) else 1.13), lex_decay=2.5, min_para_chars=340, max_para_chars=385,
                     finality_gate=(name != "old"), **flags)
         except Exception as exc:
             import traceback; traceback.print_exc()
@@ -125,6 +125,10 @@ def run_job(MID, SEED, VARIANTS, DTYPE):
         out[name]["climax_d_realised"] = cl_d
         cl_sf = [d.get("delta_sf") for d in res["direction"] if d.get("well") == "Climax" and d.get("delta_sf") is not None]
         out[name]["climax_delta_sf"] = cl_sf
+        out[name]["climax_cos_ref"] = [d.get("cos_ref") for d in res["direction"] if d.get("well") == "Climax" and d.get("cos_ref") is not None]
+        out[name]["climax_cos_p_dq"] = [d.get("cos_p_dq") for d in res["direction"] if d.get("well") == "Climax" and d.get("cos_p_dq") is not None]
+        out[name]["climax_d_target"] = [d.get("d_target") for d in res["direction"] if d.get("well") == "Climax" and d.get("d_target") is not None]
+        out[name]["climax_mean_sentence_len"] = [d.get("mean_sentence_len") for d in res["direction"] if d.get("well") == "Climax"]
         out[name]["climax_d_realised_reg"] = [d.get("d_realised_reg") for d in res["direction"] if d.get("well") == "Climax" and d.get("d_realised_reg") is not None]
         out[name]["criteria"] = {
             "chars_ge_2000": out[name]["total_chars"] >= 2000,

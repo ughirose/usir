@@ -66,6 +66,18 @@ DIRECTOR_OPS = [
     {"op": "arbitrate_rows", "target_p": MOMENTA[0], "rows": CONSTRAINT_SETS["unit_evidence"]},
     {"op": "step", "current_well": 0},
     {"op": "discharge", "base_climax_p": MOMENTA[1]},
+    # zero-bank Climax: only the Climax base momentum is released
+    {"op": "step", "current_well": 0},
+    {"op": "discharge", "base_climax_p": MOMENTA[2]},
+    # two Climax wells in one plan: the first releases release_frac of the bank and carries the rest, the second releases all
+    {"op": "step", "current_well": 2},
+    {"op": "accumulate", "target_p": MOMENTA[0], "measured_p": MOMENTA[1]},
+    {"op": "accumulate", "target_p": MOMENTA[2], "measured_p": MOMENTA[0]},
+    {"op": "step", "current_well": 0},
+    {"op": "discharge", "base_climax_p": MOMENTA[0], "later_climax": True},
+    {"op": "step", "current_well": 2},
+    {"op": "step", "current_well": 0},
+    {"op": "discharge", "base_climax_p": MOMENTA[1], "later_climax": False},
 ]
 
 
@@ -107,7 +119,7 @@ def main() -> None:
             nxt = d.step_transition(op["current_well"])
             rec["out"] = {"next_well": int(nxt)}
         elif op["op"] == "discharge":
-            boosted, discharged = d.discharge_momentum(np.array(op["base_climax_p"]))
+            boosted, discharged = d.discharge_momentum(np.array(op["base_climax_p"]), later_climax=bool(op.get("later_climax", False)))
             rec["out"] = {"boosted_p": boosted.tolist(), "discharged_p": discharged.tolist()}
         rec["state"] = {"p_banked": d.p_banked.tolist(), "refractory_counter": int(d.refractory_counter),
                         "banked_energy": d.get_banked_energy()}

@@ -94,7 +94,7 @@ def test_director_step_sequence_matches_fixture():
         elif op == "step":
             assert d.step_transition(rec["current_well"]) == out["next_well"]
         elif op == "discharge":
-            boosted, discharged = d.discharge_momentum(np.array(rec["base_climax_p"]))
+            boosted, discharged = d.discharge_momentum(np.array(rec["base_climax_p"]), later_climax=bool(rec.get("later_climax", False)))
             assert np.allclose(boosted, out["boosted_p"], atol=TOL) and np.allclose(discharged, out["discharged_p"], atol=TOL)
         st = rec["state"]
         assert np.allclose(d.p_banked, st["p_banked"], atol=TOL)

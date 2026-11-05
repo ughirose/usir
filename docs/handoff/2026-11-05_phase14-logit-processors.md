@@ -97,3 +97,22 @@
 
 ## 次の一手
 - 3B s137 で、Steered を 8e285f3 + projector_method="tikhonov" で回し、SVD 既定化の影響を分離する。
+
+# Phase 17.6: Climax 基底運動量・方向指標の全段落算出・n=5 再集計 (2026-11-05, 記入者: Claude Code)
+
+## 決定事項
+- `_direction_metrics`: Climax 段落は discharge の有無に関係なく dS/dF/delta_sf/d_realised_reg を計算し、固定参照方向との余弦 `cos_ref`(Shock +1/√6、Flux −1/√6)も出す。cos_p_dq と d_target は discharge > 0 の段落のみ。
+- Director(Py/TS): steering 時の Climax 放出 = release_frac·p_banked + p_climax_base(Shock +0.25、Flux −0.20)。後に Climax が控えるときは 70% を放出し、30% を持ち越す(`plan_wells` で RNG を複製して先読み)。Ctrl には適用しない。
+- Decoder の `_direction`: discharge_vec 経路だけ符号付き S/F に変更(従来の入力は非負なので値は不変)。integrator.p 経路は従来の abs 式のまま。
+- `case_frame_ok`: かな・助詞に続く1字の形式名詞(中 時 事 物 所 為 様 方 上 下 前 後 間)で終わる文は、主語があっても False。
+- 速度: TailCache(1ステップ1回の復号を全 processor で共有)と、デバイスごとの index tensor キャッシュ。
+- 3B の rep_penalty を 1.14 に変更(build_colab_v6.py)。
+- テスト: pytest 436 passed / 4 skipped、pnpm 364 passed。
+- n=5 再集計(`docs/handoff/v6/phase16_n5_recomputed.json`、`scripts/recompute_phase16_n5.py`): 既存の 210 値は max 差 0.0 で一致。新たに Ctrl の Climax 5 段落を算出。delta_sf の Steered−Ctrl は 1.5B +0.240(d=3.89, p=.00096)/ 3B +0.282(d=4.09, p=.0008)/ 7B +0.171(d=2.24, p=.0075)。cos_ref は 1.5B と 3B で有意、7B は p=.33 で有意でない。
+- Colab p176(3B s137 Steered、1 run、wall 283s): bigram 0.572、delta_sf 0.321/0.206(両 Climax とも ≥0.15)、全基準通過。生成時間 204.5s(p175 は 320.3s。n=1 なので A5 の効果とは断定できない)。
+
+## 未完了・注意
+- 目視の問題(p176 Climax): 述語のない断片「窓に映る。先ほどの光景。」、連用形の文末「霧はまだ薄く。」、「それ」の連発。連用形止め(〜く。)は統語終止ゲートの対象外の形。
+- 新しいコード(8e285f3 以降)で回したのは 3B s137 の1本だけ。他のモデル・seed は未再実行。
+- d_realised(非正則化)は Steered で 1.0 に飽和し、3モデルとも有意でない。
+- torch 経路の数値同一性は未検証(numpy 経路のみ旧版と一致を確認)。

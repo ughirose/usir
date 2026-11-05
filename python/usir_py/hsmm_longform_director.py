@@ -21,6 +21,7 @@ Phase B WS-B2 implementation based on Blueprint Section 3:
 
 from __future__ import annotations
 
+import copy
 import math
 import sys
 import re
@@ -188,11 +189,20 @@ class HSMMLongformDirector:
         seed: Optional[int] = None,
         arbitrator: Optional[Any] = None,
         scene_constraints: Optional[Dict[int, Sequence[str]]] = None,
+        climax_base_shock: float = 0.25,
+        climax_base_flux: float = 0.20,
+        climax_release_frac: float = 0.7,
     ) -> None:
         # arbitrator: WorldCraftArbitrator-like (compile_constraint_jacobian, arbitrate_momentum).
         # scene_constraints: {paragraph_index: constraint mode names}; unlisted paragraphs fall back to
         # cue-based mode selection from the paragraph text of the previous run (none -> unconstrained).
         self.verbose = False
+        # Climax base momentum (released at every Climax even with an empty bank): +climax_base_shock on Shock
+        # elements [3, 7, 11], -climax_base_flux on Flux elements [0, 4, 8]. When another Climax follows in the
+        # paragraph plan only climax_release_frac of the bank is released (the rest is carried forward).
+        self.climax_base_shock = float(climax_base_shock)
+        self.climax_base_flux = float(climax_base_flux)
+        self.climax_release_frac = float(climax_release_frac)
         self.arbitrator = arbitrator
         self.scene_constraints = dict(scene_constraints) if scene_constraints else {}
         self.dim = int(dim)
@@ -262,20 +272,56 @@ class HSMMLongformDirector:
         self.p_banked += delta
         return delta
 
+    def climax_base_momentum(self) -> np.ndarray:
+        """Fixed Climax base momentum p_climax_base: Shock [3, 7, 11] = +climax_base_shock, Flux [0, 4, 8] = -climax_base_flux."""
+        base = np.zeros(self.dim, dtype=np.float64)
+        for i in (3, 7, 11):
+            if i < self.dim:
+                base[i] = self.climax_base_shock
+        for i in (0, 4, 8):
+            if i < self.dim:
+                base[i] = -self.climax_base_flux
+        return base
+
+    def plan_wells(self, n_paras: int) -> List[int]:
+        """Well sequence generate_longform will visit, computed on a copy of the RNG / refractory state (no side effects)."""
+        rng_state = copy.deepcopy(self.rng)
+        refr = self.refractory_counter
+        try:
+            wells, cur = [0], 0
+            for _ in range(1, int(n_paras)):
+                cur = self.step_transition(cur)
+                wells.append(cur)
+        finally:
+            self.rng = rng_state
+            self.refractory_counter = refr
+        return wells
+
     def discharge_momentum(
         self,
         base_climax_p: np.ndarray,
+        later_climax: bool = False,
+        apply_climax_base: bool = True,
     ) -> Tuple[np.ndarray, np.ndarray]:
-        """OPEN-09: Discharges all banked momentum upon entering Climax well.
+        """OPEN-09: Discharges banked momentum upon entering Climax well.
+
+        discharged = release_frac * p_banked + p_climax_base, where release_frac = climax_release_frac if another
+        Climax follows later in the paragraph plan (the remaining (1 - release_frac) * p_banked is carried forward),
+        else 1.0. apply_climax_base=False restores the previous behaviour (discharged = p_banked, full release).
 
         Returns (boosted_target_p, discharged_delta_p).
         """
         base_arr = np.asarray(base_climax_p, dtype=np.float64).ravel()
         base_p = np.pad(base_arr, (0, max(0, self.dim - len(base_arr))))[:self.dim]
-        discharged = self.p_banked.copy()
+        rf = self.climax_release_frac if (later_climax and apply_climax_base) else 1.0
+        released = rf * self.p_banked
+        discharged = released + (self.climax_base_momentum() if apply_climax_base else 0.0)
         boosted = base_p + discharged
-        self.p_banked.fill(0.0)
-        return boosted, discharged
+        if rf >= 1.0:
+            self.p_banked.fill(0.0)
+        else:
+            self.p_banked = self.p_banked - released
+        return boosted, np.asarray(discharged, dtype=np.float64)
 
     def arbitrate_scene_momentum(
         self,
@@ -403,6 +449,7 @@ class HSMMLongformDirector:
         context_chars: int = 250,
         min_para_chars: int = 0,
         max_para_chars: int = 0,
+        climax_base_momentum: Optional[bool] = None,
     ) -> Dict[str, Any]:
         """Generates 3,000-char longform prose switching wells per paragraph.
 
@@ -415,6 +462,11 @@ class HSMMLongformDirector:
         banked_history: List[float] = []
         all_sentences: List[str] = []
         full_paragraphs_text: List[str] = []
+
+        # Climax base momentum / multi-Climax carry apply only to steered runs (default follows climax_only_steering);
+        # the Ctrl condition (steering off) keeps the previous full-release behaviour.
+        apply_cb = bool(climax_only_steering) if climax_base_momentum is None else bool(climax_base_momentum)
+        planned_wells = self.plan_wells(n_paras) if apply_cb else []
 
         # Start at Well 0 (Narrative)
         current_well_idx = 0
@@ -435,7 +487,8 @@ class HSMMLongformDirector:
 
             # 2. OPEN-09: Discharge if Climax, else normal target
             if well_idx == 2:
-                boosted_p, discharged_p = self.discharge_momentum(well.target_p)
+                later_climax = bool(apply_cb and 2 in planned_wells[k + 1:])
+                boosted_p, discharged_p = self.discharge_momentum(well.target_p, later_climax=later_climax, apply_climax_base=apply_cb)
                 effective_target_p = boosted_p
                 was_discharged = True
             else:

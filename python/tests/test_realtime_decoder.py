@@ -1176,3 +1176,43 @@ def test_cv_potential_penalises_uniform_sentence_lengths():
              {"text": "まみむめもやゆよらりるれろわをんあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろ。", "llm_logprob": -1.0}]
     r = dec.compute_particle_weights(prefix, cands, target_q=np.full(12, 0.5))
     assert r["weights"][0] < r["weights"][1] - 5.0
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# _direction with signed means (Climax base momentum has negative Flux components)
+def _old_direction(v, kappa=2.5):
+    v = np.abs(np.asarray(v, dtype=np.float64))
+    s, f = float(np.mean(v[[3, 7, 11]])), float(np.mean(v[[0, 4, 8]]))
+    return float(np.tanh(kappa * (s - f) / (s + f + 1e-9)))
+
+
+def test_direction_signed_zero_bank_climax_base():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, direction_steer=True)
+    v = np.zeros(12)
+    v[[3, 7, 11]] = 0.25
+    v[[0, 4, 8]] = -0.20
+    dec.discharge_vec = v
+    assert dec._direction() > 0.9
+    # adding banked Flux (>= 0) lowers d monotonically (no abs() fold-over)
+    ds = []
+    for b in (0.0, 0.1, 0.2, 0.4):
+        w = v.copy()
+        w[[0, 4, 8]] += b
+        dec.discharge_vec = w
+        ds.append(dec._direction())
+    assert all(x > y for x, y in zip(ds, ds[1:]))
+
+
+def test_direction_non_negative_inputs_identical_to_old_formula():
+    dec = ClauseTwistedSMCDecoder(dim=12, seed=0, direction_steer=True)
+    rng = np.random.default_rng(3)
+    for _ in range(50):
+        v = rng.random(12) * rng.choice([0.0, 0.05, 1.0, 5.0])
+        dec.discharge_vec = v
+        assert dec._direction() == pytest.approx(_old_direction(v), abs=1e-6)
+    dec.discharge_vec = np.zeros(12)
+    assert dec._direction() == 0.0
+    # no discharge_vec: integrator momentum by absolute value, as before
+    dec.discharge_vec = None
+    dec.integrator.p = -np.arange(12, dtype=float)
+    assert dec._direction() == pytest.approx(_old_direction(dec.integrator.p))

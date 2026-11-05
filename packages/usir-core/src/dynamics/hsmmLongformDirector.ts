@@ -178,7 +178,11 @@ export class HSMMLongformDirector {
   public readonly refractoryCooldown: number;
   public pBanked: number[];
   public refractoryCounter: number;
-  private readonly rng: () => number;
+  /** LCG state when seeded (copied by planWells); null -> Math.random. */
+  private rngState: number | null;
+  public readonly climaxBaseShock: number;
+  public readonly climaxBaseFlux: number;
+  public readonly climaxReleaseFrac: number;
   public readonly arbitrator: WorldCraftArbitrator | null;
   public readonly sceneConstraints: Record<number, string[]>;
 
@@ -190,7 +194,15 @@ export class HSMMLongformDirector {
     transitionMatrix?: number[][];
     refractoryCooldown?: number;
     seed?: number;
+    /** Climax base momentum: +shock on Shock [3, 7, 11], -flux on Flux [0, 4, 8] (default 0.25 / 0.20). */
+    climaxBaseShock?: number;
+    climaxBaseFlux?: number;
+    /** Share of the bank released at a Climax that is followed by another Climax (default 0.7). */
+    climaxReleaseFrac?: number;
   }) {
+    this.climaxBaseShock = options?.climaxBaseShock ?? 0.25;
+    this.climaxBaseFlux = options?.climaxBaseFlux ?? 0.2;
+    this.climaxReleaseFrac = options?.climaxReleaseFrac ?? 0.7;
     this.dim = options?.dim ?? 12;
     this.wells = options?.wells ?? createDefaultWells(this.dim);
     this.refractoryCooldown = options?.refractoryCooldown ?? 1;
@@ -212,15 +224,39 @@ export class HSMMLongformDirector {
       this.sceneConstraints[Number(k)] = [...modes];
     }
 
-    if (options?.seed !== undefined) {
-      let s = options.seed >>> 0;
-      this.rng = () => {
-        s = (Math.imul(1664525, s) + 1013904223) >>> 0;
-        return s / 4294967296;
-      };
-    } else {
-      this.rng = Math.random;
+    this.rngState = options?.seed !== undefined ? options.seed >>> 0 : null;
+  }
+
+  private rng(): number {
+    if (this.rngState === null) return Math.random();
+    this.rngState = (Math.imul(1664525, this.rngState) + 1013904223) >>> 0;
+    return this.rngState / 4294967296;
+  }
+
+  /** Well sequence generateLongform will visit; computed on a copy of the RNG / refractory state (no side effects). */
+  public planWells(nParas: number): number[] {
+    const savedState = this.rngState;
+    const savedRefr = this.refractoryCounter;
+    const wells = [0];
+    try {
+      let cur = 0;
+      for (let k = 1; k < nParas; k++) {
+        cur = this.stepTransition(cur);
+        wells.push(cur);
+      }
+    } finally {
+      this.rngState = savedState;
+      this.refractoryCounter = savedRefr;
     }
+    return wells;
+  }
+
+  /** Fixed Climax base momentum p_climax_base (Shock +, Flux -). */
+  public climaxBaseMomentum(): number[] {
+    const base = new Array(this.dim).fill(0);
+    for (const i of [3, 7, 11]) if (i < this.dim) base[i] = this.climaxBaseShock;
+    for (const i of [0, 4, 8]) if (i < this.dim) base[i] = -this.climaxBaseFlux;
+    return base;
   }
 
   public isInRefractory(): boolean {
@@ -273,13 +309,26 @@ export class HSMMLongformDirector {
     return delta;
   }
 
-  public dischargeMomentum(baseClimaxP: number[]): { boostedP: number[]; dischargedDeltaP: number[] } {
+  /**
+   * discharged = releaseFrac * p_banked + p_climax_base, releaseFrac = climaxReleaseFrac when another Climax follows
+   * in the paragraph plan (the remaining (1 - releaseFrac) * p_banked is carried forward), else 1.
+   * applyClimaxBase = false restores the previous behaviour (discharged = p_banked, full release).
+   */
+  public dischargeMomentum(
+    baseClimaxP: number[],
+    laterClimax = false,
+    applyClimaxBase = true,
+  ): { boostedP: number[]; dischargedDeltaP: number[] } {
+    const rf = laterClimax && applyClimaxBase ? this.climaxReleaseFrac : 1.0;
+    const base = applyClimaxBase ? this.climaxBaseMomentum() : new Array(this.dim).fill(0);
     const boostedP = new Array(this.dim).fill(0);
-    const dischargedDeltaP = [...this.pBanked];
+    const dischargedDeltaP = new Array(this.dim).fill(0);
     for (let i = 0; i < this.dim; i++) {
-      boostedP[i] = (baseClimaxP[i] ?? 0.0) + (this.pBanked[i] ?? 0.0);
+      const released = rf * (this.pBanked[i] ?? 0.0);
+      dischargedDeltaP[i] = released + base[i]!;
+      boostedP[i] = (baseClimaxP[i] ?? 0.0) + dischargedDeltaP[i]!;
+      this.pBanked[i] = rf >= 1.0 ? 0.0 : (this.pBanked[i] ?? 0.0) - released;
     }
-    this.pBanked.fill(0.0);
     return { boostedP, dischargedDeltaP };
   }
 
@@ -393,6 +442,8 @@ export class HSMMLongformDirector {
     prompt?: string;
     targetParagraphs?: number;
     targetTotalChars?: number;
+    /** Climax base momentum + multi-Climax carry (default false = previous full-release behaviour). */
+    climaxBaseMomentum?: boolean;
   }): LongformResult {
     const prompt = options?.prompt ?? '静謐な山寺の夜明け';
     const targetParagraphs = Math.max(6, Math.min(8, options?.targetParagraphs ?? 7));
@@ -405,6 +456,8 @@ export class HSMMLongformDirector {
     const fullParagraphsText: string[] = [];
 
     let currentWellIdx = 0;
+    const applyCb = options?.climaxBaseMomentum ?? false;
+    const plannedWells = applyCb ? this.planWells(targetParagraphs) : [];
 
     for (let k = 0; k < targetParagraphs; k++) {
       const wellIdx = k === 0 ? 0 : this.stepTransition(currentWellIdx);
@@ -419,7 +472,8 @@ export class HSMMLongformDirector {
       let wasDischarged = false;
 
       if (wellIdx === 2) {
-        const dRes = this.dischargeMomentum(well.targetP);
+        const laterClimax = applyCb && plannedWells.slice(k + 1).includes(2);
+        const dRes = this.dischargeMomentum(well.targetP, laterClimax, applyCb);
         effectiveTargetP = dRes.boostedP;
         dischargedDeltaP = dRes.dischargedDeltaP;
         wasDischarged = true;

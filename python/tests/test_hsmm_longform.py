@@ -126,7 +126,7 @@ def test_momentum_banking_accumulation_and_discharge():
 
     # Climax discharge burst
     climax_base_p = np.full(12, 0.70)
-    boosted_p, discharged_p = director.discharge_momentum(climax_base_p)
+    boosted_p, discharged_p = director.discharge_momentum(climax_base_p, apply_climax_base=False)   # previous behaviour
 
     assert np.allclose(discharged_p, 0.50)
     assert np.allclose(boosted_p, 1.20)  # 0.70 + 0.50 banked momentum!
@@ -303,3 +303,76 @@ def test_climax_only_steering_schedule_and_paragraph_hook():
     expected = [bool(w == 2 or (i > 0 and wells[i - 1] == 2)) for i, w in enumerate(wells)]
     assert seen == expected
     assert hooked == list(range(6))
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Climax base momentum + multi-Climax carry
+def _climax_base_vec():
+    v = np.zeros(12)
+    v[[3, 7, 11]] = 0.25
+    v[[0, 4, 8]] = -0.20
+    return v
+
+
+def test_climax_base_momentum_zero_bank():
+    director = HSMMLongformDirector(seed=0)
+    base_p = np.full(12, 0.5)
+    boosted, discharged = director.discharge_momentum(base_p)
+    assert np.allclose(discharged, _climax_base_vec())
+    assert np.allclose(boosted, base_p + _climax_base_vec())
+    assert np.allclose(director.p_banked, 0.0)
+
+
+def test_climax_base_momentum_with_bank_and_carry():
+    director = HSMMLongformDirector(seed=0)
+    bank = np.linspace(0.1, 1.2, 12)
+    director.p_banked = bank.copy()
+    _, d_last = director.discharge_momentum(np.zeros(12), later_climax=False)
+    assert np.allclose(d_last, bank + _climax_base_vec())
+    assert np.allclose(director.p_banked, 0.0)
+    director.p_banked = bank.copy()
+    boosted, d_mid = director.discharge_momentum(np.zeros(12), later_climax=True)
+    assert np.allclose(d_mid, 0.7 * bank + _climax_base_vec())
+    assert np.allclose(boosted, d_mid)
+    assert np.allclose(director.p_banked, 0.3 * bank)
+    # constructor parameters
+    d2 = HSMMLongformDirector(seed=0, climax_base_shock=0.5, climax_base_flux=0.1, climax_release_frac=0.5)
+    d2.p_banked = bank.copy()
+    _, dd = d2.discharge_momentum(np.zeros(12), later_climax=True)
+    exp = 0.5 * bank
+    exp[[3, 7, 11]] += 0.5
+    exp[[0, 4, 8]] -= 0.1
+    assert np.allclose(dd, exp)
+    assert np.allclose(d2.p_banked, 0.5 * bank)
+
+
+def test_apply_climax_base_false_restores_previous_behaviour():
+    director = HSMMLongformDirector(seed=0)
+    bank = np.linspace(0.1, 1.2, 12)
+    director.p_banked = bank.copy()
+    boosted, discharged = director.discharge_momentum(np.full(12, 0.5), later_climax=True, apply_climax_base=False)
+    assert np.allclose(discharged, bank) and np.allclose(boosted, 0.5 + bank)
+    assert np.allclose(director.p_banked, 0.0)
+
+
+def test_plan_wells_has_no_side_effects_and_matches_generate_longform():
+    tm = [[0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]]
+    director = HSMMLongformDirector(seed=7, transition_matrix=tm)
+    state = director.rng.bit_generator.state
+    planned = director.plan_wells(6)
+    assert director.rng.bit_generator.state == state and director.refractory_counter == 0
+    assert planned == [0, 2, 0, 0, 2, 0]                       # refractory cooldown after a Climax
+    res = director.generate_longform(target_paragraphs=6, climax_only_steering=True)
+    assert res["wells"] == planned
+    dn = [p["discharged_momentum_norm"] for p in res["paragraphs"]]
+    assert all(dn[i] > 0 for i in (1, 4))                    # Climax base is released at every Climax
+    flux = [res["paragraphs"][i]["discharged_momentum"][0] for i in (1, 4)]
+    assert all(f >= -0.20 - 1e-9 for f in flux)              # Flux base -0.20 plus released bank (>= 0)
+
+
+def test_generate_longform_without_steering_keeps_old_discharge():
+    tm = [[0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]]
+    director = HSMMLongformDirector(seed=7, transition_matrix=tm)
+    res = director.generate_longform(target_paragraphs=6, climax_only_steering=False)
+    for p in res["paragraphs"]:
+        assert min(p["discharged_momentum"]) >= 0.0          # banked momentum only (no negative Flux base)

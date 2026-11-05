@@ -153,6 +153,15 @@ def test_boundary_finality_gate():
     ("カメラ", True),
     ("カメラが", True),
     ("", False),
+    # formal-noun single-kanji endings: predicate missing even with a subject
+    ("それがそのような静けさの中", False),
+    ("雨が降った時", False),
+    ("彼は部屋の中", False),
+    ("長い時間", True),
+    ("雨が降った", True),
+    ("午後", True),
+    ("広い空間", True),
+    ("時", False),
 ])
 def test_case_frame_ok(s, ok):
     assert case_frame_ok(s) is ok
@@ -383,3 +392,70 @@ def test_first_ban_only_at_first_step():
     sc = _scores(2)
     proc(np.zeros((2, N_CTX + 1), dtype=np.int64), sc)
     assert np.all(sc == 0.0)
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# A5: shared tail decode + cached index sets
+class _CountingTokenizer(MockTokenizer):
+    def __init__(self):
+        super().__init__()
+        self.batch_decode_calls = 0
+
+    def batch_decode(self, seqs, skip_special_tokens=False):
+        self.batch_decode_calls += 1
+        return super().batch_decode(seqs, skip_special_tokens=skip_special_tokens)
+
+
+def test_tail_cache_decodes_once_per_step_for_all_processors():
+    from usir_py.realtime_decoder import TailCache
+
+    tk = _CountingTokenizer()
+    cache = TailCache(tk, N_CTX)
+    kw = dict(tail_cache=cache)
+    procs = [
+        NarrationStyleLogitsMask(tk, N_CTX, 0, [TID["です"]], [TID["た"]], -5.0, **kw),
+        ContentRepLogits(tk, N_CTX, [False] * len(VOCAB), {}, "", 1.1, 2.0, **kw),
+        ContextNgramBan(tk, N_CTX, 3, {}, 2, 4.0, {}, hira_only=[False] * len(VOCAB), stem_guard=True, **kw),
+        BoundaryBiasLogits(tk, N_CTX, [4, 4], [0, 0], [TID["。"]], [TID["、"]], ph_period=4.0, gate_on=True, noun_req=True, **kw),
+    ]
+    for step in range(1, 4):
+        ids = np.array([[0, 0] + [TID["雨"]] * step, [0, 0] + [TID["空"]] * step], dtype=np.int64)
+        sc = _scores(2)
+        before = tk.batch_decode_calls
+        for p in procs:
+            sc = p(ids, sc)
+        assert tk.batch_decode_calls - before == 1
+    assert cache.decode_calls == 3
+    # without a cache every tail-reading processor decodes on its own
+    tk2 = _CountingTokenizer()
+    ids = _ids("雨は", "空は")
+    NarrationStyleLogitsMask(tk2, N_CTX, 0, [1], [2], -1.0)(ids, _scores(2))
+    BoundaryBiasLogits(tk2, N_CTX, [4, 4], [0, 0], [TID["。"]], [TID["、"]], gate_on=True)(ids, _scores(2))
+    assert tk2.batch_decode_calls == 2
+
+
+def test_tail_cache_new_ids_object_redecodes():
+    from usir_py.realtime_decoder import TailCache
+
+    tk = _CountingTokenizer()
+    cache = TailCache(tk, N_CTX)
+    a = _ids("雨は")
+    assert cache.get(a) == ["雨は"]
+    assert cache.get(a) == ["雨は"]
+    assert tk.batch_decode_calls == 1
+    assert cache.get(_ids("空は")) == ["空は"]
+    assert tk.batch_decode_calls == 2
+
+
+def test_idxset_dedup_filter_and_cache():
+    from usir_py.realtime_decoder import IdxSet, _add_set
+
+    s = IdxSet([5, 3, 3, 10 ** 6])
+    assert s.ids == [3, 5, 10 ** 6] and len(s) == 3
+    sc = np.zeros((3, 8), dtype=np.float64)
+    _add_set(sc, [0, 2], s, [1.0, 2.0])
+    assert sc[0, 3] == 1.0 and sc[0, 5] == 1.0 and sc[2, 3] == 2.0 and sc[1].sum() == 0.0
+    assert s.index(sc) is s.index(sc)                     # cached
+    assert s.index(sc).tolist() == [3, 5]                 # ids >= vocab size dropped
+    _add_set(sc, [1], s, 0.5)
+    assert sc[1, 5] == 0.5

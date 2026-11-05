@@ -1496,6 +1496,11 @@ def run_longform_director(
     return res_summary
 
 
+_CLIMAX_REF = np.zeros(12)
+_CLIMAX_REF[[3, 7, 11]] = 1.0 / np.sqrt(6.0)
+_CLIMAX_REF[[0, 4, 8]] = -1.0 / np.sqrt(6.0)
+
+
 def _direction_metrics(paragraphs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """Direction audit measured on the generated TEXT of each paragraph (no window differences, no telescoping means).
 
@@ -1533,20 +1538,29 @@ def _direction_metrics(paragraphs: List[Dict[str, Any]]) -> List[Dict[str, Any]]
             "d_text": round((sv - fv) / (sv + fv + 1e-9), 4),
             "mean_sentence_len": round(float(np.mean([len(x) for x in sents])), 2) if sents else 0.0,
         }
-        if disch[i] > 1e-9 and q_base is not None:
-            dvn = np.asarray(p["discharged_momentum"], dtype=float)
+        if q_base is not None and (disch[i] > 1e-9 or p["well"] == "Climax"):
+            # dq / dS / dF / delta_sf / d_realised_reg depend only on q(text) and q_base (mean q of unsteered paragraphs);
+            # they do not use the discharge vector, so they are defined for undischarged Climax paragraphs too.
             dq = qs[i] - q_base
             ds, df = sd(dq)
-            na, nb = float(np.linalg.norm(dvn)), float(np.linalg.norm(dq))
+            nb = float(np.linalg.norm(dq))
             rec.update({
-                "d_target": round(float((np.mean(np.abs(dvn)[[3, 7, 11]]) - np.mean(np.abs(dvn)[[0, 4, 8]])) /
-                                        (np.mean(np.abs(dvn)[[3, 7, 11]]) + np.mean(np.abs(dvn)[[0, 4, 8]]) + 1e-9)), 4),
                 "d_realised": round((ds - df) / (abs(ds) + abs(df) + 1e-9), 4),
-                "cos_p_dq": round(float(dvn @ dq) / (na * nb) if na > 1e-12 and nb > 1e-12 else 0.0, 4),
                 "dS": round(ds, 4), "dF": round(df, 4),
-                # non-saturating direction measures: raw shift ΔS-ΔF and its scale-regularised index tanh((ΔS-ΔF)/0.10)
+                # non-saturating direction measures: raw shift DS-DF and its scale-regularised index tanh((DS-DF)/0.10)
                 "delta_sf": round(ds - df, 4), "d_realised_reg": round(float(np.tanh((ds - df) / 0.10)), 4),
             })
+            if p["well"] == "Climax":
+                # cosine between dq and the fixed Climax reference unit vector (Shock +, Flux -)
+                rec["cos_ref"] = round(float(dq @ _CLIMAX_REF) / (nb * float(np.linalg.norm(_CLIMAX_REF))) if nb > 1e-12 else 0.0, 4)
+            if disch[i] > 1e-9:
+                dvn = np.asarray(p["discharged_momentum"], dtype=float)
+                na = float(np.linalg.norm(dvn))
+                rec.update({
+                    "d_target": round(float((np.mean(np.abs(dvn)[[3, 7, 11]]) - np.mean(np.abs(dvn)[[0, 4, 8]])) /
+                                            (np.mean(np.abs(dvn)[[3, 7, 11]]) + np.mean(np.abs(dvn)[[0, 4, 8]]) + 1e-9)), 4),
+                    "cos_p_dq": round(float(dvn @ dq) / (na * nb) if na > 1e-12 and nb > 1e-12 else 0.0, 4),
+                })
         out.append(rec)
     return out
 
