@@ -1185,10 +1185,15 @@ class BoundaryBiasLogits(_ProcBase):  # type: ignore[misc,valid-type]
                         r_g = ramp
                         if self.gate_on and grp is pids and conn is not None and conn[r]:
                             r_g = 0.0
+                        if self.case_frame_gate and grp is pids and noun is not None and not noun[r]:
+                            r_g = min(r_g, 0.0)
                         _add(scores, r, grp, r_g)
             if pids and has_row_bias:
                 rb = self.row_bias[r] if r < len(self.row_bias) else 0.0
-                _add(scores, r, pids, rb)
+                if self.case_frame_gate and noun is not None and not noun[r]:
+                    _add(scores, r, pids, min(rb, 0.0))
+                else:
+                    _add(scores, r, pids, rb)
                 if cids:
                     _add(scores, r, cids, -rb)
             if self.force_close:
@@ -1891,6 +1896,9 @@ class ClauseTwistedSMCDecoder:
         gate_val = float(self.gate_bias)
         _rp = self._rhythm_params(prefix)
         noun_req = bool(_rp is not None and _rp[3])
+        if self.case_frame_gate and _rp is None and ph_period > 0:
+            # Shock regime (Climax short assertions): the positive '。' push also requires a case frame
+            noun_req = True
         sent_tail0 = re.split("[。！？!?]", prefix)[-1]
         boundary_proc = BoundaryBiasLogits(
             tokenizer_ref, n_ctx, caps, self._row_period_bias(P), period_ids, comma_ids,

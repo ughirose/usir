@@ -171,6 +171,21 @@ def test_boundary_short_phase_case_frame_gate():
     assert [float(sc[r, TID["。"]]) for r in range(3)] == [8.0, 8.0, 0.0]
 
 
+def test_boundary_row_bias_respects_case_frame_gate():
+    # Shock-regime per-row short bias (+3 on '。', -3 on '、') is withheld for rows without a case frame
+    ids = _ids("広がった", "雨が降る")
+    kw = dict(period_ids=[TID["。"]], comma_ids=[TID["、"]], noun_req=True, sent_tail0="")
+    on = BoundaryBiasLogits(TK, N_CTX, [5, 5], [3.0, 3.0], case_frame_gate=True, **kw)
+    sc = _scores(2)
+    on(ids, sc)
+    assert [float(sc[r, TID["。"]]) for r in range(2)] == [0.0, 3.0]
+    assert [float(sc[r, TID["、"]]) for r in range(2)] == [-3.0, -3.0]
+    off = BoundaryBiasLogits(TK, N_CTX, [5, 5], [3.0, 3.0], case_frame_gate=False, **kw)
+    sc = _scores(2)
+    off(ids, sc)
+    assert [float(sc[r, TID["。"]]) for r in range(2)] == [3.0, 3.0]
+
+
 # ---------------------------------------------------------------------------------------------------------------
 def test_kanji_bigrams_and_targets():
     c = kanji_bigrams("静寂が降る静寂")
