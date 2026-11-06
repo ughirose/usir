@@ -1369,6 +1369,246 @@
    "fmt": "{}"
   },
   {
+   "id": "p36_new_ctrl_msl",
+   "file": "usir_v4_paper.md",
+   "text": "28.2",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_new_ctrl_c100",
+   "file": "usir_v4_paper.md",
+   "text": "5.40",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_new_ctrl_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "9.24",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_new_ctrl_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "7.28",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_new_ctrl_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_new_ctrl_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_gA_msl",
+   "file": "usir_v4_paper.md",
+   "text": "41.0",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_gA_c100",
+   "file": "usir_v4_paper.md",
+   "text": "6.99",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_gA_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "14.99",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_gA_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "-0.24",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_gA_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='gA' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_gA_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_gB_msl",
+   "file": "usir_v4_paper.md",
+   "text": "46.8",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_gB_c100",
+   "file": "usir_v4_paper.md",
+   "text": "5.26",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_gB_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6.32",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_gB_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "-2.82",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_gB_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='gB' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_gB_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_gB_minus_gA",
+   "file": "usir_v4_paper.md",
+   "text": "5.75",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) - math.exp(d['runs'][k.replace('gB','gA')]['ortho'][0]) for k, v in d['runs'].items() if v['condition']=='gB'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p36_gB_minus_gA_min",
+   "file": "usir_v4_paper.md",
+   "text": "1.2",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "min([math.exp(v['ortho'][0]) - math.exp(d['runs'][k.replace('gB','gA')]['ortho'][0]) for k, v in d['runs'].items() if v['condition']=='gB'])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_gB_minus_gA_max",
+   "file": "usir_v4_paper.md",
+   "text": "10.6",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "max([math.exp(v['ortho'][0]) - math.exp(d['runs'][k.replace('gB','gA')]['ortho'][0]) for k, v in d['runs'].items() if v['condition']=='gB'])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_len_BA",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='gB' and v['ortho'][0] > d['runs'][k.replace('gB','gA')]['ortho'][0])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_len_Bctrl",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='gB' and v['ortho'][0] > d['runs'][k.replace('gB','new_ctrl')]['ortho'][0])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_gen_sec",
+   "file": "usir_v4_paper.md",
+   "text": "2964",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "d['generation_sec']",
+   "fmt": "{:.0f}"
+  },
+  {
+   "id": "p36_gA_ratio",
+   "file": "usir_v4_paper.md",
+   "text": "96",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "100*statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gA'])/statistics.mean([v['genome_proposal']['target_sent_len'] for v in d['runs'].values() if v['condition']=='gA'])",
+   "fmt": "{:.0f}"
+  },
+  {
+   "id": "p36_gB_ratio",
+   "file": "usir_v4_paper.md",
+   "text": "74",
+   "source": "docs/handoff/v10/p36_q3_8b.json",
+   "expr": "100*statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gB'])/statistics.mean([v['genome_proposal']['target_sent_len'] for v in d['runs'].values() if v['condition']=='gB'])",
+   "fmt": "{:.0f}"
+  },
+  {
+   "id": "p36sw_ctrl_msl",
+   "file": "usir_v4_paper.md",
+   "text": "35.8",
+   "source": "docs/handoff/v10/p36_swallow_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36sw_gB_msl",
+   "file": "usir_v4_paper.md",
+   "text": "54.1",
+   "source": "docs/handoff/v10/p36_swallow_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36sw_gB_years",
+   "file": "usir_v4_paper.md",
+   "text": "1",
+   "source": "docs/handoff/v10/p36_swallow_8b.json",
+   "expr": "sum(len(__import__('re').findall('[0-9０-９〇一二三四五六七八九]{4}', v['full_text'])) for v in d['runs'].values() if v['condition']=='gB')",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36sw_ctrl_years",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p36_swallow_8b.json",
+   "expr": "sum(len(__import__('re').findall('[0-9０-９〇一二三四五六七八九]{4}', v['full_text'])) for v in d['runs'].values() if v['condition']=='new_ctrl')",
+   "fmt": "{}"
+  },
+  {
    "id": "p28j_posbias_qwen3_8b",
    "file": "usir_v4_paper.md",
    "text": "0.78",

@@ -279,7 +279,63 @@ group but only partly in the Akutagawa direction (the control is already close t
 Mean sentence length does not separate. The Swallow B-steered station stories contained kanji-numeral calendar
 years in 3 of 3 seeds, i.e. the soft ban was insufficient there.
 """)
+    out.append(section_p36_len(P))
     return "\n".join(out)
+
+
+YEAR_EXPR = "len(__import__('re').findall('[0-9０-９〇一二三四五六七八九]{4}', v['full_text']))"
+
+
+def section_p36_len(P: Paper) -> str:
+    s, sw = f"{V10}/p36_q3_8b.json", f"{V10}/p36_swallow_8b.json"
+    if not (P.has(s) and P.has(sw)):
+        return ""
+    rows = []
+    for cond, label in (("new_ctrl", "new_ctrl"), ("gA", "A (Akutagawa, μ* 42.5)"), ("gB", "B (Tanizaki, μ* 63.1)")):
+        rows.append(f"| {label} | {P.num(f'p36_{cond}_msl', s, runs_ortho_mean(cond, 0, exp=True), '{:.1f}')} | "
+                    f"{P.num(f'p36_{cond}_c100', s, runs_ortho_mean(cond, 2))} | "
+                    f"{P.num(f'p36_{cond}_dF_AB', s, runs_mean(cond, 'delta_f_AB'))} | "
+                    f"{P.num(f'p36_{cond}_dLL_AB', s, runs_mean(cond, 'delta_ll_AB'))} | "
+                    f"{P.num(f'p36_{cond}_coin', s, runs_sum(cond, 'coinages', length=True), '{}')} | "
+                    f"{P.num(f'p36_{cond}_unf', s, runs_sum(cond, 'unfinished_paragraphs'), '{}')} |")
+    diff = ("statistics.mean([math.exp(v['ortho'][0]) - math.exp(d['runs'][k.replace('gB','gA')]['ortho'][0]) "
+            "for k, v in d['runs'].items() if v['condition']=='gB'])")
+    dBA = P.num("p36_gB_minus_gA", s, diff, "{:.2f}")
+    dBA_min = P.num("p36_gB_minus_gA_min", s, diff.replace("statistics.mean", "min"), "{:.1f}")
+    dBA_max = P.num("p36_gB_minus_gA_max", s, diff.replace("statistics.mean", "max"), "{:.1f}")
+    pBA = P.num("p36_len_BA", s, "sum(1 for k, v in d['runs'].items() if v['condition']=='gB' and "
+                                 "v['ortho'][0] > d['runs'][k.replace('gB','gA')]['ortho'][0])", "{}")
+    pBC = P.num("p36_len_Bctrl", s, "sum(1 for k, v in d['runs'].items() if v['condition']=='gB' and "
+                                    "v['ortho'][0] > d['runs'][k.replace('gB','new_ctrl')]['ortho'][0])", "{}")
+    gen = P.num("p36_gen_sec", s, "d['generation_sec']", "{:.0f}")
+    def ratio(c: str) -> str:
+        return P.num(f"p36_{c}_ratio", s, f"100*statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=={c!r}])"
+                                          f"/statistics.mean([v['genome_proposal']['target_sent_len'] for v in d['runs'].values() if v['condition']=={c!r}])", "{:.0f}")
+    ra, rb = ratio("gA"), ratio("gB")
+    sw_c = P.num("p36sw_ctrl_msl", sw, runs_ortho_mean("new_ctrl", 0, exp=True), "{:.1f}")
+    sw_b = P.num("p36sw_gB_msl", sw, runs_ortho_mean("gB", 0, exp=True), "{:.1f}")
+    yr_b = P.num("p36sw_gB_years", sw, f"sum({YEAR_EXPR} for v in d['runs'].values() if v['condition']=='gB')", "{}")
+    yr_c = P.num("p36sw_ctrl_years", sw, f"sum({YEAR_EXPR} for v in d['runs'].values() if v['condition']=='new_ctrl')", "{}")
+    return f"""### 3.3 Phase 36: narrower band and stronger sentence-end biases
+Pre-registered change (steered conditions): steady band 0.8–1.3 μ* (A 34–55, B 50–82 characters), sentence-end hold
+−18 below the band and push +8 above it, comma cap round(c* + 2), and a calendar-year penalty of −10⁴ in all conditions.
+Success criterion fixed before the run: mean sentence length B − A ≥ 10 characters and B > new_ctrl.
+Qwen3-8B, 6 plot-seed groups, A100 ({gen} s of generation):
+
+| Condition | mean sentence length | commas / 100 chars | ΔF_AB | ΔLL_AB | coinages | unfinished paragraphs |
+|---|---|---|---|---|---|---|
+""" + "\n".join(rows) + f"""
+
+B − A in mean sentence length: mean {dBA} characters (range {dBA_min}–{dBA_max}); B longer than A in {pBA} of 6 groups and
+longer than new_ctrl in {pBC} of 6. The 10-character criterion is **not met**. A reached {ra} % of its target μ*, B only
+{rb} %; the per-paragraph breakdown (short-sentence pulse paragraphs, 20-token clause cap) was not measured in this run.
+
+Swallow station (3 seeds): mean sentence length new_ctrl {sw_c}, B {sw_b}. Four-digit numeral runs: {yr_b} in B,
+{yr_c} in new_ctrl, so the zero-year criterion is **not met**. Cause, checked on the Qwen3 tokenizer: "〇" (U+3007)
+has no single token and is split into two byte-level tokens that decode to U+FFFD individually, so the per-token
+digit table used by the mask never contains it; years without "〇" (e.g. 一九六八) are tokens whose decoded surfaces contain the digits
+and are masked. The penalty value is not the cause.
+"""
 
 
 def section_judge(P: Paper) -> str:

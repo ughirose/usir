@@ -151,6 +151,28 @@ group but only partly in the Akutagawa direction (the control is already close t
 Mean sentence length does not separate. The Swallow B-steered station stories contained kanji-numeral calendar
 years in 3 of 3 seeds, i.e. the soft ban was insufficient there.
 
+### 3.3 Phase 36: narrower band and stronger sentence-end biases
+Pre-registered change (steered conditions): steady band 0.8–1.3 μ* (A 34–55, B 50–82 characters), sentence-end hold
+−18 below the band and push +8 above it, comma cap round(c* + 2), and a calendar-year penalty of −10⁴ in all conditions.
+Success criterion fixed before the run: mean sentence length B − A ≥ 10 characters and B > new_ctrl.
+Qwen3-8B, 6 plot-seed groups, A100 (2964 s of generation):
+
+| Condition | mean sentence length | commas / 100 chars | ΔF_AB | ΔLL_AB | coinages | unfinished paragraphs |
+|---|---|---|---|---|---|---|
+| new_ctrl | 28.2 | 5.40 | 9.24 | 7.28 | 0 | 0 |
+| A (Akutagawa, μ* 42.5) | 41.0 | 6.99 | 14.99 | -0.24 | 0 | 0 |
+| B (Tanizaki, μ* 63.1) | 46.8 | 5.26 | 6.32 | -2.82 | 0 | 0 |
+
+B − A in mean sentence length: mean 5.75 characters (range 1.2–10.6); B longer than A in 6 of 6 groups and
+longer than new_ctrl in 6 of 6. The 10-character criterion is **not met**. A reached 96 % of its target μ*, B only
+74 %; the per-paragraph breakdown (short-sentence pulse paragraphs, 20-token clause cap) was not measured in this run.
+
+Swallow station (3 seeds): mean sentence length new_ctrl 35.8, B 54.1. Four-digit numeral runs: 1 in B,
+0 in new_ctrl, so the zero-year criterion is **not met**. Cause, checked on the Qwen3 tokenizer: "〇" (U+3007)
+has no single token and is split into two byte-level tokens that decode to U+FFFD individually, so the per-token
+digit table used by the mask never contains it; years without "〇" (e.g. 一九六八) are tokens whose decoded surfaces contain the digits
+and are masked. The penalty value is not the cause.
+
 ## 4. LLM-as-judge
 ### 4.1 Phase 28: generative pairwise judge (position-biased)
 Cross-judging (Swallow judges Qwen3 outputs and vice versa), 5 axes, both presentation orders. The fraction of
