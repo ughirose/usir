@@ -65,7 +65,14 @@ SCRIPTS = {
     "p31_q3_8b": ("Qwen/Qwen3-8B", ["watch", "station"], [3, 42, 7], ["new_ctrl", "gA", "gB", "gC"]),
     # Phase 31b: re-run of the steered conditions with the merged sentence-end token hold (new_ctrl is unaffected)
     "p31b_q3_8b": ("Qwen/Qwen3-8B", ["watch", "station"], [3, 42, 7], ["gA", "gB"]),
+    # Phase 36-2: narrower band around mu*, stronger hold/push, comma slack +2, year hard mask (all conditions)
+    "p36_q3_8b": ("Qwen/Qwen3-8B", ["watch", "station"], [3, 42, 7], ["new_ctrl", "gA", "gB"]),
+    "p36_swallow_8b": ("tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2", ["station"], [3, 42, 7], ["new_ctrl", "gB"]),
 }
+# Phase 36 proposal overrides (fixed before the run; docs/handoff/2026-11-06_phase36_pinpoint.md)
+P36 = {"proposal_overrides": {"band": [0.8, 1.3], "comma_slack": 2.0, "hold_bias": -18.0, "push_bias": 8.0},
+       "year_penalty": 1e4}
+EXTRA = {"p36_q3_8b": P36, "p36_swallow_8b": P36}
 
 
 def build_zip_b64() -> str:
@@ -168,7 +175,10 @@ for PLOT in PLOTS:
                           genome_modes=steered, forbidden_words=FORBID[PLOT], forbid_years=True)
                 genome = GP[COND[1]] if steered else None
                 if steered:
-                    kw.update(fisher_artifact=FISHER_ART, fisher_author=AUTHOR[COND[1]], fisher_gamma=1.0, proposal_kappa=2.0)
+                    kw.update(fisher_artifact=FISHER_ART, fisher_author=AUTHOR[COND[1]], fisher_gamma=1.0, proposal_kappa=2.0,
+                              proposal_overrides=EXTRA_KW.get("proposal_overrides"))
+                if EXTRA_KW.get("year_penalty") is not None:
+                    kw["year_penalty"] = EXTRA_KW["year_penalty"]
                 res = mod.run_longform_director(
                     P["theme"], model=model, tokenizer=tok, seed=SEED, target_paragraphs=6, target_total_chars=2400,
                     min_clauses_per_paragraph=6, reseed_per_paragraph=True, verbose=False,
@@ -187,7 +197,7 @@ for PLOT in PLOTS:
                 RUNS[key] = {"plot": PLOT, "seed": SEED, "condition": COND, "model": GEN_MID, "error": repr(exc),
                              "elapsed_sec": round(time.time() - t0, 1)}
                 log(f"FAILED {key}: {exc!r}")
-out = {"generator": GEN_MID, "gpu": gpu, "plots": PLOT_DEFS, "seeds": SEEDS, "conditions": CONDS,
+out = {"generator": GEN_MID, "gpu": gpu, "plots": PLOT_DEFS, "seeds": SEEDS, "conditions": CONDS, "extra_kw": EXTRA_KW,
        "generation_sec": round(time.time() - t_all, 1), "runs": RUNS}
 _alive = False
 import gzip, zlib
@@ -208,6 +218,7 @@ def main() -> None:
             + "PLOT_DEFS = " + repr({k: PLOTS[k] for k in plots}) + "\n"
             + "AUTHOR = " + repr(AUTHOR) + "\nFORBID = " + repr(FORBID) + "\n"
             + "FISHER_ART = json.loads(" + repr(FISHER.read_text(encoding="utf-8")) + ")\n"
+            + "EXTRA_KW = " + repr(EXTRA.get(name, {})) + "\n"
         )
         out = HERE / f"{name}.py"
         out.write_text(header + BODY, encoding="utf-8")

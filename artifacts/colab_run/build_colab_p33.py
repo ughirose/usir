@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import base64
 import io
+import sys
 import zipfile
 from pathlib import Path
 
@@ -29,6 +30,9 @@ DRIVER = PY / "colab" / "run_phase33_phase_c.py"
 # name -> (model id, extra driver args)
 SCRIPTS = {
     "p33_q3_8b": ("Qwen/Qwen3-8B", []),
+    # Phase 36-3: unit-normalised steering direction at last position, alpha 0.08/0.12; shaped GRPO reward
+    "p36c_q3_8b": ("Qwen/Qwen3-8B", ["--alphas", "0.08", "0.12", "--inject-positions", "last", "--steer-unit-dir",
+                                     "--grpo-reward", "shaped"]),
 }
 
 
@@ -81,7 +85,10 @@ _alive = False
 
 def main() -> None:
     b64 = build_zip_b64()
+    only = set(sys.argv[1:])
     for name, (mid, extra) in SCRIPTS.items():
+        if only and name not in only:
+            continue
         header = "B64 = " + repr(b64) + "\n" + f"MODEL_ID = {mid!r}\nEXTRA_ARGS = {extra!r}\n"
         out = HERE / f"{name}.py"
         out.write_text(header + BODY, encoding="utf-8")
