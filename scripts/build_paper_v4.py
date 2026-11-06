@@ -701,6 +701,28 @@ calibrated vs random α 0.12, discordant pairs {mc('cal012_vs_rand012', 'only_ot
 The random direction raises the Deadzone count above base at both α, so part of the calibrated–random gap is harm
 from the random direction rather than benefit from the calibrated one. The CV-based definition shows a much smaller
 effect, and the 12 prompts are expository rather than literary.
+""" + p40_mediation(P)
+
+
+def p40_mediation(P: Paper) -> str:
+    s = f"{V10}/p40_mediation.json"
+    if not P.has(s):
+        return ""
+    sm = lambda c, k, f="{}": P.num(f"p40m_{c}_{k}", s, f"d['summary'][{c!r}][{k!r}]", f)
+    fc = lambda c, w: P.num(f"p40m_fill_{c}_{w}", s, f"d['filler_counts'][{c!r}].get({w!r}, 0)", "{}")
+    B, C, R = "base", "steer_cal_last_alpha_0.12", "steer_rand_last_alpha_0.12"
+    ex = lambda k: P.num(f"p40m_exit_{k}", s, f"d['exits_from_base'][{C!r}][{k!r}]", "{}")
+    return f"""
+**What moves (exploratory, after the result; `p40_mediation.json`).** The extractor's flat-slop gate requires mean
+sentence length > 40, CV_L < 0.28, and abstract fillers or sluggish endings above a threshold. The filler condition
+holds in {sm(B, 'g_lex')}/36 base outputs, {sm(C, 'g_lex')}/36 calibrated α 0.12 and {sm(R, 'g_lex')}/36 random
+α 0.12 outputs, the filler rate falls from {sm(B, 'abstract_b_mean', '{:.3f}')} to {sm(C, 'abstract_b_mean', '{:.3f}')},
+while mean CV_L barely changes ({sm(B, 'len_cv_mean', '{:.3f}')} vs {sm(C, 'len_cv_mean', '{:.3f}')}). Of the
+{ex('n_exit')} base→calibrated pairs that leave the Deadzone, the gate turns off in {ex('gate_turned_off')}. Most of
+the change is a few words of the fixed filler list: 重要 occurs {fc(B, '重要')} times in base, {fc(C, '重要')} under
+the calibrated direction and {fc(R, '重要')} under the random one (all fillers: {fc(B, 'total')}, {fc(C, 'total')},
+{fc(R, 'total')}). The Deadzone reduction of §5.4 is therefore mainly lexical (fewer listed filler words), not a change
+of sentence rhythm, and it is partly by construction because the same list enters the steering target's features.
 """
 
 

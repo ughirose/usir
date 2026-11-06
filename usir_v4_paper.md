@@ -371,6 +371,17 @@ The random direction raises the Deadzone count above base at both α, so part of
 from the random direction rather than benefit from the calibrated one. The CV-based definition shows a much smaller
 effect, and the 12 prompts are expository rather than literary.
 
+**What moves (exploratory, after the result; `p40_mediation.json`).** The extractor's flat-slop gate requires mean
+sentence length > 40, CV_L < 0.28, and abstract fillers or sluggish endings above a threshold. The filler condition
+holds in 36/36 base outputs, 25/36 calibrated α 0.12 and 36/36 random
+α 0.12 outputs, the filler rate falls from 0.061 to 0.039,
+while mean CV_L barely changes (0.267 vs 0.273). Of the
+11 base→calibrated pairs that leave the Deadzone, the gate turns off in 8. Most of
+the change is a few words of the fixed filler list: 重要 occurs 51 times in base, 15 under
+the calibrated direction and 50 under the random one (all fillers: 145, 96,
+153). The Deadzone reduction of §5.4 is therefore mainly lexical (fewer listed filler words), not a change
+of sentence rhythm, and it is partly by construction because the same list enters the steering target's features.
+
 ### 5.5 Phase 39: literary scene prompts
 §5.4 was repeated with 12 literary scene prompts (e.g. waiting on a station platform on a rainy evening; no author,
 work or character names; plain-style narrative prose of about 800 characters) and otherwise identical settings. The

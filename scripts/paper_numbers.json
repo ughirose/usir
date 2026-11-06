@@ -3833,6 +3833,126 @@
    "fmt": "{:.4f}"
   },
   {
+   "id": "p40m_base_g_lex",
+   "file": "usir_v4_paper.md",
+   "text": "36",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['summary']['base']['g_lex']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_steer_cal_last_alpha_0.12_g_lex",
+   "file": "usir_v4_paper.md",
+   "text": "25",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['summary']['steer_cal_last_alpha_0.12']['g_lex']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_steer_rand_last_alpha_0.12_g_lex",
+   "file": "usir_v4_paper.md",
+   "text": "36",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['summary']['steer_rand_last_alpha_0.12']['g_lex']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_base_abstract_b_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.061",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['summary']['base']['abstract_b_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40m_steer_cal_last_alpha_0.12_abstract_b_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.039",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['summary']['steer_cal_last_alpha_0.12']['abstract_b_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40m_base_len_cv_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.267",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['summary']['base']['len_cv_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40m_steer_cal_last_alpha_0.12_len_cv_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.273",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['summary']['steer_cal_last_alpha_0.12']['len_cv_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40m_exit_n_exit",
+   "file": "usir_v4_paper.md",
+   "text": "11",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['exits_from_base']['steer_cal_last_alpha_0.12']['n_exit']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_exit_gate_turned_off",
+   "file": "usir_v4_paper.md",
+   "text": "8",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['exits_from_base']['steer_cal_last_alpha_0.12']['gate_turned_off']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_fill_base_重要",
+   "file": "usir_v4_paper.md",
+   "text": "51",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['filler_counts']['base'].get('重要', 0)",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_fill_steer_cal_last_alpha_0.12_重要",
+   "file": "usir_v4_paper.md",
+   "text": "15",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['filler_counts']['steer_cal_last_alpha_0.12'].get('重要', 0)",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_fill_steer_rand_last_alpha_0.12_重要",
+   "file": "usir_v4_paper.md",
+   "text": "50",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['filler_counts']['steer_rand_last_alpha_0.12'].get('重要', 0)",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_fill_base_total",
+   "file": "usir_v4_paper.md",
+   "text": "145",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['filler_counts']['base'].get('total', 0)",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_fill_steer_cal_last_alpha_0.12_total",
+   "file": "usir_v4_paper.md",
+   "text": "96",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['filler_counts']['steer_cal_last_alpha_0.12'].get('total', 0)",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40m_fill_steer_rand_last_alpha_0.12_total",
+   "file": "usir_v4_paper.md",
+   "text": "153",
+   "source": "docs/handoff/v10/p40_mediation.json",
+   "expr": "d['filler_counts']['steer_rand_last_alpha_0.12'].get('total', 0)",
+   "fmt": "{}"
+  },
+  {
    "id": "p39_base_deadzone_stripped",
    "file": "usir_v4_paper.md",
    "text": "0",
