@@ -96,6 +96,14 @@ and top-3 go the other way and both scorings total the same over the two sets, s
 adopted. The class-mean instrument scores lower on the second set than on the first; the pooled held-out value over
 both sets is the less biased estimate.
 
+**Phase 43: transcriber conventions.** Orthographic statistics could reflect how a volunteer transcribed a text
+rather than the author. Over the 60 held-out works, top-1 accuracy is
+24/31 = 0.774 when a training work of the same
+author has the same transcriber and 26/29 =
+0.897 otherwise; the pre-registered rule (a gap of at least 0.15 in favour of shared
+transcribers) is not triggered, and the proofreader split gives equal accuracy. This does not prove the absence of
+such an effect at this sample size.
+
 **Window-level separability on real text** (Akutagawa A vs Tanizaki B, Akutagawa A vs Dazai C): ROC-AUC of the
 instrument's score difference over 600-character windows of the two authors' works.
 

@@ -1,0 +1,119 @@
+{
+ "schema": "p43_transcriber_confound_v1",
+ "n_works": 60,
+ "missing_index": 0,
+ "by_column": {
+  "入力者": {
+   "shared": {
+    "n": 31,
+    "n_correct": 24,
+    "accuracy": 0.7741935483870968
+   },
+   "not_shared": {
+    "n": 29,
+    "n_correct": 26,
+    "accuracy": 0.896551724137931
+   },
+   "difference": -0.1223581757508343,
+   "verdict": "no_indication",
+   "per_author": {
+    "000035": {
+     "shared": "0/0",
+     "not_shared": "6/6"
+    },
+    "000050": {
+     "shared": "4/4",
+     "not_shared": "2/2"
+    },
+    "000074": {
+     "shared": "5/6",
+     "not_shared": "0/0"
+    },
+    "000081": {
+     "shared": "1/1",
+     "not_shared": "5/5"
+    },
+    "000119": {
+     "shared": "2/2",
+     "not_shared": "3/4"
+    },
+    "000129": {
+     "shared": "0/0",
+     "not_shared": "6/6"
+    },
+    "000148": {
+     "shared": "5/5",
+     "not_shared": "0/1"
+    },
+    "000879": {
+     "shared": "0/4",
+     "not_shared": "2/2"
+    },
+    "001095": {
+     "shared": "3/4",
+     "not_shared": "1/2"
+    },
+    "001383": {
+     "shared": "4/5",
+     "not_shared": "1/1"
+    }
+   }
+  },
+  "校正者": {
+   "shared": {
+    "n": 18,
+    "n_correct": 15,
+    "accuracy": 0.8333333333333334
+   },
+   "not_shared": {
+    "n": 42,
+    "n_correct": 35,
+    "accuracy": 0.8333333333333334
+   },
+   "difference": 0.0,
+   "verdict": "no_indication",
+   "per_author": {
+    "000035": {
+     "shared": "0/0",
+     "not_shared": "6/6"
+    },
+    "000050": {
+     "shared": "2/2",
+     "not_shared": "4/4"
+    },
+    "000074": {
+     "shared": "2/3",
+     "not_shared": "3/3"
+    },
+    "000081": {
+     "shared": "1/1",
+     "not_shared": "5/5"
+    },
+    "000119": {
+     "shared": "1/1",
+     "not_shared": "4/5"
+    },
+    "000129": {
+     "shared": "0/0",
+     "not_shared": "6/6"
+    },
+    "000148": {
+     "shared": "4/4",
+     "not_shared": "1/2"
+    },
+    "000879": {
+     "shared": "0/1",
+     "not_shared": "2/5"
+    },
+    "001095": {
+     "shared": "1/1",
+     "not_shared": "3/5"
+    },
+    "001383": {
+     "shared": "4/5",
+     "not_shared": "1/1"
+    }
+   }
+  }
+ }
+}

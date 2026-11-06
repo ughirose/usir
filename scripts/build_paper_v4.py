@@ -657,6 +657,23 @@ The pre-registered criteria (more hits than the class mean, top-1 ≥ 0.70) are 
 and top-3 go the other way and both scorings total the same over the two sets, so the nearest-work scoring is not
 adopted. The class-mean instrument scores lower on the second set than on the first; the pooled held-out value over
 both sets is the less biased estimate.
+""" + p43_transcriber(P)
+
+
+def p43_transcriber(P: Paper) -> str:
+    s = f"{V10}/p43_transcriber_confound.json"
+    if not P.has(s):
+        return ""
+    g = lambda c, k, f: P.num(f"p43_{c}_{k}_{f}", s, f"d['by_column'][{c!r}][{k!r}][{f!r}]", "{}" if f != "accuracy" else "{:.3f}")
+    c = "入力者"
+    return f"""
+**Phase 43: transcriber conventions.** Orthographic statistics could reflect how a volunteer transcribed a text
+rather than the author. Over the {P.num('p43_n', s, "d['n_works']", '{}')} held-out works, top-1 accuracy is
+{g(c, 'shared', 'n_correct')}/{g(c, 'shared', 'n')} = {g(c, 'shared', 'accuracy')} when a training work of the same
+author has the same transcriber and {g(c, 'not_shared', 'n_correct')}/{g(c, 'not_shared', 'n')} =
+{g(c, 'not_shared', 'accuracy')} otherwise; the pre-registered rule (a gap of at least 0.15 in favour of shared
+transcribers) is not triggered, and the proofreader split gives equal accuracy. This does not prove the absence of
+such an effect at this sample size.
 """
 
 

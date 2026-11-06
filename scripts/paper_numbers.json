@@ -713,6 +713,62 @@
    "fmt": "{}"
   },
   {
+   "id": "p43_n",
+   "file": "usir_v4_paper.md",
+   "text": "60",
+   "source": "docs/handoff/v10/p43_transcriber_confound.json",
+   "expr": "d['n_works']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p43_入力者_shared_n_correct",
+   "file": "usir_v4_paper.md",
+   "text": "24",
+   "source": "docs/handoff/v10/p43_transcriber_confound.json",
+   "expr": "d['by_column']['入力者']['shared']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p43_入力者_shared_n",
+   "file": "usir_v4_paper.md",
+   "text": "31",
+   "source": "docs/handoff/v10/p43_transcriber_confound.json",
+   "expr": "d['by_column']['入力者']['shared']['n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p43_入力者_shared_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.774",
+   "source": "docs/handoff/v10/p43_transcriber_confound.json",
+   "expr": "d['by_column']['入力者']['shared']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p43_入力者_not_shared_n_correct",
+   "file": "usir_v4_paper.md",
+   "text": "26",
+   "source": "docs/handoff/v10/p43_transcriber_confound.json",
+   "expr": "d['by_column']['入力者']['not_shared']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p43_入力者_not_shared_n",
+   "file": "usir_v4_paper.md",
+   "text": "29",
+   "source": "docs/handoff/v10/p43_transcriber_confound.json",
+   "expr": "d['by_column']['入力者']['not_shared']['n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p43_入力者_not_shared_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.897",
+   "source": "docs/handoff/v10/p43_transcriber_confound.json",
+   "expr": "d['by_column']['入力者']['not_shared']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
    "id": "delta_ll_real_text_000879_vs_001383_window_auc_A_over_B",
    "file": "usir_v4_paper.md",
    "text": "0.686",
