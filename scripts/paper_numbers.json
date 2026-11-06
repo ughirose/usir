@@ -3735,6 +3735,214 @@
    "source": "docs/handoff/v10/p38_steer_eval.json",
    "expr": "d['mcnemar']['cal012_vs_base']['p_one_sided']",
    "fmt": "{:.4f}"
+  },
+  {
+   "id": "p39_base_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['base']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_base_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "4",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['base']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_base_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['base']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_base_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "1.927",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['base']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p39_base_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['base']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.08_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.08']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.08_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "3",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.08']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.08_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.08']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.08_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "1.995",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.08']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.08_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.08']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.08_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.08']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.08_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.08']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.08_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.08']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.08_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "1.976",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.08']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.08_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.08']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.12_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.12_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "4",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.12_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.12_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "2.016",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p39_steer_cal_last_alpha_0.12_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "1",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.12_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.12_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.12_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.12_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "2.009",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p39_steer_rand_last_alpha_0.12_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p39_c4_limit",
+   "file": "usir_v4_paper.md",
+   "text": "2.427",
+   "source": "docs/handoff/v10/p39_steer_eval.json",
+   "expr": "d['criteria']['c4_limit']",
+   "fmt": "{:.3f}"
   }
  ]
 }

@@ -394,7 +394,7 @@ def section_phase_c(P: Paper) -> str:
 Qwen3-8B (bf16, A100). With raw literary continuation prompts the base model was in the Deadzone in {dz} of {n}
 outputs, so the former claim of "Deadzone escape" could not be tested on that set; steering at larger α increased
 the Deadzone count, and the calibrated direction did not differ from a norm-matched random direction.
-""" + phase_c_p33(P) + phase_c_p36(P) + phase_c_p38(P)
+""" + phase_c_p33(P) + phase_c_p36(P) + phase_c_p38(P) + phase_c_p39(P)
 
 
 def phase_c_p33(P: Paper) -> str:
@@ -678,6 +678,37 @@ effect, and the 12 prompts are expository rather than literary.
 """
 
 
+def phase_c_p39(P: Paper) -> str:
+    s = f"{V10}/p39_steer_eval.json"
+    if not P.has(s):
+        return ""
+    pl = lambda c, k, f="{}": P.num(f"p39_{c}_{k}", s, f"d['pooled'][{c!r}][{k!r}]", f)
+    rows = []
+    for c, label in (("base", "base"), ("steer_cal_last_alpha_0.08", "calibrated α 0.08"),
+                     ("steer_rand_last_alpha_0.08", "random α 0.08"), ("steer_cal_last_alpha_0.12", "calibrated α 0.12"),
+                     ("steer_rand_last_alpha_0.12", "random α 0.12")):
+        rows.append(f"| {label} | {pl(c, 'deadzone_stripped')}/36 | {pl(c, 'cv_lt_028_stripped')}/36 | {pl(c, 'degenerate')} | "
+                    f"{pl(c, 'ref_ppl_mean', '{:.3f}')} | {pl(c, 'truncated')} |")
+    lim = P.num("p39_c4_limit", s, "d['criteria']['c4_limit']", "{:.3f}")
+    return f"""
+### 5.5 Phase 39: literary scene prompts
+§5.4 was repeated with 12 literary scene prompts (e.g. waiting on a station platform on a rainy evening; no author,
+work or character names; plain-style narrative prose of about 800 characters) and otherwise identical settings. The
+criteria of §5.4 were kept, with one rule added before the runs: if base is in the Deadzone in at most 5 of 36
+outputs, the comparison with base cannot be decided.
+
+| Set | Deadzone (pooled) | CV < 0.28 | degenerate | ref PPL | ended inside a sentence |
+|---|---|---|---|---|---|
+""" + "\n".join(rows) + f"""
+
+No output of any condition was classified as Deadzone; all were in the critical phase. By the pre-registered rule the
+comparison with base cannot be decided, and the calibrated–random comparison is 0 against 0, so criteria (1) and (2)
+are not met; (3) and (4) are met (PPL limit {lim}). On these prompts Qwen3-8B does not produce the flat prose the
+Deadzone classifier detects, so the steering effect of §5.4 is specific to expository prompts and was not observable
+on literary ones with this metric.
+"""
+
+
 def section_cleanroom(P: Paper) -> str:
     return """## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
@@ -697,7 +728,7 @@ def section_limitations(P: Paper) -> str:
   new authors, and the held-out value is not directly comparable with LOWO.
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
-- Phase C §5.2 and §5.3 use 12 prompts and one seed series (§5.4: three series, same 12 expository prompts); the degeneracy threshold was set after inspection;
+- Phase C §5.2 and §5.3 use 12 prompts and one seed series (§5.4: three series, same 12 expository prompts; §5.5: literary prompts, where no condition entered the Deadzone); the degeneracy threshold was set after inspection;
   neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
 - Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",
   which the Qwen3 tokenizer splits into byte-level tokens.

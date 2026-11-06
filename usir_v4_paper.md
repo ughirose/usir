@@ -355,6 +355,26 @@ The random direction raises the Deadzone count above base at both α, so part of
 from the random direction rather than benefit from the calibrated one. The CV-based definition shows a much smaller
 effect, and the 12 prompts are expository rather than literary.
 
+### 5.5 Phase 39: literary scene prompts
+§5.4 was repeated with 12 literary scene prompts (e.g. waiting on a station platform on a rainy evening; no author,
+work or character names; plain-style narrative prose of about 800 characters) and otherwise identical settings. The
+criteria of §5.4 were kept, with one rule added before the runs: if base is in the Deadzone in at most 5 of 36
+outputs, the comparison with base cannot be decided.
+
+| Set | Deadzone (pooled) | CV < 0.28 | degenerate | ref PPL | ended inside a sentence |
+|---|---|---|---|---|---|
+| base | 0/36 | 4/36 | 0 | 1.927 | 0 |
+| calibrated α 0.08 | 0/36 | 3/36 | 0 | 1.995 | 0 |
+| random α 0.08 | 0/36 | 6/36 | 0 | 1.976 | 0 |
+| calibrated α 0.12 | 0/36 | 4/36 | 0 | 2.016 | 1 |
+| random α 0.12 | 0/36 | 6/36 | 0 | 2.009 | 0 |
+
+No output of any condition was classified as Deadzone; all were in the critical phase. By the pre-registered rule the
+comparison with base cannot be decided, and the calibrated–random comparison is 0 against 0, so criteria (1) and (2)
+are not met; (3) and (4) are met (PPL limit 2.427). On these prompts Qwen3-8B does not produce the flat prose the
+Deadzone classifier detects, so the steering effect of §5.4 is specific to expository prompts and was not observable
+on literary ones with this metric.
+
 ## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
 contiguous ≥ 7-character overlap with the source. These are fixture tests in the TypeScript suite and a repository
@@ -370,7 +390,7 @@ generalisation rate on held-out data.
   new authors, and the held-out value is not directly comparable with LOWO.
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
-- Phase C §5.2 and §5.3 use 12 prompts and one seed series (§5.4: three series, same 12 expository prompts); the degeneracy threshold was set after inspection;
+- Phase C §5.2 and §5.3 use 12 prompts and one seed series (§5.4: three series, same 12 expository prompts; §5.5: literary prompts, where no condition entered the Deadzone); the degeneracy threshold was set after inspection;
   neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
 - Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",
   which the Qwen3 tokenizer splits into byte-level tokens.
