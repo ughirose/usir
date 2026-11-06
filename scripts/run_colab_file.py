@@ -59,6 +59,11 @@ def list_endpoints(token: str):
 def release(token: str, endpoint: str) -> None:
     """Unassign with retries, then confirm the endpoint is gone from the assignment list."""
     for i in range(5):
+        # the access token from the start of a long job expires (~1 h): unassign then fails with 401
+        try:
+            token = get_credentials().token
+        except Exception as exc:  # noqa: BLE001
+            print(f"[run_colab_file] could not refresh credentials: {exc}", file=sys.stderr)
         if unassign_runtime(token, endpoint):
             now = list_endpoints(token)
             if now is not None and endpoint not in now:
