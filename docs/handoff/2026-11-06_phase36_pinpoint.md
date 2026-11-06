@@ -146,3 +146,11 @@
   - original 56.36 ms/token、merged 56.42、unmerged 69.48。
   - ステア（α 0.12）は 55.62 で、base 55.93 との対比較では −0.31 ms/token。
 - フックの確認: 適用中の logit 変化の最大は 2.875。取り外し後の差は 0.0。
+
+## 6. 引き継ぎ（Gemini 相談、commit 4458e41 時点）
+- 相談パック: `F:\マイドライブ\USIR_Gemini_Consult_20261106_Phase36\`（README、Phase 36 の文書、論文、JSON 6 点、コード 7 点）。
+- 未解決と、着手する場合の入口:
+  - (A) gB の文長不足。`realtime_decoder.py` の `_rhythm_params` と `max_clause_tokens`。最初に段落別・well 別の文長内訳を測る。
+  - (B) 「〇」の年号漏れ。`_forbidden_tables` と `ForbiddenWordsLogits`。バイトトークン 1277 / 229 に対応する。修正したら `p36_swallow_8b` を再実行する。
+  - (C) GRPO の報酬が上がらない。`lora_grpo_forge.py` と `make_shaped_reward`。
+- Colab: 1 回目の ReadTimeout で割り当てたランタイムが残ったかは未確認。
