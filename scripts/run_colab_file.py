@@ -65,6 +65,19 @@ def release(token: str, endpoint: str) -> None:
     print(f"[run_colab_file] WARNING: runtime {endpoint} may still be assigned; release it manually", file=sys.stderr)
 
 
+def _long_assign_timeout(fn):
+    """The library uses a 30 s read timeout for /tun/m/assign; A100 assignment often answers later (ReadTimeout).
+    Allow 120 s for the assign endpoint only."""
+    def wrapped(url, *a, **k):
+        if "/tun/m/assign" in str(url):
+            k["timeout"] = max(float(k.get("timeout") or 0), 120.0)
+        return fn(url, *a, **k)
+    return wrapped
+
+
+requests.get = _long_assign_timeout(requests.get)
+requests.post = _long_assign_timeout(requests.post)
+
 t0 = time.time()
 creds = get_credentials()
 before = list_endpoints(creds.token)
