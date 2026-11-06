@@ -1025,6 +1025,86 @@
    "fmt": "{:.0f}"
   },
   {
+   "id": "p31b_gA_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "11.69",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31b_gA_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6.21",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31b_gA_msl",
+   "file": "usir_v4_paper.md",
+   "text": "32.5",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31b_gA_c100",
+   "file": "usir_v4_paper.md",
+   "text": "5.76",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31b_gB_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "3.21",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31b_gB_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "-0.12",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31b_gB_msl",
+   "file": "usir_v4_paper.md",
+   "text": "33.1",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31b_gB_c100",
+   "file": "usir_v4_paper.md",
+   "text": "4.19",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31b_merged_tokens",
+   "file": "usir_v4_paper.md",
+   "text": "40",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "d['runs']['watch_gB_s3']['decoder_stats']['merged_period_tokens']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31b_len_AB",
+   "file": "usir_v4_paper.md",
+   "text": "3",
+   "source": "docs/handoff/v10/p31b_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='gA' and math.exp(v['ortho'][0]) > math.exp(d['runs'][k.replace('gA','gB')]['ortho'][0]))",
+   "fmt": "{}"
+  },
+  {
    "id": "p28j_posbias_qwen3_8b",
    "file": "usir_v4_paper.md",
    "text": "0.78",

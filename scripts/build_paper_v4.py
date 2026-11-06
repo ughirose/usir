@@ -218,6 +218,28 @@ Forbidden-word and calendar-year bans were added (soft logit penalty −15).
     for f, name in (("p31_q3_8b", "Qwen3-8B"), ("p31_swallow_8b", "Qwen3-Swallow-8B")):
         if P.has(f"{V10}/{f}.json"):
             out.append(p31_table(P, f, name))
+    sb = f"{V10}/p31b_q3_8b.json"
+    if P.has(sb):
+        rows = []
+        for cond, label in (("gA", "A (Akutagawa)"), ("gB", "B (Tanizaki)")):
+            rows.append(f"| {label} | {P.num(f'p31b_{cond}_dF_AB', sb, runs_mean(cond, 'delta_f_AB'))} | "
+                        f"{P.num(f'p31b_{cond}_dLL_AB', sb, runs_mean(cond, 'delta_ll_AB'))} | "
+                        f"{P.num(f'p31b_{cond}_msl', sb, runs_ortho_mean(cond, 0, exp=True), '{:.1f}')} | "
+                        f"{P.num(f'p31b_{cond}_c100', sb, runs_ortho_mean(cond, 2))} |")
+        nm = P.num("p31b_merged_tokens", sb, "d['runs']['watch_gB_s3']['decoder_stats']['merged_period_tokens']", "{}")
+        ab_len = P.num("p31b_len_AB", sb, "sum(1 for k, v in d['runs'].items() if v['condition']=='gA' and "
+                                          "math.exp(v['ortho'][0]) > math.exp(d['runs'][k.replace('gA','gB')]['ortho'][0]))", "{}")
+        out.append(f"""**Phase 31b (Qwen3-8B, A/B re-run).** The steady band held only the single-token "。"; the vocabulary has
+{nm} further tokens containing a sentence end (e.g. merged "た。"), which bypassed the hold. Extending the hold to
+them (steered conditions only; new_ctrl is unaffected):
+
+| Condition | ΔF_AB | ΔLL_AB | mean sentence length | commas / 100 chars |
+|---|---|---|---|---|
+""" + "\n".join(rows) + f"""
+
+Sentences of both steered conditions became longer than in 3.2 (compare the Qwen3-8B table), but A and B did not
+separate in length (A longer than B in {ab_len} of 6 groups).
+""")
     out.append("""Result. On the primary instrument ΔF_AB the intended order A > new_ctrl > B holds in every group for both
 models, and the Dazai-steered condition lowers ΔF_AC. The comma rate moves in the Tanizaki direction in every
 group but only partly in the Akutagawa direction (the control is already close to Akutagawa's measured rate).

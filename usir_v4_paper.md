@@ -112,6 +112,18 @@ Paired comparisons (number of the 6 groups in which the inequality holds):
 | commas / 100 chars | 6 | 5 | 6 |
 | mean sentence length | 3 | 1 | 5 |
 
+**Phase 31b (Qwen3-8B, A/B re-run).** The steady band held only the single-token "。"; the vocabulary has
+40 further tokens containing a sentence end (e.g. merged "た。"), which bypassed the hold. Extending the hold to
+them (steered conditions only; new_ctrl is unaffected):
+
+| Condition | ΔF_AB | ΔLL_AB | mean sentence length | commas / 100 chars |
+|---|---|---|---|---|
+| A (Akutagawa) | 11.69 | 6.21 | 32.5 | 5.76 |
+| B (Tanizaki) | 3.21 | -0.12 | 33.1 | 4.19 |
+
+Sentences of both steered conditions became longer than in 3.2 (compare the Qwen3-8B table), but A and B did not
+separate in length (A longer than B in 3 of 6 groups).
+
 Result. On the primary instrument ΔF_AB the intended order A > new_ctrl > B holds in every group for both
 models, and the Dazai-steered condition lowers ΔF_AC. The comma rate moves in the Tanizaki direction in every
 group but only partly in the Akutagawa direction (the control is already close to Akutagawa's measured rate).
