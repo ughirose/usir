@@ -124,6 +124,29 @@ Cross-judging (Swallow judges Qwen3 outputs and vice versa), 5 axes, both presen
 axis decisions that chose the first-presented story was 0.78 (Swallow as judge) and 0.78
 (Qwen3 as judge); the generative judge is therefore not usable as a measurement of condition differences.
 
+### 4.2 Phase 32: logit-debiased pairwise judge
+One forward pass per order; the prompt ends with the answer stem and the judge's next-token log-probabilities of
+"1" and "2" are read: s(A,B) = ln P(1) − ln P(2), preference = (s(A,B) − s(B,A))/2, position bias =
+(s(A,B) + s(B,A))/2 (nats). A constant position bias cancels exactly; a content × position interaction does not.
+
+| Setting | Pair (a vs b) | mean preference (whole text) | mean position bias |
+|---|---|---|---|
+| Qwen3 outputs, Swallow judge | new_ctrl vs min | +0.188 | 2.00 |
+| Qwen3 outputs, Swallow judge | gA vs new_ctrl | +0.068 | 2.05 |
+| Qwen3 outputs, Swallow judge | gB vs new_ctrl | -0.005 | 2.02 |
+| Qwen3 outputs, Swallow judge | gC vs new_ctrl | -0.104 | 2.25 |
+| Qwen3 outputs, Swallow judge | gA vs gB | +0.115 | 2.24 |
+| Swallow outputs, Qwen3 judge | new_ctrl vs min | -0.437 | 6.38 |
+| Swallow outputs, Qwen3 judge | gA vs new_ctrl | -0.115 | 6.49 |
+| Swallow outputs, Qwen3 judge | gB vs new_ctrl | -0.177 | 6.70 |
+| Swallow outputs, Qwen3 judge | gC vs new_ctrl | -0.328 | 6.49 |
+| Swallow outputs, Qwen3 judge | gA vs gB | +0.224 | 6.47 |
+
+Probability mass on the two answer tokens: 0.621 (Swallow judge) and 0.017 (Qwen3 judge); the Qwen3 judge mostly
+predicts other tokens at the answer position, so its values are unreliable. The position bias exceeds the
+debiased preferences by roughly an order of magnitude, and the signs disagree between judges and between the
+whole-text and paragraph-aligned modes. No quality difference between steered and unsteered stories is claimed.
+
 ## 5. Mid-layer steering and GRPO-LoRA (Phase C)
 ### 5.1 Phase 28: raw continuation prompts
 Qwen3-8B (bf16, A100). With raw literary continuation prompts the base model was in the Deadzone in 0 of 12

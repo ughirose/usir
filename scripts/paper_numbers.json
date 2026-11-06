@@ -1041,6 +1041,182 @@
    "fmt": "{:.2f}"
   },
   {
+   "id": "p32_qwen3_8b_new_ctrl_min_pref",
+   "file": "usir_v4_paper.md",
+   "text": "+0.188",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='new_ctrl' and m['b']=='min'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_qwen3_8b_new_ctrl_min_pb",
+   "file": "usir_v4_paper.md",
+   "text": "2.00",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='new_ctrl' and m['b']=='min'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_qwen3_8b_gA_new_ctrl_pref",
+   "file": "usir_v4_paper.md",
+   "text": "+0.068",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='gA' and m['b']=='new_ctrl'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_qwen3_8b_gA_new_ctrl_pb",
+   "file": "usir_v4_paper.md",
+   "text": "2.05",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='gA' and m['b']=='new_ctrl'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_qwen3_8b_gB_new_ctrl_pref",
+   "file": "usir_v4_paper.md",
+   "text": "-0.005",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='gB' and m['b']=='new_ctrl'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_qwen3_8b_gB_new_ctrl_pb",
+   "file": "usir_v4_paper.md",
+   "text": "2.02",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='gB' and m['b']=='new_ctrl'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_qwen3_8b_gC_new_ctrl_pref",
+   "file": "usir_v4_paper.md",
+   "text": "-0.104",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='gC' and m['b']=='new_ctrl'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_qwen3_8b_gC_new_ctrl_pb",
+   "file": "usir_v4_paper.md",
+   "text": "2.25",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='gC' and m['b']=='new_ctrl'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_qwen3_8b_gA_gB_pref",
+   "file": "usir_v4_paper.md",
+   "text": "+0.115",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='gA' and m['b']=='gB'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_qwen3_8b_gA_gB_pb",
+   "file": "usir_v4_paper.md",
+   "text": "2.24",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] if m['a']=='gA' and m['b']=='gB'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_swallow_8b_new_ctrl_min_pref",
+   "file": "usir_v4_paper.md",
+   "text": "-0.437",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='new_ctrl' and m['b']=='min'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_swallow_8b_new_ctrl_min_pb",
+   "file": "usir_v4_paper.md",
+   "text": "6.38",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='new_ctrl' and m['b']=='min'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_swallow_8b_gA_new_ctrl_pref",
+   "file": "usir_v4_paper.md",
+   "text": "-0.115",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='gA' and m['b']=='new_ctrl'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_swallow_8b_gA_new_ctrl_pb",
+   "file": "usir_v4_paper.md",
+   "text": "6.49",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='gA' and m['b']=='new_ctrl'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_swallow_8b_gB_new_ctrl_pref",
+   "file": "usir_v4_paper.md",
+   "text": "-0.177",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='gB' and m['b']=='new_ctrl'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_swallow_8b_gB_new_ctrl_pb",
+   "file": "usir_v4_paper.md",
+   "text": "6.70",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='gB' and m['b']=='new_ctrl'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_swallow_8b_gC_new_ctrl_pref",
+   "file": "usir_v4_paper.md",
+   "text": "-0.328",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='gC' and m['b']=='new_ctrl'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_swallow_8b_gC_new_ctrl_pb",
+   "file": "usir_v4_paper.md",
+   "text": "6.49",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='gC' and m['b']=='new_ctrl'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_swallow_8b_gA_gB_pref",
+   "file": "usir_v4_paper.md",
+   "text": "+0.224",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['preference'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='gA' and m['b']=='gB'])",
+   "fmt": "{:+.3f}"
+  },
+  {
+   "id": "p32_swallow_8b_gA_gB_pb",
+   "file": "usir_v4_paper.md",
+   "text": "6.47",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "statistics.mean([m['full']['position_bias'] for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] if m['a']=='gA' and m['b']=='gB'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p32_mass_swallow_judge",
+   "file": "usir_v4_paper.md",
+   "text": "0.621",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "d['results']['qwen3_8b']['answer_mass_12']['mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p32_mass_qwen3_judge",
+   "file": "usir_v4_paper.md",
+   "text": "0.017",
+   "source": "docs/handoff/v10/p32j_cross.json",
+   "expr": "d['results']['swallow_8b']['answer_mass_12']['mean']",
+   "fmt": "{:.3f}"
+  },
+  {
    "id": "p28c_base_dz",
    "file": "usir_v4_paper.md",
    "text": "0",

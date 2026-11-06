@@ -240,6 +240,37 @@ def section_judge(P: Paper) -> str:
 Cross-judging (Swallow judges Qwen3 outputs and vice versa), 5 axes, both presentation orders. The fraction of
 axis decisions that chose the first-presented story was {pos('qwen3_8b')} (Swallow as judge) and {pos('swallow_8b')}
 (Qwen3 as judge); the generative judge is therefore not usable as a measurement of condition differences.
+""" + judge_p32(P)
+
+
+def judge_p32(P: Paper) -> str:
+    s = f"{V10}/p32j_cross.json"
+    if not P.has(s):
+        return ""
+    def ms(j: str, a: str, b: str, fld: str) -> str:
+        return (f"statistics.mean([m['full'][{fld!r}] for g in d['results'][{j!r}]['groups'].values() "
+                f"for m in g['matches'] if m['a']=={a!r} and m['b']=={b!r}])")
+    rows = []
+    for j, name in (("qwen3_8b", "Qwen3 outputs, Swallow judge"), ("swallow_8b", "Swallow outputs, Qwen3 judge")):
+        for a, b in (("new_ctrl", "min"), ("gA", "new_ctrl"), ("gB", "new_ctrl"), ("gC", "new_ctrl"), ("gA", "gB")):
+            rows.append(f"| {name} | {a} vs {b} | {P.num(f'p32_{j}_{a}_{b}_pref', s, ms(j, a, b, 'preference'), '{:+.3f}')} | "
+                        f"{P.num(f'p32_{j}_{a}_{b}_pb', s, ms(j, a, b, 'position_bias'), '{:.2f}')} |")
+    mq = P.num("p32_mass_swallow_judge", s, "d['results']['qwen3_8b']['answer_mass_12']['mean']", "{:.3f}")
+    mw = P.num("p32_mass_qwen3_judge", s, "d['results']['swallow_8b']['answer_mass_12']['mean']", "{:.3f}")
+    return f"""
+### 4.2 Phase 32: logit-debiased pairwise judge
+One forward pass per order; the prompt ends with the answer stem and the judge's next-token log-probabilities of
+"1" and "2" are read: s(A,B) = ln P(1) − ln P(2), preference = (s(A,B) − s(B,A))/2, position bias =
+(s(A,B) + s(B,A))/2 (nats). A constant position bias cancels exactly; a content × position interaction does not.
+
+| Setting | Pair (a vs b) | mean preference (whole text) | mean position bias |
+|---|---|---|---|
+""" + "\n".join(rows) + f"""
+
+Probability mass on the two answer tokens: {mq} (Swallow judge) and {mw} (Qwen3 judge); the Qwen3 judge mostly
+predicts other tokens at the answer position, so its values are unreliable. The position bias exceeds the
+debiased preferences by roughly an order of magnitude, and the signs disagree between judges and between the
+whole-text and paragraph-aligned modes. No quality difference between steered and unsteered stories is claimed.
 """
 
 
