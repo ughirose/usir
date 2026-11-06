@@ -631,6 +631,32 @@ The pre-registered criterion (top-1 ≥ 0.70) is met. Because training uses all 
 held-out works range from {wmin} to {wmax} windows, these values are not directly comparable with the LOWO values
 above. Akutagawa is identified in {aku} works; all {nwrong_nak} errors are assigned to Nakajima. The narrative
 statistics add one correct work over the baseline on this set.
+""" + p41_heldout2(P)
+
+
+def p41_heldout2(P: Paper) -> str:
+    s = f"{V10}/p41_heldout2_nearest_work.json"
+    if not P.has(s):
+        return ""
+    r = lambda st, m, k, f="{}": P.num(f"p41_{st}_{m}_{k}", s, f"d['results'][{st!r}][{m!r}][{k!r}]", f)
+    rows = chr(10).join(f"| {label} | {r('set2', m, 'n_correct')}/{r('set2', m, 'n')} = {r('set2', m, 'accuracy', '{:.3f}')} | "
+                     f"{r('set2', m, 'top3_accuracy', '{:.3f}')} | {r('set1', m, 'n_correct')}/{r('set1', m, 'n')} |"
+                     for label, m in (("class mean (as above)", "A_class_mean"), ("nearest training work", "B_nearest_work")))
+    return f"""
+**Phase 41: a second held-out set.** An exact per-feature decomposition of the score gap
+(`p40_heldout_error_diagnosis.json`, post hoc) shows that the two Akutagawa errors above are late works with far
+fewer commas than his training works, which a single class mean per author cannot represent. Scoring
+against the nearest training work of each author was pre-registered against the class mean on a second set of
+held-out works selected by the same rule (next works in id order; `data/aozora_heldout2_manifest.json`):
+
+| Scoring | second set top-1 | second set top-3 | first set top-1 |
+|---|---|---|---|
+""" + rows + """
+
+The pre-registered criteria (more hits than the class mean, top-1 ≥ 0.70) are met by one work, but the first set
+and top-3 go the other way and both scorings total the same over the two sets, so the nearest-work scoring is not
+adopted. The class-mean instrument scores lower on the second set than on the first; the pooled held-out value over
+both sets is the less biased estimate.
 """
 
 
