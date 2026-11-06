@@ -1408,6 +1408,8 @@ def run_longform_director(
     proposal_kappa: Optional[float] = None,
     forbidden_words: Optional[List[str]] = None,
     forbid_years: bool = False,
+    proposal_overrides: Optional[Dict[str, Any]] = None,
+    year_penalty: Optional[float] = None,
 ) -> Dict[str, Any]:
     """Runs a longform generation through HSMMLongformDirector (3-mode HSMM + WorldCraft null-space
     arbitration + Momentum Banking).
@@ -1512,7 +1514,8 @@ def run_longform_director(
             _fisher_metric = load_fisher_artifact(fisher_artifact)
         if proposal_kappa is not None:
             _ob = fisher_artifact["ortho_by_author"]
-            _genome_proposal = proposal_from_prior(_ob[fisher_author], list(_ob.values()), kappa=float(proposal_kappa))
+            _genome_proposal = proposal_from_prior(_ob[fisher_author], list(_ob.values()), kappa=float(proposal_kappa),
+                                                  **(proposal_overrides or {}))
 
     if model is not None and tokenizer is not None:
         integ = AdaptiveBAOABIntegrator(dim=12, mu_star=mu, seed=seed)
@@ -1558,7 +1561,7 @@ def run_longform_director(
             genome_proposal=_genome_proposal,
             fisher_metric=_fisher_metric, fisher_author=fisher_author if _fisher_metric is not None else None,
             fisher_gamma=float(fisher_gamma),
-            forbidden_words=list(forbidden_words or []), forbid_years=bool(forbid_years),
+            forbidden_words=list(forbidden_words or []), forbid_years=bool(forbid_years), year_penalty=year_penalty,
         )
         decoder.repeat_use_context = bool(carry_context)
         generator = "llm_clause_smc"

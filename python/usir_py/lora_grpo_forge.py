@@ -377,6 +377,7 @@ def run_authentic_grpo_lora_forge(
     prompts_per_step: Optional[int] = None,
     progress_fn: Optional[Callable[[Dict[str, Any]], None]] = None,
     ppl_completion_only: bool = False,
+    reward_fn: Optional[Callable[[str, float], float]] = None,
 ) -> Dict[str, Any]:
     r"""Executes authentic USIR-GRPO fine-tuning loop for AttachedLoRALinear weights.
 
@@ -398,6 +399,9 @@ def run_authentic_grpo_lora_forge(
     Phase 33 addition:
         ppl_completion_only: compute the reference perplexity (LoRA disabled) used by the M_semantic barrier over the
             completion tokens only, instead of prompt + completion. Matters for long chat-template prompts.
+    Phase 36 addition:
+        reward_fn: if given, reward = reward_fn(completion_text, ppl_ref) replaces compute_multiplicative_grpo_reward
+            in the authentic PyTorch path (e.g. a continuous shaping reward without the steep exp(-0.5 d_3phase)).
     Caller responsibility: the authentic path optimises every parameter with requires_grad=True. Freeze the base
     model (p.requires_grad_(False) for all parameters) BEFORE attach_lora_to_model, otherwise the optimizer is
     built over the entire model.
@@ -428,6 +432,7 @@ def run_authentic_grpo_lora_forge(
             t_step = time.perf_counter()
             optimizer.zero_grad()
             step_rewards: List[float] = []
+            group_stds: List[float] = []   # Phase 36: within-group reward std (before the +1e-6) per prompt
             step_losses: List[torch.Tensor] = []
             step_kls: List[float] = []
             step_loss_sum = 0.0
@@ -500,6 +505,9 @@ def run_authentic_grpo_lora_forge(
                         )
                         ppl_ref = float(torch.exp(ce_loss).item())
 
+                    if reward_fn is not None:
+                        rewards.append(float(reward_fn(c_text, ppl_ref)))
+                        continue
                     r_dict = compute_multiplicative_grpo_reward(
                         c_text,
                         x_0=x0,
@@ -516,6 +524,7 @@ def run_authentic_grpo_lora_forge(
                 # 3. Advantage calculation
                 r_arr = np.array(rewards, dtype=np.float32)
                 r_mean = float(np.mean(r_arr))
+                group_stds.append(float(np.std(r_arr)))
                 r_std = float(np.std(r_arr)) + 1e-6
                 advantages = (r_arr - r_mean) / r_std
 
@@ -597,6 +606,7 @@ def run_authentic_grpo_lora_forge(
                 "std_reward": round(s_rew, 4),
                 "mean_kl": round(m_kl, 6),
                 "sec": round(time.perf_counter() - t_step, 3),
+                "group_reward_std": [float(f"{x:.3g}") for x in group_stds],
             }
             step_logs.append(step_entry)
             if progress_fn is not None:

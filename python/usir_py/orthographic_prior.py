@@ -135,7 +135,8 @@ def ortho_summary(windows: Sequence[str]) -> Dict[str, float]:
 
 
 def proposal_from_prior(author: Dict[str, float], reference: Sequence[Dict[str, float]], kappa: float = 2.0,
-                        ) -> Dict[str, float]:
+                        band: Sequence[float] = (0.55, 1.6), comma_slack: float = 1.0, hold_bias: float = -12.0,
+                        push_bias: float = 3.0) -> Dict[str, float]:
     """Phase 31: decoder proposal parameters from an author's measured orthographic prior.
 
     The author's deviation from the atlas mean (unweighted over authors) is amplified by kappa:
@@ -144,6 +145,8 @@ def proposal_from_prior(author: Dict[str, float], reference: Sequence[Dict[str, 
       kanji_bias = clip(10 kappa (k_a - r_k), -0.5, 0.5)
     and mapped to the steady band: min = round(0.55 mu*), max = round(1.6 mu*), max_commas = max(1, round(c* + 1)).
     Deterministic; documented in docs/handoff/2026-11-06_phase31_genome_proposal.md.
+    Phase 36 (docs/handoff/2026-11-06_phase36_pinpoint.md) exposes the band factors, the comma slack
+    (max_commas = max(1, round(c* + comma_slack))) and the steady period hold / push biases; defaults reproduce Phase 31.
     """
     r_logL = float(np.mean([r["log_mean_sent_len"] for r in reference]))
     r_c = float(np.mean([r["commas_per_sent"] for r in reference]))
@@ -153,6 +156,7 @@ def proposal_from_prior(author: Dict[str, float], reference: Sequence[Dict[str, 
     kb = float(np.clip(10.0 * kappa * (author["kanji_ratio"] - r_k), -0.5, 0.5))
     return {
         "target_sent_len": mu, "comma_target": c, "kanji_bias": kb, "comma_push": 1.5,
-        "steady_min_chars": int(round(0.55 * mu)), "steady_max_chars": int(round(1.6 * mu)),
-        "steady_max_commas": int(max(1, round(c + 1.0))), "kappa": float(kappa),
+        "steady_min_chars": int(round(float(band[0]) * mu)), "steady_max_chars": int(round(float(band[1]) * mu)),
+        "steady_max_commas": int(max(1, round(c + float(comma_slack)))), "kappa": float(kappa),
+        "hold_bias": float(hold_bias), "push_bias": float(push_bias),
     }

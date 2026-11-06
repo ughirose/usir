@@ -47,7 +47,11 @@ class SymplecticActivationSteerer:
         layer_ratio: float = 0.65,
         v_steer: Optional[Union[np.ndarray, Any]] = None,
         inject_positions: str = "all",
+        unit_direction: bool = False,
     ):
+        # Phase 36: when True the injected direction is (V dq) / ||V dq||_2, so alpha_act alone sets the relative
+        # injection size alpha * ||h|| regardless of the (non-orthogonal) column geometry of V.
+        self.unit_direction = bool(unit_direction)
         self._v_steer: Optional[np.ndarray] = None
         self._v_version = 0
         self._steer_cache: Optional[Dict[str, Any]] = None
@@ -89,6 +93,15 @@ class SymplecticActivationSteerer:
         self._v_version += 1
         self._steer_cache = None
 
+    def steer_direction(self, dq: np.ndarray) -> np.ndarray:
+        """V_steer @ dq, unit-normalised when unit_direction is set (Phase 36)."""
+        u = self._v_steer @ dq
+        if self.unit_direction:
+            n = float(np.linalg.norm(u))
+            if n > 1e-12:
+                u = u / n
+        return u
+
     def _cached_steer_vec(self, device: Any, dq: np.ndarray, alpha: float) -> Any:
         """alpha * (V_steer @ dq) as a float32 torch tensor on `device`; rebuilt only when V, dq, alpha or device change.
 
@@ -98,10 +111,11 @@ class SymplecticActivationSteerer:
         dq_key = dq.tobytes()
         c = self._steer_cache
         if (c is not None and c["device"] == dev and c["v_version"] == self._v_version
-                and c["dq"] == dq_key and c["alpha"] == float(alpha)):
+                and c["dq"] == dq_key and c["alpha"] == float(alpha) and c.get("unit") == self.unit_direction):
             return c["vec"]
-        vec = torch.as_tensor(float(alpha) * (self._v_steer @ dq), dtype=torch.float32).to(dev)
-        self._steer_cache = {"device": dev, "v_version": self._v_version, "dq": dq_key, "alpha": float(alpha), "vec": vec}
+        vec = torch.as_tensor(float(alpha) * self.steer_direction(dq), dtype=torch.float32).to(dev)
+        self._steer_cache = {"device": dev, "v_version": self._v_version, "dq": dq_key, "alpha": float(alpha), "vec": vec,
+                             "unit": self.unit_direction}
         return vec
 
     def _ensure_orthonormal(self, v: Union[np.ndarray, Any]) -> np.ndarray:
@@ -313,7 +327,7 @@ class SymplecticActivationSteerer:
             return h_steered.to(dtype)
         else:
             h_arr = np.asarray(h, dtype=np.float32)
-            steer_dir = self.v_steer @ dq  # (d_model,)
+            steer_dir = self.steer_direction(dq)  # (d_model,)
             if pos == "last" and h_arr.ndim >= 2:
                 out = h_arr.copy()
                 last = h_arr[..., -1:, :]

@@ -25,6 +25,7 @@ import contextlib
 import dataclasses
 import datetime
 import json
+import math
 import sys
 import time
 import traceback
@@ -105,6 +106,9 @@ class Cfg(p28.Cfg):
     ppl_calib_samples: int = 12
     alpha_ppl: float = 1.0
     score_ref_ppl: bool = True
+    # Phase 36
+    steer_unit_dir: bool = False         # inject alpha * ||h|| * (V dq)/||V dq|| (both calibrated and random)
+    grpo_reward: str = "multiplicative"  # "multiplicative" (Phase 33) | "shaped" (see shaped_reward)
 
     def as_dict(self) -> Dict[str, Any]:
         d = super().as_dict()
@@ -291,8 +295,10 @@ def run_steering_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[
 
     rnd = SymplecticActivationSteerer(d_model=st.d_model, num_layers=st.num_layers, layer_ratio=cfg.steer_layer_ratio)
     rnd.v_steer = rnd._initialize_random_orthonormal(st.d_model, 12, seed=int(cfg.seed))  # seeded Haar
-    n_cal = float(np.linalg.norm(st.v_steer @ dq))
-    n_rnd = float(np.linalg.norm(rnd.v_steer @ dq))
+    st.unit_direction = bool(cfg.steer_unit_dir)
+    rnd.unit_direction = bool(cfg.steer_unit_dir)
+    n_cal = float(np.linalg.norm(st.steer_direction(dq)))
+    n_rnd = float(np.linalg.norm(rnd.steer_direction(dq)))
     ctl_scale = (n_cal / n_rnd) if (cfg.match_control_norm and n_rnd > 0) else 1.0
 
     stage: Dict[str, Any] = {
@@ -301,7 +307,8 @@ def run_steering_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[
                     "normalised_to_unit": bool(cfg.dq_normalise),
                     "definition": "(mean q of CORPUS chunks in {II_Critical, III_Void} - mean q of stage (a) generations) / q_std of the calibration corpus",
                     "target_q": [float(x) for x in target_q], "base_q": [float(x) for x in base_q],
-                    "norm_V_cal_dq": n_cal, "norm_V_random_dq": n_rnd, "control_alpha_scale": ctl_scale},
+                    "norm_V_cal_dq": n_cal, "norm_V_random_dq": n_rnd, "control_alpha_scale": ctl_scale,
+                    "norm_V_cal_dq_raw": float(np.linalg.norm(st.v_steer @ dq)), "unit_direction": bool(cfg.steer_unit_dir)},
         "conditions": {},
     }
     modes = [m for m in cfg.inject_positions]
@@ -341,6 +348,21 @@ def run_steering_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[
 # GRPO-LoRA
 # ---------------------------------------------------------------------------
 
+SHAPED_REWARD_DEF = ("Phase 36 shaped reward: clip(CV_L / 0.45, 0.05, 1.2) * cadence_alive * M_semantic, "
+                     "CV_L and cadence_alive from extract_usir_24d, M_semantic = 1/(1+exp(alpha_ppl*(ppl_ref-threshold)))")
+
+
+def make_shaped_reward(ppl_thresh: float, alpha_ppl: float) -> Callable[[str, float], float]:
+    def fn(text: str, ppl_ref: float) -> float:
+        if not text or not text.strip():
+            return 0.0
+        f = extract_usir_24d(text)
+        arg = float(np.clip(alpha_ppl * (float(ppl_ref) - float(ppl_thresh)), -50.0, 50.0))
+        m_sem = 1.0 / (1.0 + math.exp(arg))
+        return float(np.clip(float(f["len_cv"]) / 0.45, 0.05, 1.2) * float(f["cadence_alive"]) * m_sem)
+    return fn
+
+
 def run_grpo_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[str], rendered: Sequence[str],
                      train_user: Sequence[str], train_rendered: Sequence[str], base_stage: Dict[str, Any],
                      probe_logits_base: Any, log: Callable[[str], None], checks: Dict[str, Any]) -> Dict[str, Any]:
@@ -365,6 +387,7 @@ def run_grpo_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[str]
         ppl_thresh=ppl_info["threshold"], alpha_ppl=cfg.alpha_ppl, ppl_completion_only=True,
         max_new_tokens=cfg.grpo_max_new_tokens, batched_rollouts=True, per_rollout_backward=True,
         prompts_per_step=cfg.grpo_prompts_per_step,
+        reward_fn=(make_shaped_reward(ppl_info["threshold"], cfg.alpha_ppl) if cfg.grpo_reward == "shaped" else None),
         progress_fn=lambda e: log(f"[grpo] step {e['step']}/{cfg.grpo_steps} reward={e['mean_reward']:.4f} kl={e['mean_kl']:.5f} loss={e['loss']:.5f} {e['sec']:.1f}s"))
     train_wall = time.perf_counter() - t0
     if res.get("mode") != "authentic_pytorch":
@@ -373,7 +396,8 @@ def run_grpo_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[str]
         "lora": {k: info[k] for k in ("num_attached", "total_lora_params", "r", "alpha")},
         "trainable_params": n_trainable, "base_trainable_params_before_attach": n_base_trainable,
         "train_prompts": list(TRAIN_PROMPTS), "ppl_barrier": ppl_info,
-        "reward": "compute_multiplicative_grpo_reward (physical terms) x M_semantic(ref PPL barrier), see ppl_barrier",
+        "reward": ("compute_multiplicative_grpo_reward (physical terms) x M_semantic(ref PPL barrier), see ppl_barrier"
+                   if cfg.grpo_reward != "shaped" else SHAPED_REWARD_DEF),
         "train": {"result": res, "wall_sec": train_wall,
                   "peak_cuda_mem_gb": (torch.cuda.max_memory_allocated() / 2 ** 30) if cfg.device.startswith("cuda") else None},
     }
@@ -521,6 +545,8 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
     ap.add_argument("--latency-reps", type=int, default=Cfg.latency_reps)
     ap.add_argument("--latency-tokens", type=int, default=Cfg.latency_tokens)
     ap.add_argument("--also-unmerged-gen", action="store_true")
+    ap.add_argument("--steer-unit-dir", action="store_true")
+    ap.add_argument("--grpo-reward", default=Cfg.grpo_reward, choices=["multiplicative", "shaped"])
     ap.add_argument("--out", default=None, help="write the result JSON here (in addition to the ARCHIVE_B64 line)")
     ap.add_argument("--no-archive-line", action="store_true")
     args = ap.parse_args(argv)
@@ -536,6 +562,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
         grpo_rollouts=args.grpo_rollouts, grpo_max_new_tokens=args.grpo_max_new_tokens, grpo_lr=args.grpo_lr,
         alpha_ppl=args.alpha_ppl, ppl_percentile=args.ppl_percentile,
         lora_r=args.lora_r, lora_alpha=args.lora_alpha, also_unmerged_gen=args.also_unmerged_gen,
+        steer_unit_dir=args.steer_unit_dir, grpo_reward=args.grpo_reward,
     )
     t0 = time.time()
 

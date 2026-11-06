@@ -1474,7 +1474,7 @@ class ForbiddenWordsLogits(_ProcBase):  # type: ignore[misc,valid-type]
 
     def __init__(self, tokenizer: Any, n_ctx: int, words: Sequence[str], table: Dict[str, List[int]],
                  ctx_tail: str, digit_ids: Optional[Dict[int, str]] = None, penalty: float = 15.0,
-                 tail_cache: Optional[TailCache] = None) -> None:
+                 tail_cache: Optional[TailCache] = None, digit_penalty: Optional[float] = None) -> None:
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
         self.words = [w for w in words if w]
@@ -1482,6 +1482,7 @@ class ForbiddenWordsLogits(_ProcBase):  # type: ignore[misc,valid-type]
         self.ctx_tail = ctx_tail[-12:]
         self.digit_ids = digit_ids or {}
         self.penalty = float(penalty)
+        self.digit_penalty = float(penalty if digit_penalty is None else digit_penalty)
         self.tail_cache = tail_cache
 
     def __call__(self, ids: Any, scores: Any) -> Any:
@@ -1499,7 +1500,7 @@ class ForbiddenWordsLogits(_ProcBase):  # type: ignore[misc,valid-type]
                 end = text[-3:]
                 bad = [i for i, sf in self.digit_ids.items() if _YEAR_RE.search(end + sf)]
                 if bad:
-                    _add_set(scores, [r], IdxSet(bad), -self.penalty)
+                    _add_set(scores, [r], IdxSet(bad), -self.digit_penalty)
         return scores
 
 
@@ -1769,6 +1770,7 @@ class ClauseTwistedSMCDecoder:
         forbidden_words: Optional[Sequence[str]] = None,
         forbid_years: bool = False,
         forbidden_penalty: float = 15.0,
+        year_penalty: Optional[float] = None,
     ) -> None:
         # cr_paragraph_scope / cr_exempt_text : see ContentRepLogits (Phase 23: prompt theme / role tokens were penalised
         #                       from the first mention, producing coinages such as 懐中時鐘 / 青年人)
@@ -1820,6 +1822,7 @@ class ClauseTwistedSMCDecoder:
         self.forbidden_words = [w for w in (forbidden_words or []) if w]
         self.forbid_years = bool(forbid_years)
         self.forbidden_penalty = float(forbidden_penalty)
+        self.year_penalty = None if year_penalty is None else float(year_penalty)   # Phase 36: e.g. 1e4 (hard mask)
         self._forbid_cache: Optional[Tuple[Dict[str, List[int]], Dict[int, str]]] = None
         self._kanji_ids: Optional[List[int]] = None
         self._merged_period_ids: Optional[List[int]] = None
@@ -2480,14 +2483,14 @@ class ClauseTwistedSMCDecoder:
         prof = self.rhythm_profile
         if prof == "steady":
             # no positive '。' push, no '、' push; hold below steady_min_chars, mild push above steady_max_chars
+            gp = self.genome_proposal
             if slen < self.steady_min_chars:
-                pb = -12.0
+                pb = float(gp.get("hold_bias", -12.0)) if gp else -12.0
             elif slen > self.steady_max_chars:
-                pb = 3.0
+                pb = float(gp.get("push_bias", 3.0)) if gp else 3.0
             else:
                 pb = 0.0
             cb = -4.0 if commas >= self.steady_max_commas else 0.0
-            gp = self.genome_proposal
             if gp and cb == 0.0 and slen >= 10 and commas < float(gp.get("comma_target", 0.0)) - 1.0:
                 cb = float(gp.get("comma_push", 1.5))
             return (pb, cb, 20, False)
@@ -2741,7 +2744,8 @@ class ClauseTwistedSMCDecoder:
         if getattr(self, "forbidden_words", None) or getattr(self, "forbid_years", False):
             _tab, _dig = self._forbidden_tables()
             forbid_proc = ForbiddenWordsLogits(tokenizer_ref, n_ctx, self.forbidden_words, _tab, prefix[-12:],
-                                               digit_ids=_dig, penalty=self.forbidden_penalty, tail_cache=tail_cache)
+                                               digit_ids=_dig, penalty=self.forbidden_penalty, tail_cache=tail_cache,
+                                               digit_penalty=getattr(self, "year_penalty", None))
         _kb = float((getattr(self, "genome_proposal", None) or {}).get("kanji_bias", 0.0))
         kanji_proc = KanjiBiasLogits(self._kanji_token_ids(), _kb) if _kb else None
 
