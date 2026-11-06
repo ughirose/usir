@@ -128,6 +128,39 @@ def section_atlas(P: Paper) -> str:
     rs = f"{V10}/p30_reg_sensitivity.json"
     rmin = P.num("reg_sens_min", rs, "min(d.values())", "{:.3f}")
     rmax = P.num("reg_sens_max", rs, "max(d.values())", "{:.3f}")
+    n36 = f"{V10}/p36_lowo_narrative.json"
+    p36 = ""
+    if P.has(n36):
+        l36 = lambda m, k: P.num(f"p36_{m}_{k}", n36, f"d['lowo'][{m!r}][{k!r}]", "{:.3f}" if "acc" in k else "{}")
+        a36 = lambda m, a: P.num(f"p36_{m}_{a}", n36, f"d['lowo'][{m!r}]['per_author'][{a!r}]", "{}")
+        rows36 = [("24D + 27 extended (Phase 30 re-run)", "fisher_z24_ortho_ext"),
+                  ("4 narrative-channel statistics alone", "fisher_narr"),
+                  ("27 extended + 4 narrative", "fisher_ortho_ext_narr"),
+                  ("24D + 27 extended + 4 narrative (pre-specified)", "fisher_z24_ortho_ext_narr")]
+        t36 = "\n".join(f"| {name} | {l36(m, 'n_correct')}/{l36(m, 'n')} = {l36(m, 'accuracy')} | {l36(m, 'top3_accuracy')} | "
+                        f"{a36(m, '001383')} | {a36(m, '001095')} |" for name, m in rows36)
+        g = lambda r: P.num(f"p36_reg_{r}", n36, f"d['reg_sensitivity_primary'][{r!r}]['n_correct']", "{}")
+        nb = lambda a, k: P.num(f"p36_nb_{a}_{k}", n36, f"d['narr_by_author'][{a!r}][{k!r}]", "{:.1f}")
+        lm = lambda a: P.num(f"p36_nb_{a}_logmean", n36, f"math.exp(d['narr_by_author'][{a!r}]['narr_log_mean_sent_len'])", "{:.1f}")
+        p36 = f"""
+**Phase 36: narrative-channel statistics.** Dialogue spans 「…」 enter the sentence-length denominator of the
+orthographic statistics, and 600-character windows cut long sentences. Over whole texts the narrative (dialogue
+removed) mean sentence length is {nb('001383', 'whole_text_narr_mean_sent_len')} characters for Tanizaki and
+{nb('000879', 'whole_text_narr_mean_sent_len')} for Akutagawa, while the window-level geometric means are
+{lm('001383')} and {lm('000879')}, i.e. the order is reversed inside windows. Four narrative-channel statistics per
+window (log mean and log 90th-percentile narrative sentence length with dialogue replaced by one placeholder and
+boundary fragments dropped, commas per narrative sentence, dialogue character ratio) were added; the variant and
+reg = 1e-2 were fixed before the run (`p36_lowo_narrative.json`).
+
+| Instrument | LOWO top-1 | LOWO top-3 | Tanizaki | Sakaguchi |
+|---|---|---|---|---|
+{t36}
+
+Ridge sensitivity of the pre-specified variant (hits out of 46): 1e-3: {g('0.001')}, 3e-3: {g('0.003')},
+1e-2: {g('0.01')}, 3e-2: {g('0.03')}, 1e-1: {g('0.1')}. The variant was designed after the Phase 30 diagnostics of
+the same 46 works, so this is not a held-out test; the improvement is three works. The decoder's Fisher metric
+(`fisher_v1.json`, used for ΔF in §3) is unchanged.
+"""
     return f"""## 2. Measurement instrument on real text (Aozora Bunko atlas)
 Corpus: {n_works} public-domain works by 10 authors (Aozora Bunko), 600-character windows with a 300-character
 stride. Authors are labels of the atlas only; no author or character name enters any feature extractor.
@@ -144,7 +177,7 @@ The plan's target (top-1 ≥ 0.70, and non-zero hits for Tanizaki and Sakaguchi)
 reaches the value above, with one hit each for the two authors that previously had none. The ridge sensitivity
 (`p30_reg_sensitivity.json`) gives top-1 between {rmin} and {rmax} for reg ∈ [1e-3, 1e-1]; the larger values are
 not adopted because choosing reg after seeing LOWO accuracy would select on the evaluation.
-
+{p36}
 **Window-level separability on real text** (Akutagawa A vs Tanizaki B, Akutagawa A vs Dazai C): ROC-AUC of the
 instrument's score difference over 600-character windows of the two authors' works.
 
@@ -390,7 +423,8 @@ def section_limitations(P: Paper) -> str:
 - Small n: 6 plot-seed groups per model and condition, 46 works in the atlas. No significance testing.
 - The style instrument (Fisher LDA) and the steering term share the same feature space; ΔF improvements are
   partly by construction. ΔLL (a different instrument) and orthographic statistics are reported for that reason.
-- LOWO top-1 remains below 0.70.
+- LOWO top-1 is below 0.70 with the Phase 30 instrument; the Phase 36 variant exceeds it on the same 46 works
+  that informed its design (no held-out author set).
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
 - Phase C (§5.2) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection; the

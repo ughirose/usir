@@ -43,6 +43,27 @@ reaches the value above, with one hit each for the two authors that previously h
 (`p30_reg_sensitivity.json`) gives top-1 between 0.652 and 0.696 for reg ∈ [1e-3, 1e-1]; the larger values are
 not adopted because choosing reg after seeing LOWO accuracy would select on the evaluation.
 
+**Phase 36: narrative-channel statistics.** Dialogue spans 「…」 enter the sentence-length denominator of the
+orthographic statistics, and 600-character windows cut long sentences. Over whole texts the narrative (dialogue
+removed) mean sentence length is 68.8 characters for Tanizaki and
+45.3 for Akutagawa, while the window-level geometric means are
+38.4 and 40.9, i.e. the order is reversed inside windows. Four narrative-channel statistics per
+window (log mean and log 90th-percentile narrative sentence length with dialogue replaced by one placeholder and
+boundary fragments dropped, commas per narrative sentence, dialogue character ratio) were added; the variant and
+reg = 1e-2 were fixed before the run (`p36_lowo_narrative.json`).
+
+| Instrument | LOWO top-1 | LOWO top-3 | Tanizaki | Sakaguchi |
+|---|---|---|---|---|
+| 24D + 27 extended (Phase 30 re-run) | 31/46 = 0.674 | 0.870 | 1/5 | 1/4 |
+| 4 narrative-channel statistics alone | 17/46 = 0.370 | 0.761 | 1/5 | 1/4 |
+| 27 extended + 4 narrative | 29/46 = 0.630 | 0.870 | 1/5 | 1/4 |
+| 24D + 27 extended + 4 narrative (pre-specified) | 34/46 = 0.739 | 0.913 | 3/5 | 1/4 |
+
+Ridge sensitivity of the pre-specified variant (hits out of 46): 1e-3: 32, 3e-3: 32,
+1e-2: 34, 3e-2: 34, 1e-1: 34. The variant was designed after the Phase 30 diagnostics of
+the same 46 works, so this is not a held-out test; the improvement is three works. The decoder's Fisher metric
+(`fisher_v1.json`, used for ΔF in §3) is unchanged.
+
 **Window-level separability on real text** (Akutagawa A vs Tanizaki B, Akutagawa A vs Dazai C): ROC-AUC of the
 instrument's score difference over 600-character windows of the two authors' works.
 
@@ -212,7 +233,8 @@ generalisation rate on held-out data.
 - Small n: 6 plot-seed groups per model and condition, 46 works in the atlas. No significance testing.
 - The style instrument (Fisher LDA) and the steering term share the same feature space; ΔF improvements are
   partly by construction. ΔLL (a different instrument) and orthographic statistics are reported for that reason.
-- LOWO top-1 remains below 0.70.
+- LOWO top-1 is below 0.70 with the Phase 30 instrument; the Phase 36 variant exceeds it on the same 46 works
+  that informed its design (no held-out author set).
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
 - Phase C (§5.2) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection; the

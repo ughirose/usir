@@ -241,6 +241,270 @@
    "fmt": "{:.3f}"
   },
   {
+   "id": "p36_fisher_z24_ortho_ext_n_correct",
+   "file": "usir_v4_paper.md",
+   "text": "31",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_n",
+   "file": "usir_v4_paper.md",
+   "text": "46",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.674",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.870",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_001383",
+   "file": "usir_v4_paper.md",
+   "text": "1/5",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_001095",
+   "file": "usir_v4_paper.md",
+   "text": "1/4",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_narr_n_correct",
+   "file": "usir_v4_paper.md",
+   "text": "17",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_narr']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_narr_n",
+   "file": "usir_v4_paper.md",
+   "text": "46",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_narr']['n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_narr_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.370",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_narr']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p36_fisher_narr_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.761",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_narr']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p36_fisher_narr_001383",
+   "file": "usir_v4_paper.md",
+   "text": "1/5",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_narr']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_narr_001095",
+   "file": "usir_v4_paper.md",
+   "text": "1/4",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_narr']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_ortho_ext_narr_n_correct",
+   "file": "usir_v4_paper.md",
+   "text": "29",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_ortho_ext_narr']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_ortho_ext_narr_n",
+   "file": "usir_v4_paper.md",
+   "text": "46",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_ortho_ext_narr']['n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_ortho_ext_narr_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.630",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_ortho_ext_narr']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p36_fisher_ortho_ext_narr_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.870",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_ortho_ext_narr']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p36_fisher_ortho_ext_narr_001383",
+   "file": "usir_v4_paper.md",
+   "text": "1/5",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_ortho_ext_narr']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_ortho_ext_narr_001095",
+   "file": "usir_v4_paper.md",
+   "text": "1/4",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_ortho_ext_narr']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_narr_n_correct",
+   "file": "usir_v4_paper.md",
+   "text": "34",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext_narr']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_narr_n",
+   "file": "usir_v4_paper.md",
+   "text": "46",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext_narr']['n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_narr_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.739",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext_narr']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_narr_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.913",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext_narr']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_narr_001383",
+   "file": "usir_v4_paper.md",
+   "text": "3/5",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext_narr']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_fisher_z24_ortho_ext_narr_001095",
+   "file": "usir_v4_paper.md",
+   "text": "1/4",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext_narr']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_nb_001383_whole_text_narr_mean_sent_len",
+   "file": "usir_v4_paper.md",
+   "text": "68.8",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['narr_by_author']['001383']['whole_text_narr_mean_sent_len']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_nb_000879_whole_text_narr_mean_sent_len",
+   "file": "usir_v4_paper.md",
+   "text": "45.3",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['narr_by_author']['000879']['whole_text_narr_mean_sent_len']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_nb_001383_logmean",
+   "file": "usir_v4_paper.md",
+   "text": "38.4",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "math.exp(d['narr_by_author']['001383']['narr_log_mean_sent_len'])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_nb_000879_logmean",
+   "file": "usir_v4_paper.md",
+   "text": "40.9",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "math.exp(d['narr_by_author']['000879']['narr_log_mean_sent_len'])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p36_reg_0.001",
+   "file": "usir_v4_paper.md",
+   "text": "32",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['reg_sensitivity_primary']['0.001']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_reg_0.003",
+   "file": "usir_v4_paper.md",
+   "text": "32",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['reg_sensitivity_primary']['0.003']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_reg_0.01",
+   "file": "usir_v4_paper.md",
+   "text": "34",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['reg_sensitivity_primary']['0.01']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_reg_0.03",
+   "file": "usir_v4_paper.md",
+   "text": "34",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['reg_sensitivity_primary']['0.03']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p36_reg_0.1",
+   "file": "usir_v4_paper.md",
+   "text": "34",
+   "source": "docs/handoff/v10/p36_lowo_narrative.json",
+   "expr": "d['reg_sensitivity_primary']['0.1']['n_correct']",
+   "fmt": "{}"
+  },
+  {
    "id": "delta_ll_real_text_000879_vs_001383_window_auc_A_over_B",
    "file": "usir_v4_paper.md",
    "text": "0.686",
