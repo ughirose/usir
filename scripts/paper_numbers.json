@@ -17,6 +17,54 @@
  ],
  "numbers": [
   {
+   "id": "abs_h1",
+   "file": "usir_v4_paper.md",
+   "text": "27",
+   "source": "docs/handoff/v10/p38_heldout_lowo.json",
+   "expr": "d['results']['fisher_z24_ortho_ext_narr']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "abs_h2",
+   "file": "usir_v4_paper.md",
+   "text": "23",
+   "source": "docs/handoff/v10/p41_heldout2_nearest_work.json",
+   "expr": "d['results']['set2']['A_class_mean']['n_correct']",
+   "fmt": "{}"
+  },
+  {
+   "id": "abs_dz_cal",
+   "file": "usir_v4_paper.md",
+   "text": "12",
+   "source": "docs/handoff/v10/p38_steer_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "abs_dz_rand",
+   "file": "usir_v4_paper.md",
+   "text": "27",
+   "source": "docs/handoff/v10/p38_steer_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "abs_dz_base",
+   "file": "usir_v4_paper.md",
+   "text": "21",
+   "source": "docs/handoff/v10/p38_steer_eval.json",
+   "expr": "d['pooled']['base']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "abs_cv_cr",
+   "file": "usir_v4_paper.md",
+   "text": "0.0004",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal012_vs_rand012']['mean_diff']",
+   "fmt": "{:.4f}"
+  },
+  {
    "id": "lowo_gmm_quantile_scaled_phase26_accuracy",
    "file": "usir_v4_paper.md",
    "text": "0.522",
