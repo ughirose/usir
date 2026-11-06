@@ -234,7 +234,8 @@ def batched_generate(model: Any, tok: Any, prompts: Sequence[str], cfg: Cfg, see
     res = []
     for row in out[:, plen:].tolist():
         n = next((i for i, t in enumerate(row) if t in eos), len(row))  # tokens before the first EOS / pad
-        res.append({"text": tok.decode(row[:n], skip_special_tokens=True), "n_new_tokens": n,
+        # count the EOS token itself, as the batch-1 path does (out[0, plen:].numel() includes it)
+        res.append({"text": tok.decode(row[:n], skip_special_tokens=True), "n_new_tokens": min(n + 1, len(row)),
                     "wall_ms": wall_ms, "ms_per_token": (wall_ms / steps) if steps > 0 else None,
                     "batch_size": len(prompts), "batch_steps": steps})
     return res
