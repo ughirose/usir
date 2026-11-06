@@ -1,0 +1,695 @@
+{
+ "schema": "p38_heldout_lowo_v1",
+ "primary": "fisher_z24_ortho_ext_narr",
+ "reg": 0.01,
+ "labels": {
+  "000148": "夏目漱石",
+  "000879": "芥川龍之介",
+  "000035": "太宰治",
+  "000081": "宮沢賢治",
+  "000074": "梶井基次郎",
+  "000129": "森鴎外",
+  "000050": "泉鏡花",
+  "001383": "谷崎潤一郎",
+  "001095": "坂口安吾",
+  "000119": "中島敦"
+ },
+ "n_train_works": 46,
+ "n_heldout": 30,
+ "chance": 0.1,
+ "heldout": [
+  {
+   "author_id": "000035",
+   "title": "二十世紀旗手",
+   "work_id": "000234",
+   "char_count": 14067,
+   "n_windows": 45
+  },
+  {
+   "author_id": "000035",
+   "title": "八十八夜",
+   "work_id": "000235",
+   "char_count": 13662,
+   "n_windows": 44
+  },
+  {
+   "author_id": "000035",
+   "title": "小さいアルバム",
+   "work_id": "000237",
+   "char_count": 7896,
+   "n_windows": 25
+  },
+  {
+   "author_id": "000050",
+   "title": "義血侠血",
+   "work_id": "000363",
+   "char_count": 33378,
+   "n_windows": 109
+  },
+  {
+   "author_id": "000050",
+   "title": "国貞えがく",
+   "work_id": "000529",
+   "char_count": 15637,
+   "n_windows": 50
+  },
+  {
+   "author_id": "000050",
+   "title": "二、三羽――十二、三羽",
+   "work_id": "001037",
+   "char_count": 14586,
+   "n_windows": 47
+  },
+  {
+   "author_id": "000074",
+   "title": "ある崖上の感情",
+   "work_id": "000412",
+   "char_count": 11335,
+   "n_windows": 36
+  },
+  {
+   "author_id": "000074",
+   "title": "ある心の風景",
+   "work_id": "000413",
+   "char_count": 6892,
+   "n_windows": 21
+  },
+  {
+   "author_id": "000074",
+   "title": "泥濘",
+   "work_id": "000414",
+   "char_count": 6920,
+   "n_windows": 21
+  },
+  {
+   "author_id": "000081",
+   "title": "毒もみのすきな署長さん",
+   "work_id": "000454",
+   "char_count": 3091,
+   "n_windows": 9
+  },
+  {
+   "author_id": "000081",
+   "title": "双子の星",
+   "work_id": "000459",
+   "char_count": 11155,
+   "n_windows": 35
+  },
+  {
+   "author_id": "000081",
+   "title": "インドラの網",
+   "work_id": "000460",
+   "char_count": 3731,
+   "n_windows": 11
+  },
+  {
+   "author_id": "000119",
+   "title": "悟浄歎異",
+   "work_id": "000617",
+   "char_count": 12470,
+   "n_windows": 40
+  },
+  {
+   "author_id": "000119",
+   "title": "南島譚",
+   "work_id": "000619",
+   "char_count": 5432,
+   "n_windows": 17
+  },
+  {
+   "author_id": "000119",
+   "title": "文字禍",
+   "work_id": "000622",
+   "char_count": 6455,
+   "n_windows": 20
+  },
+  {
+   "author_id": "000129",
+   "title": "二人の友",
+   "work_id": "000675",
+   "char_count": 11633,
+   "n_windows": 37
+  },
+  {
+   "author_id": "000129",
+   "title": "百物語",
+   "work_id": "000676",
+   "char_count": 12547,
+   "n_windows": 40
+  },
+  {
+   "author_id": "000129",
+   "title": "かのように",
+   "work_id": "000678",
+   "char_count": 22622,
+   "n_windows": 74
+  },
+  {
+   "author_id": "000148",
+   "title": "二百十日",
+   "work_id": "000751",
+   "char_count": 30343,
+   "n_windows": 99
+  },
+  {
+   "author_id": "000148",
+   "title": "文鳥",
+   "work_id": "000753",
+   "char_count": 10569,
+   "n_windows": 34
+  },
+  {
+   "author_id": "000148",
+   "title": "虞美人草",
+   "work_id": "000761",
+   "char_count": 201433,
+   "n_windows": 665
+  },
+  {
+   "author_id": "000879",
+   "title": "文章",
+   "work_id": "000027",
+   "char_count": 6795,
+   "n_windows": 21
+  },
+  {
+   "author_id": "000879",
+   "title": "偸盗",
+   "work_id": "000031",
+   "char_count": 49157,
+   "n_windows": 162
+  },
+  {
+   "author_id": "000879",
+   "title": "大導寺信輔の半生",
+   "work_id": "000032",
+   "char_count": 12638,
+   "n_windows": 41
+  },
+  {
+   "author_id": "001095",
+   "title": "夜長姫と耳男",
+   "work_id": "042614",
+   "char_count": 27658,
+   "n_windows": 90
+  },
+  {
+   "author_id": "001095",
+   "title": "風と光と二十の私と",
+   "work_id": "042615",
+   "char_count": 15157,
+   "n_windows": 49
+  },
+  {
+   "author_id": "001095",
+   "title": "肝臓先生",
+   "work_id": "042617",
+   "char_count": 23223,
+   "n_windows": 75
+  },
+  {
+   "author_id": "001383",
+   "title": "幇間",
+   "work_id": "056644",
+   "char_count": 11927,
+   "n_windows": 38
+  },
+  {
+   "author_id": "001383",
+   "title": "恐怖",
+   "work_id": "056693",
+   "char_count": 6244,
+   "n_windows": 19
+  },
+  {
+   "author_id": "001383",
+   "title": "細雪",
+   "work_id": "056698",
+   "char_count": 152118,
+   "n_windows": 504
+  }
+ ],
+ "results": {
+  "fisher_z24_ortho_ext": {
+   "n": 30,
+   "n_correct": 26,
+   "accuracy": 0.8666666666666667,
+   "top3_accuracy": 0.9333333333333333,
+   "per_author": {
+    "000035": "3/3",
+    "000050": "2/3",
+    "000074": "3/3",
+    "000081": "3/3",
+    "000119": "3/3",
+    "000129": "3/3",
+    "000148": "3/3",
+    "000879": "1/3",
+    "001095": "2/3",
+    "001383": "3/3"
+   },
+   "rows": [
+    {
+     "author_id": "000035",
+     "work_id": "000234",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000235",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000237",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000363",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000529",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "001037",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000412",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000413",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000414",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000454",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000459",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000460",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000617",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000619",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000622",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000675",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000676",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000678",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000751",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000753",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000761",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000027",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 6
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000031",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000032",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042614",
+     "predicted": "001095",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042615",
+     "predicted": "001095",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042617",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056644",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056693",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056698",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    }
+   ]
+  },
+  "fisher_z24_ortho_ext_narr": {
+   "n": 30,
+   "n_correct": 27,
+   "accuracy": 0.9,
+   "top3_accuracy": 0.9333333333333333,
+   "per_author": {
+    "000035": "3/3",
+    "000050": "3/3",
+    "000074": "3/3",
+    "000081": "3/3",
+    "000119": "3/3",
+    "000129": "3/3",
+    "000148": "3/3",
+    "000879": "1/3",
+    "001095": "2/3",
+    "001383": "3/3"
+   },
+   "rows": [
+    {
+     "author_id": "000035",
+     "work_id": "000234",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000235",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000237",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000363",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000529",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "001037",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000412",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000413",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000414",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000454",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000459",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000460",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000617",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000619",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000622",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000675",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000676",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000678",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000751",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000753",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000761",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000027",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 6
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000031",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000032",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042614",
+     "predicted": "001095",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042615",
+     "predicted": "001095",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042617",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056644",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056693",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056698",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    }
+   ]
+  }
+ },
+ "elapsed_sec": 47.0
+}
