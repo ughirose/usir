@@ -39,3 +39,41 @@
   - 特徴の設計は、同じ 46 作品の診断（Phase 30 と Gemini の分析）を見たうえで決めた。独立した保持データでの検証ではない。
   - 差は 3 作品で、n は小さい。
   - 安吾は 1/4 のまま。
+
+### 0b. 追加の照合（36-2 / 36-3 の着手前）
+
+| 主張 | 照合結果 |
+|---|---|
+| GRPO はハードリジェクトで報酬が 1e-5 に潰れる | 半分正しい。`compute_multiplicative_grpo_reward` の `is_rejected` は記録するだけで、報酬を 1e-5 にはしない。≈1e-5 になる原因は `exp(-0.5·d_3phase)`（Deadzone では d≈21 なので exp(−10.5)≈2.7e-5） |
+| 群内の分散が消えて Advantage ≈ 0 | **誤り**。`lora_grpo_forge.py` は A_i=(R_i−μ)/(σ+1e-6) で正規化する。全ロールアウトが ≈1e-5 でも Advantage は単位スケールになり、その符号は信号ではなくノイズで決まる。step 全体の報酬 std は 0.03〜0.08 だった。群ごとの std は未記録だったので、Phase 36 から `group_reward_std` として記録する |
+| 合成ベクトルのノルムが 3〜4 倍に膨張 | **誤り**。実測は ‖V_cal Δq‖=1.60（`p33_q3_8b.json` の `norm_V_cal_dq`）。ランダム対照も α を 1.60 倍してノルムを一致させていた。単位化は「α を 1/1.60 にする」のと同じで、旧 α 0.05 / 0.15 は単位化後の α 0.08 / 0.24 に相当する |
+
+## 2. 36-2: 文長の A/B 分離（デコーダ）
+
+- 実装:
+  - `proposal_from_prior` に引数 `band`、`comma_slack`、`hold_bias`、`push_bias` を追加した。既定値は Phase 31 と同じ（テストで固定）。
+  - steady の句点バイアスは、`genome_proposal` の `hold_bias` / `push_bias` に従う。
+  - 年号の数字列は `year_penalty` で語句ペナルティと別の値にできる。
+- Phase 36 の設定（実行前に固定）:
+  - band = (0.8, 1.3)。gA は 34〜55 字、gB は 50〜82 字。
+  - hold −18、push +8、comma_slack 2（gA の読点上限 5、gB は 4）、year_penalty 1e4。
+- Gemini 案からの変更点:
+  - band を狭めた。理由は §0 の照合で gA の上限が 68 字と分かったから。Gemini が前提にした 38〜42 字ではないので、push +8 だけでは gA に効かない。また gB は下限 35 字を超えた 44 字付近で自然に閉じていたので、hold を強めるだけでは文は伸びない。
+  - 読点上限は `round(c* + 2)`（c* は 1 文あたりの目標読点数）とした。Gemini の式 `round(μ*·c100/100)+2` と同じ意味で、計算はこちらの既存の量で行う。
+- 実行: `p36_q3_8b`（Qwen3-8B、2 プロット × 3 seed × {ctrl, gA, gB}）と `p36_swallow_8b`（station × 3 seed × {ctrl, gB}、年号漏れの確認用）。
+- 成功基準:
+  - 平均文長（`ortho[0]` の exp）が gB > ctrl > gA の順に並び、gB − gA ≥ 10 字。
+  - Swallow station gB で 4 桁の年号が 0 件。
+- 注意: 芥川の目標 μ*=42.5 字は ctrl（28 字）より長い。Gemini が求めた「ctrl > gA」は、実測した事前分布とは逆向きの要求になる。
+
+## 3. 36-3: Phase C の再実行
+
+- ステア: 第 23 層、last 注入。単位化した方向 (VΔq)/‖VΔq‖ を使い、α ∈ {0.08, 0.12}。ランダム方向も単位化する（ノルム比 1）。
+  - 旧 α に換算すると 0.05 / 0.075 で、Phase 33 で退化が出た α 0.15（単位化後 0.24）より小さい。
+- GRPO: 報酬を R = clip(CV_L/0.45, 0.05, 1.2) × cadence_alive × M_semantic に変えた。step 数、lr、β などは Phase 33 と同じにして、報酬だけを変えた比較にした。
+- 実行: `p36c_q3_8b`（Qwen3-8B、A100）。
+- 成功基準:
+  - 較正方向の Deadzone 数 < ランダム方向。
+  - 退化（bigram < 0.5）が 0 件。
+  - ref PPL が base +0.5 以内。
+  - merged LoRA の Deadzone 数 < base。
