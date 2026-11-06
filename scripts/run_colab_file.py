@@ -35,7 +35,8 @@ from mcp_server_colab_exec.colab_runtime import (  # noqa: E402
 ap = argparse.ArgumentParser()
 ap.add_argument("file")
 ap.add_argument("out_dir")
-ap.add_argument("--gpu", default="L4")
+ALLOWED_GPUS = ("T4", "L4")  # A100 is banned by the user (2026-11-07): its compute-unit cost per hour is too high
+ap.add_argument("--gpu", default="L4", type=str.upper, choices=ALLOWED_GPUS)
 ap.add_argument("--timeout", type=int, default=1800)
 args = ap.parse_args()
 

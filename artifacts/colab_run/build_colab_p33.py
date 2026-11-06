@@ -7,7 +7,7 @@ The body prints one line 'ARCHIVE_B64 <crc32 hex> <base64(gzip(json))>' that scr
 
 Usage:
     python artifacts/colab_run/build_colab_p33.py
-    python scripts/run_colab_file.py artifacts/colab_run/p33_q3_8b.py docs/handoff/v9 --gpu A100 --timeout 10800
+    python scripts/run_colab_file.py artifacts/colab_run/p33_q3_8b.py docs/handoff/v9 --gpu L4 --timeout 10800
 
 Output (generated payload, gitignored):
     p33_q3_8b.py   Qwen/Qwen3-8B, bf16, A100 40GB
