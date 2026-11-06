@@ -64,6 +64,22 @@ Ridge sensitivity of the pre-specified variant (hits out of 46): 1e-3: 32, 3e-3:
 the same 46 works, so this is not a held-out test; the improvement is three works. The decoder's Fisher metric
 (`fisher_v1.json`, used for ΔF in §3) is unchanged.
 
+**Phase 38-2: held-out works.** To test the Phase 36 variant on text that did not inform its design, 30 further
+works (3 per author) were selected by a rule fixed before any of them was read: ascending Aozora work id, author role,
+public domain, NDC 913, modern orthography, title not overlapping a training title, at least 3000 characters and 5
+windows (`data/aozora_heldout_manifest.json`; only ids, URLs and hashes are committed). The Fisher model is trained on
+all 46 training works (reg 1e-2) and each held-out work is assigned by summed window scores.
+
+| Instrument | held-out top-1 | held-out top-3 |
+|---|---|---|
+| 24D + 27 extended + 4 narrative (Phase 36 primary) | 27/30 = 0.900 | 0.933 |
+| 24D + 27 extended (Phase 30 baseline) | 26/30 = 0.867 | 0.933 |
+
+The pre-registered criterion (top-1 ≥ 0.70) is met. Because training uses all works rather than all but one, and the
+held-out works range from 9 to 665 windows, these values are not directly comparable with the LOWO values
+above. Akutagawa is identified in 1/3 works; all 3 errors are assigned to Nakajima. The narrative
+statistics add one correct work over the baseline on this set.
+
 **Window-level separability on real text** (Akutagawa A vs Tanizaki B, Akutagawa A vs Dazai C): ROC-AUC of the
 instrument's score difference over 600-character windows of the two authors' works.
 
@@ -313,6 +329,32 @@ than base. A reward that depends on the truncated tail and on this step is a pla
 the intended rhythm, but the training rollouts were not stored, so this is not verified. The shaped reward now has
 a `strip_tail` option (complete sentences only), unit-tested and not yet trained with.
 
+### 5.4 Phase 38: re-evaluation without truncation, three seed series
+§5.3 was re-run with max_new_tokens 1024 (instead of 400), no GRPO, and three seed series (12 prompts each, n = 36
+per condition); Δq is calibrated from each series' own base outputs. Criteria fixed before the runs
+(`docs/handoff/2026-11-06_phase38_preregistration.md`): (1) pooled calibrated α 0.12 Deadzone below random α 0.12 and
+below base, (2) calibrated below random in at least 2 of 3 series, (3) no degenerate calibrated output (distinct
+character bigram < 0.5), (4) mean calibrated ref PPL ≤ base + 0.5 (= 2.044). Deadzone is evaluated with the fragment
+after the last sentence end removed; no output ended inside a sentence, so the stripped and full counts coincide.
+
+| Set | Deadzone (pooled) | per series s1/s2/s3 | CV < 0.28 | degenerate | ref PPL | ended inside a sentence |
+|---|---|---|---|---|---|---|
+| base | 21/36 | 7/7/7 | 23/36 | 0 | 1.544 | 0 |
+| calibrated α 0.08 | 17/36 | 6/5/6 | 23/36 | 0 | 1.674 | 0 |
+| random α 0.08 | 31/36 | 10/10/11 | 32/36 | 0 | 1.561 | 0 |
+| calibrated α 0.12 | 12/36 | 4/4/4 | 21/36 | 1 | 1.834 | 0 |
+| random α 0.12 | 27/36 | 7/11/9 | 26/36 | 0 | 1.570 | 0 |
+
+Criteria (1) and (4) are met, and (2) holds in 3 of 3 series. Criterion (3) is **not met**: one calibrated α 0.12
+output has a distinct bigram ratio of 0.496 (a coherent but repetitive explanation of compound interest), so by the
+pre-registered rule the result is reported as "not met" overall. One-sided exact McNemar tests (reported only):
+calibrated vs random α 0.12, discordant pairs 19 vs
+4, p = 0.0013; calibrated α 0.12 vs base,
+11 vs 2, p = 0.0112.
+The random direction raises the Deadzone count above base at both α, so part of the calibrated–random gap is harm
+from the random direction rather than benefit from the calibrated one. The CV-based definition shows a much smaller
+effect, and the 12 prompts are expository rather than literary.
+
 ## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
 contiguous ≥ 7-character overlap with the source. These are fixture tests in the TypeScript suite and a repository
@@ -324,10 +366,11 @@ generalisation rate on held-out data.
 - The style instrument (Fisher LDA) and the steering term share the same feature space; ΔF improvements are
   partly by construction. ΔLL (a different instrument) and orthographic statistics are reported for that reason.
 - LOWO top-1 is below 0.70 with the Phase 30 instrument; the Phase 36 variant exceeds it on the same 46 works
-  that informed its design (no held-out author set).
+  that informed its design. The Phase 38 held-out works (3 per author) are new works by the same 10 authors, not
+  new authors, and the held-out value is not directly comparable with LOWO.
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
-- Phase C (§5.2, §5.3) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection;
+- Phase C §5.2 and §5.3 use 12 prompts and one seed series (§5.4: three series, same 12 expository prompts); the degeneracy threshold was set after inspection;
   neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
 - Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",
   which the Qwen3 tokenizer splits into byte-level tokens.

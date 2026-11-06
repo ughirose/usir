@@ -177,7 +177,7 @@ The plan's target (top-1 ≥ 0.70, and non-zero hits for Tanizaki and Sakaguchi)
 reaches the value above, with one hit each for the two authors that previously had none. The ridge sensitivity
 (`p30_reg_sensitivity.json`) gives top-1 between {rmin} and {rmax} for reg ∈ [1e-3, 1e-1]; the larger values are
 not adopted because choosing reg after seeing LOWO accuracy would select on the evaluation.
-{p36}
+{p36}{p38_heldout(P)}
 **Window-level separability on real text** (Akutagawa A vs Tanizaki B, Akutagawa A vs Dazai C): ROC-AUC of the
 instrument's score difference over 600-character windows of the two authors' works.
 
@@ -394,7 +394,7 @@ def section_phase_c(P: Paper) -> str:
 Qwen3-8B (bf16, A100). With raw literary continuation prompts the base model was in the Deadzone in {dz} of {n}
 outputs, so the former claim of "Deadzone escape" could not be tested on that set; steering at larger α increased
 the Deadzone count, and the calibrated direction did not differ from a norm-matched random direction.
-""" + phase_c_p33(P) + phase_c_p36(P)
+""" + phase_c_p33(P) + phase_c_p36(P) + phase_c_p38(P)
 
 
 def phase_c_p33(P: Paper) -> str:
@@ -599,6 +599,85 @@ def p37_tail(P: Paper) -> str:
             "now has\na `strip_tail` option (complete sentences only), unit-tested and not yet trained with.\n")
 
 
+def p38_heldout(P: Paper) -> str:
+    s = f"{V10}/p38_heldout_lowo.json"
+    if not P.has(s):
+        return ""
+    r = lambda m, k, f="{}": P.num(f"p38h_{m}_{k}", s, f"d['results'][{m!r}][{k!r}]", f)
+    rows = []
+    for name, m in (("24D + 27 extended + 4 narrative (Phase 36 primary)", "fisher_z24_ortho_ext_narr"),
+                    ("24D + 27 extended (Phase 30 baseline)", "fisher_z24_ortho_ext")):
+        rows.append(f"| {name} | {r(m, 'n_correct')}/{r(m, 'n')} = {r(m, 'accuracy', '{:.3f}')} | "
+                    f"{r(m, 'top3_accuracy', '{:.3f}')} |")
+    nh = P.num("p38h_n", s, "d['n_heldout']", "{}")
+    ntr = P.num("p38h_ntrain", s, "d['n_train_works']", "{}")
+    wmin = P.num("p38h_wmin", s, "min(h['n_windows'] for h in d['heldout'])", "{}")
+    wmax = P.num("p38h_wmax", s, "max(h['n_windows'] for h in d['heldout'])", "{}")
+    aku = P.num("p38h_aku", s, "d['results']['fisher_z24_ortho_ext_narr']['per_author']['000879']", "{}")
+    nwrong_nak = P.num("p38h_wrong_to_nakajima", s,
+                       "sum(1 for x in d['results']['fisher_z24_ortho_ext_narr']['rows'] if not x['correct'] and x['predicted']=='000119')", "{}")
+    return f"""
+**Phase 38-2: held-out works.** To test the Phase 36 variant on text that did not inform its design, {nh} further
+works (3 per author) were selected by a rule fixed before any of them was read: ascending Aozora work id, author role,
+public domain, NDC 913, modern orthography, title not overlapping a training title, at least 3000 characters and 5
+windows (`data/aozora_heldout_manifest.json`; only ids, URLs and hashes are committed). The Fisher model is trained on
+all {ntr} training works (reg 1e-2) and each held-out work is assigned by summed window scores.
+
+| Instrument | held-out top-1 | held-out top-3 |
+|---|---|---|
+""" + "\n".join(rows) + f"""
+
+The pre-registered criterion (top-1 ≥ 0.70) is met. Because training uses all works rather than all but one, and the
+held-out works range from {wmin} to {wmax} windows, these values are not directly comparable with the LOWO values
+above. Akutagawa is identified in {aku} works; all {nwrong_nak} errors are assigned to Nakajima. The narrative
+statistics add one correct work over the baseline on this set.
+"""
+
+
+def phase_c_p38(P: Paper) -> str:
+    s = f"{V10}/p38_steer_eval.json"
+    if not P.has(s):
+        return ""
+    pl = lambda c, k, f="{}": P.num(f"p38_{c}_{k}", s, f"d['pooled'][{c!r}][{k!r}]", f)
+    ser = lambda c: "/".join(P.num(f"p38_{c}_{x}", s, f"d['series'][{x!r}]['conditions'][{c!r}]['deadzone_stripped']", "{}")
+                             for x in ("s1", "s2", "s3"))
+    rows = []
+    for c, label in (("base", "base"), ("steer_cal_last_alpha_0.08", "calibrated α 0.08"),
+                     ("steer_rand_last_alpha_0.08", "random α 0.08"), ("steer_cal_last_alpha_0.12", "calibrated α 0.12"),
+                     ("steer_rand_last_alpha_0.12", "random α 0.12")):
+        rows.append(f"| {label} | {pl(c, 'deadzone_stripped')}/36 | {ser(c)} | {pl(c, 'cv_lt_028_stripped')}/36 | "
+                    f"{pl(c, 'degenerate')} | {pl(c, 'ref_ppl_mean', '{:.3f}')} | {pl(c, 'truncated')} |")
+    cr = "d['criteria']"
+    ns = P.num("p38_c2", s, f"{cr}['c2_series_cal_lt_rand']", "{}")
+    lim = P.num("p38_c4_limit", s, f"{cr}['c4_limit']", "{:.3f}")
+    mc = lambda k, f: P.num(f"p38_mc_{k}_{f}", s, f"d['mcnemar'][{k!r}][{f!r}]", "{:.4f}" if f.startswith("p_") else "{}")
+    bmin = P.num("p38_deg_min_bigram", s,
+                 "min(d['series'][x]['conditions']['steer_cal_last_alpha_0.12']['min_bigram'] for x in ('s1','s2','s3'))", "{:.3f}")
+    return f"""
+### 5.4 Phase 38: re-evaluation without truncation, three seed series
+§5.3 was re-run with max_new_tokens 1024 (instead of 400), no GRPO, and three seed series (12 prompts each, n = 36
+per condition); Δq is calibrated from each series' own base outputs. Criteria fixed before the runs
+(`docs/handoff/2026-11-06_phase38_preregistration.md`): (1) pooled calibrated α 0.12 Deadzone below random α 0.12 and
+below base, (2) calibrated below random in at least 2 of 3 series, (3) no degenerate calibrated output (distinct
+character bigram < 0.5), (4) mean calibrated ref PPL ≤ base + 0.5 (= {lim}). Deadzone is evaluated with the fragment
+after the last sentence end removed; no output ended inside a sentence, so the stripped and full counts coincide.
+
+| Set | Deadzone (pooled) | per series s1/s2/s3 | CV < 0.28 | degenerate | ref PPL | ended inside a sentence |
+|---|---|---|---|---|---|---|
+""" + "\n".join(rows) + f"""
+
+Criteria (1) and (4) are met, and (2) holds in {ns} of 3 series. Criterion (3) is **not met**: one calibrated α 0.12
+output has a distinct bigram ratio of {bmin} (a coherent but repetitive explanation of compound interest), so by the
+pre-registered rule the result is reported as "not met" overall. One-sided exact McNemar tests (reported only):
+calibrated vs random α 0.12, discordant pairs {mc('cal012_vs_rand012', 'only_other')} vs
+{mc('cal012_vs_rand012', 'only_calibrated')}, p = {mc('cal012_vs_rand012', 'p_one_sided')}; calibrated α 0.12 vs base,
+{mc('cal012_vs_base', 'only_other')} vs {mc('cal012_vs_base', 'only_calibrated')}, p = {mc('cal012_vs_base', 'p_one_sided')}.
+The random direction raises the Deadzone count above base at both α, so part of the calibrated–random gap is harm
+from the random direction rather than benefit from the calibrated one. The CV-based definition shows a much smaller
+effect, and the 12 prompts are expository rather than literary.
+"""
+
+
 def section_cleanroom(P: Paper) -> str:
     return """## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
@@ -614,10 +693,11 @@ def section_limitations(P: Paper) -> str:
 - The style instrument (Fisher LDA) and the steering term share the same feature space; ΔF improvements are
   partly by construction. ΔLL (a different instrument) and orthographic statistics are reported for that reason.
 - LOWO top-1 is below 0.70 with the Phase 30 instrument; the Phase 36 variant exceeds it on the same 46 works
-  that informed its design (no held-out author set).
+  that informed its design. The Phase 38 held-out works (3 per author) are new works by the same 10 authors, not
+  new authors, and the held-out value is not directly comparable with LOWO.
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
-- Phase C (§5.2, §5.3) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection;
+- Phase C §5.2 and §5.3 use 12 prompts and one seed series (§5.4: three series, same 12 expository prompts); the degeneracy threshold was set after inspection;
   neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
 - Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",
   which the Qwen3 tokenizer splits into byte-level tokens.
