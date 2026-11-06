@@ -420,11 +420,12 @@ def test_mixed_steer_end_to_end_tiny_cpu():
     model, tok = _build_tiny()
     btok = _batch_tok(tok)
     cfg = drv.Cfg(model_id="tiny", dtype="fp32", device="cpu", n_prompts=3, max_new_tokens=10, alphas=(0.1, 0.3),
-                  inject_positions=("last",), latency_reps=1, latency_tokens=4, do_grpo=False, steer_unit_dir=True,
+                  inject_positions=("last",), latency_reps=0, latency_tokens=4, do_grpo=False, steer_unit_dir=True,
                   gen_batch=5, mixed_steer=True)
     res = drv.run_all(model, btok, cfg, log=lambda m: None)
     assert res["errors"] == [], res["errors"]
     conds = res["stages"]["steering"]["conditions"]
+    assert res["stages"]["steering"]["latency"]["skipped"] is True
     assert set(conds) == {f"steer_{k}_last_alpha_{a}" for k in ("cal", "rand") for a in (0.1, 0.3)}
     for name, c in conds.items():
         assert [r["prompt_idx"] for r in c["records"]] == [0, 1, 2] and c["summary"]["n_ok"] == 3

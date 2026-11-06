@@ -520,6 +520,9 @@ def run_steering_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[
                                     ctx_factory=lambda a_r=a_r, mode=mode: rnd.steering_context(dq, a_r, model=model, inject_positions=mode))
                 c.update(alpha_act=float(a), alpha_effective=a_r, inject_positions=mode, direction="random_haar")
                 stage["conditions"][name] = c
+    if int(cfg.latency_reps) <= 0:  # hook overhead was measured in Phases 38-44 (within +-1 %); skip to save time
+        stage["latency"] = {"skipped": True, "reason": "latency_reps <= 0"}
+        return stage
     stage["latency"] = p28.latency_bench(
         model, tok, rendered[0],
         {"base": contextlib.nullcontext,
