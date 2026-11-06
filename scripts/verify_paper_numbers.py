@@ -3,7 +3,7 @@
 (2) equal the value recomputed from a measured result JSON, formatted with the registered format.
 
 Registry entry:
-  {"id": "...", "file": "scripts/paper_sections/x.md", "text": "<literal as printed>",
+  {"id": "...", "file": "usir_v4_paper.md", "text": "<literal as printed>",
    "source": "docs/handoff/v9/p28c_q3_8b.json", "expr": "<python expression over `d` (the loaded JSON)>",
    "fmt": "{:.2f}"}
 `text` must contain fmt.format(eval(expr)).  A source JSON is rejected when it declares itself mock
@@ -66,7 +66,7 @@ def check(registry: Dict[str, Any], root: Path = ROOT) -> List[str]:
             errors.append(f"{e['id']}: source {src} is mock")
             continue
         try:
-            val = eval(e["expr"], dict(env), {"d": d})  # noqa: S307 - registry is repository-controlled
+            val = eval(e["expr"], {**env, "d": d})  # noqa: S307 - registry is repository-controlled
         except Exception as exc:
             errors.append(f"{e['id']}: expr failed ({exc!r})")
             continue

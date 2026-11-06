@@ -1,3 +1,5 @@
+> **撤回・置換済み（2026-11-06）。** 本稿の Table 1・4 は構成上 AUC を較正した合成コーパス上の計算値、Table 2・3 は mock シミュレータの出力である（出典監査: `docs/handoff/2026-11-06_phase34_paper_provenance_audit.md`）。引用しないこと。現行版は `usir_v4_paper.md`（実測 JSON から生成し、`scripts/verify_paper_numbers.py` で照合）。
+
 # 普遍文体不変表現 (USIR v3.0): 自己回帰生成制御のためのシンプレクティック熱力学動態
 
 **著者**: USIR コアリサーチコンソーシアム  

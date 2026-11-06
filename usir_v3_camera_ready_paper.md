@@ -1,3 +1,5 @@
+> **SUPERSEDED / RETRACTED (2026-11-06).** Tables 1 and 4 of this manuscript were computed on synthetic corpora calibrated by construction, and Tables 2 and 3 were produced by a mock simulator (provenance audit: `docs/handoff/2026-11-06_phase34_paper_provenance_audit.md`). Do not cite. The current paper is `usir_v4_paper.md`, whose numbers are generated from measured JSONs and checked by `scripts/verify_paper_numbers.py`.
+
 # Universal Stylistic Invariant Representations (USIR v3.0): Symplectic Thermodynamic Dynamics, Cross-Linguistic Foundations, and Zero-Overhead Style-LoRA Forge for Autoregressive Generation Control
 
 **Authors**: USIR Core Research Consortium  

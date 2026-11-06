@@ -1,0 +1,1060 @@
+{
+ "paper_files": [
+  "usir_v4_paper.md"
+ ],
+ "forbidden": [
+  "4.17 ms",
+  "0.00 ms",
+  "MAUVE 0.987",
+  "0.745",
+  "|β-1| 0.013",
+  "100.0% escape",
+  "Deadzone escape rate 100%",
+  "ROC-AUC 0.934",
+  "R² 0.851",
+  "Δ² 41.28",
+  "N=890"
+ ],
+ "numbers": [
+  {
+   "id": "lowo_gmm_quantile_scaled_phase26_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.522",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['gmm_quantile_scaled_phase26']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_gmm_quantile_scaled_phase26_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.761",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['gmm_quantile_scaled_phase26']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_gmm_quantile_scaled_phase26_001383",
+   "file": "usir_v4_paper.md",
+   "text": "0/5",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['gmm_quantile_scaled_phase26']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_gmm_quantile_scaled_phase26_001095",
+   "file": "usir_v4_paper.md",
+   "text": "0/4",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['gmm_quantile_scaled_phase26']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_z24_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.565",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_z24_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.783",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_z24_001383",
+   "file": "usir_v4_paper.md",
+   "text": "0/5",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_z24_001095",
+   "file": "usir_v4_paper.md",
+   "text": "0/4",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_ortho_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.326",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_ortho']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_ortho_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.717",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_ortho']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_ortho_001383",
+   "file": "usir_v4_paper.md",
+   "text": "0/5",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_ortho']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_ortho_001095",
+   "file": "usir_v4_paper.md",
+   "text": "0/4",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_ortho']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_z24_ortho_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.522",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24_ortho']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_z24_ortho_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.804",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24_ortho']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_z24_ortho_001383",
+   "file": "usir_v4_paper.md",
+   "text": "0/5",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24_ortho']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_z24_ortho_001095",
+   "file": "usir_v4_paper.md",
+   "text": "1/4",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24_ortho']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_ortho_ext_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.609",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_ortho_ext']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_ortho_ext_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.848",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_ortho_ext']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_ortho_ext_001383",
+   "file": "usir_v4_paper.md",
+   "text": "1/5",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_ortho_ext']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_ortho_ext_001095",
+   "file": "usir_v4_paper.md",
+   "text": "1/4",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_ortho_ext']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_z24_ortho_ext_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.674",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_z24_ortho_ext_top3_accuracy",
+   "file": "usir_v4_paper.md",
+   "text": "0.870",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['top3_accuracy']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "lowo_fisher_z24_ortho_ext_001383",
+   "file": "usir_v4_paper.md",
+   "text": "1/5",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['per_author']['001383']",
+   "fmt": "{}"
+  },
+  {
+   "id": "lowo_fisher_z24_ortho_ext_001095",
+   "file": "usir_v4_paper.md",
+   "text": "1/4",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['lowo']['fisher_z24_ortho_ext']['per_author']['001095']",
+   "fmt": "{}"
+  },
+  {
+   "id": "atlas_n_works",
+   "file": "usir_v4_paper.md",
+   "text": "46",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['n_works']",
+   "fmt": "{}"
+  },
+  {
+   "id": "atlas_chance",
+   "file": "usir_v4_paper.md",
+   "text": "0.1",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['chance']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "reg_sens_min",
+   "file": "usir_v4_paper.md",
+   "text": "0.652",
+   "source": "docs/handoff/v10/p30_reg_sensitivity.json",
+   "expr": "min(d.values())",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "reg_sens_max",
+   "file": "usir_v4_paper.md",
+   "text": "0.696",
+   "source": "docs/handoff/v10/p30_reg_sensitivity.json",
+   "expr": "max(d.values())",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "delta_ll_real_text_000879_vs_001383_window_auc_A_over_B",
+   "file": "usir_v4_paper.md",
+   "text": "0.686",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['delta_ll_real_text']['000879_vs_001383']['window_auc_A_over_B']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "delta_ll_real_text_000879_vs_001383_window_cohen_d",
+   "file": "usir_v4_paper.md",
+   "text": "0.419",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['delta_ll_real_text']['000879_vs_001383']['window_cohen_d']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "delta_fisher_real_text_000879_vs_001383_window_auc_A_over_B",
+   "file": "usir_v4_paper.md",
+   "text": "0.737",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['delta_fisher_real_text']['000879_vs_001383']['window_auc_A_over_B']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "delta_fisher_real_text_000879_vs_001383_window_cohen_d",
+   "file": "usir_v4_paper.md",
+   "text": "0.859",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['delta_fisher_real_text']['000879_vs_001383']['window_cohen_d']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "delta_ll_real_text_000879_vs_000035_window_auc_A_over_B",
+   "file": "usir_v4_paper.md",
+   "text": "0.777",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['delta_ll_real_text']['000879_vs_000035']['window_auc_A_over_B']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "delta_ll_real_text_000879_vs_000035_window_cohen_d",
+   "file": "usir_v4_paper.md",
+   "text": "0.404",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['delta_ll_real_text']['000879_vs_000035']['window_cohen_d']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "delta_fisher_real_text_000879_vs_000035_window_auc_A_over_B",
+   "file": "usir_v4_paper.md",
+   "text": "0.922",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['delta_fisher_real_text']['000879_vs_000035']['window_auc_A_over_B']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "delta_fisher_real_text_000879_vs_000035_window_cohen_d",
+   "file": "usir_v4_paper.md",
+   "text": "1.726",
+   "source": "docs/handoff/v10/p30_atlas_diagnostics.json",
+   "expr": "d['delta_fisher_real_text']['000879_vs_000035']['window_cohen_d']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p27_q3_8b_ctrl",
+   "file": "usir_v4_paper.md",
+   "text": "6.52",
+   "source": "docs/handoff/v9/p27_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p27_q3_8b_gA",
+   "file": "usir_v4_paper.md",
+   "text": "6.61",
+   "source": "docs/handoff/v9/p27_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gA_scaled' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p27_q3_8b_gB",
+   "file": "usir_v4_paper.md",
+   "text": "7.35",
+   "source": "docs/handoff/v9/p27_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gB_scaled' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p27_swallow_8b_ctrl",
+   "file": "usir_v4_paper.md",
+   "text": "2.80",
+   "source": "docs/handoff/v9/p27_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p27_swallow_8b_gA",
+   "file": "usir_v4_paper.md",
+   "text": "2.28",
+   "source": "docs/handoff/v9/p27_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gA_scaled' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p27_swallow_8b_gB",
+   "file": "usir_v4_paper.md",
+   "text": "2.25",
+   "source": "docs/handoff/v9/p27_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gB_scaled' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_new_ctrl_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "9.24",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_new_ctrl_dF_AC",
+   "file": "usir_v4_paper.md",
+   "text": "7.63",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AC'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_new_ctrl_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "7.28",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_new_ctrl_msl",
+   "file": "usir_v4_paper.md",
+   "text": "28.2",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31_q3_8b_new_ctrl_c100",
+   "file": "usir_v4_paper.md",
+   "text": "5.40",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_new_ctrl_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_new_ctrl_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_gA_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "12.21",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gA_dF_AC",
+   "file": "usir_v4_paper.md",
+   "text": "11.10",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AC'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gA_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "8.29",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gA_msl",
+   "file": "usir_v4_paper.md",
+   "text": "27.2",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31_q3_8b_gA_c100",
+   "file": "usir_v4_paper.md",
+   "text": "5.42",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gA_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='gA' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_gA_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_gB_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "3.94",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gB_dF_AC",
+   "file": "usir_v4_paper.md",
+   "text": "6.76",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AC'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gB_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "5.00",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gB_msl",
+   "file": "usir_v4_paper.md",
+   "text": "27.3",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31_q3_8b_gB_c100",
+   "file": "usir_v4_paper.md",
+   "text": "3.69",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gB_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='gB' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_gB_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_gC_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "8.98",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gC_dF_AC",
+   "file": "usir_v4_paper.md",
+   "text": "-0.14",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_f_AC'] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gC_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "7.85",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gC_msl",
+   "file": "usir_v4_paper.md",
+   "text": "28.0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31_q3_8b_gC_c100",
+   "file": "usir_v4_paper.md",
+   "text": "6.33",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_q3_8b_gC_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='gC' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_gC_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_groups",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for v in d['runs'].values() if v['condition']=='new_ctrl')",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_delta_f_AB_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['delta_f_AB'] > d['runs'][k.replace('new_ctrl', 'gB')]['delta_f_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_delta_f_AB_Actrl",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['delta_f_AB'] > d['runs'][k.replace('new_ctrl', 'new_ctrl')]['delta_f_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_delta_f_AB_ctrlB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'new_ctrl')]['delta_f_AB'] > d['runs'][k.replace('new_ctrl', 'gB')]['delta_f_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_delta_ll_AB_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['delta_ll_AB'] > d['runs'][k.replace('new_ctrl', 'gB')]['delta_ll_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_delta_ll_AB_Actrl",
+   "file": "usir_v4_paper.md",
+   "text": "4",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['delta_ll_AB'] > d['runs'][k.replace('new_ctrl', 'new_ctrl')]['delta_ll_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_delta_ll_AB_ctrlB",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'new_ctrl')]['delta_ll_AB'] > d['runs'][k.replace('new_ctrl', 'gB')]['delta_ll_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_o2_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['ortho'][2] > d['runs'][k.replace('new_ctrl', 'gB')]['ortho'][2])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_o2_Actrl",
+   "file": "usir_v4_paper.md",
+   "text": "3",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['ortho'][2] > d['runs'][k.replace('new_ctrl', 'new_ctrl')]['ortho'][2])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_o2_ctrlB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'new_ctrl')]['ortho'][2] > d['runs'][k.replace('new_ctrl', 'gB')]['ortho'][2])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_o0_AB",
+   "file": "usir_v4_paper.md",
+   "text": "2",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['ortho'][0] > d['runs'][k.replace('new_ctrl', 'gB')]['ortho'][0])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_o0_Actrl",
+   "file": "usir_v4_paper.md",
+   "text": "2",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['ortho'][0] > d['runs'][k.replace('new_ctrl', 'new_ctrl')]['ortho'][0])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_p_o0_ctrlB",
+   "file": "usir_v4_paper.md",
+   "text": "3",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'new_ctrl')]['ortho'][0] > d['runs'][k.replace('new_ctrl', 'gB')]['ortho'][0])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_q3_8b_gen_sec",
+   "file": "usir_v4_paper.md",
+   "text": "3803",
+   "source": "docs/handoff/v10/p31_q3_8b.json",
+   "expr": "d['generation_sec']",
+   "fmt": "{:.0f}"
+  },
+  {
+   "id": "p31_swallow_8b_new_ctrl_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "3.93",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_new_ctrl_dF_AC",
+   "file": "usir_v4_paper.md",
+   "text": "10.16",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_f_AC'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_new_ctrl_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "1.83",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_new_ctrl_msl",
+   "file": "usir_v4_paper.md",
+   "text": "36.5",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31_swallow_8b_new_ctrl_c100",
+   "file": "usir_v4_paper.md",
+   "text": "4.44",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_new_ctrl_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_new_ctrl_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='new_ctrl' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_gA_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "8.21",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gA_dF_AC",
+   "file": "usir_v4_paper.md",
+   "text": "13.33",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_f_AC'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gA_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "5.20",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gA_msl",
+   "file": "usir_v4_paper.md",
+   "text": "35.0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31_swallow_8b_gA_c100",
+   "file": "usir_v4_paper.md",
+   "text": "4.67",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gA_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='gA' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_gA_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='gA' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_gB_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "1.87",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gB_dF_AC",
+   "file": "usir_v4_paper.md",
+   "text": "11.12",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_f_AC'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gB_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "1.31",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gB_msl",
+   "file": "usir_v4_paper.md",
+   "text": "36.0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31_swallow_8b_gB_c100",
+   "file": "usir_v4_paper.md",
+   "text": "3.79",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gB_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='gB' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_gB_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='gB' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_gC_dF_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6.32",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_f_AB'] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gC_dF_AC",
+   "file": "usir_v4_paper.md",
+   "text": "5.34",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_f_AC'] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gC_dLL_AB",
+   "file": "usir_v4_paper.md",
+   "text": "3.98",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['delta_ll_AB'] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gC_msl",
+   "file": "usir_v4_paper.md",
+   "text": "35.7",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([math.exp(v['ortho'][0]) for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p31_swallow_8b_gC_c100",
+   "file": "usir_v4_paper.md",
+   "text": "5.23",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "statistics.mean([v['ortho'][2] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error')])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p31_swallow_8b_gC_coin",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(len(v['coinages']) for v in d['runs'].values() if v['condition']=='gC' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_gC_unf",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(v['unfinished_paragraphs'] for v in d['runs'].values() if v['condition']=='gC' and not v.get('error'))",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_groups",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for v in d['runs'].values() if v['condition']=='new_ctrl')",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_delta_f_AB_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['delta_f_AB'] > d['runs'][k.replace('new_ctrl', 'gB')]['delta_f_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_delta_f_AB_Actrl",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['delta_f_AB'] > d['runs'][k.replace('new_ctrl', 'new_ctrl')]['delta_f_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_delta_f_AB_ctrlB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'new_ctrl')]['delta_f_AB'] > d['runs'][k.replace('new_ctrl', 'gB')]['delta_f_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_delta_ll_AB_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['delta_ll_AB'] > d['runs'][k.replace('new_ctrl', 'gB')]['delta_ll_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_delta_ll_AB_Actrl",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['delta_ll_AB'] > d['runs'][k.replace('new_ctrl', 'new_ctrl')]['delta_ll_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_delta_ll_AB_ctrlB",
+   "file": "usir_v4_paper.md",
+   "text": "2",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'new_ctrl')]['delta_ll_AB'] > d['runs'][k.replace('new_ctrl', 'gB')]['delta_ll_AB'])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_o2_AB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['ortho'][2] > d['runs'][k.replace('new_ctrl', 'gB')]['ortho'][2])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_o2_Actrl",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['ortho'][2] > d['runs'][k.replace('new_ctrl', 'new_ctrl')]['ortho'][2])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_o2_ctrlB",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'new_ctrl')]['ortho'][2] > d['runs'][k.replace('new_ctrl', 'gB')]['ortho'][2])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_o0_AB",
+   "file": "usir_v4_paper.md",
+   "text": "3",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['ortho'][0] > d['runs'][k.replace('new_ctrl', 'gB')]['ortho'][0])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_o0_Actrl",
+   "file": "usir_v4_paper.md",
+   "text": "1",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'gA')]['ortho'][0] > d['runs'][k.replace('new_ctrl', 'new_ctrl')]['ortho'][0])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_p_o0_ctrlB",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "sum(1 for k, v in d['runs'].items() if v['condition']=='new_ctrl' and d['runs'][k.replace('new_ctrl', 'new_ctrl')]['ortho'][0] > d['runs'][k.replace('new_ctrl', 'gB')]['ortho'][0])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p31_swallow_8b_gen_sec",
+   "file": "usir_v4_paper.md",
+   "text": "4404",
+   "source": "docs/handoff/v10/p31_swallow_8b.json",
+   "expr": "d['generation_sec']",
+   "fmt": "{:.0f}"
+  },
+  {
+   "id": "p28j_posbias_qwen3_8b",
+   "file": "usir_v4_paper.md",
+   "text": "0.78",
+   "source": "docs/handoff/v9/p28j_cross.json",
+   "expr": "(sum(1 for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] for x in m['scores_ab'] if x>0)+sum(1 for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] for x in m['scores_ba_as_a'] if x<0))/sum(1 for g in d['results']['qwen3_8b']['groups'].values() for m in g['matches'] for x in m['scores_ab']+m['scores_ba_as_a'] if x!=0)",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p28j_posbias_swallow_8b",
+   "file": "usir_v4_paper.md",
+   "text": "0.78",
+   "source": "docs/handoff/v9/p28j_cross.json",
+   "expr": "(sum(1 for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] for x in m['scores_ab'] if x>0)+sum(1 for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] for x in m['scores_ba_as_a'] if x<0))/sum(1 for g in d['results']['swallow_8b']['groups'].values() for m in g['matches'] for x in m['scores_ab']+m['scores_ba_as_a'] if x!=0)",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p28c_base_dz",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v9/p28c_q3_8b.json",
+   "expr": "d['stages']['base']['summary']['deadzone']['count']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p28c_base_n",
+   "file": "usir_v4_paper.md",
+   "text": "12",
+   "source": "docs/handoff/v9/p28c_q3_8b.json",
+   "expr": "d['stages']['base']['summary']['deadzone']['n']",
+   "fmt": "{}"
+  }
+ ]
+}
