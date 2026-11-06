@@ -35,10 +35,14 @@ from mcp_server_colab_exec.colab_runtime import (  # noqa: E402
 ap = argparse.ArgumentParser()
 ap.add_argument("file")
 ap.add_argument("out_dir")
-ALLOWED_GPUS = ("T4", "L4")  # A100 is banned by the user (2026-11-07): its compute-unit cost per hour is too high
-ap.add_argument("--gpu", default="L4", type=str.upper, choices=ALLOWED_GPUS)
+ap.add_argument("--gpu", default="L4", type=str.upper, choices=("T4", "L4", "A100"))
+ap.add_argument("--allow-a100", action="store_true",
+                help="required with --gpu A100; pass it only after the user has approved A100 for this job")
 ap.add_argument("--timeout", type=int, default=1800)
 args = ap.parse_args()
+if args.gpu == "A100" and not args.allow_a100:
+    # 2026-11-07: A100 burns compute units fast; it needs the user's explicit approval per job
+    ap.error("--gpu A100 needs --allow-a100 (only with the user's approval for this job); use L4 or T4")
 
 code = pathlib.Path(args.file).read_text(encoding="utf-8")
 out = pathlib.Path(args.out_dir)

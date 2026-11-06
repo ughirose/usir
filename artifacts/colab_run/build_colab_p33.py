@@ -10,7 +10,7 @@ Usage:
     python scripts/run_colab_file.py artifacts/colab_run/p33_q3_8b.py docs/handoff/v9 --gpu L4 --timeout 10800
 
 Output (generated payload, gitignored):
-    p33_q3_8b.py   Qwen/Qwen3-8B, bf16, A100 40GB
+    p33_q3_8b.py   Qwen/Qwen3-8B, bf16 (L4 24GB; A100 only with the user's approval)
 Driver options can be added through the EXTRA_ARGS list (for example ["--inject-positions", "last"]).
 """
 from __future__ import annotations
@@ -53,6 +53,11 @@ for _i, _seed in enumerate((20261406, 20261506, 20261606, 20261706), start=1):
                                                     "--steer-unit-dir", "--no-grpo", "--max-new-tokens", "1024",
                                                     "--seed", str(_seed), "--prompt-set", "literary"])
 
+# Phase 44 speed check: the p40c_q3_8b_s1 workload (5 conditions x 12 literary prompts, 1024 tokens) on L4 with
+# the 12 prompts of each condition generated in one batch.  Compared with p40c_q3_8b_s1 (A100, batch 1).
+SCRIPTS["p44b_q3_8b"] = ("Qwen/Qwen3-8B", ["--alphas", "0.12", "0.16", "--inject-positions", "last", "--steer-unit-dir",
+                                         "--no-grpo", "--max-new-tokens", "1024", "--seed", "20261406",
+                                         "--prompt-set", "literary", "--gen-batch", "12"])
 
 def build_zip_b64() -> str:
     buf = io.BytesIO()

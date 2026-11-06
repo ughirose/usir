@@ -330,3 +330,64 @@ def test_phase33_driver_end_to_end_tiny_cpu():
         assert k in w_before and v.shape == w_before[k].shape
         assert not k.endswith("lora_A") and not k.endswith("lora_B")
         assert (v == w_before[k]).all(), k
+
+
+def _batch_tok(tok):
+    """Wraps the character tokenizer with list input and left/right padding (as a HF tokenizer would)."""
+    torch = pytest.importorskip("torch")
+    tr = pytest.importorskip("transformers")
+
+    class BatchTok:
+        pad_token_id, eos_token_id = tok.pad_token_id, tok.eos_token_id
+        pad_token, eos_token = "<pad>", "<eos>"
+        padding_side = "right"
+
+        def __call__(self, text, return_tensors="pt", padding=False, **kw):
+            if isinstance(text, str):
+                return tok(text)
+            rows = [tok(t)["input_ids"][0].tolist() for t in text]
+            L = max(map(len, rows))
+            pad = lambda r: ([0] * (L - len(r)) + r) if self.padding_side == "left" else (r + [0] * (L - len(r)))
+            mask = lambda r: ([0] * (L - len(r)) + [1] * len(r)) if self.padding_side == "left" else ([1] * len(r) + [0] * (L - len(r)))
+            return tr.BatchEncoding({"input_ids": torch.tensor([pad(r) for r in rows]),
+                                     "attention_mask": torch.tensor([mask(r) for r in rows])})
+
+        def decode(self, ids, skip_special_tokens=True):
+            return tok.decode(ids, skip_special_tokens=skip_special_tokens)
+
+    return BatchTok()
+
+
+def test_batched_generation_left_padding_and_records():
+    torch = pytest.importorskip("torch")
+    model, tok = _build_tiny()
+    btok = _batch_tok(tok)
+    prompts = [drv.EVAL_PROMPTS[0], drv.EVAL_PROMPTS[1][:20], drv.EVAL_PROMPTS[2][:35]]
+    # left padding keeps position -1 on each prompt's real last token: last-position logits match unpadded runs
+    btok.padding_side = "left"
+    enc = btok(prompts, padding=True)
+    btok.padding_side = "right"
+    with torch.no_grad():
+        lb = model(**enc).logits[:, -1, :]
+        for i, p in enumerate(prompts):
+            l1 = model(**tok(p)).logits[:, -1, :]
+            assert torch.allclose(lb[i], l1[0], atol=1e-4)
+    cfg = drv.Cfg(model_id="tiny", dtype="fp32", device="cpu", n_prompts=3, max_new_tokens=12, gen_batch=2)
+    cond = drv.run_condition_batched("base", model, btok, prompts, cfg, log=lambda m: None)
+    recs = cond["records"]
+    assert [r["prompt_idx"] for r in recs] == [0, 1, 2] and all(r["error"] is None for r in recs)
+    assert all(0 <= r["n_new_tokens"] <= 12 and r["batch_size"] in (1, 2) for r in recs)
+    assert recs[0]["seed"] == recs[1]["seed"] == cfg.seed and recs[2]["seed"] == cfg.seed + 2
+    assert btok.padding_side == "right"  # restored
+
+
+def test_gen_batch_dispatch(monkeypatch):
+    called = {}
+    monkeypatch.setattr(drv, "run_condition_batched", lambda *a, **k: called.setdefault("b", {"name": "x", "records": [], "summary": {}}))
+    monkeypatch.setattr(drv.p28, "run_condition", lambda *a, **k: called.setdefault("s", {"name": "x", "records": [], "summary": {}}))
+    monkeypatch.setattr(drv, "finalize_condition", lambda *a, **k: None)
+    drv.run_condition33("x", None, None, [], [], drv.Cfg(gen_batch=1), print)
+    assert "s" in called and "b" not in called
+    drv.run_condition33("x", None, None, [], [], drv.Cfg(gen_batch=4), print)
+    assert "b" in called
+    assert drv.Cfg().gen_batch == 1

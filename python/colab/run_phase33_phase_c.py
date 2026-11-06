@@ -131,6 +131,7 @@ class Cfg(p28.Cfg):
     reward_strip_tail: bool = False     # Phase 42: shaped reward on complete sentences only
     store_rollouts: bool = False        # Phase 40: keep GRPO rollout texts, rewards and ref PPL in the result
     prompt_set: str = "expository"      # evaluation prompts: "expository" (Phase 33-38) | "literary" (Phase 39)
+    gen_batch: int = 1                  # >1: evaluation prompts generated together in one left-padded generate() call
 
     def as_dict(self) -> Dict[str, Any]:
         d = super().as_dict()
@@ -197,10 +198,82 @@ def paired33(cond: List[Dict[str, Any]], base: List[Dict[str, Any]]) -> Dict[str
     return res
 
 
+def batched_generate(model: Any, tok: Any, prompts: Sequence[str], cfg: Cfg, seed: int) -> List[Dict[str, Any]]:
+    """One sampled generate() call for several prompts (left padding, so position -1 is each prompt's real last token
+    and the 'last' steering hook stays correct).  Batch-1 decoding of an 8B model is bound by per-step overhead and
+    weight reads, so B rows cost about the same wall time per step as one row.
+
+    Differences from the batch-1 path: one torch seed per batch (cfg.seed + first prompt index) instead of one per
+    prompt, so samples are not identical to batch-1 runs with the same seed; wall time is shared by the rows."""
+    pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
+    old_side = getattr(tok, "padding_side", "right")
+    old_pad = tok.pad_token
+    tok.padding_side = "left"
+    if tok.pad_token is None:
+        tok.pad_token = tok.eos_token
+    try:
+        enc = tok(list(prompts), return_tensors="pt", padding=True).to(cfg.device)
+    finally:
+        tok.padding_side = old_side
+        tok.pad_token = old_pad
+    plen = int(enc["input_ids"].shape[1])
+    torch.manual_seed(int(seed))
+    p28._sync()
+    t0 = time.perf_counter()
+    with torch.no_grad():
+        out = model.generate(**enc, max_new_tokens=int(cfg.max_new_tokens), do_sample=True, temperature=cfg.temperature,
+                             top_p=cfg.top_p, pad_token_id=pad_id)
+    p28._sync()
+    wall_ms = (time.perf_counter() - t0) * 1000.0
+    eos = {int(x) for x in ([tok.eos_token_id] if isinstance(tok.eos_token_id, int) else (tok.eos_token_id or []))}
+    eos |= {int(pad_id)}
+    gen_cfg_eos = getattr(getattr(model, "generation_config", None), "eos_token_id", None)
+    if gen_cfg_eos is not None:
+        eos |= {int(x) for x in ([gen_cfg_eos] if isinstance(gen_cfg_eos, int) else gen_cfg_eos)}
+    steps = int(out.shape[1]) - plen
+    res = []
+    for row in out[:, plen:].tolist():
+        n = next((i for i, t in enumerate(row) if t in eos), len(row))  # tokens before the first EOS / pad
+        res.append({"text": tok.decode(row[:n], skip_special_tokens=True), "n_new_tokens": n,
+                    "wall_ms": wall_ms, "ms_per_token": (wall_ms / steps) if steps > 0 else None,
+                    "batch_size": len(prompts), "batch_steps": steps})
+    return res
+
+
+def run_condition_batched(name: str, model: Any, tok: Any, prompts: Sequence[str], cfg: Cfg, log: Callable[[str], None],
+                          ctx_factory: Optional[Callable[[], Any]] = None) -> Dict[str, Any]:
+    """Same records as p28.run_condition, generated cfg.gen_batch prompts at a time.  ms_per_token is per decode step
+    of the whole batch (wall of the batch / steps), not per row."""
+    factory = ctx_factory or contextlib.nullcontext
+    B = int(cfg.gen_batch)
+    records: List[Dict[str, Any]] = []
+    for s in range(0, len(prompts), B):
+        idx = list(range(s, min(s + B, len(prompts))))
+        try:
+            with factory():
+                gs = batched_generate(model, tok, [prompts[i] for i in idx], cfg, seed=cfg.seed + s)
+            for i, g in zip(idx, gs):
+                rec = {"prompt_idx": i, "prompt": prompts[i], "seed": cfg.seed + s, "error": None, **g}
+                rec["metrics"] = p28.text_metrics(g["text"], prompts[i])
+                records.append(rec)
+            log(f"[{name}] batch {idx[0]}-{idx[-1]} steps={gs[0]['batch_steps']} wall={gs[0]['wall_ms'] / 1000:.1f}s")
+        except Exception as exc:
+            for i in idx:
+                records.append({"prompt_idx": i, "prompt": prompts[i], "seed": cfg.seed + s, "error": repr(exc),
+                                "traceback": traceback.format_exc()[-1500:]})
+            log(f"[{name}] batch {idx[0]}-{idx[-1]} ERROR {exc!r}")
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+    return {"name": name, "records": records, "summary": p28.summarize(records)}
+
+
 def run_condition33(name: str, model: Any, tok: Any, user_prompts: Sequence[str], rendered: Sequence[str], cfg: Cfg,
                     log: Callable[[str], None], base_records: Optional[List[Dict[str, Any]]] = None,
                     ctx_factory: Optional[Callable[[], Any]] = None) -> Dict[str, Any]:
-    cond = p28.run_condition(name, model, tok, rendered, cfg, log, ctx_factory=ctx_factory)
+    if int(getattr(cfg, "gen_batch", 1)) > 1:
+        cond = run_condition_batched(name, model, tok, rendered, cfg, log, ctx_factory=ctx_factory)
+    else:
+        cond = p28.run_condition(name, model, tok, rendered, cfg, log, ctx_factory=ctx_factory)
     finalize_condition(cond, user_prompts, cfg)
     if base_records is not None:
         cond["paired_vs_base"] = paired33(cond["records"], base_records)
@@ -577,6 +650,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
     ap.add_argument("--store-rollouts", action="store_true")
     ap.add_argument("--reward-strip-tail", action="store_true")
     ap.add_argument("--prompt-set", default=Cfg.prompt_set, choices=sorted(PROMPT_SETS))
+    ap.add_argument("--gen-batch", type=int, default=Cfg.gen_batch)
     ap.add_argument("--out", default=None, help="write the result JSON here (in addition to the ARCHIVE_B64 line)")
     ap.add_argument("--no-archive-line", action="store_true")
     args = ap.parse_args(argv)
@@ -594,7 +668,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
         lora_r=args.lora_r, lora_alpha=args.lora_alpha, also_unmerged_gen=args.also_unmerged_gen,
         steer_unit_dir=args.steer_unit_dir, grpo_reward=args.grpo_reward,
         prompt_set=args.prompt_set, store_rollouts=args.store_rollouts,
-        reward_strip_tail=args.reward_strip_tail,
+        reward_strip_tail=args.reward_strip_tail, gen_batch=args.gen_batch,
     )
     t0 = time.time()
 
