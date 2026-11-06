@@ -197,6 +197,18 @@ def test_literary_prompt_set_generic_and_selectable():
         assert not any(b in p for b in banned), p
     assert drv.Cfg().prompt_set == "expository" and drv.PROMPT_SETS["expository"] is drv.EVAL_PROMPTS
 
+
+def test_store_rollouts_option_wired():
+    import inspect
+    from usir_py.lora_grpo_forge import run_authentic_grpo_lora_forge
+    sig = inspect.signature(run_authentic_grpo_lora_forge)
+    assert sig.parameters["store_rollouts"].default is False
+    assert drv.Cfg().store_rollouts is False
+    src = inspect.getsource(drv.run_grpo_stage33)
+    assert "store_rollouts=cfg.store_rollouts" in src
+    body = inspect.getsource(run_authentic_grpo_lora_forge)
+    assert 'step_entry["rollouts"] = step_rollouts' in body and "ppls.append(ppl_ref)" in body
+
 def test_render_chat_fallback_and_enable_thinking():
     class NoTemplate:
         pass

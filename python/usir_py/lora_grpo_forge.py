@@ -392,6 +392,7 @@ def run_authentic_grpo_lora_forge(
     progress_fn: Optional[Callable[[Dict[str, Any]], None]] = None,
     ppl_completion_only: bool = False,
     reward_fn: Optional[Callable[[str, float], float]] = None,
+    store_rollouts: bool = False,
 ) -> Dict[str, Any]:
     r"""Executes authentic USIR-GRPO fine-tuning loop for AttachedLoRALinear weights.
 
@@ -416,6 +417,9 @@ def run_authentic_grpo_lora_forge(
     Phase 36 addition:
         reward_fn: if given, reward = reward_fn(completion_text, ppl_ref) replaces compute_multiplicative_grpo_reward
             in the authentic PyTorch path (e.g. a continuous shaping reward without the steep exp(-0.5 d_3phase)).
+    Phase 40 addition:
+        store_rollouts: keep every rollout text with its reward and reference PPL in the step log
+            (step_logs[i]["rollouts"]), so that reward hacking can be checked after training.
     Caller responsibility: the authentic path optimises every parameter with requires_grad=True. Freeze the base
     model (p.requires_grad_(False) for all parameters) BEFORE attach_lora_to_model, otherwise the optimizer is
     built over the entire model.
@@ -447,6 +451,7 @@ def run_authentic_grpo_lora_forge(
             optimizer.zero_grad()
             step_rewards: List[float] = []
             group_stds: List[float] = []   # Phase 36: within-group reward std (before the +1e-6) per prompt
+            step_rollouts: List[Dict[str, Any]] = []  # Phase 40: filled only when store_rollouts
             step_losses: List[torch.Tensor] = []
             step_kls: List[float] = []
             step_loss_sum = 0.0
@@ -499,6 +504,7 @@ def run_authentic_grpo_lora_forge(
 
                 # 2. Compute physical rewards for all completions
                 rewards: List[float] = []
+                ppls: List[float] = []
                 for c_text in rollout_texts:
                     # Reference PPL estimation using lora_enabled=False
                     set_lora_enabled(model, False)
@@ -518,6 +524,7 @@ def run_authentic_grpo_lora_forge(
                             shift_labels.view(-1),
                         )
                         ppl_ref = float(torch.exp(ce_loss).item())
+                    ppls.append(ppl_ref)
 
                     if reward_fn is not None:
                         rewards.append(float(reward_fn(c_text, ppl_ref)))
@@ -534,6 +541,9 @@ def run_authentic_grpo_lora_forge(
                     rewards.append(r_dict["reward"])
 
                 step_rewards.extend(rewards)
+                if store_rollouts:
+                    step_rollouts.extend({"prompt_idx": int(p_idx), "text": c, "reward": float(r), "ppl_ref": float(q)}
+                                         for c, r, q in zip(rollout_texts, rewards, ppls))
 
                 # 3. Advantage calculation
                 r_arr = np.array(rewards, dtype=np.float32)
@@ -622,6 +632,8 @@ def run_authentic_grpo_lora_forge(
                 "sec": round(time.perf_counter() - t_step, 3),
                 "group_reward_std": [float(f"{x:.3g}") for x in group_stds],
             }
+            if store_rollouts:
+                step_entry["rollouts"] = step_rollouts
             step_logs.append(step_entry)
             if progress_fn is not None:
                 progress_fn(step_entry)
