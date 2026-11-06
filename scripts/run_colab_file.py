@@ -15,9 +15,14 @@ import sys
 import time
 import zlib
 
+import requests
+
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from run_colab_benchmark import execute_with_live_streaming  # noqa: E402
 from mcp_server_colab_exec.colab_runtime import (  # noqa: E402
+    COLAB_API,
+    _colab_headers,
+    _strip_xssi,
     allocate_runtime,
     create_session,
     get_credentials,
@@ -37,9 +42,45 @@ out = pathlib.Path(args.out_dir)
 out.mkdir(parents=True, exist_ok=True)
 stem = pathlib.Path(args.file).stem
 
+def list_endpoints(token: str):
+    """Endpoints currently assigned to this account, or None if the list cannot be read."""
+    try:
+        r = requests.get(f"{COLAB_API}/tun/m/assignments", headers=_colab_headers(token),
+                         params={"authuser": "0"}, timeout=30)
+        r.raise_for_status()
+        return {a.get("endpoint") for a in _strip_xssi(r.text).get("assignments", []) if a.get("endpoint")}
+    except Exception as exc:  # noqa: BLE001
+        print(f"[run_colab_file] could not list assignments: {exc}", file=sys.stderr)
+        return None
+
+
+def release(token: str, endpoint: str) -> None:
+    """Unassign with retries, then confirm the endpoint is gone from the assignment list."""
+    for i in range(5):
+        if unassign_runtime(token, endpoint):
+            now = list_endpoints(token)
+            if now is not None and endpoint not in now:
+                return
+        time.sleep(10 * (i + 1))
+    print(f"[run_colab_file] WARNING: runtime {endpoint} may still be assigned; release it manually", file=sys.stderr)
+
+
 t0 = time.time()
 creds = get_credentials()
-assignment = allocate_runtime(creds.token, accelerator=args.gpu)
+before = list_endpoints(creds.token)
+try:
+    assignment = allocate_runtime(creds.token, accelerator=args.gpu)
+except Exception:
+    # The assign request may have created a runtime even though the response was lost (e.g. ReadTimeout).
+    time.sleep(15)
+    after = list_endpoints(creds.token)
+    if before is not None and after is not None:
+        for ep in sorted(after - before):
+            print(f"[run_colab_file] releasing runtime created by the failed assign: {ep}", file=sys.stderr)
+            release(creds.token, ep)
+    else:
+        print("[run_colab_file] WARNING: assign failed and assignments could not be listed; check Colab", file=sys.stderr)
+    raise
 endpoint = assignment["endpoint"]
 stop_event = start_keepalive(creds.token, endpoint)
 rc = 1
@@ -66,5 +107,8 @@ try:
     print(f"[run_colab_file] total wall {time.time() - t0:.0f}s (kernel exit_code={exit_code})")
 finally:
     stop_event.set()
-    unassign_runtime(creds.token, endpoint)
+    if assignment.get("reused") and before and endpoint in before:
+        print(f"[run_colab_file] runtime {endpoint} existed before this run; not released", file=sys.stderr)
+    else:
+        release(creds.token, endpoint)
 sys.exit(rc)
