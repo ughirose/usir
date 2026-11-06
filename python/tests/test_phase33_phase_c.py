@@ -391,3 +391,42 @@ def test_gen_batch_dispatch(monkeypatch):
     drv.run_condition33("x", None, None, [], [], drv.Cfg(gen_batch=4), print)
     assert "b" in called
     assert drv.Cfg().gen_batch == 1
+
+
+def test_per_row_steering_matches_steering_context():
+    torch = pytest.importorskip("torch")
+    model, tok = _build_tiny()
+    st = SymplecticActivationSteerer(d_model=64, num_layers=4, layer_ratio=0.65)
+    st.unit_direction = True
+    dq = np.linspace(-1, 1, 12).astype(np.float32)
+    enc = tok(drv.EVAL_PROMPTS[0])
+    with torch.no_grad():
+        l0 = model(**enc).logits
+        for pos in ("last", "all"):
+            with st.steering_context(dq, 0.3, model=model, inject_positions=pos):
+                ref = model(**enc).logits
+            st._steer_cache = None
+            vec = st._cached_steer_vec("cpu", dq, 0.3)[None, :]
+            with drv.per_row_steering(st, model, vec, pos):
+                got = model(**enc).logits
+            assert torch.allclose(got, ref, atol=1e-5) and not torch.allclose(got, l0)
+        with drv.per_row_steering(st, model, torch.zeros(1, 64), "last"):
+            assert torch.allclose(model(**enc).logits, l0, atol=1e-6)  # zero row = unsteered
+        assert torch.allclose(model(**enc).logits, l0)  # hook removed
+
+
+def test_mixed_steer_end_to_end_tiny_cpu():
+    pytest.importorskip("torch")
+    model, tok = _build_tiny()
+    btok = _batch_tok(tok)
+    cfg = drv.Cfg(model_id="tiny", dtype="fp32", device="cpu", n_prompts=3, max_new_tokens=10, alphas=(0.1, 0.3),
+                  inject_positions=("last",), latency_reps=1, latency_tokens=4, do_grpo=False, steer_unit_dir=True,
+                  gen_batch=5, mixed_steer=True)
+    res = drv.run_all(model, btok, cfg, log=lambda m: None)
+    assert res["errors"] == [], res["errors"]
+    conds = res["stages"]["steering"]["conditions"]
+    assert set(conds) == {f"steer_{k}_last_alpha_{a}" for k in ("cal", "rand") for a in (0.1, 0.3)}
+    for name, c in conds.items():
+        assert [r["prompt_idx"] for r in c["records"]] == [0, 1, 2] and c["summary"]["n_ok"] == 3
+        assert c["direction"] == ("calibrated" if "_cal_" in name else "random_haar")
+        assert all(r["mixed_batch"] for r in c["records"]) and c["paired_vs_base"]["n_pairs"] == 3

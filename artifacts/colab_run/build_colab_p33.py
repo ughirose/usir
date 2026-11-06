@@ -58,6 +58,10 @@ for _i, _seed in enumerate((20261406, 20261506, 20261606, 20261706), start=1):
 SCRIPTS["p44b_q3_8b"] = ("Qwen/Qwen3-8B", ["--alphas", "0.12", "0.16", "--inject-positions", "last", "--steer-unit-dir",
                                          "--no-grpo", "--max-new-tokens", "1024", "--seed", "20261406",
                                          "--prompt-set", "literary", "--gen-batch", "12"])
+# Phase 45: same workload with steering conditions sharing batches (per-row injection), 24 rows per generate() call
+SCRIPTS["p45m_q3_8b"] = ("Qwen/Qwen3-8B", ["--alphas", "0.12", "0.16", "--inject-positions", "last", "--steer-unit-dir",
+                                         "--no-grpo", "--max-new-tokens", "1024", "--seed", "20261406",
+                                         "--prompt-set", "literary", "--gen-batch", "24", "--mixed-steer"])
 
 def build_zip_b64() -> str:
     buf = io.BytesIO()

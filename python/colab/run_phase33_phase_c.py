@@ -132,6 +132,7 @@ class Cfg(p28.Cfg):
     store_rollouts: bool = False        # Phase 40: keep GRPO rollout texts, rewards and ref PPL in the result
     prompt_set: str = "expository"      # evaluation prompts: "expository" (Phase 33-38) | "literary" (Phase 39)
     gen_batch: int = 1                  # >1: evaluation prompts generated together in one left-padded generate() call
+    mixed_steer: bool = False           # steering conditions share batches (per-row injection vectors); rows per call = gen_batch
 
     def as_dict(self) -> Dict[str, Any]:
         d = super().as_dict()
@@ -266,6 +267,78 @@ def run_condition_batched(name: str, model: Any, tok: Any, prompts: Sequence[str
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
     return {"name": name, "records": records, "summary": p28.summarize(records)}
+
+
+@contextlib.contextmanager
+def per_row_steering(steerer: SymplecticActivationSteerer, model: Any, row_vecs: Any, positions: str):
+    """Forward hook on the steerer's target layer that adds row-specific injections:
+    h'[b] = h[b] + ||h[b]|| * row_vecs[b]  (row_vecs: float32 (B, d); zero rows leave h unchanged).
+    Same arithmetic as SymplecticActivationSteerer.steer_tensor with vec = alpha * steer_direction(dq), so a batch
+    whose rows all carry one condition reproduces steering_context for that condition."""
+    layer = steerer.get_target_layer_module(model)
+    if layer is None:
+        raise RuntimeError("steering target layer not found")
+    vecs = row_vecs[:, None, :]
+
+    def hook(module, inputs, output):
+        h = output[0] if isinstance(output, tuple) else output
+        dt = h.dtype
+        hf = h.to(torch.float32)
+        if positions == "last":
+            last = hf[:, -1:, :]
+            hs = torch.cat([hf[:, :-1, :], last + (torch.norm(last, dim=-1, keepdim=True) + 1e-8) * vecs], dim=1)
+        else:
+            hs = hf + (torch.norm(hf, dim=-1, keepdim=True) + 1e-8) * vecs
+        hs = hs.to(dt)
+        return (hs,) + tuple(output[1:]) if isinstance(output, tuple) else hs
+
+    handle = layer.register_forward_hook(hook)
+    try:
+        yield
+    finally:
+        handle.remove()
+
+
+def run_conditions_mixed(specs: Sequence[Dict[str, Any]], model: Any, tok: Any, user_prompts: Sequence[str],
+                         rendered: Sequence[str], cfg: Cfg, log: Callable[[str], None], positions: str,
+                         base_records: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Dict[str, Any]]:
+    """Generates every (condition, prompt) row of several steering conditions in shared batches of cfg.gen_batch rows.
+    specs: [{"name", "steerer", "dq", "alpha"}].  Returns {name: condition dict} as run_condition33 would."""
+    import torch as _t
+    rows = [(si, i) for si in range(len(specs)) for i in range(len(rendered))]
+    vec_of = []
+    for s in specs:
+        s["steerer"]._steer_cache = None
+        vec_of.append(s["steerer"]._cached_steer_vec(cfg.device, np.asarray(s["dq"], dtype=np.float32), float(s["alpha"])))
+    recs: Dict[int, List[Dict[str, Any]]] = {si: [] for si in range(len(specs))}
+    B = max(1, int(cfg.gen_batch))
+    for k in range(0, len(rows), B):
+        chunk = rows[k:k + B]
+        vecs = _t.stack([vec_of[si] for si, _ in chunk]).to(cfg.device)
+        try:
+            with per_row_steering(specs[0]["steerer"], model, vecs, positions):
+                gs = batched_generate(model, tok, [rendered[i] for _, i in chunk], cfg, seed=cfg.seed + k)
+            for (si, i), g in zip(chunk, gs):
+                rec = {"prompt_idx": i, "prompt": rendered[i], "seed": cfg.seed + k, "error": None, "mixed_batch": True, **g}
+                rec["metrics"] = p28.text_metrics(g["text"], rendered[i])
+                recs[si].append(rec)
+            log(f"[mixed {positions}] rows {k}-{k + len(chunk) - 1} steps={gs[0]['batch_steps']} wall={gs[0]['wall_ms'] / 1000:.1f}s")
+        except Exception as exc:
+            for si, i in chunk:
+                recs[si].append({"prompt_idx": i, "prompt": rendered[i], "seed": cfg.seed + k, "error": repr(exc),
+                                 "traceback": traceback.format_exc()[-1500:]})
+            log(f"[mixed {positions}] rows {k}-{k + len(chunk) - 1} ERROR {exc!r}")
+            if _t.cuda.is_available():
+                _t.cuda.empty_cache()
+    out = {}
+    for si, s in enumerate(specs):
+        r = sorted(recs[si], key=lambda x: x["prompt_idx"])
+        cond = {"name": s["name"], "records": r, "summary": p28.summarize(r)}
+        finalize_condition(cond, user_prompts, cfg)
+        if base_records is not None:
+            cond["paired_vs_base"] = paired33(cond["records"], base_records)
+        out[s["name"]] = cond
+    return out
 
 
 def run_condition33(name: str, model: Any, tok: Any, user_prompts: Sequence[str], rendered: Sequence[str], cfg: Cfg,
@@ -419,7 +492,21 @@ def run_steering_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[
     checks["steer_hook_max_abs_logit_change"] = float((l1 - l0).abs().max())
     checks["steer_hook_removed_max_abs_logit_diff"] = float((l2 - l0).abs().max())
 
-    for mode in modes:
+    for mode in modes if cfg.mixed_steer else []:
+        specs, meta = [], {}
+        for a in cfg.alphas:
+            specs.append({"name": f"steer_cal_{mode}_alpha_{a:g}", "steerer": st, "dq": dq, "alpha": float(a)})
+            meta[specs[-1]["name"]] = dict(alpha_act=float(a), inject_positions=mode, direction="calibrated")
+            if cfg.steer_control:
+                a_r = float(a) * ctl_scale
+                specs.append({"name": f"steer_rand_{mode}_alpha_{a:g}", "steerer": rnd, "dq": dq, "alpha": a_r})
+                meta[specs[-1]["name"]] = dict(alpha_act=float(a), alpha_effective=a_r, inject_positions=mode,
+                                               direction="random_haar")
+        for name, c in run_conditions_mixed(specs, model, tok, user_prompts, rendered, cfg, log, mode,
+                                            base_stage["records"]).items():
+            c.update(meta[name])
+            stage["conditions"][name] = c
+    for mode in modes if not cfg.mixed_steer else []:
         for a in cfg.alphas:
             name = f"steer_cal_{mode}_alpha_{a:g}"
             c = run_condition33(name, model, tok, user_prompts, rendered, cfg, log, base_stage["records"],
@@ -652,6 +739,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
     ap.add_argument("--reward-strip-tail", action="store_true")
     ap.add_argument("--prompt-set", default=Cfg.prompt_set, choices=sorted(PROMPT_SETS))
     ap.add_argument("--gen-batch", type=int, default=Cfg.gen_batch)
+    ap.add_argument("--mixed-steer", action="store_true")
     ap.add_argument("--out", default=None, help="write the result JSON here (in addition to the ARCHIVE_B64 line)")
     ap.add_argument("--no-archive-line", action="store_true")
     args = ap.parse_args(argv)
@@ -669,7 +757,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
         lora_r=args.lora_r, lora_alpha=args.lora_alpha, also_unmerged_gen=args.also_unmerged_gen,
         steer_unit_dir=args.steer_unit_dir, grpo_reward=args.grpo_reward,
         prompt_set=args.prompt_set, store_rollouts=args.store_rollouts,
-        reward_strip_tail=args.reward_strip_tail, gen_batch=args.gen_batch,
+        reward_strip_tail=args.reward_strip_tail, gen_batch=args.gen_batch, mixed_steer=args.mixed_steer,
     )
     t0 = time.time()
 
