@@ -34,6 +34,11 @@ SCRIPTS = {
     "p36c_q3_8b": ("Qwen/Qwen3-8B", ["--alphas", "0.08", "0.12", "--inject-positions", "last", "--steer-unit-dir",
                                      "--grpo-reward", "shaped"]),
 }
+# Phase 38: steering-only re-evaluation without truncation (max_new_tokens 1024), three seed series, no GRPO
+for _i, _seed in enumerate((20261106, 20261206, 20261306), start=1):
+    SCRIPTS[f"p38c_q3_8b_s{_i}"] = ("Qwen/Qwen3-8B", ["--alphas", "0.08", "0.12", "--inject-positions", "last",
+                                                    "--steer-unit-dir", "--no-grpo", "--max-new-tokens", "1024",
+                                                    "--seed", str(_seed)])
 
 
 def build_zip_b64() -> str:
