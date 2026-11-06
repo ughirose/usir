@@ -87,6 +87,25 @@ TRAIN_TASKS: List[str] = [
 EVAL_PROMPTS: List[str] = [t + PROSE_SUFFIX for t in EVAL_TASKS]
 TRAIN_PROMPTS: List[str] = [t + PROSE_SUFFIX for t in TRAIN_TASKS]
 
+# Phase 39: literary scene prompts (no author, work or character names), same length instruction as above
+LITERARY_SUFFIX = "小説の地の文として、だ・である調で800字程度で書いてください。見出しや箇条書きは使わないでください。"
+LITERARY_TASKS: List[str] = [
+    "雨の降る夕方、駅のホームで電車を待つ人の様子を描いてください。",
+    "古い家を片づけていて、子どものころの手紙を見つける場面を描いてください。",
+    "夜の病院の廊下で、家族の手術が終わるのを待つ場面を描いてください。",
+    "冬の朝、海沿いの小さな町を歩く場面を描いてください。",
+    "長く会っていなかった友人と喫茶店で再会する場面を描いてください。",
+    "山道で道に迷い、日が暮れていく場面を描いてください。",
+    "祭りの夜、人混みの中で連れとはぐれる場面を描いてください。",
+    "引っ越しの前日、空になった部屋で過ごす場面を描いてください。",
+    "停電した夜、ろうそくの明かりで家族が過ごす場面を描いてください。",
+    "夏の午後、川辺で釣りをする老人を描いてください。",
+    "試験の結果を知らせる手紙を開ける直前の場面を描いてください。",
+    "嵐が過ぎた翌朝、荒れた庭を見て回る場面を描いてください。",
+]
+LITERARY_PROMPTS: List[str] = [t + LITERARY_SUFFIX for t in LITERARY_TASKS]
+PROMPT_SETS = {"expository": EVAL_PROMPTS, "literary": LITERARY_PROMPTS}
+
 
 @dataclasses.dataclass
 class Cfg(p28.Cfg):
@@ -109,6 +128,7 @@ class Cfg(p28.Cfg):
     # Phase 36
     steer_unit_dir: bool = False         # inject alpha * ||h|| * (V dq)/||V dq|| (both calibrated and random)
     grpo_reward: str = "multiplicative"  # "multiplicative" (Phase 33) | "shaped" (see shaped_reward)
+    prompt_set: str = "expository"      # evaluation prompts: "expository" (Phase 33-38) | "literary" (Phase 39)
 
     def as_dict(self) -> Dict[str, Any]:
         d = super().as_dict()
@@ -433,8 +453,9 @@ def run_grpo_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[str]
 
 def run_all(model: Any, tok: Any, cfg: Cfg, log: Callable[[str], None] = print) -> Dict[str, Any]:
     t_all = time.perf_counter()
-    n = max(1, min(cfg.n_prompts, len(EVAL_PROMPTS)))
-    user_prompts = EVAL_PROMPTS[:n]
+    prompts = PROMPT_SETS[cfg.prompt_set]
+    n = max(1, min(cfg.n_prompts, len(prompts)))
+    user_prompts = prompts[:n]
     rendered = [render_chat(tok, u) for u in user_prompts]
     train_user = list(TRAIN_PROMPTS)
     train_rendered = [render_chat(tok, u) for u in train_user]
@@ -551,6 +572,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
     ap.add_argument("--also-unmerged-gen", action="store_true")
     ap.add_argument("--steer-unit-dir", action="store_true")
     ap.add_argument("--grpo-reward", default=Cfg.grpo_reward, choices=["multiplicative", "shaped"])
+    ap.add_argument("--prompt-set", default=Cfg.prompt_set, choices=sorted(PROMPT_SETS))
     ap.add_argument("--out", default=None, help="write the result JSON here (in addition to the ARCHIVE_B64 line)")
     ap.add_argument("--no-archive-line", action="store_true")
     args = ap.parse_args(argv)
@@ -567,6 +589,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
         alpha_ppl=args.alpha_ppl, ppl_percentile=args.ppl_percentile,
         lora_r=args.lora_r, lora_alpha=args.lora_alpha, also_unmerged_gen=args.also_unmerged_gen,
         steer_unit_dir=args.steer_unit_dir, grpo_reward=args.grpo_reward,
+        prompt_set=args.prompt_set,
     )
     t0 = time.time()
 

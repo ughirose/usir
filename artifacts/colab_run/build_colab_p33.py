@@ -39,6 +39,11 @@ for _i, _seed in enumerate((20261106, 20261206, 20261306), start=1):
     SCRIPTS[f"p38c_q3_8b_s{_i}"] = ("Qwen/Qwen3-8B", ["--alphas", "0.08", "0.12", "--inject-positions", "last",
                                                     "--steer-unit-dir", "--no-grpo", "--max-new-tokens", "1024",
                                                     "--seed", str(_seed)])
+# Phase 39: same as Phase 38 with literary scene prompts
+for _i, _seed in enumerate((20261106, 20261206, 20261306), start=1):
+    SCRIPTS[f"p39c_q3_8b_s{_i}"] = ("Qwen/Qwen3-8B", ["--alphas", "0.08", "0.12", "--inject-positions", "last",
+                                                    "--steer-unit-dir", "--no-grpo", "--max-new-tokens", "1024",
+                                                    "--seed", str(_seed), "--prompt-set", "literary"])
 
 
 def build_zip_b64() -> str:

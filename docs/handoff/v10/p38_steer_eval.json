@@ -1,9 +1,11 @@
 {
  "schema": "p38_steer_eval_v1",
+ "prefix": "p38c_q3_8b",
  "criteria_doc": "docs/handoff/2026-11-06_phase38_preregistration.md",
  "series": {
   "s1": {
    "seed": 20261106,
+   "prompt_set": "expository",
    "total_wall_sec": 1361.725130324,
    "conditions": {
     "base": {
@@ -75,6 +77,7 @@
   },
   "s2": {
    "seed": 20261206,
+   "prompt_set": "expository",
    "total_wall_sec": 1417.8811261209999,
    "conditions": {
     "base": {
@@ -146,6 +149,7 @@
   },
   "s3": {
    "seed": 20261306,
+   "prompt_set": "expository",
    "total_wall_sec": 1361.470031383,
    "conditions": {
     "base": {

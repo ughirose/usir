@@ -186,6 +186,17 @@ def test_prompts_disjoint_generic_and_flat():
     assert drv.Cfg().max_new_tokens == 400 and drv.Cfg().grpo_max_new_tokens == 256
 
 
+
+def test_literary_prompt_set_generic_and_selectable():
+    lit = drv.PROMPT_SETS["literary"]
+    assert len(lit) == 12 and len(set(lit)) == 12
+    assert not set(lit) & set(drv.EVAL_PROMPTS + drv.TRAIN_PROMPTS)
+    banned = {str(c.get("author", "")) for c in CORPUS} | {str(c.get("title", "")) for c in CORPUS}
+    banned = {b for b in banned if len(b) >= 2}
+    for p in lit:
+        assert not any(b in p for b in banned), p
+    assert drv.Cfg().prompt_set == "expository" and drv.PROMPT_SETS["expository"] is drv.EVAL_PROMPTS
+
 def test_render_chat_fallback_and_enable_thinking():
     class NoTemplate:
         pass

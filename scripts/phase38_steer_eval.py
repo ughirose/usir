@@ -9,10 +9,12 @@ Criteria: (1) pooled calibrated a0.12 < random a0.12 and < base; (2) calibrated 
 Report only: alpha 0.08, CV_L < 0.28, one-sided exact McNemar, truncation counts, latency.
 
 Output: docs/handoff/v10/p38_steer_eval.json
-Usage:  cd python && uv run python ../scripts/phase38_steer_eval.py
+Usage:  cd python && uv run python ../scripts/phase38_steer_eval.py [--prefix p39c_q3_8b --out p39_steer_eval.json]
+        (Phase 39 uses the same script and criteria on the literary prompt set)
 """
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import statistics as st
@@ -55,13 +57,17 @@ def records(d: dict, cond: str) -> list:
 
 
 def main() -> None:
-    out = {"schema": "p38_steer_eval_v1", "criteria_doc": "docs/handoff/2026-11-06_phase38_preregistration.md",
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--prefix", default="p38c_q3_8b")
+    ap.add_argument("--out", default=OUT.name)
+    args = ap.parse_args()
+    out = {"schema": "p38_steer_eval_v1", "prefix": args.prefix, "criteria_doc": "docs/handoff/2026-11-06_phase38_preregistration.md",
            "series": {}, "pooled": {}}
     flags = {c: [] for c in CONDS}
     for s in SERIES:
-        d = json.loads((V10 / f"p38c_q3_8b_{s}.json").read_text(encoding="utf-8"))
+        d = json.loads((V10 / f"{args.prefix}_{s}.json").read_text(encoding="utf-8"))
         assert d["config"]["max_new_tokens"] == 1024 and not d["provenance"]["mock_used"] and not d["errors"], s
-        ser = {"seed": d["config"]["seed"], "total_wall_sec": d["total_wall_sec"], "conditions": {}}
+        ser = {"seed": d["config"]["seed"], "prompt_set": d["config"].get("prompt_set", "expository"), "total_wall_sec": d["total_wall_sec"], "conditions": {}}
         keys = None
         for c in CONDS:
             recs = sorted(records(d, c), key=lambda r: r["prompt_idx"])
@@ -108,12 +114,13 @@ def main() -> None:
     out["mcnemar"] = {"cal012_vs_rand012": mcnemar_one_sided(flags[CAL], flags[RAND]),
                       "cal012_vs_base": mcnemar_one_sided(flags[CAL], flags["base"]),
                       "cal008_vs_rand008": mcnemar_one_sided(flags["steer_cal_last_alpha_0.08"], flags["steer_rand_last_alpha_0.08"])}
-    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    out_path = V10 / args.out
+    out_path.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     for c in CONDS:
         print(c, P[c], [out["series"][s]["conditions"][c]["deadzone_stripped"] for s in SERIES])
     print(json.dumps(out["criteria"], indent=1))
     print(json.dumps(out["mcnemar"], indent=1))
-    print("wrote", OUT)
+    print("wrote", out_path)
 
 
 if __name__ == "__main__":
