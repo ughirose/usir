@@ -394,7 +394,7 @@ def section_phase_c(P: Paper) -> str:
 Qwen3-8B (bf16, A100). With raw literary continuation prompts the base model was in the Deadzone in {dz} of {n}
 outputs, so the former claim of "Deadzone escape" could not be tested on that set; steering at larger α increased
 the Deadzone count, and the calibrated direction did not differ from a norm-matched random direction.
-""" + phase_c_p33(P) + phase_c_p36(P) + phase_c_p38(P) + phase_c_p39(P)
+""" + phase_c_p33(P) + phase_c_p36(P) + phase_c_p38(P) + phase_c_p39(P) + phase_c_p42(P)
 
 
 def phase_c_p33(P: Paper) -> str:
@@ -754,6 +754,39 @@ comparison with base cannot be decided, and the calibrated–random comparison i
 are not met; (3) and (4) are met (PPL limit {lim}). On these prompts Qwen3-8B does not produce the flat prose the
 Deadzone classifier detects; the base rate is at the floor, so the steering effect of §5.4 could not be observed on
 literary prompts with this metric (this does not show that the effect is absent there).
+"""
+
+
+def phase_c_p42(P: Paper) -> str:
+    s = f"{V10}/p42_grpo_eval.json"
+    if not P.has(s):
+        return ""
+    v = lambda nid, expr, f="{}": P.num(f"p42_{nid}", s, expr, f)
+    se = lambda c, k, f="{}": v(f"{c}_{k}", f"d['sets'][{c!r}][{k!r}]", f)
+    ro = lambda h, k, f="{:.3f}": v(f"ro_{h}_{k}", f"d['rollouts'][{h!r}][{k!r}]", f)
+    return f"""
+### 5.6 Phase 42: GRPO with the shaped reward on complete sentences
+The §5.3 GRPO run was repeated without steering, with the shaped reward computed after removing the fragment cut by
+the 256-token rollout limit, rollouts stored, and evaluation at 1024 tokens. Pre-registered criteria: (1) mean reward
+of the last 10 steps at least 0.02 above the first 10, (2) merged-LoRA Deadzone below base, (3) no degenerate output
+and ref PPL within base + 0.5.
+
+| | base | merged LoRA |
+|---|---|---|
+| Deadzone (n = 12) | {se('base', 'deadzone_stripped')} | {se('lora_merged', 'deadzone_stripped')} |
+| degenerate | {se('base', 'degenerate')} | {se('lora_merged', 'degenerate')} |
+| ref PPL | {se('base', 'ref_ppl_mean', '{:.3f}')} | {se('lora_merged', 'ref_ppl_mean', '{:.3f}')} |
+| mean CV_L | {se('base', 'cv_mean_stripped', '{:.3f}')} | {se('lora_merged', 'cv_mean_stripped', '{:.3f}')} |
+
+The reward rose from {v('r_first', "d['reward_first10']", '{:.3f}')} to {v('r_last', "d['reward_last10']", '{:.3f}')}
+(criterion 1 met), the Deadzone criterion is met by one output, and one merged-LoRA output has a distinct bigram ratio
+just below 0.5, so the run is **not met** overall. In the stored rollouts, {ro('first_half', 'ends_inside_sentence', '{:.3f}')}
+(first half) and {ro('second_half', 'ends_inside_sentence', '{:.3f}')} (second half) end inside a sentence, none lacks a
+sentence end, and the position of the last sentence end does not move ({ro('first_half', 'last_end_position_mean')} →
+{ro('second_half', 'last_end_position_mean')}), so the policy did not learn to avoid sentence ends. The reward
+correlates with CV_L ({v('c_cv', "d['rollouts']['corr_reward_cv']", '{:.2f}')}) and with cadence_alive
+({v('c_cad', "d['rollouts']['corr_reward_cadence']", '{:.2f}')}); scoring the same rollouts without removing the tail
+gives a higher reward ({ro('first_half', 'reward_unstripped_mean')} vs {ro('first_half', 'reward_mean')} in the first half).
 """
 
 

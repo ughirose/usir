@@ -402,6 +402,29 @@ are not met; (3) and (4) are met (PPL limit 2.427). On these prompts Qwen3-8B do
 Deadzone classifier detects; the base rate is at the floor, so the steering effect of §5.4 could not be observed on
 literary prompts with this metric (this does not show that the effect is absent there).
 
+### 5.6 Phase 42: GRPO with the shaped reward on complete sentences
+The §5.3 GRPO run was repeated without steering, with the shaped reward computed after removing the fragment cut by
+the 256-token rollout limit, rollouts stored, and evaluation at 1024 tokens. Pre-registered criteria: (1) mean reward
+of the last 10 steps at least 0.02 above the first 10, (2) merged-LoRA Deadzone below base, (3) no degenerate output
+and ref PPL within base + 0.5.
+
+| | base | merged LoRA |
+|---|---|---|
+| Deadzone (n = 12) | 7 | 6 |
+| degenerate | 0 | 1 |
+| ref PPL | 1.550 | 1.581 |
+| mean CV_L | 0.271 | 0.290 |
+
+The reward rose from 0.226 to 0.259
+(criterion 1 met), the Deadzone criterion is met by one output, and one merged-LoRA output has a distinct bigram ratio
+just below 0.5, so the run is **not met** overall. In the stored rollouts, 0.981
+(first half) and 0.994 (second half) end inside a sentence, none lacks a
+sentence end, and the position of the last sentence end does not move (0.938 →
+0.942), so the policy did not learn to avoid sentence ends. The reward
+correlates with CV_L (0.84) and with cadence_alive
+(0.87); scoring the same rollouts without removing the tail
+gives a higher reward (0.287 vs 0.218 in the first half).
+
 ## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
 contiguous ≥ 7-character overlap with the source. These are fixture tests in the TypeScript suite and a repository

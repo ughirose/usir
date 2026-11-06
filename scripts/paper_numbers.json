@@ -4159,6 +4159,150 @@
    "source": "docs/handoff/v10/p39_steer_eval.json",
    "expr": "d['criteria']['c4_limit']",
    "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_base_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['sets']['base']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p42_lora_merged_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['sets']['lora_merged']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p42_base_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['sets']['base']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p42_lora_merged_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "1",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['sets']['lora_merged']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p42_base_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "1.550",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['sets']['base']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_lora_merged_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "1.581",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['sets']['lora_merged']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_base_cv_mean_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "0.271",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['sets']['base']['cv_mean_stripped']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_lora_merged_cv_mean_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "0.290",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['sets']['lora_merged']['cv_mean_stripped']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_r_first",
+   "file": "usir_v4_paper.md",
+   "text": "0.226",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['reward_first10']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_r_last",
+   "file": "usir_v4_paper.md",
+   "text": "0.259",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['reward_last10']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_ro_first_half_ends_inside_sentence",
+   "file": "usir_v4_paper.md",
+   "text": "0.981",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['rollouts']['first_half']['ends_inside_sentence']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_ro_second_half_ends_inside_sentence",
+   "file": "usir_v4_paper.md",
+   "text": "0.994",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['rollouts']['second_half']['ends_inside_sentence']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_ro_first_half_last_end_position_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.938",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['rollouts']['first_half']['last_end_position_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_ro_second_half_last_end_position_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.942",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['rollouts']['second_half']['last_end_position_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_c_cv",
+   "file": "usir_v4_paper.md",
+   "text": "0.84",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['rollouts']['corr_reward_cv']",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p42_c_cad",
+   "file": "usir_v4_paper.md",
+   "text": "0.87",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['rollouts']['corr_reward_cadence']",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p42_ro_first_half_reward_unstripped_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.287",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['rollouts']['first_half']['reward_unstripped_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_ro_first_half_reward_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.218",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['rollouts']['first_half']['reward_mean']",
+   "fmt": "{:.3f}"
   }
  ]
 }
