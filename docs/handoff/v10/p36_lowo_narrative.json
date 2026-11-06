@@ -1,0 +1,1500 @@
+{
+ "schema": "p36_lowo_narrative_v1",
+ "primary": "fisher_z24_ortho_ext_narr",
+ "reg": 0.01,
+ "narr_names": [
+  "narr_log_mean_sent_len",
+  "narr_log_p90_sent_len",
+  "narr_commas_per_sent",
+  "dialogue_char_ratio"
+ ],
+ "labels": {
+  "000148": "夏目漱石",
+  "000879": "芥川龍之介",
+  "000035": "太宰治",
+  "000081": "宮沢賢治",
+  "000074": "梶井基次郎",
+  "000129": "森鴎外",
+  "000050": "泉鏡花",
+  "001383": "谷崎潤一郎",
+  "001095": "坂口安吾",
+  "000119": "中島敦"
+ },
+ "n_works": 46,
+ "chance": 0.1,
+ "lowo": {
+  "fisher_z24_ortho_ext": {
+   "accuracy": 0.6739130434782609,
+   "n_correct": 31,
+   "n": 46,
+   "top3_accuracy": 0.8695652173913043,
+   "per_author": {
+    "000035": "3/4",
+    "000050": "4/4",
+    "000074": "4/5",
+    "000081": "4/4",
+    "000119": "4/5",
+    "000129": "4/5",
+    "000148": "4/5",
+    "000879": "2/5",
+    "001095": "1/4",
+    "001383": "1/5"
+   },
+   "rows": [
+    {
+     "author_id": "000035",
+     "work_id": "001567",
+     "predicted": "000879",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000301",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "001565",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000275",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000521",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000360",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000897",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "003586",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000424",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000427",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000429",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000415",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000411",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000456",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "043754",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000462",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000470",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000624",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001737",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001738",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000621",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001743",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "045245",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000689",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000673",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "045224",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "058126",
+     "predicted": "000050",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000752",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000799",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000776",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000794",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000773",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000127",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000042",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000055",
+     "predicted": "000050",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000060",
+     "predicted": "000050",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000179",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042621",
+     "predicted": "001095",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042618",
+     "predicted": "000148",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042877",
+     "predicted": "000035",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042616",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 7
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056641",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "001383",
+     "work_id": "057349",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056643",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056866",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001383",
+     "work_id": "058093",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 7
+    }
+   ]
+  },
+  "fisher_narr": {
+   "accuracy": 0.3695652173913043,
+   "n_correct": 17,
+   "n": 46,
+   "top3_accuracy": 0.7608695652173914,
+   "per_author": {
+    "000035": "0/4",
+    "000050": "1/4",
+    "000074": "1/5",
+    "000081": "3/4",
+    "000119": "3/5",
+    "000129": "3/5",
+    "000148": "3/5",
+    "000879": "1/5",
+    "001095": "1/4",
+    "001383": "1/5"
+   },
+   "rows": [
+    {
+     "author_id": "000035",
+     "work_id": "001567",
+     "predicted": "000148",
+     "correct": false,
+     "rank_of_truth": 8
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000301",
+     "predicted": "000050",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000035",
+     "work_id": "001565",
+     "predicted": "000050",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000275",
+     "predicted": "000879",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000521",
+     "predicted": "000035",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000360",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000897",
+     "predicted": "000081",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "000050",
+     "work_id": "003586",
+     "predicted": "000035",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000424",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000427",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000429",
+     "predicted": "000148",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000415",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000411",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000456",
+     "predicted": "001383",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000081",
+     "work_id": "043754",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000462",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000470",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000624",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001737",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001738",
+     "predicted": "000074",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000621",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001743",
+     "predicted": "000074",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000129",
+     "work_id": "045245",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000689",
+     "predicted": "000081",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000673",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "045224",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "058126",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000752",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000799",
+     "predicted": "000074",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000776",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000794",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000773",
+     "predicted": "000074",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000127",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000042",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000055",
+     "predicted": "000035",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000060",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000179",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042621",
+     "predicted": "001095",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042618",
+     "predicted": "000148",
+     "correct": false,
+     "rank_of_truth": 7
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042877",
+     "predicted": "001383",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042616",
+     "predicted": "000074",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056641",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "001383",
+     "work_id": "057349",
+     "predicted": "000879",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056643",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056866",
+     "predicted": "000081",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "001383",
+     "work_id": "058093",
+     "predicted": "000081",
+     "correct": false,
+     "rank_of_truth": 10
+    }
+   ]
+  },
+  "fisher_ortho_ext_narr": {
+   "accuracy": 0.6304347826086957,
+   "n_correct": 29,
+   "n": 46,
+   "top3_accuracy": 0.8695652173913043,
+   "per_author": {
+    "000035": "3/4",
+    "000050": "4/4",
+    "000074": "3/5",
+    "000081": "4/4",
+    "000119": "4/5",
+    "000129": "3/5",
+    "000148": "3/5",
+    "000879": "3/5",
+    "001095": "1/4",
+    "001383": "1/5"
+   },
+   "rows": [
+    {
+     "author_id": "000035",
+     "work_id": "001567",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000301",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "001565",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000275",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000521",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000360",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000897",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "003586",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000424",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000427",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000429",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000415",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000411",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000456",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "043754",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000462",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000470",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000624",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001737",
+     "predicted": "000148",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001738",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000621",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001743",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "045245",
+     "predicted": "000148",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000689",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000673",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "045224",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "058126",
+     "predicted": "000050",
+     "correct": false,
+     "rank_of_truth": 6
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000752",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000799",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000776",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000794",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000773",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000127",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000042",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000055",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000060",
+     "predicted": "001383",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000179",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042621",
+     "predicted": "001095",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042618",
+     "predicted": "000074",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042877",
+     "predicted": "001383",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042616",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 7
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056641",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001383",
+     "work_id": "057349",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056643",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056866",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001383",
+     "work_id": "058093",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 7
+    }
+   ]
+  },
+  "fisher_z24_ortho_ext_narr": {
+   "accuracy": 0.7391304347826086,
+   "n_correct": 34,
+   "n": 46,
+   "top3_accuracy": 0.9130434782608695,
+   "per_author": {
+    "000035": "3/4",
+    "000050": "4/4",
+    "000074": "4/5",
+    "000081": "4/4",
+    "000119": "4/5",
+    "000129": "4/5",
+    "000148": "4/5",
+    "000879": "3/5",
+    "001095": "1/4",
+    "001383": "3/5"
+   },
+   "rows": [
+    {
+     "author_id": "000035",
+     "work_id": "001567",
+     "predicted": "000879",
+     "correct": false,
+     "rank_of_truth": 5
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000301",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "001565",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000035",
+     "work_id": "000275",
+     "predicted": "000035",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000521",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000360",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "000897",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000050",
+     "work_id": "003586",
+     "predicted": "000050",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000424",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000427",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000429",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000415",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000074",
+     "work_id": "000411",
+     "predicted": "000074",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000456",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "043754",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000462",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000081",
+     "work_id": "000470",
+     "predicted": "000081",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000624",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001737",
+     "predicted": "000148",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001738",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "000621",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000119",
+     "work_id": "001743",
+     "predicted": "000119",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "045245",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000689",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "000673",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "045224",
+     "predicted": "000129",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000129",
+     "work_id": "058126",
+     "predicted": "000050",
+     "correct": false,
+     "rank_of_truth": 4
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000752",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000799",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000776",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000794",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000148",
+     "work_id": "000773",
+     "predicted": "000148",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000127",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000042",
+     "predicted": "000129",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000055",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000060",
+     "predicted": "000050",
+     "correct": false,
+     "rank_of_truth": 2
+    },
+    {
+     "author_id": "000879",
+     "work_id": "000179",
+     "predicted": "000879",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042621",
+     "predicted": "001095",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042618",
+     "predicted": "000148",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042877",
+     "predicted": "000035",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001095",
+     "work_id": "042616",
+     "predicted": "000119",
+     "correct": false,
+     "rank_of_truth": 7
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056641",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "057349",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056643",
+     "predicted": "001383",
+     "correct": true,
+     "rank_of_truth": 1
+    },
+    {
+     "author_id": "001383",
+     "work_id": "056866",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 3
+    },
+    {
+     "author_id": "001383",
+     "work_id": "058093",
+     "predicted": "001095",
+     "correct": false,
+     "rank_of_truth": 7
+    }
+   ]
+  }
+ },
+ "reg_sensitivity_primary": {
+  "0.001": {
+   "n_correct": 32,
+   "accuracy": 0.6956521739130435
+  },
+  "0.003": {
+   "n_correct": 32,
+   "accuracy": 0.6956521739130435
+  },
+  "0.01": {
+   "n_correct": 34,
+   "accuracy": 0.7391304347826086
+  },
+  "0.03": {
+   "n_correct": 34,
+   "accuracy": 0.7391304347826086
+  },
+  "0.1": {
+   "n_correct": 34,
+   "accuracy": 0.7391304347826086
+  }
+ },
+ "narr_by_author": {
+  "000035": {
+   "narr_log_mean_sent_len": 3.507237404203928,
+   "narr_log_p90_sent_len": 4.196205331529036,
+   "narr_commas_per_sent": 2.8022834608345346,
+   "dialogue_char_ratio": 0.1334908949905149,
+   "whole_text_narr_mean_sent_len": 45.650443667652596,
+   "whole_text_narr_p90_sent_len": 94.20000000000027
+  },
+  "000050": {
+   "narr_log_mean_sent_len": 3.3686918369702403,
+   "narr_log_p90_sent_len": 4.086881470952914,
+   "narr_commas_per_sent": 2.2240480556036144,
+   "dialogue_char_ratio": 0.18897317181538595,
+   "whole_text_narr_mean_sent_len": 50.8752,
+   "whole_text_narr_p90_sent_len": 98.0
+  },
+  "000074": {
+   "narr_log_mean_sent_len": 3.270972937386956,
+   "narr_log_p90_sent_len": 3.8452180111802243,
+   "narr_commas_per_sent": 0.6360560215712524,
+   "dialogue_char_ratio": 0.0944067981553688,
+   "whole_text_narr_mean_sent_len": 29.153284671532848,
+   "whole_text_narr_p90_sent_len": 53.200000000000045
+  },
+  "000081": {
+   "narr_log_mean_sent_len": 3.363260425679746,
+   "narr_log_p90_sent_len": 4.01870775921484,
+   "narr_commas_per_sent": 0.7826426519014418,
+   "dialogue_char_ratio": 0.24580149207656307,
+   "whole_text_narr_mean_sent_len": 41.12808219178082,
+   "whole_text_narr_p90_sent_len": 74.0
+  },
+  "000119": {
+   "narr_log_mean_sent_len": 3.458949760715359,
+   "narr_log_p90_sent_len": 3.987446948262427,
+   "narr_commas_per_sent": 1.2555951071110272,
+   "dialogue_char_ratio": 0.04228182984733569,
+   "whole_text_narr_mean_sent_len": 32.89034253092293,
+   "whole_text_narr_p90_sent_len": 60.0
+  },
+  "000129": {
+   "narr_log_mean_sent_len": 3.524181017953851,
+   "narr_log_p90_sent_len": 4.082577674062106,
+   "narr_commas_per_sent": 1.4167766512843696,
+   "dialogue_char_ratio": 0.1414134648187021,
+   "whole_text_narr_mean_sent_len": 37.606416772554006,
+   "whole_text_narr_p90_sent_len": 68.0
+  },
+  "000148": {
+   "narr_log_mean_sent_len": 3.181141060622415,
+   "narr_log_p90_sent_len": 3.75435728109408,
+   "narr_commas_per_sent": 0.7624152630049174,
+   "dialogue_char_ratio": 0.16570344337663429,
+   "whole_text_narr_mean_sent_len": 29.661918666761625,
+   "whole_text_narr_p90_sent_len": 53.0
+  },
+  "000879": {
+   "narr_log_mean_sent_len": 3.712171097769604,
+   "narr_log_p90_sent_len": 4.2011892788625245,
+   "narr_commas_per_sent": 2.483706148314388,
+   "dialogue_char_ratio": 0.0710417866525734,
+   "whole_text_narr_mean_sent_len": 45.31311475409836,
+   "whole_text_narr_p90_sent_len": 80.0
+  },
+  "001095": {
+   "narr_log_mean_sent_len": 3.6798368589261528,
+   "narr_log_p90_sent_len": 4.302770344407072,
+   "narr_commas_per_sent": 1.6690797706552973,
+   "dialogue_char_ratio": 0.09950305390162273,
+   "whole_text_narr_mean_sent_len": 45.41744548286604,
+   "whole_text_narr_p90_sent_len": 95.0
+  },
+  "001383": {
+   "narr_log_mean_sent_len": 3.6491939951389196,
+   "narr_log_p90_sent_len": 4.305431832863323,
+   "narr_commas_per_sent": 1.4839074636883987,
+   "dialogue_char_ratio": 0.23463097211630693,
+   "whole_text_narr_mean_sent_len": 68.822083766009,
+   "whole_text_narr_p90_sent_len": 121.0
+  }
+ },
+ "elapsed_sec": 2.2
+}

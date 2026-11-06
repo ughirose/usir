@@ -73,6 +73,49 @@ def ortho_vector_ext(text: str) -> np.ndarray:
     return np.concatenate([ortho_vector(body), np.asarray(kana), np.asarray(fin)])
 
 
+# Phase 36: narrative-channel statistics.  Dialogue spans 「...」 are replaced by one placeholder character so that
+# short utterances do not enter the sentence-length denominator; the first fragment of a window and an unterminated
+# last fragment are dropped (they are cut by the window boundary).  Universal character classes only (invariant 3).
+NARR_NAMES = ("narr_log_mean_sent_len", "narr_log_p90_sent_len", "narr_commas_per_sent", "dialogue_char_ratio")
+NARR_DIM = len(NARR_NAMES)
+_DIALOGUE = re.compile(r"「[^「」]*」")
+
+
+def _narrative_sentences(body: str) -> List[str]:
+    parts = _SENT_SPLIT.split(_DIALOGUE.sub("□", body))
+    if parts and not re.search(r"[。！？!?]$", parts[-1]):
+        parts = parts[:-1]
+    return [s for s in parts[1:] if len(s) >= 2]
+
+
+def narrative_sentence_lengths(text: str) -> List[int]:
+    return [len(s) for s in _narrative_sentences(re.sub(r"\s", "", text))]
+
+
+def ortho_vector_narr(text: str) -> np.ndarray:
+    body = re.sub(r"\s", "", text)
+    n = max(len(body), 1)
+    dia = sum(len(m) for m in _DIALOGUE.findall(body))
+    sents = _narrative_sentences(body)
+    if sents:
+        L = np.asarray([len(s) for s in sents], dtype=float)
+        commas = sum(s.count("、") for s in sents) / len(sents)
+    else:
+        narr = _DIALOGUE.sub("□", body)
+        L = np.asarray([float(max(len(narr), 1))])
+        commas = float(narr.count("、"))
+    return np.array([
+        math.log(max(float(L.mean()), 1.0)),
+        math.log(max(float(np.percentile(L, 90)), 1.0)),
+        commas,
+        dia / n,
+    ], dtype=float)
+
+
+def ortho_matrix_narr(windows: Sequence[str]) -> np.ndarray:
+    return np.array([ortho_vector_narr(w) for w in windows], dtype=float).reshape(-1, NARR_DIM)
+
+
 def ortho_matrix_ext(windows: Sequence[str]) -> np.ndarray:
     return np.array([ortho_vector_ext(w) for w in windows], dtype=float).reshape(-1, ORTHO_EXT_DIM)
 
