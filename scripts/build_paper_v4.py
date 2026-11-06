@@ -730,8 +730,8 @@ outputs, the comparison with base cannot be decided.
 No output of any condition was classified as Deadzone; all were in the critical phase. By the pre-registered rule the
 comparison with base cannot be decided, and the calibrated–random comparison is 0 against 0, so criteria (1) and (2)
 are not met; (3) and (4) are met (PPL limit {lim}). On these prompts Qwen3-8B does not produce the flat prose the
-Deadzone classifier detects, so the steering effect of §5.4 is specific to expository prompts and was not observable
-on literary ones with this metric.
+Deadzone classifier detects; the base rate is at the floor, so the steering effect of §5.4 could not be observed on
+literary prompts with this metric (this does not show that the effect is absent there).
 """
 
 
@@ -754,6 +754,12 @@ def section_limitations(P: Paper) -> str:
   new authors, and the held-out value is not directly comparable with LOWO.
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
+- Steering controls: each seed series draws one random (Haar) direction, so §5.4 compares the calibrated direction
+  with three random directions only, and the McNemar p-values treat the 36 pairs as independent; an isotropic random
+  direction is a weak control (it raised the Deadzone count above base). The steering target and the Deadzone and
+  CV_L metrics live in the same 24D feature space, and no independent quality measure is applied to steered text.
+- `strip_incomplete_tail` treats only 。！？!? as sentence ends, so a text whose last sentence is a closing quotation
+  loses that sentence.
 - Phase C §5.2 and §5.3 use 12 prompts and one seed series (§5.4: three series, same 12 expository prompts; §5.5: literary prompts, where no condition entered the Deadzone); the degeneracy threshold was set after inspection;
   neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
 - Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",

@@ -3,7 +3,7 @@
 
 Criteria fixed in docs/handoff/2026-11-06_phase40_preregistration.md before the runs. CV_L is the extractor's len_cv
 on each text with the fragment after the last sentence end removed (strip_incomplete_tail). Comparisons are paired
-by (prompt, seed) within each series and pooled over 3 series (n = 36 pairs).
+by (prompt, seed) within each series and pooled over the series given by --series (Phase 40: 4 series, n = 48 pairs).
 
 Output: docs/handoff/v10/<out>
 Usage:  cd python && uv run python ../scripts/phase40_cv_eval.py --prefix p40c_q3_8b --out p40_cv_eval.json
