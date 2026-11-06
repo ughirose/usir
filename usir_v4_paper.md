@@ -245,6 +245,31 @@ merged 54.01 ms/token,
 unmerged 66.43 ms/token. Merging removes the
 adapter overhead, but this adapter has no measured effect to deliver.
 
+### 5.3 Phase 36: unit-norm direction, smaller α, shaped GRPO reward
+Same prompts, seed and layer as §5.2. The steering direction is normalised, û = VΔq/‖VΔq‖ (‖VΔq‖ was 1.60 before
+normalisation; the random control is normalised too), injected at the last position with α ∈ {0.08, 0.12}, which
+corresponds to α 0.05 / 0.075 of §5.2. Criteria fixed before the run: calibrated Deadzone < random, no degenerate
+output, reference PPL within base + 0.5, merged-LoRA Deadzone < base. The base model gave 7/12
+(ref PPL 1.551), identical to §5.2.
+
+| α | calibrated Deadzone | random Deadzone | calibrated CV < 0.28 | random CV < 0.28 | calibrated degenerate | random degenerate | calibrated ref PPL | random ref PPL |
+|---|---|---|---|---|---|---|---|---|
+| 0.08 | 5/12 | 7/12 | 5/12 | 9/12 | 0 | 0 | 1.704 | 1.582 |
+| 0.12 | 1/12 | 7/12 | 4/12 | 6/12 | 0 | 0 | 1.873 | 1.574 |
+
+The three steering criteria are met at both α. At α = 0.12 the calibrated direction reaches the Deadzone count of
+§5.2's α = 0.15 without degenerate outputs and at a lower reference PPL. With n = 12 and one seed series the Wilson
+95 % intervals at α = 0.12 still overlap (calibrated upper bound 0.354, random lower bound 0.320), the CV-based definition
+shows a smaller gap, and the reference PPL is above base; no significance is claimed.
+
+GRPO with the shaped reward clip(CV_L/0.45, 0.05, 1.2) × cadence_alive × PPL barrier (all other settings as §5.2):
+the reward is continuous and the within-group reward standard deviation stayed at 0.113 (first 10 steps) and
+0.104 (last 10), but the mean reward did not rise (0.286 → 0.281; maximum KL 0.0254). The merged adapter was in
+the Deadzone in 7/12 outputs, equal to base, so the merged-LoRA criterion is **not met**. Decode latency:
+original 56.36 ms/token, merged
+56.42, unmerged
+69.48.
+
 ## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
 contiguous ≥ 7-character overlap with the source. These are fixture tests in the TypeScript suite and a repository
@@ -259,8 +284,10 @@ generalisation rate on held-out data.
   that informed its design (no held-out author set).
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
-- Phase C (§5.2) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection; the
-  40-step GRPO run did not raise the reward, so it says nothing about longer training.
+- Phase C (§5.2, §5.3) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection;
+  neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
+- Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",
+  which the Qwen3 tokenizer splits into byte-level tokens.
 
 ## Appendix A. Synthetic self-consistency checks (not evidence)
 The former Tables 1 and 4 remain reproducible from `python/usir_py/v2/benchmark_v2_large_scale.py` and

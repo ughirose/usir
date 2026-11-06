@@ -394,7 +394,7 @@ def section_phase_c(P: Paper) -> str:
 Qwen3-8B (bf16, A100). With raw literary continuation prompts the base model was in the Deadzone in {dz} of {n}
 outputs, so the former claim of "Deadzone escape" could not be tested on that set; steering at larger α increased
 the Deadzone count, and the calibrated direction did not differ from a norm-matched random direction.
-""" + phase_c_p33(P)
+""" + phase_c_p33(P) + phase_c_p36(P)
 
 
 def phase_c_p33(P: Paper) -> str:
@@ -465,6 +465,63 @@ adapter overhead, but this adapter has no measured effect to deliver.
 """
 
 
+def phase_c_p36(P: Paper) -> str:
+    s = f"{V10}/p36c_q3_8b.json"
+    if not P.has(s):
+        return ""
+    st = "d['stages']"
+    cond = lambda c: f"{st}['steering']['conditions'][{c!r}]"
+
+    def dz(nid: str, base: str, kind: str = "deadzone") -> str:
+        return P.num(nid, s, f"{base}['summary'][{kind!r}]['count']", "{}") + "/" +             P.num(nid + "_n", s, f"{base}['summary'][{kind!r}]['n']", "{}")
+
+    b, lm = f"{st}['base']", f"{st}['grpo_lora']['lora_merged']"
+    rows = []
+    for a in ("0.08", "0.12"):
+        c, r = cond(f"steer_cal_last_alpha_{a}"), cond(f"steer_rand_last_alpha_{a}")
+        k = f"p36c_{a}"
+        deg = lambda nid, base: P.num(nid, s, f"sum(1 for r in {base}['records'] if r['metrics']['distinct_char_bigram'] < 0.5)", "{}")
+        ppl = lambda nid, base: P.num(nid, s, f"{base}['summary']['ref_ppl_completion']['mean']", "{:.3f}")
+        rows.append(f"| {a} | {dz(k + '_cal_dz', c)} | {dz(k + '_rand_dz', r)} | {dz(k + '_cal_dzcv', c, 'deadzone_cv')} | "
+                    f"{dz(k + '_rand_dzcv', r, 'deadzone_cv')} | {deg(k + '_cal_deg', c)} | {deg(k + '_rand_deg', r)} | "
+                    f"{ppl(k + '_cal_ppl', c)} | {ppl(k + '_rand_ppl', r)} |")
+    steps = f"{st}['grpo_lora']['train']['result']['steps']"
+    lat = f"{st}['grpo_lora']['latency']['states']"
+    raw = P.num("p36c_norm_raw", s, f"{st}['steering']['delta_q']['norm_V_cal_dq_raw']", "{:.2f}")
+    lo = P.num("p36c_wilson_cal_hi", s, f"{cond('steer_cal_last_alpha_0.12')}['summary']['deadzone']['wilson95'][1]", "{:.3f}")
+    hi = P.num("p36c_wilson_rand_lo", s, f"{cond('steer_rand_last_alpha_0.12')}['summary']['deadzone']['wilson95'][0]", "{:.3f}")
+    f10 = P.num("p36c_rew_first10", s, f"statistics.mean(x['mean_reward'] for x in {steps}[:10])", "{:.3f}")
+    l10 = P.num("p36c_rew_last10", s, f"statistics.mean(x['mean_reward'] for x in {steps}[-10:])", "{:.3f}")
+    gs10 = P.num("p36c_grs_first10", s, f"statistics.mean(v for x in {steps}[:10] for v in x['group_reward_std'])", "{:.3f}")
+    gsl10 = P.num("p36c_grs_last10", s, f"statistics.mean(v for x in {steps}[-10:] for v in x['group_reward_std'])", "{:.3f}")
+    klmax = P.num("p36c_klmax", s, f"max(x['mean_kl'] for x in {steps})", "{:.4f}")
+    return f"""
+### 5.3 Phase 36: unit-norm direction, smaller α, shaped GRPO reward
+Same prompts, seed and layer as §5.2. The steering direction is normalised, û = VΔq/‖VΔq‖ (‖VΔq‖ was {raw} before
+normalisation; the random control is normalised too), injected at the last position with α ∈ {{0.08, 0.12}}, which
+corresponds to α 0.05 / 0.075 of §5.2. Criteria fixed before the run: calibrated Deadzone < random, no degenerate
+output, reference PPL within base + 0.5, merged-LoRA Deadzone < base. The base model gave {dz('p36c_base_dz', b)}
+(ref PPL {P.num('p36c_base_ppl', s, b + "['summary']['ref_ppl_completion']['mean']", '{:.3f}')}), identical to §5.2.
+
+| α | calibrated Deadzone | random Deadzone | calibrated CV < 0.28 | random CV < 0.28 | calibrated degenerate | random degenerate | calibrated ref PPL | random ref PPL |
+|---|---|---|---|---|---|---|---|---|
+""" + "\n".join(rows) + f"""
+
+The three steering criteria are met at both α. At α = 0.12 the calibrated direction reaches the Deadzone count of
+§5.2's α = 0.15 without degenerate outputs and at a lower reference PPL. With n = 12 and one seed series the Wilson
+95 % intervals at α = 0.12 still overlap (calibrated upper bound {lo}, random lower bound {hi}), the CV-based definition
+shows a smaller gap, and the reference PPL is above base; no significance is claimed.
+
+GRPO with the shaped reward clip(CV_L/0.45, 0.05, 1.2) × cadence_alive × PPL barrier (all other settings as §5.2):
+the reward is continuous and the within-group reward standard deviation stayed at {gs10} (first 10 steps) and
+{gsl10} (last 10), but the mean reward did not rise ({f10} → {l10}; maximum KL {klmax}). The merged adapter was in
+the Deadzone in {dz('p36c_lora_dz', lm)} outputs, equal to base, so the merged-LoRA criterion is **not met**. Decode latency:
+original {P.num('p36c_lat_orig', s, lat + "['original']['ms_per_token']['mean']")} ms/token, merged
+{P.num('p36c_lat_merged', s, lat + "['lora_merged']['ms_per_token']['mean']")}, unmerged
+{P.num('p36c_lat_unmerged', s, lat + "['lora_unmerged']['ms_per_token']['mean']")}.
+"""
+
+
 def section_cleanroom(P: Paper) -> str:
     return """## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
@@ -483,8 +540,10 @@ def section_limitations(P: Paper) -> str:
   that informed its design (no held-out author set).
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
-- Phase C (§5.2) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection; the
-  40-step GRPO run did not raise the reward, so it says nothing about longer training.
+- Phase C (§5.2, §5.3) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection;
+  neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
+- Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",
+  which the Qwen3 tokenizer splits into byte-level tokens.
 
 ## Appendix A. Synthetic self-consistency checks (not evidence)
 The former Tables 1 and 4 remain reproducible from `python/usir_py/v2/benchmark_v2_large_scale.py` and
