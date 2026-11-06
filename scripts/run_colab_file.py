@@ -9,7 +9,9 @@ The Colab script prints one line 'ARCHIVE_B64 <crc32-hex> <base64(gzip(json))>'.
 import argparse
 import base64
 import gzip
+import os
 import pathlib
+import tempfile
 import re
 import sys
 import time
@@ -78,22 +80,55 @@ def _long_assign_timeout(fn):
 requests.get = _long_assign_timeout(requests.get)
 requests.post = _long_assign_timeout(requests.post)
 
+LOCK = pathlib.Path(tempfile.gettempdir()) / "usir_colab_assign.lock"
+LATE_WINDOW_SEC = 120  # a runtime created by a failed assign can appear in the list well after the error
+
+
+def acquire_lock(max_wait: float = 1800.0) -> None:
+    """Serialise assign requests across runner processes, so that a runtime appearing during a failed assign
+    belongs to this process and not to a concurrent job.  A lock older than 10 minutes is treated as stale."""
+    t = time.time()
+    while True:
+        try:
+            os.close(os.open(LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY))
+            return
+        except FileExistsError:
+            try:
+                if time.time() - LOCK.stat().st_mtime > 600:
+                    LOCK.unlink(missing_ok=True)
+                    continue
+            except FileNotFoundError:
+                continue
+            if time.time() - t > max_wait:
+                raise RuntimeError("timed out waiting for the Colab assign lock")
+            time.sleep(5)
+
+
 t0 = time.time()
 creds = get_credentials()
-before = list_endpoints(creds.token)
+acquire_lock()
 try:
-    assignment = allocate_runtime(creds.token, accelerator=args.gpu)
-except Exception:
-    # The assign request may have created a runtime even though the response was lost (e.g. ReadTimeout).
-    time.sleep(15)
-    after = list_endpoints(creds.token)
-    if before is not None and after is not None:
-        for ep in sorted(after - before):
-            print(f"[run_colab_file] releasing runtime created by the failed assign: {ep}", file=sys.stderr)
-            release(creds.token, ep)
-    else:
-        print("[run_colab_file] WARNING: assign failed and assignments could not be listed; check Colab", file=sys.stderr)
-    raise
+    before = list_endpoints(creds.token)
+    try:
+        assignment = allocate_runtime(creds.token, accelerator=args.gpu)
+    except Exception:
+        # The assign request may have created a runtime even though the response was lost (ReadTimeout,
+        # ConnectionError).  Watch the list for a while; anything new belongs to this process (lock held).
+        released = set()
+        if before is None:
+            print("[run_colab_file] WARNING: assign failed and assignments could not be listed; check Colab", file=sys.stderr)
+        else:
+            t_fail = time.time()
+            while time.time() - t_fail < LATE_WINDOW_SEC:
+                time.sleep(15)
+                after = list_endpoints(creds.token)
+                for ep in sorted((after or set()) - before - released):
+                    print(f"[run_colab_file] releasing runtime created by the failed assign: {ep}", file=sys.stderr)
+                    release(creds.token, ep)
+                    released.add(ep)
+        raise
+finally:
+    LOCK.unlink(missing_ok=True)
 endpoint = assignment["endpoint"]
 stop_event = start_keepalive(creds.token, endpoint)
 rc = 1
