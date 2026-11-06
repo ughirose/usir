@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import base64
 import io
+import sys
 import zipfile
 from pathlib import Path
 
@@ -62,6 +63,8 @@ PLOTS = {
 SCRIPTS = {
     "p31_swallow_8b": ("tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2", ["watch", "station"], [3, 42, 7], ["new_ctrl", "gA", "gB", "gC"]),
     "p31_q3_8b": ("Qwen/Qwen3-8B", ["watch", "station"], [3, 42, 7], ["new_ctrl", "gA", "gB", "gC"]),
+    # Phase 31b: re-run of the steered conditions with the merged sentence-end token hold (new_ctrl is unaffected)
+    "p31b_q3_8b": ("Qwen/Qwen3-8B", ["watch", "station"], [3, 42, 7], ["gA", "gB"]),
 }
 
 
@@ -195,7 +198,10 @@ print("ARCHIVE_B64", format(zlib.crc32(raw) & 0xFFFFFFFF, "08x"), base64.b64enco
 
 def main() -> None:
     b64 = build_zip_b64()
+    only = set(sys.argv[1:])
     for name, (mid, plots, seeds, conds) in SCRIPTS.items():
+        if only and name not in only:
+            continue
         header = (
             "import json\nB64 = " + repr(b64) + "\n"
             + f"GEN_MID = {mid!r}\nPLOTS = {plots!r}\nSEEDS = {seeds!r}\nCONDS = {conds!r}\n"

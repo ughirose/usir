@@ -120,3 +120,17 @@ def test_fisher_term_skips_windows_the_extractor_rejects():
     assert d.stats["fisher_skipped"] == 1
     w = d.compute_particle_weights("", ["雨", "、"])
     assert w["term5_fisher"] == [0.0, 0.0]
+
+
+class PunctTok(FakeTok):
+    vocab = ["<pad>", "た", "。", "た。", "。\n", "、", "雨", "？"]
+
+    def encode(self, s, add_special_tokens=False):
+        return [self.vocab.index(s)] if s in self.vocab else []
+
+
+def test_merged_period_tokens_exclude_single_period():
+    d = ClauseTwistedSMCDecoder(dim=12, seed=0, genome_proposal={"steady_min_chars": 30})
+    d.tokenizer = PunctTok()
+    assert d._merged_period_token_ids() == [3, 4, 7]   # た。, 。\n, ？ ; the single "。" (2) is biased elsewhere
+    assert d.stats["merged_period_tokens"] == 3

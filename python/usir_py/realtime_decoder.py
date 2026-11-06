@@ -1822,6 +1822,7 @@ class ClauseTwistedSMCDecoder:
         self.forbidden_penalty = float(forbidden_penalty)
         self._forbid_cache: Optional[Tuple[Dict[str, List[int]], Dict[int, str]]] = None
         self._kanji_ids: Optional[List[int]] = None
+        self._merged_period_ids: Optional[List[int]] = None
         # rhythm_profile      : "cycle" (default; short/medium/long by sentence index mod 3), "steady" (no positive '。' push and no
         #                       '、' push; '。' sealed -12 below steady_min_chars, +3 above steady_max_chars, '、' -4 once the sentence
         #                       has >= steady_max_commas commas) or "pulse" (cycle with positive '。' pushes capped at +3 and no
@@ -2406,6 +2407,17 @@ class ClauseTwistedSMCDecoder:
                                if sf.strip() and "一" <= sf.strip()[0] <= "鿿"]
         return self._kanji_ids
 
+    def _merged_period_token_ids(self) -> List[int]:
+        """Phase 31b: tokens whose surface contains a sentence end (。！？) but which are not the single-token "。"
+        itself (e.g. merged "た。" / "。
+" pieces); the steady-band '。' hold only biases the single token."""
+        if self._merged_period_ids is None:
+            single = set(self._punct_ids()[0])
+            self._merged_period_ids = [i for i, sf in enumerate(self._vocab_surfaces())
+                                       if i not in single and any(c in sf for c in "。！？")]
+            self.stats["merged_period_tokens"] = len(self._merged_period_ids)
+        return self._merged_period_ids
+
     def _fisher_term(self, prefix: str, cand_texts: Sequence[str]) -> Optional[np.ndarray]:
         fm, a = self.fisher_metric, self.fisher_author
         if fm is None or a is None or self.fisher_gamma == 0.0 or len(cand_texts) < 2:
@@ -2734,6 +2746,12 @@ class ClauseTwistedSMCDecoder:
         kanji_proc = KanjiBiasLogits(self._kanji_token_ids(), _kb) if _kb else None
 
         ph_period, ph_comma = self._phase_bias(prefix)
+        merged_proc = None
+        if (getattr(self, "genome_proposal", None) and self.genome_proposal.get("hold_merged_periods", True)
+                and self.rhythm_profile == "steady" and self._rhythm_params(prefix) is not None and ph_period < 0):
+            # the steady band holds '。' below steady_min_chars: apply the same hold to merged sentence-end tokens
+            merged_proc = KanjiBiasLogits(self._merged_period_token_ids(), ph_period)
+            self.stats["merged_period_holds"] = self.stats.get("merged_period_holds", 0) + 1
         gate_on = bool(self.syntactic_gate)
         gate_val = float(self.gate_bias)
         _rp = self._rhythm_params(prefix)
@@ -2779,7 +2797,8 @@ class ClauseTwistedSMCDecoder:
             "logits_processor": ([narr_proc] if narr_proc is not None else []) + (
                 [ngram_proc] if ngram_proc is not None else []) + ([content_proc] if content_proc is not None else []) + (
                 [simile_proc] if simile_proc is not None else []) + ([forbid_proc] if forbid_proc is not None else []) + (
-                [kanji_proc] if kanji_proc is not None else []) + [_EosPenalty(), boundary_proc, _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
+                [kanji_proc] if kanji_proc is not None else []) + (
+                [merged_proc] if merged_proc is not None else []) + [_EosPenalty(), boundary_proc, _RowTemp()] + ([_MinP()] if min_p_val > 0 else []),
             "stopping_criteria": StoppingCriteriaList([_ClausePunctStop()]),
         }
         if self.rep_penalty and self.rep_penalty != 1.0:
