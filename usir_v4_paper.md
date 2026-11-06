@@ -424,6 +424,15 @@ sentence end, and the position of the last sentence end does not move (0.938 →
 correlates with CV_L (0.84) and with cadence_alive
 (0.87); scoring the same rollouts without removing the tail
 gives a higher reward (0.287 vs 0.218 in the first half).
+The rise is small against the step-to-step noise: the standard deviation of the per-step mean reward is
+0.082, a permutation of the step order gives p =
+0.18 for the last-minus-first-10 difference, the first
+and last 20 steps differ by less (0.218 → 0.234),
+and the slope with prompt fixed effects is 0.0012 per step
+(the interval from rollout-level OLS is too narrow because rollouts of one step are not independent). With one run,
+neither a learning effect nor the tail hypothesis of Phase 37 is confirmed or refuted; the reward is dominated by
+CV_L and cadence_alive rather than by the tail. Evaluation at 1024 tokens ended every output at a sentence end, so
+the evaluation-side tail removal had no effect on criterion 2.
 
 ## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no

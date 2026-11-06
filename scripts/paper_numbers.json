@@ -4303,6 +4303,46 @@
    "source": "docs/handoff/v10/p42_grpo_eval.json",
    "expr": "d['rollouts']['first_half']['reward_mean']",
    "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_n_sd",
+   "file": "usir_v4_paper.md",
+   "text": "0.082",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['noise']['step_sd']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_n_perm",
+   "file": "usir_v4_paper.md",
+   "text": "0.18",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['noise']['perm_p_last10_minus_first10']",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p42_n_f20",
+   "file": "usir_v4_paper.md",
+   "text": "0.218",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['noise']['first20']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_n_l20",
+   "file": "usir_v4_paper.md",
+   "text": "0.234",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['noise']['last20']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p42_n_slope",
+   "file": "usir_v4_paper.md",
+   "text": "0.0012",
+   "source": "docs/handoff/v10/p42_grpo_eval.json",
+   "expr": "d['noise']['slope_per_step_prompt_fe']",
+   "fmt": "{:.4f}"
   }
  ]
 }

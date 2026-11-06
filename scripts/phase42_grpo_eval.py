@@ -105,7 +105,25 @@ def main() -> None:
                                            "0.26_0.65": sum(0.26 <= c <= 0.65 for c in cads),
                                            "gt_0.65": sum(c > 0.65 for c in cads)},
                     "corr_reward_stripped_vs_unstripped": corr(rew, unst)})
-    out = {"schema": "p42_grpo_eval_v1", "reward_first10": first, "reward_last10": last, "sets": sets,
+    # post-run additions (report only, after the reviewer's note): noise of the 10-step means
+    mr = np.array([x["mean_reward"] for x in steps], float)
+    rng = np.random.default_rng(0)
+    obs = mr[-10:].mean() - mr[:10].mean()
+    perm = [(lambda q: q[-10:].mean() - q[:10].mean())(rng.permutation(mr)) for _ in range(20000)]
+    noise = {"step_sd": float(mr.std(ddof=1)), "perm_p_last10_minus_first10": float(np.mean([x >= obs for x in perm])),
+             "first20": float(mr[:20].mean()), "last20": float(mr[20:].mean())}
+    if ro:
+        P_ = sorted({r["prompt_idx"] for r in ro})
+        X = np.array([[r["step"]] + [1.0 if r["prompt_idx"] == k else 0.0 for k in P_] for r in ro], float)
+        y = np.array([r["reward"] for r in ro], float)
+        beta, *_ = np.linalg.lstsq(X, y, rcond=None)
+        res = y - X @ beta
+        s2 = float(res @ res) / (len(y) - X.shape[1])
+        se = float(np.sqrt(s2 * np.linalg.inv(X.T @ X)[0, 0]))
+        noise.update({"slope_per_step_prompt_fe": float(beta[0]), "slope_se": se,
+                      "slope_ci95": [float(beta[0] - 1.96 * se), float(beta[0] + 1.96 * se)],
+                      "note": "OLS on rollout rewards with prompt fixed effects; rollouts within a step are not independent"})
+    out = {"schema": "p42_grpo_eval_v1", "noise": noise, "reward_first10": first, "reward_last10": last, "sets": sets,
            "criteria": crit, "rollouts": rep}
     Path(args.out).write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps({k: v for k, v in out.items()}, ensure_ascii=False, indent=1)[:3000])

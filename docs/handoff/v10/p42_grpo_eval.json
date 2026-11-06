@@ -1,5 +1,18 @@
 {
  "schema": "p42_grpo_eval_v1",
+ "noise": {
+  "step_sd": 0.0815483920748901,
+  "perm_p_last10_minus_first10": 0.1833,
+  "first20": 0.217835,
+  "last20": 0.23416,
+  "slope_per_step_prompt_fe": 0.0012190566014135742,
+  "slope_se": 0.0006083056025724365,
+  "slope_ci95": [
+   2.6777620371598674e-05,
+   0.0024113355824555496
+  ],
+  "note": "OLS on rollout rewards with prompt fixed effects; rollouts within a step are not independent"
+ },
  "reward_first10": 0.22644,
  "reward_last10": 0.2591,
  "sets": {

@@ -787,6 +787,15 @@ sentence end, and the position of the last sentence end does not move ({ro('firs
 correlates with CV_L ({v('c_cv', "d['rollouts']['corr_reward_cv']", '{:.2f}')}) and with cadence_alive
 ({v('c_cad', "d['rollouts']['corr_reward_cadence']", '{:.2f}')}); scoring the same rollouts without removing the tail
 gives a higher reward ({ro('first_half', 'reward_unstripped_mean')} vs {ro('first_half', 'reward_mean')} in the first half).
+The rise is small against the step-to-step noise: the standard deviation of the per-step mean reward is
+{v('n_sd', "d['noise']['step_sd']", '{:.3f}')}, a permutation of the step order gives p =
+{v('n_perm', "d['noise']['perm_p_last10_minus_first10']", '{:.2f}')} for the last-minus-first-10 difference, the first
+and last 20 steps differ by less ({v('n_f20', "d['noise']['first20']", '{:.3f}')} → {v('n_l20', "d['noise']['last20']", '{:.3f}')}),
+and the slope with prompt fixed effects is {v('n_slope', "d['noise']['slope_per_step_prompt_fe']", '{:.4f}')} per step
+(the interval from rollout-level OLS is too narrow because rollouts of one step are not independent). With one run,
+neither a learning effect nor the tail hypothesis of Phase 37 is confirmed or refuted; the reward is dominated by
+CV_L and cadence_alive rather than by the tail. Evaluation at 1024 tokens ended every output at a sentence end, so
+the evaluation-side tail removal had no effect on criterion 2.
 """
 
 
