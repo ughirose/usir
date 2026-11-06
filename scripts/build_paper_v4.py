@@ -305,6 +305,74 @@ def section_phase_c(P: Paper) -> str:
 Qwen3-8B (bf16, A100). With raw literary continuation prompts the base model was in the Deadzone in {dz} of {n}
 outputs, so the former claim of "Deadzone escape" could not be tested on that set; steering at larger α increased
 the Deadzone count, and the calibrated direction did not differ from a norm-matched random direction.
+""" + phase_c_p33(P)
+
+
+def phase_c_p33(P: Paper) -> str:
+    s = f"{V10}/p33_q3_8b.json"
+    if not P.has(s):
+        return ""
+    st = "d['stages']"
+    cond = lambda c: f"{st}['steering']['conditions'][{c!r}]"
+
+    def dz(nid: str, base: str, kind: str = "deadzone") -> str:
+        return P.num(nid, s, f"{base}['summary'][{kind!r}]['count']", "{}") + "/" + \
+            P.num(nid + "_n", s, f"{base}['summary'][{kind!r}]['n']", "{}")
+
+    def deg(nid: str, base: str) -> str:
+        return P.num(nid, s, f"sum(1 for r in {base}['records'] if r['metrics']['distinct_char_bigram'] < 0.5)", "{}")
+
+    def ppl(nid: str, base: str) -> str:
+        return P.num(nid, s, f"{base}['summary']['ref_ppl_completion']['mean']")
+
+    b, lm = f"{st}['base']", f"{st}['grpo_lora']['lora_merged']"
+    rows = []
+    for inj in ("all", "last"):
+        for a in ("0.05", "0.15", "0.3"):
+            c, r = cond(f"steer_cal_{inj}_alpha_{a}"), cond(f"steer_rand_{inj}_alpha_{a}")
+            k = f"p33_{inj}_{a}"
+            rows.append(f"| {inj} | {a} | {dz(k + '_cal_dz', c)} | {dz(k + '_rand_dz', r)} | {deg(k + '_cal_deg', c)} | "
+                        f"{deg(k + '_rand_deg', r)} | {ppl(k + '_cal_ppl', c)} | {ppl(k + '_rand_ppl', r)} |")
+    lat = f"{st}['grpo_lora']['latency']['states']"
+    steps = f"{st}['grpo_lora']['train']['result']['steps']"
+    r2cv = P.num("p33_r2cv", s, f"{st}['steering']['calibration']['r2_cv_mean']", "{:.3f}")
+    cosmax = P.num("p33_cosmax", s, f"{st}['steering']['calibration']['column_cosine_max_abs_offdiag']", "{:.3f}")
+    first10 = P.num("p33_rew_first10", s, f"statistics.mean(x['mean_reward'] for x in {steps}[:10])", "{:.3f}")
+    last10 = P.num("p33_rew_last10", s, f"statistics.mean(x['mean_reward'] for x in {steps}[-10:])", "{:.3f}")
+    klmax = P.num("p33_klmax", s, f"max(x['mean_kl'] for x in {steps})", "{:.4f}")
+    nsteps = P.num("p33_nsteps", s, f"len({steps})", "{}")
+    return f"""
+### 5.2 Phase 33: Deadzone-inducing instruct prompts
+Qwen3-8B (bf16, A100), 12 explanatory instruct prompts (no bullets or headings, polite register, about 800 characters),
+400 new tokens at T=0.8. The Deadzone is the QDA phase classifier (`Phase_I_Deadzone`); CV_L < 0.28 is reported as a
+second definition. Both were fixed in the driver before the run.
+
+The base model was in the Deadzone in {dz('p33_base_dz', b)} outputs (CV definition {dz('p33_base_dzcv', b, 'deadzone_cv')}),
+so this prompt set does induce the Deadzone.
+
+Steering adds a direction at layer 23 of 36, built from independent per-element ridge maps (5-fold CV R² mean {r2cv};
+maximum off-diagonal |cos| between element columns {cosmax}, i.e. the element directions are far from orthogonal).
+The control is a random direction with matched norm. "Degenerate" means distinct character-bigram ratio < 0.5, a
+threshold chosen after inspecting the outputs (repetition loops). Low reference PPL in degenerate rows reflects
+repetition, not quality.
+
+| inject | α | calibrated Deadzone | random Deadzone | calibrated degenerate | random degenerate | calibrated ref PPL | random ref PPL |
+|---|---|---|---|---|---|---|---|
+""" + "\n".join(rows) + f"""
+
+The largest difference is at last-position injection with α = 0.15. It comes with a higher reference PPL and with
+some degenerate outputs; at α = 0.3 both directions collapse or lose the effect, so the dose response is not monotone.
+The base reference PPL is {ppl('p33_base_ppl', b)}. We therefore do not claim that calibrated steering resolves the
+Deadzone.
+
+GRPO-LoRA (r = 8, {nsteps} steps, 256-token rollouts, multiplicative physical reward times a reference-PPL barrier):
+the mean reward over the first 10 steps was {first10} and over the last 10 steps {last10}, with maximum KL {klmax}.
+The reward did not rise. The merged adapter was in the Deadzone in {dz('p33_lora_dz', lm)} outputs, versus
+{dz('p33_base_dz2', b)} for the base model, so it did not reduce the Deadzone. Decode latency (64 tokens × 5 repetitions):
+original {P.num('p33_lat_orig', s, lat + "['original']['ms_per_token']['mean']")} ms/token,
+merged {P.num('p33_lat_merged', s, lat + "['lora_merged']['ms_per_token']['mean']")} ms/token,
+unmerged {P.num('p33_lat_unmerged', s, lat + "['lora_unmerged']['ms_per_token']['mean']")} ms/token. Merging removes the
+adapter overhead, but this adapter has no measured effect to deliver.
 """
 
 
@@ -325,6 +393,8 @@ def section_limitations(P: Paper) -> str:
 - LOWO top-1 remains below 0.70.
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
+- Phase C (§5.2) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection; the
+  40-step GRPO run did not raise the reward, so it says nothing about longer training.
 
 ## Appendix A. Synthetic self-consistency checks (not evidence)
 The former Tables 1 and 4 remain reproducible from `python/usir_py/v2/benchmark_v2_large_scale.py` and

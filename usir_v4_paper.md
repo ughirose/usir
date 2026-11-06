@@ -165,6 +165,43 @@ Qwen3-8B (bf16, A100). With raw literary continuation prompts the base model was
 outputs, so the former claim of "Deadzone escape" could not be tested on that set; steering at larger α increased
 the Deadzone count, and the calibrated direction did not differ from a norm-matched random direction.
 
+### 5.2 Phase 33: Deadzone-inducing instruct prompts
+Qwen3-8B (bf16, A100), 12 explanatory instruct prompts (no bullets or headings, polite register, about 800 characters),
+400 new tokens at T=0.8. The Deadzone is the QDA phase classifier (`Phase_I_Deadzone`); CV_L < 0.28 is reported as a
+second definition. Both were fixed in the driver before the run.
+
+The base model was in the Deadzone in 7/12 outputs (CV definition 8/12),
+so this prompt set does induce the Deadzone.
+
+Steering adds a direction at layer 23 of 36, built from independent per-element ridge maps (5-fold CV R² mean 0.658;
+maximum off-diagonal |cos| between element columns 0.934, i.e. the element directions are far from orthogonal).
+The control is a random direction with matched norm. "Degenerate" means distinct character-bigram ratio < 0.5, a
+threshold chosen after inspecting the outputs (repetition loops). Low reference PPL in degenerate rows reflects
+repetition, not quality.
+
+| inject | α | calibrated Deadzone | random Deadzone | calibrated degenerate | random degenerate | calibrated ref PPL | random ref PPL |
+|---|---|---|---|---|---|---|---|
+| all | 0.05 | 5/12 | 8/12 | 1 | 0 | 2.04 | 1.61 |
+| all | 0.15 | 8/12 | 5/12 | 12 | 3 | 1.51 | 2.19 |
+| all | 0.3 | 12/12 | 8/12 | 12 | 12 | 1.22 | 1.72 |
+| last | 0.05 | 5/12 | 6/12 | 0 | 0 | 1.69 | 1.57 |
+| last | 0.15 | 1/12 | 10/12 | 3 | 0 | 2.70 | 1.69 |
+| last | 0.3 | 7/12 | 6/12 | 12 | 0 | 1.80 | 2.19 |
+
+The largest difference is at last-position injection with α = 0.15. It comes with a higher reference PPL and with
+some degenerate outputs; at α = 0.3 both directions collapse or lose the effect, so the dose response is not monotone.
+The base reference PPL is 1.55. We therefore do not claim that calibrated steering resolves the
+Deadzone.
+
+GRPO-LoRA (r = 8, 40 steps, 256-token rollouts, multiplicative physical reward times a reference-PPL barrier):
+the mean reward over the first 10 steps was 0.081 and over the last 10 steps 0.077, with maximum KL 0.0054.
+The reward did not rise. The merged adapter was in the Deadzone in 8/12 outputs, versus
+7/12 for the base model, so it did not reduce the Deadzone. Decode latency (64 tokens × 5 repetitions):
+original 54.10 ms/token,
+merged 54.01 ms/token,
+unmerged 66.43 ms/token. Merging removes the
+adapter overhead, but this adapter has no measured effect to deliver.
+
 ## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
 contiguous ≥ 7-character overlap with the source. These are fixture tests in the TypeScript suite and a repository
@@ -178,6 +215,8 @@ generalisation rate on held-out data.
 - LOWO top-1 remains below 0.70.
 - The 8B generative judge is position-biased; the logit-debiased judge cancels a constant position bias only.
 - Coinage detection is a fixed regular-expression list, not a general detector.
+- Phase C (§5.2) uses 12 prompts and one seed series; the degeneracy threshold was set after inspection; the
+  40-step GRPO run did not raise the reward, so it says nothing about longer training.
 
 ## Appendix A. Synthetic self-consistency checks (not evidence)
 The former Tables 1 and 4 remain reproducible from `python/usir_py/v2/benchmark_v2_large_scale.py` and
