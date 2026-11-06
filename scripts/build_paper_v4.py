@@ -394,7 +394,7 @@ def section_phase_c(P: Paper) -> str:
 Qwen3-8B (bf16, A100). With raw literary continuation prompts the base model was in the Deadzone in {dz} of {n}
 outputs, so the former claim of "Deadzone escape" could not be tested on that set; steering at larger α increased
 the Deadzone count, and the calibrated direction did not differ from a norm-matched random direction.
-""" + phase_c_p33(P) + phase_c_p36(P) + phase_c_p38(P) + phase_c_p39(P) + phase_c_p42(P)
+""" + phase_c_p33(P) + phase_c_p36(P) + phase_c_p38(P) + phase_c_p39(P) + phase_c_p42(P) + phase_c_p40(P)
 
 
 def phase_c_p33(P: Paper) -> str:
@@ -796,6 +796,39 @@ and the slope with prompt fixed effects is {v('n_slope', "d['noise']['slope_per_
 neither a learning effect nor the tail hypothesis of Phase 37 is confirmed or refuted; the reward is dominated by
 CV_L and cadence_alive rather than by the tail. Evaluation at 1024 tokens ended every output at a sentence end, so
 the evaluation-side tail removal had no effect on criterion 2.
+"""
+
+
+def phase_c_p40(P: Paper) -> str:
+    s = f"{V10}/p40_cv_eval.json"
+    if not P.has(s):
+        return ""
+    pl = lambda c, k, f="{:.3f}": P.num(f"p40_{c}_{k}", s, f"d['pooled'][{c!r}][{k!r}]", f)
+    pr = lambda c, k, f="{:.3f}": P.num(f"p40_pr_{c}_{k}", s, f"d['paired'][{c!r}][{k!r}]", f)
+    rows = "\n".join(f"| {label} | {pl(c, 'cv_mean')} | {pl(c, 'cv_median')} | {pl(c, 'degenerate', '{}')} | {pl(c, 'ref_ppl_mean')} |"
+                     for c, label in (("base", "base"), ("steer_cal_last_alpha_0.12", "calibrated α 0.12"),
+                                      ("steer_rand_last_alpha_0.12", "random α 0.12"),
+                                      ("steer_cal_last_alpha_0.16", "calibrated α 0.16 (report only)"),
+                                      ("steer_rand_last_alpha_0.16", "random α 0.16 (report only)")))
+    ns = P.num("p40_c3", s, "d['criteria']['c3_series_cal_gt_rand']", "{}")
+    return f"""
+### 5.7 Phase 40: sentence-length CV on literary prompts, new seeds
+Because the Deadzone count was at the floor in §5.5, CV_L (tail removed) was pre-registered as the primary metric,
+motivated by an exploratory difference in the §5.5 data, and tested on four new seed series (n = 48 pairs). Criteria:
+calibrated α 0.12 above base and above random α 0.12 (one-sided Wilcoxon p < 0.05 each), above random in at least 3 of
+4 series, no degenerate output, ref PPL within base + 0.5.
+
+| Set | mean CV_L | median | degenerate | ref PPL |
+|---|---|---|---|---|
+""" + rows + f"""
+
+Calibrated α 0.12 − base: {pr('cal012_vs_base', 'mean_diff')} (p = {pr('cal012_vs_base', 'wilcoxon_p_greater', '{:.3f}')});
+calibrated − random α 0.12: {pr('cal012_vs_rand012', 'mean_diff', '{:.4f}')} (p = {pr('cal012_vs_rand012', 'wilcoxon_p_greater', '{:.2f}')});
+calibrated above random in {ns} of 4 series. The result is **not met**: the exploratory calibrated–random difference
+of §5.5 did not replicate, and both directions raise CV_L slightly above base. At α 0.16 (report only, not corrected
+for multiple comparisons) calibrated − base is {pr('cal_secondary_vs_base', 'mean_diff')} (p =
+{pr('cal_secondary_vs_base', 'wilcoxon_p_greater', '{:.3f}')}) and calibrated − random is
+{pr('cal_secondary_vs_rand_secondary', 'mean_diff')} (p = {pr('cal_secondary_vs_rand_secondary', 'wilcoxon_p_greater', '{:.2f}')}).
 """
 
 

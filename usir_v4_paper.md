@@ -434,6 +434,28 @@ neither a learning effect nor the tail hypothesis of Phase 37 is confirmed or re
 CV_L and cadence_alive rather than by the tail. Evaluation at 1024 tokens ended every output at a sentence end, so
 the evaluation-side tail removal had no effect on criterion 2.
 
+### 5.7 Phase 40: sentence-length CV on literary prompts, new seeds
+Because the Deadzone count was at the floor in §5.5, CV_L (tail removed) was pre-registered as the primary metric,
+motivated by an exploratory difference in the §5.5 data, and tested on four new seed series (n = 48 pairs). Criteria:
+calibrated α 0.12 above base and above random α 0.12 (one-sided Wilcoxon p < 0.05 each), above random in at least 3 of
+4 series, no degenerate output, ref PPL within base + 0.5.
+
+| Set | mean CV_L | median | degenerate | ref PPL |
+|---|---|---|---|---|
+| base | 0.345 | 0.343 | 0 | 1.961 |
+| calibrated α 0.12 | 0.365 | 0.362 | 0 | 2.056 |
+| random α 0.12 | 0.365 | 0.358 | 0 | 2.010 |
+| calibrated α 0.16 (report only) | 0.379 | 0.377 | 0 | 2.089 |
+| random α 0.16 (report only) | 0.355 | 0.338 | 0 | 2.014 |
+
+Calibrated α 0.12 − base: 0.020 (p = 0.071);
+calibrated − random α 0.12: 0.0004 (p = 0.57);
+calibrated above random in 2 of 4 series. The result is **not met**: the exploratory calibrated–random difference
+of §5.5 did not replicate, and both directions raise CV_L slightly above base. At α 0.16 (report only, not corrected
+for multiple comparisons) calibrated − base is 0.034 (p =
+0.030) and calibrated − random is
+0.025 (p = 0.14).
+
 ## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
 contiguous ≥ 7-character overlap with the source. These are fixture tests in the TypeScript suite and a repository

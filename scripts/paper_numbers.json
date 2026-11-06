@@ -4343,6 +4343,238 @@
    "source": "docs/handoff/v10/p42_grpo_eval.json",
    "expr": "d['noise']['slope_per_step_prompt_fe']",
    "fmt": "{:.4f}"
+  },
+  {
+   "id": "p40_base_cv_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.345",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['base']['cv_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_base_cv_median",
+   "file": "usir_v4_paper.md",
+   "text": "0.343",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['base']['cv_median']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_base_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['base']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40_base_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "1.961",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['base']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_cal_last_alpha_0.12_cv_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.365",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['cv_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_cal_last_alpha_0.12_cv_median",
+   "file": "usir_v4_paper.md",
+   "text": "0.362",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['cv_median']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_cal_last_alpha_0.12_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40_steer_cal_last_alpha_0.12_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "2.056",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.12']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_rand_last_alpha_0.12_cv_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.365",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['cv_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_rand_last_alpha_0.12_cv_median",
+   "file": "usir_v4_paper.md",
+   "text": "0.358",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['cv_median']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_rand_last_alpha_0.12_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40_steer_rand_last_alpha_0.12_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "2.010",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.12']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_cal_last_alpha_0.16_cv_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.379",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.16']['cv_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_cal_last_alpha_0.16_cv_median",
+   "file": "usir_v4_paper.md",
+   "text": "0.377",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.16']['cv_median']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_cal_last_alpha_0.16_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.16']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40_steer_cal_last_alpha_0.16_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "2.089",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_cal_last_alpha_0.16']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_rand_last_alpha_0.16_cv_mean",
+   "file": "usir_v4_paper.md",
+   "text": "0.355",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.16']['cv_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_rand_last_alpha_0.16_cv_median",
+   "file": "usir_v4_paper.md",
+   "text": "0.338",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.16']['cv_median']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_steer_rand_last_alpha_0.16_degenerate",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.16']['degenerate']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40_steer_rand_last_alpha_0.16_ref_ppl_mean",
+   "file": "usir_v4_paper.md",
+   "text": "2.014",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['pooled']['steer_rand_last_alpha_0.16']['ref_ppl_mean']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_c3",
+   "file": "usir_v4_paper.md",
+   "text": "2",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['criteria']['c3_series_cal_gt_rand']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p40_pr_cal012_vs_base_mean_diff",
+   "file": "usir_v4_paper.md",
+   "text": "0.020",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal012_vs_base']['mean_diff']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_pr_cal012_vs_base_wilcoxon_p_greater",
+   "file": "usir_v4_paper.md",
+   "text": "0.071",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal012_vs_base']['wilcoxon_p_greater']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_pr_cal012_vs_rand012_mean_diff",
+   "file": "usir_v4_paper.md",
+   "text": "0.0004",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal012_vs_rand012']['mean_diff']",
+   "fmt": "{:.4f}"
+  },
+  {
+   "id": "p40_pr_cal012_vs_rand012_wilcoxon_p_greater",
+   "file": "usir_v4_paper.md",
+   "text": "0.57",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal012_vs_rand012']['wilcoxon_p_greater']",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p40_pr_cal_secondary_vs_base_mean_diff",
+   "file": "usir_v4_paper.md",
+   "text": "0.034",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal_secondary_vs_base']['mean_diff']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_pr_cal_secondary_vs_base_wilcoxon_p_greater",
+   "file": "usir_v4_paper.md",
+   "text": "0.030",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal_secondary_vs_base']['wilcoxon_p_greater']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_pr_cal_secondary_vs_rand_secondary_mean_diff",
+   "file": "usir_v4_paper.md",
+   "text": "0.025",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal_secondary_vs_rand_secondary']['mean_diff']",
+   "fmt": "{:.3f}"
+  },
+  {
+   "id": "p40_pr_cal_secondary_vs_rand_secondary_wilcoxon_p_greater",
+   "file": "usir_v4_paper.md",
+   "text": "0.14",
+   "source": "docs/handoff/v10/p40_cv_eval.json",
+   "expr": "d['paired']['cal_secondary_vs_rand_secondary']['wilcoxon_p_greater']",
+   "fmt": "{:.2f}"
   }
  ]
 }
