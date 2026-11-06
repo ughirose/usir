@@ -62,7 +62,7 @@
   - 読点上限は `round(c* + 2)`（c* は 1 文あたりの目標読点数）とした。Gemini の式 `round(μ*·c100/100)+2` と同じ意味で、計算はこちらの既存の量で行う。
 - 実行: `p36_q3_8b`（Qwen3-8B、2 プロット × 3 seed × {ctrl, gA, gB}）と `p36_swallow_8b`（station × 3 seed × {ctrl, gB}、年号漏れの確認用）。
 - 成功基準:
-  - 平均文長（`ortho[0]` の exp）が gB > ctrl > gA の順に並び、gB − gA ≥ 10 字。
+  - 平均文長（`ortho[0]` の exp）で gB − gA ≥ 10 字、かつ gB > ctrl。ctrl と gA の大小は報告だけにする（下記の注意を参照）。
   - Swallow station gB で 4 桁の年号が 0 件。
 - 注意: 芥川の目標 μ*=42.5 字は ctrl（28 字）より長い。Gemini が求めた「ctrl > gA」は、実測した事前分布とは逆向きの要求になる。
 
