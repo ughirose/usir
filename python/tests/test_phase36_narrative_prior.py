@@ -105,3 +105,84 @@ def test_shaped_reward_is_continuous_and_ranks_by_cv():
     assert 0.0 < rf < rv
     assert fn(varied, 6.0) < rv                          # PPL barrier still applies
     assert fn("", 1.0) == 0.0
+
+
+# ---- Phase 37: byte-split "〇" in the year mask, in-band ramp, incomplete-tail stripping ---------------------------
+from usir_py.lora_grpo_forge import strip_incomplete_tail  # noqa: E402
+from usir_py.realtime_decoder import byte_split_digit_pairs  # noqa: E402
+
+
+class _ByteTok:
+    """Mock of a byte-level BPE vocabulary in which "〇" has no token: it is ids (5, 6), each decoding to U+FFFD."""
+    vocab = ["二", "一", "年", "人", "雨", "<b0>", "<b1>"]
+
+    def encode(self, s, add_special_tokens=False):
+        out = []
+        for ch in s:
+            out += [5, 6] if ch == "〇" else [self.vocab.index(ch)]
+        return out
+
+    def decode(self, ids, **k):
+        s, i = "", 0
+        while i < len(ids):
+            if ids[i] == 5 and i + 1 < len(ids) and ids[i + 1] == 6:
+                s, i = s + "〇", i + 2
+            elif ids[i] in (5, 6):
+                s, i = s + "�", i + 1
+            else:
+                s, i = s + self.vocab[ids[i]], i + 1
+        return s
+
+    def batch_decode(self, rows, **k):
+        return [self.decode(list(r)) for r in rows]
+
+
+def _year_proc(tk, ctx_ids):
+    digits = {i: s for i, s in enumerate(tk.vocab) if s in "一二"}
+    pairs = byte_split_digit_pairs(tk)
+    assert pairs == [(5, 6, "〇")]
+    proc = ForbiddenWordsLogits(tk, 0, [], {}, ctx_tail="", digit_ids=digits, digit_penalty=1e4, digit_pairs=pairs)
+    return proc(np.array([ctx_ids]), np.zeros((1, len(tk.vocab))))[0]
+
+
+def test_byte_split_zero_cannot_complete_a_year():
+    tk = _ByteTok()
+    # 二〇一 + 〇: the second byte of 〇 after [二, 〇, 一, b0] is masked; other tokens are not
+    sc = _year_proc(tk, [0, 5, 6, 1, 5])
+    assert sc[6] == -1e4 and sc[2] == 0.0 and sc[3] == 0.0
+    # 二〇一 + (start of 〇): the first byte is masked too, so the year cannot be started
+    sc = _year_proc(tk, [0, 5, 6, 1])
+    assert sc[5] == -1e4 and sc[1] == -1e4 and sc[4] == 0.0
+    # a single digit before 〇 is not a year: 二〇 stays possible (e.g. counts), nothing is masked
+    sc = _year_proc(tk, [0, 5])
+    assert sc[6] == 0.0
+    # without the pair table (Phase 36 behaviour) the completion was not masked
+    digits = {i: s for i, s in enumerate(tk.vocab) if s in "一二"}
+    p36 = ForbiddenWordsLogits(tk, 0, [], {}, ctx_tail="", digit_ids=digits, digit_penalty=1e4)
+    assert p36(np.array([[0, 5, 6, 1, 5]]), np.zeros((1, 7)))[0, 6] == 0.0
+
+
+def test_in_band_ramp_defaults_off_and_grows_inside_band():
+    gp = {"steady_min_chars": 20, "steady_max_chars": 40, "steady_max_commas": 9, "comma_target": 0.0,
+          "hold_bias": -18.0, "push_bias": 8.0}
+    d = ClauseTwistedSMCDecoder(dim=12, seed=0, rhythm=True, rhythm_profile="steady", genome_proposal=gp)
+    assert d._rhythm_params("あ" * 30)[0] == 0.0                       # Phase 36 behaviour without band_ramp
+    d.genome_proposal = dict(gp, band_ramp=4.0)
+    assert d._rhythm_params("あ" * 20)[0] == 0.0
+    assert abs(d._rhythm_params("あ" * 30)[0] - 2.0) < 1e-9
+    assert abs(d._rhythm_params("あ" * 40)[0] - 4.0) < 1e-9
+    assert d._rhythm_params("あ" * 41)[0] == 8.0 and d._rhythm_params("あ" * 5)[0] == -18.0
+    ob = json.loads(_ART.read_text(encoding="utf-8"))["ortho_by_author"]
+    assert proposal_from_prior(ob["000879"], list(ob.values()))["band_ramp"] == 0.0
+
+
+def test_strip_incomplete_tail_and_shaped_reward_option():
+    assert strip_incomplete_tail("晴れです。明日も晴れ") == "晴れです。"
+    assert strip_incomplete_tail("晴れです。") == "晴れです。"
+    assert strip_incomplete_tail("終止なし") == "終止なし"
+    # flat complete sentences + a long fragment cut by the token limit: the fragment alone inflates CV_L
+    cut = "今日は晴れです。明日も晴れです。昨日も晴れでした。週末は家でゆっくりと本を読みながら過ごしたいと考えていて、そのために"
+    fn0 = drv33.make_shaped_reward(ppl_thresh=2.0, alpha_ppl=1.0)
+    fn1 = drv33.make_shaped_reward(ppl_thresh=2.0, alpha_ppl=1.0, strip_tail=True)
+    assert fn1(cut, 1.5) == fn0(strip_incomplete_tail(cut), 1.5)
+    assert fn1(cut, 1.5) != fn0(cut, 1.5)

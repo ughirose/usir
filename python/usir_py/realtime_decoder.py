@@ -1467,6 +1467,19 @@ def forbidden_completion_table(surfaces: Sequence[str], words: Sequence[str]) ->
     return table
 
 
+def byte_split_digit_pairs(tokenizer: Any) -> List[Tuple[int, int, str]]:
+    """Phase 37: digit characters that the tokenizer encodes as exactly two byte-level tokens (Qwen3: "〇")."""
+    out: List[Tuple[int, int, str]] = []
+    for ch in _DIGIT_CHARS:
+        try:
+            enc = list(tokenizer.encode(ch, add_special_tokens=False))
+        except Exception:
+            continue
+        if len(enc) == 2:
+            out.append((int(enc[0]), int(enc[1]), ch))
+    return out
+
+
 class ForbiddenWordsLogits(_ProcBase):  # type: ignore[misc,valid-type]
     """Phase 31: -penalty on tokens that would complete a forbidden word (e.g. the opposite-gender role word) given
     the text so far (prefix tail + generated tail of the row); optional ban on tokens that would form a run of four
@@ -1474,7 +1487,8 @@ class ForbiddenWordsLogits(_ProcBase):  # type: ignore[misc,valid-type]
 
     def __init__(self, tokenizer: Any, n_ctx: int, words: Sequence[str], table: Dict[str, List[int]],
                  ctx_tail: str, digit_ids: Optional[Dict[int, str]] = None, penalty: float = 15.0,
-                 tail_cache: Optional[TailCache] = None, digit_penalty: Optional[float] = None) -> None:
+                 tail_cache: Optional[TailCache] = None, digit_penalty: Optional[float] = None,
+                 digit_pairs: Optional[Sequence[Tuple[int, int, str]]] = None) -> None:
         self.tokenizer = tokenizer
         self.n_ctx = int(n_ctx)
         self.words = [w for w in words if w]
@@ -1484,6 +1498,9 @@ class ForbiddenWordsLogits(_ProcBase):  # type: ignore[misc,valid-type]
         self.penalty = float(penalty)
         self.digit_penalty = float(penalty if digit_penalty is None else digit_penalty)
         self.tail_cache = tail_cache
+        # Phase 37: digit characters without a single token (Qwen3: "〇" = byte tokens 1277, 229). Each entry is
+        # (first byte token, second byte token, character); the per-token digit table cannot see these characters.
+        self.digit_pairs = list(digit_pairs or [])
 
     def __call__(self, ids: Any, scores: Any) -> Any:
         tails = _tail_texts(self.tokenizer, ids, self.n_ctx, self.tail_cache)
@@ -1501,6 +1518,15 @@ class ForbiddenWordsLogits(_ProcBase):  # type: ignore[misc,valid-type]
                 bad = [i for i, sf in self.digit_ids.items() if _YEAR_RE.search(end + sf)]
                 if bad:
                     _add_set(scores, [r], IdxSet(bad), -self.digit_penalty)
+            if self.digit_pairs:
+                last = int(ids[r, -1]) if ids.shape[1] else -1
+                clean = text.rstrip("�")
+                pending = clean != text            # the row ends inside a multi-byte character
+                for t0, t1, ch in self.digit_pairs:
+                    if pending and last == t0 and _YEAR_RE.search(clean[-3:] + ch):
+                        _add_set(scores, [r], IdxSet([t1]), -self.digit_penalty)   # completing ch would make a year
+                    elif not pending and _YEAR_RE.search(text[-3:] + ch):
+                        _add_set(scores, [r], IdxSet([t0]), -self.digit_penalty)   # do not start ch after 3 digits
         return scores
 
 
@@ -2401,6 +2427,7 @@ class ClauseTwistedSMCDecoder:
                     st = sf.strip()
                     if st and any(c in _DIGIT_CHARS for c in st):
                         digits[i] = st
+            self._digit_pairs = byte_split_digit_pairs(self.tokenizer) if self.forbid_years else []
             self._forbid_cache = (table, digits)
         return self._forbid_cache
 
@@ -2489,7 +2516,11 @@ class ClauseTwistedSMCDecoder:
             elif slen > self.steady_max_chars:
                 pb = float(gp.get("push_bias", 3.0)) if gp else 3.0
             else:
-                pb = 0.0
+                # Phase 37: optional in-band ramp (the bias is evaluated once per clause, so a clause that starts
+                # inside the band otherwise runs one clause past it); 0 when band_ramp is absent (Phase 36 behaviour)
+                ramp = float(gp.get("band_ramp", 0.0)) if gp else 0.0
+                span = max(1, self.steady_max_chars - self.steady_min_chars)
+                pb = ramp * (slen - self.steady_min_chars) / span if ramp else 0.0
             cb = -4.0 if commas >= self.steady_max_commas else 0.0
             if gp and cb == 0.0 and slen >= 10 and commas < float(gp.get("comma_target", 0.0)) - 1.0:
                 cb = float(gp.get("comma_push", 1.5))
@@ -2745,7 +2776,8 @@ class ClauseTwistedSMCDecoder:
             _tab, _dig = self._forbidden_tables()
             forbid_proc = ForbiddenWordsLogits(tokenizer_ref, n_ctx, self.forbidden_words, _tab, prefix[-12:],
                                                digit_ids=_dig, penalty=self.forbidden_penalty, tail_cache=tail_cache,
-                                               digit_penalty=getattr(self, "year_penalty", None))
+                                               digit_penalty=getattr(self, "year_penalty", None),
+                                               digit_pairs=getattr(self, "_digit_pairs", None))
         _kb = float((getattr(self, "genome_proposal", None) or {}).get("kanji_bias", 0.0))
         kanji_proc = KanjiBiasLogits(self._kanji_token_ids(), _kb) if _kb else None
 

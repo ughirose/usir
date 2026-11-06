@@ -335,7 +335,7 @@ Swallow station (3 seeds): mean sentence length new_ctrl {sw_c}, B {sw_b}. Four-
 has no single token and is split into two byte-level tokens that decode to U+FFFD individually, so the per-token
 digit table used by the mask never contains it; years without "〇" (e.g. 一九六八) are tokens whose decoded surfaces contain the digits
 and are masked. The penalty value is not the cause.
-"""
+""" + p37_paragraph_split(P)
 
 
 def section_judge(P: Paper) -> str:
@@ -519,7 +519,84 @@ the Deadzone in {dz('p36c_lora_dz', lm)} outputs, equal to base, so the merged-L
 original {P.num('p36c_lat_orig', s, lat + "['original']['ms_per_token']['mean']")} ms/token, merged
 {P.num('p36c_lat_merged', s, lat + "['lora_merged']['ms_per_token']['mean']")}, unmerged
 {P.num('p36c_lat_unmerged', s, lat + "['lora_unmerged']['ms_per_token']['mean']")}.
-"""
+""" + p37_tail(P)
+
+
+def p37_paragraph_split(P: Paper) -> str:
+    s = f"{V10}/p37_reanalysis.json"
+    if not P.has(s):
+        return ""
+    pt = "d['paragraph_type']"
+    rows = []
+    for f, name, conds in (("p36_q3_8b", "Qwen3-8B", ("new_ctrl", "gA", "gB")), ("p36_swallow_8b", "Swallow", ("new_ctrl", "gB"))):
+        for c in conds:
+            b = f"{pt}[{f!r}]['conditions'][{c!r}]"
+            rows.append(f"| {name} | {c} | {P.num(f'p37_{f}_{c}_steady', s, b + KEY('steady_mean'), '{:.1f}')} "
+                        f"({P.num(f'p37_{f}_{c}_steady_n', s, b + KEY('steady_n'), '{}')}) | "
+                        f"{P.num(f'p37_{f}_{c}_climax', s, b + KEY('climax_mean'), '{:.1f}')} "
+                        f"({P.num(f'p37_{f}_{c}_climax_n', s, b + KEY('climax_n'), '{}')}) | "
+                        f"{P.num(f'p37_{f}_{c}_share', s, '100*' + b + KEY('climax_sentence_share'), '{:.1f}')} % |")
+    runs = f"{pt}['p36_q3_8b']['runs']"
+    diff = (f"[v['steady_mean'] - {runs}[k.replace('_gB_', '_gA_')]['steady_mean'] for k, v in {runs}.items() "
+            "if v['condition']=='gB']")
+    dm = P.num("p37_steady_BA_mean", s, f"statistics.mean({diff})", "{:.2f}")
+    dmin = P.num("p37_steady_BA_min", s, f"min({diff})", "{:.1f}")
+    dmax = P.num("p37_steady_BA_max", s, f"max({diff})", "{:.1f}")
+    over = P.num("p37_gA_over_max", s, f"sum(v['steady_over_max'] for v in {runs}.values() if v['condition']=='gA')", "{}")
+    nA = P.num("p37_gA_steady_n2", s, f"{pt}['p36_q3_8b']['conditions']['gA']['steady_n']", "{}")
+    b31 = f"{pt}['p31b_q3_8b']['conditions']"
+    a31 = P.num('p37_p31b_gA_steady', s, b31 + "['gA']['steady_mean']", '{:.1f}')
+    bb31 = P.num('p37_p31b_gB_steady', s, b31 + "['gB']['steady_mean']", '{:.1f}')
+    return ("\n**Post-hoc split by paragraph type (Phase 37, no new generation).** The genome band acts only on steady "
+            "paragraphs\n(director well ≠ 2); the Climax paragraph (well 2) uses the pulse profile in every condition, "
+            "including new_ctrl.\nSentence lengths (same splitter as above), number of sentences in parentheses:\n\n"
+            "| Model | Condition | steady paragraphs | Climax paragraph | Climax share of sentences |\n"
+            "|---|---|---|---|---|\n" + "\n".join(rows) +
+            f"\n\nIn steady paragraphs B − A is {dm} characters on average (range {dmin}–{dmax}; 6 of 6 groups ≥ 10). "
+            "The Climax\nparagraph has short sentences and therefore many of them, so it dominates the whole-text mean. "
+            "This split was chosen\nafter seeing the result; the pre-registered whole-text criterion remains **not met**, "
+            "and the split is reported as\nan explanation, not as a substitute. Both steered conditions overshoot their "
+            f"targets in steady paragraphs (A:\n{over} of {nA} sentences above the band maximum); the sentence-end bias is "
+            "evaluated once per clause, so a clause\nthat starts inside the band can run past it. For comparison, Phase 31b "
+            f"steady paragraphs gave A {a31} and B {bb31}.\nAn optional in-band ramp of the '。' bias (`band_ramp`, default 0) "
+            "and a mask for byte-split \"〇\" were added in Phase 37;\nthey are unit-tested only and have not been run on a model.\n")
+
+
+def KEY(k: str) -> str:
+    return f"[{k!r}]"
+
+
+def p37_tail(P: Paper) -> str:
+    s = f"{V10}/p37_reanalysis.json"
+    if not P.has(s):
+        return ""
+    rows = []
+    for c, label in (("base", "base"), ("steer_cal_last_alpha_0.08", "calibrated α 0.08"),
+                     ("steer_rand_last_alpha_0.08", "random α 0.08"), ("steer_cal_last_alpha_0.12", "calibrated α 0.12"),
+                     ("steer_rand_last_alpha_0.12", "random α 0.12"), ("lora_merged", "merged LoRA")):
+        b = f"d['phase_c_tail']['sets'][{c!r}]"
+        k = f"p37_tail_{c}"
+        cells = [P.num(k + "_" + f, s, b + KEY(f), "{}") for f in
+                 ("truncated", "deadzone_full", "deadzone_stripped", "cv_lt_028_json", "cv_lt_028_stripped", "paragraph_break")]
+        rows.append(f"| {label} | " + " | ".join(cells) + " |")
+    ca = "[x for v in d['phase_c_tail']['sets'].values() for x in v['cadence_alive']]"
+    n_all = P.num("p37_cad_n", s, f"len({ca})", "{}")
+    n_lo = P.num("p37_cad_lo", s, f"sum(1 for x in {ca} if x < 0.26)", "{}")
+    n_mid = P.num("p37_cad_mid", s, f"sum(1 for x in {ca} if 0.26 <= x <= 0.65)", "{}")
+    return ("\n**Sensitivity to the truncated tail (Phase 37, re-analysis of the same texts).** Evaluation stops at 400 "
+            "new tokens,\nso many outputs end inside a sentence, and the extractor treats the fragment as the last sentence. "
+            "Recomputing the\nclassifiers on each text with the fragment after the last sentence end removed (counts out of 12):\n\n"
+            "| Set | truncated | Deadzone | Deadzone, tail removed | CV < 0.28 | CV < 0.28, tail removed | contains a blank line |\n"
+            "|---|---|---|---|---|---|---|\n" + "\n".join(rows) +
+            "\n\nWith the tail removed, calibrated α 0.12 is still below random α 0.12 and below base, but its Deadzone "
+            "count rises\nfrom 1 to 5, so its gaps to base and to random both shrink; part of the α 0.12 effect in the "
+            "table above comes\nfrom truncated fragments, and the steering result is weaker than that table suggests. "
+            f"cadence_alive is two-valued over all {n_all} evaluation texts ({n_lo} below 0.26,\n{n_mid} between 0.26 and 0.65): "
+            "the extractor's flat-slop gate (mean length > 40, CV_L < 0.28, and abstract fillers or\nsluggish endings) "
+            "subtracts 0.68 as a step. The merged adapter ended inside a sentence and used blank lines more often\nthan base. "
+            "A reward that depends on the truncated tail and on this step is a plausible reason why GRPO did not learn\n"
+            "the intended rhythm, but the training rollouts were not stored, so this is not verified. The shaped reward "
+            "now has\na `strip_tail` option (complete sentences only), unit-tested and not yet trained with.\n")
 
 
 def section_cleanroom(P: Paper) -> str:
@@ -544,6 +621,8 @@ def section_limitations(P: Paper) -> str:
   neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
 - Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",
   which the Qwen3 tokenizer splits into byte-level tokens.
+- Phase 37 analyses (paragraph-type split, truncated-tail sensitivity) were chosen after seeing the Phase 36 results;
+  the Phase 37 code changes (in-band ramp, byte-split "〇" mask, tail stripping in the reward) have unit tests only.
 
 ## Appendix A. Synthetic self-consistency checks (not evidence)
 The former Tables 1 and 4 remain reproducible from `python/usir_py/v2/benchmark_v2_large_scale.py` and

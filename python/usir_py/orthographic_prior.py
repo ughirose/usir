@@ -136,7 +136,7 @@ def ortho_summary(windows: Sequence[str]) -> Dict[str, float]:
 
 def proposal_from_prior(author: Dict[str, float], reference: Sequence[Dict[str, float]], kappa: float = 2.0,
                         band: Sequence[float] = (0.55, 1.6), comma_slack: float = 1.0, hold_bias: float = -12.0,
-                        push_bias: float = 3.0) -> Dict[str, float]:
+                        push_bias: float = 3.0, band_ramp: float = 0.0) -> Dict[str, float]:
     """Phase 31: decoder proposal parameters from an author's measured orthographic prior.
 
     The author's deviation from the atlas mean (unweighted over authors) is amplified by kappa:
@@ -147,6 +147,8 @@ def proposal_from_prior(author: Dict[str, float], reference: Sequence[Dict[str, 
     Deterministic; documented in docs/handoff/2026-11-06_phase31_genome_proposal.md.
     Phase 36 (docs/handoff/2026-11-06_phase36_pinpoint.md) exposes the band factors, the comma slack
     (max_commas = max(1, round(c* + comma_slack))) and the steady period hold / push biases; defaults reproduce Phase 31.
+    Phase 37: band_ramp > 0 adds a '。' bias band_ramp * frac inside the band, frac = (slen - min) / (max - min), so
+    that a clause started inside the band is more likely to close it (default 0 = Phase 36 behaviour).
     """
     r_logL = float(np.mean([r["log_mean_sent_len"] for r in reference]))
     r_c = float(np.mean([r["commas_per_sent"] for r in reference]))
@@ -158,5 +160,5 @@ def proposal_from_prior(author: Dict[str, float], reference: Sequence[Dict[str, 
         "target_sent_len": mu, "comma_target": c, "kanji_bias": kb, "comma_push": 1.5,
         "steady_min_chars": int(round(float(band[0]) * mu)), "steady_max_chars": int(round(float(band[1]) * mu)),
         "steady_max_commas": int(max(1, round(c + float(comma_slack)))), "kappa": float(kappa),
-        "hold_bias": float(hold_bias), "push_bias": float(push_bias),
+        "hold_bias": float(hold_bias), "push_bias": float(push_bias), "band_ramp": float(band_ramp),
     }

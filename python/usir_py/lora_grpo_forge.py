@@ -358,6 +358,20 @@ def set_lora_enabled(model: Any, enabled: bool) -> int:
 # 3. Authentic GRPO Policy Gradient Training Loop
 # ---------------------------------------------------------------------------
 
+_SENT_END = "。！？!?"
+
+
+def strip_incomplete_tail(text: str) -> str:
+    """Phase 37: drop the trailing fragment after the last sentence end (a rollout cut by the token limit).
+
+    Returns the text unchanged when it already ends with a sentence end or contains none."""
+    s = text.rstrip()
+    if not s or s[-1] in _SENT_END:
+        return s
+    cut = max(s.rfind(c) for c in _SENT_END)
+    return s[:cut + 1] if cut >= 0 else s
+
+
 def run_authentic_grpo_lora_forge(
     model: Any,
     tokenizer: Optional[Any] = None,

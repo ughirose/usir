@@ -1609,6 +1609,262 @@
    "fmt": "{}"
   },
   {
+   "id": "p37_p36_q3_8b_new_ctrl_steady",
+   "file": "usir_v4_paper.md",
+   "text": "29.6",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['new_ctrl']['steady_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_q3_8b_new_ctrl_steady_n",
+   "file": "usir_v4_paper.md",
+   "text": "318",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['new_ctrl']['steady_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_q3_8b_new_ctrl_climax",
+   "file": "usir_v4_paper.md",
+   "text": "21.7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['new_ctrl']['climax_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_q3_8b_new_ctrl_climax_n",
+   "file": "usir_v4_paper.md",
+   "text": "82",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['new_ctrl']['climax_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_q3_8b_new_ctrl_share",
+   "file": "usir_v4_paper.md",
+   "text": "20.5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "100*d['paragraph_type']['p36_q3_8b']['conditions']['new_ctrl']['climax_sentence_share']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gA_steady",
+   "file": "usir_v4_paper.md",
+   "text": "54.9",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gA']['steady_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gA_steady_n",
+   "file": "usir_v4_paper.md",
+   "text": "180",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gA']['steady_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gA_climax",
+   "file": "usir_v4_paper.md",
+   "text": "18.5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gA']['climax_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gA_climax_n",
+   "file": "usir_v4_paper.md",
+   "text": "113",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gA']['climax_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gA_share",
+   "file": "usir_v4_paper.md",
+   "text": "38.6",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "100*d['paragraph_type']['p36_q3_8b']['conditions']['gA']['climax_sentence_share']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gB_steady",
+   "file": "usir_v4_paper.md",
+   "text": "71.3",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gB']['steady_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gB_steady_n",
+   "file": "usir_v4_paper.md",
+   "text": "138",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gB']['steady_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gB_climax",
+   "file": "usir_v4_paper.md",
+   "text": "17.6",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gB']['climax_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gB_climax_n",
+   "file": "usir_v4_paper.md",
+   "text": "116",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gB']['climax_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_q3_8b_gB_share",
+   "file": "usir_v4_paper.md",
+   "text": "45.7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "100*d['paragraph_type']['p36_q3_8b']['conditions']['gB']['climax_sentence_share']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_new_ctrl_steady",
+   "file": "usir_v4_paper.md",
+   "text": "39.1",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_swallow_8b']['conditions']['new_ctrl']['steady_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_new_ctrl_steady_n",
+   "file": "usir_v4_paper.md",
+   "text": "134",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_swallow_8b']['conditions']['new_ctrl']['steady_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_new_ctrl_climax",
+   "file": "usir_v4_paper.md",
+   "text": "24.8",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_swallow_8b']['conditions']['new_ctrl']['climax_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_new_ctrl_climax_n",
+   "file": "usir_v4_paper.md",
+   "text": "41",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_swallow_8b']['conditions']['new_ctrl']['climax_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_new_ctrl_share",
+   "file": "usir_v4_paper.md",
+   "text": "23.4",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "100*d['paragraph_type']['p36_swallow_8b']['conditions']['new_ctrl']['climax_sentence_share']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_gB_steady",
+   "file": "usir_v4_paper.md",
+   "text": "79.9",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_swallow_8b']['conditions']['gB']['steady_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_gB_steady_n",
+   "file": "usir_v4_paper.md",
+   "text": "69",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_swallow_8b']['conditions']['gB']['steady_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_gB_climax",
+   "file": "usir_v4_paper.md",
+   "text": "19.2",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_swallow_8b']['conditions']['gB']['climax_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_gB_climax_n",
+   "file": "usir_v4_paper.md",
+   "text": "52",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_swallow_8b']['conditions']['gB']['climax_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p36_swallow_8b_gB_share",
+   "file": "usir_v4_paper.md",
+   "text": "43.0",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "100*d['paragraph_type']['p36_swallow_8b']['conditions']['gB']['climax_sentence_share']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_steady_BA_mean",
+   "file": "usir_v4_paper.md",
+   "text": "16.35",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "statistics.mean([v['steady_mean'] - d['paragraph_type']['p36_q3_8b']['runs'][k.replace('_gB_', '_gA_')]['steady_mean'] for k, v in d['paragraph_type']['p36_q3_8b']['runs'].items() if v['condition']=='gB'])",
+   "fmt": "{:.2f}"
+  },
+  {
+   "id": "p37_steady_BA_min",
+   "file": "usir_v4_paper.md",
+   "text": "12.6",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "min([v['steady_mean'] - d['paragraph_type']['p36_q3_8b']['runs'][k.replace('_gB_', '_gA_')]['steady_mean'] for k, v in d['paragraph_type']['p36_q3_8b']['runs'].items() if v['condition']=='gB'])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_steady_BA_max",
+   "file": "usir_v4_paper.md",
+   "text": "21.1",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "max([v['steady_mean'] - d['paragraph_type']['p36_q3_8b']['runs'][k.replace('_gB_', '_gA_')]['steady_mean'] for k, v in d['paragraph_type']['p36_q3_8b']['runs'].items() if v['condition']=='gB'])",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_gA_over_max",
+   "file": "usir_v4_paper.md",
+   "text": "76",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "sum(v['steady_over_max'] for v in d['paragraph_type']['p36_q3_8b']['runs'].values() if v['condition']=='gA')",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_gA_steady_n2",
+   "file": "usir_v4_paper.md",
+   "text": "180",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p36_q3_8b']['conditions']['gA']['steady_n']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_p31b_gA_steady",
+   "file": "usir_v4_paper.md",
+   "text": "39.6",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p31b_q3_8b']['conditions']['gA']['steady_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
+   "id": "p37_p31b_gB_steady",
+   "file": "usir_v4_paper.md",
+   "text": "42.5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['paragraph_type']['p31b_q3_8b']['conditions']['gB']['steady_mean']",
+   "fmt": "{:.1f}"
+  },
+  {
    "id": "p28j_posbias_qwen3_8b",
    "file": "usir_v4_paper.md",
    "text": "0.78",
@@ -2663,6 +2919,318 @@
    "source": "docs/handoff/v10/p36c_q3_8b.json",
    "expr": "d['stages']['grpo_lora']['latency']['states']['lora_unmerged']['ms_per_token']['mean']",
    "fmt": "{:.2f}"
+  },
+  {
+   "id": "p37_tail_base_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['base']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_base_deadzone_full",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['base']['deadzone_full']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_base_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['base']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_base_cv_lt_028_json",
+   "file": "usir_v4_paper.md",
+   "text": "8",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['base']['cv_lt_028_json']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_base_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "8",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['base']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_base_paragraph_break",
+   "file": "usir_v4_paper.md",
+   "text": "2",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['base']['paragraph_break']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.08_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.08']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.08_deadzone_full",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.08']['deadzone_full']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.08_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.08']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.08_cv_lt_028_json",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.08']['cv_lt_028_json']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.08_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.08']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.08_paragraph_break",
+   "file": "usir_v4_paper.md",
+   "text": "4",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.08']['paragraph_break']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.08_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.08']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.08_deadzone_full",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.08']['deadzone_full']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.08_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "8",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.08']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.08_cv_lt_028_json",
+   "file": "usir_v4_paper.md",
+   "text": "9",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.08']['cv_lt_028_json']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.08_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "10",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.08']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.08_paragraph_break",
+   "file": "usir_v4_paper.md",
+   "text": "1",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.08']['paragraph_break']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.12_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "8",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.12']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.12_deadzone_full",
+   "file": "usir_v4_paper.md",
+   "text": "1",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.12']['deadzone_full']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.12_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.12']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.12_cv_lt_028_json",
+   "file": "usir_v4_paper.md",
+   "text": "4",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.12']['cv_lt_028_json']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.12_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.12']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_cal_last_alpha_0.12_paragraph_break",
+   "file": "usir_v4_paper.md",
+   "text": "4",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_cal_last_alpha_0.12']['paragraph_break']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.12_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "5",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.12']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.12_deadzone_full",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.12']['deadzone_full']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.12_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "9",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.12']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.12_cv_lt_028_json",
+   "file": "usir_v4_paper.md",
+   "text": "6",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.12']['cv_lt_028_json']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.12_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "9",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.12']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_steer_rand_last_alpha_0.12_paragraph_break",
+   "file": "usir_v4_paper.md",
+   "text": "4",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['steer_rand_last_alpha_0.12']['paragraph_break']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_lora_merged_truncated",
+   "file": "usir_v4_paper.md",
+   "text": "11",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['lora_merged']['truncated']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_lora_merged_deadzone_full",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['lora_merged']['deadzone_full']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_lora_merged_deadzone_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "8",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['lora_merged']['deadzone_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_lora_merged_cv_lt_028_json",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['lora_merged']['cv_lt_028_json']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_lora_merged_cv_lt_028_stripped",
+   "file": "usir_v4_paper.md",
+   "text": "8",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['lora_merged']['cv_lt_028_stripped']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_tail_lora_merged_paragraph_break",
+   "file": "usir_v4_paper.md",
+   "text": "7",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "d['phase_c_tail']['sets']['lora_merged']['paragraph_break']",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_cad_n",
+   "file": "usir_v4_paper.md",
+   "text": "72",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "len([x for v in d['phase_c_tail']['sets'].values() for x in v['cadence_alive']])",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_cad_lo",
+   "file": "usir_v4_paper.md",
+   "text": "25",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "sum(1 for x in [x for v in d['phase_c_tail']['sets'].values() for x in v['cadence_alive']] if x < 0.26)",
+   "fmt": "{}"
+  },
+  {
+   "id": "p37_cad_mid",
+   "file": "usir_v4_paper.md",
+   "text": "0",
+   "source": "docs/handoff/v10/p37_reanalysis.json",
+   "expr": "sum(1 for x in [x for v in d['phase_c_tail']['sets'].values() for x in v['cadence_alive']] if 0.26 <= x <= 0.65)",
+   "fmt": "{}"
   }
  ]
 }

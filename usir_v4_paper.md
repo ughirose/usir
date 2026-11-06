@@ -173,6 +173,27 @@ has no single token and is split into two byte-level tokens that decode to U+FFF
 digit table used by the mask never contains it; years without "〇" (e.g. 一九六八) are tokens whose decoded surfaces contain the digits
 and are masked. The penalty value is not the cause.
 
+**Post-hoc split by paragraph type (Phase 37, no new generation).** The genome band acts only on steady paragraphs
+(director well ≠ 2); the Climax paragraph (well 2) uses the pulse profile in every condition, including new_ctrl.
+Sentence lengths (same splitter as above), number of sentences in parentheses:
+
+| Model | Condition | steady paragraphs | Climax paragraph | Climax share of sentences |
+|---|---|---|---|---|
+| Qwen3-8B | new_ctrl | 29.6 (318) | 21.7 (82) | 20.5 % |
+| Qwen3-8B | gA | 54.9 (180) | 18.5 (113) | 38.6 % |
+| Qwen3-8B | gB | 71.3 (138) | 17.6 (116) | 45.7 % |
+| Swallow | new_ctrl | 39.1 (134) | 24.8 (41) | 23.4 % |
+| Swallow | gB | 79.9 (69) | 19.2 (52) | 43.0 % |
+
+In steady paragraphs B − A is 16.35 characters on average (range 12.6–21.1; 6 of 6 groups ≥ 10). The Climax
+paragraph has short sentences and therefore many of them, so it dominates the whole-text mean. This split was chosen
+after seeing the result; the pre-registered whole-text criterion remains **not met**, and the split is reported as
+an explanation, not as a substitute. Both steered conditions overshoot their targets in steady paragraphs (A:
+76 of 180 sentences above the band maximum); the sentence-end bias is evaluated once per clause, so a clause
+that starts inside the band can run past it. For comparison, Phase 31b steady paragraphs gave A 39.6 and B 42.5.
+An optional in-band ramp of the '。' bias (`band_ramp`, default 0) and a mask for byte-split "〇" were added in Phase 37;
+they are unit-tested only and have not been run on a model.
+
 ## 4. LLM-as-judge
 ### 4.1 Phase 28: generative pairwise judge (position-biased)
 Cross-judging (Swallow judges Qwen3 outputs and vice versa), 5 axes, both presentation orders. The fraction of
@@ -270,6 +291,28 @@ original 56.36 ms/token, merged
 56.42, unmerged
 69.48.
 
+**Sensitivity to the truncated tail (Phase 37, re-analysis of the same texts).** Evaluation stops at 400 new tokens,
+so many outputs end inside a sentence, and the extractor treats the fragment as the last sentence. Recomputing the
+classifiers on each text with the fragment after the last sentence end removed (counts out of 12):
+
+| Set | truncated | Deadzone | Deadzone, tail removed | CV < 0.28 | CV < 0.28, tail removed | contains a blank line |
+|---|---|---|---|---|---|---|
+| base | 6 | 7 | 7 | 8 | 8 | 2 |
+| calibrated α 0.08 | 5 | 5 | 5 | 5 | 6 | 4 |
+| random α 0.08 | 5 | 7 | 8 | 9 | 10 | 1 |
+| calibrated α 0.12 | 8 | 1 | 5 | 4 | 7 | 4 |
+| random α 0.12 | 5 | 7 | 9 | 6 | 9 | 4 |
+| merged LoRA | 11 | 7 | 8 | 7 | 8 | 7 |
+
+With the tail removed, calibrated α 0.12 is still below random α 0.12 and below base, but its Deadzone count rises
+from 1 to 5, so its gaps to base and to random both shrink; part of the α 0.12 effect in the table above comes
+from truncated fragments, and the steering result is weaker than that table suggests. cadence_alive is two-valued over all 72 evaluation texts (25 below 0.26,
+0 between 0.26 and 0.65): the extractor's flat-slop gate (mean length > 40, CV_L < 0.28, and abstract fillers or
+sluggish endings) subtracts 0.68 as a step. The merged adapter ended inside a sentence and used blank lines more often
+than base. A reward that depends on the truncated tail and on this step is a plausible reason why GRPO did not learn
+the intended rhythm, but the training rollouts were not stored, so this is not verified. The shaped reward now has
+a `strip_tail` option (complete sentences only), unit-tested and not yet trained with.
+
 ## 6. Clean-room gate
 Tier S (128 bytes) and Tier M (4096 bytes) style binaries pass `threeRoomGate.ts`: no raw text retained and no
 contiguous ≥ 7-character overlap with the source. These are fixture tests in the TypeScript suite and a repository
@@ -288,6 +331,8 @@ generalisation rate on held-out data.
   neither 40-step GRPO run (multiplicative or shaped reward) raised the reward, so they say nothing about longer training.
 - Phase 36 sentence length: B − A stayed below the pre-registered 10 characters; the calendar-year mask misses "〇",
   which the Qwen3 tokenizer splits into byte-level tokens.
+- Phase 37 analyses (paragraph-type split, truncated-tail sensitivity) were chosen after seeing the Phase 36 results;
+  the Phase 37 code changes (in-band ramp, byte-split "〇" mask, tail stripping in the reward) have unit tests only.
 
 ## Appendix A. Synthetic self-consistency checks (not evidence)
 The former Tables 1 and 4 remain reproducible from `python/usir_py/v2/benchmark_v2_large_scale.py` and

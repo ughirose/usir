@@ -44,7 +44,7 @@ import run_phase28_phase_c_real as p28  # noqa: E402  (sibling module; also bund
 from usir_py.activation_steerer import SymplecticActivationSteerer  # noqa: E402
 from usir_py.corpus_40_benchmark import CORPUS  # noqa: E402
 from usir_py.extractor_24d import extract_usir_24d  # noqa: E402
-from usir_py.lora_grpo_forge import attach_lora_to_model, run_authentic_grpo_lora_forge, set_lora_enabled  # noqa: E402
+from usir_py.lora_grpo_forge import attach_lora_to_model, run_authentic_grpo_lora_forge, set_lora_enabled, strip_incomplete_tail  # noqa: E402
 
 torch = p28.torch
 TORCH_AVAILABLE = p28.TORCH_AVAILABLE
@@ -352,8 +352,12 @@ SHAPED_REWARD_DEF = ("Phase 36 shaped reward: clip(CV_L / 0.45, 0.05, 1.2) * cad
                      "CV_L and cadence_alive from extract_usir_24d, M_semantic = 1/(1+exp(alpha_ppl*(ppl_ref-threshold)))")
 
 
-def make_shaped_reward(ppl_thresh: float, alpha_ppl: float) -> Callable[[str, float], float]:
+def make_shaped_reward(ppl_thresh: float, alpha_ppl: float,
+                       strip_tail: bool = False) -> Callable[[str, float], float]:
+    """strip_tail (Phase 37): score only the complete sentences (drop the fragment cut by the token limit)."""
     def fn(text: str, ppl_ref: float) -> float:
+        if strip_tail and text:
+            text = strip_incomplete_tail(text)
         if not text or not text.strip():
             return 0.0
         f = extract_usir_24d(text)
