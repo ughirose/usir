@@ -128,6 +128,7 @@ class Cfg(p28.Cfg):
     # Phase 36
     steer_unit_dir: bool = False         # inject alpha * ||h|| * (V dq)/||V dq|| (both calibrated and random)
     grpo_reward: str = "multiplicative"  # "multiplicative" (Phase 33) | "shaped" (see shaped_reward)
+    reward_strip_tail: bool = False     # Phase 42: shaped reward on complete sentences only
     store_rollouts: bool = False        # Phase 40: keep GRPO rollout texts, rewards and ref PPL in the result
     prompt_set: str = "expository"      # evaluation prompts: "expository" (Phase 33-38) | "literary" (Phase 39)
 
@@ -412,7 +413,7 @@ def run_grpo_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[str]
         ppl_thresh=ppl_info["threshold"], alpha_ppl=cfg.alpha_ppl, ppl_completion_only=True,
         max_new_tokens=cfg.grpo_max_new_tokens, batched_rollouts=True, per_rollout_backward=True,
         prompts_per_step=cfg.grpo_prompts_per_step, store_rollouts=cfg.store_rollouts,
-        reward_fn=(make_shaped_reward(ppl_info["threshold"], cfg.alpha_ppl) if cfg.grpo_reward == "shaped" else None),
+        reward_fn=(make_shaped_reward(ppl_info["threshold"], cfg.alpha_ppl, strip_tail=cfg.reward_strip_tail) if cfg.grpo_reward == "shaped" else None),
         progress_fn=lambda e: log(f"[grpo] step {e['step']}/{cfg.grpo_steps} reward={e['mean_reward']:.4f} kl={e['mean_kl']:.5f} loss={e['loss']:.5f} {e['sec']:.1f}s"))
     train_wall = time.perf_counter() - t0
     if res.get("mode") != "authentic_pytorch":
@@ -574,6 +575,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
     ap.add_argument("--steer-unit-dir", action="store_true")
     ap.add_argument("--grpo-reward", default=Cfg.grpo_reward, choices=["multiplicative", "shaped"])
     ap.add_argument("--store-rollouts", action="store_true")
+    ap.add_argument("--reward-strip-tail", action="store_true")
     ap.add_argument("--prompt-set", default=Cfg.prompt_set, choices=sorted(PROMPT_SETS))
     ap.add_argument("--out", default=None, help="write the result JSON here (in addition to the ARCHIVE_B64 line)")
     ap.add_argument("--no-archive-line", action="store_true")
@@ -592,6 +594,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
         lora_r=args.lora_r, lora_alpha=args.lora_alpha, also_unmerged_gen=args.also_unmerged_gen,
         steer_unit_dir=args.steer_unit_dir, grpo_reward=args.grpo_reward,
         prompt_set=args.prompt_set, store_rollouts=args.store_rollouts,
+        reward_strip_tail=args.reward_strip_tail,
     )
     t0 = time.time()
 

@@ -206,6 +206,7 @@ def test_store_rollouts_option_wired():
     assert drv.Cfg().store_rollouts is False
     src = inspect.getsource(drv.run_grpo_stage33)
     assert "store_rollouts=cfg.store_rollouts" in src
+    assert "strip_tail=cfg.reward_strip_tail" in src and drv.Cfg().reward_strip_tail is False
     body = inspect.getsource(run_authentic_grpo_lora_forge)
     assert 'step_entry["rollouts"] = step_rollouts' in body and "ppls.append(ppl_ref)" in body
 

@@ -44,6 +44,9 @@ for _i, _seed in enumerate((20261106, 20261206, 20261306), start=1):
     SCRIPTS[f"p39c_q3_8b_s{_i}"] = ("Qwen/Qwen3-8B", ["--alphas", "0.08", "0.12", "--inject-positions", "last",
                                                     "--steer-unit-dir", "--no-grpo", "--max-new-tokens", "1024",
                                                     "--seed", str(_seed), "--prompt-set", "literary"])
+# Phase 42: GRPO only (no steering), shaped reward on complete sentences, rollouts stored; eval at 1024 tokens
+SCRIPTS["p42g_q3_8b"] = ("Qwen/Qwen3-8B", ["--no-steer", "--grpo-reward", "shaped", "--reward-strip-tail",
+                                         "--store-rollouts", "--max-new-tokens", "1024", "--seed", "20261106"])
 # Phase 40: literary prompts, new seeds, 4 series, alpha 0.12 (primary) and 0.16 (report only); CV_L primary metric
 for _i, _seed in enumerate((20261406, 20261506, 20261606, 20261706), start=1):
     SCRIPTS[f"p40c_q3_8b_s{_i}"] = ("Qwen/Qwen3-8B", ["--alphas", "0.12", "0.16", "--inject-positions", "last",
