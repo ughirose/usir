@@ -1,0 +1,430 @@
+{
+ "schema": "p40_heldout_error_diagnosis_v1",
+ "post_hoc": true,
+ "errors": [
+  {
+   "author_id": "000879",
+   "predicted": "000119",
+   "work_id": "000027",
+   "title": "文章",
+   "n_windows": 21,
+   "gap": 119.95040601302689,
+   "gap_per_window": 5.711924095858423,
+   "by_group": {
+    "z24": -3.372069346486917,
+    "ortho_ext": 110.98120411711471,
+    "narrative": 12.341271242399108
+   },
+   "top_terms": [
+    {
+     "feature": "commas_per_100",
+     "term": 159.9332394533615,
+     "heldout_std_mean": -1.8604902570733126,
+     "true_author_std_mean": 1.3452300425266712,
+     "predicted_author_std_mean": -0.259287021222793
+    },
+    {
+     "feature": "z24_10",
+     "term": 52.020236965195046,
+     "heldout_std_mean": -1.169698865536501,
+     "true_author_std_mean": 0.2187564942040348,
+     "predicted_author_std_mean": -0.8630864294349451
+    },
+    {
+     "feature": "narr_log_mean_sent_len",
+     "term": 45.551836421330556,
+     "heldout_std_mean": -0.4204707219280001,
+     "true_author_std_mean": 0.4628375107543435,
+     "predicted_author_std_mean": -0.024264319641261335
+    },
+    {
+     "feature": "z24_4",
+     "term": 23.128179516285922,
+     "heldout_std_mean": -0.4852114013908502,
+     "true_author_std_mean": 1.1399403258331817,
+     "predicted_author_std_mean": 0.3667981709276471
+    },
+    {
+     "feature": "z24_3",
+     "term": 22.467351183094767,
+     "heldout_std_mean": -0.054382458757224625,
+     "true_author_std_mean": -0.6796988589067932,
+     "predicted_author_std_mean": -0.7197242375801849
+    },
+    {
+     "feature": "kana_が",
+     "term": 13.246665967012845,
+     "heldout_std_mean": -2.23164317792571,
+     "true_author_std_mean": 0.0878089550950387,
+     "predicted_author_std_mean": -0.37877128825329615
+    }
+   ]
+  },
+  {
+   "author_id": "000879",
+   "predicted": "000119",
+   "work_id": "000032",
+   "title": "大導寺信輔の半生",
+   "n_windows": 41,
+   "gap": 475.70268120870617,
+   "gap_per_window": 11.602504419724541,
+   "by_group": {
+    "z24": 26.381590702923674,
+    "ortho_ext": 433.3972959053819,
+    "narrative": 15.923794600400605
+   },
+   "top_terms": [
+    {
+     "feature": "commas_per_100",
+     "term": 325.48113082489414,
+     "heldout_std_mean": -1.9623284890770825,
+     "true_author_std_mean": 1.3452300425266712,
+     "predicted_author_std_mean": -0.259287021222793
+    },
+    {
+     "feature": "hiragana_ratio",
+     "term": 122.1160636914768,
+     "heldout_std_mean": -1.9545888874228647,
+     "true_author_std_mean": -0.24463652719687123,
+     "predicted_author_std_mean": -1.9902608783896267
+    },
+    {
+     "feature": "z24_10",
+     "term": 73.34816931793829,
+     "heldout_std_mean": -0.9342467701445363,
+     "true_author_std_mean": 0.2187564942040348,
+     "predicted_author_std_mean": -0.8630864294349451
+    },
+    {
+     "feature": "narr_log_mean_sent_len",
+     "term": 65.63443026720918,
+     "heldout_std_mean": -0.25285963798681965,
+     "true_author_std_mean": 0.4628375107543435,
+     "predicted_author_std_mean": -0.024264319641261335
+    },
+    {
+     "feature": "z24_4",
+     "term": 50.754293983631925,
+     "heldout_std_mean": -0.6387969025243406,
+     "true_author_std_mean": 1.1399403258331817,
+     "predicted_author_std_mean": 0.3667981709276471
+    },
+    {
+     "feature": "kana_に",
+     "term": 48.143192578159756,
+     "heldout_std_mean": 1.7167148532415675,
+     "true_author_std_mean": 0.30913662457280805,
+     "predicted_author_std_mean": 0.7000969063130397
+    }
+   ]
+  },
+  {
+   "author_id": "001095",
+   "predicted": "000119",
+   "work_id": "042617",
+   "title": "肝臓先生",
+   "n_windows": 75,
+   "gap": 2.1180800045039945,
+   "gap_per_window": 0.028241066726719926,
+   "by_group": {
+    "z24": -16.354978637491453,
+    "ortho_ext": -1.947028593433327,
+    "narrative": 20.420087235428753
+   },
+   "top_terms": [
+    {
+     "feature": "z24_10",
+     "term": 65.29117711207017,
+     "heldout_std_mean": -1.087258817215801,
+     "true_author_std_mean": -0.4041552306886529,
+     "predicted_author_std_mean": -0.8630864294349451
+    },
+    {
+     "feature": "hiragana_ratio",
+     "term": 55.05056614841542,
+     "heldout_std_mean": -1.1926426907375032,
+     "true_author_std_mean": 0.22854001388509712,
+     "predicted_author_std_mean": -1.9902608783896267
+    },
+    {
+     "feature": "z24_7",
+     "term": 29.8788460130295,
+     "heldout_std_mean": 0.4294537384412379,
+     "true_author_std_mean": 0.090489633336554,
+     "predicted_author_std_mean": -0.21654596455242128
+    },
+    {
+     "feature": "final_す",
+     "term": 16.879455839713604,
+     "heldout_std_mean": 0.09518439952605585,
+     "true_author_std_mean": -0.24147098875648723,
+     "predicted_author_std_mean": -0.4756449509726912
+    },
+    {
+     "feature": "final_た",
+     "term": 16.647658760734288,
+     "heldout_std_mean": -0.7482088755493825,
+     "true_author_std_mean": 0.26719777266136113,
+     "predicted_author_std_mean": -0.027980214398838903
+    },
+    {
+     "feature": "z24_3",
+     "term": 13.907923268549537,
+     "heldout_std_mean": 0.21065695532822903,
+     "true_author_std_mean": 0.19294066552326106,
+     "predicted_author_std_mean": -0.7197242375801849
+    }
+   ]
+  }
+ ],
+ "typicality": [
+  {
+   "author_id": "000035",
+   "work_id": "000234",
+   "title": "二十世紀旗手",
+   "n_windows": 45,
+   "dist_to_own_mean": 2.378018603484308,
+   "dist_to_nearest_other": 3.672250123657909
+  },
+  {
+   "author_id": "000035",
+   "work_id": "000235",
+   "title": "八十八夜",
+   "n_windows": 44,
+   "dist_to_own_mean": 2.0117456759664325,
+   "dist_to_nearest_other": 4.341411188681239
+  },
+  {
+   "author_id": "000035",
+   "work_id": "000237",
+   "title": "小さいアルバム",
+   "n_windows": 25,
+   "dist_to_own_mean": 1.3934440137611124,
+   "dist_to_nearest_other": 3.6071931867162133
+  },
+  {
+   "author_id": "000050",
+   "work_id": "000363",
+   "title": "義血侠血",
+   "n_windows": 109,
+   "dist_to_own_mean": 2.7148776329388,
+   "dist_to_nearest_other": 2.783093087365316
+  },
+  {
+   "author_id": "000050",
+   "work_id": "000529",
+   "title": "国貞えがく",
+   "n_windows": 50,
+   "dist_to_own_mean": 1.2183428445705928,
+   "dist_to_nearest_other": 3.776381466691722
+  },
+  {
+   "author_id": "000050",
+   "work_id": "001037",
+   "title": "二、三羽――十二、三羽",
+   "n_windows": 47,
+   "dist_to_own_mean": 2.073737443523483,
+   "dist_to_nearest_other": 2.6129050088070853
+  },
+  {
+   "author_id": "000074",
+   "work_id": "000412",
+   "title": "ある崖上の感情",
+   "n_windows": 36,
+   "dist_to_own_mean": 1.7936317021284929,
+   "dist_to_nearest_other": 2.2264740453395353
+  },
+  {
+   "author_id": "000074",
+   "work_id": "000413",
+   "title": "ある心の風景",
+   "n_windows": 21,
+   "dist_to_own_mean": 0.9941058156976172,
+   "dist_to_nearest_other": 2.8474842567834027
+  },
+  {
+   "author_id": "000074",
+   "work_id": "000414",
+   "title": "泥濘",
+   "n_windows": 21,
+   "dist_to_own_mean": 1.6135182450751877,
+   "dist_to_nearest_other": 2.9222300854553604
+  },
+  {
+   "author_id": "000081",
+   "work_id": "000454",
+   "title": "毒もみのすきな署長さん",
+   "n_windows": 9,
+   "dist_to_own_mean": 2.5271653331772193,
+   "dist_to_nearest_other": 3.197179721876747
+  },
+  {
+   "author_id": "000081",
+   "work_id": "000459",
+   "title": "双子の星",
+   "n_windows": 35,
+   "dist_to_own_mean": 2.0607427543804318,
+   "dist_to_nearest_other": 4.050131844440536
+  },
+  {
+   "author_id": "000081",
+   "work_id": "000460",
+   "title": "インドラの網",
+   "n_windows": 11,
+   "dist_to_own_mean": 2.7307919703418704,
+   "dist_to_nearest_other": 4.0335417798211814
+  },
+  {
+   "author_id": "000119",
+   "work_id": "000617",
+   "title": "悟浄歎異",
+   "n_windows": 40,
+   "dist_to_own_mean": 1.578849345552164,
+   "dist_to_nearest_other": 2.657136301480984
+  },
+  {
+   "author_id": "000119",
+   "work_id": "000619",
+   "title": "南島譚",
+   "n_windows": 17,
+   "dist_to_own_mean": 1.6981654122837793,
+   "dist_to_nearest_other": 3.4683619710527616
+  },
+  {
+   "author_id": "000119",
+   "work_id": "000622",
+   "title": "文字禍",
+   "n_windows": 20,
+   "dist_to_own_mean": 1.9942411213982258,
+   "dist_to_nearest_other": 3.0257775739440933
+  },
+  {
+   "author_id": "000129",
+   "work_id": "000675",
+   "title": "二人の友",
+   "n_windows": 37,
+   "dist_to_own_mean": 1.7470211996655582,
+   "dist_to_nearest_other": 2.609607507128419
+  },
+  {
+   "author_id": "000129",
+   "work_id": "000676",
+   "title": "百物語",
+   "n_windows": 40,
+   "dist_to_own_mean": 1.2297487105639917,
+   "dist_to_nearest_other": 2.9225521824974616
+  },
+  {
+   "author_id": "000129",
+   "work_id": "000678",
+   "title": "かのように",
+   "n_windows": 74,
+   "dist_to_own_mean": 1.0916922610889002,
+   "dist_to_nearest_other": 3.2029471010360946
+  },
+  {
+   "author_id": "000148",
+   "work_id": "000751",
+   "title": "二百十日",
+   "n_windows": 99,
+   "dist_to_own_mean": 1.8163907119348854,
+   "dist_to_nearest_other": 3.5017834542326094
+  },
+  {
+   "author_id": "000148",
+   "work_id": "000753",
+   "title": "文鳥",
+   "n_windows": 34,
+   "dist_to_own_mean": 1.2873241940251614,
+   "dist_to_nearest_other": 2.8531334490266986
+  },
+  {
+   "author_id": "000148",
+   "work_id": "000761",
+   "title": "虞美人草",
+   "n_windows": 665,
+   "dist_to_own_mean": 1.6460851610949903,
+   "dist_to_nearest_other": 2.924814158491177
+  },
+  {
+   "author_id": "000879",
+   "work_id": "000027",
+   "title": "文章",
+   "n_windows": 21,
+   "dist_to_own_mean": 4.24967589609135,
+   "dist_to_nearest_other": 2.5760234917606937
+  },
+  {
+   "author_id": "000879",
+   "work_id": "000031",
+   "title": "偸盗",
+   "n_windows": 162,
+   "dist_to_own_mean": 2.061371944545149,
+   "dist_to_nearest_other": 3.216906080495659
+  },
+  {
+   "author_id": "000879",
+   "work_id": "000032",
+   "title": "大導寺信輔の半生",
+   "n_windows": 41,
+   "dist_to_own_mean": 5.604663401209608,
+   "dist_to_nearest_other": 2.8648286164113466
+  },
+  {
+   "author_id": "001095",
+   "work_id": "042614",
+   "title": "夜長姫と耳男",
+   "n_windows": 90,
+   "dist_to_own_mean": 2.334557058902277,
+   "dist_to_nearest_other": 2.7280960049173237
+  },
+  {
+   "author_id": "001095",
+   "work_id": "042615",
+   "title": "風と光と二十の私と",
+   "n_windows": 49,
+   "dist_to_own_mean": 1.1456331814785663,
+   "dist_to_nearest_other": 2.8711684709383545
+  },
+  {
+   "author_id": "001095",
+   "work_id": "042617",
+   "title": "肝臓先生",
+   "n_windows": 75,
+   "dist_to_own_mean": 2.0016392538186225,
+   "dist_to_nearest_other": 1.987480205932661
+  },
+  {
+   "author_id": "001383",
+   "work_id": "056644",
+   "title": "幇間",
+   "n_windows": 38,
+   "dist_to_own_mean": 2.9910170489051415,
+   "dist_to_nearest_other": 3.221560327360766
+  },
+  {
+   "author_id": "001383",
+   "work_id": "056693",
+   "title": "恐怖",
+   "n_windows": 19,
+   "dist_to_own_mean": 2.4529769764213167,
+   "dist_to_nearest_other": 3.1660326309501245
+  },
+  {
+   "author_id": "001383",
+   "work_id": "056698",
+   "title": "細雪",
+   "n_windows": 504,
+   "dist_to_own_mean": 2.3472323373348045,
+   "dist_to_nearest_other": 2.955753585406432
+  }
+ ],
+ "dist_to_own_mean_correct": {
+  "mean": 1.886386248157054,
+  "max": 2.9910170489051415
+ },
+ "dist_to_own_mean_errors": {
+  "mean": 3.9519928503731934,
+  "min": 2.0016392538186225
+ }
+}
