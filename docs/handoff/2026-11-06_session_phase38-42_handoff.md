@@ -111,3 +111,8 @@
 - Phase 40 の全量（240 本）を L4 の 1 ジョブで実行した。所要 926 s、使用 0.48 CU（実測）、L4 のレートは 1.94 CU/h。
 - 系列ごとの結果は `docs/handoff/v10/p46_q3_8b_s{1..4}.json`。全系列をまとめたファイルは重複なので git の対象外にした。
 - 終了後の割り当ては 0 件、CU 残高は 228.24。
+
+## 2026-11-08 追記: Phase 47（GRPO を L4 で実測）
+- `p47g_q3_8b`（Phase 42 と同設定、評価のみ `--gen-batch 24`）。L4 で 2,267 s、1.13 CU、学習 44.0 s/step（A100 37.9 s/step）、ピーク 18.7 GB、エラー 0。解放確認済み（割り当て 0）。
+- 詳細と残高・高速化候補は `docs/handoff/2026-11-07_colab_speed_cu_report.md` 第 4 節。
+- 次の候補: 参照 forward の共有（`lora_grpo_forge.py:513` と `:566`）。attention_mask の差の数値検証が先。
