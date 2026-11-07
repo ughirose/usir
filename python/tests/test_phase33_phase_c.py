@@ -451,3 +451,46 @@ def test_multi_seed_series_one_model_load(monkeypatch):
         assert set(r["stages"]["steering"]["conditions"]) == {"steer_cal_last_alpha_0.1", "steer_rand_last_alpha_0.1"}
     with pytest.raises(SystemExit):
         drv.main(["--model-id", "tiny", "--device", "cpu", "--seeds", "1", "2", "--no-archive-line"])
+
+
+def test_grpo_share_ref_forward_matches_unshared():
+    """share_ref_forward reuses the reference forward for PPL and KL: same rollouts, rewards, PPL, KL and LoRA update
+    as the two-forward path (float tolerance; fp32 CPU)."""
+    torch = pytest.importorskip("torch")
+    from usir_py.lora_grpo_forge import attach_lora_to_model, run_authentic_grpo_lora_forge
+    shaped = drv.make_shaped_reward(5.0, 1.0, strip_tail=True)
+    outs = []
+    for share in (False, True):
+        model, tok = _build_tiny()
+        for p in model.parameters():
+            p.requires_grad_(False)
+        torch.manual_seed(1)
+        attach_lora_to_model(model, target_modules=("q_proj", "v_proj"), r=4, alpha=8.0)
+        torch.manual_seed(7)
+        items = [{"prompt": u, "x_0": u} for u in drv.TRAIN_PROMPTS[:2]]
+        res = run_authentic_grpo_lora_forge(model, tokenizer=tok, prompts=items, num_rollouts=2, num_steps=2,
+                                            device="cpu", max_new_tokens=12, batched_rollouts=True,
+                                            per_rollout_backward=True, prompts_per_step=1, ppl_completion_only=True,
+                                            store_rollouts=True, reward_fn=shaped, share_ref_forward=share)
+        lora = {k: v.detach().clone() for k, v in model.state_dict().items() if "lora" in k}
+        outs.append((res, lora))
+    (a, la), (b, lb) = outs
+    assert a["mode"] == b["mode"] == "authentic_pytorch"
+    for sa, sb in zip(a["steps"], b["steps"]):
+        assert [r["text"] for r in sa["rollouts"]] == [r["text"] for r in sb["rollouts"]]
+        for ra, rb in zip(sa["rollouts"], sb["rollouts"]):
+            assert ra["ppl_ref"] == pytest.approx(rb["ppl_ref"], rel=1e-5)
+            assert ra["reward"] == pytest.approx(rb["reward"], rel=1e-5, abs=1e-7)
+        assert sa["mean_kl"] == pytest.approx(sb["mean_kl"], rel=1e-4, abs=1e-8)
+        assert sa["loss"] == pytest.approx(sb["loss"], rel=1e-4, abs=1e-7)
+    assert la.keys() == lb.keys() and la
+    for k in la:
+        assert torch.allclose(la[k], lb[k], rtol=1e-4, atol=1e-6), k
+
+
+def test_grpo_share_ref_option_wired():
+    import inspect
+    from usir_py.lora_grpo_forge import run_authentic_grpo_lora_forge
+    assert inspect.signature(run_authentic_grpo_lora_forge).parameters["share_ref_forward"].default is False
+    assert drv.Cfg().grpo_share_ref is False
+    assert "share_ref_forward=cfg.grpo_share_ref" in inspect.getsource(drv.run_grpo_stage33)

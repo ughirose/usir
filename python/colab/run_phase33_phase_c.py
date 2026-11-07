@@ -130,6 +130,7 @@ class Cfg(p28.Cfg):
     grpo_reward: str = "multiplicative"  # "multiplicative" (Phase 33) | "shaped" (see shaped_reward)
     reward_strip_tail: bool = False     # Phase 42: shaped reward on complete sentences only
     store_rollouts: bool = False        # Phase 40: keep GRPO rollout texts, rewards and ref PPL in the result
+    grpo_share_ref: bool = False        # Phase 48: one reference forward per rollout for both ref PPL and KL
     prompt_set: str = "expository"      # evaluation prompts: "expository" (Phase 33-38) | "literary" (Phase 39)
     gen_batch: int = 1                  # >1: evaluation prompts generated together in one left-padded generate() call
     mixed_steer: bool = False           # steering conditions share batches (per-row injection vectors); rows per call = gen_batch
@@ -577,6 +578,7 @@ def run_grpo_stage33(model: Any, tok: Any, cfg: Cfg, user_prompts: Sequence[str]
         ppl_thresh=ppl_info["threshold"], alpha_ppl=cfg.alpha_ppl, ppl_completion_only=True,
         max_new_tokens=cfg.grpo_max_new_tokens, batched_rollouts=True, per_rollout_backward=True,
         prompts_per_step=cfg.grpo_prompts_per_step, store_rollouts=cfg.store_rollouts,
+        share_ref_forward=cfg.grpo_share_ref,
         reward_fn=(make_shaped_reward(ppl_info["threshold"], cfg.alpha_ppl, strip_tail=cfg.reward_strip_tail) if cfg.grpo_reward == "shaped" else None),
         progress_fn=lambda e: log(f"[grpo] step {e['step']}/{cfg.grpo_steps} reward={e['mean_reward']:.4f} kl={e['mean_kl']:.5f} loss={e['loss']:.5f} {e['sec']:.1f}s"))
     train_wall = time.perf_counter() - t0
@@ -739,6 +741,8 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
     ap.add_argument("--steer-unit-dir", action="store_true")
     ap.add_argument("--grpo-reward", default=Cfg.grpo_reward, choices=["multiplicative", "shaped"])
     ap.add_argument("--store-rollouts", action="store_true")
+    ap.add_argument("--grpo-share-ref", action="store_true",
+                    help="one reference forward per rollout, used for both the ref-PPL reward barrier and the KL term")
     ap.add_argument("--reward-strip-tail", action="store_true")
     ap.add_argument("--prompt-set", default=Cfg.prompt_set, choices=sorted(PROMPT_SETS))
     ap.add_argument("--gen-batch", type=int, default=Cfg.gen_batch)
@@ -761,7 +765,7 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
         alpha_ppl=args.alpha_ppl, ppl_percentile=args.ppl_percentile,
         lora_r=args.lora_r, lora_alpha=args.lora_alpha, also_unmerged_gen=args.also_unmerged_gen,
         steer_unit_dir=args.steer_unit_dir, grpo_reward=args.grpo_reward,
-        prompt_set=args.prompt_set, store_rollouts=args.store_rollouts,
+        prompt_set=args.prompt_set, store_rollouts=args.store_rollouts, grpo_share_ref=args.grpo_share_ref,
         reward_strip_tail=args.reward_strip_tail, gen_batch=args.gen_batch, mixed_steer=args.mixed_steer,
     )
     if args.seeds and cfg.do_grpo:  # checked before the model is loaded

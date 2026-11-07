@@ -393,6 +393,7 @@ def run_authentic_grpo_lora_forge(
     ppl_completion_only: bool = False,
     reward_fn: Optional[Callable[[str, float], float]] = None,
     store_rollouts: bool = False,
+    share_ref_forward: bool = False,
 ) -> Dict[str, Any]:
     r"""Executes authentic USIR-GRPO fine-tuning loop for AttachedLoRALinear weights.
 
@@ -418,6 +419,11 @@ def run_authentic_grpo_lora_forge(
         reward_fn: if given, reward = reward_fn(completion_text, ppl_ref) replaces compute_multiplicative_grpo_reward
             in the authentic PyTorch path (e.g. a continuous shaping reward without the steep exp(-0.5 d_3phase)).
     Phase 40 addition:
+        share_ref_forward: run the reference forward (LoRA disabled) once per rollout and use its token log
+            probabilities both for the reference PPL (reward barrier) and for the KL term.  Both forwards see the same
+            token ids with the same weights, so the math is unchanged; the PPL is computed as exp(-mean token log prob)
+            from a forward without attention_mask (all-ones for a single unpadded sequence), so it can differ from the
+            unshared path by float rounding only.
         store_rollouts: keep every rollout text with its reward and reference PPL in the step log
             (step_logs[i]["rollouts"]), so that reward hacking can be checked after training.
     Caller responsibility: the authentic path optimises every parameter with requires_grad=True. Freeze the base
@@ -505,25 +511,40 @@ def run_authentic_grpo_lora_forge(
                 # 2. Compute physical rewards for all completions
                 rewards: List[float] = []
                 ppls: List[float] = []
+                ref_tok_lps: List[Any] = []  # share_ref_forward: reference token log probs per rollout
                 for c_text in rollout_texts:
                     # Reference PPL estimation using lora_enabled=False
                     set_lora_enabled(model, False)
                     enc = tokenizer(p_text + c_text, return_tensors="pt").to(device)
-                    with torch.no_grad():
-                        ref_out = model(**enc)
-                        shift_logits = ref_out.logits[:, :-1, :].float().contiguous()
-                        shift_labels = enc["input_ids"][:, 1:].contiguous()
+                    if share_ref_forward:
+                        s_ids = enc["input_ids"]
+                        with torch.no_grad():
+                            s_lp = F.log_softmax(model(s_ids).logits[:, :-1, :].float(), dim=-1)
+                            s_tok = torch.gather(s_lp, -1, s_ids[:, 1:].unsqueeze(-1)).squeeze(-1)
+                            del s_lp
+                        ref_tok_lps.append(s_tok)
+                        seg = s_tok
                         if ppl_completion_only:
-                            _pl = int(tokenizer(p_text, return_tensors="pt")["input_ids"].shape[1])
-                            _gs = max(0, _pl - 1)
-                            if _gs < shift_labels.shape[1]:
-                                shift_logits = shift_logits[:, _gs:, :].contiguous()
-                                shift_labels = shift_labels[:, _gs:].contiguous()
-                        ce_loss = F.cross_entropy(
-                            shift_logits.view(-1, shift_logits.size(-1)),
-                            shift_labels.view(-1),
-                        )
-                        ppl_ref = float(torch.exp(ce_loss).item())
+                            _gs = max(0, int(tokenizer(p_text, return_tensors="pt")["input_ids"].shape[1]) - 1)
+                            if _gs < seg.shape[1]:
+                                seg = seg[:, _gs:]
+                        ppl_ref = float(torch.exp(-seg.mean()).item())
+                    else:
+                        with torch.no_grad():
+                            ref_out = model(**enc)
+                            shift_logits = ref_out.logits[:, :-1, :].float().contiguous()
+                            shift_labels = enc["input_ids"][:, 1:].contiguous()
+                            if ppl_completion_only:
+                                _pl = int(tokenizer(p_text, return_tensors="pt")["input_ids"].shape[1])
+                                _gs = max(0, _pl - 1)
+                                if _gs < shift_labels.shape[1]:
+                                    shift_logits = shift_logits[:, _gs:, :].contiguous()
+                                    shift_labels = shift_labels[:, _gs:].contiguous()
+                            ce_loss = F.cross_entropy(
+                                shift_logits.view(-1, shift_logits.size(-1)),
+                                shift_labels.view(-1),
+                            )
+                            ppl_ref = float(torch.exp(ce_loss).item())
                     ppls.append(ppl_ref)
 
                     if reward_fn is not None:
@@ -560,11 +581,14 @@ def run_authentic_grpo_lora_forge(
                     if in_ids.shape[1] < 2:
                         continue
 
-                    # Reference logits (no grad, lora off)
-                    set_lora_enabled(model, False)
-                    with torch.no_grad():
-                        logits_ref = model(in_ids).logits[:, :-1, :].float()
-                        log_probs_ref = F.log_softmax(logits_ref, dim=-1)
+                    # Reference logits (no grad, lora off); shared with the PPL forward above when share_ref_forward
+                    if share_ref_forward:
+                        log_probs_ref = None
+                    else:
+                        set_lora_enabled(model, False)
+                        with torch.no_grad():
+                            logits_ref = model(in_ids).logits[:, :-1, :].float()
+                            log_probs_ref = F.log_softmax(logits_ref, dim=-1)
 
                     # Policy logits (grad, lora on)
                     set_lora_enabled(model, True)
@@ -578,7 +602,8 @@ def run_authentic_grpo_lora_forge(
 
                     # Gather token log probabilities
                     target_ids = in_ids[:, 1:].unsqueeze(-1)
-                    tok_lp_ref = torch.gather(log_probs_ref, -1, target_ids).squeeze(-1)
+                    tok_lp_ref = (ref_tok_lps[i] if share_ref_forward
+                                  else torch.gather(log_probs_ref, -1, target_ids).squeeze(-1))
                     tok_lp_theta = torch.gather(log_probs_theta, -1, target_ids).squeeze(-1)
 
                     # Slice to only generated completion tokens
