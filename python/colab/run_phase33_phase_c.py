@@ -743,6 +743,8 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
     ap.add_argument("--prompt-set", default=Cfg.prompt_set, choices=sorted(PROMPT_SETS))
     ap.add_argument("--gen-batch", type=int, default=Cfg.gen_batch)
     ap.add_argument("--mixed-steer", action="store_true")
+    ap.add_argument("--seeds", type=int, nargs="+", default=None,
+                    help="run one series per seed on the same loaded model (steering only; needs --no-grpo)")
     ap.add_argument("--out", default=None, help="write the result JSON here (in addition to the ARCHIVE_B64 line)")
     ap.add_argument("--no-archive-line", action="store_true")
     args = ap.parse_args(argv)
@@ -762,6 +764,8 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
         prompt_set=args.prompt_set, store_rollouts=args.store_rollouts,
         reward_strip_tail=args.reward_strip_tail, gen_batch=args.gen_batch, mixed_steer=args.mixed_steer,
     )
+    if args.seeds and cfg.do_grpo:  # checked before the model is loaded
+        raise SystemExit("--seeds needs --no-grpo")
     t0 = time.time()
 
     def log(msg: str) -> None:
@@ -773,8 +777,18 @@ def main(argv: Optional[Sequence[str]] = None, model_id: Optional[str] = None) -
     model, tok = p28.load_model(cfg.model_id, cfg.dtype, cfg.device)
     load_sec = time.perf_counter() - t_load
     log(f"loaded in {load_sec:.0f}s")
-    result = run_all(model, tok, cfg, log)
-    result["model_load_sec"] = load_sec
+    if args.seeds:
+        # several seed series on one loaded model (one model download/load per job).  GRPO changes the model, so it
+        # is not allowed here; steering hooks are removed after each condition, so series do not interact.
+        result = {"schema": "phase33_multi_series_v1", "model_id": cfg.model_id, "model_load_sec": load_sec, "series": []}
+        for k, sd in enumerate(args.seeds, start=1):
+            log(f"series s{k} seed={sd}")
+            r = run_all(model, tok, dataclasses.replace(cfg, seed=int(sd)), log)
+            r["model_load_sec"] = load_sec
+            result["series"].append({"name": f"s{k}", "seed": int(sd), "result": r})
+    else:
+        result = run_all(model, tok, cfg, log)
+        result["model_load_sec"] = load_sec
     if args.out:
         Path(args.out).write_text(json.dumps(p28._sanitize(result), ensure_ascii=False, indent=1), encoding="utf-8")
         log(f"wrote {args.out}")

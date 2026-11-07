@@ -61,6 +61,18 @@ def list_endpoints(token: str):
         return None
 
 
+def ccu_info():
+    """{'currentBalance', 'consumptionRateHourly', ...} for this account, or None.  Read only."""
+    try:
+        r = requests.get(f"{COLAB_API}/tun/m/ccu-info", headers=_colab_headers(get_credentials().token),
+                         params={"authuser": "0"}, timeout=30)
+        r.raise_for_status()
+        return _strip_xssi(r.text)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[run_colab_file] could not read ccu-info: {exc}", file=sys.stderr)
+        return None
+
+
 def release(token: str, endpoint: str) -> None:
     """Unassign with retries, then confirm the endpoint is gone from the assignment list."""
     for i in range(5):
@@ -116,6 +128,7 @@ def acquire_lock(max_wait: float = 1800.0) -> None:
 
 t0 = time.time()
 creds = get_credentials()
+ccu = {"gpu": args.gpu, "before": ccu_info()}
 acquire_lock()
 try:
     before = list_endpoints(creds.token)
@@ -144,6 +157,7 @@ stop_event = start_keepalive(creds.token, endpoint)
 rc = 1
 try:
     kernel_id = create_session(assignment["proxy_url"], assignment["proxy_token"])
+    ccu["during"] = ccu_info()
     stdout, stderr, exit_code = execute_with_live_streaming(
         assignment["proxy_url"], assignment["proxy_token"], kernel_id, code,
         timeout=args.timeout, access_token=creds.token, endpoint=endpoint,
@@ -160,6 +174,15 @@ try:
             print(f"[run_colab_file] CRC mismatch {crc} != {m.group(1)}", file=sys.stderr)
         else:
             (out / f"{stem}.json").write_bytes(raw)
+            try:
+                import json as _json
+                doc = _json.loads(raw)
+                for ser in (doc.get("series") or []) if isinstance(doc, dict) else []:
+                    (out / f"{stem}_{ser['name']}.json").write_text(_json.dumps(ser["result"], ensure_ascii=False),
+                                                                     encoding="utf-8")
+                    print(f"[run_colab_file] wrote {out / (stem + '_' + ser['name'] + '.json')}")
+            except Exception as exc:  # noqa: BLE001
+                print(f"[run_colab_file] could not split series: {exc}", file=sys.stderr)
             print(f"[run_colab_file] wrote {out / (stem + '.json')} ({len(raw)} bytes, crc ok)")
             rc = 0
     print(f"[run_colab_file] total wall {time.time() - t0:.0f}s (kernel exit_code={exit_code})")
@@ -169,4 +192,15 @@ finally:
         print(f"[run_colab_file] runtime {endpoint} existed before this run; not released", file=sys.stderr)
     else:
         release(creds.token, endpoint)
+    import json as _json
+    ccu["after"] = ccu_info()
+    ccu["wall_sec"] = time.time() - t0
+    try:
+        ccu["used"] = ccu["before"]["currentBalance"] - ccu["after"]["currentBalance"]
+    except Exception:  # noqa: BLE001
+        ccu["used"] = None
+    (out / f"{stem}.ccu.json").write_text(_json.dumps(ccu, indent=1), encoding="utf-8")
+    rate = (ccu.get("during") or {}).get("consumptionRateHourly")
+    print(f"[run_colab_file] CU used {ccu['used']} (rate during run {rate}/h, balance after "
+          f"{(ccu['after'] or {}).get('currentBalance')})")
 sys.exit(rc)

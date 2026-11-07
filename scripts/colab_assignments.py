@@ -22,6 +22,12 @@ def main() -> int:
     except Exception as exc:  # noqa: BLE001
         print(f"could not read assignments: {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1
+    try:
+        c = _strip_xssi(requests.get(f"{COLAB_API}/tun/m/ccu-info", headers=_colab_headers(token),
+                                     params={"authuser": "0"}, timeout=30).text)
+        print(f"compute units: balance {c.get('currentBalance'):.2f}, consumption {c.get('consumptionRateHourly')}/h")
+    except Exception as exc:  # noqa: BLE001
+        print(f"could not read ccu-info: {exc}", file=sys.stderr)
     if not items:
         print("assigned runtimes: 0")
         return 0

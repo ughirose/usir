@@ -62,6 +62,12 @@ SCRIPTS["p44b_q3_8b"] = ("Qwen/Qwen3-8B", ["--alphas", "0.12", "0.16", "--inject
 SCRIPTS["p45m_q3_8b"] = ("Qwen/Qwen3-8B", ["--alphas", "0.12", "0.16", "--inject-positions", "last", "--steer-unit-dir",
                                          "--no-grpo", "--max-new-tokens", "1024", "--seed", "20261406",
                                          "--prompt-set", "literary", "--gen-batch", "24", "--mixed-steer"])
+# Phase 46: the whole Phase 40 workload (4 seed series x 5 conditions x 12 literary prompts) in one L4 job:
+# one model load, steering conditions in shared batches of 24 rows, no latency bench.
+SCRIPTS["p46_q3_8b"] = ("Qwen/Qwen3-8B", ["--alphas", "0.12", "0.16", "--inject-positions", "last", "--steer-unit-dir",
+                                        "--no-grpo", "--max-new-tokens", "1024", "--prompt-set", "literary",
+                                        "--gen-batch", "24", "--mixed-steer", "--latency-reps", "0",
+                                        "--seeds", "20261406", "20261506", "20261606", "20261706"])
 
 def build_zip_b64() -> str:
     buf = io.BytesIO()

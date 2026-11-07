@@ -431,3 +431,23 @@ def test_mixed_steer_end_to_end_tiny_cpu():
         assert [r["prompt_idx"] for r in c["records"]] == [0, 1, 2] and c["summary"]["n_ok"] == 3
         assert c["direction"] == ("calibrated" if "_cal_" in name else "random_haar")
         assert all(r["mixed_batch"] for r in c["records"]) and c["paired_vs_base"]["n_pairs"] == 3
+
+
+def test_multi_seed_series_one_model_load(monkeypatch):
+    pytest.importorskip("torch")
+    model, tok = _build_tiny()
+    btok = _batch_tok(tok)
+    loads = []
+    monkeypatch.setattr(drv.p28, "load_model", lambda *a, **k: loads.append(a) or (model, btok))
+    res = drv.main(["--model-id", "tiny", "--device", "cpu", "--dtype", "fp32", "--no-grpo", "--n-prompts", "2",
+                    "--max-new-tokens", "6", "--alphas", "0.1", "--inject-positions", "last", "--steer-unit-dir",
+                    "--gen-batch", "4", "--mixed-steer", "--latency-reps", "0", "--seeds", "11", "12",
+                    "--no-archive-line"])
+    assert len(loads) == 1 and res["schema"] == "phase33_multi_series_v1"
+    assert [s["name"] for s in res["series"]] == ["s1", "s2"] and [s["seed"] for s in res["series"]] == [11, 12]
+    for s in res["series"]:
+        r = s["result"]
+        assert r["errors"] == [] and r["config"]["seed"] == s["seed"]
+        assert set(r["stages"]["steering"]["conditions"]) == {"steer_cal_last_alpha_0.1", "steer_rand_last_alpha_0.1"}
+    with pytest.raises(SystemExit):
+        drv.main(["--model-id", "tiny", "--device", "cpu", "--seeds", "1", "2", "--no-archive-line"])
