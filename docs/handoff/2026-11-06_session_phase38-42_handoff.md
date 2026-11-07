@@ -116,3 +116,8 @@
 - `p47g_q3_8b`（Phase 42 と同設定、評価のみ `--gen-batch 24`）。L4 で 2,267 s、1.13 CU、学習 44.0 s/step（A100 37.9 s/step）、ピーク 18.7 GB、エラー 0。解放確認済み（割り当て 0）。
 - 詳細と残高・高速化候補は `docs/handoff/2026-11-07_colab_speed_cu_report.md` 第 4 節。
 - 次の候補: 参照 forward の共有（`lora_grpo_forge.py:513` と `:566`）。attention_mask の差の数値検証が先。
+
+## 2026-11-08 追記: Phase 48（参照 forward の共有）
+- `share_ref_forward` / `--grpo-share-ref` を実装（`8e7ecc4`、既定 False）。CPU パリティテスト追加。
+- L4 A/B（各 6 ステップ）: 44.35 → 42.66 s/step（−3.8%）、ピーク 18.69 → 18.01 GB。1 ステップ目は同一（PPL 相対差 ≤1.3e-7）、以後は bf16 差で分岐。ベンチ 0.29 CU、解放確認済み。
+- 詳細はレポート第 5 節。次の候補はロールアウト生成の 2 プロンプト合算（未実施）。

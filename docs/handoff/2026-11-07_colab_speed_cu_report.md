@@ -70,7 +70,24 @@
 - 終了後の割り当ては 0 件、消費 0 CU/h（`colab_assignments.py` で確認）。
 - 残高 227.11 CU で、この GRPO ジョブは約 200 回分。
 - 学習結果: 最終平均報酬 0.2655、mean KL 0.0104、PPL 閾値 1.702（Phase 42 は 1.736）。評価サンプルはバッチ化で Phase 42 と別物なので、品質指標の直接比較はしない。
-- 未実施の高速化候補（学習の数式は変えない）: 参照モデルの forward が同じ入力で 2 回行われている（`lora_grpo_forge.py:513` の PPL 用と `:566` の KL 用）。共有すれば 1 ステップの forward を 8 回減らせる。ただし片方だけ attention_mask を渡しており、数値一致は未検証。ステップ内の decode と forward/backward の時間内訳も未計測。
+- 参照 forward の共有は第 5 節で実装・実測した。
+
+## 5. 参照 forward の共有（Phase 48, 2026-11-08, `docs/handoff/v10/p48_share_ref_bench.*`）
+
+- 変更: `run_authentic_grpo_lora_forge(share_ref_forward=True)` / ドライバ `--grpo-share-ref`。参照モデル（LoRA オフ）の forward をロールアウトごとに 1 回にし、報酬用 PPL と KL の両方に使う。既定は False（従来どおり）。
+- CPU（tiny Qwen2, fp32, 2 ステップ）: ロールアウト文・PPL・報酬・KL・損失・LoRA 重みが許容誤差 1e-4 内で一致（`test_grpo_share_ref_forward_matches_unshared`）。
+- L4（Qwen3-8B bf16、Phase 42/47 と同じ 2 プロンプト × 4 ロールアウト × 256 トークン、PPL 閾値 1.702 固定、各 6 ステップ、同一 LoRA 初期値・同一 seed）:
+
+| | 共有なし | 共有あり |
+|---|---|---|
+| 1 ステップ平均 | 44.35 s | 42.66 s（−3.8%） |
+| ピークメモリ | 18.69 GB | 18.01 GB |
+
+- 数値: 1 ステップ目はロールアウト 8/8 が同一文、PPL の相対差は最大 1.3e-7、損失は 6 桁一致。2 ステップ目以降はロールアウト文が分かれた（1 ステップ目の更新で LoRA 重みに bf16 の丸め差が入り、サンプリングが分岐したと推定）。したがって GPU 上ではビット一致ではなく、統計的に同等。
+- 効果: 40 ステップで約 68 s、約 0.04 CU の削減。小さい。1 ステップの大半は、ロールアウト生成（256 ステップの逐次 decode × 2 回）と policy の forward/backward と推定（内訳は未計測）。
+- このベンチは 698 s、0.29 CU（残高 227.11 → 226.83）。解放確認済み（割り当て 0）。
+- 次の候補（未実施）: 2 プロンプトのロールアウトを 1 回の generate（8 行）にまとめる。decode 部分を約半分にできる見込みだが、RNG の順序と padding が変わるので統計的同等になる。
+
 
 ## 出典
 - A100/L4/T4 の CU レート（2026-03 測定）: https://mccormickml.com/2024/04/23/colab-gpus-features-and-pricing/
