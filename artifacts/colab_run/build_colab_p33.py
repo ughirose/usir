@@ -68,6 +68,11 @@ SCRIPTS["p46_q3_8b"] = ("Qwen/Qwen3-8B", ["--alphas", "0.12", "0.16", "--inject-
                                         "--no-grpo", "--max-new-tokens", "1024", "--prompt-set", "literary",
                                         "--gen-batch", "24", "--mixed-steer", "--latency-reps", "0",
                                         "--seeds", "20261406", "20261506", "20261606", "20261706"])
+# Phase 47: the Phase 42 GRPO job (shaped reward, 40 steps, rollouts stored) on L4 to measure time, memory and CU;
+# evaluation generations batched (24 rows), so eval samples differ from p42g_q3_8b.  GRPO training itself is unchanged.
+SCRIPTS["p47g_q3_8b"] = ("Qwen/Qwen3-8B", ["--no-steer", "--grpo-reward", "shaped", "--reward-strip-tail",
+                                         "--store-rollouts", "--max-new-tokens", "1024", "--seed", "20261106",
+                                         "--gen-batch", "24"])
 
 def build_zip_b64() -> str:
     buf = io.BytesIO()
