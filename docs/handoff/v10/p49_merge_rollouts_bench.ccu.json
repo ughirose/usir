@@ -1,0 +1,59 @@
+{
+ "gpu": "L4",
+ "before": {
+  "currentBalance": 226.82686247669903,
+  "consumptionRateHourly": 0,
+  "assignmentsCount": 0,
+  "eligibleGpus": [
+   "G4",
+   "A100",
+   "L4",
+   "T4"
+  ],
+  "ineligibleGpus": [
+   "H100"
+  ],
+  "eligibleTpus": [
+   "V6E1",
+   "V5E1"
+  ]
+ },
+ "during": {
+  "currentBalance": 226.82686247669903,
+  "consumptionRateHourly": 1.94,
+  "assignmentsCount": 1,
+  "eligibleGpus": [
+   "G4",
+   "A100",
+   "L4",
+   "T4"
+  ],
+  "ineligibleGpus": [
+   "H100"
+  ],
+  "eligibleTpus": [
+   "V6E1",
+   "V5E1"
+  ]
+ },
+ "after": {
+  "currentBalance": 226.6320015912753,
+  "consumptionRateHourly": 0,
+  "assignmentsCount": 0,
+  "eligibleGpus": [
+   "G4",
+   "A100",
+   "L4",
+   "T4"
+  ],
+  "ineligibleGpus": [
+   "H100"
+  ],
+  "eligibleTpus": [
+   "V6E1",
+   "V5E1"
+  ]
+ },
+ "wall_sec": 570.1637425422668,
+ "used": 0.19486088542373636
+}
