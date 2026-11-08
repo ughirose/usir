@@ -494,3 +494,40 @@ def test_grpo_share_ref_option_wired():
     assert inspect.signature(run_authentic_grpo_lora_forge).parameters["share_ref_forward"].default is False
     assert drv.Cfg().grpo_share_ref is False
     assert "share_ref_forward=cfg.grpo_share_ref" in inspect.getsource(drv.run_grpo_stage33)
+
+
+def _run_forge_tiny(merge, pps, steps=2):
+    torch = pytest.importorskip("torch")
+    from usir_py.lora_grpo_forge import attach_lora_to_model, run_authentic_grpo_lora_forge
+    model, tok = _build_tiny()
+    btok = _batch_tok(tok)
+    for p in model.parameters():
+        p.requires_grad_(False)
+    torch.manual_seed(1)
+    attach_lora_to_model(model, target_modules=("q_proj", "v_proj"), r=4, alpha=8.0)
+    torch.manual_seed(7)
+    items = [{"prompt": u[:n], "x_0": u} for u, n in zip(drv.TRAIN_PROMPTS[:2], (40, 25))]  # unequal lengths
+    return run_authentic_grpo_lora_forge(model, tokenizer=btok, prompts=items, num_rollouts=2, num_steps=steps,
+                                         device="cpu", max_new_tokens=10, batched_rollouts=True,
+                                         per_rollout_backward=True, prompts_per_step=pps, ppl_completion_only=True,
+                                         store_rollouts=True, reward_fn=drv.make_shaped_reward(5.0, 1.0, strip_tail=True),
+                                         share_ref_forward=True, merge_step_rollouts=merge)
+
+
+def test_grpo_merge_rollouts_one_prompt_identical():
+    """With one prompt per step the merged call is the same generate() call: identical results."""
+    a, b = _run_forge_tiny(False, 1), _run_forge_tiny(True, 1)
+    for sa, sb in zip(a["steps"], b["steps"]):
+        assert [r["text"] for r in sa["rollouts"]] == [r["text"] for r in sb["rollouts"]]
+        assert sa["loss"] == pytest.approx(sb["loss"], rel=1e-5, abs=1e-8)
+
+
+def test_grpo_merge_rollouts_two_prompts_left_padded():
+    res = _run_forge_tiny(True, 2, steps=1)
+    st = res["steps"][0]
+    assert [r["prompt_idx"] for r in st["rollouts"]] == [0, 0, 1, 1]
+    assert all("<pad>" not in r["text"] and r["text"] for r in st["rollouts"])
+    assert all(np.isfinite(r["ppl_ref"]) for r in st["rollouts"]) and np.isfinite(st["loss"])
+    import inspect
+    assert "merge_step_rollouts=cfg.grpo_merge_rollouts" in inspect.getsource(drv.run_grpo_stage33)
+    assert drv.Cfg().grpo_merge_rollouts is False

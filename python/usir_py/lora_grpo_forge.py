@@ -394,6 +394,7 @@ def run_authentic_grpo_lora_forge(
     reward_fn: Optional[Callable[[str, float], float]] = None,
     store_rollouts: bool = False,
     share_ref_forward: bool = False,
+    merge_step_rollouts: bool = False,
 ) -> Dict[str, Any]:
     r"""Executes authentic USIR-GRPO fine-tuning loop for AttachedLoRALinear weights.
 
@@ -424,6 +425,10 @@ def run_authentic_grpo_lora_forge(
             token ids with the same weights, so the math is unchanged; the PPL is computed as exp(-mean token log prob)
             from a forward without attention_mask (all-ones for a single unpadded sequence), so it can differ from the
             unshared path by float rounding only.
+        merge_step_rollouts: draw the rollouts of all prompts of a step in one left-padded generate() call
+            (n_prompts * G rows) instead of one call per prompt.  The loss, advantages and KL are unchanged; the
+            samples differ from the per-prompt path (RNG order, padding), so results are statistically equivalent only.
+            Needs a tokenizer that accepts a list with padding=True and has a pad token.
         store_rollouts: keep every rollout text with its reward and reference PPL in the step log
             (step_logs[i]["rollouts"]), so that reward hacking can be checked after training.
     Caller responsibility: the authentic path optimises every parameter with requires_grad=True. Freeze the base
@@ -469,7 +474,33 @@ def run_authentic_grpo_lora_forge(
                 step_items = list(enumerate(prompts))
             n_loss_expected = max(1, len(step_items) * int(num_rollouts))
 
-            for p_idx, p_item in step_items:
+            merged_texts: Dict[int, List[str]] = {}
+            if merge_step_rollouts and not candidate_completions:
+                set_lora_enabled(model, True)
+                m_prompts = [(it["prompt"] if isinstance(it, dict) else str(it)) for _, it in step_items]
+                old_side = getattr(tokenizer, "padding_side", "right")
+                tokenizer.padding_side = "left"
+                try:
+                    m_enc = tokenizer(m_prompts, return_tensors="pt", padding=True).to(device)
+                finally:
+                    tokenizer.padding_side = old_side
+                m_width = m_enc["input_ids"].shape[1]
+                pad_id = getattr(tokenizer, "pad_token_id", None)
+                with torch.no_grad():
+                    m_out = model.generate(
+                        **m_enc,
+                        max_new_tokens=int(max_new_tokens),
+                        do_sample=True,
+                        temperature=0.85,
+                        num_return_sequences=int(num_rollouts),
+                        pad_token_id=pad_id if pad_id is not None else 0,
+                    )
+                # num_return_sequences repeats each input row G times consecutively
+                for j in range(len(step_items)):
+                    merged_texts[j] = [tokenizer.decode(m_out[j * int(num_rollouts) + g][m_width:], skip_special_tokens=True)
+                                       for g in range(int(num_rollouts))]
+
+            for j_item, (p_idx, p_item) in enumerate(step_items):
                 p_text = p_item["prompt"] if isinstance(p_item, dict) else str(p_item)
                 x0 = p_item.get("x_0", p_text) if isinstance(p_item, dict) else p_text
                 xT = p_item.get("x_T", None) if isinstance(p_item, dict) else None
@@ -478,6 +509,8 @@ def run_authentic_grpo_lora_forge(
                 # 1. Rollout G=4 completions
                 if candidate_completions and p_idx < len(candidate_completions):
                     rollout_texts = list(candidate_completions[p_idx][:num_rollouts])
+                elif j_item in merged_texts:
+                    rollout_texts = merged_texts[j_item]
                 else:
                     # Model generation
                     set_lora_enabled(model, True)
