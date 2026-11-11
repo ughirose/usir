@@ -1,7 +1,11 @@
 import json
 from collections import defaultdict
 
-data = json.load(open('docs/handoff/v10/nishiki_profile_106works.json', encoding='utf-8'))
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+profile_path = ROOT / 'docs' / 'handoff' / 'v10' / 'nishiki_profile_106works.json'
+data = json.load(open(profile_path, encoding='utf-8-sig'))
 works = data['works']
 
 print('=== 106 WORKS PROFILE COMPREHENSIVE AUDIT ===')

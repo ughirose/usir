@@ -127,6 +127,284 @@ RE_RESOLV_MARKER = re.compile(
     r"(?:のだ|のであった|からである|とわかった|判明した|のだった|に違いない|であった|理解した|合点がいった|納得した|思い出した|解けた)"
 )
 
+# Common nouns frequently occurring across scenes that should NOT be hook resolution keys (§4.1.2)
+COMMON_HOOK_STOPWORDS = {
+    "先生", "学校", "自分", "人間", "今日", "昨日", "明日", "言葉", "時間", "世界",
+    "気持", "気持ち", "様子", "本当", "場合", "相手", "理由", "意味", "存在", "問題",
+    "父親", "母親", "子供", "友達", "友人", "東京", "日本", "部屋", "身体", "からだ",
+    "以前", "以後", "最近", "日常", "社会", "生活", "世間", "事物", "呼吸", "瞬間",
+    "仕事", "父親", "母親", "兄弟", "夫婦", "一人", "二人", "誰か", "彼ら", "手紙",
+}
+
+
+class FidResolver:
+    """HW-02 Free Indirect Discourse (FID) 5-trigger resolver (Spec §3.5).
+
+    T1 (0.30): Past-tense base in preceding context transitioning to non-past or noun end
+    T2 (0.25): Proximal/speech-time deixis outside quotes (今/いま/ここ/この.../明日/きのう/こうやって)
+    T3 (0.35): Subjective emotion/visceral adjectives bare outside quotes (non-garu form)
+    T4 (0.35): Epistemic modality, questions, exclamations, trail-offs outside quotes
+    T5 (0.25): Perception/cognitive verbs in preceding 1-2 sentences with focal subject v_focal
+
+    Sentences with I_fid >= 0.50 represent internal focalized monologue.
+    """
+
+    RE_PAST_SENT = re.compile(r"(?:た|だ|かった|でした|ました)[。！？\s\n]*$")
+    RE_NON_PAST_OR_NOUN = re.compile(
+        r"(?:[るうすくつぬぶむ]|のである|のだ|わけだ|はずだ|ものだ|に相違ない|[\u4e00-\u9fff\u30a0-\u30ff々]+)[。！？\s\n]*$"
+    )
+    RE_DEIXIS = re.compile(
+        r"(?:今|いま|ここ|此処|この[^\s、。]{1,6}|明日|あす|きのう|昨日|こうやって|斯う)"
+    )
+    RE_EMOTION_ADJ = re.compile(
+        r"(?:悲し|苦し|痛|寂し|さびし|憎|恋し|恐ろし|おそろし|恥ずかし|はずかし|情けな|たまらな|口惜し|悔し|つら|辛)い(?!が[るっれろ])"
+    )
+    RE_MODALITY = re.compile(
+        r"(?:にちがいない|に違いない|のではなかろうか|のではあるまいか|のではあるまい|かしら|のだ[。！]?|のだ……|か[。？\?]|……|…|であろうか|ではないか)"
+    )
+    RE_PERCEPTION = re.compile(
+        r"([^\s、。]{1,8})[はが][^。]{0,25}?(?:見(?:る|た|つめ|上げ)|眺め|聞(?:く|い)|気(?:づ|付)い|思(?:う|っ)|考(?:える|え)|感(?:じる|じ)|知(?:る|っ)|怪し(?:む|ん)|疑(?:う|っ)|悟(?:る|っ))"
+    )
+
+    @classmethod
+    def resolve_fid(
+        cls, scene_text: str, known_characters: Optional[List[str]] = None
+    ) -> Tuple[Optional[str], float, List[Dict[str, Any]]]:
+        """Evaluate FID triggers across narrative sentences outside quotes."""
+        sents = [s.strip() for s in SENT_SPLIT.split(scene_text) if s.strip()]
+        if not sents:
+            return None, 0.0, []
+
+        fid_spans = []
+        max_score = 0.0
+        candidate_focals: List[Tuple[str, float]] = []
+
+        for i, s in enumerate(sents):
+            narr_s = RE_QUOTE.sub(" ", s).strip()
+            if not narr_s:
+                continue
+
+            # T1: Past-tense context to non-past / noun
+            t1 = False
+            if i > 0:
+                prev_narr = RE_QUOTE.sub(" ", sents[i - 1]).strip()
+                prev_is_past = bool(cls.RE_PAST_SENT.search(prev_narr))
+                cur_is_non_past = bool(cls.RE_NON_PAST_OR_NOUN.search(narr_s))
+                if prev_is_past and cur_is_non_past:
+                    t1 = True
+
+            # T2: Deixis
+            t2 = bool(cls.RE_DEIXIS.search(narr_s))
+
+            # T3: Visceral subjective emotion
+            t3 = bool(cls.RE_EMOTION_ADJ.search(narr_s))
+
+            # T4: Epistemic modality / exclamation / trail-off
+            t4 = bool(cls.RE_MODALITY.search(narr_s))
+
+            # T5: Perception verb in preceding 1-2 sentences
+            t5 = False
+            focal_sub = None
+            for lookback in (1, 2):
+                if i >= lookback:
+                    prev_s = RE_QUOTE.sub(" ", sents[i - lookback]).strip()
+                    m = cls.RE_PERCEPTION.search(prev_s)
+                    if m:
+                        cand = m.group(1).strip()
+                        if cand not in STOP_CHARACTERS and len(cand) <= 8:
+                            t5 = True
+                            focal_sub = cand
+                            break
+
+            score = (
+                (0.30 if t1 else 0.0)
+                + (0.25 if t2 else 0.0)
+                + (0.35 if t3 else 0.0)
+                + (0.35 if t4 else 0.0)
+                + (0.25 if t5 else 0.0)
+            )
+            score = round(min(1.0, score), 4)
+            if score > max_score:
+                max_score = score
+
+            if score >= 0.50:
+                subj = focal_sub
+                if not subj and known_characters:
+                    for kc in known_characters:
+                        if kc in narr_s or (i > 0 and kc in sents[i - 1]):
+                            subj = kc
+                            break
+                if not subj:
+                    for p in ("私", "わたし", "僕", "ぼく", "俺", "おれ", "自分", "余", "吾輩"):
+                        if p in narr_s:
+                            subj = "語り手"
+                            break
+                fid_spans.append(
+                    {
+                        "sentence_idx": i,
+                        "text": narr_s[:40],
+                        "score": score,
+                        "triggers": {"t1": t1, "t2": t2, "t3": t3, "t4": t4, "t5": t5},
+                        "focal": subj,
+                    }
+                )
+                if subj:
+                    candidate_focals.append((subj, score))
+
+        best_focal = None
+        if candidate_focals:
+            focal_weights: Dict[str, float] = {}
+            for sub, sc in candidate_focals:
+                focal_weights[sub] = focal_weights.get(sub, 0.0) + sc
+            best_focal = max(focal_weights.items(), key=lambda x: x[1])[0]
+
+        return best_focal, max_score, fid_spans
+
+
+def extract_turn_dialogue_edges(
+    scene_text: str,
+    character_stalks: List[Dict[str, Any]],
+    focal_char: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    """Extract adjacent dialogue edges from consecutive speech turns (u_k -> u_{k+1}, u_k != u_{k+1}).
+
+    Abolishes arbitrary clique edge explosion across all scene characters.
+    """
+    if len(character_stalks) < 2:
+        return []
+
+    char_names = [c["name"] for c in character_stalks]
+
+    turns: List[Dict[str, Any]] = []
+    for m in RE_QUOTE.finditer(scene_text):
+        q_text = m.group(1) or m.group(2) or ""
+        q_start = m.start()
+        q_end = m.end()
+
+        before = scene_text[max(0, q_start - 50) : q_start]
+        after = scene_text[q_end : min(len(scene_text), q_end + 50)]
+
+        speaker = None
+        # 1. Direct match with known character names in immediate before/after context
+        for cn in sorted(char_names, key=len, reverse=True):
+            if re.search(rf"[」』][とて、\s]*{re.escape(cn)}[はが]", after[:30]):
+                speaker = cn
+                break
+            if re.search(rf"{re.escape(cn)}[はが][^。]{{0,25}}[「\n]*$", before):
+                speaker = cn
+                break
+            if (cn + "は" in before[-25:]) or (cn + "が" in before[-25:]):
+                speaker = cn
+                break
+
+        if not speaker:
+            m_after = RE_SPEAKER_AFTER.search(after)
+            if m_after:
+                cand = m_after.group(1).strip()
+                if cand in char_names:
+                    speaker = cand
+                elif cand not in STOP_CHARACTERS and len(cand) <= 8:
+                    speaker = cand
+
+        if not speaker:
+            m_before = RE_SPEAKER_BEFORE.search(before)
+            if m_before:
+                cand = m_before.group(1).strip()
+                if cand in char_names:
+                    speaker = cand
+                elif cand not in STOP_CHARACTERS and len(cand) <= 8:
+                    speaker = cand
+
+        if not speaker:
+            for p in ("俺", "おれ", "オレ", "僕", "ぼく", "私", "わたし", "自分", "余", "吾輩"):
+                if p in q_text:
+                    if "語り手" in char_names:
+                        speaker = "語り手"
+                    elif focal_char and focal_char in char_names:
+                        speaker = focal_char
+                    break
+
+        turns.append({"quote": q_text, "speaker": speaker, "pos": q_start})
+
+    if not turns:
+        return []
+
+    # Resolve unassigned speakers through natural adjacent dialogue alternation
+    last_known = None
+    for idx, t in enumerate(turns):
+        if t["speaker"]:
+            last_known = t["speaker"]
+        else:
+            if idx > 0 and turns[idx - 1]["speaker"]:
+                prev = turns[idx - 1]["speaker"]
+                alt = [c for c in char_names if c != prev]
+                t["speaker"] = alt[0] if alt else ("相手" if prev != "相手" else "話者")
+            elif last_known:
+                alt = [c for c in char_names if c != last_known]
+                t["speaker"] = alt[0] if alt else ("相手" if last_known != "相手" else "話者")
+            else:
+                t["speaker"] = focal_char if (focal_char and focal_char in char_names) else char_names[0]
+
+    pair_counts: Dict[Tuple[str, str], int] = {}
+    for k in range(len(turns) - 1):
+        u = turns[k]["speaker"]
+        v = turns[k + 1]["speaker"]
+        if u and v and u != v:
+            pair = (min(u, v), max(u, v))
+            pair_counts[pair] = pair_counts.get(pair, 0) + 1
+
+    if not pair_counts and len(turns) >= 1:
+        first_sp = turns[0]["speaker"] or char_names[0]
+        alt = [c for c in char_names if c != first_sp]
+        other = alt[0] if alt else "相手"
+        pair = (min(first_sp, other), max(first_sp, other))
+        pair_counts[pair] = 1
+
+    edges: List[Dict[str, Any]] = []
+    for (u, v), cnt in sorted(pair_counts.items()):
+        conf = min(100, 50 + cnt * 25)
+        edges.append({"u": u, "v": v, "confidence": conf})
+
+    return edges
+
+
+def compute_work_scene_frequencies(scene_texts: List[str]) -> Dict[str, int]:
+    """Compute within-work scene frequency sf(w) for kanji tokens across all scenes."""
+    sf: Dict[str, int] = {}
+    for sc in scene_texts:
+        tokens = set(re.findall(r"[\u4e00-\u9fff]{2,}", sc))
+        for tok in tokens:
+            sf[tok] = sf.get(tok, 0) + 1
+    return sf
+
+
+def filter_hook_tokens_by_isf(
+    raw_tokens: Set[str],
+    scene_freqs: Dict[str, int],
+    total_scenes: int,
+    isf_threshold: float = 1.2,
+) -> Set[str]:
+    """Filter hook tokens using Within-Work Inverse Scene Frequency (ISF) §4.1.2.
+
+    ISF(w) = ln(T_W / (sf(w) + 1))
+    Retains only tokens with ISF(w) >= 1.2 (approx <= 30% of scenes).
+    Guards short works (T_W < 4) with sf(w) <= 1.
+    Excludes COMMON_HOOK_STOPWORDS.
+    """
+    filtered = set()
+    for tok in raw_tokens:
+        if tok in COMMON_HOOK_STOPWORDS:
+            continue
+        sf = scene_freqs.get(tok, 0)
+        if total_scenes < 4:
+            if sf <= 1:
+                filtered.add(tok)
+        else:
+            isf = math.log(total_scenes / (sf + 1))
+            if isf >= isf_threshold:
+                filtered.add(tok)
+    return filtered
+
 
 def split_long_paragraph(para: str, max_len: int = 1600, target_len: int = 800) -> List[str]:
     """Split a paragraph exceeding max_len into coherent sub-paragraphs."""
@@ -498,8 +776,8 @@ def extract_scene_characters_and_edges(
     f_event_arousal: int,
     f_style_valence: int,
     f_style_arousal: int,
-) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """HW-06 Deterministic character stalk and dialogue edge extractor."""
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Optional[str]]:
+    """HW-06 Deterministic character stalk and dialogue edge extractor with FID resolution (Spec §3.5)."""
     speakers: List[str] = []
 
     for name in RE_SPEAKER_AFTER.findall(scene_text):
@@ -530,6 +808,12 @@ def extract_scene_characters_and_edges(
 
     if narrator_present and "語り手" not in speakers:
         speakers.insert(0, "語り手")
+
+    # HW-02 Free Indirect Discourse (FID) 5-trigger resolution (§3.5)
+    focal_char, fid_score, fid_spans = FidResolver.resolve_fid(scene_text, speakers)
+    if focal_char and focal_char not in speakers:
+        if len(speakers) < 4:
+            speakers.insert(0 if not narrator_present else 1, focal_char)
 
     if has_dialogue and len(speakers) < 2:
         found_2nd = None
@@ -576,25 +860,25 @@ def extract_scene_characters_and_edges(
             h = abs(hash(name))
             base = [(h >> (i * 2) & 3) - 1 for i in range(6)]
 
+        # Dynamic modulation under strong FID internal monologue (§3.5 intra_variance)
+        is_focal = (name == focal_char) or (name == "語り手" and focal_char in ("語り手", "私", "自分"))
+        mod_emotion = d_emotion + (1 if (is_focal and fid_score >= 0.50 and f_style_valence < 0) else 0)
+        mod_will = d_will + (-1 if (is_focal and fid_score >= 0.50 and f_event_valence < 0) else 0)
+
         axes_q = [
             max(-2, min(2, base[0] + d_life)),
             max(-2, min(2, base[1] + d_order)),
             max(-2, min(2, base[2] + d_mystic)),
             max(-2, min(2, base[3] + d_devotion)),
-            max(-2, min(2, base[4] + d_emotion)),
-            max(-2, min(2, base[5] + d_will)),
+            max(-2, min(2, base[4] + mod_emotion)),
+            max(-2, min(2, base[5] + mod_will)),
         ]
         character_stalks.append({"name": name, "axes_q": axes_q})
 
-    dialogue_edges: List[Dict[str, Any]] = []
-    if has_dialogue and len(character_stalks) >= 2:
-        for i in range(len(character_stalks) - 1):
-            u_name = character_stalks[i]["name"]
-            v_name = character_stalks[i + 1]["name"]
-            if u_name != v_name:
-                dialogue_edges.append({"u": u_name, "v": v_name, "confidence": 100})
+    # Adjacent speech turn dialogue edges (Spec §4.1 / Task 1 requirement)
+    dialogue_edges = extract_turn_dialogue_edges(scene_text, character_stalks, focal_char)
 
-    return character_stalks, dialogue_edges
+    return character_stalks, dialogue_edges, focal_char
 
 
 def build_scene_annotation(
@@ -625,7 +909,7 @@ def build_scene_annotation(
     )
 
     if character_stalks is None or dialogue_edges is None:
-        stalks, edges = extract_scene_characters_and_edges(
+        stalks, edges, auto_focal = extract_scene_characters_and_edges(
             scene_text,
             scene_index,
             scene_count,
@@ -638,6 +922,8 @@ def build_scene_annotation(
             character_stalks = stalks
         if dialogue_edges is None:
             dialogue_edges = edges
+        if focal_character is None:
+            focal_character = auto_focal
 
     if opened_hooks is None or closed_hook_ids is None:
         # Default single-scene hook detection
@@ -751,16 +1037,20 @@ class AozoraCorpusSplitter:
         scene_texts: List[str],
         include_audit_meta: bool = False,
     ) -> List[Dict[str, Any]]:
-        """Annotate all scenes of a work with continuous hook tracking and character dynamics."""
+        """Annotate all scenes of a work with continuous hook tracking, ISF filtering, and character dynamics."""
         count = len(scene_texts)
         hook_seq = 1
         active_hooks: List[Dict[str, Any]] = []
         work_records: List[Dict[str, Any]] = []
 
+        # Pass 1: Compute within-work scene frequencies for ISF filtering (§4.1.2)
+        work_scene_freqs = compute_work_scene_frequencies(scene_texts)
+
+        # Pass 2: Annotate scenes
         for idx, sc_txt in enumerate(scene_texts):
             awase, nagare, _, _, _ = compute_heuristic_signals(sc_txt, idx, count)
 
-            stalks, edges = extract_scene_characters_and_edges(
+            stalks, edges, focal = extract_scene_characters_and_edges(
                 sc_txt,
                 idx,
                 count,
@@ -770,22 +1060,29 @@ class AozoraCorpusSplitter:
                 awase["f_style_arousal"],
             )
 
-            # Kamae hook extraction
+            # Kamae hook extraction with ISF filtering
             opened_hooks: List[Dict[str, Any]] = []
             sents = [s for s in SENT_SPLIT.split(sc_txt) if s.strip()]
             for sent in sents:
                 if RE_HOOK_TRIG.search(sent):
                     label = sent.strip()[:30]
                     kanji_toks = set(re.findall(r"[\u4e00-\u9fff]{2,}", label))
-                    if not kanji_toks:
-                        kanji_toks = {label[:4]}
+                    # Filter tokens using Within-Work ISF (threshold >= 1.2)
+                    specific_toks = filter_hook_tokens_by_isf(
+                        kanji_toks, work_scene_freqs, total_scenes=count, isf_threshold=1.2
+                    )
+                    # If specific_toks is empty, guard by taking non-stopword tokens or first 4 chars
+                    if not specific_toks:
+                        fallback = {tok for tok in kanji_toks if tok not in COMMON_HOOK_STOPWORDS}
+                        specific_toks = fallback if fallback else {label[:4]}
+
                     opened_hooks.append({"id": hook_seq, "label": label})
-                    active_hooks.append({"id": hook_seq, "tokens": kanji_toks, "open_idx": idx})
+                    active_hooks.append({"id": hook_seq, "tokens": specific_toks, "open_idx": idx})
                     hook_seq += 1
                     if len(opened_hooks) >= 2:
                         break
 
-            # Kamae hook closure
+            # Kamae hook closure: verified against specific ISF tokens
             closed_hook_ids: List[int] = []
             has_resolv = bool(RE_RESOLV_MARKER.search(sc_txt))
             for h in list(active_hooks):
@@ -802,6 +1099,7 @@ class AozoraCorpusSplitter:
                 scene_count=count,
                 include_audit_meta=include_audit_meta,
                 extra_meta=work,
+                focal_character=focal,
                 character_stalks=stalks,
                 dialogue_edges=edges,
                 opened_hooks=opened_hooks,

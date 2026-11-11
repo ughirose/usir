@@ -358,3 +358,107 @@ def test_fix4_nagare_continuous_logp_and_mood_diversity(splitter: AozoraCorpusSp
         f"Expected at least 4 distinct 1st-rank mood codes, got {len(unique_first_moods)}: {unique_first_moods}"
     )
 
+
+def test_fid_5_triggers_and_adjacent_dialogue_edges():
+    """Stage B-3 Task 1.1: HW-02 Free Indirect Discourse (FID) 5-triggers & turn dialogue edges.
+
+    1. Tests FidResolver:
+       - T1 (0.30): Past-tense context to non-past or noun end
+       - T2 (0.25): Proximal deixis (今/ここ/この)
+       - T3 (0.35): Visceral emotion bare adjective (悲しい/苦しい)
+       - T4 (0.35): Modality (〜に違いない/〜のではなかろうか)
+       - T5 (0.25): Perception verb with subject (下人は見上げた)
+       Verifies I_fid >= 0.50 triggers internal monologue and focal character identification.
+    2. Tests DialogueEdge adjacency:
+       Verifies 3+ character dialogue creates adjacent turn pairs only, abolishing clique explosion.
+    """
+    from usir_py.v5.aozora_scene_splitter import (
+        FidResolver,
+        extract_scene_characters_and_edges,
+        extract_turn_dialogue_edges,
+    )
+
+    # 1. FID synthetic test
+    # Text: Context past -> perception verb -> deixis + visceral emotion + modality
+    fid_text = (
+        "下人は門の上の死骸を見上げた。\n"
+        "昨日はただの雨だった。だが今、この冷たい風が骨に染みる。\n"
+        "恐ろしい。己はどうして生き延びるべきなのか。盗人になるより外に道はないのではなかろうか。"
+    )
+    focal, max_score, spans = FidResolver.resolve_fid(fid_text, ["下人"])
+    assert max_score >= 0.50, f"Expected I_fid >= 0.50, got {max_score}"
+    assert focal == "下人", f"Expected focal '下人', got '{focal}'"
+    assert len(spans) >= 1, "Expected at least 1 FID span"
+
+    # 2. Adjacent dialogue turns vs Clique test
+    # 3 characters: A, B, C. A talks to B, B replies to A, then B talks to C, C replies to B.
+    # Total characters = 3. Clique would create (A,B), (A,C), (B,C).
+    # Turn sequence: A -> B -> C -> B. Pairs: (A, B) and (B, C). Pair (A, C) must NOT exist.
+    three_char_text = (
+        "太郎は言った。「やあ、次郎。」\n"
+        "次郎は答えた。「太郎か、久しぶりだな。」\n"
+        "次郎は三郎に向かって言った。「三郎、準備はできたか。」\n"
+        "三郎は頷いた。「ああ、準備万端だ。」"
+    )
+    stalks = [
+        {"name": "太郎", "axes_q": [0, 0, 0, 0, 0, 0]},
+        {"name": "次郎", "axes_q": [0, 0, 0, 0, 0, 0]},
+        {"name": "三郎", "axes_q": [0, 0, 0, 0, 0, 0]},
+    ]
+    edges = extract_turn_dialogue_edges(three_char_text, stalks)
+    pairs = {(e["u"], e["v"]) for e in edges}
+    # Normalize pairs
+    norm_pairs = {tuple(sorted([u, v])) for u, v in pairs}
+
+    assert ("太郎", "次郎") in norm_pairs, f"Missing (太郎, 次郎) in {norm_pairs}"
+    assert ("三郎", "次郎") in norm_pairs, f"Missing (三郎, 次郎) in {norm_pairs}"
+    # Clique edge between 太郎 and 三郎 must NOT exist
+    assert ("太郎", "三郎") not in norm_pairs, (
+        f"Clique explosion detected! (太郎, 三郎) should not have an edge: {norm_pairs}"
+    )
+
+
+def test_within_work_isf_hook_filtering():
+    """Stage B-3 Task 1.2: Within-Work Inverse Scene Frequency (ISF) hook filter.
+
+    - Common high-frequency nouns (先生, 学校, 自分, 今日) must be suppressed from hook closure keys.
+    - Rare/specific mystery tokens (occurring in <= 30% of scenes, ISF >= 1.2) must be preserved.
+    """
+    from usir_py.v5.aozora_scene_splitter import (
+        COMMON_HOOK_STOPWORDS,
+        compute_work_scene_frequencies,
+        filter_hook_tokens_by_isf,
+    )
+
+    scenes = [
+        "先生は学校で今日もおっしゃった。なぜ先生は悲しそうなのか？ 秘密があるのか。",
+        "先生と学校の校庭を歩く。自分は先生の教えを思い出す。",
+        "学校の教室で今日、先生の講義を聞いた。先生の言葉が響く。",
+        "街の片隅で奇妙な水晶球を発見した。これは何事だろうか？",
+        "あの水晶球の正体は古代の遺物であった。謎が解けた。",
+    ]
+    # Total scenes = 5
+    # "先生": occurs in scenes 0, 1, 2 -> sf = 3. ISF = ln(5 / (3 + 1)) = ln(5/4) = 0.223 < 1.2
+    # "学校": occurs in scenes 0, 1, 2 -> sf = 3. ISF = 0.223 < 1.2
+    # "水晶球": occurs in scenes 3, 4 -> sf = 2. ISF = ln(5 / (2 + 1)) = ln(5/3) = 0.510
+    # Let's check with total_scenes = 10:
+    # If total_scenes = 10, sf("先生") = 8 -> ISF = ln(10/9) = 0.105
+    # sf("水晶球") = 1 -> ISF = ln(10/2) = ln(5) = 1.609 >= 1.2
+    scene_freqs = {
+        "先生": 8,
+        "学校": 8,
+        "自分": 7,
+        "今日": 8,
+        "水晶球": 1,
+        "秘密": 2,
+    }
+    raw_tokens = {"先生", "学校", "自分", "今日", "水晶球"}
+
+    filtered = filter_hook_tokens_by_isf(raw_tokens, scene_freqs, total_scenes=10, isf_threshold=1.2)
+    assert "先生" not in filtered, "先生 should be filtered out by ISF / stopword"
+    assert "学校" not in filtered, "学校 should be filtered out by ISF / stopword"
+    assert "自分" not in filtered, "自分 should be filtered out by ISF / stopword"
+    assert "今日" not in filtered, "今日 should be filtered out by ISF / stopword"
+    assert "水晶球" in filtered, "水晶球 must be retained as specific hook token"
+
+
