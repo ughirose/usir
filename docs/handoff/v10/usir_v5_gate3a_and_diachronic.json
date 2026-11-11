@@ -1,0 +1,211 @@
+{
+  "schema": "usir_v5_gate3a_and_diachronic_v1",
+  "date": "2026-11-11",
+  "elapsed_sec": 81.67,
+  "order2_gate3a_distribution_shift": {
+    "meiji_in_domain": {
+      "n_samples": 25,
+      "raw_bits_per_token_mean": 2.8357,
+      "raw_bits_per_token_sd": 0.1745,
+      "closed_class_coverage_pct": 61.93,
+      "cohens_d_vs_meiji": 0.0,
+      "ks_statistic": 0.0,
+      "ks_pvalue": 1.0,
+      "column_centered_bits_mean": -0.0,
+      "column_centered_shift_attenuation": -0.0
+    },
+    "taisho": {
+      "n_samples": 39,
+      "raw_bits_per_token_mean": 3.1096,
+      "raw_bits_per_token_sd": 0.1914,
+      "closed_class_coverage_pct": 63.04,
+      "cohens_d_vs_meiji": 1.4956,
+      "ks_statistic": 0.5692,
+      "ks_pvalue": 4.3e-05,
+      "column_centered_bits_mean": 0.2739,
+      "column_centered_shift_attenuation": -0.0
+    },
+    "showa": {
+      "n_samples": 42,
+      "raw_bits_per_token_mean": 3.1476,
+      "raw_bits_per_token_sd": 0.1932,
+      "closed_class_coverage_pct": 62.92,
+      "cohens_d_vs_meiji": 1.6945,
+      "ks_statistic": 0.6495,
+      "ks_pvalue": 1e-06,
+      "column_centered_bits_mean": 0.3119,
+      "column_centered_shift_attenuation": 0.0
+    },
+    "modern_colloquial": {
+      "n_samples": 4,
+      "raw_bits_per_token_mean": 2.9209,
+      "raw_bits_per_token_sd": 0.1744,
+      "closed_class_coverage_pct": 59.21,
+      "cohens_d_vs_meiji": 0.4884,
+      "ks_statistic": 0.39,
+      "ks_pvalue": 0.562924,
+      "column_centered_bits_mean": 0.0852,
+      "column_centered_shift_attenuation": -0.0
+    }
+  },
+  "order3_d10_multi_translator_anova": {
+    "anova_per_pole": {
+      "Kasane": {
+        "eta_source": 0.0025,
+        "eta_trans": 0.9971,
+        "eta_interaction": 0.0003
+      },
+      "Sasae": {
+        "eta_source": 0.0,
+        "eta_trans": 0.0,
+        "eta_interaction": 0.0
+      },
+      "Kamae": {
+        "eta_source": 1.0,
+        "eta_trans": 0.0,
+        "eta_interaction": 0.0
+      },
+      "Sadame": {
+        "eta_source": 0.062,
+        "eta_trans": 0.6333,
+        "eta_interaction": 0.3047
+      },
+      "Nagare": {
+        "eta_source": 0.6379,
+        "eta_trans": 0.1349,
+        "eta_interaction": 0.2272
+      },
+      "Awase": {
+        "eta_source": 0.1549,
+        "eta_trans": 0.3803,
+        "eta_interaction": 0.4648
+      }
+    },
+    "preregistered_order": [
+      "Nagare",
+      "Kamae",
+      "Sadame",
+      "Awase",
+      "Kasane"
+    ],
+    "empirical_order": [
+      "Kamae",
+      "Nagare",
+      "Awase",
+      "Sadame",
+      "Kasane"
+    ],
+    "spearman_rho": 0.8,
+    "spearman_pvalue": 0.1041,
+    "hypothesis_supported": true
+  },
+  "order3_section6_diachronic_trajectories": {
+    "夏目漱石": {
+      "n_works": 11,
+      "years_span": [
+        1905,
+        1914
+      ],
+      "work_sequence": [
+        "1905: 薤露行",
+        "1906: 坊っちゃん",
+        "1906: 草枕",
+        "1906: 二百十日",
+        "1907: 虞美人草",
+        "1908: 夢十夜",
+        "1908: 三四郎",
+        "1908: 文鳥",
+        "1908: 坑夫",
+        "1912: 彼岸過迄",
+        "1914: こころ"
+      ],
+      "detected_tau_idx": 1,
+      "detected_split_work": "1906: 坊っちゃん",
+      "detected_year": 1906,
+      "historical_ground_truth_year": 1910,
+      "historical_event": "修善寺の大患・『門』から後期三部作へ",
+      "absolute_year_error": 4,
+      "change_point_variance_explained": 0.2887
+    },
+    "芥川龍之介": {
+      "n_works": 11,
+      "years_span": [
+        1915,
+        1927
+      ],
+      "work_sequence": [
+        "1915: 羅生門",
+        "1916: 鼻",
+        "1916: 芋粥",
+        "1917: 偸盗",
+        "1917: 戯作三昧",
+        "1918: 地獄変",
+        "1922: 藪の中",
+        "1924: 伝吉の敵打ち",
+        "1925: 大導寺信輔の半生",
+        "1926: 文章",
+        "1927: 玄鶴山房"
+      ],
+      "detected_tau_idx": 7,
+      "detected_split_work": "1924: 伝吉の敵打ち",
+      "detected_year": 1924,
+      "historical_ground_truth_year": 1923,
+      "historical_event": "関東大震災・歴史物から保吉もの/晩年自伝へ",
+      "absolute_year_error": 1,
+      "change_point_variance_explained": 0.2848
+    },
+    "太宰治": {
+      "n_works": 10,
+      "years_span": [
+        1937,
+        1948
+      ],
+      "work_sequence": [
+        "1937: 二十世紀旗手",
+        "1939: 女生徒",
+        "1939: 八十八夜",
+        "1940: 走れメロス",
+        "1940: 兄たち",
+        "1942: 小さいアルバム",
+        "1942: 老ハイデルベルヒ",
+        "1947: 斜陽",
+        "1948: 人間失格",
+        "1948: 美男子と煙草"
+      ],
+      "detected_tau_idx": 6,
+      "detected_split_work": "1942: 老ハイデルベルヒ",
+      "detected_year": 1942,
+      "historical_ground_truth_year": 1945,
+      "historical_event": "終戦・中期明朗期から『斜陽』『人間失格』へ",
+      "absolute_year_error": 3,
+      "change_point_variance_explained": 0.2033
+    },
+    "森鴎外": {
+      "n_works": 11,
+      "years_span": [
+        1890,
+        1916
+      ],
+      "work_sequence": [
+        "1890: 舞姫",
+        "1909: 心中",
+        "1911: 百物語",
+        "1912: 雁",
+        "1912: かのように",
+        "1912: カズイスチカ",
+        "1913: 阿部一族",
+        "1913: 佐橋甚五郎",
+        "1915: 山椒大夫",
+        "1915: 二人の友",
+        "1916: 高瀬舟"
+      ],
+      "detected_tau_idx": 1,
+      "detected_split_work": "1909: 心中",
+      "detected_year": 1909,
+      "historical_ground_truth_year": 1912,
+      "historical_event": "明治天皇崩御/乃木殉死・現代小説から歴史小説へ",
+      "absolute_year_error": 3,
+      "change_point_variance_explained": 0.237
+    }
+  }
+}

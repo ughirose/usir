@@ -153,3 +153,61 @@ def test_goldilocks_void_finder_logic():
         assert v["empty_radius"] >= 0.85
         assert v["boundary_author_count"] >= 3
         assert 0.0 <= v["goldilocks_score"] <= 1.0
+
+
+def test_order0_and_order1_calibration_artifacts():
+    """5. Test Order 0 (D0) Calibration & Order 1 (U6) artifacts integrity."""
+    cal_path = ROOT / "docs" / "handoff" / "v10" / "usir_v5_instrument_calibration.json"
+    if not cal_path.exists():
+        pytest.skip("Calibration JSON not yet generated")
+    data = json.loads(cal_path.read_text(encoding="utf-8"))
+
+    # Metamorphic tests
+    m1 = data["metamorphic_calibration"]["M1_comma_deletion"]
+    assert m1["max_deep_pole_abs_error"] < 1e-6
+    assert m1["kasane_surface_delta"] > 0.0
+
+    m2 = data["metamorphic_calibration"]["M2_entity_substitution"]
+    assert m2["max_abs_error"] < 1e-6
+
+    m3 = data["metamorphic_calibration"]["M3_scene_order_shuffle"]
+    assert m3["sadame_e_inter_mean_max_error"] < 1e-6
+    assert m3["awase_mean_max_error"] < 1e-6
+
+    # Noise floors
+    floors = data["noise_floors"]
+    for pole in ["Kasane", "Sasae", "Kamae", "Sadame", "Nagare", "Awase"]:
+        assert pole in floors
+        assert floors[pole]["sigma_noise"] > 0.0
+        assert floors[pole]["level3_gate_2sigma"] > floors[pole]["sigma_noise"]
+
+    # U6 Filter
+    u6 = data["order1_u6_polish_separation"]
+    assert u6["f1"] >= 0.95
+    assert u6["precision"] >= 0.95
+
+
+def test_order2_and_order3_diachronic_artifacts():
+    """6. Test Order 2 (Gate 3a) & Order 3 (D10 / Section 6) artifacts integrity."""
+    dia_path = ROOT / "docs" / "handoff" / "v10" / "usir_v5_gate3a_and_diachronic.json"
+    if not dia_path.exists():
+        pytest.skip("Gate 3a / Diachronic JSON not yet generated")
+    data = json.loads(dia_path.read_text(encoding="utf-8"))
+
+    # Gate 3a
+    g3a = data["order2_gate3a_distribution_shift"]
+    assert "meiji_in_domain" in g3a
+    assert "modern_colloquial" in g3a
+    assert g3a["modern_colloquial"]["closed_class_coverage_pct"] >= 50.0
+
+    # D10 ANOVA
+    d10 = data["order3_d10_multi_translator_anova"]
+    assert d10["hypothesis_supported"] is True
+    assert d10["spearman_rho"] >= 0.70
+
+    # Section 6 Change Point Detection
+    s6 = data["order3_section6_diachronic_trajectories"]
+    errors = [v["absolute_year_error"] for v in s6.values()]
+    assert max(errors) <= 5, f"Expected max change point year error <= 5, got {max(errors)}"
+    assert np.mean(errors) <= 3.5, f"Expected mean error <= 3.5, got {np.mean(errors)}"
+

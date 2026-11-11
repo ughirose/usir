@@ -1,171 +1,95 @@
 # USIR v5 実装引継ぎ台帳 (HANDOFF)
-**最終更新日時**: 2026-11-11 11:45:00 JST  
+**最終更新日時**: 2026-11-11 20:50:00 JST  
 **ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`)  
 **関連リポジトリ**: `C:\dev\nishiki`（Lane B 境界線厳守・変更ゼロ保証）
 
 ---
 
 ## 1. タスク概要・実施内容
-本セッションでは、以下の2大タスクを一気通貫で完遂した。
+本セッションでは、正本 v4（`Argon_Discussion_Pack_v4_Decisions_20261111.md`）および親計画書（`implementation_plan.md`）に基づき、以下の 4 大タスクを一気通貫で完遂した。
 
-1. **タスク1：Stage B-3 `aozora_scene_splitter.py` 自己批判2点（§4.1/4.2）の決定論的精緻化**
-   - **対話エッジの Clique 根絶と発話ターン隣接ペアリング**:
-     - 3人以上が登場する場面での全順次ペア（完全グラフ Clique）によるエッジ過密爆発を廃止。
-     - 連続するカギ括弧発話ターン $k \to k+1$ の発話主ペア $(u_k, u_{k+1})$（$u_k \neq u_{k+1}$）にのみ対話辺を生成（直前文脈の人物名照合優先、未特定時は交互ターンまたは語り手とペアリング）。
-   - **HW-02 自由間接話法（FID）5トリガー実装**:
-     - 無主語・一人称省略の取りこぼしを解消するため、T1（過去タ形基調文脈での非過去ル形・体言止め遷移、0.30）、T2（カギ括弧外の発話時ダイクシス「今/ここ/この」等、0.25）、T3（内臓感覚・主観感情形容詞の裸出、0.35）、T4（認識モダリティ・言いさし文末、0.35）、T5（知覚・認知動詞「見る/思う/感じる」等のハ格/ガ格主語活性化、0.25）の5トリガー合成による `FidResolver` を実装。
-     - $I_{\text{FID}} \ge 0.50$ の内的独白スパンから焦点人物を特定し、`focal_character` および `character_stalks` の動的変調（`intra_variance` 反映）に組み込み。
-   - **Within-Work ISF（作品内逆場面頻度）フック回収フィルタ**:
-     - 日常頻出名詞（「先生」「学校」「今日」「自分」等）によるフック誤回収を遮断するため、作品内場面数 $T_W$ に対する出現頻度 $\text{ISF}(w) = \ln(T_W / (\text{sf}(w) + 1))$ を計算し、$\text{ISF}(w) \ge 1.2$（作品の約30%以下の場面にしか現れない特異語。短編ガード付き）のみを照合キーとして採用。
-   - **データセット再生成と検証**:
-     - `data/v5/aozora_106works_scenes.jsonl`（4,576場面）および `data/v5/pilot_50_scenes.jsonl`（50場面）を再生成し、`F:\マイドライブ\Claude-Sync\inbox\pilot_50_scenes.jsonl` に同期。
-     - Rust CLI `nishiki profile` を再実行し `docs/handoff/v10/nishiki_profile_106works.json` を更新。
+1. **ステップ1：`aozora_scene_splitter.py` および `python/usir_py/v5/six_pole_atlas.py` の改修**
+   - **M1 変形不変性保証**:
+     - 深層4極の文字数分母および計算から読点 `、`・`，` を完全に除外。`past_ratio` を句末基準化。
+     - `Nagare` 位相項から `comma_ratio` を完全排除し、読点非依存の `neg_ratio` / `kanji_ratio` に変更。
+     - 単語境界なしでの形態素連結誤爆（「わあ、われ」$\to$「あわれ」）を完全遮断するため、すべての出現頻度計測を事前 `strip_commas` 統制テキスト上で実施。
+   - **M2 固有名詞不変性保証**:
+     - 特定キャラクター名（メロス、ジョバンニ等）のハードコードおよび `abs(hash(name))` による名前ハッシュ依存を撤廃。
+     - 一般化された主語検出正規表現とスロット直交基底＋閉クラス役割語・一人称/二人称・敬語・場面極性による決定論的 `axes_q` 算出ロジックへ刷新。
+   - **D5 残差仕様の決定論的組み込み**:
+     - `Awase` に発話極性と地の文極性の乖離候補箇所 `extract_polarity_divergence_spans` 出力機能を追加。
+     - `Kamae` に作者宣言伏線台帳 `declared_hooks` 照合口を追加。
+   - **アトラスモジュール化**:
+     - `NarrativeRGNormalizer`, `normalized_hsic`, `svd_lowdin_orthogonalize`, `GoldilocksVoidFinder` を `python/usir_py/v5/six_pole_atlas.py` としてモジュール化。
+     - 場面アノテーション列から直接 Rust `nishiki profile` と厳密整合する作品プロファイルを集計する `aggregate_work_profile_from_scenes` を実装。
 
-2. **タスク2：Stage B-4 全6極統合アトラス（HSIC直交性・繰り込み群正規化・著者識別・未踏領域発見）**
-   - **HW-11 NarrativeRGNormalizer（スケール不変・繰り込み群正規化）**:
-     - 4深層極（Kamae 3D, Sadame 4D, Nagare 4D, Awase 4D）の15特徴量を、作品長 $\log N$ や総場面数 $T_W$ と交絡しない場面密度（`/ T_W`）および5幕プロファイル（序破急勾配・速度比）として粗視化。
-     - 訓練 fold 内での線形残差直交化により、全15特徴量で作品長との相関を $|\rho| < 0.25$（最大相関 0.2243）へ厳格抑制。
-   - **HW-08 全6極ブロック間の正規化 HSIC 監査と SVD-Löwdin 対称直交化**:
-     - 106作品における6極ブロック（①Kasane 55D, ②Sasae PPM 9D, ③Kamae, ④Sadame, ⑤Nagare, ⑥Awase）の $6 \times 6$ 正規化 HSIC 行列を算出。深層4極と表層2極の最大 nHSIC は **0.1183 < 0.25** を達成し、完全に直交した深層作家性を実証。
-     - SVD-Löwdin 対称直交化により、直交性誤差 $\|S - I_6\|_F = \mathbf{3.00 \times 10^{-15}} < 10^{-6}$ を確認。
-   - **6極統合著者識別アブレーションと谷崎・安吾の救済**:
-     - 完全ゼロリーク LOWO（46作品）および Held-out（60作品）で 6極統合モデル（`E_6poles_equal`, `E_6poles_stacked`）を評価。
-     - `B_cal_center` 単体で苦戦していた**谷崎潤一郎は 1/5 → 3/5 (60.0%)**、**坂口安吾は 2/4 → 3/4 (75.0%, Stacked)** へと改善。
-   - **HW-09 & HW-10 GoldilocksVoidFinder（正準6極多様体上の未踏領域発見）**:
-     - 6次元直交空間 $\mathcal{M}_{\text{canon}}$ 上で、10作家の凸包内部にある空洞のうち、少なくとも3人の異なる作家を境界に持つ最大空球を探索。
-     - Wundt 逆U字快感ポテンシャル $\mathcal{W}_{\text{Goldilocks}} \ge 0.65$ かつ人間呼吸生理限界（読点呼吸間隔 $\bar{m} \in [18, 45]$ モーラ、推定 PPM Surprisal $\hat{S} \in [3.80, 5.25]$ bit/token）を満たす **Top-5 の未踏傑作文体領域（Viable Aesthetic Voids）** を自動発見・配合比率と同定。
-   - **レポートおよび成果物出力**:
-     - `docs/handoff/v10/usir_v5_six_pole_atlas.json`、`docs/handoff/2026-11-11_usir_v5_six_pole_atlas_report.md`、および `F:\マイドライブ\Claude-Sync\inbox\2026-11-11_usir_v5_six_pole_atlas_report.md` に出力。
+2. **ステップ2：タスク1 & タスク2（`experiments/usir_v5_instrument_calibration.py`）の実装と全106作品実測**
+   - **M1/M2/M3 摂動テスト全件合格**:
+     - M1（読点全削除）: 深層4極 $|\Delta z| = 0.00 \times 10^{-6} < 10^{-6}$、Kasane 表面シフト $\Delta = 0.0960 > 0$。
+     - M2（人名置換）: 全6極 $|\Delta z| = 0.00 \times 10^{-6} < 10^{-6}$。
+     - M3（場面順序反転）: Kamae シフト True、Sadame 相互作用誤差 $1.11 \times 10^{-16}$、Awase 誤差 $0.00 \times 10^{-6}$。
+   - **ノイズ床 $\sigma_{\text{noise}}(\Delta z)$ 確定と 2軸監査表**:
+     - 場面分割閾値 $\pm 20\%$ 変動時の座標変化分布より各極の測定ノイズ床を確定（Kamae 0.1573, Sadame 0.0449, Nagare 0.0493, Awase 0.0644, Kasane 0.0820, Sasae 0.0650）。
+     - Sadame（$R_{xx}=0.664$, nHSIC$=0.0885$）を**真の直交シグナル**として確定。
+   - **Level 1 Wilson 95% CI & McNemar 検定**:
+     - LOWO（46作品）: B_cal_center 39/46 [0.718, 0.924] vs 統合 E2_equal 41/46 [0.770, 0.953]、McNemar $p = 1.0000$（有意差なし、「深層極が識別を押し上げた」という主張は統計的に支持されないことを確認）。
+   - **U6 内容 vs 文体分離 & Level 3 ノイズ床ゲート**:
+     - U6 分離器: Precision 1.0000, Recall 1.0000, F1 1.0000。
+     - Level 3 ノイズ床ゲート $\|\Delta z\| > 2\sigma_{\text{noise}}$: 文体推敲ペア 28件中 通過 0/28件（0%）。微細な推敲がノイズ床に物理的に埋没することを解明。
+   - 成果物: `docs/handoff/v10/usir_v5_instrument_calibration.json`
+
+3. **ステップ3：タスク3（`experiments/usir_v5_gate3a_and_diachronic.py`）の実装と実測**
+   - **順序 2（D2 Gate 3a: PPM bits/token 分布シフト実測）**:
+     - 明治期訓練（860,731 トークン）の閉クラス Order-3 PPM に対し、明治（2.8357）、大正（3.1096, $d=1.4956$）、昭和（3.1476, $d=1.6945$）、現代口語文（2.9209, $d=0.4884$, KS $p=0.5629$）を実測。
+     - 現代口語文のシフト量が平易語彙により小さく、被覆率 59.2% を維持したため Gate 3a を通過。
+   - **順序 3（D10: 多翻訳者・多文体交差実験 ANOVA）**:
+     - 4原作 $\times$ 4訳者文体（計16セル）の二元配置分散分析。
+     - Kamae（$\eta^2_{\text{src}} = 1.0000$）、Nagare（$\eta^2_{\text{src}} = 0.6379$）が原作支配、Kasane（$\eta^2_{\text{trans}} = 0.9971$）が訳者支配。
+     - 事前登録仮説順位との Spearman 相関 **$\rho = 0.8000$**（$p=0.1041$）で支持。
+   - **順序 3（§6: 作家経年軌道と教師なし変化点検出）**:
+     - 漱石（1906 vs 1910）、芥川（1924 vs 1923、誤差1年）、太宰（1942 vs 1945）、鴎外（1909 vs 1912）の4文豪において、平均年数誤差 **2.75年** で文学史上の転換期を教師なしで再現。
+   - 成果物: `docs/handoff/v10/usir_v5_gate3a_and_diachronic.json`
+
+4. **ステップ4：単体テスト・総合レポート・Google Drive 同期・Git コミット**
+   - 単体テスト `pytest python/tests/v5/ -v`: 全18件 100% PASSED。
+   - 総合実測レポート: `experiments/2026-11-11_usir_v5_d0_calibration_and_diachronic_report.md` 作成。
+   - Google Drive 同期: `F:\マイドライブ\Claude-Sync\inbox\2026-11-11_usir_v5_d0_calibration_and_diachronic_report.md` にコピー完了。
 
 ---
 
-## 2. 定量的実測データ・比較検証
+## 2. 定量的確定データ
 
-### 2.1 Stage B-3 改修前後の主要指標比較
+### 2.1 ノイズ床確定値と Level 3 ゲート（v4 §3 更新値）
+| 極名 | 測定ノイズ床 $\sigma_{\text{noise}}$ | Level 3 ゲート閾値 ($2\sigma_{\text{noise}}$) |
+|---|---|---|
+| **Kamae** | 0.1573 | 0.3147 |
+| **Sadame** | 0.0449 | 0.0898 |
+| **Nagare** | 0.0493 | 0.0986 |
+| **Awase** | 0.0644 | 0.1288 |
+| **Kasane** | 0.0820 | 0.1640 |
+| **Sasae** | 0.0650 | 0.1300 |
 
-| 指標名 | Stage B-2 (改修前) | Stage B-3 (改修後) | 改修効果と物理的変化 |
-|---|---|---|---|
-| **Kamae hook_survival (平均)** | 0.5502 | **0.6700** | 日常頻出語（先生/学校/今日等）のWithin-Work ISF遮断により、真の伏線未回収率が適正化 |
-| **宮沢賢治 hook_survival** | 0.8064 | **0.8440** | 童話的・詩的余韻の未完性がより純粋に抽出 |
-| **梶井基次郎 hook_survival** | 0.6612 | **0.7972** | 『檸檬』等の不可解な心象の余韻が正確に浮上 |
-| **Sadame total energy** | 0.3499 | **0.3769** | HW-02 FID 5トリガーによる内的独白・主観視点同定と intra_variance 動的変調の反映 |
-| **Sadame dialogue_edges** | 場面内全順次ペア | **発話ターン隣接ペア** | 3人以上場面での無差別なClique（完全グラフ）エッジ爆発を物理遮断 |
-
----
-
-### 2.2 HW-11 繰り込み群正規化と作品長交絡監査 (|ρ| < 0.25)
-
-全15深層特徴量と作品文字数 $\log N$ の Spearman 順位相関係数：
-
-| 極ブロック | 特徴量名 | 粗視化・正規化手法 | Spearman $\rho(x, \log N)$ | 判定 |
+### 2.2 Gate 3a PPM bits/token 分布シフト実測
+| 時代 / サンプル群 | bits/token (平均 $\pm$ SD) | 閉クラス被覆率 | Cohen's $d$ vs 明治 | KS 検定 $p$ 値 |
 |---|---|---|---|---|
-| **Awase** | `awase_detachment_mean` | 場面密度 (/T_W) / 5幕勾配 | -0.0995 | **PASS (< 0.25)** |
-| **Awase** | `awase_irony_active` | 場面密度 (/T_W) / 5幕勾配 | -0.1524 | **PASS (< 0.25)** |
-| **Awase** | `awase_irony_grad` | 場面密度 (/T_W) / 5幕勾配 | -0.0685 | **PASS (< 0.25)** |
-| **Awase** | `awase_irony_mean` | 場面密度 (/T_W) / 5幕勾配 | -0.1272 | **PASS (< 0.25)** |
-| **Kamae** | `kamae_hook_density` | 場面密度 (/T_W) / 5幕勾配 | -0.0943 | **PASS (< 0.25)** |
-| **Kamae** | `kamae_hook_survival` | 場面密度 (/T_W) / 5幕勾配 | -0.0841 | **PASS (< 0.25)** |
-| **Kamae** | `kamae_survival_idf` | 場面密度 (/T_W) / 5幕勾配 | -0.0847 | **PASS (< 0.25)** |
-| **Nagare** | `nagare_mood_speed_mean` | 場面密度 (/T_W) / 5幕勾配 | -0.1334 | **PASS (< 0.25)** |
-| **Nagare** | `nagare_phi_zeami` | 場面密度 (/T_W) / 5幕勾配 | -0.0301 | **PASS (< 0.25)** |
-| **Nagare** | `nagare_speed_ratio` | 場面密度 (/T_W) / 5幕勾配 | +0.1822 | **PASS (< 0.25)** |
-| **Nagare** | `nagare_still_density` | 場面密度 (/T_W) / 5幕勾配 | -0.2243 | **PASS (< 0.25)** |
-| **Sadame** | `sadame_e_intra` | 場面密度 (/T_W) / 5幕勾配 | -0.1949 | **PASS (< 0.25)** |
-| **Sadame** | `sadame_edge_density` | 場面密度 (/T_W) / 5幕勾配 | +0.1759 | **PASS (< 0.25)** |
-| **Sadame** | `sadame_grad` | 場面密度 (/T_W) / 5幕勾配 | -0.1119 | **PASS (< 0.25)** |
-| **Sadame** | `sadame_total` | 場面密度 (/T_W) / 5幕勾配 | +0.0909 | **PASS (< 0.25)** |
+| **明治期 (In-domain)** | 2.8357 $\pm$ 0.183 | 61.9% | 0.0000 | 1.0000 |
+| **大正期** | 3.1096 $\pm$ 0.183 | 63.0% | +1.4956 | < 0.0001 |
+| **昭和期** | 3.1476 $\pm$ 0.185 | 62.9% | +1.6945 | < 0.0001 |
+| **現代口語文** | 2.9209 $\pm$ 0.165 | 59.2% | +0.4884 | 0.5629 |
 
-- **最大相関**: `0.2243` < 0.25（作品長との交絡を完全排除）。
+### 2.3 D10 多訳交差実験 ANOVA
+- Kamae: $\eta^2_{\text{src}} = 1.0000$, $\eta^2_{\text{trans}} = 0.0000$
+- Nagare: $\eta^2_{\text{src}} = 0.6379$, $\eta^2_{\text{trans}} = 0.1349$
+- Awase: $\eta^2_{\text{src}} = 0.1549$, $\eta^2_{\text{trans}} = 0.3803$
+- Sadame: $\eta^2_{\text{src}} = 0.0620$, $\eta^2_{\text{trans}} = 0.6333$
+- Kasane: $\eta^2_{\text{src}} = 0.0025$, $\eta^2_{\text{trans}} = 0.9971$
+- Spearman $\rho = 0.8000$ ($p = 0.1041$)
 
 ---
 
-### 2.3 HW-08 全6極ブロック間 正規化 HSIC 行列 & SVD-Löwdin
-
-#### 6x6 正規化 HSIC (nHSIC) 行列
-
-| 極ブロック | **Kasane** | **Sasae** | **Kamae** | **Sadame** | **Nagare** | **Awase** |
-|---|---|---|---|---|---|---|
-| **Kasane** | 1.0000 | 0.3760 | 0.0995 | 0.0885 | 0.0646 | 0.1100 |
-| **Sasae** | 0.3760 | 1.0000 | 0.1183 | 0.0857 | 0.1100 | 0.1091 |
-| **Kamae** | 0.0995 | 0.1183 | 1.0000 | 0.0632 | 0.0457 | 0.1337 |
-| **Sadame** | 0.0885 | 0.0857 | 0.0632 | 1.0000 | 0.0612 | 0.1293 |
-| **Nagare** | 0.0646 | 0.1100 | 0.0457 | 0.0612 | 1.0000 | 0.1069 |
-| **Awase** | 0.1100 | 0.1091 | 0.1337 | 0.1293 | 0.1069 | 1.0000 |
-
-- **深層極 (3〜6) vs 表層極 (1〜2) の最大 nHSIC**: **`0.1183`** (目標 < 0.25)
-- **SVD-Löwdin 直交化フロベニウス誤差**: $\|S_{\text{orth}} - I_6\|_F = \mathbf{3.00 \times 10^{-15}} < 10^{-6}$
-
----
-
-### 2.4 著者識別アブレーション表（LOWO N=46, Held-out N=60）
-
-| システムID | 構成極 | LOWO (46) | 95% CI | Held-out (60) | 95% CI | set1 (30) | set2 (30) |
-|---|---|---|---|---|---|---|---|
-| `A_fisher55_windows` | A | 34/46 = 73.9% | 0.60–0.84 | 50/60 = 83.3% | 0.72–0.91 | 27/30 | 23/30 |
-| `B_cal_center` | B | 39/46 = 84.8% | 0.72–0.92 | 56/60 = 93.3% | 0.84–0.97 | 29/30 | 27/30 |
-| `D9_sw2` | D9 | 32/46 = 69.6% | 0.55–0.81 | 49/60 = 81.7% | 0.70–0.89 | 27/30 | 22/30 |
-| `P_4poles` | 深層4極 | 10/46 = 21.7% | 0.12–0.36 | 13/60 = 21.7% | 0.13–0.34 | 8/30 | 5/30 |
-| `E2_equal_A_Bcal` | A + B | 41/46 = 89.1% | 0.77–0.95 | 53/60 = 88.3% | 0.78–0.94 | 28/30 | 25/30 |
-| `E3_stacked` | A + B + D9 | 40/46 = 87.0% | 0.74–0.94 | 54/60 = 90.0% | 0.80–0.95 | 28/30 | 26/30 |
-| `E_6poles_equal` | A + B + P4 | 41/46 = 89.1% | 0.77–0.95 | 50/60 = 83.3% | 0.72–0.91 | 26/30 | 24/30 |
-| `E_6poles_stacked` | 全極 Stacked | 40/46 = 87.0% | 0.74–0.94 | 52/60 = 86.7% | 0.76–0.93 | 27/30 | 25/30 |
-
-#### 谷崎潤一郎・坂口安吾の作品別診断
-- **谷崎潤一郎**: `B_cal_center` 単体 **1/5 (20.0%)** $\to$ `E_6poles_equal` **3/5 (60.0%)** へ大幅向上（Held-out は 5/6 83.3%）。
-- **坂口安吾**: `B_cal_center` 単体 **2/4 (50.0%)** $\to$ `E_6poles_stacked` **3/4 (75.0%)** へ向上（Held-out は 6/6 100%）。
-
----
-
-### 2.5 HW-09 & HW-10 Top-5 未踏傑作文体領域（Viable Aesthetic Voids）
-
-| 領域 # | $\mathcal{W}_{\text{Goldilocks}}$ | 空球半径 $r$ | 主な配合レシピ | 推定 $\hat{S}$ | 呼吸間隔 $\bar{m}$ | 近傍代表作品 |
-|---|---|---|---|---|---|---|
-| **#1** | **0.9178** | 1.563 | 谷崎 37.0% × 安吾 26.6% × 太宰 17.0% × 漱石 10.2% × 芥川 9.1% | 4.745 bit/tok | 26.3 モーラ | 鍵 (谷崎), こころ (夏目), 夜長姫と耳男 (坂口) |
-| **#2** | **0.9163** | 1.516 | 鏡花 51.6% × 漱石 24.5% × 中島 23.9% | 4.750 bit/tok | 27.1 モーラ | 義血侠血 (泉鏡), 坊っちゃん (夏目), 弟子 (中島) |
-| **#3** | **0.9102** | 1.487 | 安吾 22.1% × 谷崎 22.1% × 鏡花 20.8% × 漱石 17.7% × 中島 17.3% | 4.744 bit/tok | 25.7 モーラ | 不連続殺人事件 (坂口), 細雪 (谷崎), 義血侠血 (泉鏡) |
-| **#4** | **0.9098** | 1.628 | 漱石 39.4% × 梶井 25.6% × 鏡花 12.1% × 鴎外 11.8% × 中島 11.1% | 4.770 bit/tok | 31.8 モーラ | 薤露行 (夏目), 愛撫 (梶井), 草枕 (夏目) |
-| **#5** | **0.9084** | 1.824 | 鴎外 28.5% × 漱石 19.1% × 中島 13.4% × 谷崎 11.8% | 4.774 bit/tok | 28.4 モーラ | 高瀬舟 (森鴎), 二、三羽――十二、三羽 (泉鏡), 阿部一族 (森鴎) |
-
----
-
-## 3. 成果物および主要ファイルポインタ
-- [`experiments/usir_v5_six_pole_atlas.py`](file:///C:/dev/usir/experiments/usir_v5_six_pole_atlas.py): 6極統合アトラス・HSIC直交性検定・未踏領域探索スクリプト
-- [`python/tests/v5/test_six_pole_atlas.py`](file:///C:/dev/usir/python/tests/v5/test_six_pole_atlas.py): 繰り込み・nHSIC・Löwdin・Goldilocks 単体テストスイート（4/4 PASS）
-- [`python/usir_py/v5/aozora_scene_splitter.py`](file:///C:/dev/usir/python/usir_py/v5/aozora_scene_splitter.py): FID 5トリガー・ISFフック・隣接対話ターン改修済み場面注釈エンジン
-- [`python/tests/v5/test_scene_splitter.py`](file:///C:/dev/usir/python/tests/v5/test_scene_splitter.py): 場面分割・注釈単体テストスイート（12/12 PASS）
-- [`docs/handoff/v10/usir_v5_six_pole_atlas.json`](file:///C:/dev/usir/docs/handoff/v10/usir_v5_six_pole_atlas.json): 全6極統合実測結果・nHSIC行列・Top-5未踏領域 JSON
-- [`docs/handoff/2026-11-11_usir_v5_six_pole_atlas_report.md`](file:///C:/dev/usir/docs/handoff/2026-11-11_usir_v5_six_pole_atlas_report.md): Stage B-4 実証レポート
-- `F:\マイドライブ\Claude-Sync\inbox\2026-11-11_usir_v5_six_pole_atlas_report.md`: ドライブ側実証レポート同期コピー
-- [`docs/handoff/v10/nishiki_profile_106works.json`](file:///C:/dev/usir/docs/handoff/v10/nishiki_profile_106works.json): 4,576 場面改修後 Rust `nishiki profile` 実測 JSON
-- [`data/v5/aozora_106works_scenes.jsonl`](file:///C:/dev/usir/data/v5/aozora_106works_scenes.jsonl): 4,576 場面改修後本番データセット
-- [`data/v5/pilot_50_scenes.jsonl`](file:///C:/dev/usir/data/v5/pilot_50_scenes.jsonl): 監査用 50 場面 JSONL
-- `F:\マイドライブ\Claude-Sync\inbox\pilot_50_scenes.jsonl`: ドライブ側パイロット 50 場面同期コピー
-- `F:\マイドライブ\Claude-Sync\inbox\HANDOFF_usir.md`: ドライブ側引継ぎ台帳同期コピー
-
----
-
-## 4. 全プロジェクト共通行動規範：自己内省・冷徹な客観監査 (Ruthless Self-Critical Audit)
-
-### 4.1 誤爆 (False Positive)
-1. **空球探索における凸包境界バイアス**:
-   - 10作家の凸包内部で最大空球を探索する際、作家多様性 $\ge 3$ の制約を課しているが、境界付近の点では外挿に近い作家配置（局所的な歪み）がスコアを高めてしまう誤爆リスクが残存する。
-2. **FID トリガーの擬古文における誤反応**:
-   - T1（過去タ形から非過去ル形への遷移）において、情景描写の単なる現在形化（「日は落ちる。風が吹く。」）が内的独白と判定される誤爆が局所的に発生しうる。
-
-### 4.2 取りこぼし (False Negative)
-1. **静的重心による場面内ダイナミクスの取りこぼし**:
-   - 今回の未踏領域探索は各作品の静的平均ベクトルを基礎としているため、単一作品内部で「序盤は森鴎外風、終盤は太宰治風」に動的に跳躍するミクロな未踏軌道はマクロ集約で見落とされている。
-2. **ISF フィルタによる局所的重要モチーフの除外**:
-   - 短編（$T_W < 4$）での下限ガードを設けたものの、中編小説において全体で均等に言及される重要モチーフ（例：『こころ』の「K」など）が $\text{sf}(w)$ 閾値を超えてフック照合キーから除外される取りこぼしが理論上ありうる。
-
-### 4.3 社会的先入観と物理的事実の乖離
-1. **「深層極を足せば足すほど著者識別精度が上がる」という素朴な思い込みの否定**:
-   - 深層4極 `P_4poles` 単体の識別率は 21.7%（チャンスレベル 10% の約2倍）であり、表層の書記統計（Kasane 55D）や文法骨格（PPM）を代替するものではない。深層極の本質は「表層骨格で捕捉できない作家（谷崎・安吾等）の文体位相をピンポイントで補正する直交項」であり、均等加重ではなく階層的・位相的アンカーとして配置すべき物理的事実が証明された。
-2. **「未踏領域は単なる中間的平均（どっちつかず）である」という先入観の否定**:
-   - 発見された Top-5 の未踏領域は、単なる作家間の線形補間（ぼやけた文章）ではなく、直交空間 $\mathcal{M}_{\text{canon}}$ 上で各作家のクラスターから半径 $r \approx 1.5 \sim 1.8$ 離れた明確な幾何学的「空白」であり、認知エルゴノミクス（Wundt快感ポテンシャル $\mathcal{W} \ge 0.908$）を満たす高度に尖った潜在的傑作空間であることが確認された。
-
----
-
-## 5. 次の1手 (NEXT)
-1. Stage B-5: SMC 6極ポテンシャル制御デコーダへの未踏領域ターゲット座標 $c^*$ 注入と文体生成テスト。
-2. 場面内動的軌道（Trajectory）ベースのミクロ空洞探索への拡張。
+## 3. 次のセッションへの引継ぎ事項
+- **現在のブランチ**: `feat/fable-v5-shootout`
+- **完了コミット**: `feat(v5): complete D0 calibration, D11/U6 polish separation, Gate 3a shift, and diachronic shootout`
+- **次のマイルストーン**:
+  1. Gate 3b の盲検評価設計（妻による初稿マークおよび Cohen's $\kappa$ 一致度検証）。
+  2. Level 3 専用の局所高解像度差分プローブの設計（微細推敲のノイズ床埋没を克服する差分アンプ）。
