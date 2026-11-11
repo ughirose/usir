@@ -27,6 +27,7 @@ Rust side: C:/dev/nishiki, `cargo build --release -p nishiki-hardcore-cli`.
 
 Usage:  cd python && uv run python ../experiments/fable_v5_grand_shootout.py [--reuse]
 Output: docs/handoff/v10/fable_v5_grand_shootout.json, docs/handoff/v10/fable_v5_grand_shootout_tables.md
+        docs/handoff/v10/fable_v5_followup.json, docs/handoff/v10/fable_v5_followup_tables.md (follow-up)
 """
 from __future__ import annotations
 
@@ -246,6 +247,235 @@ def ensemble(parts, works, aids):
     return pack(res["lowo"], res["heldout"], works, aids)
 
 
+# ---- follow-up (2026-11-11, second run): three targeted corrections, system C dropped ------------------------
+# Fixed before this run:
+#   B_core / B_collapsed   skeleton with symbols collapsed (core: keep the six marks 、。！？「」; collapsed: one <SYM>)
+#   B_cal_center           H(X||M_a) - mu_a,  mu_a = mean of H(w||M_a) over the fold's training works NOT by a
+#   B_cal_z                (H - mu_a) / sd_a  with the same training works
+#   B_equalized            every author model trained on the same number of tokens (the fold's smallest author)
+#   D9_*                   sliced W2 after projecting windows with the fold's own Fisher (55 -> 9), K = 128
+#   E3_equal               z-sum of A, B_cal_center, D9_sw2_author_pool (no learned weights)
+#   E3_stacked             non-negative weights of the same three, fitted by conditional logit on the
+#                          leave-one-out scores of the fold's training works (nested: both the outer test
+#                          work and the inner work are excluded from every model that scores the inner work)
+STACK_L2 = 0.01
+FOLLOWUP_OUT = OUT_DIR / "fable_v5_followup.json"
+FOLLOWUP_TABLES = OUT_DIR / "fable_v5_followup_tables.md"
+SOSEKI, KAJII, AKUTAGAWA = "000148", "000074", "000879"
+
+
+def followup(works, X, aids, labels, systems, reuse):
+    from scipy.optimize import minimize
+
+    t0 = time.time()
+    train = [w for w in works if w["split"] == "train"]
+    held = [w for w in works if w["split"] != "train"]
+    author_of = {w["id"]: w["author_id"] for w in works}
+    train_ids = [w["id"] for w in train]
+    held_ids = [w["id"] for w in held]
+
+    ppm = run_rust("ppm-table", {
+        "works": [{"id": w["id"], "path": str(w["path"]), "author": w["author_id"],
+                   "split": "train" if w["split"] == "train" else "heldout"} for w in works],
+        "ppm_order": PPM_ORDER, "modes": ["surface", "core", "collapsed"], "double_loo": ["surface"],
+    }, "ppm_table", reuse)["modes"]
+
+    def ppm_fold(mode, q, excl):
+        """Scores of work q under the models trained on train minus excl.  Returns H, mu, sd per author."""
+        table = ppm[mode]["table"]
+        H, mu, sd = {}, {}, {}
+        for a in aids:
+            row = table[a + "|" + ";".join(sorted(i for i in excl if author_of[i] == a))]
+            H[a] = row[q]
+            cal = [row[w] for w in train_ids if w not in excl and author_of[w] != a]
+            mu[a], sd[a] = float(np.mean(cal)), float(np.std(cal))
+        return H, mu, sd
+
+    def b_scores(mode, kind, q, excl):
+        H, mu, sd = ppm_fold(mode, q, excl)
+        if kind == "plain":
+            return {a: -H[a] for a in aids}
+        if kind == "center":
+            return {a: -(H[a] - mu[a]) for a in aids}
+        return {a: -(H[a] - mu[a]) / sd[a] for a in aids}
+
+    def b_system(mode, kind):
+        lo = [{"id": t, "author": author_of[t], "scores": b_scores(mode, kind, t, {t})} for t in train_ids]
+        ho = [{"id": h, "author": author_of[h], "scores": b_scores(mode, kind, h, set())} for h in held_ids]
+        return pack(lo, ho, works, aids)
+
+    fu = {"A_fisher55_windows": systems["A_fisher55_windows"], "B_ppm_skeleton": systems["B_ppm_skeleton"]}
+    chk = b_system("surface", "plain")
+    assert chk["lowo"]["n_correct"] == fu["B_ppm_skeleton"]["lowo"]["n_correct"]
+    assert chk["heldout"]["n_correct"] == fu["B_ppm_skeleton"]["heldout"]["n_correct"]
+    fu["B_core"] = b_system("core", "plain")
+    fu["B_collapsed"] = b_system("collapsed", "plain")
+    fu["B_cal_center"] = b_system("surface", "center")
+    fu["B_cal_z"] = b_system("surface", "z")
+    fu["B_collapsed_cal_center"] = b_system("collapsed", "center")
+
+    def eq_rows(ids, fold_of):
+        return [{"id": i, "author": author_of[i],
+                 "scores": {a: -ppm["surface"]["equalized"][fold_of(i)]["h"][i][a] for a in aids}} for i in ids]
+    fu["B_equalized"] = pack(eq_rows(train_ids, lambda i: "lowo:" + i), eq_rows(held_ids, lambda i: "heldout"), works, aids)
+
+    def fold_name(excl):
+        return "|".join(sorted(excl)) or "heldout"
+
+    # Fisher models per training set (train minus excl); excl has 0, 1 or 2 works.
+    folds, a_scores = [], {}          # a_scores[(fold name, q)] = scores
+
+    def add_fold(excl, queries):
+        m = fit_fisher({a: np.concatenate([X[i] for i in train_ids if i not in excl and author_of[i] == a])
+                        for a in aids}, reg=REG)
+        for q in queries:
+            a_scores[(fold_name(excl), q)] = m.scores(X[q])
+        folds.append({"name": fold_name(excl), "train": [i for i in train_ids if i not in excl], "query": list(queries),
+                      "projection": {"center": m.center.tolist(), "scale": m.scale.tolist(), "W": m.W.tolist()}})
+
+    add_fold(set(), held_ids)
+    for t in train_ids:
+        add_fold({t}, [t])
+    for i, t in enumerate(train_ids):
+        for w in train_ids[i + 1:]:
+            add_fold({t, w}, [t, w])
+    print("fisher fits:", len(folds), "(%.0fs)" % (time.time() - t0))
+    sw_out = run_rust("sw2", {"clouds": [{"id": w["id"], "author": w["author_id"], "points": X[w["id"]].tolist()}
+                                         for w in works], "folds": folds, "k": SW_K, "seed": SEED}, "sw2_fisher9", reuse)
+    d9 = {(r["fold"], r["query"]): r for r in sw_out}
+
+    def d9_scores(q, excl, mode="pool"):
+        r = d9[(fold_name(excl), q)]
+        if mode == "pool":
+            return {a: -r["to_author_pool"][a] for a in aids}
+        return {a: -min(d for k, d in r["to_work"].items() if author_of[k] == a) for a in aids}
+
+    for mode, name in (("pool", "D9_sw2_author_pool"), ("work", "D9_sw2_nearest_work")):
+        fu[name] = pack([{"id": t, "author": author_of[t], "scores": d9_scores(t, {t}, mode)} for t in train_ids],
+                        [{"id": h, "author": author_of[h], "scores": d9_scores(h, set(), mode)} for h in held_ids],
+                        works, aids)
+    # sanity: the per-fold Fisher scores reproduce system A
+    chkA = pack([{"id": t, "author": author_of[t], "scores": a_scores[(fold_name({t}), t)]} for t in train_ids],
+                [{"id": h, "author": author_of[h], "scores": a_scores[("heldout", h)]} for h in held_ids], works, aids)
+    assert (chkA["lowo"]["n_correct"], chkA["heldout"]["n_correct"]) == (
+        fu["A_fisher55_windows"]["lowo"]["n_correct"], fu["A_fisher55_windows"]["heldout"]["n_correct"])
+
+    def triple(q, excl):
+        """z-scored author scores of the three base systems for work q, models trained on train minus excl."""
+        return [zscore_scores(a_scores[(fold_name(excl), q)]), zscore_scores(b_scores("surface", "center", q, excl)),
+                zscore_scores(d9_scores(q, excl))]
+
+    def fit_weights(samples):
+        """samples: list of (triple, true author).  Non-negative conditional-logit weights."""
+        Z = np.array([[[z[a] for a in aids] for z in tr] for tr, _ in samples])   # (n, 3, 10)
+        y = np.array([aids.index(a) for _, a in samples])
+
+        def nll(wv):
+            logits = np.tensordot(wv, Z, axes=(0, 1))                                  # (n, 10)
+            logits = logits - logits.max(axis=1, keepdims=True)
+            lp = logits[np.arange(len(y)), y] - np.log(np.exp(logits).sum(axis=1))
+            return -lp.sum() + STACK_L2 * float(np.sum(wv ** 2))
+        return minimize(nll, np.ones(3), method="L-BFGS-B", bounds=[(0, None)] * 3).x
+
+    def combine(tr, wv):
+        return {a: float(sum(wk * z[a] for wk, z in zip(wv, tr))) for a in aids}
+
+    def fixed(wv):
+        return pack([{"id": t, "author": author_of[t], "scores": combine(triple(t, {t}), wv)} for t in train_ids],
+                    [{"id": h, "author": author_of[h], "scores": combine(triple(h, set()), wv)} for h in held_ids],
+                    works, aids)
+
+    fu["E3_equal_A_Bcal_D9"] = fixed(np.array([1.0, 1.0, 1.0]))
+    fu["E2_equal_A_Bcal"] = fixed(np.array([1.0, 1.0, 0.0]))
+    fu["E2_equal_A_D9"] = fixed(np.array([1.0, 0.0, 1.0]))
+    fu["E2_equal_Bcal_D9"] = fixed(np.array([0.0, 1.0, 1.0]))
+    # stacking: LOWO uses double exclusion for the inner scores, held-out uses the plain LOWO scores of the 46
+    st_lo, weights_lowo = [], []
+    for t in train_ids:
+        wv = fit_weights([(triple(w, {t, w}), author_of[w]) for w in train_ids if w != t])
+        weights_lowo.append(wv)
+        st_lo.append({"id": t, "author": author_of[t], "scores": combine(triple(t, {t}), wv)})
+    w_held = fit_weights([(triple(w, {w}), author_of[w]) for w in train_ids])
+    st_ho = [{"id": h, "author": author_of[h], "scores": combine(triple(h, set()), w_held)} for h in held_ids]
+    fu["E3_stacked_A_Bcal_D9"] = pack(st_lo, st_ho, works, aids)
+    WL = np.array(weights_lowo)
+
+    def absorbed(sysres):
+        """How many works of each non-Soseki author are predicted as Soseki."""
+        res = {}
+        for part in ("lowo", "heldout"):
+            conf = sysres[part]["confusion"]
+            res[part] = {"non_soseki_predicted_soseki": sum(conf[a][SOSEKI] for a in aids if a != SOSEKI),
+                         "kajii": conf[KAJII][SOSEKI], "akutagawa": conf[AKUTAGAWA][SOSEKI],
+                         "soseki_recall": "%d/%d" % (conf[SOSEKI][SOSEKI], sum(conf[SOSEKI].values()))}
+        return res
+
+    tok = {a: int(sum(ppm["surface"]["tokens"][i] for i in train_ids if author_of[i] == a)) for a in aids}
+    _, mu_full, sd_full = ppm_fold("surface", held_ids[0], set())
+    out = {
+        "schema": "fable_v5_followup_v1",
+        "protocol": {"stack_l2": STACK_L2, "ppm_order": PPM_ORDER, "sw_k": SW_K, "seed": SEED, "reg": REG,
+                     "n_sw2_folds": len(folds)},
+        "labels": labels,
+        "skeleton_vocab": {m: ppm[m]["vocab"] for m in ppm},
+        "equalized_n_min_heldout": ppm["surface"]["equalized"]["heldout"]["n_min"],
+        "train_tokens_by_author": tok,
+        "calibration_full_models": {a: {"mu": round(mu_full[a], 4), "sd": round(sd_full[a], 4)} for a in aids},
+        "stack_weights": {"order": ["A", "B_cal_center", "D9_sw2_author_pool"],
+                          "heldout": [round(float(x), 4) for x in w_held],
+                          "lowo_mean": [round(float(x), 4) for x in WL.mean(axis=0)],
+                          "lowo_min": [round(float(x), 4) for x in WL.min(axis=0)],
+                          "lowo_max": [round(float(x), 4) for x in WL.max(axis=0)]},
+        "systems": {k: {p: v[p] for p in ("lowo", "heldout", "heldout1", "heldout2")} for k, v in fu.items()},
+        "soseki_absorption": {k: absorbed(v) for k, v in fu.items() if k.startswith("B_")},
+        "elapsed_sec": round(time.time() - t0, 1),
+    }
+    FOLLOWUP_OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    L = ["| system | LOWO (46) | 95% CI | held-out (60) | 95% CI | set1 (30) | set2 (30) |", "|---|---|---|---|---|---|---|"]
+    for k, v in out["systems"].items():
+        lo, ho = v["lowo"], v["heldout"]
+        L.append("| %s | %d/%d = %.3f | %.2f–%.2f | %d/%d = %.3f | %.2f–%.2f | %d/%d | %d/%d |" % (
+            k, lo["n_correct"], lo["n"], lo["accuracy"], lo["wilson95"][0], lo["wilson95"][1],
+            ho["n_correct"], ho["n"], ho["accuracy"], ho["wilson95"][0], ho["wilson95"][1],
+            v["heldout1"]["n_correct"], v["heldout1"]["n"], v["heldout2"]["n_correct"], v["heldout2"]["n"]))
+    L += ["", "### absorption into Soseki (system B variants)", "",
+          "| system | LOWO: non-Soseki works predicted Soseki (of 41) | Kajii to Soseki (of 5) | Akutagawa to Soseki (of 5) "
+          "| Soseki recall | held-out: non-Soseki predicted Soseki (of 54) | Kajii to Soseki (of 6) "
+          "| Akutagawa to Soseki (of 6) | Soseki recall |",
+          "|---|---|---|---|---|---|---|---|---|"]
+    for k, v in out["soseki_absorption"].items():
+        lo, ho = v["lowo"], v["heldout"]
+        L.append("| %s | %d | %d | %d | %s | %d | %d | %d | %s |" % (
+            k, lo["non_soseki_predicted_soseki"], lo["kajii"], lo["akutagawa"], lo["soseki_recall"],
+            ho["non_soseki_predicted_soseki"], ho["kajii"], ho["akutagawa"], ho["soseki_recall"]))
+    L += ["", "### training tokens and calibration offsets (full author models, surface skeleton)", "",
+          "| author | training tokens | mu_a (bit/token; mean cross-entropy of the other authors' training works) | sd_a |",
+          "|---|---|---|---|"]
+    for a in sorted(aids, key=lambda a: tok[a]):
+        L.append("| %s | %d | %.3f | %.3f |" % (labels[a], tok[a], mu_full[a], sd_full[a]))
+    L += ["", "### per author (LOWO / held-out)", "", "| system | " + " | ".join(labels[a] for a in aids) + " |",
+          "|---|" + "---|" * len(aids)]
+    for k, v in out["systems"].items():
+        L.append("| " + k + " | " + " | ".join(v["lowo"]["per_author"][a] + " / " + v["heldout"]["per_author"][a]
+                                               for a in aids) + " |")
+    for k in ("B_collapsed", "B_cal_center", "B_equalized", "D9_sw2_author_pool", "E3_equal_A_Bcal_D9",
+              "E3_stacked_A_Bcal_D9"):
+        for part in ("lowo", "heldout"):
+            conf = out["systems"][k][part]["confusion"]
+            L += ["", "### confusion: %s / %s (rows = truth, columns = predicted)" % (k, part), "",
+                  "| truth / pred | " + " | ".join(labels[a] for a in aids) + " |", "|---|" + "---|" * len(aids)]
+            for a in aids:
+                L.append("| " + labels[a] + " | " + " | ".join(str(conf[a][b]) for b in aids) + " |")
+    FOLLOWUP_TABLES.write_text("\n".join(L) + "\n", encoding="utf-8")
+    print("---- follow-up ----")
+    for k, v in out["systems"].items():
+        print("%-32s LOWO %2d/46  held-out %2d/60 (set1 %d/30, set2 %d/30)" % (
+            k, v["lowo"]["n_correct"], v["heldout"]["n_correct"], v["heldout1"]["n_correct"], v["heldout2"]["n_correct"]))
+    print("stack weights", out["stack_weights"])
+    print("wrote", FOLLOWUP_OUT, "and", FOLLOWUP_TABLES, "(%.1fs)" % out["elapsed_sec"])
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--reuse", action="store_true", help="reuse Rust outputs in experiments/_fable_v5_work if present")
@@ -462,6 +692,7 @@ def main() -> None:
         print(f"{k:32s} LOWO {v['lowo']['n_correct']:2d}/46  held-out {v['heldout']['n_correct']:2d}/60 "
               f"(set1 {v['heldout1']['n_correct']}/30, set2 {v['heldout2']['n_correct']}/30)")
     print("wrote", OUT, "and", TABLES, f"({out['elapsed_sec']}s)")
+    followup(works, X, aids, labels, systems, args.reuse)
 
 
 if __name__ == "__main__":

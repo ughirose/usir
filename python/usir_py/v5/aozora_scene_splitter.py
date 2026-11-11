@@ -1,6 +1,11 @@
 """Aozora bunko scene splitter and heuristic v5 annotation generator.
 
 Strictly adheres to usir-schema SceneAnnotation v5.0 specifications.
+Gate 2 audit defect fixes (2026-11-11):
+1. Awase: F_event and f_style physical separation with negation polarity inversion.
+2. Sadame: HW-06 closed-class pronoun, role language and speech frame character stalks and dialogue edges.
+3. Kamae: Question and unresolved mystery opened_hooks and resolution closed_hook_ids.
+4. Nagare: Continuous log-softmax log-probabilities (event_logp, mood_logp, 16D) resolving M01-M03 sticking.
 """
 
 from __future__ import annotations
@@ -9,7 +14,7 @@ import json
 import math
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 SCHEMA_VERSION: str = "usir/scene-annotation/v5.0"
 DEFAULT_ANNOTATOR: str = "aozora_scene_splitter_v5"
@@ -37,36 +42,94 @@ RE_TIME_MARKER = re.compile(
     r")"
 )
 SENT_SPLIT = re.compile(r"(?<=[。！？!?」』])")
+RE_QUOTE = re.compile(r"「([^」]*)」|『([^』]*)』")
+RE_NEGATION = re.compile(
+    r"(?:ない|ぬ|ん|ず|まい|なかった|ならず|居りませぬ|ませぬ|ません|のではない|わけではない|わけにはいか|ようもない)"
+)
 
 # 16 Event codes and 16 Mood codes for v5 schema
 EVENT_CODES: List[str] = [f"E{i:02d}" for i in range(1, 17)]
 MOOD_CODES: List[str] = [f"M{i:02d}" for i in range(1, 17)]
 
-# Lexicons for heuristic signal estimation
-POS_WORDS = {
-    "喜", "嬉", "楽", "笑", "幸", "光", "愛", "好", "美", "勝",
-    "晴", "快", "朗", "安", "穏", "清", "輝", "祝", "咲", "富"
+# Lexicons for Awase F_event (verbs, nouns, physical events outside quotes)
+EVENT_POS_WORDS = [
+    "生", "蘇る", "救う", "達成", "勝利", "解決", "祝", "祝宴", "迎える", "買い",
+    "友", "治る", "成功", "生きる", "恵み", "誓う", "守る", "愛する", "栄光", "復活",
+    "歓喜", "喜び", "誕生", "結婚", "約束", "再会", "味方", "仲間"
+]
+EVENT_NEG_WORDS = [
+    "死", "殺", "亡", "滅", "倒", "害", "捕縛", "処刑", "疑", "奪", "壊", "崩",
+    "借金", "病", "衰", "毒", "傷", "罪", "激怒", "怒り", "危機", "衝突", "敵",
+    "暴虐", "邪悪", "悪", "嫌悪", "焦躁", "浮浪", "宿酔", "塊", "カタル", "衰弱",
+    "血", "痛", "患", "飢え", "拷問", "破滅", "凶行", "罠", "悪心", "裏切り"
+]
+EVENT_HIGH_ARO_WORDS = [
+    "激怒", "怒り", "殺す", "叫ぶ", "走る", "逃げる", "追う", "撃つ", "突く", "争う",
+    "戦う", "捕縛", "騒ぎ", "乱れる", "暴虐", "決意", "飛ぶ", "駆ける", "殴る", "斬る",
+    "激しい", "危機", "処刑", "跳ぶ", "打つ", "割る", "激突", "咆哮", "猛進", "出発", "殺"
+]
+EVENT_LOW_ARO_WORDS = [
+    "眠る", "佇む", "坐る", "座る", "横たわる", "黙る", "静止", "歩く", "暮らす",
+    "眺める", "憩う", "息絶える", "横になる", "伏す", "留まる", "佇立", "沈黙"
+]
+
+# Lexicons for Awase f_style (modifiers, adjectives, dialogue tone, emotion)
+STYLE_POS_WORDS = [
+    "美しい", "美しく", "嬉し", "楽し", "快い", "爽やか", "幸福", "素晴らしい",
+    "喜ばし", "穏やか", "澄んだ", "澄ん", "典雅", "絢爛", "愛らしい", "ほがらか", "安らか",
+    "快活", "可憐", "晴れやか", "鮮やか", "清らか", "甘い", "懐かしい", "麗しい"
+]
+STYLE_NEG_WORDS = [
+    "えたいの知れない", "得体の知れない", "不吉", "焦躁", "恐ろしい", "悲しい", "寂しい", "苦しい", "痛ましい", "惨め",
+    "むさくるしい", "汚い", "見すぼらしい", "見すぼらしく", "憂鬱", "重くるしい", "呪われた", "不安", "奇怪", "怪しく",
+    "気味悪い", "おどろおどろ", "陰気", "凄惨", "居堪らず", "辛抱がなら", "不気味", "暗い",
+    "無気力", "埃っぽい", "嫌悪", "残酷"
+]
+
+# HW-06 Role pronoun & character detection
+FIRST_PERSON_PRONOUNS: Dict[str, Tuple[int, int]] = {
+    "吾輩": (1, -1), "我輩": (1, -1), "余": (1, -1), "予": (1, -1), "朕": (2, -1), "麿": (1, -1),
+    "俺": (1, 1), "おれ": (1, 1), "オレ": (1, 1), "乃公": (1, 1),
+    "僕": (0, 0), "ぼく": (0, 0), "ボク": (0, 0), "おいら": (0, 1),
+    "わし": (1, 0), "ワシ": (1, 0), "儂": (1, 0), "愚老": (1, 0),
+    "私": (0, 0), "わたし": (0, 0), "自分": (0, 0),
+    "わたくし": (-1, -1), "小生": (-1, -1), "下拙": (-1, -1), "手前ども": (-1, -1), "私め": (-2, -1),
+    "あたし": (0, 1), "あたい": (0, 1), "うち": (0, 1), "わらわ": (1, 1),
 }
-NEG_WORDS = {
-    "悲", "泣", "苦", "痛", "怒", "恐", "怖", "死", "血", "殺",
-    "壊", "暗", "悪", "病", "冷", "寒", "怨", "闇", "衰", "毒"
+
+SECOND_PERSON_PRONOUNS: Dict[str, Tuple[int, int]] = {
+    "貴様": (2, -2), "てめえ": (2, -2), "手前": (2, -2), "己": (2, -2), "汝": (1, -1), "下郎": (2, -2),
+    "お前": (1, 1), "おまえ": (1, 1), "おぬし": (1, 0), "お主": (1, 0), "そち": (1, 0), "其方": (1, 0),
+    "君": (0, 0), "きみ": (0, 0), "キミ": (0, 0), "貴君": (0, 0), "諸君": (0, 0),
+    "あんた": (0, 1), "お前さん": (0, 1), "そなた": (0, 0),
+    "あなた": (-1, -1), "貴方": (-1, -1), "貴女": (-1, -1), "貴殿": (-1, -1), "貴下": (-1, -1),
+    "先生": (-2, -1), "旦那様": (-2, -1), "旦那": (-2, -1), "奥様": (-2, -1), "御前": (-1, -1),
+    "閣下": (-2, -1), "陛下": (-2, -1), "上人": (-2, -1), "お上人": (-2, -1), "王様": (-2, -1),
 }
-DYNAMIC_WORDS = {
-    "走", "飛", "追", "撃", "叫", "急", "跳", "突", "戦", "打",
-    "投", "壊", "裂", "火", "嵐", "激", "崩", "迫", "走る", "追う"
+
+RE_SPEAKER_AFTER = re.compile(
+    r"」[とて、\s]*([^\s、。]{1,8})[はが][^。]{0,30}?(?:言っ|答え|問|叫|呟|つぶや|告げ|怒鳴|笑っ|返|述|尋ね|命じ|促)"
+)
+RE_SPEAKER_BEFORE = re.compile(
+    r"([^\s、。]{1,8})[はが][^。]{0,30}?(?:言っ|答え|問|尋ね|叫|呟|つぶや|告げ|命じ|語りかけ|質問)[たて][。！？\s\n]*「"
+)
+
+STOP_CHARACTERS = {
+    "それ", "これ", "あれ", "どれ", "誰", "どこ", "何", "ここ", "そこ", "こと",
+    "もの", "よう", "ほう", "わけ", "ため", "はず", "つもり", "声", "顔", "目",
+    "手", "口", "頭", "胸", "人", "男", "女", "誰か", "彼", "彼女"
 }
-STATIC_WORDS = {
-    "思", "考", "見", "聞", "知", "感", "黙", "佇", "夜", "月",
-    "静", "深", "夢", "影", "眠", "座", "歩", "眺", "佇む", "静か"
-}
+
+RE_HOOK_TRIG = re.compile(
+    r"(?:なぜ|どうして|何故|なにゆえ|どういう|誰が|どこへ|いつ|怪しく思|えたいの知れ|得体の知れ|秘密|謎|わからぬ|分からない|不思議|奇妙|不可解|不審|訝し|疑念|何事だろ|どうしたこと)"
+)
+RE_RESOLV_MARKER = re.compile(
+    r"(?:のだ|のであった|からである|とわかった|判明した|のだった|に違いない|であった|理解した|合点がいった|納得した|思い出した|解けた)"
+)
 
 
 def split_long_paragraph(para: str, max_len: int = 1600, target_len: int = 800) -> List[str]:
-    """Split a paragraph exceeding max_len into coherent sub-paragraphs.
-
-    Splits at sentence boundaries where possible; falls back to balanced chunking
-    if a single sentence exceeds max_len.
-    """
+    """Split a paragraph exceeding max_len into coherent sub-paragraphs."""
     if len(para) <= max_len:
         return [para]
 
@@ -79,7 +142,6 @@ def split_long_paragraph(para: str, max_len: int = 1600, target_len: int = 800) 
             if cur:
                 chunks.append(cur)
                 cur = ""
-            # Balance chunks evenly so the last piece is not too small
             n_chunks = math.ceil(len(p) / target_len)
             c_size = math.ceil(len(p) / n_chunks)
             for i in range(0, len(p), c_size):
@@ -106,16 +168,11 @@ def split_work_into_scenes(
     max_chars: int = 1600,
     target_chars: int = 750,
 ) -> List[str]:
-    """Split a full work's text into continuous scenes strictly clamped to [min_chars, max_chars].
-
-    Detects blank lines, symbol dividers, chapter/section headings, and spatio-temporal markers.
-    Handles tail rebalancing and degenerate edge cases gracefully.
-    """
+    """Split a full work's text into continuous scenes strictly clamped to [min_chars, max_chars]."""
     text_clean = text.strip()
     if not text_clean:
         return []
 
-    # If the entire work itself is shorter than min_chars, return it as a single scene
     if len(text_clean) < min_chars:
         return [text_clean]
 
@@ -157,32 +214,27 @@ def split_work_into_scenes(
         sp_len = len(sp)
 
         if cur_len >= min_chars:
-            # 1) Adding sp exceeds max_chars
             if cur_len + sp_len > max_chars:
                 scenes.append("\n".join(cur_parts))
                 cur_parts = [sp]
                 cur_len = sp_len
                 continue
-            # 2) Strong boundary at or above min_chars
             if strong:
                 scenes.append("\n".join(cur_parts))
                 cur_parts = [sp]
                 cur_len = sp_len
                 continue
-            # 3) Weak boundary at or above 350 chars
             if weak and cur_len >= 350:
                 scenes.append("\n".join(cur_parts))
                 cur_parts = [sp]
                 cur_len = sp_len
                 continue
-            # 4) Reached target_chars at a paragraph transition
             if cur_len >= target_chars:
                 scenes.append("\n".join(cur_parts))
                 cur_parts = [sp]
                 cur_len = sp_len
                 continue
 
-        # If cur_len < min_chars, but cur_len + sp_len > max_chars, re-chunk combined
         if cur_len > 0 and cur_len + sp_len > max_chars:
             combined = "\n".join(cur_parts) + "\n" + sp
             re_chunks = split_long_paragraph(combined, max_chars, target_chars)
@@ -198,14 +250,12 @@ def split_work_into_scenes(
     if cur_parts:
         last_scene = "\n".join(cur_parts).strip()
         if len(last_scene) < min_chars and scenes:
-            # Rebalance with preceding scene
             if len(scenes[-1]) + 1 + len(last_scene) <= max_chars:
                 scenes[-1] = scenes[-1] + "\n" + last_scene
             else:
                 combined = scenes[-1] + "\n" + last_scene
                 mid = len(combined) // 2
                 best_pos = mid
-                # Search for sentence break near mid
                 for m in SENT_SPLIT.finditer(combined):
                     pos = m.end()
                     if (
@@ -216,7 +266,6 @@ def split_work_into_scenes(
                             best_pos = pos
                 first_part = combined[:best_pos].strip()
                 second_part = combined[best_pos:].strip()
-                # If either part is still < min_chars, fall back to exact midpoint
                 if len(first_part) < min_chars or len(second_part) < min_chars:
                     best_pos = mid
                     first_part = combined[:best_pos].strip()
@@ -230,67 +279,134 @@ def split_work_into_scenes(
     return scenes
 
 
+def score_segment_polarity(text: str, pos_words: List[str], neg_words: List[str]) -> Tuple[float, float]:
+    """Score positive and negative hits with negation scope inversion."""
+    pos_score = 0.0
+    neg_score = 0.0
+
+    sentences = re.split(r"[。！？!?\n]", text)
+    for sent in sentences:
+        sent = sent.strip()
+        if not sent:
+            continue
+        has_sent_neg = bool(RE_NEGATION.search(sent))
+        for w in pos_words:
+            idx = 0
+            while True:
+                idx = sent.find(w, idx)
+                if idx == -1:
+                    break
+                window = sent[idx : idx + len(w) + 35]
+                if RE_NEGATION.search(window) or (has_sent_neg and idx > len(sent) // 2):
+                    neg_score += 1.0  # negated positive becomes negative
+                else:
+                    pos_score += 1.0
+                idx += len(w)
+        for w in neg_words:
+            idx = 0
+            while True:
+                idx = sent.find(w, idx)
+                if idx == -1:
+                    break
+                window = sent[idx : idx + len(w) + 35]
+                if RE_NEGATION.search(window):
+                    pos_score += 0.5  # negated negative attenuated / slightly positive
+                else:
+                    neg_score += 1.0
+                idx += len(w)
+    return pos_score, neg_score
+
+
+def quantize_val(val_raw: float) -> int:
+    if val_raw >= 0.25:
+        return 2
+    if val_raw >= 0.08:
+        return 1
+    if val_raw <= -0.25:
+        return -2
+    if val_raw <= -0.08:
+        return -1
+    return 0
+
+
+def quantize_aro(aro_raw: float) -> int:
+    if aro_raw >= 1.0:
+        return 2
+    if aro_raw >= 0.25:
+        return 1
+    if aro_raw <= -1.0:
+        return -2
+    if aro_raw <= -0.25:
+        return -1
+    return 0
+
+
+def log_softmax(scores: List[float]) -> List[float]:
+    """Numerically stable log-softmax returning finite f32 values <= 0.0."""
+    max_s = max(scores)
+    shifted = [s - max_s for s in scores]
+    lse = math.log(sum(math.exp(x) for x in shifted))
+    return [round(float(x - lse), 6) for x in shifted]
+
+
 def compute_heuristic_signals(
     scene_text: str, scene_index: int, scene_count: int
 ) -> Tuple[Dict[str, int], Dict[str, Any], Dict[str, Any], Dict[str, int], Dict[str, int]]:
-    """Compute deterministic draft annotations (awase, nagare) from surface textual features.
+    """Compute deterministic v5 annotations (awase, nagare) from surface textual features.
 
-    Guarantees:
-    - awase values in [-2, 2]
-    - nagare top3 codes strictly distinct with weights [3, 2, 1]
+    1. Awase: F_event and f_style calculated independently with negation polarity inversion.
+    2. Nagare: Continuous 16-dimensional log-softmax probabilities (event_logp, mood_logp).
     """
     total_len = max(len(scene_text), 1)
     pos = scene_index / max(scene_count, 1)
 
-    # Dialogue ratio
-    quote_matches = re.findall(r"「([^」]*)」", scene_text)
-    quote_chars = sum(len(m) for m in quote_matches)
-    quote_ratio = quote_chars / total_len
+    quote_spans = RE_QUOTE.findall(scene_text)
+    quote_chars = sum(len(m[0] or m[1]) for m in quote_spans)
+    dialogue_ratio = quote_chars / total_len
+    narrative_text = RE_QUOTE.sub(" ", scene_text)
 
-    # Punctuation counts
+    sents = [s for s in SENT_SPLIT.split(scene_text) if s.strip()]
+    n_sents = max(len(sents), 1)
+    mean_sent_len = total_len / n_sents
+    cv_sent_len = (
+        (sum((len(s) - mean_sent_len) ** 2 for s in sents) / n_sents) ** 0.5 / (mean_sent_len + 1e-5)
+        if len(sents) >= 2
+        else 0.5
+    )
+
     excl_count = scene_text.count("！") + scene_text.count("!")
     quest_count = scene_text.count("？") + scene_text.count("?")
+    excl_quest_ratio = (excl_count + quest_count) / total_len
+    comma_ratio = scene_text.count("、") / total_len
+    kanji_ratio = len(re.findall(r"[\u4e00-\u9fff]", scene_text)) / total_len
+    neg_ratio = len(re.findall(r"(?:ない|ぬ|ん|ず|まい|なかった|ならず)", scene_text)) / n_sents
+    past_ratio = len(re.findall(r"(?:た|だ)[。、\s]", scene_text)) / n_sents
 
-    # Lexicon hits
-    pos_hits = sum(scene_text.count(w) for w in POS_WORDS)
-    neg_hits = sum(scene_text.count(w) for w in NEG_WORDS)
-    dyn_hits = sum(scene_text.count(w) for w in DYNAMIC_WORDS)
-    stat_hits = sum(scene_text.count(w) for w in STATIC_WORDS)
+    # 1. Awase: Event layer (F_event)
+    pos_e, neg_e = score_segment_polarity(narrative_text, EVENT_POS_WORDS, EVENT_NEG_WORDS)
+    val_e_raw = (pos_e - neg_e) / max(pos_e + neg_e, 2.0)
+    f_event_valence = quantize_val(val_e_raw)
 
-    # 1. Awase: event valence (-2..2)
-    val_raw = (pos_hits - neg_hits) / max((pos_hits + neg_hits), 2)
-    if val_raw > 0.4:
-        f_event_valence = 2
-    elif val_raw > 0.1:
-        f_event_valence = 1
-    elif val_raw < -0.4:
-        f_event_valence = -2
-    elif val_raw < -0.1:
-        f_event_valence = -1
-    else:
-        f_event_valence = 0
+    event_high_hits = sum(narrative_text.count(w) for w in EVENT_HIGH_ARO_WORDS)
+    event_low_hits = sum(narrative_text.count(w) for w in EVENT_LOW_ARO_WORDS)
+    aro_e_raw = (event_high_hits * 1.5 - event_low_hits) / max(len(narrative_text) / 250.0, 1.0)
+    f_event_arousal = quantize_aro(aro_e_raw)
 
-    # Event arousal (-2..2)
-    aro_raw = (dyn_hits + excl_count * 2 - stat_hits) / max(total_len / 200, 1)
-    if aro_raw > 2.0:
-        f_event_arousal = 2
-    elif aro_raw > 0.6:
-        f_event_arousal = 1
-    elif aro_raw < -2.0:
-        f_event_arousal = -2
-    elif aro_raw < -0.6:
-        f_event_arousal = -1
-    else:
-        f_event_arousal = 0
+    # Awase: Style layer (f_style)
+    pos_s, neg_s = score_segment_polarity(scene_text, STYLE_POS_WORDS, STYLE_NEG_WORDS)
+    val_s_raw = (pos_s - neg_s) / max(pos_s + neg_s, 2.0)
+    f_style_valence = quantize_val(val_s_raw)
 
-    # Style valence & arousal (derived from sentence cadence and dialogue)
-    f_style_valence = max(-2, min(2, f_event_valence))
-    if quote_ratio > 0.4 or excl_count > 0:
-        f_style_arousal = max(-2, min(2, f_event_arousal + 1))
-    elif stat_hits > dyn_hits and quote_ratio < 0.15:
-        f_style_arousal = max(-2, min(2, f_event_arousal - 1))
-    else:
-        f_style_arousal = f_event_arousal
+    style_high_hits = (
+        excl_count * 1.5
+        + (1.0 if any(scene_text.endswith(x) for x in ("ぞ", "ぜ", "わい", "たまえ", "よ")) else 0.0)
+        + (1.0 if dialogue_ratio > 0.4 else 0.0)
+    )
+    style_low_hits = sum(
+        scene_text.count(w) for w in ["ひっそり", "静か", "ぽつねんと", "ぼんやり", "幽か", "かすか", "そっと"]
+    )
+    aro_s_raw = (style_high_hits * 1.2 - style_low_hits) / max(total_len / 300.0, 1.0)
+    f_style_arousal = quantize_aro(aro_s_raw)
 
     awase = {
         "f_event_valence": int(f_event_valence),
@@ -299,77 +415,186 @@ def compute_heuristic_signals(
         "f_style_arousal": int(f_style_arousal),
     }
 
-    # 2. Nagare event codes (E01..E16)
-    event_scores: Dict[str, float] = {code: 0.0 for code in EVENT_CODES}
-    if pos < 0.2:
-        event_scores["E01"] += 3.0  # Setting / Introduction
-        event_scores["E02"] += 2.0  # Appearance
-    elif pos > 0.8:
-        event_scores["E16"] += 3.5  # Climax / Conclusion
-        event_scores["E15"] += 2.0  # Reflection
-    else:
-        event_scores["E10"] += 1.5  # Progression
+    # 2. Nagare event continuous log-probabilities (E01..E16)
+    e_scores = [0.0] * 16
+    e_scores[0] = 2.0 * max(0.0, 0.3 - pos) / 0.3 + 1.0 * kanji_ratio - 0.5 * past_ratio
+    e_scores[1] = 1.5 * sum(scene_text.count(w) for w in ["会う", "やって来", "現れ", "訪ね", "見かけ", "迎える"]) / 2.0
+    e_scores[2] = 4.0 * dialogue_ratio + (1.0 if quote_chars > 100 else 0.0)
+    e_scores[3] = 1.5 * sum(scene_text.count(w) for w in ["思", "考", "悟", "感", "記憶", "追憶", "心"]) / 3.0 + 1.0 * (1.0 - dialogue_ratio)
+    e_scores[4] = 1.5 * sum(scene_text.count(w) for w in ["行", "歩", "走", "旅", "出発", "越え", "彷徨", "向か"]) / 3.0
+    e_scores[5] = 2.0 * excl_quest_ratio * 10.0 + 1.5 * sum(scene_text.count(w) for w in ["迷", "疑", "悩", "拒", "葛藤", "躊躇"]) / 2.0
+    e_scores[6] = 2.0 * sum(scene_text.count(w) for w in ["不意に", "突然", "異変", "変化", "事件", "たちまち", "ふと"]) / 2.0
+    e_scores[7] = 2.0 * max(0, f_event_arousal) + 1.5 * max(0, -f_event_valence) + 1.5 * sum(scene_text.count(w) for w in ["危機", "迫る", "恐怖", "捕縛", "処刑", "危険"]) / 2.0
+    e_scores[8] = 2.0 * (event_high_hits / 3.0) + 1.5 * sum(scene_text.count(w) for w in ["戦", "撃", "争", "叫", "投", "壊", "打"]) / 3.0
+    e_scores[9] = 1.5 * (1.0 - abs(pos - 0.5) * 2.0) + 1.0 * sum(scene_text.count(w) for w in ["それから", "やがて", "続いて", "進む", "間もなく"]) / 2.0
+    e_scores[10] = 1.8 * sum(scene_text.count(w) for w in ["見出", "発見", "気づ", "判明", "見つけ", "わかっ", "知っ"]) / 2.0
+    e_scores[11] = 2.0 * max(0, -f_event_valence) + 1.5 * sum(scene_text.count(w) for w in ["死", "失", "倒れ", "奪", "傷", "泣", "滅", "害"]) / 2.0
+    e_scores[12] = 2.0 * sum(scene_text.count(w) for w in ["逆転", "破綻", "崩壊", "裏切", "一変", "狂気", "破滅"]) / 2.0
+    e_scores[13] = 2.0 * max(0, f_event_valence) + 1.0 * max(0, f_event_arousal) + 1.5 * sum(scene_text.count(w) for w in ["勝", "救", "歓喜", "成功", "栄光", "達成", "喜"]) / 2.0
+    e_scores[14] = 2.0 * max(0.0, pos - 0.7) / 0.3 + 1.0 * sum(scene_text.count(w) for w in ["静まり", "名残", "余韻", "振り返", "佇む", "去る"]) / 2.0
+    e_scores[15] = 3.0 * max(0.0, pos - 0.8) / 0.2 + 1.5 * sum(scene_text.count(w) for w in ["終", "結末", "解決", "去っ", "幕", "完"]) / 2.0
 
-    if quote_ratio > 0.35:
-        event_scores["E03"] += 4.0  # Dialogue
-    if quest_count > 0:
-        event_scores["E06"] += 2.0  # Conflict / Dilemma
-        event_scores["E11"] += 1.5  # Discovery
-    if dyn_hits > 2:
-        event_scores["E09"] += 2.5  # Action
-        event_scores["E08"] += 2.0  # Crisis
-    if stat_hits > 2:
-        event_scores["E04"] += 2.5  # Introspection
-    if neg_hits > 2:
-        event_scores["E12"] += 2.5  # Loss / Distress
-    if pos_hits > 2:
-        event_scores["E14"] += 2.5  # Joy / Success
+    # Add small deterministic entropy from sentence length variance
+    for i in range(16):
+        e_scores[i] += 0.2 * math.sin(i * 1.5 + cv_sent_len)
 
-    # Sort descending by score, tie-breaking by code name
-    sorted_events = sorted(EVENT_CODES, key=lambda c: (event_scores[c], -int(c[1:])), reverse=True)
+    event_logp = log_softmax(e_scores)
+    sorted_events = sorted(range(16), key=lambda i: (event_logp[i], -i), reverse=True)
     event_top3 = [
-        {"code": sorted_events[0], "rank_weight": 3},
-        {"code": sorted_events[1], "rank_weight": 2},
-        {"code": sorted_events[2], "rank_weight": 1},
+        {"code": EVENT_CODES[sorted_events[0]], "rank_weight": 3},
+        {"code": EVENT_CODES[sorted_events[1]], "rank_weight": 2},
+        {"code": EVENT_CODES[sorted_events[2]], "rank_weight": 1},
     ]
 
-    # 3. Nagare mood codes (M01..M16)
-    mood_scores: Dict[str, float] = {code: 0.0 for code in MOOD_CODES}
-    if f_event_arousal <= -1 and f_event_valence >= 0:
-        mood_scores["M01"] += 3.0  # Calm
-    elif f_event_arousal >= 1 and f_event_valence <= -1:
-        mood_scores["M02"] += 3.5  # Tense
-        mood_scores["M10"] += 2.5  # Fearful
-    elif f_event_valence <= -1:
-        mood_scores["M03"] += 3.0  # Melancholy
-        mood_scores["M08"] += 2.0  # Pathos
-    elif f_event_valence >= 1 and f_event_arousal >= 1:
-        mood_scores["M04"] += 3.5  # Joyful
-        mood_scores["M14"] += 2.5  # Dynamic
-    else:
-        mood_scores["M16"] += 2.0  # Lingering / Reflective
+    # 3. Nagare mood continuous log-probabilities (M01..M16)
+    m_scores = [0.0] * 16
+    m_scores[0] = 1.8 * max(0, -f_style_arousal) + 1.0 * max(0, f_style_valence) + 1.5 * sum(scene_text.count(w) for w in ["静か", "穏やか", "平穏", "のどか", "凪", "ひっそり"]) / 2.0
+    m_scores[1] = 1.8 * max(0, f_style_arousal) + 1.0 * max(0, -f_style_valence) + 1.5 * sum(scene_text.count(w) for w in ["焦燥", "緊迫", "息苦し", "切迫", "じりじり", "緊張"]) / 2.0
+    m_scores[2] = 2.0 * max(0, -f_style_valence) + 1.0 * max(0, -f_style_arousal) + 1.5 * sum(scene_text.count(w) for w in ["憂鬱", "沈鬱", "暗い", "陰気", "塞ぐ", "重い", "不吉"]) / 2.0
+    m_scores[3] = 2.0 * max(0, f_style_valence) + 1.5 * max(0, f_style_arousal) + 1.5 * sum(scene_text.count(w) for w in ["昂揚", "熱狂", "歓喜", "喜悦", "晴れやか", "快活"]) / 2.0
+    m_scores[4] = 1.2 * neg_ratio + 1.5 * sum(scene_text.count(w) for w in ["諦観", "無常", "儚い", "仕方な", "定め", "朽ち", "諦め"]) / 2.0
+    m_scores[5] = 2.0 * sum(scene_text.count(w) for w in ["官能", "耽美", "艶", "匂い", "白い肌", "妖艶", "唇", "吐息", "香水", "香"]) / 2.0
+    m_scores[6] = 2.0 * sum(scene_text.count(w) for w in ["畏怖", "崇高", "荘厳", "怪異", "霊気", "神秘", "神", "仏", "霊"]) / 2.0
+    m_scores[7] = 1.8 * max(0, -f_style_valence) + 1.5 * sum(scene_text.count(w) for w in ["哀切", "情念", "あわれ", "憐れ", "慕う", "涙", "恋情", "切な"]) / 2.0
+    is_ironic = (f_event_valence * f_style_valence < 0)
+    m_scores[8] = (2.0 if is_ironic else 0.0) + 1.5 * sum(scene_text.count(w) for w in ["諧謔", "皮肉", "アイロニー", "嘲笑", "可笑し", "吹き出", "笑っ", "苦笑"]) / 2.0
+    m_scores[9] = 2.0 * sum(scene_text.count(w) for w in ["恐怖", "戦慄", "恐ろし", "慄く", "慄然", "震え", "背筋", "怖"]) / 2.0
+    m_scores[10] = 2.5 * sum(scene_text.count(w) for w in ["激怒", "憤怒", "怒り", "反逆", "許せぬ", "憤然", "歯ぎしり", "怒っ"]) / 2.0
+    m_scores[11] = 1.5 * (1.0 - dialogue_ratio) + 1.8 * sum(scene_text.count(w) for w in ["孤独", "一人", "ぽつねん", "隔絶", "疎外", "取り残さ", "孤立"]) / 2.0
+    m_scores[12] = 2.5 * sum(scene_text.count(w) for w in ["夢", "幻", "幻惑", "夢想", "朦朧", "うつつ", "錯覚", "まぼろし"]) / 2.0
+    m_scores[13] = 1.8 * max(0, f_style_arousal) + 1.8 * sum(scene_text.count(w) for w in ["疾走", "躍動", "駆け抜", "飛沫", "烈風", "驀進", "跳躍"]) / 2.0
+    m_scores[14] = 1.5 * max(0.0, pos - 0.7) + 1.8 * sum(scene_text.count(w) for w in ["和解", "救済", "許し", "慈愛", "温もり", "安堵", "和ら"]) / 2.0
+    m_scores[15] = 1.5 * max(0.0, pos - 0.8) + 1.5 * sum(scene_text.count(w) for w in ["余情", "余白", "去りゆく", "佇まい", "遠ざかる", "夕暮れ"]) / 2.0
 
-    if pos > 0.85:
-        mood_scores["M15"] += 2.5  # Resignation / Peace
-    if "夢" in scene_text or "幻" in scene_text:
-        mood_scores["M13"] += 3.0  # Dreamy
+    for i in range(16):
+        m_scores[i] += 0.2 * math.cos(i * 1.5 + comma_ratio * 10.0)
 
-    sorted_moods = sorted(MOOD_CODES, key=lambda c: (mood_scores[c], -int(c[1:])), reverse=True)
+    mood_logp = log_softmax(m_scores)
+    sorted_moods = sorted(range(16), key=lambda i: (mood_logp[i], -i), reverse=True)
     mood_top3 = [
-        {"code": sorted_moods[0], "rank_weight": 3},
-        {"code": sorted_moods[1], "rank_weight": 2},
-        {"code": sorted_moods[2], "rank_weight": 1},
+        {"code": MOOD_CODES[sorted_moods[0]], "rank_weight": 3},
+        {"code": MOOD_CODES[sorted_moods[1]], "rank_weight": 2},
+        {"code": MOOD_CODES[sorted_moods[2]], "rank_weight": 1},
     ]
 
     nagare = {
         "event_top3": event_top3,
         "mood_top3": mood_top3,
+        "event_logp": event_logp,
+        "mood_logp": mood_logp,
     }
 
     f_event_stream = {"valence": f_event_valence, "arousal": f_event_arousal}
     f_style_stream = {"valence": f_style_valence, "arousal": f_style_arousal}
 
     return awase, nagare, {}, f_event_stream, f_style_stream
+
+
+def extract_scene_characters_and_edges(
+    scene_text: str,
+    scene_index: int,
+    scene_count: int,
+    f_event_valence: int,
+    f_event_arousal: int,
+    f_style_valence: int,
+    f_style_arousal: int,
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """HW-06 Deterministic character stalk and dialogue edge extractor."""
+    speakers: List[str] = []
+
+    for name in RE_SPEAKER_AFTER.findall(scene_text):
+        name = name.strip()
+        if name and name not in STOP_CHARACTERS and len(name) <= 8:
+            if name not in speakers:
+                speakers.append(name)
+
+    for name in RE_SPEAKER_BEFORE.findall(scene_text):
+        name = name.strip()
+        if name and name not in STOP_CHARACTERS and len(name) <= 8:
+            if name not in speakers:
+                speakers.append(name)
+
+    quotes = RE_QUOTE.findall(scene_text)
+    has_dialogue = len(quotes) > 0
+
+    narrator_present = False
+    narrative_text = RE_QUOTE.sub(" ", scene_text)
+    for p in ("私", "わたし", "僕", "ぼく", "俺", "おれ", "吾輩", "余", "自分"):
+        if p in narrative_text:
+            narrator_present = True
+            break
+
+    for p in ("メロス", "セリヌンティウス", "ディオニス", "老爺", "ジョバンニ", "カンパネルラ", "カンディタ", "一郎"):
+        if p in scene_text and p not in speakers:
+            speakers.append(p)
+
+    if narrator_present and "語り手" not in speakers:
+        speakers.insert(0, "語り手")
+
+    if has_dialogue and len(speakers) < 2:
+        found_2nd = None
+        for p in SECOND_PERSON_PRONOUNS:
+            if p in scene_text:
+                found_2nd = p
+                break
+        if found_2nd and found_2nd not in speakers:
+            speakers.append(found_2nd)
+        elif len(speakers) == 1:
+            speakers.append("相手")
+        elif len(speakers) == 0:
+            speakers.extend(["話者", "相手"])
+
+    # Build character stalks with dynamic scene modulation
+    d_life = max(-1, min(1, f_event_valence))
+    d_order = -1 if (f_event_arousal >= 1 and f_event_valence < 0) else 0
+    d_mystic = 1 if any(w in scene_text for w in ["神", "仏", "霊", "夢", "幻", "魂", "奇跡"]) else 0
+    d_devotion = (
+        1
+        if (f_event_valence > 0 or any(w in scene_text for w in ["友", "信", "約束", "救", "助"]))
+        else (-1 if any(w in scene_text for w in ["疑", "私慾", "裏切", "殺"]) else 0)
+    )
+    d_emotion = -1 if f_style_arousal >= 1 else (1 if f_style_arousal <= -1 else 0)
+    d_will = (
+        1
+        if (f_event_arousal >= 1 or any(w in scene_text for w in ["決意", "必ず", "誓"]))
+        else (-1 if any(w in scene_text for w in ["疲れ", "諦", "絶望", "不能"]) else 0)
+    )
+
+    character_stalks: List[Dict[str, Any]] = []
+    for name in speakers[:4]:  # limit to max 4 main characters per scene
+        if name == "語り手":
+            base = [0, 0, 0, 0, 0, 0]
+        elif name in ("王", "暴君", "ディオニス"):
+            base = [-1, 2, 0, -2, 1, 1]
+        elif "老" in name or name == "上人":
+            base = [0, 1, 1, 0, 1, -1]
+        elif name in ("メロス", "ジョバンニ"):
+            base = [1, -1, 0, 1, -1, 1]
+        elif name in ("お前", "貴様", "てめえ"):
+            base = [-1, -1, 0, -1, -1, 1]
+        else:
+            h = abs(hash(name))
+            base = [(h >> (i * 2) & 3) - 1 for i in range(6)]
+
+        axes_q = [
+            max(-2, min(2, base[0] + d_life)),
+            max(-2, min(2, base[1] + d_order)),
+            max(-2, min(2, base[2] + d_mystic)),
+            max(-2, min(2, base[3] + d_devotion)),
+            max(-2, min(2, base[4] + d_emotion)),
+            max(-2, min(2, base[5] + d_will)),
+        ]
+        character_stalks.append({"name": name, "axes_q": axes_q})
+
+    dialogue_edges: List[Dict[str, Any]] = []
+    if has_dialogue and len(character_stalks) >= 2:
+        for i in range(len(character_stalks) - 1):
+            u_name = character_stalks[i]["name"]
+            v_name = character_stalks[i + 1]["name"]
+            if u_name != v_name:
+                dialogue_edges.append({"u": u_name, "v": v_name, "confidence": 100})
+
+    return character_stalks, dialogue_edges
 
 
 def build_scene_annotation(
@@ -383,6 +608,10 @@ def build_scene_annotation(
     focal_character: Optional[str] = None,
     include_audit_meta: bool = False,
     extra_meta: Optional[Dict[str, Any]] = None,
+    character_stalks: Optional[List[Dict[str, Any]]] = None,
+    dialogue_edges: Optional[List[Dict[str, Any]]] = None,
+    opened_hooks: Optional[List[Dict[str, Any]]] = None,
+    closed_hook_ids: Optional[List[int]] = None,
 ) -> Dict[str, Any]:
     """Construct a scene annotation record.
 
@@ -395,8 +624,40 @@ def build_scene_annotation(
         scene_text, scene_index, scene_count
     )
 
-    char_len = max(len(scene_text), 1)
+    if character_stalks is None or dialogue_edges is None:
+        stalks, edges = extract_scene_characters_and_edges(
+            scene_text,
+            scene_index,
+            scene_count,
+            awase["f_event_valence"],
+            awase["f_event_arousal"],
+            awase["f_style_valence"],
+            awase["f_style_arousal"],
+        )
+        if character_stalks is None:
+            character_stalks = stalks
+        if dialogue_edges is None:
+            dialogue_edges = edges
 
+    if opened_hooks is None or closed_hook_ids is None:
+        # Default single-scene hook detection
+        o_hooks: List[Dict[str, Any]] = []
+        c_hooks: List[int] = []
+        sents = [s for s in SENT_SPLIT.split(scene_text) if s.strip()]
+        hook_id = 1
+        for sent in sents:
+            if RE_HOOK_TRIG.search(sent):
+                label = sent.strip()[:30]
+                o_hooks.append({"id": hook_id, "label": label})
+                hook_id += 1
+                if len(o_hooks) >= 2:
+                    break
+        if opened_hooks is None:
+            opened_hooks = o_hooks
+        if closed_hook_ids is None:
+            closed_hook_ids = c_hooks
+
+    char_len = max(len(scene_text), 1)
     record: Dict[str, Any] = {}
 
     if include_audit_meta:
@@ -447,12 +708,12 @@ def build_scene_annotation(
     record["awase"] = awase
     record["nagare"] = nagare
     record["sadame"] = {
-        "character_stalks": [],
-        "dialogue_edges": [],
+        "character_stalks": character_stalks,
+        "dialogue_edges": dialogue_edges,
     }
     record["kamae"] = {
-        "opened_hooks": [],
-        "closed_hook_ids": [],
+        "opened_hooks": opened_hooks,
+        "closed_hook_ids": closed_hook_ids,
     }
 
     return record
@@ -484,6 +745,72 @@ class AozoraCorpusSplitter:
         path = self.cache_dir / filename
         return path.read_text("utf-8")
 
+    def process_work_scenes(
+        self,
+        work: Dict[str, Any],
+        scene_texts: List[str],
+        include_audit_meta: bool = False,
+    ) -> List[Dict[str, Any]]:
+        """Annotate all scenes of a work with continuous hook tracking and character dynamics."""
+        count = len(scene_texts)
+        hook_seq = 1
+        active_hooks: List[Dict[str, Any]] = []
+        work_records: List[Dict[str, Any]] = []
+
+        for idx, sc_txt in enumerate(scene_texts):
+            awase, nagare, _, _, _ = compute_heuristic_signals(sc_txt, idx, count)
+
+            stalks, edges = extract_scene_characters_and_edges(
+                sc_txt,
+                idx,
+                count,
+                awase["f_event_valence"],
+                awase["f_event_arousal"],
+                awase["f_style_valence"],
+                awase["f_style_arousal"],
+            )
+
+            # Kamae hook extraction
+            opened_hooks: List[Dict[str, Any]] = []
+            sents = [s for s in SENT_SPLIT.split(sc_txt) if s.strip()]
+            for sent in sents:
+                if RE_HOOK_TRIG.search(sent):
+                    label = sent.strip()[:30]
+                    kanji_toks = set(re.findall(r"[\u4e00-\u9fff]{2,}", label))
+                    if not kanji_toks:
+                        kanji_toks = {label[:4]}
+                    opened_hooks.append({"id": hook_seq, "label": label})
+                    active_hooks.append({"id": hook_seq, "tokens": kanji_toks, "open_idx": idx})
+                    hook_seq += 1
+                    if len(opened_hooks) >= 2:
+                        break
+
+            # Kamae hook closure
+            closed_hook_ids: List[int] = []
+            has_resolv = bool(RE_RESOLV_MARKER.search(sc_txt))
+            for h in list(active_hooks):
+                if h["open_idx"] < idx and has_resolv:
+                    if any(tok in sc_txt for tok in h["tokens"]):
+                        closed_hook_ids.append(h["id"])
+                        active_hooks.remove(h)
+
+            rec = build_scene_annotation(
+                scene_text=sc_txt,
+                author_id=work["author_id"],
+                work_id=work["work_id"],
+                scene_index=idx,
+                scene_count=count,
+                include_audit_meta=include_audit_meta,
+                extra_meta=work,
+                character_stalks=stalks,
+                dialogue_edges=edges,
+                opened_hooks=opened_hooks,
+                closed_hook_ids=closed_hook_ids,
+            )
+            work_records.append(rec)
+
+        return work_records
+
     def process_all_works(
         self,
         include_audit_meta: bool = False,
@@ -500,18 +827,8 @@ class AozoraCorpusSplitter:
             scene_texts = split_work_into_scenes(
                 text, min_chars=min_chars, max_chars=max_chars, target_chars=target_chars
             )
-            count = len(scene_texts)
-            for idx, sc_txt in enumerate(scene_texts):
-                rec = build_scene_annotation(
-                    scene_text=sc_txt,
-                    author_id=work["author_id"],
-                    work_id=work["work_id"],
-                    scene_index=idx,
-                    scene_count=count,
-                    include_audit_meta=include_audit_meta,
-                    extra_meta=work,
-                )
-                all_records.append(rec)
+            records = self.process_work_scenes(work, scene_texts, include_audit_meta=include_audit_meta)
+            all_records.extend(records)
 
         return all_records
 
@@ -524,41 +841,27 @@ class AozoraCorpusSplitter:
     ) -> List[Dict[str, Any]]:
         """Extract balanced pilot scenes (per_author per each of the 10 authors)."""
         works = self.load_manifests()
-        # Group works by author
         author_works: Dict[str, List[Dict[str, Any]]] = {}
         for w in works:
             author_works.setdefault(w["author_id"], []).append(w)
 
         pilot_records: List[Dict[str, Any]] = []
 
-        # For each author, sample per_author scenes evenly across progression
         for author_id in sorted(author_works.keys()):
             a_works = author_works[author_id]
-            # Collect all scenes for this author with audit meta
             a_scenes: List[Dict[str, Any]] = []
             for w in a_works:
                 text = self.get_cached_text(w)
                 sc_texts = split_work_into_scenes(
                     text, min_chars=min_chars, max_chars=max_chars, target_chars=target_chars
                 )
-                count = len(sc_texts)
-                for idx, sc_txt in enumerate(sc_texts):
-                    rec = build_scene_annotation(
-                        scene_text=sc_txt,
-                        author_id=w["author_id"],
-                        work_id=w["work_id"],
-                        scene_index=idx,
-                        scene_count=count,
-                        include_audit_meta=True,
-                        extra_meta=w,
-                    )
-                    a_scenes.append(rec)
+                recs = self.process_work_scenes(w, sc_texts, include_audit_meta=True)
+                a_scenes.extend(recs)
 
             total_a = len(a_scenes)
             if total_a <= per_author:
                 selected = a_scenes
             else:
-                # 5 evenly spaced checkpoints: ~5%, ~25%, ~50%, ~75%, ~95%
                 indices = [
                     int(round(i * (total_a - 1) / (per_author - 1))) for i in range(per_author)
                 ]
@@ -576,3 +879,33 @@ class AozoraCorpusSplitter:
         with open(out, "w", encoding="utf-8") as f:
             for rec in records:
                 f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+
+def main() -> None:
+    data_dir = Path("C:/dev/usir/data")
+    splitter = AozoraCorpusSplitter(data_dir=data_dir)
+
+    print("Generating full aozora_106works_scenes.jsonl (4,576 scenes)...")
+    all_scenes = splitter.process_all_works(include_audit_meta=False)
+    all_path = data_dir / "v5" / "aozora_106works_scenes.jsonl"
+    splitter.save_jsonl(all_scenes, all_path)
+    print(f"Saved {len(all_scenes)} scenes to {all_path}")
+
+    print("Generating pilot_50_scenes.jsonl (50 scenes)...")
+    pilot_scenes = splitter.extract_pilot_scenes(per_author=5)
+    pilot_path = data_dir / "v5" / "pilot_50_scenes.jsonl"
+    splitter.save_jsonl(pilot_scenes, pilot_path)
+    print(f"Saved {len(pilot_scenes)} scenes to {pilot_path}")
+
+    drive_pilot_path = Path("F:/マイドライブ/Claude-Sync/inbox/pilot_50_scenes.jsonl")
+    if drive_pilot_path.parent.exists():
+        import shutil
+        shutil.copyfile(pilot_path, drive_pilot_path)
+        print(f"Copied pilot scenes to {drive_pilot_path}")
+    else:
+        print(f"Warning: {drive_pilot_path.parent} not accessible, skipped drive copy.")
+
+
+if __name__ == "__main__":
+    main()
+

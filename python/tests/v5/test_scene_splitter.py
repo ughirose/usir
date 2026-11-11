@@ -12,6 +12,7 @@ Validates:
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 import pytest
 
@@ -214,3 +215,146 @@ def test_pilot_50_scenes(splitter: AozoraCorpusSplitter):
         assert s["story_position"] in ("序盤", "中盤", "終盤")
         assert 200 <= s["char_len"] <= 1600
         assert s["schema_version"] == SCHEMA_VERSION
+
+
+def test_fix1_melos_and_lemon_awase(splitter: AozoraCorpusSplitter):
+    """Gate 2 Fix 1: Awase physical separation and negation polarity inversion.
+
+    - Melos beginning (001567, scene 0) must have high arousal (f_event_arousal >= 1 or f_style_arousal >= 1).
+    - Lemon beginning (000424, scene 0) must have negative valence (f_event_valence <= -1 and f_style_valence <= -1).
+    - Scenes with irony > 0 (opposite valence signs) and detachment > 0 must exist.
+    """
+    works = splitter.load_manifests()
+    melos_meta = [w for w in works if w["work_id"] == "001567"][0]
+    lemon_meta = [w for w in works if w["work_id"] == "000424"][0]
+
+    melos_scenes = splitter.process_work_scenes(
+        melos_meta, split_work_into_scenes(splitter.get_cached_text(melos_meta))
+    )
+    lemon_scenes = splitter.process_work_scenes(
+        lemon_meta, split_work_into_scenes(splitter.get_cached_text(lemon_meta))
+    )
+
+    m0_awase = melos_scenes[0]["awase"]
+    assert m0_awase["f_event_arousal"] >= 1 or m0_awase["f_style_arousal"] >= 1, (
+        f"Melos scene 0 failed high arousal: {m0_awase}"
+    )
+
+    l0_awase = lemon_scenes[0]["awase"]
+    assert l0_awase["f_event_valence"] <= -1 and l0_awase["f_style_valence"] <= -1, (
+        f"Lemon scene 0 failed negative valence: {l0_awase}"
+    )
+
+    # Check across pilot 50 scenes for irony > 0 and detachment > 0
+    pilot = splitter.extract_pilot_scenes(5)
+    has_irony = False
+    has_detachment = False
+    for s in pilot:
+        a = s["awase"]
+        vf = a["f_event_valence"] / 2.0
+        vs = a["f_style_valence"] / 2.0
+        af = a["f_event_arousal"] / 2.0
+        as_ = a["f_style_arousal"] / 2.0
+
+        if (-vf * vs) > 0.0:
+            has_irony = True
+        if abs(vf) * max(0.0, af - as_) > 0.0:
+            has_detachment = True
+
+    assert has_irony, "No irony > 0 found in pilot scenes"
+    assert has_detachment, "No detachment > 0 found in pilot scenes"
+
+
+def test_fix2_sadame_characters_and_edges(splitter: AozoraCorpusSplitter):
+    """Gate 2 Fix 2: HW-06 closed-class character stalks and dialogue edges.
+
+    - >= 30 of 50 pilot scenes must have non-empty character_stalks.
+    - Dialogue scenes must have non-empty dialogue_edges with strict schema {u, v, confidence}.
+    - Recurring characters must have varying axes_q across scenes (intra_variance > 0).
+    """
+    pilot = splitter.extract_pilot_scenes(5)
+    non_empty_stalks = [s for s in pilot if len(s["sadame"]["character_stalks"]) > 0]
+    assert len(non_empty_stalks) >= 30, (
+        f"Expected >= 30 scenes with stalks, got {len(non_empty_stalks)}"
+    )
+
+    dialogue_scenes = [s for s in pilot if "「" in s["text"]]
+    scenes_with_edges = [s for s in dialogue_scenes if len(s["sadame"]["dialogue_edges"]) > 0]
+    assert len(scenes_with_edges) >= 15, (
+        f"Expected >= 15 dialogue scenes with edges, got {len(scenes_with_edges)}"
+    )
+
+    for s in pilot:
+        for edge in s["sadame"]["dialogue_edges"]:
+            assert set(edge.keys()) == {"u", "v", "confidence"}, (
+                f"DialogueEdge has invalid keys: {edge.keys()}"
+            )
+            assert isinstance(edge["u"], str) and len(edge["u"]) > 0
+            assert isinstance(edge["v"], str) and len(edge["v"]) > 0
+            assert isinstance(edge["confidence"], int) and 0 <= edge["confidence"] <= 255
+
+    # Check varying axes_q across scenes for same character
+    works = splitter.load_manifests()
+    melos_meta = [w for w in works if w["work_id"] == "001567"][0]
+    melos_scenes = splitter.process_work_scenes(
+        melos_meta, split_work_into_scenes(splitter.get_cached_text(melos_meta))
+    )
+    melos_axes_seq = [
+        c["axes_q"]
+        for s in melos_scenes
+        for c in s["sadame"]["character_stalks"]
+        if c["name"] == "メロス"
+    ]
+    assert len(melos_axes_seq) >= 2, "Expected メロス in at least 2 scenes"
+    unique_axes = {tuple(x) for x in melos_axes_seq}
+    assert len(unique_axes) >= 2, f"Expected varying axes_q for メロス, got identical: {unique_axes}"
+
+
+def test_fix3_kamae_opened_and_closed_hooks(splitter: AozoraCorpusSplitter):
+    """Gate 2 Fix 3: kamae opened_hooks and closed_hook_ids.
+
+    - Opened hooks and closed hooks must be non-empty across pilot scenes / corpus.
+    - HookRef must be strictly {id: int, label: str}, closed_hook_ids must be list of int.
+    """
+    pilot = splitter.extract_pilot_scenes(5)
+    opened = [s for s in pilot if len(s["kamae"]["opened_hooks"]) > 0]
+    assert len(opened) >= 10, f"Expected >= 10 scenes with opened hooks, got {len(opened)}"
+
+    for s in pilot:
+        for h in s["kamae"]["opened_hooks"]:
+            assert set(h.keys()) == {"id", "label"}
+            assert isinstance(h["id"], int) and h["id"] >= 1
+            assert isinstance(h["label"], str) and len(h["label"]) > 0
+        for cid in s["kamae"]["closed_hook_ids"]:
+            assert isinstance(cid, int) and cid >= 1
+
+
+def test_fix4_nagare_continuous_logp_and_mood_diversity(splitter: AozoraCorpusSplitter):
+    """Gate 2 Fix 4: Continuous log-probabilities and mood diversity.
+
+    - event_logp and mood_logp must be length 16 and all <= 0.0 finite floats.
+    - mood_top3 must be diverse (M01, M02, M03 must not dominate excessively).
+    """
+    pilot = splitter.extract_pilot_scenes(5)
+    first_rank_moods = []
+
+    for s in pilot:
+        nag = s["nagare"]
+        assert "event_logp" in nag and nag["event_logp"] is not None
+        assert "mood_logp" in nag and nag["mood_logp"] is not None
+
+        elp = nag["event_logp"]
+        mlp = nag["mood_logp"]
+
+        assert len(elp) == 16
+        assert len(mlp) == 16
+        assert all(isinstance(x, (float, int)) and math.isfinite(x) and x <= 0.0 for x in elp)
+        assert all(isinstance(x, (float, int)) and math.isfinite(x) and x <= 0.0 for x in mlp)
+
+        first_rank_moods.append(nag["mood_top3"][0]["code"])
+
+    unique_first_moods = set(first_rank_moods)
+    assert len(unique_first_moods) >= 4, (
+        f"Expected at least 4 distinct 1st-rank mood codes, got {len(unique_first_moods)}: {unique_first_moods}"
+    )
+

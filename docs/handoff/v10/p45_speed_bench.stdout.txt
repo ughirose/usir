@@ -1,0 +1,49 @@
+config.json:   0%|          | 0.00/728 [00:00<?, ?B/s]
+tokenizer_config.json:   0%|          | 0.00/9.73k [00:00<?, ?B/s]
+vocab.json:   0%|          | 0.00/2.78M [00:00<?, ?B/s]
+merges.txt:   0%|          | 0.00/1.67M [00:00<?, ?B/s]
+tokenizer.json: reconstructing file:   0%|          |  0.00B / 11.4MB            
+tokenizer.json: downloading bytes:           |  0.00B            
+model.safetensors.index.json:   0%|          | 0.00/32.9k [00:00<?, ?B/s]
+Downloading bytes:           |  0.00B            
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]
+Loading weights:   0%|          | 0/399 [00:00<?, ?it/s]
+generation_config.json:   0%|          | 0.00/239 [00:00<?, ?B/s]
+[     84s] loaded Qwen/Qwen3-8B in 76s
+[    103s] {"label": "eager", "batch": 1, "wall_s": 17.052789355000186, "ms_per_step": 66.61245841796948, "tok_per_s": 15.012206781580643, "peak_mem_gb": 15.316738605499268}
+[    123s] {"label": "eager", "batch": 12, "wall_s": 19.354026369000167, "ms_per_step": 75.6016655039069, "tok_per_s": 158.72666190640828, "peak_mem_gb": 15.895525455474854}
+[    147s] {"label": "eager", "batch": 24, "wall_s": 22.696407678000014, "ms_per_step": 88.65784249218756, "tok_per_s": 270.7036323618506, "peak_mem_gb": 16.51719045639038}
+[    175s] {"label": "eager", "batch": 48, "wall_s": 26.693835885000226, "ms_per_step": 104.27279642578213, "tok_per_s": 460.3309937521891, "peak_mem_gb": 17.77052402496338}
+[    310s] {"label": "static_cache", "batch": 1, "wall_s": 81.4199104950003, "ms_per_step": 318.0465253710949, "tok_per_s": 3.14419407296843, "peak_mem_gb": 15.363028526306152}
+[    437s] {"label": "static_cache", "batch": 12, "wall_s": 21.748930449, "ms_per_step": 84.95675956640625, "tok_per_s": 141.24832516264027, "peak_mem_gb": 15.8841233253479}
+[    570s] ERROR compile Qwen/Qwen3-8B: RuntimeError('Error: accessing tensor output of CUDAGraphs that has been overwritten by a subsequent run. Stack trace: File "/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py", line 943, in wrapper\n    output = func(self, *args, **kwargs)\n  File "/u
+config.json:   0%|          | 0.00/726 [00:00<?, ?B/s]
+tokenizer_config.json:   0%|          | 0.00/9.73k [00:00<?, ?B/s]
+vocab.json:   0%|          | 0.00/2.78M [00:00<?, ?B/s]
+merges.txt:   0%|          | 0.00/1.67M [00:00<?, ?B/s]
+model.safetensors.index.json:   0%|          | 0.00/32.8k [00:00<?, ?B/s]
+Downloading bytes:           |  0.00B            
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]
+generation_config.json:   0%|          | 0.00/239 [00:00<?, ?B/s]
+[    606s] loaded Qwen/Qwen3-4B in 33s
+[    621s] {"label": "eager", "batch": 1, "wall_s": 14.525971396000386, "ms_per_step": 56.74207576562651, "tok_per_s": 17.623606230595197, "peak_mem_gb": 7.603640079498291}
+[    637s] {"label": "eager", "batch": 12, "wall_s": 15.05177530400033, "ms_per_step": 58.79599728125129, "tok_per_s": 204.0955261392688, "peak_mem_gb": 8.181226253509521}
+[    656s] {"label": "eager", "batch": 48, "wall_s": 18.43635230000018, "ms_per_step": 72.0170011718757, "tok_per_s": 666.5092855705453, "peak_mem_gb": 10.058905601501465}
+config.json:   0%|          | 0.00/726 [00:00<?, ?B/s]
+tokenizer_config.json:   0%|          | 0.00/9.73k [00:00<?, ?B/s]
+vocab.json:   0%|          | 0.00/2.78M [00:00<?, ?B/s]
+merges.txt:   0%|          | 0.00/1.67M [00:00<?, ?B/s]
+model.safetensors.index.json:   0%|          | 0.00/25.6k [00:00<?, ?B/s]
+Downloading bytes:           |  0.00B            
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]
+generation_config.json:   0%|          | 0.00/239 [00:00<?, ?B/s]
+[    678s] loaded Qwen/Qwen3-1.7B in 21s
+[    690s] {"label": "eager", "batch": 1, "wall_s": 11.21471953299988, "ms_per_step": 43.80749817578078, "tok_per_s": 22.827142421770517, "peak_mem_gb": 3.254045009613037}
+[    702s] {"label": "eager", "batch": 12, "wall_s": 11.653216706999956, "ms_per_step": 45.52037776171858, "tok_per_s": 263.6181989265405, "peak_mem_gb": 3.72627592086792}
+[    716s] {"label": "eager", "batch": 48, "wall_s": 13.810420584999974, "ms_per_step": 53.94695541015615, "tok_per_s": 889.762909418303, "peak_mem_gb": 5.257200241088867}
+ARCHIVE_B64 3c237faf H4sIABIS7moC/7VW224bNxD9FUIvTXOhyCGHFwN9SJq2CNAL2qJ9qQthtaYtwavVZi8WDMP/3sNVgFpaOU2QWg/Srjjkzpk558zezbpylTbF7EzMGsuLrknpYrFMdbla3OjZSzGr027Rb69T3SGG2OGvdhhv/rqbVcUyVXlvKq5Sm8OXRV+u8I/G9a6oqkWO1F4qJh+iYVZK6ZBP2XSLJrWLrk8NQpyTTpPlYLWPLtqACDx2H5KPYKk0kXI+aA7KWYOAJhXXi03aLK6W+xCjnTfBKbYxkstnbLYX+wx/3aV6nr/Mq/AmZ1pti4vxaM/SWTI2UMBzo+f7l+Kj0OgAW5SGrSJnXMzYnJ9gyw/AggN4E5WLE2hBenLOaSxahTROQQuRmdgyW28D26eBRvYhNCLpIjLyKLrK2OwEWgjSsQ+WbCQd/EiPh9jIK+mVcYaM04GVm0JzkrUHdMsO1TFP1LSRUP8iA9uiCYZDyIQkmhJSKyvJE8hoCQhJmyNo1ilpjIrReAb2qKfQvPQexAc7bHTmf4LW9UW/LhdlAeE+qrigpdUxAkTMAM0EntFBKutAKeO1ivaYlEZqixPQfIouPKI2ZxQFBvWV00wfRdelfmj2dDcWHY/sNHiFymr6RHwHsiMtoYNolB1TP2KllTjfM75AX0d8rDirJdlgiLUjRJA/qTh4ERkEGevjp4LLzGKPooPMnqw3/2UmB16CyhBHr010uWsnfJIdcJNC4Rwjd9bH0Lx00BpAGwX8Ok6hIQKKtEp5tD3QSNxT2OwhLQ1JDxtTxjrUxXH8PJuEf0PnntGxDG3KyOyCkSOqBkqwpmNGEgSpsgk6lAfmPnXJIDW2EvptGJH0RMAOrQQ6shACo96jR4ap/RNGl8cSbA4W6Y9wwfgl0oWQGGZh+YTUFGoXomJkyXBhx0/UsQNckIi2MGY2FGMMU1zWyKA8KKSzjJU/HtkYH4G8xmwgnX1QT6loJEYanF+piK4q4x8BBrEfQiMl2YTgAqaqyzT/PDJqiNQQZjWmMT481ZllSBEJee9y23gCzhm8sAQdA7gIDHwCG4Y6wYRIBecjPRW0IzqiKXB9AmFshuanM5uNjBYns9XgE5z7CFoIEbyhiKmgg1FTPjK65gljEwcEZPoFXfsby6ltt+2HF8rHPfagkyeHxYtyu2nW1Tg0xjNzwG9D3a836bt8/+yr8edMFGWZum5dX4ke77XbVmyHvhl6sb0U3/7x9vUPbdGsOtGvil6sik4sU6rF9ia1u3bdY4dY3opCdMOyS++HVPcCL8RS/N4X5bXo26JMZ+J75CHOZ/Oha+fVtiyqebVezpvbfrWtMVrN/GLd9a8a7EA7uzl21d3ltt2ktpsP/brq5lepTu26lM3tOQBV6zqJmMfwuhY75IdmnZ/XAp8PuX8jLoe6fNal6vKleF60Vx1+nl/v8tXXY+iX5DT2pZu/zw3Z36B6i/H2YYY2v9wiQ2zDgy8OMuzOxJuiSz/lzb/M9p2vb9Cju9lVM+Re/fznu7fvXosf7WxkZDv2e0YSclUvygEGMS48yCuvg40w2Nn9uKcv9jLwmINBRdifisaFeP8Pr38jPOkMAAA=
