@@ -1,7 +1,66 @@
 # USIR v5 実装引継ぎ台帳 (HANDOFF)
-**最終更新日時**: 2026-11-11 20:50:00 JST  
+**最終更新日時**: 2026-11-12 10:20:00 JST  
 **ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`)  
 **関連リポジトリ**: `C:\dev\nishiki`（Lane B 境界線厳守・変更ゼロ保証）
+
+---
+
+## 0. Stage B-5 改訂実装・実測セッション（2026-11-12 実施）
+
+本セッションでは、Orion策定・Fable査読統合の正本仕様に基づき、以下のタスク1〜4を一気通貫で完遂した。
+
+### 1. タスク1：Python 側 ortho_v2 移植・突合・M1 感受性監査・fisher_v2 出力
+- **全11,723窓完全突合**:
+  - `python/usir_py/orthographic_prior.py` に `ortho_matrix_ext_v2` / `ortho_matrix_narr_v2` / `content_char_count` 等を追加（既存 v1 関数・`fisher_v1.json` は完全凍結）。
+  - 青空文庫106作品・全11,723窓において、Rust 側 `nishiki-hardcore ortho` との最大絶対差が **$8.8818 \times 10^{-16} < 10^{-12}$** で完全一致（倍精度マシンイプシロン精度）。
+  - 成果物: `docs/handoff/v10/ortho_v2_parity_result.json`
+- **z0〜z23（24次元）の M1 感受性監査**:
+  - 全11,723窓で読点削除（M1）時の変動量を測定。**24次元すべてが読点削除で変動（不変次元 0 次元）**。
+  - 特に z16（$\max \Delta = 6.61$）、z04（$\max \Delta = 0.81$）が節分割と分散乗算により顕著に変動。
+- **完全不変サブセット `v2_28` の評価**:
+  - LOWO (46): 28/46 (60.87%, Wilson 95%: [0.465, 0.736])
+  - Held-out (60): 45/60 (75.00%, Wilson 95%: [0.628, 0.842])
+  - **M1 問い合わせ予測ラベル反転数: 0/46 (0.0%), Held-out 0/60 (0.0%)**。読点全削除攻撃に対する完全耐性を実証。
+  - 正本 A55（LOWO 34/46, Held 50/60, M1反転 27/46）、Z24+v2_28（52D：LOWO 34/46, Held 48/60, M1反転 30/46）、Z24単体（24D：LOWO 26/46, Held 40/60, M1反転 36/46）との並行比較表を確定。
+- **実験用アーティファクト出力**:
+  - `artifacts/style_atlas/fisher_v2.json` 出力完了（正本 `fisher_v1.json` は無変更）。
+  - 成果物: `docs/handoff/v10/z24_m1_sensitivity_and_fisher_v2.json`
+
+### 2. タスク2：Level 3「固定境界ペア差分」と U6 ガード
+- **固定境界ペア差分 $\Delta z_{\text{paired}}$ 実測**:
+  - `experiments/usir_v5_paired_micro_diff_level3.py` を新設。場面境界ジッターノイズ $\sigma_{\text{jitter}}$ を数学的にゼロに相殺。
+  - Tier A 既知 STYLE_POLISH 28件の実測において、同一場面内ブートストラップ揺らぎ $\sigma_{\text{paired}} = 1.0963$ に対し、$2\sigma_{\text{paired}}$ ゲート超過率は **0/28 件（0.0%）**。微小推敲差分がサンプリングノイズ床に埋没することを客観開示。
+  - 目標作家プロトタイプ $z^*$ への方向余弦:
+    - 実推敲差分: 平均 $+0.2913$（中央値 $+0.3450$）
+    - ランダム等方摂動: 平均 $+0.0999$（中央値 $+0.0473$）
+    - 逆方向劣化摂動: 平均 $-0.2913$（中央値 $-0.3450$）
+  - Wilcoxon 符号順位検定:
+    - 実推敲 vs 逆方向劣化: 統計量 297.0, **$p = 0.00473 < 0.01$**（極めて有意に劣化方向を上回る）。
+    - 実推敲 vs ランダム摂動: 統計量 253.0, **$p = 0.06207$**（マージナル、有意水準 0.05 にはわずかに届かず）。
+- **U6 分離器ガード実装と誤爆実測**:
+  - `python/usir_py/v5/u6_guards.py` に数詞ガード（値正規化・表記ゆれ対応）・否定ガード（助動詞限定・二重否定除外）を実装。
+  - 単体テスト `python/tests/v5/test_u6_guards.py`（6件全パス）。
+  - 既知 28 件の STYLE_POLISH ペアでの誤爆（誤却下）は **0 件（0.0%）**。
+  - 成果物: `docs/handoff/v10/paired_micro_diff_level3_result.json`
+
+### 3. タスク3：HW-22／24／25 Python 試作と青空文庫 106 作品実測
+- **プロトタイプ実装**: `python/usir_py/v5/narrative_pacing_and_metaphor.py`（単体テスト全パス）。全定数は未較正初期値（$\kappa=1.35, \gamma=1.5, \epsilon_0=0.1$）。
+- **青空文庫全 11,723 窓での ANOVA 分析と信号強度判定**:
+  - **HW-22（比喩跳躍距離 $\mathcal{D}_{\text{leap}}$）**: ANOVA $F=7.52, p=4.75 \times 10^{-11}$, 効果量 $\eta^2 = 0.0057$（**0.57%**） $\to$ **WEAK_SIGNAL**。比喩の局所スパイク性により窓内ノイズに埋没。**Rust 移植見送り**。
+  - **HW-24（章末引き強度 $\mathcal{C}_{\text{cliff}}$）**: ANOVA $F=13.94, p=1.39 \times 10^{-22}$, 効果量 $\eta^2 = 0.0106$（**1.06%**） $\to$ **WEAK_SIGNAL**。機械的スライス窓末尾では窓内ノイズに埋没。**Rust 移植見送り**。
+  - **HW-25（設定開示結合比 $\Gamma_{\text{UID}}$）**: ANOVA $F=150.44, p=2.88 \times 10^{-270}$, 効果量 $\eta^2 = 0.1036$（**10.36%**） $\to$ **MODERATE_SIGNAL**。漢字複合語負荷 vs 会話・動詞運動量の比率は文体リズムとして定常的な作家間差を保持。
+  - 成果物: `docs/handoff/v10/narrative_pacing_prototype_results.json`
+
+### 4. タスク4：Gate 3a（層C現代小説）への布石棚卸し
+- 著作権法第30条の4（情報解析目的利用）、妻の原稿（層B-1）の完全物理隔離、クリーンルーム規約（Entity-Blanking / 非可逆特徴量化）を整理。
+- 既存パイプラインの流用可能性（`ortho_v2`, `extractor_24d`, `PPM` 分布シフト検証は即流用可、ルビ・レイアウト前処理器は要改修）と不足分リストを確定。
+
+### 5. テスト・レポート・同期
+- 単体テスト `pytest python/tests/v5/`: **31 件全パス（100% PASS）**。
+- 総合レポート: `docs/handoff/2026-11-12_usir_v5_stage_b5_revised_report.md` 作成。
+- Google Drive 同期: `F:\マイドライブ\Claude-Sync\inbox\2026-11-12_usir_v5_stage_b5_revised_report.md` にコピー完了。
+
+---
 
 ---
 

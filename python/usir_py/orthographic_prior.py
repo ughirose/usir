@@ -162,3 +162,117 @@ def proposal_from_prior(author: Dict[str, float], reference: Sequence[Dict[str, 
         "steady_max_commas": int(max(1, round(c + float(comma_slack)))), "kappa": float(kappa),
         "hold_bias": float(hold_bias), "push_bias": float(push_bias), "band_ramp": float(band_ramp),
     }
+
+
+# ==============================================================================
+# Orthographic prior v2 (derived layer with content-character denominator)
+# ==============================================================================
+
+ORTHO_EXT_V2_NAMES = tuple(f"v2_{name}" for name in ORTHO_EXT_NAMES)
+NARR_V2_NAMES = tuple(f"v2_{name}" for name in NARR_NAMES)
+V2_COMMA_DIMS = ([2, 3], [2])  # 31D overall: indices [2, 3, 29]
+
+
+def is_content_char(c: str) -> bool:
+    """Content character: alphanumeric, or mask char (U+25A0), or dialogue char (U+25A1)."""
+    return c.isalnum() or c == "\u25a0" or c == "\u25a1"
+
+
+def content_char_count(text: str) -> int:
+    """Count of content characters in text excluding whitespace."""
+    body = re.sub(r"\s", "", text)
+    return sum(1 for c in body if is_content_char(c))
+
+
+def ortho_vector_ext_v2(text: str) -> np.ndarray:
+    """Orthographic prior v2 27-dim vector (content-character denominator)."""
+    body = re.sub(r"\s", "", text)
+    nc = max(sum(1 for c in body if is_content_char(c)), 1)
+
+    sents = [s for s in _SENT_SPLIT.split(body) if sum(1 for c in s if is_content_char(c)) >= 1]
+    if not sents:
+        lens = [float(nc)]
+    else:
+        lens = [float(sum(1 for c in s if is_content_char(c))) for s in sents]
+
+    L = np.asarray(lens, dtype=float)
+    mu = float(L.mean())
+    cv = float(L.std() / mu) if mu > 0 else 0.0
+
+    commas = body.count("、")
+    kanji = len(_KANJI.findall(body))
+    hira = len(_HIRA.findall(body))
+    quotes = sum(body.count(c) for c in "「」『』")
+
+    cntf = float(len(lens))
+    base = [
+        math.log(max(mu, 1.0)),
+        cv,
+        100.0 * commas / nc,
+        commas / max(cntf, 1.0),
+        kanji / nc,
+        hira / nc,
+        quotes / nc,
+    ]
+
+    kana = [100.0 * body.count(c) / nc for c in FUNCTION_KANA]
+
+    m = max(len(sents), 1)
+    counts = [0] * len(FINAL_CHARS)
+    for s in sents:
+        i = len(s)
+        while i > 0 and (s[i - 1] in "。！？!?" or s[i - 1] == "、"):
+            i -= 1
+        if i > 0:
+            last_c = s[i - 1]
+            for idx, fc in enumerate(FINAL_CHARS):
+                if last_c == fc:
+                    counts[idx] += 1
+                    break
+
+    fin = [c / m for c in counts]
+    fin.append(1.0 - sum(fin))
+
+    return np.concatenate([np.asarray(base, dtype=float), np.asarray(kana, dtype=float), np.asarray(fin, dtype=float)])
+
+
+def ortho_vector_narr_v2(text: str) -> np.ndarray:
+    """Narrative-channel v2 4-dim vector (content-character denominator)."""
+    body = re.sub(r"\s", "", text)
+    nc = max(sum(1 for c in body if is_content_char(c)), 1)
+
+    dia = sum(sum(1 for c in m if is_content_char(c)) for m in _DIALOGUE.findall(body))
+    replaced = _DIALOGUE.sub("□", body)
+
+    parts = _SENT_SPLIT.split(replaced)
+    if parts and not re.search(r"[。！？!?]$", parts[-1]):
+        parts = parts[:-1]
+
+    sents = [s for s in parts[1:] if sum(1 for c in s if is_content_char(c)) >= 1]
+    if sents:
+        lens = [float(sum(1 for c in s if is_content_char(c))) for s in sents]
+        L = np.asarray(lens, dtype=float)
+        mean_len = float(L.mean())
+        p90_len = float(np.percentile(L, 90))
+        commas = sum(s.count("、") for s in sents) / len(sents)
+    else:
+        lens = [float(max(sum(1 for c in replaced if is_content_char(c)), 1))]
+        mean_len = lens[0]
+        p90_len = lens[0]
+        commas = float(replaced.count("、"))
+
+    return np.array([
+        math.log(max(mean_len, 1.0)),
+        math.log(max(p90_len, 1.0)),
+        commas,
+        dia / nc,
+    ], dtype=float)
+
+
+def ortho_matrix_ext_v2(windows: Sequence[str]) -> np.ndarray:
+    return np.array([ortho_vector_ext_v2(w) for w in windows], dtype=float).reshape(-1, ORTHO_EXT_DIM)
+
+
+def ortho_matrix_narr_v2(windows: Sequence[str]) -> np.ndarray:
+    return np.array([ortho_vector_narr_v2(w) for w in windows], dtype=float).reshape(-1, NARR_DIM)
+
