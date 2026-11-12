@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "title": "U6 Guards Cross-Language Test Vectors (32 Pairs)",
-    "version": "1.1",
-    "description": "Fixed input-output fixture covering numeral changes, orthography variation, negation flips, double negation, 4 closed-class false positive exclusions, fraction/ratio patterns, and single-unit kanji numerals.",
-    "n_vectors": 32,
-    "pass_count": 32,
+    "title": "U6 Guards Cross-Language Test Vectors (38 Pairs)",
+    "version": "1.2",
+    "description": "Fixed input-output fixture covering numeral changes, orthography variation, negation flips, double negation, 4 closed-class false positive exclusions, fraction/ratio patterns, and single-unit kanji numerals. Added 万が一 closed-class exclusion and boundary pairs.",
+    "n_vectors": 38,
+    "pass_count": 38,
     "calibrated": false,
     "threshold_calibration_note": "Logic is fixed across 32 vectors, but surface divergence thresholds (min_jaccard: 0.55, max_char_change: 0.25) remain uncalibrated initial heuristics."
   },
@@ -565,6 +565,110 @@
       ],
       "nums_after": [
         100
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.0
+    },
+    {
+      "id": 33,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "万が一の事態に備えておく。",
+      "text_after": "万一の事態に備えておく。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.0769
+    },
+    {
+      "id": 34,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "万が一の場合を想定して行動する。",
+      "text_after": "万一の場合を想定して行動する。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.0625
+    },
+    {
+      "id": 35,
+      "category": "numeral_exclusion_boundary",
+      "text_before": "万が一の事故に備える。",
+      "text_after": "百件の事故に備える。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NUMERAL_MISMATCH: [] vs [100]",
+      "nums_before": [],
+      "nums_after": [
+        100
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 36,
+      "category": "numeral_exclusion_boundary",
+      "text_before": "万が一にも油断してはならない。",
+      "text_after": "万一にも油断してはならない。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 1,
+      "pol_after": 1,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.0667
+    },
+    {
+      "id": 37,
+      "category": "negation_flip_boundary",
+      "text_before": "万が一の事態が発生した。",
+      "text_after": "万が一の事態が発生しなかった。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NEGATION_FLIP: 0 vs 1",
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 1,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 38,
+      "category": "numeral_identical_variation",
+      "text_before": "万人に一人の逸材だ。",
+      "text_after": "10000人に1人の逸材だ。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [
+        10000,
+        1
+      ],
+      "nums_after": [
+        10000,
+        1
       ],
       "pol_before": 0,
       "pol_after": 0,

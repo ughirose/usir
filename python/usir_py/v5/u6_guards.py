@@ -40,6 +40,7 @@ _IDIOM_PREFIX_EXCLUSIONS = (
     "一通り", "一旦", "一応", "一緒", "一層", "一向", "一斉",
     "一般", "一途", "一見", "一部", "一様", "一同", "万事",
     "百面相", "千差万別", "千載一遇", "四角", "三角", "二重",
+    "万が一",
 )
 
 # Time counters/suffixes that indicate "十分" is temporal (10 minutes/parts) rather than adverbial "sufficiently"
@@ -52,6 +53,7 @@ _NUMERAL_EXCLUSIONS = {
     "一般", "万一", "一途", "一見", "一番", "一部", "一様", "唯一", "一同",
     "万事", "百面相", "千差万別", "千載一遇", "四角", "三角", "二重",
     "一通り", "一旦", "一応", "一緒", "一層", "一向", "一斉",
+    "万が一",
 }
 
 
@@ -135,8 +137,10 @@ def extract_numerals_with_spans(text: str) -> List[Tuple[int, Tuple[int, int]]]:
         if any(rest_from_start.startswith(p) for p in _IDIOM_PREFIX_EXCLUSIONS):
             continue
 
-        # Check surrounding idioms like 唯一, 万一
+        # Check surrounding idioms like 唯一, 万一, 万が一
         if start > 0 and text[start - 1:end] in ("唯一", "万一"):
+            continue
+        if start >= 2 and text[start - 2:end] == "万が一":
             continue
 
         # "一番" vs "一番目": ordinal 一番目 is allowed as numeral 1, bare 一番 is adverbial
@@ -167,11 +171,14 @@ def extract_numerals(text: str) -> List[int]:
     """Extract list of parsed numeral values from text in sequential order.
 
     Excludes:
-    - Fixed idioms: 一通り, 一旦, 一応, 一緒, 一層, 一向, 一斉, 万一, 唯一, 一番 (not 一番目), etc.
+    - Fixed idioms: 一通り, 一旦, 一応, 一緒, 一層, 一向, 一斉, 万一, 万が一, 唯一, 一番 (not 一番目), etc.
     - Adverbial 十分: when not immediately followed by counter/time suffix (間, 後, 前, etc.)
       or fraction indicator (分の).
     """
     return [val for val, _ in extract_numerals_with_spans(text)]
+
+
+extract_numbers = extract_numerals
 
 
 def mask_numeral_spans(text: str, spans: Sequence[Tuple[int, int]], placeholder: str = "_NUM_") -> str:

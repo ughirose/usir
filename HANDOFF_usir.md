@@ -1,11 +1,59 @@
 # USIR v5 実装引継ぎ台帳 (HANDOFF)
-**最終更新日時**: 2026-11-12 14:40:00 JST  
+**最終更新日時**: 2026-11-12 17:25:00 JST  
 **ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`)  
 **関連リポジトリ**: `C:\dev\nishiki`（Lane B 境界線厳守・変更ゼロ保証）
 
 ---
 
-## 0. Stage B-7 実装・実測セッション（2026-11-12 実施）
+## 0. Stage B-8 改訂・総合検証セッション（2026-11-12 実施）
+
+本セッションでは、Stage B-7 における残存課題を一気通貫で解決し、U6 閉鎖系除外同期、Gate 3a 現代散文分布シフト実測、改稿ペア拡充（86件）・U6 ROC 較正・二階層 Level 3b 残差検定、および Kamae $\eta^2=1.00$ の構造解明を完遂した。
+
+### 1. タスク1：U6「万が一」閉鎖系除外同期と 38 件テストベクトル確定
+- **数詞除外同期**:
+  - `python/usir_py/v5/u6_guards.py` に「万が一」「万一」を完全除外設定（`extract_numerals("万が一の事態") == []`）。
+  - `extract_numbers = extract_numerals` のエイリアス互換性を保証。
+- **38件テストベクトル確定**:
+  - `docs/handoff/v10/u6_guards_test_vectors.json` を 38 件に更新（SHA-256: `4AC04322811EB30776260F8EC2DEA378FF962A5C44180823218973DBAA3F3EF7`）。
+  - `F:\マイドライブ\Claude-Sync\inbox\u6_guards_test_vectors.json` に同期完了。
+  - テスト `pytest python/tests/v5/`: **46 件全 PASS**。
+
+### 2. タスク2：Gate 3a 現代散文マルチレジスター分布シフトの実測
+- **ベンチマークデータ生成**:
+  - `scripts/build_tier_c_modern_benchmark.py` を修正（全サンプル 408〜590 字に調整）。
+  - `data/usir_v5_eval/tier_c_modern_benchmark.jsonl`（4 レジスター × 8 サンプル = 32 件、クリーンルーム規格・生テキスト完全非保持）を生成（SHA-256: `45F5F5D45895F591D075F432DE5AA16F67CA511E0FCE1486741301084E0642B1`）。
+- **分布シフト解析結果**:
+  - スクリプト: `experiments/gate3a_modern_shift_analysis.py`
+  - 成果物: `data/usir_v5_eval/usir_v5_gate3a_modern_shift_report.json`（SHA-256: `4FD446ADD2C30B964F36A82D735F01BF7B8D4CC3B20660284A80BD77A6583E57`）。
+  - PPM bits/token: R1=4.0672 ($d=-3.19$), R2=4.1087 ($d=-2.87$), R3=4.0636 ($d=-3.07$), R4=4.7203。
+  - 閉クラス被覆率: R1=58.88%, R2=56.74%, R3=55.64%, R4=63.22%。
+  - ortho_v2 31D 列中心化 $\eta^2$: Raw=0.4554 $\to$ Standardized=0.4429。
+  - **死角・限界の冷徹な開示**: 初期ヒューリスティック「被覆率 85% 以上」は過大であり、自然日本語散文は 55%〜63% が実測値であるため、未較正初期値であることを明記（本番推奨閾値: 52.0%）。
+
+### 3. タスク3：改稿ペア拡充・U6 ROC 較正・二階層 Level 3b 残差検定
+- **一次テキスト改稿 86 ペア構築**:
+  - `data/usir_v5_eval/u6_calibration_and_level3_dataset.jsonl`（SHA-256: `93C689E44D68DFBB711DDA62F5F4A99E3551FC82789549DE4DFCC0FCE1C28A4D`）。
+  - Class A (ミクロ推敲 42 件), Class B (マクロ改稿 22 件: D10 16件 + 賢治異稿等 6件), Class C (内容変更 22 件)。LLM 合成ペア完全不使用。
+- **U6 Guards ROC 較正**:
+  - 層化 2 分割（43/43 件）グリッドサーチ。
+  - Scope 1 (ミクロ推敲境界): 初期値 (0.55, 0.25) の Recall=0.4286 (低再現率) を特定。最適値 (min_jaccard=0.35, max_char_change=0.45) で Precision=0.9286, Recall=0.6190, **F1=0.7429**, FPR=0.0909（楽観バイアス -0.0586）。
+  - Scope 2 (全改稿境界): マクロ改稿を含めると Recall=0.4062 に低下。表層 Jaccard 単独でのマクロ改稿検出限界を冷徹に開示。
+- **二階層 Level 3b 残差検定（H1 & H2）**:
+  - スクリプト: `experiments/scale_separated_level3.py`
+  - 成果物: `data/usir_v5_eval/usir_v5_stage_b8_scale_separation_and_gate3a.json`（SHA-256: `B6441FE5B8EF1787BC89847BD11F64661D6A07D3A9DCAF770F008DE9CE915DC9`）。
+  - H1 (Class A, n=42): ortho28 (vs random $p=0.6380$, vs other $p=0.2280$), ortho28+kasane11 (vs random $p=0.3330$, vs other $p=0.2280$)。準平行 0 件。
+  - H2 (Class B, n=22): 6pole (vs random $p=0.4826$, vs other $p=0.6250$), 6pole+HW-25 (vs random $p=0.3369$, vs other $p=0.6250$)。準平行 0 件。
+  - **科学的客観結論**: コーパス規範回帰方向を除去した純残差空間ではランダム摂動や他者方向と有意差を持たず（$p > 0.20$）、局所残差空間での個別作家引き込み仮説は非支持。
+- **Kamae $\eta^2=1.00$ の構造解明と撤回**:
+  - D10 の 4 原作において、フック判定が 0 個（Melos, Sangetsu）または 1 個（Ginga, Prince）の離散値に固定化され、トランスレーター定型句がフック開閉に影響を与えなかったことによる $SS_{\text{trans}}=0$ の「構成的アーティファクト」であることをコードから解明。「完全意味保存」としての成果引用を正式撤回。
+
+### 4. 総合レポート同期
+- 総合報告書: `docs/handoff/2026-11-12_usir_v5_stage_b8_revised_report.md` 作成。
+- Google Drive 同期: `F:\マイドライブ\Claude-Sync\inbox\2026-11-12_usir_v5_stage_b8_revised_report.md` に同期完了。
+
+---
+
+## 0.1 Stage B-7 実装・実測セッション（2026-11-12 実施）
 
 本セッションでは、Orion 指摘1〜3への対応（同義反復の撤回、空間再編、Level 3a/3b 分離、本人特異残差検定の実装実測）および U6 ガードの表記変換保護・端ケース拡充を一気通貫で完遂した。
 

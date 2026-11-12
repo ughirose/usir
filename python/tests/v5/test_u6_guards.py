@@ -5,6 +5,7 @@ from usir_py.v5.u6_guards import (
     check_negation_guard,
     extract_negation_polarity,
     extract_numerals,
+    extract_numbers,
     parse_japanese_numeral,
     u6_classify,
 )
@@ -84,6 +85,26 @@ def test_numeral_closed_class_idiom_exclusions():
     res = u6_classify("一通りの確認を終えた。", "ひととおりの確認を終えた。")
     assert res["label"] == "STYLE_POLISH"
     assert res["guard_passed"] is True
+
+
+def test_numeral_closed_class_man_ga_ichi_exclusion():
+    # 万が一 / 万一 should extract [] (not [10000, 1] or [10000])
+    assert extract_numerals("万が一の事態に備える") == []
+    assert extract_numbers("万が一の事態に備える") == []
+    assert extract_numerals("万が一の場合") == []
+    assert extract_numbers("万が一の場合") == []
+    assert extract_numerals("万一の事態に備える") == []
+    assert extract_numbers("万一の事態に備える") == []
+
+    # Idiom polish: 万が一 -> 万一
+    res = u6_classify("万が一の事態に備えておく。", "万一の事態に備えておく。")
+    assert res["label"] == "STYLE_POLISH"
+    assert res["guard_passed"] is True
+
+    # Real numeral vs 万が一: 万が一 vs 百件 -> mismatch
+    res_mismatch = u6_classify("万が一の事故に備える。", "百件の事故に備える。")
+    assert res_mismatch["label"] == "CONTENT_REWRITE"
+    assert res_mismatch["guard_passed"] is False
 
 
 def test_numeral_adverbial_juuppun_exclusion():
@@ -205,7 +226,7 @@ def test_numeral_single_unit_kanji_hyaku():
     assert res_change["guard_passed"] is False
 
 
-def test_u6_test_vectors_32_fixture_pass():
+def test_u6_test_vectors_fixture_pass():
     import json
     from pathlib import Path
 
@@ -213,9 +234,10 @@ def test_u6_test_vectors_32_fixture_pass():
     assert fixture_path.exists(), f"Missing fixture file: {fixture_path}"
 
     data = json.loads(fixture_path.read_text(encoding="utf-8"))
-    assert data["metadata"]["n_vectors"] == 32
+    n_vecs = data["metadata"]["n_vectors"]
+    assert n_vecs == 38, f"Expected 38 vectors, got {n_vecs}"
     assert data["metadata"]["calibrated"] is False
-    assert len(data["test_vectors"]) == 32
+    assert len(data["test_vectors"]) == 38
 
     for vec in data["test_vectors"]:
         res = u6_classify(vec["text_before"], vec["text_after"])

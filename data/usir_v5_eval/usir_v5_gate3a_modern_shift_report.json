@@ -1,0 +1,330 @@
+{
+  "metadata": {
+    "title": "USIR v5 Gate 3a: Modern Prose Multi-Register Distribution Shift Analysis",
+    "version": "1.0",
+    "benchmark_source": "data/usir_v5_eval/tier_c_modern_benchmark.jsonl",
+    "n_samples": 32,
+    "registers": [
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+    ],
+    "samples_per_register": 8,
+    "tier_c_cleanroom_compliant": true,
+    "raw_text_retained": false
+  },
+  "calibration_audit_notes": {
+    "closed_class_coverage_threshold_audit": {
+      "heuristic_initial_threshold_pct": 85.0,
+      "status": "CALIBRATION_PENDING_EXCESSIVE_INITIAL_HEURISTIC",
+      "empirical_range_observed_pct": [
+        55.64,
+        63.22
+      ],
+      "finding": "Initial uncalibrated threshold (85% coverage) was an excessively optimistic prior. Empirical closed-class grammar skeleton tokens comprise 55-63% in authentic prose (R1: 58.88%, R2: 56.74%, R3: 55.64%, R4: 63.22%). Closed-class coverage does NOT reach 85% in any natural Japanese literary register. Threshold must be calibrated to 52.0% (safely below R3 minimum) for production filtering."
+    },
+    "outlier_rate_threshold_audit": {
+      "heuristic_initial_threshold_pct": 10.0,
+      "status": "MEASURED_AGAINST_R4_BASELINE",
+      "finding": "Outlier rate depends strictly on reference distribution definition. Under R4 3-sigma threshold (7.97): outlier rate = 62.5% [95% CI: 41.7% - 83.3%]. Under Chi2(df=31) p=0.95 threshold (6.71): outlier rate = 83.3% [95% CI: 66.7% - 95.8%]."
+    }
+  },
+  "ppm_cross_entropy_analysis": {
+    "R1": {
+      "register_name": "Modern Colloquial Fiction",
+      "n": 8,
+      "mean_bits_per_token": 4.0672,
+      "std_bits_per_token": 0.1538,
+      "ci_95": [
+        3.9739,
+        4.1653
+      ],
+      "delta_from_r4": -0.6531,
+      "cohens_d_vs_r4": -3.1881,
+      "welch_t_stat": -6.3761,
+      "welch_p_val": 3.8661182508971906e-05,
+      "ks_statistic": 0.875,
+      "ks_p_val": 0.002486402486402486
+    },
+    "R2": {
+      "register_name": "Modern Essay & Criticism",
+      "n": 8,
+      "mean_bits_per_token": 4.1087,
+      "std_bits_per_token": 0.1691,
+      "ci_95": [
+        4.0043,
+        4.2275
+      ],
+      "delta_from_r4": -0.6116,
+      "cohens_d_vs_r4": -2.9013,
+      "welch_t_stat": -5.8026,
+      "welch_p_val": 7.359483568630534e-05,
+      "ks_statistic": 0.875,
+      "ks_p_val": 0.002486402486402486
+    },
+    "R3": {
+      "register_name": "Modern Technical & Business Prose",
+      "n": 8,
+      "mean_bits_per_token": 4.0636,
+      "std_bits_per_token": 0.1678,
+      "ci_95": [
+        3.9585,
+        4.1689
+      ],
+      "delta_from_r4": -0.6567,
+      "cohens_d_vs_r4": -3.1232,
+      "welch_t_stat": -6.2464,
+      "welch_p_val": 3.737367195595825e-05,
+      "ks_statistic": 1.0,
+      "ks_p_val": 0.00015540015540015537
+    },
+    "R4": {
+      "register_name": "Aozora Bunko Colloquial Baseline",
+      "n": 8,
+      "mean_bits_per_token": 4.7203,
+      "std_bits_per_token": 0.2455,
+      "ci_95": [
+        4.5585,
+        4.8808
+      ],
+      "delta_from_r4": 0.0,
+      "cohens_d_vs_r4": 0.0,
+      "welch_t_stat": 0.0,
+      "welch_p_val": 1.0,
+      "ks_statistic": 0.0,
+      "ks_p_val": 1.0
+    }
+  },
+  "closed_class_coverage_analysis": {
+    "R1": {
+      "register_name": "Modern Colloquial Fiction",
+      "n": 8,
+      "mean_coverage_pct": 58.88,
+      "std_coverage_pct": 1.35,
+      "ci_95": [
+        57.98,
+        59.73
+      ],
+      "delta_from_r4_pct": -4.34,
+      "cohens_d_vs_r4": -2.274,
+      "meets_heuristic_85pct": false
+    },
+    "R2": {
+      "register_name": "Modern Essay & Criticism",
+      "n": 8,
+      "mean_coverage_pct": 56.74,
+      "std_coverage_pct": 1.13,
+      "ci_95": [
+        56.03,
+        57.48
+      ],
+      "delta_from_r4_pct": -6.48,
+      "cohens_d_vs_r4": -3.53,
+      "meets_heuristic_85pct": false
+    },
+    "R3": {
+      "register_name": "Modern Technical & Business Prose",
+      "n": 8,
+      "mean_coverage_pct": 55.64,
+      "std_coverage_pct": 1.06,
+      "ci_95": [
+        54.96,
+        56.3
+      ],
+      "delta_from_r4_pct": -7.58,
+      "cohens_d_vs_r4": -4.1783,
+      "meets_heuristic_85pct": false
+    },
+    "R4": {
+      "register_name": "Aozora Bunko Colloquial Baseline",
+      "n": 8,
+      "mean_coverage_pct": 63.22,
+      "std_coverage_pct": 2.34,
+      "ci_95": [
+        61.68,
+        64.75
+      ],
+      "delta_from_r4_pct": 0.0,
+      "cohens_d_vs_r4": 0.0,
+      "meets_heuristic_85pct": false
+    }
+  },
+  "ortho_v2_31d_shift_analysis": {
+    "R1": {
+      "register_name": "Modern Colloquial Fiction",
+      "n": 8,
+      "mean_abs_cohens_d_across_31d": 0.874,
+      "top_shifted_dimensions": [
+        {
+          "dim": 5,
+          "cohens_d": -2.5991
+        },
+        {
+          "dim": 14,
+          "cohens_d": -2.2777
+        },
+        {
+          "dim": 17,
+          "cohens_d": 2.1933
+        },
+        {
+          "dim": 8,
+          "cohens_d": 1.8932
+        },
+        {
+          "dim": 7,
+          "cohens_d": -1.6297
+        }
+      ],
+      "mahalanobis_diag_mean": 6.6375,
+      "mahalanobis_diag_ci95": [
+        6.0695,
+        7.2066
+      ],
+      "mahalanobis_regularized_mean": 8.9726,
+      "mahalanobis_regularized_ci95": [
+        8.0964,
+        9.9969
+      ]
+    },
+    "R2": {
+      "register_name": "Modern Essay & Criticism",
+      "n": 8,
+      "mean_abs_cohens_d_across_31d": 1.3131,
+      "top_shifted_dimensions": [
+        {
+          "dim": 1,
+          "cohens_d": -4.4787
+        },
+        {
+          "dim": 5,
+          "cohens_d": -3.9485
+        },
+        {
+          "dim": 16,
+          "cohens_d": -3.3597
+        },
+        {
+          "dim": 4,
+          "cohens_d": 3.0652
+        },
+        {
+          "dim": 18,
+          "cohens_d": 2.6824
+        }
+      ],
+      "mahalanobis_diag_mean": 8.8513,
+      "mahalanobis_diag_ci95": [
+        8.4126,
+        9.3377
+      ],
+      "mahalanobis_regularized_mean": 11.7022,
+      "mahalanobis_regularized_ci95": [
+        10.8613,
+        12.58
+      ]
+    },
+    "R3": {
+      "register_name": "Modern Technical & Business Prose",
+      "n": 8,
+      "mean_abs_cohens_d_across_31d": 1.6933,
+      "top_shifted_dimensions": [
+        {
+          "dim": 5,
+          "cohens_d": -8.0972
+        },
+        {
+          "dim": 18,
+          "cohens_d": 4.8142
+        },
+        {
+          "dim": 16,
+          "cohens_d": -4.6346
+        },
+        {
+          "dim": 1,
+          "cohens_d": -4.0113
+        },
+        {
+          "dim": 17,
+          "cohens_d": -2.8998
+        }
+      ],
+      "mahalanobis_diag_mean": 11.2173,
+      "mahalanobis_diag_ci95": [
+        10.896,
+        11.5376
+      ],
+      "mahalanobis_regularized_mean": 14.7201,
+      "mahalanobis_regularized_ci95": [
+        14.3143,
+        15.2026
+      ]
+    },
+    "R4": {
+      "register_name": "Aozora Bunko Colloquial Baseline",
+      "n": 8,
+      "mean_abs_cohens_d_across_31d": 0.0,
+      "top_shifted_dimensions": [
+        {
+          "dim": 30,
+          "cohens_d": 0.0
+        },
+        {
+          "dim": 29,
+          "cohens_d": 0.0
+        },
+        {
+          "dim": 28,
+          "cohens_d": 0.0
+        },
+        {
+          "dim": 27,
+          "cohens_d": 0.0
+        },
+        {
+          "dim": 26,
+          "cohens_d": 0.0
+        }
+      ],
+      "mahalanobis_diag_mean": 4.9486,
+      "mahalanobis_diag_ci95": [
+        4.3591,
+        5.6138
+      ],
+      "mahalanobis_regularized_mean": 2.8144,
+      "mahalanobis_regularized_ci95": [
+        2.7638,
+        2.8698
+      ]
+    }
+  },
+  "column_centering_and_variance_analysis": {
+    "ortho_v2_31d": {
+      "eta2_raw": 0.4554,
+      "eta2_column_centered": 0.4554,
+      "eta2_standardized": 0.4429,
+      "centering_effect_note": "Raw eta^2=0.4554 is identical to column-centered eta^2=0.4554 because column centering shifts origin without altering between-group vs total variance ratio. Standardizing column scales adjusts eta^2 to 0.4429."
+    },
+    "integrated_33d_features": {
+      "eta2_raw": 0.6054,
+      "eta2_standardized": 0.4632,
+      "interpretation": "Raw 33D feature matrix has eta^2=0.6054 (dominated by coverage % scale). After full column standardization (Z-score), eta^2_register becomes 0.4632."
+    },
+    "distance_structure_and_outliers": {
+      "baseline_r4_diag_mean": 4.9486,
+      "baseline_r4_diag_std": 1.0066,
+      "outlier_rate_3sigma_pct": 62.5,
+      "outlier_rate_3sigma_ci95_pct": [
+        41.67,
+        83.33
+      ],
+      "outlier_rate_chi2_p95_pct": 83.33,
+      "outlier_rate_chi2_p95_ci95_pct": [
+        66.67,
+        95.83
+      ]
+    }
+  }
+}

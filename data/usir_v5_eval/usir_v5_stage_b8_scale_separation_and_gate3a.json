@@ -1,0 +1,415 @@
+{
+  "metadata": {
+    "title": "USIR v5 Stage B-8: Scale Separation Level 3b & U6 ROC Calibration Report",
+    "version": "1.0",
+    "timestamp": "2026-11-12 17:22:24",
+    "dataset_file": "data\\usir_v5_eval\\u6_calibration_and_level3_dataset.jsonl",
+    "n_pairs": 86,
+    "class_distribution": {
+      "Class_A_micro_polish": 42,
+      "Class_B_macro_revision": 22,
+      "Class_C_content_rewrite": 22
+    }
+  },
+  "u6_roc_calibration": {
+    "Scope1_micro_polish_boundary": {
+      "scope_description": "Class A (micro-polish) vs Class C (content rewrite)",
+      "uncalibrated_initial_heuristic": {
+        "min_jaccard": 0.55,
+        "max_char_change": 0.25,
+        "selection_set": {
+          "precision": 0.625,
+          "recall": 0.2381,
+          "f1": 0.3448,
+          "fpr": 0.2727,
+          "tp": 5,
+          "fp": 3,
+          "tn": 8,
+          "fn": 16
+        },
+        "evaluation_set": {
+          "precision": 0.9,
+          "recall": 0.4286,
+          "f1": 0.5806,
+          "fpr": 0.0909,
+          "tp": 9,
+          "fp": 1,
+          "tn": 10,
+          "fn": 12
+        }
+      },
+      "calibrated_optimal": {
+        "min_jaccard": 0.35,
+        "max_char_change": 0.45,
+        "selection_set": {
+          "precision": 0.7647,
+          "recall": 0.619,
+          "f1": 0.6842,
+          "fpr": 0.3636,
+          "tp": 13,
+          "fp": 4,
+          "tn": 7,
+          "fn": 8
+        },
+        "evaluation_set": {
+          "precision": 0.9286,
+          "recall": 0.619,
+          "f1": 0.7429,
+          "fpr": 0.0909,
+          "tp": 13,
+          "fp": 1,
+          "tn": 10,
+          "fn": 8
+        },
+        "optimism_bias": -0.0586
+      },
+      "grid_search_summary": {
+        "n_grid_points": 63,
+        "top_3_candidates": [
+          {
+            "min_jaccard": 0.35,
+            "max_char_change": 0.45,
+            "f1": 0.6842,
+            "precision": 0.7647,
+            "recall": 0.619,
+            "fpr": 0.3636
+          },
+          {
+            "min_jaccard": 0.35,
+            "max_char_change": 0.35,
+            "f1": 0.6486,
+            "precision": 0.75,
+            "recall": 0.5714,
+            "fpr": 0.3636
+          },
+          {
+            "min_jaccard": 0.35,
+            "max_char_change": 0.4,
+            "f1": 0.6486,
+            "precision": 0.75,
+            "recall": 0.5714,
+            "fpr": 0.3636
+          }
+        ]
+      }
+    },
+    "Scope2_full_revision_boundary": {
+      "scope_description": "Class A + Class B (micro + macro revision) vs Class C (content rewrite)",
+      "uncalibrated_initial_heuristic": {
+        "min_jaccard": 0.55,
+        "max_char_change": 0.25,
+        "selection_set": {
+          "precision": 0.625,
+          "recall": 0.1562,
+          "f1": 0.25,
+          "fpr": 0.2727,
+          "tp": 5,
+          "fp": 3,
+          "tn": 8,
+          "fn": 27
+        },
+        "evaluation_set": {
+          "precision": 0.9,
+          "recall": 0.2812,
+          "f1": 0.4286,
+          "fpr": 0.0909,
+          "tp": 9,
+          "fp": 1,
+          "tn": 10,
+          "fn": 23
+        }
+      },
+      "calibrated_optimal": {
+        "min_jaccard": 0.35,
+        "max_char_change": 0.45,
+        "selection_set": {
+          "precision": 0.7647,
+          "recall": 0.4062,
+          "f1": 0.5306,
+          "fpr": 0.3636,
+          "tp": 13,
+          "fp": 4,
+          "tn": 7,
+          "fn": 19
+        },
+        "evaluation_set": {
+          "precision": 0.9286,
+          "recall": 0.4062,
+          "f1": 0.5652,
+          "fpr": 0.0909,
+          "tp": 13,
+          "fp": 1,
+          "tn": 10,
+          "fn": 19
+        },
+        "optimism_bias": -0.0346
+      },
+      "grid_search_summary": {
+        "n_grid_points": 63,
+        "top_3_candidates": [
+          {
+            "min_jaccard": 0.35,
+            "max_char_change": 0.45,
+            "f1": 0.5306,
+            "precision": 0.7647,
+            "recall": 0.4062,
+            "fpr": 0.3636
+          },
+          {
+            "min_jaccard": 0.35,
+            "max_char_change": 0.35,
+            "f1": 0.5,
+            "precision": 0.75,
+            "recall": 0.375,
+            "fpr": 0.3636
+          },
+          {
+            "min_jaccard": 0.35,
+            "max_char_change": 0.4,
+            "f1": 0.5,
+            "precision": 0.75,
+            "recall": 0.375,
+            "fpr": 0.3636
+          }
+        ]
+      }
+    }
+  },
+  "level3b_scale_separated_specificity": {
+    "h1_micro_scale": {
+      "ortho28": {
+        "n_total": 42,
+        "n_quasi_parallel": 0,
+        "n_filtered_non_quasi": 42,
+        "rho_perp_stats": {
+          "median": 0.9696,
+          "iqr": 0.0493,
+          "min": 0.7387,
+          "max": 0.9995
+        },
+        "theta_deg_stats": {
+          "median": 77.02,
+          "iqr": 19.66,
+          "min": 47.62,
+          "max": 111.65
+        },
+        "test_vs_isotropic_random": {
+          "full_cohort": {
+            "n": 42,
+            "w_statistic": 413.0,
+            "p_value_two_sided": 0.6380331310333531,
+            "mean_cos_spec": 0.0211,
+            "significant_005": false
+          },
+          "quasi_parallel_excluded": {
+            "n": 42,
+            "w_statistic": 413.0,
+            "p_value_two_sided": 0.6380331310333531,
+            "mean_cos_spec": 0.0211,
+            "significant_005": false
+          }
+        },
+        "test_vs_other_authors": {
+          "full_cohort": {
+            "n": 42,
+            "w_statistic": 226.0,
+            "p_value_two_sided": 0.22799336758907884,
+            "mean_cos_spec": 0.0352,
+            "significant_005": false
+          },
+          "quasi_parallel_excluded": {
+            "n": 42,
+            "w_statistic": 226.0,
+            "p_value_two_sided": 0.22799336758907884,
+            "mean_cos_spec": 0.0352,
+            "significant_005": false
+          }
+        }
+      },
+      "ortho28_plus_kasane11": {
+        "n_total": 42,
+        "n_quasi_parallel": 0,
+        "n_filtered_non_quasi": 42,
+        "rho_perp_stats": {
+          "median": 0.9696,
+          "iqr": 0.0492,
+          "min": 0.7388,
+          "max": 0.9995
+        },
+        "theta_deg_stats": {
+          "median": 77.02,
+          "iqr": 19.65,
+          "min": 47.63,
+          "max": 111.64
+        },
+        "test_vs_isotropic_random": {
+          "full_cohort": {
+            "n": 42,
+            "w_statistic": 373.0,
+            "p_value_two_sided": 0.33299069687382143,
+            "mean_cos_spec": 0.0285,
+            "significant_005": false
+          },
+          "quasi_parallel_excluded": {
+            "n": 42,
+            "w_statistic": 373.0,
+            "p_value_two_sided": 0.33299069687382143,
+            "mean_cos_spec": 0.0285,
+            "significant_005": false
+          }
+        },
+        "test_vs_other_authors": {
+          "full_cohort": {
+            "n": 42,
+            "w_statistic": 226.0,
+            "p_value_two_sided": 0.22799336758907884,
+            "mean_cos_spec": 0.0353,
+            "significant_005": false
+          },
+          "quasi_parallel_excluded": {
+            "n": 42,
+            "w_statistic": 226.0,
+            "p_value_two_sided": 0.22799336758907884,
+            "mean_cos_spec": 0.0353,
+            "significant_005": false
+          }
+        }
+      }
+    },
+    "h2_macro_scale": {
+      "6pole": {
+        "n_total": 22,
+        "n_quasi_parallel": 0,
+        "n_filtered_non_quasi": 22,
+        "rho_perp_stats": {
+          "median": 0.7636,
+          "iqr": 0.2719,
+          "min": 0.2401,
+          "max": 0.9847
+        },
+        "theta_deg_stats": {
+          "median": 130.2,
+          "iqr": 76.2,
+          "min": 59.98,
+          "max": 166.11
+        },
+        "test_vs_isotropic_random": {
+          "full_cohort": {
+            "n": 22,
+            "w_statistic": 104.0,
+            "p_value_two_sided": 0.4825911521911621,
+            "mean_cos_spec": 0.0671,
+            "significant_005": false
+          },
+          "quasi_parallel_excluded": {
+            "n": 22,
+            "w_statistic": 104.0,
+            "p_value_two_sided": 0.4825911521911621,
+            "mean_cos_spec": 0.0671,
+            "significant_005": false
+          }
+        },
+        "test_vs_other_styles_authors": {
+          "full_cohort": {
+            "n": 22,
+            "w_statistic": 5.0,
+            "p_value_two_sided": 0.625,
+            "mean_cos_spec": -0.006,
+            "significant_005": false
+          },
+          "quasi_parallel_excluded": {
+            "n": 22,
+            "w_statistic": 5.0,
+            "p_value_two_sided": 0.625,
+            "mean_cos_spec": -0.006,
+            "significant_005": false
+          }
+        }
+      },
+      "6pole_plus_hw25": {
+        "n_total": 22,
+        "n_quasi_parallel": 0,
+        "n_filtered_non_quasi": 22,
+        "rho_perp_stats": {
+          "median": 0.7638,
+          "iqr": 0.2751,
+          "min": 0.2412,
+          "max": 0.983
+        },
+        "theta_deg_stats": {
+          "median": 130.18,
+          "iqr": 75.63,
+          "min": 60.25,
+          "max": 166.04
+        },
+        "test_vs_isotropic_random": {
+          "full_cohort": {
+            "n": 22,
+            "w_statistic": 96.0,
+            "p_value_two_sided": 0.3369474411010742,
+            "mean_cos_spec": -0.0693,
+            "significant_005": false
+          },
+          "quasi_parallel_excluded": {
+            "n": 22,
+            "w_statistic": 96.0,
+            "p_value_two_sided": 0.3369474411010742,
+            "mean_cos_spec": -0.0693,
+            "significant_005": false
+          }
+        },
+        "test_vs_other_styles_authors": {
+          "full_cohort": {
+            "n": 22,
+            "w_statistic": 5.0,
+            "p_value_two_sided": 0.625,
+            "mean_cos_spec": -0.0049,
+            "significant_005": false
+          },
+          "quasi_parallel_excluded": {
+            "n": 22,
+            "w_statistic": 5.0,
+            "p_value_two_sided": 0.625,
+            "mean_cos_spec": -0.0049,
+            "significant_005": false
+          }
+        }
+      }
+    }
+  },
+  "kamae_eta2_structural_audit": {
+    "claimed_metric_in_b7": "Kamae eta^2_source = 1.0000",
+    "recalculated_d10_anova": {
+      "eta_source": 1.0,
+      "eta_trans": 0.0,
+      "eta_interaction": 0.0
+    },
+    "empirical_kamae_values_in_d10": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "kamae_delta_in_expanded_class_b": {
+      "mean_abs_delta": 0.1364,
+      "ratio_exact_zero_delta": 0.8636
+    },
+    "pathway_and_mechanism_analysis": {
+      "root_cause": "Constitutive artifact of discrete hook survival calculation on short texts. In six_pole_atlas.py (L375), hook_survival = unresolved_unweighted / (open_unweighted + eps). In the 4 D10 source texts, hook detection produces either 0 open hooks (SRC_MELOS, SRC_SANGETSU -> 0.0) or 1 unresolved hook that never closes (SRC_GINGA, SRC_PRINCE -> 1.0). The 4 translator styles add only prefix/suffix framing sentences which do NOT alter scene-internal question/suspense hooks. Consequently, SS_trans == 0.0 and SS_interaction == 0.0, producing an artificial mathematical extreme eta^2_source = 1.0000.",
+      "scientific_status": "CONSTITUTIVE_ARTIFACT_RETRACTED_AS_INDEPENDENT_RESULT",
+      "citation_rule": "MUST NOT be cited as empirical achievement or proof of perfect semantic preservation until continuous hook model is calibrated on full-length works."
+    }
+  }
+}
