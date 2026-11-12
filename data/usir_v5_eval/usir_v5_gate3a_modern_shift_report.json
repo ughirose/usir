@@ -1,7 +1,10 @@
 {
   "metadata": {
     "title": "USIR v5 Gate 3a: Modern Prose Multi-Register Distribution Shift Analysis",
-    "version": "1.0",
+    "version": "1.1",
+    "status": "SHIFT_QUANTIFIED_NOT_PASSED",
+    "gate_decision": "GATE_3B_FREEZE_MAINTAINED",
+    "freeze_reason": "Modern multi-register prose exhibits severe distribution shift against Aozora baseline: outlier rate = 62.5% under 3-sigma (R1=50.0%, R2=75.0%, R3=75.0%). Simple column centering fails to remove register shift (eta^2_register: 0.6054 -> 0.4632). Gate 3b (submission of authentic personal manuscripts) MUST REMAIN FROZEN until register-specific centering or domain adaptation policies are finalized.",
     "benchmark_source": "data/usir_v5_eval/tier_c_modern_benchmark.jsonl",
     "n_samples": 32,
     "registers": [
@@ -15,19 +18,30 @@
     "raw_text_retained": false
   },
   "calibration_audit_notes": {
-    "closed_class_coverage_threshold_audit": {
-      "heuristic_initial_threshold_pct": 85.0,
-      "status": "CALIBRATION_PENDING_EXCESSIVE_INITIAL_HEURISTIC",
-      "empirical_range_observed_pct": [
-        55.64,
-        63.22
-      ],
-      "finding": "Initial uncalibrated threshold (85% coverage) was an excessively optimistic prior. Empirical closed-class grammar skeleton tokens comprise 55-63% in authentic prose (R1: 58.88%, R2: 56.74%, R3: 55.64%, R4: 63.22%). Closed-class coverage does NOT reach 85% in any natural Japanese literary register. Threshold must be calibrated to 52.0% (safely below R3 minimum) for production filtering."
+    "closed_class_dual_metric_audit": {
+      "metric_A_token_density": {
+        "definition": "closed_tokens / total_tokens (Token density of closed-class function words)",
+        "empirical_range_observed_pct": [
+          55.64,
+          63.22
+        ],
+        "natural_range_pct": "55.0% - 65.0%",
+        "health_lower_bound_pct": 52.0,
+        "status": "HEALTHY_WITHIN_NATURAL_BOUNDS",
+        "finding": "The previously observed 55.6% - 63.2% values represent authentic closed-class token density, which naturally spans 55-65% in Japanese literary and expository prose. The initial 85% requirement was a mistaken expectation of vocabulary coverage applied to token density."
+      },
+      "metric_B_vocab_coverage": {
+        "definition": "closed_known / closed_tokens (Known vocabulary coverage against training lexicon)",
+        "parity_with_rust_nishiki_ppm": "EXACT_PARITY (matches nishiki-ppm skeleton.rs / shift.rs)",
+        "empirical_coverage_ratio": 1.0,
+        "empirical_coverage_pct": 100.0,
+        "status": "PASS (Full coverage of closed-class vocabulary)"
+      }
     },
     "outlier_rate_threshold_audit": {
       "heuristic_initial_threshold_pct": 10.0,
-      "status": "MEASURED_AGAINST_R4_BASELINE",
-      "finding": "Outlier rate depends strictly on reference distribution definition. Under R4 3-sigma threshold (7.97): outlier rate = 62.5% [95% CI: 41.7% - 83.3%]. Under Chi2(df=31) p=0.95 threshold (6.71): outlier rate = 83.3% [95% CI: 66.7% - 95.8%]."
+      "status": "NOT_PASSED_HIGH_OUTLIER_RATE",
+      "finding": "Under R4 3-sigma threshold (7.97): modern prose outlier rate = 62.5% [95% CI: 41.7% - 83.3%]. Under Chi2(df=31) p=0.95 threshold (6.71): outlier rate = 83.3% [95% CI: 66.7% - 95.8%]. Outlier rate substantially exceeds the 10.0% safety threshold."
     }
   },
   "ppm_cross_entropy_analysis": {
@@ -100,53 +114,73 @@
     "R1": {
       "register_name": "Modern Colloquial Fiction",
       "n": 8,
-      "mean_coverage_pct": 58.88,
-      "std_coverage_pct": 1.35,
-      "ci_95": [
+      "closed_class_token_density_pct": 58.88,
+      "token_density_std_pct": 1.35,
+      "token_density_ci_95": [
         57.98,
         59.73
       ],
-      "delta_from_r4_pct": -4.34,
-      "cohens_d_vs_r4": -2.274,
+      "token_density_delta_from_r4_pct": -4.34,
+      "token_density_cohens_d_vs_r4": -2.274,
+      "within_natural_density_range_52_to_68": true,
+      "closed_class_vocab_coverage_ratio": 1.0,
+      "closed_class_vocab_coverage_pct": 100.0,
+      "vocab_coverage_status": "EXACT_RUST_PARITY_FULL_COVERAGE",
+      "mean_coverage_pct": 58.88,
       "meets_heuristic_85pct": false
     },
     "R2": {
       "register_name": "Modern Essay & Criticism",
       "n": 8,
-      "mean_coverage_pct": 56.74,
-      "std_coverage_pct": 1.13,
-      "ci_95": [
+      "closed_class_token_density_pct": 56.74,
+      "token_density_std_pct": 1.13,
+      "token_density_ci_95": [
         56.03,
         57.48
       ],
-      "delta_from_r4_pct": -6.48,
-      "cohens_d_vs_r4": -3.53,
+      "token_density_delta_from_r4_pct": -6.48,
+      "token_density_cohens_d_vs_r4": -3.53,
+      "within_natural_density_range_52_to_68": true,
+      "closed_class_vocab_coverage_ratio": 1.0,
+      "closed_class_vocab_coverage_pct": 100.0,
+      "vocab_coverage_status": "EXACT_RUST_PARITY_FULL_COVERAGE",
+      "mean_coverage_pct": 56.74,
       "meets_heuristic_85pct": false
     },
     "R3": {
       "register_name": "Modern Technical & Business Prose",
       "n": 8,
-      "mean_coverage_pct": 55.64,
-      "std_coverage_pct": 1.06,
-      "ci_95": [
+      "closed_class_token_density_pct": 55.64,
+      "token_density_std_pct": 1.06,
+      "token_density_ci_95": [
         54.96,
         56.3
       ],
-      "delta_from_r4_pct": -7.58,
-      "cohens_d_vs_r4": -4.1783,
+      "token_density_delta_from_r4_pct": -7.58,
+      "token_density_cohens_d_vs_r4": -4.1783,
+      "within_natural_density_range_52_to_68": true,
+      "closed_class_vocab_coverage_ratio": 1.0,
+      "closed_class_vocab_coverage_pct": 100.0,
+      "vocab_coverage_status": "EXACT_RUST_PARITY_FULL_COVERAGE",
+      "mean_coverage_pct": 55.64,
       "meets_heuristic_85pct": false
     },
     "R4": {
       "register_name": "Aozora Bunko Colloquial Baseline",
       "n": 8,
-      "mean_coverage_pct": 63.22,
-      "std_coverage_pct": 2.34,
-      "ci_95": [
+      "closed_class_token_density_pct": 63.22,
+      "token_density_std_pct": 2.34,
+      "token_density_ci_95": [
         61.68,
         64.75
       ],
-      "delta_from_r4_pct": 0.0,
-      "cohens_d_vs_r4": 0.0,
+      "token_density_delta_from_r4_pct": 0.0,
+      "token_density_cohens_d_vs_r4": 0.0,
+      "within_natural_density_range_52_to_68": true,
+      "closed_class_vocab_coverage_ratio": 1.0,
+      "closed_class_vocab_coverage_pct": 100.0,
+      "vocab_coverage_status": "EXACT_RUST_PARITY_FULL_COVERAGE",
+      "mean_coverage_pct": 63.22,
       "meets_heuristic_85pct": false
     }
   },

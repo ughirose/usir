@@ -1,0 +1,2165 @@
+{
+  "metadata": {
+    "title": "Discrete Count Freezing & Artifact Audit across All Spaces",
+    "timestamp": "2026-11-12 19:39:27",
+    "cohorts": [
+      "D10_multi_trans_16",
+      "Class_A_micro_84",
+      "Aozora_scenes_4576",
+      "Aozora_windows_11723"
+    ],
+    "n_features": 51
+  },
+  "high_risk_summary": {
+    "D10_multi_trans_16": [
+      "6pole_kamae",
+      "6pole_nagare",
+      "6pole_awase",
+      "kamae_hook_survival",
+      "kamae_hook_survival_idf",
+      "kamae_opened_hooks",
+      "sadame_e_intra",
+      "sadame_edges_eff",
+      "nagare_phi_zeami",
+      "nagare_event_speed",
+      "nagare_event_accel",
+      "nagare_mood_speed",
+      "nagare_mood_accel",
+      "awase_irony_mean",
+      "awase_irony_max",
+      "awase_detachment_mean",
+      "awase_detachment_max",
+      "ortho28_v2_final_た",
+      "ortho28_v2_final_だ",
+      "ortho28_v2_final_い",
+      "ortho28_v2_final_う",
+      "ortho28_v2_final_す",
+      "ortho28_v2_final_ぬ",
+      "ortho28_v2_final_か",
+      "ortho28_v2_final_」",
+      "ortho28_v2_final_other"
+    ],
+    "Class_A_micro_84": [
+      "6pole_kamae",
+      "6pole_sadame",
+      "6pole_nagare",
+      "6pole_awase",
+      "kamae_hook_survival",
+      "kamae_hook_survival_idf",
+      "kamae_opened_hooks",
+      "sadame_total",
+      "sadame_e_inter",
+      "sadame_e_intra",
+      "sadame_edges_eff",
+      "nagare_phi_zeami",
+      "nagare_event_speed",
+      "nagare_event_accel",
+      "nagare_mood_speed",
+      "nagare_mood_accel",
+      "awase_irony_mean",
+      "awase_irony_max",
+      "awase_detachment_mean",
+      "awase_detachment_max",
+      "ortho28_v2_quote_ratio",
+      "ortho28_v2_final_た",
+      "ortho28_v2_final_だ",
+      "ortho28_v2_final_い",
+      "ortho28_v2_final_う",
+      "ortho28_v2_final_す",
+      "ortho28_v2_final_ぬ",
+      "ortho28_v2_final_か",
+      "ortho28_v2_final_」",
+      "ortho28_v2_final_other",
+      "ortho28_v2_dialogue_char_ratio"
+    ],
+    "Aozora_scenes_4576": [
+      "6pole_kamae",
+      "6pole_nagare",
+      "6pole_awase",
+      "kamae_hook_survival",
+      "kamae_hook_survival_idf",
+      "kamae_opened_hooks",
+      "sadame_e_intra",
+      "nagare_phi_zeami",
+      "nagare_event_speed",
+      "nagare_event_accel",
+      "nagare_mood_speed",
+      "nagare_mood_accel",
+      "awase_irony_mean",
+      "awase_irony_max",
+      "awase_detachment_mean",
+      "awase_detachment_max",
+      "ortho28_v2_final_ぬ",
+      "ortho28_v2_final_」"
+    ],
+    "Aozora_windows_11723": [
+      "6pole_kamae",
+      "6pole_nagare",
+      "6pole_awase",
+      "kamae_hook_survival",
+      "kamae_hook_survival_idf",
+      "kamae_opened_hooks",
+      "sadame_e_intra",
+      "nagare_phi_zeami",
+      "nagare_event_speed",
+      "nagare_event_accel",
+      "nagare_mood_speed",
+      "nagare_mood_accel",
+      "awase_irony_mean",
+      "awase_irony_max",
+      "awase_detachment_mean",
+      "awase_detachment_max",
+      "ortho28_v2_final_ぬ"
+    ]
+  },
+  "cohort_statistics": {
+    "D10_multi_trans_16": {
+      "6pole_kasane": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 12,
+        "min_positive_val": 1.158301,
+        "mean_val": 2.735528,
+        "std_val": 0.996296,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_sasae": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 12,
+        "min_positive_val": 2.264151,
+        "mean_val": 2.731402,
+        "std_val": 0.499912,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_kamae": {
+        "n_samples": 16,
+        "zero_count": 8,
+        "zero_rate_pct": 50.0,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.5,
+        "std_val": 0.5,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_sadame": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 4,
+        "min_positive_val": 0.041667,
+        "mean_val": 0.027995,
+        "std_val": 0.052951,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "6pole_nagare": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 1,
+        "min_positive_val": 0.5,
+        "mean_val": 0.5,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_awase": {
+        "n_samples": 16,
+        "zero_count": 15,
+        "zero_rate_pct": 93.75,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.0625,
+        "std_val": 0.242061,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "hw25_gamma_uid": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 16,
+        "min_positive_val": 0.285307,
+        "mean_val": 0.433982,
+        "std_val": 0.1114,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "kamae_hook_survival": {
+        "n_samples": 16,
+        "zero_count": 8,
+        "zero_rate_pct": 50.0,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.5,
+        "std_val": 0.5,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "kamae_hook_survival_idf": {
+        "n_samples": 16,
+        "zero_count": 8,
+        "zero_rate_pct": 50.0,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.5,
+        "std_val": 0.5,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "kamae_opened_hooks": {
+        "n_samples": 16,
+        "zero_count": 8,
+        "zero_rate_pct": 50.0,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.5,
+        "std_val": 0.5,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_total": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 4,
+        "min_positive_val": 0.041667,
+        "mean_val": 0.027995,
+        "std_val": 0.052951,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "sadame_e_inter": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 4,
+        "min_positive_val": 0.166667,
+        "mean_val": 0.111979,
+        "std_val": 0.211804,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "sadame_e_intra": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_edges_eff": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.25,
+        "std_val": 0.433013,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_phi_zeami": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 1,
+        "min_positive_val": 0.5,
+        "mean_val": 0.5,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_event_speed": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_event_accel": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_mood_speed": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_mood_accel": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_irony_mean": {
+        "n_samples": 16,
+        "zero_count": 15,
+        "zero_rate_pct": 93.75,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.0625,
+        "std_val": 0.242061,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_irony_max": {
+        "n_samples": 16,
+        "zero_count": 15,
+        "zero_rate_pct": 93.75,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.0625,
+        "std_val": 0.242061,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_detachment_mean": {
+        "n_samples": 16,
+        "zero_count": 10,
+        "zero_rate_pct": 62.5,
+        "n_unique": 3,
+        "min_positive_val": 1.0,
+        "mean_val": 0.625,
+        "std_val": 0.856957,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_detachment_max": {
+        "n_samples": 16,
+        "zero_count": 10,
+        "zero_rate_pct": 62.5,
+        "n_unique": 3,
+        "min_positive_val": 1.0,
+        "mean_val": 0.625,
+        "std_val": 0.856957,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_log_mean_sent_len": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 12,
+        "min_positive_val": 3.154634,
+        "mean_val": 3.439052,
+        "std_val": 0.218382,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_sent_len_cv": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 16,
+        "min_positive_val": 0.035853,
+        "mean_val": 0.223796,
+        "std_val": 0.195515,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kanji_ratio": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 16,
+        "min_positive_val": 0.322275,
+        "mean_val": 0.37742,
+        "std_val": 0.04322,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_hiragana_ratio": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 16,
+        "min_positive_val": 0.525346,
+        "mean_val": 0.603678,
+        "std_val": 0.043465,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_quote_ratio": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 4,
+        "min_positive_val": 0.026786,
+        "mean_val": 0.006933,
+        "std_val": 0.012014,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_kana_は": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 12,
+        "min_positive_val": 0.473934,
+        "mean_val": 2.355557,
+        "std_val": 1.389981,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_が": {
+        "n_samples": 16,
+        "zero_count": 4,
+        "zero_rate_pct": 25.0,
+        "n_unique": 13,
+        "min_positive_val": 0.816327,
+        "mean_val": 1.094173,
+        "std_val": 0.793396,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_の": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 16,
+        "min_positive_val": 1.73913,
+        "mean_val": 3.332833,
+        "std_val": 1.507285,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_に": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 12,
+        "min_positive_val": 1.632653,
+        "mean_val": 4.043885,
+        "std_val": 1.686369,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_を": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 16,
+        "min_positive_val": 2.419355,
+        "mean_val": 3.741978,
+        "std_val": 1.285429,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_と": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 12,
+        "min_positive_val": 0.431034,
+        "mean_val": 1.945947,
+        "std_val": 1.214559,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_で": {
+        "n_samples": 16,
+        "zero_count": 2,
+        "zero_rate_pct": 12.5,
+        "n_unique": 15,
+        "min_positive_val": 0.434783,
+        "mean_val": 1.50442,
+        "std_val": 0.90546,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_も": {
+        "n_samples": 16,
+        "zero_count": 3,
+        "zero_rate_pct": 18.75,
+        "n_unique": 14,
+        "min_positive_val": 0.403226,
+        "mean_val": 0.641327,
+        "std_val": 0.571382,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_て": {
+        "n_samples": 16,
+        "zero_count": 1,
+        "zero_rate_pct": 6.25,
+        "n_unique": 16,
+        "min_positive_val": 0.403226,
+        "mean_val": 2.727461,
+        "std_val": 1.893302,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_た": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 12,
+        "min_positive_val": 1.276596,
+        "mean_val": 2.644852,
+        "std_val": 1.808476,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_final_た": {
+        "n_samples": 16,
+        "zero_count": 8,
+        "zero_rate_pct": 50.0,
+        "n_unique": 2,
+        "min_positive_val": 0.5,
+        "mean_val": 0.25,
+        "std_val": 0.25,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_る": {
+        "n_samples": 16,
+        "zero_count": 8,
+        "zero_rate_pct": 50.0,
+        "n_unique": 5,
+        "min_positive_val": 0.333333,
+        "mean_val": 0.256944,
+        "std_val": 0.270655,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_だ": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_い": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 2,
+        "min_positive_val": 0.333333,
+        "mean_val": 0.083333,
+        "std_val": 0.144338,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_う": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 3,
+        "min_positive_val": 0.111111,
+        "mean_val": 0.034722,
+        "std_val": 0.061724,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_す": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 2,
+        "min_positive_val": 0.5,
+        "mean_val": 0.125,
+        "std_val": 0.216506,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_ぬ": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_か": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_」": {
+        "n_samples": 16,
+        "zero_count": 16,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_other": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.25,
+        "std_val": 0.433013,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_narr_log_mean_sent_len": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 16,
+        "min_positive_val": 3.193558,
+        "mean_val": 3.499359,
+        "std_val": 0.174296,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_narr_log_p90_sent_len": {
+        "n_samples": 16,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 13,
+        "min_positive_val": 3.342862,
+        "mean_val": 3.625033,
+        "std_val": 0.11103,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_dialogue_char_ratio": {
+        "n_samples": 16,
+        "zero_count": 12,
+        "zero_rate_pct": 75.0,
+        "n_unique": 4,
+        "min_positive_val": 0.09375,
+        "mean_val": 0.024266,
+        "std_val": 0.042049,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      }
+    },
+    "Class_A_micro_84": {
+      "6pole_kasane": {
+        "n_samples": 84,
+        "zero_count": 11,
+        "zero_rate_pct": 13.1,
+        "n_unique": 49,
+        "min_positive_val": 1.639344,
+        "mean_val": 3.577408,
+        "std_val": 2.255278,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_sasae": {
+        "n_samples": 84,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 54,
+        "min_positive_val": 1.333333,
+        "mean_val": 3.586486,
+        "std_val": 1.792251,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_kamae": {
+        "n_samples": 84,
+        "zero_count": 77,
+        "zero_rate_pct": 91.67,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.083333,
+        "std_val": 0.276385,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_sadame": {
+        "n_samples": 84,
+        "zero_count": 80,
+        "zero_rate_pct": 95.24,
+        "n_unique": 2,
+        "min_positive_val": 0.145833,
+        "mean_val": 0.006944,
+        "std_val": 0.031056,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_nagare": {
+        "n_samples": 84,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 1,
+        "min_positive_val": 0.5,
+        "mean_val": 0.5,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_awase": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "hw25_gamma_uid": {
+        "n_samples": 84,
+        "zero_count": 43,
+        "zero_rate_pct": 51.19,
+        "n_unique": 38,
+        "min_positive_val": 0.273973,
+        "mean_val": 0.443457,
+        "std_val": 0.584845,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "kamae_hook_survival": {
+        "n_samples": 84,
+        "zero_count": 77,
+        "zero_rate_pct": 91.67,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.083333,
+        "std_val": 0.276385,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "kamae_hook_survival_idf": {
+        "n_samples": 84,
+        "zero_count": 77,
+        "zero_rate_pct": 91.67,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.083333,
+        "std_val": 0.276385,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "kamae_opened_hooks": {
+        "n_samples": 84,
+        "zero_count": 77,
+        "zero_rate_pct": 91.67,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.083333,
+        "std_val": 0.276385,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_total": {
+        "n_samples": 84,
+        "zero_count": 80,
+        "zero_rate_pct": 95.24,
+        "n_unique": 2,
+        "min_positive_val": 0.145833,
+        "mean_val": 0.006944,
+        "std_val": 0.031056,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_e_inter": {
+        "n_samples": 84,
+        "zero_count": 80,
+        "zero_rate_pct": 95.24,
+        "n_unique": 2,
+        "min_positive_val": 0.583333,
+        "mean_val": 0.027778,
+        "std_val": 0.124226,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_e_intra": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_edges_eff": {
+        "n_samples": 84,
+        "zero_count": 80,
+        "zero_rate_pct": 95.24,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.047619,
+        "std_val": 0.212959,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_phi_zeami": {
+        "n_samples": 84,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 1,
+        "min_positive_val": 0.5,
+        "mean_val": 0.5,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_event_speed": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_event_accel": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_mood_speed": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_mood_accel": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_irony_mean": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_irony_max": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_detachment_mean": {
+        "n_samples": 84,
+        "zero_count": 82,
+        "zero_rate_pct": 97.62,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.02381,
+        "std_val": 0.152455,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_detachment_max": {
+        "n_samples": 84,
+        "zero_count": 82,
+        "zero_rate_pct": 97.62,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.02381,
+        "std_val": 0.152455,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_log_mean_sent_len": {
+        "n_samples": 84,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 58,
+        "min_positive_val": 2.251292,
+        "mean_val": 3.368609,
+        "std_val": 0.500661,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_sent_len_cv": {
+        "n_samples": 84,
+        "zero_count": 42,
+        "zero_rate_pct": 50.0,
+        "n_unique": 40,
+        "min_positive_val": 0.021277,
+        "mean_val": 0.159307,
+        "std_val": 0.200768,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_kanji_ratio": {
+        "n_samples": 84,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 72,
+        "min_positive_val": 0.05,
+        "mean_val": 0.321217,
+        "std_val": 0.091301,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_hiragana_ratio": {
+        "n_samples": 84,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 72,
+        "min_positive_val": 0.413793,
+        "mean_val": 0.642325,
+        "std_val": 0.083737,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_quote_ratio": {
+        "n_samples": 84,
+        "zero_count": 80,
+        "zero_rate_pct": 95.24,
+        "n_unique": 5,
+        "min_positive_val": 0.030769,
+        "mean_val": 0.002879,
+        "std_val": 0.014567,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_kana_は": {
+        "n_samples": 84,
+        "zero_count": 18,
+        "zero_rate_pct": 21.43,
+        "n_unique": 49,
+        "min_positive_val": 1.428571,
+        "mean_val": 2.850345,
+        "std_val": 2.097602,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_が": {
+        "n_samples": 84,
+        "zero_count": 38,
+        "zero_rate_pct": 45.24,
+        "n_unique": 39,
+        "min_positive_val": 1.428571,
+        "mean_val": 1.537699,
+        "std_val": 1.616019,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_kana_の": {
+        "n_samples": 84,
+        "zero_count": 10,
+        "zero_rate_pct": 11.9,
+        "n_unique": 58,
+        "min_positive_val": 1.515152,
+        "mean_val": 5.246386,
+        "std_val": 3.193331,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_に": {
+        "n_samples": 84,
+        "zero_count": 25,
+        "zero_rate_pct": 29.76,
+        "n_unique": 48,
+        "min_positive_val": 1.492537,
+        "mean_val": 2.620135,
+        "std_val": 2.230645,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_を": {
+        "n_samples": 84,
+        "zero_count": 23,
+        "zero_rate_pct": 27.38,
+        "n_unique": 43,
+        "min_positive_val": 1.492537,
+        "mean_val": 2.396712,
+        "std_val": 1.940918,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_と": {
+        "n_samples": 84,
+        "zero_count": 33,
+        "zero_rate_pct": 39.29,
+        "n_unique": 39,
+        "min_positive_val": 1.515152,
+        "mean_val": 2.258292,
+        "std_val": 2.226931,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_kana_で": {
+        "n_samples": 84,
+        "zero_count": 30,
+        "zero_rate_pct": 35.71,
+        "n_unique": 44,
+        "min_positive_val": 1.111111,
+        "mean_val": 2.170772,
+        "std_val": 2.136488,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_kana_も": {
+        "n_samples": 84,
+        "zero_count": 48,
+        "zero_rate_pct": 57.14,
+        "n_unique": 34,
+        "min_positive_val": 1.111111,
+        "mean_val": 1.402846,
+        "std_val": 2.058346,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_kana_て": {
+        "n_samples": 84,
+        "zero_count": 22,
+        "zero_rate_pct": 26.19,
+        "n_unique": 49,
+        "min_positive_val": 1.515152,
+        "mean_val": 2.631288,
+        "std_val": 2.17594,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_た": {
+        "n_samples": 84,
+        "zero_count": 12,
+        "zero_rate_pct": 14.29,
+        "n_unique": 49,
+        "min_positive_val": 1.666667,
+        "mean_val": 3.923493,
+        "std_val": 2.413602,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_final_た": {
+        "n_samples": 84,
+        "zero_count": 33,
+        "zero_rate_pct": 39.29,
+        "n_unique": 3,
+        "min_positive_val": 0.5,
+        "mean_val": 0.505952,
+        "std_val": 0.446508,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_る": {
+        "n_samples": 84,
+        "zero_count": 58,
+        "zero_rate_pct": 69.05,
+        "n_unique": 4,
+        "min_positive_val": 0.333333,
+        "mean_val": 0.212302,
+        "std_val": 0.346325,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_だ": {
+        "n_samples": 84,
+        "zero_count": 76,
+        "zero_rate_pct": 90.48,
+        "n_unique": 3,
+        "min_positive_val": 0.333333,
+        "mean_val": 0.045635,
+        "std_val": 0.141681,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_い": {
+        "n_samples": 84,
+        "zero_count": 71,
+        "zero_rate_pct": 84.52,
+        "n_unique": 4,
+        "min_positive_val": 0.5,
+        "mean_val": 0.099206,
+        "std_val": 0.245487,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_う": {
+        "n_samples": 84,
+        "zero_count": 81,
+        "zero_rate_pct": 96.43,
+        "n_unique": 2,
+        "min_positive_val": 0.5,
+        "mean_val": 0.017857,
+        "std_val": 0.092788,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_す": {
+        "n_samples": 84,
+        "zero_count": 83,
+        "zero_rate_pct": 98.81,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.011905,
+        "std_val": 0.108458,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_ぬ": {
+        "n_samples": 84,
+        "zero_count": 80,
+        "zero_rate_pct": 95.24,
+        "n_unique": 3,
+        "min_positive_val": 0.5,
+        "mean_val": 0.029762,
+        "std_val": 0.141236,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_か": {
+        "n_samples": 84,
+        "zero_count": 82,
+        "zero_rate_pct": 97.62,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.02381,
+        "std_val": 0.152455,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_」": {
+        "n_samples": 84,
+        "zero_count": 84,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_other": {
+        "n_samples": 84,
+        "zero_count": 78,
+        "zero_rate_pct": 92.86,
+        "n_unique": 3,
+        "min_positive_val": 0.5,
+        "mean_val": 0.053571,
+        "std_val": 0.204384,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_narr_log_mean_sent_len": {
+        "n_samples": 84,
+        "zero_count": 2,
+        "zero_rate_pct": 2.38,
+        "n_unique": 50,
+        "min_positive_val": 2.079442,
+        "mean_val": 3.345217,
+        "std_val": 0.718895,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_narr_log_p90_sent_len": {
+        "n_samples": 84,
+        "zero_count": 2,
+        "zero_rate_pct": 2.38,
+        "n_unique": 50,
+        "min_positive_val": 2.079442,
+        "mean_val": 3.353216,
+        "std_val": 0.710381,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_dialogue_char_ratio": {
+        "n_samples": 84,
+        "zero_count": 80,
+        "zero_rate_pct": 95.24,
+        "n_unique": 4,
+        "min_positive_val": 0.105263,
+        "mean_val": 0.028149,
+        "std_val": 0.154755,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      }
+    },
+    "Aozora_scenes_4576": {
+      "6pole_kasane": {
+        "n_samples": 4576,
+        "zero_count": 7,
+        "zero_rate_pct": 0.15,
+        "n_unique": 3752,
+        "min_positive_val": 0.10627,
+        "mean_val": 4.077219,
+        "std_val": 1.840761,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_sasae": {
+        "n_samples": 4576,
+        "zero_count": 7,
+        "zero_rate_pct": 0.15,
+        "n_unique": 3318,
+        "min_positive_val": 0.107991,
+        "mean_val": 2.505938,
+        "std_val": 0.984743,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_kamae": {
+        "n_samples": 4576,
+        "zero_count": 1967,
+        "zero_rate_pct": 42.99,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.570149,
+        "std_val": 0.495055,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_sadame": {
+        "n_samples": 4576,
+        "zero_count": 1266,
+        "zero_rate_pct": 27.67,
+        "n_unique": 194,
+        "min_positive_val": 0.010417,
+        "mean_val": 0.064468,
+        "std_val": 0.057552,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_nagare": {
+        "n_samples": 4576,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 1,
+        "min_positive_val": 0.5,
+        "mean_val": 0.5,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_awase": {
+        "n_samples": 4576,
+        "zero_count": 4109,
+        "zero_rate_pct": 89.79,
+        "n_unique": 4,
+        "min_positive_val": 0.25,
+        "mean_val": 0.092493,
+        "std_val": 0.281714,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "hw25_gamma_uid": {
+        "n_samples": 4576,
+        "zero_count": 45,
+        "zero_rate_pct": 0.98,
+        "n_unique": 4434,
+        "min_positive_val": 0.008061,
+        "mean_val": 0.419379,
+        "std_val": 0.465653,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "kamae_hook_survival": {
+        "n_samples": 4576,
+        "zero_count": 1967,
+        "zero_rate_pct": 42.99,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.570149,
+        "std_val": 0.495055,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "kamae_hook_survival_idf": {
+        "n_samples": 4576,
+        "zero_count": 1967,
+        "zero_rate_pct": 42.99,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.570149,
+        "std_val": 0.495055,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "kamae_opened_hooks": {
+        "n_samples": 4576,
+        "zero_count": 1967,
+        "zero_rate_pct": 42.99,
+        "n_unique": 3,
+        "min_positive_val": 1.0,
+        "mean_val": 0.829327,
+        "std_val": 0.812343,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_total": {
+        "n_samples": 4576,
+        "zero_count": 1266,
+        "zero_rate_pct": 27.67,
+        "n_unique": 194,
+        "min_positive_val": 0.010417,
+        "mean_val": 0.064468,
+        "std_val": 0.057552,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "sadame_e_inter": {
+        "n_samples": 4576,
+        "zero_count": 1266,
+        "zero_rate_pct": 27.67,
+        "n_unique": 176,
+        "min_positive_val": 0.041667,
+        "mean_val": 0.225808,
+        "std_val": 0.197436,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "sadame_e_intra": {
+        "n_samples": 4576,
+        "zero_count": 4576,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_edges_eff": {
+        "n_samples": 4576,
+        "zero_count": 1266,
+        "zero_rate_pct": 27.67,
+        "n_unique": 7,
+        "min_positive_val": 1.0,
+        "mean_val": 0.946023,
+        "std_val": 0.849937,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "nagare_phi_zeami": {
+        "n_samples": 4576,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 1,
+        "min_positive_val": 0.5,
+        "mean_val": 0.5,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_event_speed": {
+        "n_samples": 4576,
+        "zero_count": 4576,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_event_accel": {
+        "n_samples": 4576,
+        "zero_count": 4576,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_mood_speed": {
+        "n_samples": 4576,
+        "zero_count": 4576,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_mood_accel": {
+        "n_samples": 4576,
+        "zero_count": 4576,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_irony_mean": {
+        "n_samples": 4576,
+        "zero_count": 4109,
+        "zero_rate_pct": 89.79,
+        "n_unique": 4,
+        "min_positive_val": 0.25,
+        "mean_val": 0.092493,
+        "std_val": 0.281714,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_irony_max": {
+        "n_samples": 4576,
+        "zero_count": 4109,
+        "zero_rate_pct": 89.79,
+        "n_unique": 4,
+        "min_positive_val": 0.25,
+        "mean_val": 0.092493,
+        "std_val": 0.281714,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_detachment_mean": {
+        "n_samples": 4576,
+        "zero_count": 3796,
+        "zero_rate_pct": 82.95,
+        "n_unique": 6,
+        "min_positive_val": 0.25,
+        "mean_val": 0.10271,
+        "std_val": 0.250481,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_detachment_max": {
+        "n_samples": 4576,
+        "zero_count": 3796,
+        "zero_rate_pct": 82.95,
+        "n_unique": 6,
+        "min_positive_val": 0.25,
+        "mean_val": 0.10271,
+        "std_val": 0.250481,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_log_mean_sent_len": {
+        "n_samples": 4576,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 3401,
+        "min_positive_val": 2.054124,
+        "mean_val": 3.625838,
+        "std_val": 0.459178,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_sent_len_cv": {
+        "n_samples": 4576,
+        "zero_count": 6,
+        "zero_rate_pct": 0.13,
+        "n_unique": 4550,
+        "min_positive_val": 0.054038,
+        "mean_val": 0.628727,
+        "std_val": 0.186934,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kanji_ratio": {
+        "n_samples": 4576,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 4177,
+        "min_positive_val": 0.077029,
+        "mean_val": 0.311871,
+        "std_val": 0.058403,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_hiragana_ratio": {
+        "n_samples": 4576,
+        "zero_count": 28,
+        "zero_rate_pct": 0.61,
+        "n_unique": 4195,
+        "min_positive_val": 0.000763,
+        "mean_val": 0.662868,
+        "std_val": 0.086404,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_quote_ratio": {
+        "n_samples": 4576,
+        "zero_count": 1033,
+        "zero_rate_pct": 22.57,
+        "n_unique": 2543,
+        "min_positive_val": 0.000762,
+        "mean_val": 0.015451,
+        "std_val": 0.018234,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_は": {
+        "n_samples": 4576,
+        "zero_count": 39,
+        "zero_rate_pct": 0.85,
+        "n_unique": 3012,
+        "min_positive_val": 0.147059,
+        "mean_val": 2.378153,
+        "std_val": 0.744153,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_が": {
+        "n_samples": 4576,
+        "zero_count": 48,
+        "zero_rate_pct": 1.05,
+        "n_unique": 3000,
+        "min_positive_val": 0.07734,
+        "mean_val": 1.997161,
+        "std_val": 0.696765,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_の": {
+        "n_samples": 4576,
+        "zero_count": 36,
+        "zero_rate_pct": 0.79,
+        "n_unique": 3494,
+        "min_positive_val": 0.073529,
+        "mean_val": 4.594759,
+        "std_val": 1.370503,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_に": {
+        "n_samples": 4576,
+        "zero_count": 37,
+        "zero_rate_pct": 0.81,
+        "n_unique": 3123,
+        "min_positive_val": 0.147059,
+        "mean_val": 2.850683,
+        "std_val": 0.85865,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_を": {
+        "n_samples": 4576,
+        "zero_count": 40,
+        "zero_rate_pct": 0.87,
+        "n_unique": 3094,
+        "min_positive_val": 0.170648,
+        "mean_val": 2.161755,
+        "std_val": 0.791453,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_と": {
+        "n_samples": 4576,
+        "zero_count": 36,
+        "zero_rate_pct": 0.79,
+        "n_unique": 3112,
+        "min_positive_val": 0.076336,
+        "mean_val": 2.522108,
+        "std_val": 0.802069,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_で": {
+        "n_samples": 4576,
+        "zero_count": 58,
+        "zero_rate_pct": 1.27,
+        "n_unique": 3168,
+        "min_positive_val": 0.118765,
+        "mean_val": 1.936794,
+        "std_val": 0.814408,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_も": {
+        "n_samples": 4576,
+        "zero_count": 69,
+        "zero_rate_pct": 1.51,
+        "n_unique": 2939,
+        "min_positive_val": 0.111235,
+        "mean_val": 1.591418,
+        "std_val": 0.67027,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_て": {
+        "n_samples": 4576,
+        "zero_count": 38,
+        "zero_rate_pct": 0.83,
+        "n_unique": 3172,
+        "min_positive_val": 0.071225,
+        "mean_val": 3.007955,
+        "std_val": 0.877565,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_た": {
+        "n_samples": 4576,
+        "zero_count": 42,
+        "zero_rate_pct": 0.92,
+        "n_unique": 3378,
+        "min_positive_val": 0.071225,
+        "mean_val": 3.106605,
+        "std_val": 1.120066,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_final_た": {
+        "n_samples": 4576,
+        "zero_count": 357,
+        "zero_rate_pct": 7.8,
+        "n_unique": 443,
+        "min_positive_val": 0.023256,
+        "mean_val": 0.364853,
+        "std_val": 0.256766,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_final_る": {
+        "n_samples": 4576,
+        "zero_count": 1452,
+        "zero_rate_pct": 31.73,
+        "n_unique": 341,
+        "min_positive_val": 0.018868,
+        "mean_val": 0.151672,
+        "std_val": 0.16095,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_だ": {
+        "n_samples": 4576,
+        "zero_count": 2600,
+        "zero_rate_pct": 56.82,
+        "n_unique": 186,
+        "min_positive_val": 0.017544,
+        "mean_val": 0.044483,
+        "std_val": 0.069606,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_い": {
+        "n_samples": 4576,
+        "zero_count": 1697,
+        "zero_rate_pct": 37.08,
+        "n_unique": 212,
+        "min_positive_val": 0.02,
+        "mean_val": 0.079049,
+        "std_val": 0.086873,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_う": {
+        "n_samples": 4576,
+        "zero_count": 2144,
+        "zero_rate_pct": 46.85,
+        "n_unique": 167,
+        "min_positive_val": 0.017857,
+        "mean_val": 0.04754,
+        "std_val": 0.064484,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_す": {
+        "n_samples": 4576,
+        "zero_count": 2860,
+        "zero_rate_pct": 62.5,
+        "n_unique": 230,
+        "min_positive_val": 0.017857,
+        "mean_val": 0.058948,
+        "std_val": 0.114509,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_ぬ": {
+        "n_samples": 4576,
+        "zero_count": 4024,
+        "zero_rate_pct": 87.94,
+        "n_unique": 107,
+        "min_positive_val": 0.016949,
+        "mean_val": 0.010115,
+        "std_val": 0.033822,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_か": {
+        "n_samples": 4576,
+        "zero_count": 3084,
+        "zero_rate_pct": 67.4,
+        "n_unique": 134,
+        "min_positive_val": 0.018519,
+        "mean_val": 0.027759,
+        "std_val": 0.052863,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_」": {
+        "n_samples": 4576,
+        "zero_count": 3899,
+        "zero_rate_pct": 85.21,
+        "n_unique": 46,
+        "min_positive_val": 0.018868,
+        "mean_val": 0.008802,
+        "std_val": 0.024251,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_other": {
+        "n_samples": 4576,
+        "zero_count": 993,
+        "zero_rate_pct": 21.7,
+        "n_unique": 375,
+        "min_positive_val": 0.017544,
+        "mean_val": 0.20678,
+        "std_val": 0.210991,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_narr_log_mean_sent_len": {
+        "n_samples": 4576,
+        "zero_count": 8,
+        "zero_rate_pct": 0.17,
+        "n_unique": 2973,
+        "min_positive_val": 0.693147,
+        "mean_val": 3.633058,
+        "std_val": 0.545355,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_narr_log_p90_sent_len": {
+        "n_samples": 4576,
+        "zero_count": 8,
+        "zero_rate_pct": 0.17,
+        "n_unique": 1216,
+        "min_positive_val": 0.693147,
+        "mean_val": 4.094614,
+        "std_val": 0.567943,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_dialogue_char_ratio": {
+        "n_samples": 4576,
+        "zero_count": 1160,
+        "zero_rate_pct": 25.35,
+        "n_unique": 3303,
+        "min_positive_val": 0.000773,
+        "mean_val": 0.234075,
+        "std_val": 0.280288,
+        "risk_level": "LOW_CONTINUOUS"
+      }
+    },
+    "Aozora_windows_11723": {
+      "6pole_kasane": {
+        "n_samples": 11723,
+        "zero_count": 19,
+        "zero_rate_pct": 0.16,
+        "n_unique": 63,
+        "min_positive_val": 0.166667,
+        "mean_val": 4.093392,
+        "std_val": 1.833405,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_sasae": {
+        "n_samples": 11723,
+        "zero_count": 4,
+        "zero_rate_pct": 0.03,
+        "n_unique": 57,
+        "min_positive_val": 0.166667,
+        "mean_val": 3.06972,
+        "std_val": 1.28315,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "6pole_kamae": {
+        "n_samples": 11723,
+        "zero_count": 5843,
+        "zero_rate_pct": 49.84,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.501578,
+        "std_val": 0.499998,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_sadame": {
+        "n_samples": 11723,
+        "zero_count": 4001,
+        "zero_rate_pct": 34.13,
+        "n_unique": 186,
+        "min_positive_val": 0.010417,
+        "mean_val": 0.05512,
+        "std_val": 0.054651,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "6pole_nagare": {
+        "n_samples": 11723,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 1,
+        "min_positive_val": 0.5,
+        "mean_val": 0.5,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "6pole_awase": {
+        "n_samples": 11723,
+        "zero_count": 10728,
+        "zero_rate_pct": 91.51,
+        "n_unique": 4,
+        "min_positive_val": 0.25,
+        "mean_val": 0.079608,
+        "std_val": 0.265867,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "hw25_gamma_uid": {
+        "n_samples": 11723,
+        "zero_count": 94,
+        "zero_rate_pct": 0.8,
+        "n_unique": 8915,
+        "min_positive_val": 0.008676,
+        "mean_val": 0.420006,
+        "std_val": 0.430779,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "kamae_hook_survival": {
+        "n_samples": 11723,
+        "zero_count": 5843,
+        "zero_rate_pct": 49.84,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.501578,
+        "std_val": 0.499998,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "kamae_hook_survival_idf": {
+        "n_samples": 11723,
+        "zero_count": 5843,
+        "zero_rate_pct": 49.84,
+        "n_unique": 2,
+        "min_positive_val": 1.0,
+        "mean_val": 0.501578,
+        "std_val": 0.499998,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "kamae_opened_hooks": {
+        "n_samples": 11723,
+        "zero_count": 5843,
+        "zero_rate_pct": 49.84,
+        "n_unique": 3,
+        "min_positive_val": 1.0,
+        "mean_val": 0.685831,
+        "std_val": 0.764181,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_total": {
+        "n_samples": 11723,
+        "zero_count": 4001,
+        "zero_rate_pct": 34.13,
+        "n_unique": 186,
+        "min_positive_val": 0.010417,
+        "mean_val": 0.05512,
+        "std_val": 0.054651,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "sadame_e_inter": {
+        "n_samples": 11723,
+        "zero_count": 4001,
+        "zero_rate_pct": 34.13,
+        "n_unique": 168,
+        "min_positive_val": 0.041667,
+        "mean_val": 0.204621,
+        "std_val": 0.200442,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "sadame_e_intra": {
+        "n_samples": 11723,
+        "zero_count": 11723,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "sadame_edges_eff": {
+        "n_samples": 11723,
+        "zero_count": 4001,
+        "zero_rate_pct": 34.13,
+        "n_unique": 7,
+        "min_positive_val": 1.0,
+        "mean_val": 0.767466,
+        "std_val": 0.700234,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "nagare_phi_zeami": {
+        "n_samples": 11723,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 1,
+        "min_positive_val": 0.5,
+        "mean_val": 0.5,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_event_speed": {
+        "n_samples": 11723,
+        "zero_count": 11723,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_event_accel": {
+        "n_samples": 11723,
+        "zero_count": 11723,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_mood_speed": {
+        "n_samples": 11723,
+        "zero_count": 11723,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "nagare_mood_accel": {
+        "n_samples": 11723,
+        "zero_count": 11723,
+        "zero_rate_pct": 100.0,
+        "n_unique": 1,
+        "min_positive_val": 0.0,
+        "mean_val": 0.0,
+        "std_val": 0.0,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_irony_mean": {
+        "n_samples": 11723,
+        "zero_count": 10728,
+        "zero_rate_pct": 91.51,
+        "n_unique": 4,
+        "min_positive_val": 0.25,
+        "mean_val": 0.079608,
+        "std_val": 0.265867,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_irony_max": {
+        "n_samples": 11723,
+        "zero_count": 10728,
+        "zero_rate_pct": 91.51,
+        "n_unique": 4,
+        "min_positive_val": 0.25,
+        "mean_val": 0.079608,
+        "std_val": 0.265867,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_detachment_mean": {
+        "n_samples": 11723,
+        "zero_count": 9830,
+        "zero_rate_pct": 83.85,
+        "n_unique": 7,
+        "min_positive_val": 0.25,
+        "mean_val": 0.101894,
+        "std_val": 0.256875,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "awase_detachment_max": {
+        "n_samples": 11723,
+        "zero_count": 9830,
+        "zero_rate_pct": 83.85,
+        "n_unique": 7,
+        "min_positive_val": 0.25,
+        "mean_val": 0.101894,
+        "std_val": 0.256875,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_log_mean_sent_len": {
+        "n_samples": 11723,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 2193,
+        "min_positive_val": 2.282382,
+        "mean_val": 3.442947,
+        "std_val": 0.465024,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_sent_len_cv": {
+        "n_samples": 11723,
+        "zero_count": 4,
+        "zero_rate_pct": 0.03,
+        "n_unique": 11590,
+        "min_positive_val": 0.084079,
+        "mean_val": 0.682235,
+        "std_val": 0.202004,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kanji_ratio": {
+        "n_samples": 11723,
+        "zero_count": 0,
+        "zero_rate_pct": 0.0,
+        "n_unique": 5921,
+        "min_positive_val": 0.069853,
+        "mean_val": 0.31103,
+        "std_val": 0.056367,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_hiragana_ratio": {
+        "n_samples": 11723,
+        "zero_count": 70,
+        "zero_rate_pct": 0.6,
+        "n_unique": 5992,
+        "min_positive_val": 0.001748,
+        "mean_val": 0.663302,
+        "std_val": 0.085772,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_quote_ratio": {
+        "n_samples": 11723,
+        "zero_count": 3168,
+        "zero_rate_pct": 27.02,
+        "n_unique": 1849,
+        "min_positive_val": 0.001681,
+        "mean_val": 0.014653,
+        "std_val": 0.018024,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_は": {
+        "n_samples": 11723,
+        "zero_count": 86,
+        "zero_rate_pct": 0.73,
+        "n_unique": 1709,
+        "min_positive_val": 0.178571,
+        "mean_val": 2.367108,
+        "std_val": 0.762993,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_が": {
+        "n_samples": 11723,
+        "zero_count": 92,
+        "zero_rate_pct": 0.78,
+        "n_unique": 1645,
+        "min_positive_val": 0.176056,
+        "mean_val": 2.000733,
+        "std_val": 0.722822,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_の": {
+        "n_samples": 11723,
+        "zero_count": 86,
+        "zero_rate_pct": 0.73,
+        "n_unique": 2479,
+        "min_positive_val": 0.358423,
+        "mean_val": 4.59523,
+        "std_val": 1.390216,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_に": {
+        "n_samples": 11723,
+        "zero_count": 86,
+        "zero_rate_pct": 0.73,
+        "n_unique": 1800,
+        "min_positive_val": 0.182482,
+        "mean_val": 2.854513,
+        "std_val": 0.87902,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_を": {
+        "n_samples": 11723,
+        "zero_count": 89,
+        "zero_rate_pct": 0.76,
+        "n_unique": 1766,
+        "min_positive_val": 0.178253,
+        "mean_val": 2.147908,
+        "std_val": 0.822159,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_と": {
+        "n_samples": 11723,
+        "zero_count": 84,
+        "zero_rate_pct": 0.72,
+        "n_unique": 1831,
+        "min_positive_val": 0.178253,
+        "mean_val": 2.53065,
+        "std_val": 0.83191,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_で": {
+        "n_samples": 11723,
+        "zero_count": 115,
+        "zero_rate_pct": 0.98,
+        "n_unique": 1823,
+        "min_positive_val": 0.176367,
+        "mean_val": 1.961995,
+        "std_val": 0.834401,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_も": {
+        "n_samples": 11723,
+        "zero_count": 108,
+        "zero_rate_pct": 0.92,
+        "n_unique": 1582,
+        "min_positive_val": 0.176367,
+        "mean_val": 1.613374,
+        "std_val": 0.697007,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_て": {
+        "n_samples": 11723,
+        "zero_count": 84,
+        "zero_rate_pct": 0.72,
+        "n_unique": 1905,
+        "min_positive_val": 0.179211,
+        "mean_val": 3.017598,
+        "std_val": 0.919664,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_kana_た": {
+        "n_samples": 11723,
+        "zero_count": 87,
+        "zero_rate_pct": 0.74,
+        "n_unique": 2200,
+        "min_positive_val": 0.179211,
+        "mean_val": 3.087902,
+        "std_val": 1.135015,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_final_た": {
+        "n_samples": 11723,
+        "zero_count": 1017,
+        "zero_rate_pct": 8.68,
+        "n_unique": 374,
+        "min_positive_val": 0.022727,
+        "mean_val": 0.30434,
+        "std_val": 0.227368,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_final_る": {
+        "n_samples": 11723,
+        "zero_count": 3929,
+        "zero_rate_pct": 33.52,
+        "n_unique": 299,
+        "min_positive_val": 0.021739,
+        "mean_val": 0.134816,
+        "std_val": 0.151128,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_だ": {
+        "n_samples": 11723,
+        "zero_count": 7187,
+        "zero_rate_pct": 61.31,
+        "n_unique": 172,
+        "min_positive_val": 0.021277,
+        "mean_val": 0.037654,
+        "std_val": 0.064475,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_い": {
+        "n_samples": 11723,
+        "zero_count": 4621,
+        "zero_rate_pct": 39.42,
+        "n_unique": 185,
+        "min_positive_val": 0.022222,
+        "mean_val": 0.07143,
+        "std_val": 0.083629,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_う": {
+        "n_samples": 11723,
+        "zero_count": 6157,
+        "zero_rate_pct": 52.52,
+        "n_unique": 141,
+        "min_positive_val": 0.022222,
+        "mean_val": 0.040976,
+        "std_val": 0.058862,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_す": {
+        "n_samples": 11723,
+        "zero_count": 7697,
+        "zero_rate_pct": 65.66,
+        "n_unique": 201,
+        "min_positive_val": 0.021277,
+        "mean_val": 0.04968,
+        "std_val": 0.10202,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_ぬ": {
+        "n_samples": 11723,
+        "zero_count": 10495,
+        "zero_rate_pct": 89.52,
+        "n_unique": 96,
+        "min_positive_val": 0.022222,
+        "mean_val": 0.008333,
+        "std_val": 0.029357,
+        "risk_level": "HIGH_ARTIFACT_RISK"
+      },
+      "ortho28_v2_final_か": {
+        "n_samples": 11723,
+        "zero_count": 8360,
+        "zero_rate_pct": 71.31,
+        "n_unique": 134,
+        "min_positive_val": 0.022222,
+        "mean_val": 0.022696,
+        "std_val": 0.04669,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_」": {
+        "n_samples": 11723,
+        "zero_count": 6589,
+        "zero_rate_pct": 56.21,
+        "n_unique": 337,
+        "min_positive_val": 0.022222,
+        "mean_val": 0.088915,
+        "std_val": 0.137961,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      },
+      "ortho28_v2_final_other": {
+        "n_samples": 11723,
+        "zero_count": 436,
+        "zero_rate_pct": 3.72,
+        "n_unique": 392,
+        "min_positive_val": 0.021277,
+        "mean_val": 0.241159,
+        "std_val": 0.18712,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_narr_log_mean_sent_len": {
+        "n_samples": 11723,
+        "zero_count": 34,
+        "zero_rate_pct": 0.29,
+        "n_unique": 5022,
+        "min_positive_val": 0.03279,
+        "mean_val": 3.3126,
+        "std_val": 0.692984,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_narr_log_p90_sent_len": {
+        "n_samples": 11723,
+        "zero_count": 88,
+        "zero_rate_pct": 0.75,
+        "n_unique": 1572,
+        "min_positive_val": 0.336472,
+        "mean_val": 3.940647,
+        "std_val": 0.642193,
+        "risk_level": "LOW_CONTINUOUS"
+      },
+      "ortho28_v2_dialogue_char_ratio": {
+        "n_samples": 11723,
+        "zero_count": 3730,
+        "zero_rate_pct": 31.82,
+        "n_unique": 6123,
+        "min_positive_val": 0.001686,
+        "mean_val": 0.179776,
+        "std_val": 0.233851,
+        "risk_level": "MEDIUM_DISCRETE_STEP"
+      }
+    }
+  }
+}

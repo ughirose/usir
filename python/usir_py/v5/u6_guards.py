@@ -17,11 +17,28 @@ Adheres strictly to the specification in Rust diff_harvester.rs and Stage B-6 re
      * Adverb 先ず / まず.
      * Epistemic conjecture modalities: 違いない / ちがいない / かもしれない / かも知れない (and inflections).
      * Lexical adjective stems (少, 切, 危, 汚, 儚) + ない/なかった/なく/なけれ.
+
+Calibration Scope Note:
+- calibration_scope: "micro_polish_only"
+- Provisional thresholds: (min_jaccard=0.35, max_char_change=0.45).
+- IMPORTANT: マクロ改稿（Class B）では Jaccard 系ゲートは Recall 0.4062 に低下するため使用しない（ミクロ推敲専用）。
 """
 from __future__ import annotations
 
 import re
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
+
+# Calibration Scope Metadata
+CALIBRATION_SCOPE = "micro_polish_only"
+MACRO_REVISION_JACCARD_DISALLOWED_NOTE = (
+    "マクロ改稿（Class B）では Jaccard 系ゲートは Recall 0.4062 に低下するため使用しない（ミクロ推敲専用）"
+)
+PROVISIONAL_CALIBRATED_THRESHOLDS = {
+    "min_jaccard": 0.35,
+    "max_char_change": 0.45,
+    "calibration_scope": CALIBRATION_SCOPE,
+    "note": MACRO_REVISION_JACCARD_DISALLOWED_NOTE,
+}
 
 # Full-width to half-width mapping
 _FULLWIDTH_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")

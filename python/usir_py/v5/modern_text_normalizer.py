@@ -232,14 +232,45 @@ class Order3PPMModel:
         return -math.log2(max(p_u, 1e-12))
 
     def evaluate_cross_entropy(self, tokens: List[str]) -> Tuple[float, float]:
-        """Compute cross-entropy (bits/token) and closed-class coverage (%)."""
+        """Compute cross-entropy (bits/token) and closed-class token ratio (formerly called coverage_pct).
+
+        Returns:
+            Tuple of (mean_bits_per_token, closed_class_token_ratio_pct).
+            Note: The second element is the closed-class token density in text (55-65%),
+            corresponding to Rust closed_share * 100.0, NOT vocabulary coverage.
+            For exact parity with Rust nishiki-ppm, see `evaluate_skeleton_metrics`.
+        """
+        metrics = self.evaluate_skeleton_metrics(tokens)
+        return metrics["bits_per_token"], metrics["closed_class_token_ratio"] * 100.0
+
+    def evaluate_skeleton_metrics(self, tokens: List[str]) -> Dict[str, Any]:
+        """Compute detailed PPM cross-entropy and dual closed-class coverage metrics.
+
+        Parity with Rust nishiki-ppm::shift::ClosedClassCoverage:
+        - closed_class_token_ratio: closed_tokens / total_tokens (density, natural range 55-65%)
+        - closed_class_vocab_coverage: closed_known / closed_tokens (vocab coverage, >=99.9%)
+        """
         if not tokens:
-            return 0.0, 0.0
+            return {
+                "bits_per_token": 0.0,
+                "closed_class_token_ratio": 0.0,
+                "closed_class_vocab_coverage": 1.0,
+                "tokens_total": 0,
+                "closed_tokens": 0,
+                "closed_known": 0,
+            }
+
         total_bits = 0.0
-        closed_hits = 0
+        closed_tokens = 0
+        closed_known = 0
+
         for i, tok in enumerate(tokens):
-            if tok in CLOSED_SET:
-                closed_hits += 1
+            is_closed = tok in CLOSED_SET
+            if is_closed:
+                closed_tokens += 1
+                if tok in self.vocab and self.unigrams.get(tok, 0) > 0:
+                    closed_known += 1
+
             ctx = ()
             if i == 1:
                 ctx = (tokens[0] if tokens[0] in self.vocab else TOKEN_UNK,)
@@ -252,8 +283,17 @@ class Order3PPMModel:
             total_bits += bits
 
         mean_bits_per_token = total_bits / len(tokens)
-        coverage_pct = (closed_hits / len(tokens)) * 100.0
-        return mean_bits_per_token, coverage_pct
+        token_ratio = closed_tokens / len(tokens)
+        vocab_coverage = (closed_known / closed_tokens) if closed_tokens > 0 else 1.0
+
+        return {
+            "bits_per_token": mean_bits_per_token,
+            "closed_class_token_ratio": token_ratio,
+            "closed_class_vocab_coverage": vocab_coverage,
+            "tokens_total": len(tokens),
+            "closed_tokens": closed_tokens,
+            "closed_known": closed_known,
+        }
 
 
 # ---------------------------------------------------------------------------

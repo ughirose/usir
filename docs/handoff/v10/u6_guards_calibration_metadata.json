@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "title": "U6 Guards Calibration Metadata & Scope Specification",
+    "version": "1.0",
+    "target_vectors_file": "docs/handoff/v10/u6_guards_test_vectors.json",
+    "target_vectors_sha256": "4AC04322811EB30776260F8EC2DEA378FF962A5C44180823218973DBAA3F3EF7",
+    "calibration_scope": "micro_polish_only",
+    "macro_revision_policy": "マクロ改稿（Class B）では Jaccard 系ゲートは Recall 0.4062 に低下するため使用しない（ミクロ推敲専用）",
+    "provisional_thresholds": {
+      "min_jaccard": 0.35,
+      "max_char_change": 0.45,
+      "calibration_scope": "micro_polish_only",
+      "note": "Provisional threshold calibrated on Class A micro-polish pairs."
+    },
+    "expanded_grid_findings": {
+      "grid_range": {
+        "min_jaccard": [0.05, 0.75],
+        "max_char_change": [0.15, 0.85],
+        "n_points": 225
+      },
+      "scope1_micro_only": {
+        "optimal_point": {
+          "min_jaccard": 0.25,
+          "max_char_change": 0.85,
+          "mean_cv_f1": 0.7698
+        },
+        "plateau_range": {
+          "min_jaccard": 0.25,
+          "max_char_change_span": [0.55, 0.85],
+          "size": 7
+        }
+      },
+      "scope2_full_revision": {
+        "optimal_point": {
+          "min_jaccard": 0.25,
+          "max_char_change": 0.55,
+          "mean_cv_f1": 0.5998
+        },
+        "finding": "Severe recall drop across Class B (Recall falls to 0.4062 under initial 0.55/0.25 heuristics, and 0.5000 under expanded optimal), proving Jaccard-based gates cannot separate macro-revision from content rewrite."
+      }
+    }
+  }
+}
