@@ -30,15 +30,31 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 # Calibration Scope Metadata
 CALIBRATION_SCOPE = "micro_polish_only"
+CHAR_CHANGE_PLATEAU_NOTE = (
+    "max_char_change >= 0.55 forms a 7-point flat plateau (Mean CV F1 = 0.7698); "
+    "length ratio is effectively unconstrained in micro-polish"
+)
 MACRO_REVISION_JACCARD_DISALLOWED_NOTE = (
     "マクロ改稿（Class B）では Jaccard 系ゲートは Recall 0.4062 に低下するため使用しない（ミクロ推敲専用）"
 )
-PROVISIONAL_CALIBRATED_THRESHOLDS = {
-    "min_jaccard": 0.35,
-    "max_char_change": 0.45,
-    "calibration_scope": CALIBRATION_SCOPE,
-    "note": MACRO_REVISION_JACCARD_DISALLOWED_NOTE,
+
+U6_PROFILES = {
+    "uncalibrated_v1": {
+        "min_jaccard": 0.55,
+        "max_char_change": 0.25,
+        "calibration_scope": "legacy_heuristic_38vectors",
+        "note": "Default uncalibrated heuristic for 38-vector fixture backward compatibility.",
+    },
+    "provisional_micro_v2": {
+        "min_jaccard": 0.25,
+        "max_char_change": 0.85,
+        "calibration_scope": CALIBRATION_SCOPE,
+        "char_change_plateau_note": CHAR_CHANGE_PLATEAU_NOTE,
+        "note": MACRO_REVISION_JACCARD_DISALLOWED_NOTE,
+    },
 }
+
+PROVISIONAL_CALIBRATED_THRESHOLDS = U6_PROFILES["provisional_micro_v2"]
 
 # Full-width to half-width mapping
 _FULLWIDTH_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
@@ -302,8 +318,9 @@ def check_negation_guard(t_before: str, t_after: str) -> Tuple[bool, str, int, i
 def u6_classify(
     t_before: str,
     t_after: str,
-    min_jaccard: float = 0.55,
-    max_char_change: float = 0.25,
+    min_jaccard: Optional[float] = None,
+    max_char_change: Optional[float] = None,
+    profile: Optional[str] = None,
 ) -> Dict[str, Any]:
     """U6 Classifier with Numeral Guard and Negation Guard.
 
@@ -314,6 +331,14 @@ def u6_classify(
       - 'jaccard': float
       - 'char_change_ratio': float
     """
+    if profile is not None and profile in U6_PROFILES:
+        prof_dict = U6_PROFILES[profile]
+        eff_min_j = prof_dict["min_jaccard"] if min_jaccard is None else min_jaccard
+        eff_max_c = prof_dict["max_char_change"] if max_char_change is None else max_char_change
+    else:
+        eff_min_j = 0.55 if min_jaccard is None else min_jaccard
+        eff_max_c = 0.25 if max_char_change is None else max_char_change
+
     # 1. Numeral Guard
     res_b = extract_numerals_with_spans(t_before)
     res_a = extract_numerals_with_spans(t_after)
@@ -364,12 +389,12 @@ def u6_classify(
     jaccard = len(w1 & w2) / max(len(w1 | w2), 1) if (w1 or w2) else 1.0
     char_change = abs(len(t_b_eval) - len(t_a_eval)) / max(len(t_b_eval), 1)
 
-    if jaccard >= min_jaccard and char_change <= max_char_change:
+    if jaccard >= eff_min_j and char_change <= eff_max_c:
         label = "STYLE_POLISH"
         rejection_reason = None
     else:
         label = "CONTENT_REWRITE"
-        rejection_reason = f"SURFACE_DIVERGENCE: jaccard={jaccard:.3f} < {min_jaccard} or len_change={char_change:.3f} > {max_char_change}"
+        rejection_reason = f"SURFACE_DIVERGENCE: jaccard={jaccard:.3f} < {eff_min_j} or len_change={char_change:.3f} > {eff_max_c}"
 
     return {
         "label": label,

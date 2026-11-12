@@ -245,3 +245,24 @@ def test_u6_test_vectors_fixture_pass():
             f"Vector {vec['id']} ({vec['category']}): expected {vec['expected_label']}, got {res['label']}"
         )
 
+
+def test_u6_profiles():
+    from usir_py.v5.u6_guards import U6_PROFILES, PROVISIONAL_CALIBRATED_THRESHOLDS
+
+    assert "uncalibrated_v1" in U6_PROFILES
+    assert "provisional_micro_v2" in U6_PROFILES
+    assert U6_PROFILES["provisional_micro_v2"]["min_jaccard"] == 0.25
+    assert U6_PROFILES["provisional_micro_v2"]["max_char_change"] == 0.85
+    assert PROVISIONAL_CALIBRATED_THRESHOLDS["min_jaccard"] == 0.25
+    assert PROVISIONAL_CALIBRATED_THRESHOLDS["max_char_change"] == 0.85
+
+    # Test classifying with profile keyword
+    # A pair with char_change = 0.4167 (passes provisional_micro_v2 max_c=0.85, fails uncalibrated_v1 max_c=0.25)
+    tb = "空は青く澄み渡っていた。"
+    ta = "空は青くどこまでも澄み渡っていた。"
+    res_def = u6_classify(tb, ta)
+    assert res_def["label"] == "CONTENT_REWRITE"  # len_change > 0.25
+
+    res_micro = u6_classify(tb, ta, profile="provisional_micro_v2")
+    assert res_micro["label"] == "STYLE_POLISH"  # len_change <= 0.85 and jaccard >= 0.25
+

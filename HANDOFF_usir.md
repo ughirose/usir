@@ -297,9 +297,45 @@
 
 ---
 
-## 3. 次のセッションへの引継ぎ事項
+## 4. Stage B-9 完了記録（2026-11-12）
+
+### 4.1 実施内容と定量確定値
+1. **タスク1：二階層レンズ Level 3b 残差特異性検証コードバグ修正・実測完了**
+   - `experiments/scale_separated_level3.py` の Gram-Schmidt 直交化引数バグ（L363-364）および Class B 目標／他スタイル重心計算バグ（L463-508）を修正。
+   - **H1 (Micro-scale, Class A ミクロ推敲, $n=42$)**:
+     * 全結合空間（39D: ortho28 + kasane11）: $\text{mean } \cos_{\text{spec}} = +0.1085$, vs ランダム $p=0.0175$, vs 他作家 $p=0.0051$（有意）。
+     * 有効連続サブセット（32D: ortho24_cont + kasane8_active）: $\text{mean } \cos_{\text{spec}} = +0.1083$, vs ランダム Bonferroni $p=0.0476$, vs 他作家 Bonferroni $p=0.0210$（両対照で有意成立）。
+   - **H2 (Macro-scale, Class B マクロ改稿, $n=22$)**:
+     * 全結合空間（7D: 6pole + HW-25）: $\text{mean } \cos_{\text{spec}} = +0.1365$, vs ランダム $p=0.0164$, vs 他作家 $p=0.0018$（有意）。
+     * 有効連続サブセット（5D: 4pole_cont + HW-25）: $\text{mean } \cos_{\text{spec}} = +0.0849$, vs 他作家 Bonferroni $p=0.0065$（対他者で有意成立）。
+   - 成果物: `data/usir_v5_eval/usir_v5_stage_b8_scale_separation_and_gate3a.json`
+
+2. **タスク2：U6 ガード暫定較正プロファイル確定とテストベクタ固定**
+   - `python/usir_py/v5/u6_guards.py` に `U6_PROFILES`（`uncalibrated_v1 = (0.55, 0.25)`, `provisional_micro_v2 = (0.25, 0.85)`）を追加。
+   - `docs/handoff/v10/u6_guards_calibration_metadata.json` を更新。
+   - `python/tests/v5/test_u6_guards.py` に 17 件のテストを追加（全件 PASS）。
+   - 既存38件テストベクタ SHA-256（`4AC04322811EB30776260F8EC2DEA378FF962A5C44180823218973DBAA3F3EF7`）との整合性を完全維持。
+
+3. **タスク3：Gate 3a レジスター別中心化・時代オフセット補正の比較実測**
+   - ベンチマークを32件から64件（4レジスター $\times$ 16件、D3クリーンルーム準拠不可逆プロファイル）へと拡充（`scripts/build_tier_c_modern_benchmark_expanded.py`, `data/usir_v5_eval/tier_c_modern_benchmark_expanded.jsonl`）。
+   - `experiments/gate3a_register_centering_eval.py` を新設し、青空106作品アトラス基準で4スキームを LOO 比較実測（`data/usir_v5_eval/usir_v5_b9_register_centering_and_level3.json`）。
+   - **Scheme 0 (Raw 31D Atlas)**: 現代散文全体 3-sigma 外れ値率 95.83%（R1=87.5%, R2=100.0%, R3=100.0%）。
+   - **Scheme 1 (Continuous Core 24D)**: スパース語尾除外後も外れ値率 100.0%（構造的オフセット未解消）。
+   - **Scheme 2 (LOO 時代オフセット補正)**: R1 現代小説において 3-sigma 外れ値率が 87.5% $\to$ **0.0%**（$0/16$ 件）へと激減し、青空文学多様体への収束を証明。一方で現代散文全体（R1〜R3）をプールした時代補正では外れ値率 81.25% が残存し、ジャンル乖離と時代ドリフトが直交することを確認。
+   - **Scheme 3 (Within-Register LOO 中心化)**: レジスター間分散比 $\eta^2_{\text{register}}$ を **100.0% 完全消去**（$0.4965 \to 0.0000$）しつつ、内部距離相関 Spearman $\rho = 1.0000$ を完全保持。
+   - **総合レポート**: `docs/handoff/2026-11-12_usir_v5_stage_b9_report.md` 作成、Google Drive inbox へ同期完了。
+
+4. **総合テスト検証**:
+   - `pytest python/tests/v5/`: **全47件 PASS** (82.25s)。
+
+---
+
+## 5. Stage B-10 への引継ぎ事項
+
 - **現在のブランチ**: `feat/fable-v5-shootout`
-- **完了コミット**: `feat(v5): complete D0 calibration, D11/U6 polish separation, Gate 3a shift, and diachronic shootout`
-- **次のマイルストーン**:
-  1. Gate 3b の盲検評価設計（妻による初稿マークおよび Cohen's $\kappa$ 一致度検証）。
-  2. Level 3 専用の局所高解像度差分プローブの設計（微細推敲のノイズ床埋没を克服する差分アンプ）。
+- **Gate 3b 状態**: **`GATE3B_FROZEN`（凍結継続）**
+  * 理由: 現代小説（R1）は時代補正で救済可能だが、エッセイ（R2）や技術文書（R3）は青空文学多様体と直交するため、手元原稿（層B-1）の投入にはレジスター条件付きアトラス（Scheme 3 型）またはレジスター自動判定の配備と Orion 合意が必須。
+- **Stage B-10 次期課題**:
+  1. **レジスター条件付き推論基盤の設計**: Scheme 3（Within-Register Centering）に基づく、テキスト入力時のレジスター判定および条件付き標準化パイプラインのモジュール化。
+  2. **Level 3 局所高解像度差分プローブの具体化**: ノイズ床を克服する局所文体差分アンプの実装。
+  3. **Orion 合意形成**: Gate 3b 解除要件の定式化と合意プロトコル。

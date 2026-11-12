@@ -5,12 +5,29 @@
     "target_vectors_file": "docs/handoff/v10/u6_guards_test_vectors.json",
     "target_vectors_sha256": "4AC04322811EB30776260F8EC2DEA378FF962A5C44180823218973DBAA3F3EF7",
     "calibration_scope": "micro_polish_only",
+    "char_change_plateau_note": "max_char_change >= 0.55 forms a 7-point flat plateau (Mean CV F1 = 0.7698); length ratio is effectively unconstrained in micro-polish",
     "macro_revision_policy": "マクロ改稿（Class B）では Jaccard 系ゲートは Recall 0.4062 に低下するため使用しない（ミクロ推敲専用）",
+    "profiles": {
+      "uncalibrated_v1": {
+        "min_jaccard": 0.55,
+        "max_char_change": 0.25,
+        "calibration_scope": "legacy_test_vectors",
+        "note": "Default uncalibrated heuristic maintained for 38-vector test suite backward compatibility."
+      },
+      "provisional_micro_v2": {
+        "min_jaccard": 0.25,
+        "max_char_change": 0.85,
+        "calibration_scope": "micro_polish_only",
+        "char_change_plateau_note": "max_char_change >= 0.55 forms a 7-point flat plateau (Mean CV F1 = 0.7698); length ratio is effectively unconstrained in micro-polish",
+        "note": "225-point CV grid search optimal parameter set for micro-polish."
+      }
+    },
     "provisional_thresholds": {
-      "min_jaccard": 0.35,
-      "max_char_change": 0.45,
+      "min_jaccard": 0.25,
+      "max_char_change": 0.85,
       "calibration_scope": "micro_polish_only",
-      "note": "Provisional threshold calibrated on Class A micro-polish pairs."
+      "char_change_plateau_note": "max_char_change >= 0.55 forms a 7-point flat plateau (Mean CV F1 = 0.7698); length ratio is effectively unconstrained in micro-polish",
+      "note": "Provisional threshold calibrated on 225-point CV grid search for Class A micro-polish pairs."
     },
     "expanded_grid_findings": {
       "grid_range": {
