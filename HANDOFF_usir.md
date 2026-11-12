@@ -1,11 +1,58 @@
 # USIR v5 実装引継ぎ台帳 (HANDOFF)
-**最終更新日時**: 2026-11-12 11:45:00 JST  
+**最終更新日時**: 2026-11-12 14:40:00 JST  
 **ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`)  
 **関連リポジトリ**: `C:\dev\nishiki`（Lane B 境界線厳守・変更ゼロ保証）
 
 ---
 
-## 0. Stage B-6 実装・実測セッション（2026-11-12 実施）
+## 0. Stage B-7 実装・実測セッション（2026-11-12 実施）
+
+本セッションでは、Orion 指摘1〜3への対応（同義反復の撤回、空間再編、Level 3a/3b 分離、本人特異残差検定の実装実測）および U6 ガードの表記変換保護・端ケース拡充を一気通貫で完遂した。
+
+### 1. タスク1：Orion 指摘1〜3への対応 — 同義反復撤回・本人特異残差検定
+- **同義反復の完全撤回**:
+  - `experiments/usir_v5_edited_span_level3.py` における「vs 劣化（$-cos_{\text{author}}$）」の Wilcoxon 検定は差分 $2 \cdot cos_{\text{author}}$ の検定（$cos_{\text{author}} > 0$ の言い換え）であるため独立証拠から撤回。有効な方向性対照を「vs 等方ランダム摂動」のみに限定。
+- **空間再編**:
+  - 前回 vs ランダムで非有意だった `ppm3d`（$p = 0.169$）を主空間から探索空間へ格下げ。
+  - 主空間: `ortho28`（28D, 前回 $p = 1.22 \times 10^{-4}$）、`6pole`（6D, 前回 $p = 4.73 \times 10^{-3}$）。
+  - 探索空間: `ppm3d`（3D）、`A55`（55D, Canonical Atlas Z24 + ortho_v1 31D）。
+- **Level 3a / 3b の概念的分離**:
+  - 微細推敲28件における規範回帰（vs ランダム有意）は「Level 3a：レジスター整合性チェック（計器健全性確認）」と位置づけ。
+  - 本人特異性「Level 3b」の合否判定は、人手由来マクロ改稿ペアが揃うまで保留（DEFERRED）。LLM 疑似ペアは循環検証となるため一切使用禁止。
+- **本人特異残差検定（Residual Orthogonalization Test）の実装と実測**:
+  - 実験スクリプト: `experiments/usir_v5_residual_specificity_level3.py` 新設。
+  - 推敲前座標 $z_{\text{before}}$ からコーパス全体平均 $z^*_{\text{corpus}}$ への単位ベクトル $u_{\text{corp}}$ を直交化で除去した本人残差ベクトル $u_{\text{spec}}(\text{author})$ を算出。
+  - 事前固定基準 $\rho_{\perp} < 0.10$（$\theta < 5.74^\circ$）による準平行フラグ管理。
+  - **実測結果（`span_only` 28ペア）**:
+    - **ortho28 [主空間]**: 直交残差空間でも本人方向へ有意！
+      - 全28件: $cos_{\text{spec}} = +0.1485$（vs ランダム $W=304.0, \mathbf{p=0.0102}$、vs 他作家9名平均 $W=340.0, \mathbf{p=5.86 \times 10^{-4}}$）。
+      - 非平行27件（準平行1件除外）: $cos_{\text{spec}} = +0.1454$（vs ランダム $W=278.0, \mathbf{p=0.0159}$、vs 他作家 $W=314.0, \mathbf{p=9.29 \times 10^{-4}}$）。
+    - **6pole [主空間・死角開示]**:
+      - 準平行ペアが 7/28（25.0%）発生。
+      - 直交残差空間では本人方向へ非有意（全28件: $cos_{\text{spec}} = -0.0865$, vs ランダム $p=0.832$, vs 他作家 $p=0.865$；非平行21件: $cos_{\text{spec}} = +0.0353$, vs ランダム $p=0.500$, vs 他作家 $p=0.603$）。
+      - 【特定事実】6pole が微細推敲28件で捉えていたのは「作家個人の文体偏向」ではなく「文語散文としての規範的整流化（コーパス平均回帰）」であった。
+    - **A55 [探索空間]**: $cos_{\text{spec}} = +0.0946$（vs ランダム $p=0.0657$、vs 他作家 $W=308.0, \mathbf{p=7.82 \times 10^{-3}}$ 有意）。
+    - **ppm3d [探索空間]**: $cos_{\text{spec}} = -0.0899$（vs ランダム $p=0.887$、vs 他作家 $p=0.788$ 非有意）。
+- **D10 多訳ペア（4 Sources x 4 Translators）での予備観測**:
+  - TR_STANDARD $\to$ 他3文体の改稿12ペアにおいて、残差空間でも全空間が文体特異方向へ有意（ortho28 $p=2.44 \times 10^{-4}$, 6pole $cos_{\text{spec}}=+0.9257, p=2.44 \times 10^{-4}$, A55 $p=2.44 \times 10^{-4}$, ppm3d $p=0.0261$）。マクロ文体改稿での特異性検出力を実証。
+  - 成果物: `docs/handoff/v10/usir_v5_residual_specificity_level3.json`
+
+### 2. タスク2：U6 ガード表記変換保護と 32 件テストベクトル
+- **表記変換保護の実装**:
+  - `python/usir_py/v5/u6_guards.py` に漢数字・位取り記号・アラビア数字表記ゆれ保護、否定助動詞・二重否定接辞境界保護を実装。
+- **32件テストベクトル確定と未較正初期値の明記**:
+  - `docs/handoff/v10/u6_guards_test_vectors.json`: 32件全件で論理確定（`pass_count: 32`）。
+  - **重要注記**: 表層乖離度閾値（漢字 Jaccard 0.55 / 文字数変化率 0.25）はいまだデータ駆動で最適化されていない初期値（`calibrated: false`）であることを明記。
+- **検証テスト**: `python/tests/v5/test_u6_guards.py`（15件全パス）。
+
+### 3. テスト・レポート・同期
+- 単体テスト `pytest python/tests/v5/`: **45 件全パス（100% PASS）**。
+- 総合レポート: `docs/handoff/2026-11-12_usir_v5_stage_b7_report.md` 作成。
+- Google Drive 同期: `F:\マイドライブ\Claude-Sync\inbox\2026-11-12_usir_v5_stage_b7_report.md` にコピー完了。
+
+---
+
+## 0.1 Stage B-6 実装・実測セッション（2026-11-12 実施）
 
 本セッションでは、v4 決定事項および Stage B-5 の課題に基づき、以下のタスク1〜3を一気通貫で完遂した。
 

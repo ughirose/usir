@@ -153,3 +153,73 @@ def test_negation_adjective_stems_exclusion():
     passes, reason, pb, pa = check_negation_guard("残された時間が少ない。", "残された時間が僅少である。")
     assert passes is True
     assert pb == 0 and pa == 0
+
+
+def test_numeral_placeholder_orthographic_protection():
+    # "一万二千円" -> "12000円": Numeral normalization protects against Jaccard/length false positives
+    res_short = u6_classify("一万二千円", "12000円")
+    assert res_short["label"] == "STYLE_POLISH"
+    assert res_short["guard_passed"] is True
+    assert res_short["nums_before"] == [12000]
+    assert res_short["nums_after"] == [12000]
+
+    res_sent = u6_classify("費用は一万二千円だった。", "費用は12000円だった。")
+    assert res_sent["label"] == "STYLE_POLISH"
+    assert res_sent["guard_passed"] is True
+
+    # Real semantic rewrite with matching numerals must still be rejected by Jaccard
+    res_diff = u6_classify("一万二千円の費用をかけた。", "12000円の利益を得た。")
+    assert res_diff["label"] == "CONTENT_REWRITE"
+    assert "SURFACE_DIVERGENCE" in res_diff["rejection_reason"]
+
+
+def test_numeral_fraction_ratio_jubun_no_ichi():
+    # 割合・分数表現: "十分の一" extracts [10, 1] without being swallowed by adverbial exclusion
+    nums = extract_numerals("被害は十分の一になった。")
+    assert nums == [10, 1]
+
+    # Matching orthographic polish: 十分の一 -> 10分の1 is STYLE_POLISH
+    res = u6_classify("被害は十分の一になった。", "被害は10分の1になった。")
+    assert res["label"] == "STYLE_POLISH"
+    assert res["guard_passed"] is True
+
+    # Fraction value change: 十分の一 -> 五分の一 is CONTENT_REWRITE
+    res_change = u6_classify("被害は十分の一になった。", "被害は五分の一になった。")
+    assert res_change["label"] == "CONTENT_REWRITE"
+    assert res_change["guard_passed"] is False
+
+
+def test_numeral_single_unit_kanji_hyaku():
+    # 単独位取り漢数字: "百の兵がいた" extracts [100]
+    nums = extract_numerals("城門の前には百の兵がいた。")
+    assert nums == [100]
+
+    # Matching polish: 百 -> 100 is STYLE_POLISH
+    res = u6_classify("城門の前には百の兵がいた。", "城門の前には100の兵がいた。")
+    assert res["label"] == "STYLE_POLISH"
+    assert res["guard_passed"] is True
+
+    # Value change: 百 -> 千 is CONTENT_REWRITE
+    res_change = u6_classify("城門の前には百の兵がいた。", "城門の前には千の兵がいた。")
+    assert res_change["label"] == "CONTENT_REWRITE"
+    assert res_change["guard_passed"] is False
+
+
+def test_u6_test_vectors_32_fixture_pass():
+    import json
+    from pathlib import Path
+
+    fixture_path = Path("docs/handoff/v10/u6_guards_test_vectors.json")
+    assert fixture_path.exists(), f"Missing fixture file: {fixture_path}"
+
+    data = json.loads(fixture_path.read_text(encoding="utf-8"))
+    assert data["metadata"]["n_vectors"] == 32
+    assert data["metadata"]["calibrated"] is False
+    assert len(data["test_vectors"]) == 32
+
+    for vec in data["test_vectors"]:
+        res = u6_classify(vec["text_before"], vec["text_after"])
+        assert res["label"] == vec["expected_label"], (
+            f"Vector {vec['id']} ({vec['category']}): expected {vec['expected_label']}, got {res['label']}"
+        )
+

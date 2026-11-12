@@ -1,10 +1,12 @@
 {
   "metadata": {
-    "title": "U6 Guards Cross-Language Test Vectors (30 Pairs)",
-    "version": "1.0",
-    "description": "Fixed input-output fixture covering numeral changes, orthography variation, negation flips, double negation, and 4 closed-class false positive exclusions.",
-    "n_vectors": 30,
-    "pass_count": 30
+    "title": "U6 Guards Cross-Language Test Vectors (32 Pairs)",
+    "version": "1.1",
+    "description": "Fixed input-output fixture covering numeral changes, orthography variation, negation flips, double negation, 4 closed-class false positive exclusions, fraction/ratio patterns, and single-unit kanji numerals.",
+    "n_vectors": 32,
+    "pass_count": 32,
+    "calibrated": false,
+    "threshold_calibration_note": "Logic is fixed across 32 vectors, but surface divergence thresholds (min_jaccard: 0.55, max_char_change: 0.25) remain uncalibrated initial heuristics."
   },
   "test_vectors": [
     {
@@ -24,7 +26,7 @@
       ],
       "pol_before": 0,
       "pol_after": 0,
-      "jaccard": 0.8333,
+      "jaccard": 1.0,
       "char_change_ratio": 0.0
     },
     {
@@ -44,7 +46,7 @@
       ],
       "pol_before": 0,
       "pol_after": 0,
-      "jaccard": 0.7,
+      "jaccard": 1.0,
       "char_change_ratio": 0.0
     },
     {
@@ -64,7 +66,7 @@
       ],
       "pol_before": 0,
       "pol_after": 0,
-      "jaccard": 0.9091,
+      "jaccard": 1.0,
       "char_change_ratio": 0.0
     },
     {
@@ -84,8 +86,8 @@
       ],
       "pol_before": 0,
       "pol_after": 0,
-      "jaccard": 0.6923,
-      "char_change_ratio": 0.05
+      "jaccard": 1.0,
+      "char_change_ratio": 0.0
     },
     {
       "id": 5,
@@ -460,8 +462,8 @@
       ],
       "pol_before": 0,
       "pol_after": 0,
-      "jaccard": 0.75,
-      "char_change_ratio": 0.0769
+      "jaccard": 0.7143,
+      "char_change_ratio": 0.0588
     },
     {
       "id": 27,
@@ -526,6 +528,48 @@
       "pol_after": 0,
       "jaccard": 0.6667,
       "char_change_ratio": 0.0714
+    },
+    {
+      "id": 31,
+      "category": "numeral_fraction_ratio",
+      "text_before": "被害は十分の一になった。",
+      "text_after": "被害は10分の1になった。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [
+        10,
+        1
+      ],
+      "nums_after": [
+        10,
+        1
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.0
+    },
+    {
+      "id": 32,
+      "category": "numeral_single_unit_kanji",
+      "text_before": "城門の前には百の兵がいた。",
+      "text_after": "城門の前には100の兵がいた。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [
+        100
+      ],
+      "nums_after": [
+        100
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.0
     }
   ]
 }

@@ -117,14 +117,15 @@ def parse_japanese_numeral(token: str) -> Optional[int]:
     return total_val
 
 
-def extract_numerals(text: str) -> List[int]:
-    """Extract list of parsed numeral values from text in sequential order.
+def extract_numerals_with_spans(text: str) -> List[Tuple[int, Tuple[int, int]]]:
+    """Extract list of (parsed numeral value, (start_idx, end_idx)) from text in sequential order.
 
     Excludes:
     - Fixed idioms: 一通り, 一旦, 一応, 一緒, 一層, 一向, 一斉, 万一, 唯一, 一番 (not 一番目), etc.
-    - Adverbial 十分: when not immediately followed by counter/time suffix (間, 後, 前, etc.).
+    - Adverbial 十分: when not immediately followed by counter/time suffix (間, 後, 前, etc.)
+      or fraction indicator (分の).
     """
-    values = []
+    results: List[Tuple[int, Tuple[int, int]]] = []
     for m in _NUMERAL_PATTERN.finditer(text):
         token = m.group(0)
         start, end = m.start(), m.end()
@@ -142,23 +143,43 @@ def extract_numerals(text: str) -> List[int]:
         if rest_from_start.startswith("一番") and not rest_from_start.startswith("一番目"):
             continue
 
-        # Check adverbial 十分 vs temporal 十分 (10 minutes)
+        # Check adverbial 十分 vs temporal 十分 vs fraction 十分の一
         # In _NUMERAL_PATTERN, "十" is matched. If followed by "分":
         if token == "十" and text[end:].startswith("分"):
             after_juuppun = text[end + 1:]
+            is_fraction = text[end:].startswith("分の")
             is_temporal = any(after_juuppun.startswith(c) for c in _JUUPPUN_TIME_COUNTERS)
-            if not is_temporal:
+            if not is_temporal and not is_fraction:
                 # Adverbial 十分 (sufficiently) -> exclude
                 continue
             else:
-                # Temporal 十分 (10 minutes) -> value is 10
-                values.append(10)
+                # Temporal 十分 (10 minutes) or fraction 十分の一 -> value is 10
+                results.append((10, (start, end)))
                 continue
 
         val = parse_japanese_numeral(token)
         if val is not None:
-            values.append(val)
-    return values
+            results.append((val, (start, end)))
+    return results
+
+
+def extract_numerals(text: str) -> List[int]:
+    """Extract list of parsed numeral values from text in sequential order.
+
+    Excludes:
+    - Fixed idioms: 一通り, 一旦, 一応, 一緒, 一層, 一向, 一斉, 万一, 唯一, 一番 (not 一番目), etc.
+    - Adverbial 十分: when not immediately followed by counter/time suffix (間, 後, 前, etc.)
+      or fraction indicator (分の).
+    """
+    return [val for val, _ in extract_numerals_with_spans(text)]
+
+
+def mask_numeral_spans(text: str, spans: Sequence[Tuple[int, int]], placeholder: str = "_NUM_") -> str:
+    """Replace numeral spans in text with a placeholder from right to left."""
+    s = text
+    for start, end in sorted(spans, key=lambda x: x[0], reverse=True):
+        s = s[:start] + placeholder + s[end:]
+    return s
 
 
 def check_numeral_guard(t_before: str, t_after: str) -> Tuple[bool, str, List[int], List[int]]:
@@ -270,16 +291,22 @@ def u6_classify(
       - 'char_change_ratio': float
     """
     # 1. Numeral Guard
-    num_pass, num_reason, nums_b, nums_a = check_numeral_guard(t_before, t_after)
-    if not num_pass:
+    res_b = extract_numerals_with_spans(t_before)
+    res_a = extract_numerals_with_spans(t_after)
+    nums_b = [v for v, _ in res_b]
+    nums_a = [v for v, _ in res_a]
+
+    if nums_b != nums_a:
         return {
             "label": "CONTENT_REWRITE",
             "guard_passed": False,
-            "rejection_reason": num_reason,
+            "rejection_reason": f"NUMERAL_MISMATCH: {nums_b} vs {nums_a}",
             "jaccard": 0.0,
             "char_change_ratio": 1.0,
             "nums_before": nums_b,
             "nums_after": nums_a,
+            "pol_before": 0,
+            "pol_after": 0,
         }
 
     # 2. Negation Guard
@@ -291,15 +318,27 @@ def u6_classify(
             "rejection_reason": neg_reason,
             "jaccard": 0.0,
             "char_change_ratio": 1.0,
+            "nums_before": nums_b,
+            "nums_after": nums_a,
             "pol_before": pol_b,
             "pol_after": pol_a,
         }
 
     # 3. Content Jaccard & Length Change
-    w1 = set(x for x in t_before if "\u4e00" <= x <= "\u9fff")
-    w2 = set(x for x in t_after if "\u4e00" <= x <= "\u9fff")
+    # If numerals match and are present, normalize spans to placeholder _NUM_ to protect orthographic variation
+    if len(nums_b) > 0:
+        spans_b = [s for _, s in res_b]
+        spans_a = [s for _, s in res_a]
+        t_b_eval = mask_numeral_spans(t_before, spans_b, "_NUM_")
+        t_a_eval = mask_numeral_spans(t_after, spans_a, "_NUM_")
+    else:
+        t_b_eval = t_before
+        t_a_eval = t_after
+
+    w1 = set(x for x in t_b_eval if "\u4e00" <= x <= "\u9fff")
+    w2 = set(x for x in t_a_eval if "\u4e00" <= x <= "\u9fff")
     jaccard = len(w1 & w2) / max(len(w1 | w2), 1) if (w1 or w2) else 1.0
-    char_change = abs(len(t_before) - len(t_after)) / max(len(t_before), 1)
+    char_change = abs(len(t_b_eval) - len(t_a_eval)) / max(len(t_b_eval), 1)
 
     if jaccard >= min_jaccard and char_change <= max_char_change:
         label = "STYLE_POLISH"
@@ -316,4 +355,6 @@ def u6_classify(
         "char_change_ratio": round(char_change, 4),
         "nums_before": nums_b,
         "nums_after": nums_a,
+        "pol_before": pol_b,
+        "pol_after": pol_a,
     }
