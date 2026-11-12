@@ -1,0 +1,531 @@
+{
+  "metadata": {
+    "title": "U6 Guards Cross-Language Test Vectors (30 Pairs)",
+    "version": "1.0",
+    "description": "Fixed input-output fixture covering numeral changes, orthography variation, negation flips, double negation, and 4 closed-class false positive exclusions.",
+    "n_vectors": 30,
+    "pass_count": 30
+  },
+  "test_vectors": [
+    {
+      "id": 1,
+      "category": "numeral_identical_variation",
+      "text_before": "あの事件からすでに三年が経過した。",
+      "text_after": "あの事件からすでに3年が経過した。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [
+        3
+      ],
+      "nums_after": [
+        3
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.8333,
+      "char_change_ratio": 0.0
+    },
+    {
+      "id": 2,
+      "category": "numeral_identical_variation",
+      "text_before": "百五十人の参加者が広場に集まった。",
+      "text_after": "150人の参加者が広場に集まった。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [
+        150
+      ],
+      "nums_after": [
+        150
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.7,
+      "char_change_ratio": 0.0
+    },
+    {
+      "id": 3,
+      "category": "numeral_identical_variation",
+      "text_before": "午後五時に東京駅の広場で集合した。",
+      "text_after": "午後5時に東京駅の広場で集合した。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [
+        5
+      ],
+      "nums_after": [
+        5
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.9091,
+      "char_change_ratio": 0.0
+    },
+    {
+      "id": 4,
+      "category": "numeral_identical_variation",
+      "text_before": "一万二千円の費用と予算を慎重に計上した。",
+      "text_after": "12000円の費用と予算を慎重に計上した。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [
+        12000
+      ],
+      "nums_after": [
+        12000
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6923,
+      "char_change_ratio": 0.05
+    },
+    {
+      "id": 5,
+      "category": "numeral_value_change",
+      "text_before": "三年前の事件であった。",
+      "text_after": "十年前の事件であった。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NUMERAL_MISMATCH: [3] vs [10]",
+      "nums_before": [
+        3
+      ],
+      "nums_after": [
+        10
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 6,
+      "category": "numeral_value_change",
+      "text_before": "五人の侍が立っていた。",
+      "text_after": "八人の侍が立っていた。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NUMERAL_MISMATCH: [5] vs [8]",
+      "nums_before": [
+        5
+      ],
+      "nums_after": [
+        8
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 7,
+      "category": "numeral_value_change",
+      "text_before": "百二十キロメートルを走破した。",
+      "text_after": "二百キロメートルを走破した。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NUMERAL_MISMATCH: [120] vs [200]",
+      "nums_before": [
+        120
+      ],
+      "nums_after": [
+        200
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 8,
+      "category": "numeral_value_change",
+      "text_before": "第一章の結末を迎えた。",
+      "text_after": "第三章の結末を迎えた。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NUMERAL_MISMATCH: [1] vs [3]",
+      "nums_before": [
+        1
+      ],
+      "nums_after": [
+        3
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 9,
+      "category": "negation_flip",
+      "text_before": "彼は激しく泣いた。",
+      "text_after": "彼は激しく泣かなかった。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NEGATION_FLIP: 0 vs 1",
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 1,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 10,
+      "category": "negation_flip",
+      "text_before": "私は真実を知っている。",
+      "text_after": "私は真実を知らない。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NEGATION_FLIP: 0 vs 1",
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 1,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 11,
+      "category": "negation_flip",
+      "text_before": "手紙を最後まで読まなかった。",
+      "text_after": "手紙を最後まで読んだ。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NEGATION_FLIP: 1 vs 0",
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 1,
+      "pol_after": 0,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 12,
+      "category": "negation_flip",
+      "text_before": "港へ行くつもりだった。",
+      "text_after": "港へ行くまいと思った。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NEGATION_FLIP: 0 vs 1",
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 1,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 13,
+      "category": "double_negation",
+      "text_before": "彼が当時の複雑な事情を深く理解していることは誰の目にも明白であった。",
+      "text_after": "彼が当時の複雑な事情を深く理解していないわけではないことは誰の目にも明白であった。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.2059
+    },
+    {
+      "id": 14,
+      "category": "double_negation",
+      "text_before": "今回の新規提案計画に強く賛成であると関係者全員に説明した。",
+      "text_after": "今回の新規提案計画に強く賛成しないこともないと関係者全員に説明した。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.1724
+    },
+    {
+      "id": 15,
+      "category": "double_negation",
+      "text_before": "その山道が非常に危険であることは関係者全員がよく知っている。",
+      "text_after": "その山道が非常に危険であることは関係者全員が知らないわけではない。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 1.0,
+      "char_change_ratio": 0.1
+    },
+    {
+      "id": 16,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "一通りの手順を完了した。",
+      "text_after": "ひととおりの手順を完了した。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6667,
+      "char_change_ratio": 0.1667
+    },
+    {
+      "id": 17,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "一旦作業を中断することにした。",
+      "text_after": "ひとまず作業を中断することにした。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6667,
+      "char_change_ratio": 0.1333
+    },
+    {
+      "id": 18,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "一応の結果は得られた。",
+      "text_after": "いちおうの結果は得られた。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6,
+      "char_change_ratio": 0.1818
+    },
+    {
+      "id": 19,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "一緒に行動することを決意した。",
+      "text_after": "いっしょに行動することを決意した。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6667,
+      "char_change_ratio": 0.1333
+    },
+    {
+      "id": 20,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "一層の努力が必要である。",
+      "text_after": "いっそうの努力が必要である。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6667,
+      "char_change_ratio": 0.1667
+    },
+    {
+      "id": 21,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "彼らは一向に動じる気配がない。",
+      "text_after": "彼らはちっとも動じる気配がない。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 1,
+      "pol_after": 1,
+      "jaccard": 0.6667,
+      "char_change_ratio": 0.0667
+    },
+    {
+      "id": 22,
+      "category": "numeral_exclusion_idioms",
+      "text_before": "生徒たちは一斉に拍手をした。",
+      "text_after": "生徒たちはいっせいに拍手をした。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6667,
+      "char_change_ratio": 0.1429
+    },
+    {
+      "id": 23,
+      "category": "numeral_exclusion_adverbial_juuppun",
+      "text_before": "十分に休息を取って休んだ。",
+      "text_after": "充分に休息を取って休んだ。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6667,
+      "char_change_ratio": 0.0
+    },
+    {
+      "id": 24,
+      "category": "numeral_exclusion_temporal_juuppun",
+      "text_before": "十分前に家を出発した。",
+      "text_after": "三分前に家を出発した。",
+      "expected_label": "CONTENT_REWRITE",
+      "actual_label": "CONTENT_REWRITE",
+      "guard_passed": false,
+      "rejection_reason": "NUMERAL_MISMATCH: [10] vs [3]",
+      "nums_before": [
+        10
+      ],
+      "nums_after": [
+        3
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.0,
+      "char_change_ratio": 1.0
+    },
+    {
+      "id": 25,
+      "category": "negation_exclusion_mazu",
+      "text_before": "先ず、深呼吸をして落ち着いた。",
+      "text_after": "まず、深呼吸をして落ち着いた。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.8333,
+      "char_change_ratio": 0.0
+    },
+    {
+      "id": 26,
+      "category": "negation_exclusion_mazu",
+      "text_before": "先ず第一の課題を解決した。",
+      "text_after": "初めに第一の課題を解決した。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [
+        1
+      ],
+      "nums_after": [
+        1
+      ],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.75,
+      "char_change_ratio": 0.0769
+    },
+    {
+      "id": 27,
+      "category": "negation_exclusion_modality",
+      "text_before": "彼が犯人に違いないと確信した。",
+      "text_after": "彼が犯人にちがいないと確信した。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.8333,
+      "char_change_ratio": 0.0667
+    },
+    {
+      "id": 28,
+      "category": "negation_exclusion_modality",
+      "text_before": "明日雨が降るかもしれないと思った。",
+      "text_after": "明日雨が降るかも知れないと思った。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.8333,
+      "char_change_ratio": 0.0
+    },
+    {
+      "id": 29,
+      "category": "negation_exclusion_adjectives",
+      "text_before": "残された活動資金が少ない状況であった。",
+      "text_after": "残された活動資金が僅少である状況であった。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.8889,
+      "char_change_ratio": 0.1053
+    },
+    {
+      "id": 30,
+      "category": "negation_exclusion_adjectives",
+      "text_before": "胸の奥が切ない夜景であった。",
+      "text_after": "胸の奥が痛ましい夜景であった。",
+      "expected_label": "STYLE_POLISH",
+      "actual_label": "STYLE_POLISH",
+      "guard_passed": true,
+      "rejection_reason": null,
+      "nums_before": [],
+      "nums_after": [],
+      "pol_before": 0,
+      "pol_after": 0,
+      "jaccard": 0.6667,
+      "char_change_ratio": 0.0714
+    }
+  ]
+}

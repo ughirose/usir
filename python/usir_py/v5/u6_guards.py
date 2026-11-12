@@ -1,15 +1,22 @@
 """U6 Content Rewrite vs Style Polish classifier with Numeral and Negation Guards.
 
-Adheres strictly to the specification in Rust diff_harvester.rs:
+Adheres strictly to the specification in Rust diff_harvester.rs and Stage B-6 requirements:
 1. Numeral Guard:
    - Normalizes Japanese numerals (kanji, arabic, full-width, positional/place-value).
    - Allows orthographic variants with equal numerical value (e.g. 三年 -> 3年 as STYLE_POLISH).
    - Rejects numerical value changes (e.g. 三年前 -> 十年前 as CONTENT_REWRITE).
+   - Closed-class numeral exclusions:
+     * Idioms: 一通り, 一旦, 一応, 一緒, 一層, 一向, 一斉, 一般, 万一, 一途, 一見, 一部, 一様, 唯一, 一同, etc.
+     * Adverbial 十分: when not immediately followed by counter/time suffix (間, 後, 前, etc.).
 2. Negation Guard:
    - Detects verbal/auxiliary negation (ない, なかった, なく, ず, ぬ, ません, まい, ん, etc.).
    - Disregards lexical prefixes (不, 無, 非, 未) as sole polarity flipping evidence.
    - Exempts double-negation constructions (e.g. ないわけではない) from negation-flip flagging.
    - Flags polarity inversion (e.g. 泣いた -> 泣かなかった) as CONTENT_REWRITE.
+   - Closed-class negation exclusions:
+     * Adverb 先ず / まず.
+     * Epistemic conjecture modalities: 違いない / ちがいない / かもしれない / かも知れない (and inflections).
+     * Lexical adjective stems (少, 切, 危, 汚, 儚) + ない/なかった/なく/なけれ.
 """
 from __future__ import annotations
 
@@ -28,10 +35,23 @@ _LARGE_UNITS = [("兆", 1000000000000), ("億", 100000000), ("万", 10000)]
 
 _NUMERAL_PATTERN = re.compile(r"[0-9０-９一二三四五六七八九〇零十百千万億兆]+")
 
-# Lexical idioms that shouldn't be parsed as pure numerals
+# Closed-class numeral idioms starting with "一" or other kanji numerals
+_IDIOM_PREFIX_EXCLUSIONS = (
+    "一通り", "一旦", "一応", "一緒", "一層", "一向", "一斉",
+    "一般", "一途", "一見", "一部", "一様", "一同", "万事",
+    "百面相", "千差万別", "千載一遇", "四角", "三角", "二重",
+)
+
+# Time counters/suffixes that indicate "十分" is temporal (10 minutes/parts) rather than adverbial "sufficiently"
+_JUUPPUN_TIME_COUNTERS = (
+    "間", "後", "前", "足らず", "あまり", "余り", "過", "すぎ", "過ぎ",
+    "ほど", "ばかり", "程度", "おき", "置き", "以", "目",
+)
+
 _NUMERAL_EXCLUSIONS = {
     "一般", "万一", "一途", "一見", "一番", "一部", "一様", "唯一", "一同",
     "万事", "百面相", "千差万別", "千載一遇", "四角", "三角", "二重",
+    "一通り", "一旦", "一応", "一緒", "一層", "一向", "一斉",
 }
 
 
@@ -98,10 +118,43 @@ def parse_japanese_numeral(token: str) -> Optional[int]:
 
 
 def extract_numerals(text: str) -> List[int]:
-    """Extract list of parsed numeral values from text in sequential order."""
+    """Extract list of parsed numeral values from text in sequential order.
+
+    Excludes:
+    - Fixed idioms: 一通り, 一旦, 一応, 一緒, 一層, 一向, 一斉, 万一, 唯一, 一番 (not 一番目), etc.
+    - Adverbial 十分: when not immediately followed by counter/time suffix (間, 後, 前, etc.).
+    """
     values = []
     for m in _NUMERAL_PATTERN.finditer(text):
         token = m.group(0)
+        start, end = m.start(), m.end()
+
+        # Check idiom prefix exclusions (e.g. 一通り, 一旦, 一応, 一緒, 一層, 一向, 一斉)
+        rest_from_start = text[start:]
+        if any(rest_from_start.startswith(p) for p in _IDIOM_PREFIX_EXCLUSIONS):
+            continue
+
+        # Check surrounding idioms like 唯一, 万一
+        if start > 0 and text[start - 1:end] in ("唯一", "万一"):
+            continue
+
+        # "一番" vs "一番目": ordinal 一番目 is allowed as numeral 1, bare 一番 is adverbial
+        if rest_from_start.startswith("一番") and not rest_from_start.startswith("一番目"):
+            continue
+
+        # Check adverbial 十分 vs temporal 十分 (10 minutes)
+        # In _NUMERAL_PATTERN, "十" is matched. If followed by "分":
+        if token == "十" and text[end:].startswith("分"):
+            after_juuppun = text[end + 1:]
+            is_temporal = any(after_juuppun.startswith(c) for c in _JUUPPUN_TIME_COUNTERS)
+            if not is_temporal:
+                # Adverbial 十分 (sufficiently) -> exclude
+                continue
+            else:
+                # Temporal 十分 (10 minutes) -> value is 10
+                values.append(10)
+                continue
+
         val = parse_japanese_numeral(token)
         if val is not None:
             values.append(val)
@@ -125,7 +178,7 @@ def check_numeral_guard(t_before: str, t_after: str) -> Tuple[bool, str, List[in
 
 # Negation regexes
 _DOUBLE_NEGATION = re.compile(
-    r"(?:ない|なく|ず|ぬ|ざる)(?:わけ|こと|でも|も)?(?:では|じゃ|は|が)?(?:ない|なく|なかった|ありません|い)"
+    r"(?:ない|なく|ず|ぬ|ざる)(?:わけ|こと|はず|でも|も)*(?:では|じゃ|は|が|も)*(?:ない|なく|なかった|ありません|い)"
 )
 
 # Verbal/auxiliary negation (excluding lexical prefixes 不, 無, 非, 未)
@@ -137,19 +190,46 @@ _VERBAL_NEGATION = re.compile(
     r"))"
 )
 
+# Negation exclusion patterns:
+# 1. Adverbs: 先ず / まず
+# 2. Epistemic conjecture modality: 違いない / ちがいない / かもしれない / かも知れない (and inflections)
+# 3. Adjectives with stems (少 / 切 / 危 / 汚 / 儚) + ない/なかった/なく/なけれ/なかろ
+_NEGATION_EXCLUSIONS = re.compile(
+    r"(?:"
+    r"先ず|まず|"
+    r"(?:違い|ちがい)(?:ない|なかった|なく|なかろ|なけれ)|"
+    r"(?:かもしれ|かも知れ)(?:ない|なかった|なく|なかろ|なけれ|ぬ|ず)|"
+    r"(?:[少切危汚儚]|すく|せつ|あぶ|きた|はか)(?:ない|なかった|なく|なけれ|なかろ)"
+    r")"
+)
+
+
+def _mask_negation_exclusions(text: str) -> str:
+    """Mask false-positive negation patterns before polarity analysis."""
+    def _replacer(m: re.Match) -> str:
+        s = m.group(0)
+        # Replace with safe non-negation dummy characters of equal length
+        return "〇" * len(s)
+
+    return _NEGATION_EXCLUSIONS.sub(_replacer, text)
+
 
 def extract_negation_polarity(sentence: str) -> int:
     """Returns 1 if sentence has net auxiliary/verbal negation, 0 if affirmative.
 
     Double negation cancels out to 0 (affirmative/neutral).
     Lexical prefixes alone do not trigger negation (0).
+    Excludes adverbs (先ず/まず), modalities (違いない/かもしれない), and adjectives (少ない/切ない/危ない/汚い/儚い).
     """
-    # Check for double negation first
+    # Check for double negation on unmasked text first
     if _DOUBLE_NEGATION.search(sentence):
         return 0
 
-    # Count verbal negations
-    matches = _VERBAL_NEGATION.findall(sentence)
+    # Mask closed-class false positive exclusions
+    masked = _mask_negation_exclusions(sentence)
+
+    # Count verbal negations on masked sentence
+    matches = _VERBAL_NEGATION.findall(masked)
     return 1 if len(matches) > 0 else 0
 
 

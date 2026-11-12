@@ -1,8 +1,9 @@
-"""Tests for U6 Numeral and Negation Guards."""
+"""Tests for U6 Numeral and Negation Guards with Stage B-6 closed-class exclusions."""
 import pytest
 from usir_py.v5.u6_guards import (
     check_numeral_guard,
     check_negation_guard,
+    extract_negation_polarity,
     extract_numerals,
     parse_japanese_numeral,
     u6_classify,
@@ -62,3 +63,93 @@ def test_negation_guard_lexical_prefix_ignored():
     # Lexical prefix "不" alone does not flip auxiliary polarity
     passes, reason, pb, pa = check_negation_guard("可能な計画である。", "不可能な計画である。")
     assert passes is True  # Lexical change handled by content Jaccard, not negation guard
+
+
+def test_numeral_closed_class_idiom_exclusions():
+    # 7 specific idioms starting with 一: 一通り, 一旦, 一応, 一緒, 一層, 一向, 一斉
+    idiom_sentences = [
+        "一通りの確認を終えた。",
+        "一旦停止して確認した。",
+        "一応の合意に達した。",
+        "一緒に出かけることにした。",
+        "一層の注意を払った。",
+        "一向に気にする様子はない。",
+        "一斉に歓声が上がった。",
+    ]
+    for s in idiom_sentences:
+        nums = extract_numerals(s)
+        assert nums == [], f"Expected empty numerals for idiom '{s}', got {nums}"
+
+    # Style polish replacement of idiom without numeral change
+    res = u6_classify("一通りの確認を終えた。", "ひととおりの確認を終えた。")
+    assert res["label"] == "STYLE_POLISH"
+    assert res["guard_passed"] is True
+
+
+def test_numeral_adverbial_juuppun_exclusion():
+    # Adverbial 十分 (meaning 'sufficiently') should NOT extract 10
+    assert extract_numerals("十分に休んだ。") == []
+    assert extract_numerals("十分な休養を取った。") == []
+    assert extract_numerals("テストカバレッジは十分である。") == []
+
+    # Polishing 十分 -> 充分 should stay STYLE_POLISH
+    res = u6_classify("十分に休息を取った。", "充分に休息を取った。")
+    assert res["label"] == "STYLE_POLISH"
+    assert res["guard_passed"] is True
+
+    # Temporal 十分 (10 minutes, followed by 間/後/前) SHOULD extract 10
+    assert extract_numerals("十分前に出発した。") == [10]
+    assert extract_numerals("十分間待った。") == [10]
+    assert extract_numerals("十分後に連絡する。") == [10]
+
+    # Temporal change 10分前 -> 3分前 should be rejected as CONTENT_REWRITE
+    res_temporal = u6_classify("十分前に出発した。", "三分前に出発した。")
+    assert res_temporal["label"] == "CONTENT_REWRITE"
+    assert res_temporal["guard_passed"] is False
+
+
+def test_negation_adverb_mazu_exclusion():
+    # "先ず" / "まず" is an adverb, not verbal negation
+    assert extract_negation_polarity("先ず、深呼吸をした。") == 0
+    assert extract_negation_polarity("まず、彼に連絡した。") == 0
+
+    # Polishing 先ず -> まず should stay STYLE_POLISH
+    passes, reason, pb, pa = check_negation_guard("先ず、彼に挨拶した。", "まず、彼に挨拶した。")
+    assert passes is True
+    assert pb == 0 and pa == 0
+    res = u6_classify("先ず、彼に挨拶した。", "まず、彼に挨拶した。")
+    assert res["label"] == "STYLE_POLISH"
+
+
+def test_negation_conjecture_modality_exclusion():
+    # 違いない / ちがいない / かもしれない / かも知れない do not add verbal negation
+    assert extract_negation_polarity("彼が犯人に違いない。") == 0
+    assert extract_negation_polarity("彼が犯人にちがいない。") == 0
+    assert extract_negation_polarity("彼が犯人かもしれない。") == 0
+    assert extract_negation_polarity("彼が犯人かも知れない。") == 0
+
+    # Polishing 違いない -> ちがいない should stay STYLE_POLISH
+    passes, reason, pb, pa = check_negation_guard("彼が来たに違いない。", "彼が来たちがいない。")
+    assert passes is True
+    assert pb == 0 and pa == 0
+    res = u6_classify("彼が来たに違いない。", "彼が来たちがいない。")
+    assert res["label"] == "STYLE_POLISH"
+
+
+def test_negation_adjective_stems_exclusion():
+    # Adjectives with stem (少/切/危/汚/儚) + ない are state descriptions, not verbal negations
+    assert extract_negation_polarity("予算が少ない。") == 0
+    assert extract_negation_polarity("切ない恋心である。") == 0
+    assert extract_negation_polarity("危ない道を進む。") == 0
+    assert extract_negation_polarity("汚い手口を使う。") == 0
+    assert extract_negation_polarity("儚い命であった。") == 0
+
+    # Also inflections (少なかった, 切なく, 危なければ)
+    assert extract_negation_polarity("経験が少なかった。") == 0
+    assert extract_negation_polarity("切なく響いた。") == 0
+    assert extract_negation_polarity("危なければ逃げる。") == 0
+
+    # Polishing 少ない -> 僅少 should not trigger NEGATION_FLIP
+    passes, reason, pb, pa = check_negation_guard("残された時間が少ない。", "残された時間が僅少である。")
+    assert passes is True
+    assert pb == 0 and pa == 0
