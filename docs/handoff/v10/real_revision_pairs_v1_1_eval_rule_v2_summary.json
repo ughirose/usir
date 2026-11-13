@@ -1,0 +1,251 @@
+{
+  "v1_count": 415,
+  "new_count": 24,
+  "v1_1_count": 439,
+  "v1_1_sha256": "55d2ddcf9f0f3afddc043e48b6d19632eaca71d601fc3ab98cd24341f78cd9f6",
+  "band_counts_v1_1": {
+    "S": 50,
+    "M": 252,
+    "L": 137,
+    "mixed": 84
+  },
+  "candidate_logs": [
+    {
+      "group_id": "ogai_takasebune_ed",
+      "desc": "森鴎外『高瀬舟』(中央公論初出 vs 日本現代文學全集7)",
+      "is_novel": true,
+      "extracted": 16,
+      "S": 9,
+      "M": 5,
+      "L": 2,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 39,
+        "n_paras_b": 40,
+        "n_aligned_pairs": 20,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 4,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 16
+      }
+    },
+    {
+      "group_id": "ichiyo_wakaremichi_ed",
+      "desc": "樋口一葉『わかれ道』(現代日本文學全集10 vs 樋口一葉全集2)",
+      "is_novel": true,
+      "extracted": 8,
+      "S": 1,
+      "M": 2,
+      "L": 5,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 12,
+        "n_paras_b": 11,
+        "n_aligned_pairs": 8,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 8
+      }
+    },
+    {
+      "group_id": "makino_seibugeki_ed",
+      "desc": "牧野信一『西部劇通信』(全集3 vs 全集4)",
+      "is_novel": true,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 41,
+        "n_paras_b": 7,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    },
+    {
+      "group_id": "kishida_tonari_ed",
+      "desc": "岸田国士『隣の花』(全集3 vs 全集28, 戯曲)",
+      "is_novel": false,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 289,
+        "n_paras_b": 7,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    },
+    {
+      "group_id": "nakahara_samui_ed",
+      "desc": "中原中也『寒い夜の自我像』(詩集 vs 新編全集2, 詩)",
+      "is_novel": false,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 24,
+        "n_paras_b": 40,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    },
+    {
+      "group_id": "miyamoto_kotoshi_ed",
+      "desc": "宮本百合子『今年こそは』(全集別巻比較)",
+      "is_novel": false,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 21,
+        "n_paras_b": 17,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    },
+    {
+      "group_id": "miyamoto_bungei_ed",
+      "desc": "宮本百合子『文芸時評』(別巻比較)",
+      "is_novel": false,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 35,
+        "n_paras_b": 39,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    },
+    {
+      "group_id": "miyamoto_mudai1_ed",
+      "desc": "宮本百合子『無題（一）』(別巻比較)",
+      "is_novel": false,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 31,
+        "n_paras_b": 156,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    },
+    {
+      "group_id": "miyamoto_mudai2_ed",
+      "desc": "宮本百合子『無題（二）』(別巻比較)",
+      "is_novel": false,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 31,
+        "n_paras_b": 50,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    },
+    {
+      "group_id": "miyamoto_mudai3_ed",
+      "desc": "宮本百合子『無題（三）』(別巻比較)",
+      "is_novel": false,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 19,
+        "n_paras_b": 19,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    },
+    {
+      "group_id": "miyamoto_mudai4_ed",
+      "desc": "宮本百合子『無題（四）』(別巻比較)",
+      "is_novel": false,
+      "extracted": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0,
+      "diag": {
+        "n_paras_a": 9,
+        "n_paras_b": 20,
+        "n_aligned_pairs": 0,
+        "identical_text": 0,
+        "dice_below_min": 0,
+        "non_content_or_lt50": 0,
+        "l_min_lt50": 0,
+        "duplicate_text_pair": 0,
+        "accepted": 0
+      }
+    }
+  ],
+  "parity_v2_f17": {
+    "total_verified": 439,
+    "discrepancy_count": 0,
+    "discrepancies": [],
+    "max_per_dim_abs_diff": 4.440892098500626e-16
+  }
+}

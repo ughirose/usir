@@ -1,0 +1,1479 @@
+{
+  "6pole": {
+    "dim": 6,
+    "mean_norm": 2.8778,
+    "n_pairs": 3829,
+    "per_dim_std": [
+      2.6011,
+      2.1946,
+      0.4923,
+      0.0821,
+      0.0,
+      0.1818
+    ],
+    "rms_norm": 3.4444,
+    "sigma_para": 1.4389,
+    "std_norm": 1.8927,
+    "two_sigma_threshold": 2.8778
+  },
+  "kasane11": {
+    "dim": 11,
+    "extractor": "kasane_summary@1",
+    "feature_space": "kasane11_v1",
+    "mean_norm": 456.5627549319886,
+    "n_pairs": 22883,
+    "note": "同一作品内の隣接段落（両段落 30 字以上）の kasane11 特徴量差の次元別 SD。段落が自然に異なる大きさであり、推敲によるノイズの大きさではない。|Δ|/σ は隣接段落間のばらつきに対する比として読み、推敲の有意性の検定には使わない（未較正）。",
+    "per_dim_std": {
+      "ac_coupling": 0.4032200400846906,
+      "ac_max_sis": 0.06805890186216172,
+      "ac_mean_crest": 0.4355079102296499,
+      "ac_mean_velocity": 82.76439487244087,
+      "dc_cadence": 319.16005542438097,
+      "dc_confession": 127.72007196397192,
+      "dc_polyphony": 216.2189316431964,
+      "dc_showing": 209.79308216667906,
+      "dc_speculation": 178.67276239518245,
+      "dc_staccato": 150.54557312341254,
+      "semantic_tension": 78.40923547529623
+    },
+    "rms_norm": 525.8571184238643,
+    "sd_definition": "per_dim_std は母集団 SD（ddof=0）で差の平均を引いた後の SD（numpy np.std の既定と同じ）。差は『後の段落 − 前の段落』。生の特徴量（z 化なし）。",
+    "sigma_kind": "adjacent_paragraph_diff_sd",
+    "source": {
+      "authors": [
+        "000035",
+        "000050",
+        "000074",
+        "000081",
+        "000119",
+        "000129",
+        "000148",
+        "000879",
+        "001095",
+        "001383"
+      ],
+      "excluded_works": [],
+      "generator": "nishiki gen-paragraph-noise-floor",
+      "n_authors": 10,
+      "n_nonfinite_values_set_to_zero": 0,
+      "n_paragraphs": 22989,
+      "n_works": 106,
+      "paragraph_rule": "re.split(r\"\\n+\") → strip → len>=30 chars（usir_v5_edited_span_level3.py と同じ）",
+      "python_n_pairs_reference": 3829,
+      "scope": "all-106",
+      "works": [
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000752.txt",
+          "n_pairs": 344,
+          "n_paragraphs": 345,
+          "work_id": "000752"
+        },
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000799.txt",
+          "n_pairs": 130,
+          "n_paragraphs": 131,
+          "work_id": "000799"
+        },
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000776.txt",
+          "n_pairs": 574,
+          "n_paragraphs": 575,
+          "work_id": "000776"
+        },
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000794.txt",
+          "n_pairs": 1269,
+          "n_paragraphs": 1270,
+          "work_id": "000794"
+        },
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000773.txt",
+          "n_pairs": 915,
+          "n_paragraphs": 916,
+          "work_id": "000773"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000127.txt",
+          "n_pairs": 30,
+          "n_paragraphs": 31,
+          "work_id": "000127"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000042.txt",
+          "n_pairs": 35,
+          "n_paragraphs": 36,
+          "work_id": "000042"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000055.txt",
+          "n_pairs": 71,
+          "n_paragraphs": 72,
+          "work_id": "000055"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000060.txt",
+          "n_pairs": 133,
+          "n_paragraphs": 134,
+          "work_id": "000060"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000179.txt",
+          "n_pairs": 35,
+          "n_paragraphs": 36,
+          "work_id": "000179"
+        },
+        {
+          "author_id": "000035",
+          "file": "novel_000035_001567.txt",
+          "n_pairs": 53,
+          "n_paragraphs": 54,
+          "work_id": "001567"
+        },
+        {
+          "author_id": "000035",
+          "file": "novel_000035_000301.txt",
+          "n_pairs": 436,
+          "n_paragraphs": 437,
+          "work_id": "000301"
+        },
+        {
+          "author_id": "000035",
+          "file": "novel_000035_001565.txt",
+          "n_pairs": 672,
+          "n_paragraphs": 673,
+          "work_id": "001565"
+        },
+        {
+          "author_id": "000035",
+          "file": "novel_000035_000275.txt",
+          "n_pairs": 82,
+          "n_paragraphs": 83,
+          "work_id": "000275"
+        },
+        {
+          "author_id": "000081",
+          "file": "novel_000081_000456.txt",
+          "n_pairs": 338,
+          "n_paragraphs": 339,
+          "work_id": "000456"
+        },
+        {
+          "author_id": "000081",
+          "file": "novel_000081_043754.txt",
+          "n_pairs": 72,
+          "n_paragraphs": 73,
+          "work_id": "043754"
+        },
+        {
+          "author_id": "000081",
+          "file": "novel_000081_000462.txt",
+          "n_pairs": 350,
+          "n_paragraphs": 351,
+          "work_id": "000462"
+        },
+        {
+          "author_id": "000081",
+          "file": "novel_000081_000470.txt",
+          "n_pairs": 127,
+          "n_paragraphs": 128,
+          "work_id": "000470"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000424.txt",
+          "n_pairs": 28,
+          "n_paragraphs": 29,
+          "work_id": "000424"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000427.txt",
+          "n_pairs": 13,
+          "n_paragraphs": 14,
+          "work_id": "000427"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000429.txt",
+          "n_pairs": 198,
+          "n_paragraphs": 199,
+          "work_id": "000429"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000415.txt",
+          "n_pairs": 19,
+          "n_paragraphs": 20,
+          "work_id": "000415"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000411.txt",
+          "n_pairs": 15,
+          "n_paragraphs": 16,
+          "work_id": "000411"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_045245.txt",
+          "n_pairs": 35,
+          "n_paragraphs": 36,
+          "work_id": "045245"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_000689.txt",
+          "n_pairs": 193,
+          "n_paragraphs": 194,
+          "work_id": "000689"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_000673.txt",
+          "n_pairs": 147,
+          "n_paragraphs": 148,
+          "work_id": "000673"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_045224.txt",
+          "n_pairs": 392,
+          "n_paragraphs": 393,
+          "work_id": "045224"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_058126.txt",
+          "n_pairs": 71,
+          "n_paragraphs": 72,
+          "work_id": "058126"
+        },
+        {
+          "author_id": "000050",
+          "file": "novel_000050_000521.txt",
+          "n_pairs": 386,
+          "n_paragraphs": 387,
+          "work_id": "000521"
+        },
+        {
+          "author_id": "000050",
+          "file": "novel_000050_000360.txt",
+          "n_pairs": 80,
+          "n_paragraphs": 81,
+          "work_id": "000360"
+        },
+        {
+          "author_id": "000050",
+          "file": "novel_000050_000897.txt",
+          "n_pairs": 80,
+          "n_paragraphs": 81,
+          "work_id": "000897"
+        },
+        {
+          "author_id": "000050",
+          "file": "novel_000050_003586.txt",
+          "n_pairs": 763,
+          "n_paragraphs": 764,
+          "work_id": "003586"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_056641.txt",
+          "n_pairs": 54,
+          "n_paragraphs": 55,
+          "work_id": "056641"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_057349.txt",
+          "n_pairs": 90,
+          "n_paragraphs": 91,
+          "work_id": "057349"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_056643.txt",
+          "n_pairs": 204,
+          "n_paragraphs": 205,
+          "work_id": "056643"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_056866.txt",
+          "n_pairs": 26,
+          "n_paragraphs": 27,
+          "work_id": "056866"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_058093.txt",
+          "n_pairs": 1353,
+          "n_paragraphs": 1354,
+          "work_id": "058093"
+        },
+        {
+          "author_id": "001095",
+          "file": "novel_001095_042621.txt",
+          "n_pairs": 65,
+          "n_paragraphs": 66,
+          "work_id": "042621"
+        },
+        {
+          "author_id": "001095",
+          "file": "novel_001095_042618.txt",
+          "n_pairs": 121,
+          "n_paragraphs": 122,
+          "work_id": "042618"
+        },
+        {
+          "author_id": "001095",
+          "file": "novel_001095_042877.txt",
+          "n_pairs": 209,
+          "n_paragraphs": 210,
+          "work_id": "042877"
+        },
+        {
+          "author_id": "001095",
+          "file": "novel_001095_042616.txt",
+          "n_pairs": 16,
+          "n_paragraphs": 17,
+          "work_id": "042616"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_000624.txt",
+          "n_pairs": 19,
+          "n_paragraphs": 20,
+          "work_id": "000624"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_001737.txt",
+          "n_pairs": 105,
+          "n_paragraphs": 106,
+          "work_id": "001737"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_001738.txt",
+          "n_pairs": 116,
+          "n_paragraphs": 117,
+          "work_id": "001738"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_000621.txt",
+          "n_pairs": 27,
+          "n_paragraphs": 28,
+          "work_id": "000621"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_001743.txt",
+          "n_pairs": 368,
+          "n_paragraphs": 369,
+          "work_id": "001743"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000234.txt",
+          "n_pairs": 41,
+          "n_paragraphs": 42,
+          "work_id": "000234"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000235.txt",
+          "n_pairs": 57,
+          "n_paragraphs": 58,
+          "work_id": "000235"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000237.txt",
+          "n_pairs": 15,
+          "n_paragraphs": 16,
+          "work_id": "000237"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_000363.txt",
+          "n_pairs": 317,
+          "n_paragraphs": 318,
+          "work_id": "000363"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_000529.txt",
+          "n_pairs": 145,
+          "n_paragraphs": 146,
+          "work_id": "000529"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_001037.txt",
+          "n_pairs": 90,
+          "n_paragraphs": 91,
+          "work_id": "001037"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000412.txt",
+          "n_pairs": 63,
+          "n_paragraphs": 64,
+          "work_id": "000412"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000413.txt",
+          "n_pairs": 72,
+          "n_paragraphs": 73,
+          "work_id": "000413"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000414.txt",
+          "n_pairs": 34,
+          "n_paragraphs": 35,
+          "work_id": "000414"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000454.txt",
+          "n_pairs": 31,
+          "n_paragraphs": 32,
+          "work_id": "000454"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000459.txt",
+          "n_pairs": 127,
+          "n_paragraphs": 128,
+          "work_id": "000459"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000460.txt",
+          "n_pairs": 40,
+          "n_paragraphs": 41,
+          "work_id": "000460"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_000617.txt",
+          "n_pairs": 35,
+          "n_paragraphs": 36,
+          "work_id": "000617"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_000619.txt",
+          "n_pairs": 18,
+          "n_paragraphs": 19,
+          "work_id": "000619"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_000622.txt",
+          "n_pairs": 18,
+          "n_paragraphs": 19,
+          "work_id": "000622"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000675.txt",
+          "n_pairs": 79,
+          "n_paragraphs": 80,
+          "work_id": "000675"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000676.txt",
+          "n_pairs": 46,
+          "n_paragraphs": 47,
+          "work_id": "000676"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000678.txt",
+          "n_pairs": 101,
+          "n_paragraphs": 102,
+          "work_id": "000678"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000751.txt",
+          "n_pairs": 348,
+          "n_paragraphs": 349,
+          "work_id": "000751"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000753.txt",
+          "n_pairs": 66,
+          "n_paragraphs": 67,
+          "work_id": "000753"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000761.txt",
+          "n_pairs": 1897,
+          "n_paragraphs": 1898,
+          "work_id": "000761"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000027.txt",
+          "n_pairs": 44,
+          "n_paragraphs": 45,
+          "work_id": "000027"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000031.txt",
+          "n_pairs": 321,
+          "n_paragraphs": 322,
+          "work_id": "000031"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000032.txt",
+          "n_pairs": 32,
+          "n_paragraphs": 33,
+          "work_id": "000032"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042614.txt",
+          "n_pairs": 269,
+          "n_paragraphs": 270,
+          "work_id": "042614"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042615.txt",
+          "n_pairs": 61,
+          "n_paragraphs": 62,
+          "work_id": "042615"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042617.txt",
+          "n_pairs": 174,
+          "n_paragraphs": 175,
+          "work_id": "042617"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056644.txt",
+          "n_pairs": 97,
+          "n_paragraphs": 98,
+          "work_id": "056644"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056693.txt",
+          "n_pairs": 42,
+          "n_paragraphs": 43,
+          "work_id": "056693"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056698.txt",
+          "n_pairs": 709,
+          "n_paragraphs": 710,
+          "work_id": "056698"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000238.txt",
+          "n_pairs": 27,
+          "n_paragraphs": 28,
+          "work_id": "000238"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000239.txt",
+          "n_pairs": 22,
+          "n_paragraphs": 23,
+          "work_id": "000239"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000241.txt",
+          "n_pairs": 39,
+          "n_paragraphs": 40,
+          "work_id": "000241"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_001087.txt",
+          "n_pairs": 1729,
+          "n_paragraphs": 1730,
+          "work_id": "001087"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_001174.txt",
+          "n_pairs": 179,
+          "n_paragraphs": 180,
+          "work_id": "001174"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_001176.txt",
+          "n_pairs": 115,
+          "n_paragraphs": 116,
+          "work_id": "001176"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000416.txt",
+          "n_pairs": 40,
+          "n_paragraphs": 41,
+          "work_id": "000416"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000417.txt",
+          "n_pairs": 101,
+          "n_paragraphs": 102,
+          "work_id": "000417"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000419.txt",
+          "n_pairs": 39,
+          "n_paragraphs": 40,
+          "work_id": "000419"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000461.txt",
+          "n_pairs": 83,
+          "n_paragraphs": 84,
+          "work_id": "000461"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000466.txt",
+          "n_pairs": 67,
+          "n_paragraphs": 68,
+          "work_id": "000466"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000469.txt",
+          "n_pairs": 49,
+          "n_paragraphs": 50,
+          "work_id": "000469"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_001741.txt",
+          "n_pairs": 48,
+          "n_paragraphs": 49,
+          "work_id": "001741"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_001742.txt",
+          "n_pairs": 16,
+          "n_paragraphs": 17,
+          "work_id": "001742"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_002521.txt",
+          "n_pairs": 76,
+          "n_paragraphs": 77,
+          "work_id": "002521"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000680.txt",
+          "n_pairs": 77,
+          "n_paragraphs": 78,
+          "work_id": "000680"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000686.txt",
+          "n_pairs": 37,
+          "n_paragraphs": 38,
+          "work_id": "000686"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000690.txt",
+          "n_pairs": 62,
+          "n_paragraphs": 63,
+          "work_id": "000690"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000765.txt",
+          "n_pairs": 817,
+          "n_paragraphs": 818,
+          "work_id": "000765"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000769.txt",
+          "n_pairs": 139,
+          "n_paragraphs": 140,
+          "work_id": "000769"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000774.txt",
+          "n_pairs": 555,
+          "n_paragraphs": 556,
+          "work_id": "000774"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000034.txt",
+          "n_pairs": 32,
+          "n_paragraphs": 33,
+          "work_id": "000034"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000036.txt",
+          "n_pairs": 71,
+          "n_paragraphs": 72,
+          "work_id": "000036"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000038.txt",
+          "n_pairs": 167,
+          "n_paragraphs": 168,
+          "work_id": "000038"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042623.txt",
+          "n_pairs": 93,
+          "n_paragraphs": 94,
+          "work_id": "042623"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042626.txt",
+          "n_pairs": 1299,
+          "n_paragraphs": 1300,
+          "work_id": "042626"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042764.txt",
+          "n_pairs": 96,
+          "n_paragraphs": 97,
+          "work_id": "042764"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056846.txt",
+          "n_pairs": 136,
+          "n_paragraphs": 137,
+          "work_id": "056846"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056847.txt",
+          "n_pairs": 341,
+          "n_paragraphs": 342,
+          "work_id": "056847"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056849.txt",
+          "n_pairs": 83,
+          "n_paragraphs": 84,
+          "work_id": "056849"
+        }
+      ],
+      "works_per_author": null
+    },
+    "std_norm": 260.9140851045798
+  },
+  "length_bands": {
+    "ac_activation_evidence": "sparsity-audit --length-bins: 250 字以下は全段落 1 ウィンドウで ac_mean_velocity / ac_max_sis / ac_coupling が厳密に 0.0。ウィンドウ数 2 以上で 0 以外（例外は coupling 4 件・max_sis 1 件）。M 帯（251..=500）は 1 ウィンドウの段落（最大 464 字）を含むため、ac_* は部分的にしか活性化しない。",
+    "ac_sigma_pool": {
+      "ci": "パーセンタイル法 95%",
+      "dims": {
+        "ac_coupling": {
+          "L": {
+            "cluster_ci95": [
+              0.9493292015365287,
+              1.1091478830584625
+            ],
+            "cluster_ci_width_over_sigma": 0.15537008143786707,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 566,
+            "n_works_contributing": 54,
+            "pair_ci95": [
+              0.9785533317595839,
+              1.0759396579803766
+            ],
+            "pair_ci_width_over_sigma": 0.09467554913962078,
+            "sigma": 1.0286322826305896
+          },
+          "M": {
+            "cluster_ci95": [
+              1.30977345211734,
+              1.4338286321769567
+            ],
+            "cluster_ci_width_over_sigma": 0.0903565407504507,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 323,
+            "n_works_contributing": 53,
+            "pair_ci95": [
+              1.294181750241924,
+              1.4441955862181621
+            ],
+            "pair_ci_width_over_sigma": 0.10926372664974138,
+            "sigma": 1.3729518530621458
+          },
+          "ci_would_pool_diagnostic_only": null,
+          "cluster_would_pool": false,
+          "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+          "diagnostic_overlap_criteria_disagree": false,
+          "freeze_reason": null,
+          "lift_conditions": null,
+          "log_ratio_criterion": {
+            "ci95_log": [
+              0.19417728805685303,
+              0.3868553959818953
+            ],
+            "ci95_ratio": [
+              1.214311546808362,
+              1.4723435690826843
+            ],
+            "ci_contains_zero": false,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+            "point_log_sigma_M_over_L": 0.28873302032445725,
+            "point_ratio": 1.3347353337492043,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 889,
+          "overlap_ratio_cluster": 0.0,
+          "overlap_ratio_pair": 0.0,
+          "pair_level_would_pool": false,
+          "pool_frozen": false,
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": 1.1674441498895005
+        },
+        "ac_max_sis": {
+          "L": {
+            "cluster_ci95": [
+              0.1321552242837338,
+              0.15718642160545146
+            ],
+            "cluster_ci_width_over_sigma": 0.17267620711530698,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 566,
+            "n_works_contributing": 54,
+            "pair_ci95": [
+              0.13321294112344292,
+              0.1568736191878143
+            ],
+            "pair_ci_width_over_sigma": 0.16322176256375878,
+            "sigma": 0.14496031468309192
+          },
+          "M": {
+            "cluster_ci95": [
+              0.10716865921683888,
+              0.1503674768109467
+            ],
+            "cluster_ci_width_over_sigma": 0.3383118948544718,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 323,
+            "n_works_contributing": 53,
+            "pair_ci95": [
+              0.113029746598793,
+              0.14154646625465855
+            ],
+            "pair_ci_width_over_sigma": 0.2233289242417952,
+            "sigma": 0.12768932529756372
+          },
+          "ci_would_pool_diagnostic_only": false,
+          "cluster_would_pool": true,
+          "decision": "帯別（F-20 凍結: ac_max_sis は CI にかかわらず常に帯別。CI は参考診断値）",
+          "diagnostic_overlap_criteria_disagree": true,
+          "freeze_reason": "F-19 fallback: all 4 CI procedures exceeded G1 at m=1.25 (upper error 14.6-17.3% > 5.5%)",
+          "lift_conditions": [
+            "corpus_works >= 100",
+            "F-19 benchmark re-run on expanded population passes G1/G2 for ac_max_sis"
+          ],
+          "log_ratio_criterion": {
+            "ci95_log": [
+              -0.32011221718385013,
+              0.06887243303706841
+            ],
+            "ci95_ratio": [
+              0.7260675552456112,
+              1.071299538002717
+            ],
+            "ci_contains_zero": true,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+            "point_log_sigma_M_over_L": -0.1268598456065045,
+            "point_ratio": 0.8808571199415126,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 889,
+          "overlap_ratio_cluster": 0.7275821565040166,
+          "overlap_ratio_pair": 0.3522099032218515,
+          "pair_level_would_pool": false,
+          "pool_frozen": true,
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": 0.1389338291864049
+        },
+        "ac_mean_velocity": {
+          "L": {
+            "cluster_ci95": [
+              82.0297364660255,
+              120.98380685887895
+            ],
+            "cluster_ci_width_over_sigma": 0.3869961730804491,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 566,
+            "n_works_contributing": 54,
+            "pair_ci95": [
+              90.05310912627901,
+              111.21290138763821
+            ],
+            "pair_ci_width_over_sigma": 0.21021573729623974,
+            "sigma": 100.65750801302019
+          },
+          "M": {
+            "cluster_ci95": [
+              105.31995470215007,
+              164.61104145989898
+            ],
+            "cluster_ci_width_over_sigma": 0.45288849838981665,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 323,
+            "n_works_contributing": 53,
+            "pair_ci95": [
+              109.23069555589315,
+              153.8528700324926
+            ],
+            "pair_ci_width_over_sigma": 0.34084161209870856,
+            "sigma": 130.91762535050083
+          },
+          "ci_would_pool_diagnostic_only": null,
+          "cluster_would_pool": false,
+          "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+          "diagnostic_overlap_criteria_disagree": false,
+          "freeze_reason": null,
+          "lift_conditions": null,
+          "log_ratio_criterion": {
+            "ci95_log": [
+              -0.018652419652372267,
+              0.5360948595807772
+            ],
+            "ci95_ratio": [
+              0.9815204601826557,
+              1.7093186820685562
+            ],
+            "ci_contains_zero": true,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+            "point_log_sigma_M_over_L": 0.2628445667316035,
+            "point_ratio": 1.3006245429160281,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 889,
+          "overlap_ratio_cluster": 0.4021107935257668,
+          "overlap_ratio_pair": 0.09367794386927197,
+          "pair_level_would_pool": false,
+          "pool_frozen": false,
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": 112.63561120923939
+        }
+      },
+      "frozen_dims": [
+        "ac_max_sis"
+      ],
+      "n_works": 106,
+      "pool_rule": "F17: プールは等値主張。σ 比 σ_M/σ_L の作品単位クラスタ CI が同等マージン（σ比 0.80〜1.25、未検証の仮値）内に収まる次元だけプール可。それ以外は既定で帯別。プール値は provisional として記録。重なり比（0.5）は診断のみで判定に使わない",
+      "population": "両段落とも 2 ウィンドウ以上の隣接ペア。混在ペア（片側のみ複数ウィンドウ）と両方単窓ペアは含めない",
+      "resamples": 10000,
+      "rng": "SplitMix64",
+      "seed": 20261113,
+      "seed_rule": "帯番号 bi ごとに seed ^ bi（クラスタ）、seed ^ (0x100 + bi)（ペア単位）",
+      "statistic": "母集団 SD（ddof=0）",
+      "unit": "作品（全作品から復元抽出。作品内の両側複数ウィンドウペアは丸ごと入れ替わる）"
+    },
+    "band_key": "L_max = max(chars(p_t), chars(p_t+1))（両段落の長い方）",
+    "bands": [
+      {
+        "kasane11": {
+          "ac_multi_window_n_pairs": 0,
+          "ac_multi_window_per_dim_std": null,
+          "dead_dims_sigma_verified_zero": true,
+          "mean_norm": 482.37114668835744,
+          "n_active_dims": 8,
+          "pair_window_mix": {
+            "both_multi": 0,
+            "both_single": 17654,
+            "mixed_one_side_multi": 0
+          },
+          "per_dim_std": {
+            "ac_coupling": 0.0,
+            "ac_max_sis": 0.0,
+            "ac_mean_crest": 0.36314782902753956,
+            "ac_mean_velocity": 0.0,
+            "dc_cadence": 346.73646676555376,
+            "dc_confession": 135.7176309661059,
+            "dc_polyphony": 227.45320299580246,
+            "dc_showing": 223.88364307242335,
+            "dc_speculation": 189.4580125601206,
+            "dc_staccato": 158.2532293980289,
+            "semantic_tension": 83.49546651953357
+          },
+          "rms_norm": 555.3512312570999,
+          "std_norm": 275.19641513169523,
+          "structurally_dead_dims": [
+            "ac_mean_velocity",
+            "ac_max_sis",
+            "ac_coupling"
+          ]
+        },
+        "max_chars": 250,
+        "min_chars": 30,
+        "n_pairs": 17654,
+        "name": "S",
+        "ortho28": {
+          "dim_names": [
+            "v2_log_mean_sent_len",
+            "v2_sent_len_cv",
+            "v2_kanji_ratio",
+            "v2_hiragana_ratio",
+            "v2_quote_ratio",
+            "v2_kana_は",
+            "v2_kana_が",
+            "v2_kana_の",
+            "v2_kana_に",
+            "v2_kana_を",
+            "v2_kana_と",
+            "v2_kana_で",
+            "v2_kana_も",
+            "v2_kana_て",
+            "v2_kana_た",
+            "v2_final_た",
+            "v2_final_る",
+            "v2_final_だ",
+            "v2_final_い",
+            "v2_final_う",
+            "v2_final_す",
+            "v2_final_ぬ",
+            "v2_final_か",
+            "v2_final_」",
+            "v2_final_other",
+            "v2_narr_log_mean_sent_len",
+            "v2_narr_log_p90_sent_len",
+            "v2_dialogue_char_ratio"
+          ],
+          "mean_norm": 9.017469141291993,
+          "per_dim_std": [
+            0.6563377245158427,
+            0.3536538164362949,
+            0.10719819354682532,
+            0.11506020911270212,
+            0.03240651329145979,
+            2.5435487250167634,
+            2.4999152818273305,
+            3.7469877053778546,
+            2.72080891984574,
+            2.5709549147469124,
+            2.832957309780161,
+            2.5737364797718203,
+            2.4476481860534482,
+            3.0099282232020217,
+            3.021357761703977,
+            0.48231393673184153,
+            0.3002316331412191,
+            0.17089315548038478,
+            0.2078067214365533,
+            0.17610143858935629,
+            0.20773754041436665,
+            0.09935274001286248,
+            0.1493934620568912,
+            0.3222747202469355,
+            0.42769725773293904,
+            1.999503979193145,
+            2.038660057636231,
+            0.5391345564731524
+          ],
+          "rms_norm": 9.456007571746504,
+          "std_norm": 2.8462834508837704
+        }
+      },
+      {
+        "kasane11": {
+          "ac_multi_window_band_specific_per_dim_std": {
+            "ac_coupling": 1.3729518530621458,
+            "ac_max_sis": 0.12768932529756372,
+            "ac_mean_velocity": 130.91762535050083
+          },
+          "ac_multi_window_n_pairs": 323,
+          "ac_multi_window_per_dim_std": {
+            "ac_coupling": 1.3729518530621458,
+            "ac_max_sis": 0.12768932529756372,
+            "ac_mean_velocity": 130.91762535050083
+          },
+          "ac_multi_window_pooled_dims": [],
+          "ac_multi_window_provisional_pooled_per_dim_std": {
+            "ac_coupling": 1.1674441498895005,
+            "ac_max_sis": 0.1389338291864049,
+            "ac_mean_velocity": 112.63561120923939
+          },
+          "dead_dims_sigma_verified_zero": false,
+          "mean_norm": 387.25933923152144,
+          "n_active_dims": 11,
+          "pair_window_mix": {
+            "both_multi": 323,
+            "both_single": 1156,
+            "mixed_one_side_multi": 2197
+          },
+          "per_dim_std": {
+            "ac_coupling": 0.8499762984790515,
+            "ac_max_sis": 0.12431299366548369,
+            "ac_mean_crest": 0.5486657588767627,
+            "ac_mean_velocity": 175.06975406393374,
+            "dc_cadence": 212.30445245808727,
+            "dc_confession": 100.3333866566968,
+            "dc_polyphony": 179.48513273680373,
+            "dc_showing": 163.86279166949134,
+            "dc_speculation": 142.63068930701593,
+            "dc_staccato": 126.04374142227698,
+            "semantic_tension": 61.33505245859978
+          },
+          "rms_norm": 429.96691390885553,
+          "std_norm": 186.82010393496196,
+          "structurally_dead_dims": []
+        },
+        "max_chars": 500,
+        "min_chars": 251,
+        "n_pairs": 3676,
+        "name": "M",
+        "ortho28": {
+          "dim_names": [
+            "v2_log_mean_sent_len",
+            "v2_sent_len_cv",
+            "v2_kanji_ratio",
+            "v2_hiragana_ratio",
+            "v2_quote_ratio",
+            "v2_kana_は",
+            "v2_kana_が",
+            "v2_kana_の",
+            "v2_kana_に",
+            "v2_kana_を",
+            "v2_kana_と",
+            "v2_kana_で",
+            "v2_kana_も",
+            "v2_kana_て",
+            "v2_kana_た",
+            "v2_final_た",
+            "v2_final_る",
+            "v2_final_だ",
+            "v2_final_い",
+            "v2_final_う",
+            "v2_final_す",
+            "v2_final_ぬ",
+            "v2_final_か",
+            "v2_final_」",
+            "v2_final_other",
+            "v2_narr_log_mean_sent_len",
+            "v2_narr_log_p90_sent_len",
+            "v2_dialogue_char_ratio"
+          ],
+          "mean_norm": 6.091123469120468,
+          "per_dim_std": [
+            0.6150628342659286,
+            0.3389968728606187,
+            0.07782304928191804,
+            0.08600811984884026,
+            0.02196982750665195,
+            1.5711575095859802,
+            1.6331231915993127,
+            2.6884196483242038,
+            1.8570019537723257,
+            1.7533807425828487,
+            1.8906402473988586,
+            1.6989557774858708,
+            1.5847309503890405,
+            1.9945093675148975,
+            2.1331552125602364,
+            0.40897481450803586,
+            0.2588331905754529,
+            0.13551722995177629,
+            0.1756399094957032,
+            0.1375028505874657,
+            0.17579650040737396,
+            0.06060065405719873,
+            0.09171692153611795,
+            0.18840092853446797,
+            0.2857865811742443,
+            1.651054755849249,
+            1.7765144383231906,
+            0.4128314063372881
+          ],
+          "rms_norm": 6.588933131668058,
+          "std_norm": 2.512420087788487
+        }
+      },
+      {
+        "kasane11": {
+          "ac_multi_window_band_specific_per_dim_std": {
+            "ac_coupling": 1.0286322826305896,
+            "ac_max_sis": 0.14496031468309192,
+            "ac_mean_velocity": 100.65750801302019
+          },
+          "ac_multi_window_n_pairs": 566,
+          "ac_multi_window_per_dim_std": {
+            "ac_coupling": 1.0286322826305896,
+            "ac_max_sis": 0.14496031468309192,
+            "ac_mean_velocity": 100.65750801302019
+          },
+          "ac_multi_window_pooled_dims": [],
+          "ac_multi_window_provisional_pooled_per_dim_std": {
+            "ac_coupling": 1.1674441498895005,
+            "ac_max_sis": 0.1389338291864049,
+            "ac_mean_velocity": 112.63561120923939
+          },
+          "dead_dims_sigma_verified_zero": false,
+          "mean_norm": 327.22470473755106,
+          "n_active_dims": 11,
+          "pair_window_mix": {
+            "both_multi": 566,
+            "both_single": 8,
+            "mixed_one_side_multi": 979
+          },
+          "per_dim_std": {
+            "ac_coupling": 0.8270844742362,
+            "ac_max_sis": 0.17793442147549962,
+            "ac_mean_crest": 0.7634546364776682,
+            "ac_mean_velocity": 168.45204674408373,
+            "dc_cadence": 165.85874366679516,
+            "dc_confession": 84.4400491165588,
+            "dc_polyphony": 156.40892076290092,
+            "dc_showing": 123.15948431205041,
+            "dc_speculation": 119.1634265774084,
+            "dc_staccato": 107.88742404197427,
+            "semantic_tension": 49.3245744240341
+          },
+          "rms_norm": 361.8936365664513,
+          "std_norm": 154.5671271542326,
+          "structurally_dead_dims": []
+        },
+        "max_chars": null,
+        "min_chars": 501,
+        "n_pairs": 1553,
+        "name": "L",
+        "ortho28": {
+          "dim_names": [
+            "v2_log_mean_sent_len",
+            "v2_sent_len_cv",
+            "v2_kanji_ratio",
+            "v2_hiragana_ratio",
+            "v2_quote_ratio",
+            "v2_kana_は",
+            "v2_kana_が",
+            "v2_kana_の",
+            "v2_kana_に",
+            "v2_kana_を",
+            "v2_kana_と",
+            "v2_kana_で",
+            "v2_kana_も",
+            "v2_kana_て",
+            "v2_kana_た",
+            "v2_final_た",
+            "v2_final_る",
+            "v2_final_だ",
+            "v2_final_い",
+            "v2_final_う",
+            "v2_final_す",
+            "v2_final_ぬ",
+            "v2_final_か",
+            "v2_final_」",
+            "v2_final_other",
+            "v2_narr_log_mean_sent_len",
+            "v2_narr_log_p90_sent_len",
+            "v2_dialogue_char_ratio"
+          ],
+          "mean_norm": 5.005280137725212,
+          "per_dim_std": [
+            0.5590756599874537,
+            0.3301363335695882,
+            0.0700808539601132,
+            0.12415944385908341,
+            0.017702921354074006,
+            1.3511768847837293,
+            1.339548443925353,
+            2.2802048142276994,
+            1.6017598212512056,
+            1.3856330159887438,
+            1.6653843034977573,
+            1.3733760462824667,
+            1.3165905703034508,
+            1.662881433289424,
+            1.8185069031997434,
+            0.3814840298888956,
+            0.24151022305714925,
+            0.11807541778236581,
+            0.1658072928419247,
+            0.1218491936645372,
+            0.13992298067060116,
+            0.044426123012653196,
+            0.09610716924168583,
+            0.17674372374633343,
+            0.27160593994096466,
+            1.414135887223419,
+            1.5603560380318175,
+            0.34715524857420677
+          ],
+          "rms_norm": 5.583557691974762,
+          "std_norm": 2.4745276806906187
+        }
+      }
+    ],
+    "f14_rule": "n_evaluated は前後段落のウィンドウ数で決める（両方 1 窓 → ac_* 3 次元を除く 8 次元／片方でも 2 窓以上 → 11 次元）。σ は文字数帯（L_max）で検索。ac_* の σ は kasane11.ac_multi_window_per_dim_std（両段落とも 2 窓以上のペアだけ）。混在ペア（片側のみ複数窓）は 11 次元評価で、単窓側の ac_* は 0 なので Δ_ac = 値 − 0 になる（非対称）。",
+    "lmin_diagnostic": {
+      "n_pairs_lmin_le_250": 21561,
+      "n_pairs_lmin_le_250_but_lmax_gt_250": 3907,
+      "n_pairs_total": 22883,
+      "note": "L_min で S 帯を切ると、この混在ペア（短い段落＋250 字超の段落）が S に入り、ac_* の差が 0 にならない。そのため S 帯は L_max で切る。"
+    },
+    "pair_window_mix_total": {
+      "both_multi": 889,
+      "both_single": 18818,
+      "mixed_one_side_multi": 3176,
+      "n_pairs": 22883
+    },
+    "sd_definition": "per_dim_std は母集団 SD（ddof=0）で差の平均を引いた後の SD（numpy np.std の既定と同じ）。差は『後の段落 − 前の段落』。生の特徴量（z 化なし）。",
+    "thresholds": {
+      "M_max_chars": 500,
+      "S_max_chars": 250
+    }
+  },
+  "note": "6pole と ppm3d は base-json（Python 生成、3 著者×4 作品=12 作品）のコピーで、再生成していない（12 作品時点）。ortho28 と kasane11 は Rust で scope に従い再生成。σ は隣接段落差の SD であり推敲ノイズそのものではない。",
+  "ortho28": {
+    "definition": "ortho_v2 の 31 次元（ext 27 + narr 4）から読点 3 次元（添字 2,3,29）を除いた 28 次元の生特徴量について、kasane11 と同じ隣接段落ペア（後−前）の次元別 SD（ddof=0）。Rust（ortho_named(text, true)）で計算。",
+    "dim": 28,
+    "dim_names": [
+      "v2_log_mean_sent_len",
+      "v2_sent_len_cv",
+      "v2_kanji_ratio",
+      "v2_hiragana_ratio",
+      "v2_quote_ratio",
+      "v2_kana_は",
+      "v2_kana_が",
+      "v2_kana_の",
+      "v2_kana_に",
+      "v2_kana_を",
+      "v2_kana_と",
+      "v2_kana_で",
+      "v2_kana_も",
+      "v2_kana_て",
+      "v2_kana_た",
+      "v2_final_た",
+      "v2_final_る",
+      "v2_final_だ",
+      "v2_final_い",
+      "v2_final_う",
+      "v2_final_す",
+      "v2_final_ぬ",
+      "v2_final_か",
+      "v2_final_」",
+      "v2_final_other",
+      "v2_narr_log_mean_sent_len",
+      "v2_narr_log_p90_sent_len",
+      "v2_dialogue_char_ratio"
+    ],
+    "mean_norm": 8.275076263896496,
+    "n_pairs": 22883,
+    "note": "隣接段落差の SD であり推敲ノイズそのものではない。",
+    "per_dim_std": [
+      0.6436899156121964,
+      0.3497965277075295,
+      0.100855416556037,
+      0.11157256654100663,
+      0.03015017773557881,
+      2.3477573109236434,
+      2.317724422523434,
+      3.513679323217074,
+      2.5376024626927385,
+      2.3924483539989385,
+      2.6370843129752726,
+      2.3879261452118286,
+      2.2678329080933404,
+      2.795798146395872,
+      2.828104686601168,
+      0.46499007965253064,
+      0.2902809312012099,
+      0.16256507549238514,
+      0.20034299845038844,
+      0.16724615606743656,
+      0.19896479957805435,
+      0.0913200742935209,
+      0.13855194948348828,
+      0.29656505314923576,
+      0.39906467943469415,
+      1.9126465892330846,
+      1.9694757104845708,
+      0.5097178823955413
+    ],
+    "python_comparison": {
+      "comparable": false,
+      "reason": "base の Python 値は 3 著者×4 作品（12 作品）のため、このスコープとは比較しない"
+    },
+    "rms_norm": 8.83592615051926,
+    "scope": "all-106",
+    "sd_definition": "per_dim_std は母集団 SD（ddof=0）で差の平均を引いた後の SD（numpy np.std の既定と同じ）。差は『後の段落 − 前の段落』。生の特徴量（z 化なし）。",
+    "sigma_kind": "adjacent_paragraph_diff_sd",
+    "std_norm": 3.097854703521164
+  },
+  "ppm3d": {
+    "dim": 3,
+    "mean_norm": 1.0664,
+    "n_pairs": 3829,
+    "per_dim_std": [
+      0.662,
+      0.5932,
+      1.0104
+    ],
+    "rms_norm": 1.3458,
+    "sigma_para": 0.5332,
+    "std_norm": 0.8209,
+    "two_sigma_threshold": 1.0664
+  }
+}
