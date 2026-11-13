@@ -24,7 +24,7 @@ implemented in ``nishiki`` (``crates/nishiki-cli/src/diff_harvester.rs`` and
    The ac_* sigma population (both sides multi-window pairs only) is unchanged.
 3. Length-band lookup by ``L_max = max(len(before), len(after))`` (bands ``S``, ``M``, ``L``)
    and ``ac_multi_window_per_dim_std`` override for the 3 AC velocity/SIS/coupling dimensions
-   when evaluating 11D pairs against ``docs/handoff/v10/paragraph_noise_floor_all_novel.json``.
+   when evaluating 11D pairs against ``docs/handoff/v10/paragraph_noise_floor_all_216_canonical.json`` (default since F-22; F-17 floor ``paragraph_noise_floor_all_novel.json`` is the historical reference).
 
 GOVERNANCE & NON-CONFLATION GUARD:
     Harvest paragraph noise floor ``sigma`` (``sigma_kind="adjacent_paragraph_diff_sd"``)
@@ -40,7 +40,9 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-CANONICAL_F14_NOISE_FLOOR_PATH = REPO_ROOT / "docs" / "handoff" / "v10" / "paragraph_noise_floor_all_novel.json"
+CANONICAL_F14_NOISE_FLOOR_PATH = REPO_ROOT / "docs" / "handoff" / "v10" / "paragraph_noise_floor_all_216_canonical.json"
+# F-17 floor (46 works, SHA 0575B64A...) is retained as history / benchmark reference only.
+F17_HISTORICAL_NOISE_FLOOR_PATH = REPO_ROOT / "docs" / "handoff" / "v10" / "paragraph_noise_floor_all_novel.json"
 CANONICAL_F14_BOOTSTRAP_CI_PATH = REPO_ROOT / "docs" / "handoff" / "v10" / "ac_sigma_bootstrap_ci.json"
 
 KASANE11_DIM_NAMES: Tuple[str, ...] = (
@@ -88,18 +90,19 @@ _SENTENCE_CLOSER_CHARS = frozenset(
 )
 
 F14_SIGMA_PROVENANCE: Dict[str, Any] = {
-    "canonical_path": "docs/handoff/v10/paragraph_noise_floor_all_novel.json",
-    "upstream_evidence_path": "C:/dev/nishiki/docs/handoff/evidence/2026-11-13_f14/paragraph_noise_floor_all_novel.json",
+    "canonical_path": "docs/handoff/v10/paragraph_noise_floor_all_216_canonical.json",
+    "upstream_evidence_path": "C:/dev/nishiki/docs/handoff/evidence/2026-11-14_f21/paragraph_noise_floor_all_216_canonical.json",
+    "historical_f17_floor_path": "docs/handoff/v10/paragraph_noise_floor_all_novel.json",
     "bootstrap_ci_path": "docs/handoff/v10/ac_sigma_bootstrap_ci.json",
     "nishiki_commits": {
         "f14_hybrid_and_all_novel_sigma": "48b6eb7",
         "f14_bootstrap_ci_addendum": "fffae58",
     },
-    "generator_command": "nishiki gen-paragraph-noise-floor --scope all-novel",
-    "scope": "all-novel",
-    "n_works": 46,
-    "n_authors": 10,
-    "n_pairs_total": 10859,
+    "generator_command": "nishiki gen-paragraph-noise-floor (scope all-216; adopted as canonical in Stage F-21, default switched in F-22)",
+    "scope": "all-216",
+    "n_works": 216,
+    "n_authors": 120,
+    "n_pairs_total": 52812,
     "sd_definition": "population SD (ddof=0) of adjacent paragraph differences (p_{t+1} - p_t)",
     "sigma_kind": "adjacent_paragraph_diff_sd",
     "hybrid_rule": {

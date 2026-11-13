@@ -118,8 +118,8 @@ def test_f14_window_count_and_hybrid_rule_mechanics():
     nf_data, prov = load_f14_noise_floor()
     assert Path(CANONICAL_F14_NOISE_FLOOR_PATH).exists()
     assert len(prov["sha256"]) == 64
-    assert prov["n_works_in_file"] == 46
-    assert prov["n_pairs_in_file"] == 10859
+    assert prov["n_works_in_file"] == 216  # F-22: default switched from F-17 (46) to 216 canonical
+    assert prov["n_pairs_in_file"] == 52812  # F-17 was 10859
 
     assert len(KASANE11_DIM_NAMES) == 11
     assert len(SHORT_DEAD_DIMS) == 3
