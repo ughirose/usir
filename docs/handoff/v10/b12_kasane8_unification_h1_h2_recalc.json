@@ -1,0 +1,285 @@
+{
+  "index_verification": {
+    "same_index_set": false,
+    "legacy_slice_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "unified_canonical_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      10
+    ],
+    "only_in_legacy_indices": [
+      7
+    ],
+    "only_in_unified_indices": [
+      10
+    ],
+    "canonical_kasane11_dim_names": {
+      "legacy_slice_dims": [
+        "dc_showing",
+        "dc_staccato",
+        "dc_polyphony",
+        "dc_confession",
+        "dc_cadence",
+        "dc_speculation",
+        "semantic_tension",
+        "ac_mean_velocity"
+      ],
+      "unified_kasane8_active_dims": [
+        "dc_showing",
+        "dc_staccato",
+        "dc_polyphony",
+        "dc_confession",
+        "dc_cadence",
+        "dc_speculation",
+        "semantic_tension",
+        "ac_mean_crest"
+      ],
+      "dropped_from_legacy": [
+        "ac_mean_velocity"
+      ],
+      "added_in_unified": [
+        "ac_mean_crest"
+      ]
+    },
+    "python_surrogate_dim_names": {
+      "legacy_slice_dims": [
+        "c_comma",
+        "c_period",
+        "c_te",
+        "c_de",
+        "c_ni",
+        "c_wa",
+        "c_ga",
+        "c_no"
+      ],
+      "unified_indices_dims": [
+        "c_comma",
+        "c_period",
+        "c_te",
+        "c_de",
+        "c_ni",
+        "c_wa",
+        "c_ga",
+        "mean_cl_div_100"
+      ],
+      "dropped_from_legacy": [
+        "c_no"
+      ],
+      "added_in_unified": [
+        "mean_cl_div_100"
+      ]
+    },
+    "explanation": "scale_separated_level3.py::extract_kasane8_active historically sliced [:8] (indices 0..7), keeping index 7 (canonical ac_mean_velocity / Python surrogate c_no) and dropping index 10 (canonical ac_mean_crest / Python surrogate mean_cl_div_100). KASANE8_ACTIVE_DIM_NAMES instead excludes indices 7, 8, 9 and retains index 10 ([0..6, 10])."
+  },
+  "h1_32d_core": {
+    "frozen_b8_headline": {
+      "n_pairs": 42,
+      "n_quasi": 8,
+      "median_rho_perp": 0.1462,
+      "median_theta_deg": 8.41,
+      "mean_cos_spec": 0.1083,
+      "mean_cos_rand": -0.0001,
+      "mean_cos_other": -0.0128,
+      "vs_random": {
+        "w_stat": 552.0,
+        "p_one_sided": 0.011888620865233148,
+        "p_two_sided": 0.023777241730466296,
+        "sig_005_one": true,
+        "sig_005_two": true,
+        "bonferroni_p_one": 0.04755448346093259,
+        "bonferroni_p_two": 0.09510896692186518,
+        "n_nonzero": 39
+      },
+      "vs_other": {
+        "w_stat": 654.0,
+        "p_one_sided": 0.005252185545032262,
+        "p_two_sided": 0.010504371090064524,
+        "sig_005_one": true,
+        "sig_005_two": true,
+        "bonferroni_p_one": 0.021008742180129047,
+        "bonferroni_p_two": 0.042017484360258095,
+        "n_nonzero": 42
+      }
+    },
+    "reproduced_legacy_slice_0_to_7": {
+      "n_pairs": 42,
+      "n_quasi": 8,
+      "median_rho_perp": 0.1462,
+      "median_theta_deg": 8.41,
+      "mean_cos_spec": 0.1083,
+      "mean_cos_rand": -0.0001,
+      "mean_cos_other": -0.0128,
+      "vs_random": {
+        "w_stat": 552.0,
+        "p_one_sided": 0.011888620865233148,
+        "p_two_sided": 0.023777241730466296,
+        "sig_005_one": true,
+        "sig_005_two": true,
+        "bonferroni_p_one": 0.04755448346093259,
+        "bonferroni_p_two": 0.09510896692186518,
+        "n_nonzero": 39
+      },
+      "vs_other": {
+        "w_stat": 654.0,
+        "p_one_sided": 0.005252185545032262,
+        "p_two_sided": 0.010504371090064524,
+        "sig_005_one": true,
+        "sig_005_two": true,
+        "bonferroni_p_one": 0.021008742180129047,
+        "bonferroni_p_two": 0.042017484360258095,
+        "n_nonzero": 42
+      }
+    },
+    "unified_kasane8_indices_0_to_6_and_10": {
+      "n_pairs": 42,
+      "n_quasi": 8,
+      "median_rho_perp": 0.1464,
+      "median_theta_deg": 8.42,
+      "mean_cos_spec": 0.1083,
+      "mean_cos_rand": 0.002,
+      "mean_cos_other": -0.0128,
+      "vs_random": {
+        "w_stat": 553.0,
+        "p_one_sided": 0.011463026991353297,
+        "p_two_sided": 0.022926053982706595,
+        "sig_005_one": true,
+        "sig_005_two": true,
+        "bonferroni_p_one": 0.04585210796541319,
+        "bonferroni_p_two": 0.09170421593082638,
+        "n_nonzero": 39
+      },
+      "vs_other": {
+        "w_stat": 654.0,
+        "p_one_sided": 0.005252185545032262,
+        "p_two_sided": 0.010504371090064524,
+        "sig_005_one": true,
+        "sig_005_two": true,
+        "bonferroni_p_one": 0.021008742180129047,
+        "bonferroni_p_two": 0.042017484360258095,
+        "n_nonzero": 42
+      }
+    },
+    "diff_unified_vs_frozen": {
+      "mean_cos_spec_frozen": 0.1083,
+      "mean_cos_spec_unified": 0.1083,
+      "delta_mean_cos_spec": 0.0,
+      "mean_cos_rand_frozen": -0.0001,
+      "mean_cos_rand_unified": 0.002,
+      "delta_mean_cos_rand": 0.0021,
+      "mean_cos_other_frozen": -0.0128,
+      "mean_cos_other_unified": -0.0128,
+      "delta_mean_cos_other": 0.0,
+      "vs_other_w_delta": 0.0,
+      "vs_other_p_two_frozen": 0.010504,
+      "vs_other_p_two_unified": 0.010504,
+      "vs_other_bonferroni_p_two_frozen": 0.042017,
+      "vs_other_bonferroni_p_two_unified": 0.042017,
+      "vs_other_bonf_sig_unchanged": true,
+      "vs_random_w_delta": 1.0,
+      "vs_random_p_one_frozen": 0.011889,
+      "vs_random_p_one_unified": 0.011463,
+      "vs_random_p_two_frozen": 0.023777,
+      "vs_random_p_two_unified": 0.022926,
+      "vs_random_bonferroni_p_two_frozen": 0.095109,
+      "vs_random_bonferroni_p_two_unified": 0.091704,
+      "vs_random_bonf_sig_unchanged": true,
+      "legacy_repro_matches_frozen_exact": true
+    }
+  },
+  "h2_5d_continuous_core": {
+    "frozen_b8_headline": {
+      "n_pairs": 22,
+      "n_quasi": 11,
+      "median_rho_perp": 0.101,
+      "median_theta_deg": 5.8,
+      "mean_cos_spec": 0.0849,
+      "mean_cos_rand": 0.0001,
+      "mean_cos_other": -0.1089,
+      "vs_random": {
+        "w_stat": 153.0,
+        "p_one_sided": 0.2030165195465088,
+        "p_two_sided": 0.4060330390930176,
+        "sig_005_one": false,
+        "sig_005_two": false,
+        "bonferroni_p_one": 0.8120660781860352,
+        "bonferroni_p_two": 1.0,
+        "n_nonzero": 22
+      },
+      "vs_other": {
+        "w_stat": 214.0,
+        "p_one_sided": 0.001619577407836914,
+        "p_two_sided": 0.003239154815673828,
+        "sig_005_one": true,
+        "sig_005_two": true,
+        "bonferroni_p_one": 0.006478309631347656,
+        "bonferroni_p_two": 0.012956619262695312,
+        "n_nonzero": 22
+      }
+    },
+    "recalculated": {
+      "n_pairs": 22,
+      "n_quasi": 11,
+      "median_rho_perp": 0.101,
+      "median_theta_deg": 5.8,
+      "mean_cos_spec": 0.0849,
+      "mean_cos_rand": 0.0001,
+      "mean_cos_other": -0.1089,
+      "vs_random": {
+        "w_stat": 153.0,
+        "p_one_sided": 0.2030165195465088,
+        "p_two_sided": 0.4060330390930176,
+        "sig_005_one": false,
+        "sig_005_two": false,
+        "bonferroni_p_one": 0.8120660781860352,
+        "bonferroni_p_two": 1.0,
+        "n_nonzero": 22
+      },
+      "vs_other": {
+        "w_stat": 214.0,
+        "p_one_sided": 0.001619577407836914,
+        "p_two_sided": 0.003239154815673828,
+        "sig_005_one": true,
+        "sig_005_two": true,
+        "bonferroni_p_one": 0.006478309631347656,
+        "bonferroni_p_two": 0.012956619262695312,
+        "n_nonzero": 22
+      }
+    },
+    "diff_vs_frozen": {
+      "depends_on_kasane8_active": false,
+      "mean_cos_spec_frozen": 0.0849,
+      "mean_cos_spec_recalc": 0.0849,
+      "delta_mean_cos_spec": 0.0,
+      "vs_other_p_two_frozen": 0.003239,
+      "vs_other_p_two_recalc": 0.003239,
+      "vs_other_bonferroni_p_two_frozen": 0.012957,
+      "vs_other_bonferroni_p_two_recalc": 0.012957,
+      "vs_random_p_two_frozen": 0.406033,
+      "vs_random_p_two_recalc": 0.406033,
+      "vs_random_bonferroni_p_two_frozen": 1.0,
+      "vs_random_bonferroni_p_two_recalc": 1.0,
+      "exact_match_with_frozen": true
+    }
+  },
+  "rating_conclusions_assessment": {
+    "rating_conclusion_changed": false,
+    "h1_rating_unchanged": true,
+    "h2_rating_unchanged": true,
+    "summary": "Unified KASANE8_ACTIVE_INDICES ([0..6, 10]) differs from legacy [:8] ([0..7]) at the 8th slot (index 10 mean_cl_div_100 / ac_mean_crest instead of index 7 c_no / ac_mean_velocity). Re-calculating H1 (32D core, n=42) changes vs_other W=654.0, p_two=0.010504, bonferroni_p_two=0.042017 by 0.0, and shifts vs_random W from 552.0 to 553.0 (p_two: 0.023777 -> 0.022926, bonferroni_p_two: 0.095109 -> 0.091704; nominal sig <0.05 preserved, two-sided Bonferroni non-sig preserved). H2 (5D continuous core, n=22) does not use KASANE8 and is bit-identical. Rating conclusions and Gate 3a/3b decisions do NOT change."
+  },
+  "frozen_artifacts_not_modified": true
+}

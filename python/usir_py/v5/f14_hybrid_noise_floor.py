@@ -58,6 +58,12 @@ KASANE8_ACTIVE_DIM_NAMES: Tuple[str, ...] = tuple(
     dim for dim in KASANE11_DIM_NAMES if dim not in SHORT_DEAD_DIMS
 )
 
+KASANE8_ACTIVE_INDICES: Tuple[int, ...] = tuple(
+    idx for idx, dim in enumerate(KASANE11_DIM_NAMES) if dim not in SHORT_DEAD_DIMS
+)
+
+ALIGN_MIN_SIMILARITY: float = 0.25
+
 _SENTENCE_BOUNDARY_CHARS = frozenset(("\u3002", "\uff01", "\uff1f"))  # 。 ！ ？
 _SENTENCE_CLOSER_CHARS = frozenset(
     (
@@ -182,6 +188,43 @@ def is_eight_dim(windows: Tuple[int, int]) -> bool:
     return int(windows[0]) <= 1 and int(windows[1]) <= 1
 
 
+def char_bigrams(text: str) -> List[int]:
+    """Build sorted non-whitespace character 2-grams identical to Rust ``diff_harvester::bigrams``."""
+    cs = [ord(c) for c in text if not c.isspace()]
+    if not cs:
+        return []
+    if len(cs) == 1:
+        return [cs[0] << 32]
+    return sorted(((cs[i] << 32) | cs[i + 1]) for i in range(len(cs) - 1))
+
+
+def char_bigram_dice(text_a: str, text_b: str) -> float:
+    """Compute non-whitespace character 2-gram Dice coefficient identical to Rust ``diff_harvester::dice``."""
+    ba = char_bigrams(text_a)
+    bb = char_bigrams(text_b)
+    if not ba and not bb:
+        return 1.0
+    if not ba or not bb:
+        return 0.0
+    inter = 0
+    i = 0
+    j = 0
+    la = len(ba)
+    lb = len(bb)
+    while i < la and j < lb:
+        va = ba[i]
+        vb = bb[j]
+        if va == vb:
+            inter += 1
+            i += 1
+            j += 1
+        elif va < vb:
+            i += 1
+        else:
+            j += 1
+    return (2.0 * inter) / float(la + lb)
+
+
 def select_length_band(l_max: int, bands: Sequence[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
     """Select length band matching Rust ``NoiseFloor::band_for(l_max)``."""
     if not bands:
@@ -208,8 +251,17 @@ def evaluate_f14_hybrid_pair(
     delta_kasane11: Optional[Dict[str, float]] = None,
     use_band: bool = True,
     provenance: Optional[Dict[str, Any]] = None,
+    apply_dice_gate: bool = True,
+    align_min_similarity: float = ALIGN_MIN_SIMILARITY,
 ) -> Dict[str, Any]:
-    """Evaluate a paragraph pair under F-14 hybrid judgment and regenerate sigma lookup."""
+    """Evaluate a paragraph pair under F-14/F-15 hybrid judgment with canonical Dice gate.
+
+    When ``apply_dice_gate`` is True (canonical ``harvest-diff`` default), pairs with
+    ``char_bigram_dice(text_before, text_after) < align_min_similarity`` (default ``0.25``)
+    are recorded as ``kind="unaligned"`` with ``n_evaluated=None`` and excluded from
+    noise-floor evaluation.
+    """
+    dice_sim = char_bigram_dice(text_before, text_after)
     w_before = window_count_kasane(text_before)
     w_after = window_count_kasane(text_after)
     windows = (w_before, w_after)
@@ -219,6 +271,29 @@ def evaluate_f14_hybrid_pair(
 
     bands = noise_floor_data.get("length_bands", {}).get("bands", [])
     band = select_length_band(l_max, bands) if use_band else None
+    band_name_raw = str(band["name"]) if band is not None else "overall"
+
+    if apply_dice_gate and dice_sim < align_min_similarity:
+        return {
+            "kind": "unaligned",
+            "aligned": False,
+            "dice_similarity": dice_sim,
+            "align_min_similarity": align_min_similarity,
+            "band": band_name_raw,
+            "l_max_chars": l_max,
+            "window_counts": [w_before, w_after],
+            "mixed_window_pair": mixed_window_pair,
+            "is_eight_dim": eight_dim,
+            "n_eval_rule": None,
+            "n_evaluated": None,
+            "active_dims": [],
+            "excluded_structurally_dead_dims": list(KASANE11_DIM_NAMES),
+            "ac_sigma_source": "not_applicable",
+            "sigma_used": {},
+            "sigma_kind": F14_SIGMA_PROVENANCE["sigma_kind"],
+            "ratios": None,
+            "provenance": provenance or F14_SIGMA_PROVENANCE,
+        }
 
     if band is not None:
         band_name = str(band["name"])
@@ -288,6 +363,10 @@ def evaluate_f14_hybrid_pair(
         }
 
     return {
+        "kind": "pair",
+        "aligned": True,
+        "dice_similarity": dice_sim,
+        "align_min_similarity": align_min_similarity if apply_dice_gate else None,
         "band": band_name,
         "l_max_chars": l_max,
         "window_counts": [w_before, w_after],

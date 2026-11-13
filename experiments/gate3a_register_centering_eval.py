@@ -54,10 +54,47 @@ TASK2_U6_META_PATH = ROOT / "docs" / "handoff" / "v10" / "u6_guards_calibration_
 OUTPUT_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_b9_register_centering_and_level3.json"
 OUTPUT_B10_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_b10_gate3a_scene_scale_and_level3.json"
 OUTPUT_B11_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_b11_gate3a_calibrated_and_f14_parity.json"
+OUTPUT_B12_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_b12_canonical_eval.json"
+OUTPUT_B12_SUMMARY_PATH = ROOT / "docs" / "handoff" / "v10" / "gate3a_register_centering_summary.json"
 
 # Gate status constants (Strictly frozen & maintained according to repository rules)
 GATE3A_STATUS = "SHIFT_QUANTIFIED_NOT_PASSED"
 GATE3B_STATUS = "GATE3B_FROZEN"
+
+# Stage B-12 Task 2: Explicit primary / auxiliary alarm threshold specification (threshold values unchanged)
+PRIMARY_ALARM_THRESHOLD_KEY = "mc_indep_p95"
+PRIMARY_ALARM_THRESHOLD_D = 6.9267
+AUXILIARY_ALARM_THRESHOLD_KEY = "mc_r4corr_p95"
+AUXILIARY_ALARM_THRESHOLD_D = 7.6574
+ALARM_THRESHOLD_SPEC: Dict[str, Any] = {
+    "primary_alarm": {
+        "role": "primary",
+        "label_ja": "一次警報",
+        "threshold_key": PRIMARY_ALARM_THRESHOLD_KEY,
+        "threshold_d": PRIMARY_ALARM_THRESHOLD_D,
+        "mc_quantile": "95%",
+        "null_model": "independent_gaussian_24d_loo",
+        "description": "Primary alarm threshold (一次警報): mc_indep_p95 (d=6.9267).",
+    },
+    "auxiliary_alarm": {
+        "role": "auxiliary",
+        "label_ja": "補助警報",
+        "threshold_key": AUXILIARY_ALARM_THRESHOLD_KEY,
+        "threshold_d": AUXILIARY_ALARM_THRESHOLD_D,
+        "mc_quantile": "95%",
+        "null_model": "r4_correlated_gaussian_24d_loo",
+        "description": "Auxiliary alarm threshold (補助警報): mc_r4corr_p95 (d=7.6574).",
+    },
+    "thresholds_unchanged_note": (
+        "Explicitly documents primary (mc_indep_p95, d=6.9267) and auxiliary (mc_r4corr_p95, d=7.6574) roles; "
+        "threshold values and Gate 3a/3b decisions remain unchanged."
+    ),
+}
+
+
+def get_alarm_threshold_specification() -> Dict[str, Any]:
+    """Return the canonical Gate 3a primary/auxiliary alarm threshold specification."""
+    return json.loads(json.dumps(ALARM_THRESHOLD_SPEC, ensure_ascii=False))
 
 # 31D ortho_v2 dimensions
 ALL_ORTHO_NAMES = list(ORTHO_EXT_V2_NAMES) + list(NARR_V2_NAMES)
@@ -1258,6 +1295,10 @@ def evaluate_b10_scene_scale_redesign(
             "chi2_p9973": round(thresh_c2_9973, 4),
             "canonical_denominator": "sigma2_scene_r_diagonal",
             "canonical_threshold_family": "finite_sample_mc_loo_student_t_null",
+            "primary_alarm_threshold_key": PRIMARY_ALARM_THRESHOLD_KEY,
+            "primary_alarm_threshold_d": PRIMARY_ALARM_THRESHOLD_D,
+            "auxiliary_alarm_threshold_key": AUXILIARY_ALARM_THRESHOLD_KEY,
+            "auxiliary_alarm_threshold_d": AUXILIARY_ALARM_THRESHOLD_D,
             **{k: round(float(v), 4) for k, v in mc_thresh.items()},
         }
 
@@ -1528,6 +1569,11 @@ def build_b11_threshold_calibration_comparison(b10_eval: Dict[str, Any]) -> Dict
             "Condition (b) Scheme 3 within-register LOO convergence is an intake-normalization diagnostic only "
             "and is NOT counted as Gate 3a pass evidence."
         ),
+        "primary_alarm_threshold_key": PRIMARY_ALARM_THRESHOLD_KEY,
+        "primary_alarm_threshold_d": PRIMARY_ALARM_THRESHOLD_D,
+        "auxiliary_alarm_threshold_key": AUXILIARY_ALARM_THRESHOLD_KEY,
+        "auxiliary_alarm_threshold_d": AUXILIARY_ALARM_THRESHOLD_D,
+        "alarm_threshold_specification": get_alarm_threshold_specification(),
         "thresholds": s24["thresholds"],
         "monte_carlo_quantiles": {
             "seed": 42,
@@ -1545,185 +1591,89 @@ def build_b11_threshold_calibration_comparison(b10_eval: Dict[str, Any]) -> Dict
     }
 
 
-def main() -> None:
+def build_b12_gate3a_summary(b10_eval: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Build Stage B-12 Gate 3a output JSON with explicit primary/auxiliary alarm thresholds."""
+    if b10_eval is None:
+        records_64 = load_benchmark_records(BENCHMARK_64_PATH)
+        atlas = extract_aozora_106_atlas()
+        b10_eval = evaluate_b10_scene_scale_redesign(records_64, atlas, TASK1_STAGE_JSON_PATH)
+    calib = build_b11_threshold_calibration_comparison(b10_eval)
+    return {
+        "metadata": {
+            "title": "USIR v5 Stage B-12: Gate 3a Summary with Explicit Primary & Auxiliary Alarm Thresholds",
+            "version": "1.2",
+            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "gate_3a_status": GATE3A_STATUS,
+            "gate_3b_status": GATE3B_STATUS,
+            "primary_alarm_threshold_key": PRIMARY_ALARM_THRESHOLD_KEY,
+            "primary_alarm_threshold_d": PRIMARY_ALARM_THRESHOLD_D,
+            "auxiliary_alarm_threshold_key": AUXILIARY_ALARM_THRESHOLD_KEY,
+            "auxiliary_alarm_threshold_d": AUXILIARY_ALARM_THRESHOLD_D,
+        },
+        "gate_3a_status": GATE3A_STATUS,
+        "gate_3b_status": GATE3B_STATUS,
+        "primary_alarm_threshold_key": PRIMARY_ALARM_THRESHOLD_KEY,
+        "primary_alarm_threshold_d": PRIMARY_ALARM_THRESHOLD_D,
+        "auxiliary_alarm_threshold_key": AUXILIARY_ALARM_THRESHOLD_KEY,
+        "auxiliary_alarm_threshold_d": AUXILIARY_ALARM_THRESHOLD_D,
+        "alarm_threshold_specification": get_alarm_threshold_specification(),
+        "gate3a_calibrated_evaluation": calib,
+        "reference_only_scheme_2": b10_eval["reference_only_scheme_2"],
+    }
+
+
+def main(overwrite_frozen: bool = False) -> None:
     t0 = time.time()
-    print("=== USIR v5 Stage B-9 Task 3: Gate 3a Register Centering & Offset Evaluation ===")
+    print("=== USIR v5 Stage B-12: Gate 3a Register Centering & Canonical Evaluation ===")
 
-    # 1. Load Aozora 106 Atlas Baseline
     aozora_atlas = extract_aozora_106_atlas()
-    print(f"Atlas baseline established in {time.time() - t0:.2f}s")
-    print(f"  31D self-mean d_M: {aozora_atlas['self_d_m_31_mean']:.4f}, 3sigma threshold: {aozora_atlas['thresh_3sigma_31']:.4f}")
-    print(f"  24D self-mean d_M: {aozora_atlas['self_d_m_24_mean']:.4f}, 3sigma threshold: {aozora_atlas['thresh_3sigma_24']:.4f}")
-
-    # 2. Load benchmark datasets and Task 1 / Task 2 artifacts
     assert BENCHMARK_32_PATH.exists(), f"Missing {BENCHMARK_32_PATH}"
     assert BENCHMARK_64_PATH.exists(), f"Missing {BENCHMARK_64_PATH}"
-
-    records_32 = load_benchmark_records(BENCHMARK_32_PATH)
     records_64 = load_benchmark_records(BENCHMARK_64_PATH)
-    print(f"Loaded benchmark 32 samples (n={len(records_32)}) and expanded 64 samples (n={len(records_64)})")
 
-    task1_data = {}
-    if TASK1_STAGE_JSON_PATH.exists():
-        task1_json = json.loads(TASK1_STAGE_JSON_PATH.read_text(encoding="utf-8"))
-        task1_data = task1_json.get("level3b_scale_separated_specificity", {})
-
-    task2_data = {}
-    if TASK2_U6_META_PATH.exists():
-        task2_data = json.loads(TASK2_U6_META_PATH.read_text(encoding="utf-8")).get("metadata", {})
-
-    # 3. Run evaluation on both datasets
-    print("\n--- Evaluating 32-sample benchmark (Original) ---")
-    eval_32 = evaluate_dataset(records_32, aozora_atlas, "tier_c_modern_benchmark_32")
-
-    print("\n--- Evaluating 64-sample benchmark (Expanded) ---")
-    eval_64 = evaluate_dataset(records_64, aozora_atlas, "tier_c_modern_benchmark_expanded_64")
-
-    # 4. Comparative Synthesis & Gate 3b Decision
-    r1_b64_diag_al = eval_64["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["aligned"]
-    r1_b64_atlas_al = eval_64["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["ortho24_cont"]["aligned"]
-    pool_b64_diag_al = eval_64["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["scheme_2_loo_era_shift_alignment"]["all_modern_pooled_alignment"]["aligned"]
-    pool_b64_atlas_al = eval_64["scheme_2_loo_era_shift_alignment"]["all_modern_pooled_alignment"]["ortho24_cont"]["aligned"]
-    s3_shrink_64 = eval_64["scheme_3_within_register_loo_centering"]["within_register_outlier_rates"]["ortho24_cont"]["modes"]["loo_mean_shrinkage_loo_var"]["modern_aggregate"]
-
-    synthesis = {
-        "metadata": {
-            "title": "USIR v5 Stage B-9: Gate 3a Register-Specific Centering & Level 3b Scale Separation Report",
-            "version": "1.1",
-            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "evaluated_datasets": [
-                "data/usir_v5_eval/tier_c_modern_benchmark.jsonl (n=32)",
-                "data/usir_v5_eval/tier_c_modern_benchmark_expanded.jsonl (n=64)",
-            ],
-            "gate_3b_status": "GATE3B_FROZEN",
-            "gate_3b_decision_reason": (
-                "Gate 3b (intake of authentic personal manuscripts / Layer B-1) MUST REMAIN FROZEN until Orion consensus. "
-                f"While Scheme 2 (LOO Era Shift Alignment) brings R1 fiction outlier rate to {r1_b64_diag_al['outlier_rate_3sigma_pct']}% (3sigma) / "
-                f"{r1_b64_diag_al['outlier_rate_chi2_p95_pct']}% (chi2) under Baseline A (R4 diagonal) and "
-                f"{r1_b64_atlas_al['outlier_rate_3sigma_pct']}% (3sigma) under Baseline B (Aozora 106 Atlas 24D), "
-                f"pooled modern prose (R1-R3) retains {pool_b64_diag_al['outlier_rate_3sigma_pct']}% (Baseline A) / "
-                f"{pool_b64_atlas_al['outlier_rate_3sigma_pct']}% (Baseline B) 3-sigma outlier rates. "
-                "Register-conditioned normalization (Scheme 3, eliminating 100% of eta^2_register) is mandatory before Gate 3b."
-            ),
-        },
-        "task1_level3b_scale_separated_specificity": task1_data,
-        "task2_u6_provisional_micro_v2_calibration": task2_data,
-        "benchmark_32_samples": eval_32,
-        "benchmark_64_samples": eval_64,
-        "comparative_summary": {
-            "sample_size_stability": {
-                "n_32_to_n_64_comparison": "Doubling sample size from 32 to 64 narrows 95% bootstrap CIs and eliminates single-sample variance collapse in larger cohorts.",
-                "baseline_a_r4_diagonal_summary": {
-                    "scheme_0_modern_3sigma_pct": {
-                        "n32": eval_32["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["unaligned_modern_aggregate"]["outlier_rate_3sigma_pct"],
-                        "n64": eval_64["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["unaligned_modern_aggregate"]["outlier_rate_3sigma_pct"],
-                    },
-                    "scheme_2_r1_aligned_31d_pct": {
-                        "n32": eval_32["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["aligned"],
-                        "n64": eval_64["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["aligned"],
-                    },
-                },
-                "baseline_b_aozora_106_atlas_summary": {
-                    "scheme_0_modern_outlier_3sigma_pct": {
-                        "n32": eval_32["scheme_0_raw_r4_centering_31d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
-                        "n64": eval_64["scheme_0_raw_r4_centering_31d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
-                    },
-                    "scheme_1_modern_outlier_3sigma_pct": {
-                        "n32": eval_32["scheme_1_continuous_core_subspace_24d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
-                        "n64": eval_64["scheme_1_continuous_core_subspace_24d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
-                    },
-                    "scheme_2_r1_outlier_3sigma_pct_aligned_24d": {
-                        "n32": eval_32["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["ortho24_cont"]["aligned"]["outlier_rate_3sigma_pct"],
-                        "n64": eval_64["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["ortho24_cont"]["aligned"]["outlier_rate_3sigma_pct"],
-                    },
-                },
-                "scheme_3_register_variance_elimination_24d_pct": {
-                    "n32": eval_32["scheme_3_within_register_loo_centering"]["eta_squared_register_elimination"]["ortho24_cont"]["register_variance_elimination_rate_pct"],
-                    "n64": eval_64["scheme_3_within_register_loo_centering"]["eta_squared_register_elimination"]["ortho24_cont"]["register_variance_elimination_rate_pct"],
-                },
-                "scheme_3_within_register_modern_shrinkage_outliers_n64": s3_shrink_64,
-            },
-            "core_scientific_findings": [
-                "1. Both Baseline A (in-benchmark R4 diagonal) and Baseline B (Aozora 106-works Atlas) confirm severe modern register shift (Baseline A R2=75-87.5%, R3=100% 3-sigma; Baseline B overall modern ~95.8% 3-sigma).",
-                "2. Scheme 1 (Continuous Core 24D) removes sparse dimensions but cannot eliminate register/era shift by itself.",
-                "3. Scheme 2 (LOO Era Shift Alignment) cleanly aligns R1 colloquial fiction into the literary manifold (3-sigma outlier rate drops to 0.0% on both Baseline A and Baseline B 24D in n=64, and chi2_0.95 drops to 0.0% on Baseline A).",
-                "4. Scheme 2 on pooled modern prose (R1-R3) fails to resolve R2/R3 outliers, demonstrating genre/register drift is orthogonal to chronological era drift.",
-                "5. Scheme 3 (Within-Register LOO Centering) achieves 100% elimination of between-register variance (eta^2 -> 0.000) and rho=1.000 distance fidelity, with 0.0% 3-sigma / 4.17% chi2 modern outlier rate under shrinkage LOO variance (while exposing single-nonzero LOO variance collapse on unregularized small cohorts).",
-            ],
-        },
-    }
-
-    # Save B-9 output
-    OUTPUT_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_JSON_PATH, "w", encoding="utf-8") as f:
-        json.dump(synthesis, f, ensure_ascii=False, indent=2)
-
-    print(f"\nSuccessfully generated Gate 3a and Level 3 B-9 JSON report: {OUTPUT_JSON_PATH}")
-
-    # Stage B-10: Scene-Level Scale Redesign Evaluation
-    print("\n--- Running Stage B-10 Scene-Level Scale Redesign Evaluation ---")
     b10_eval = evaluate_b10_scene_scale_redesign(records_64, aozora_atlas, TASK1_STAGE_JSON_PATH)
+    b12_summary = build_b12_gate3a_summary(b10_eval)
 
-    b10_synthesis = {
+    OUTPUT_B12_SUMMARY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_B12_SUMMARY_PATH.write_text(json.dumps(b12_summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"Wrote Stage B-12 Gate 3a summary JSON: {OUTPUT_B12_SUMMARY_PATH}")
+
+    from scale_separated_level3 import (
+        evaluate_f14_hybrid_alignment_and_parity,
+        verify_kasane8_index_unification_and_recalc_h1_h2,
+    )
+
+    f14_parity = evaluate_f14_hybrid_alignment_and_parity()
+    kasane8_recalc = verify_kasane8_index_unification_and_recalc_h1_h2()
+
+    b12_canonical = {
         "metadata": {
-            "title": "USIR v5 Stage B-10: Gate 3a Scene-Level Denominator Redesign & Level 3b Scale Separation Report",
-            "version": "1.0",
+            "title": "USIR v5 Stage B-12: Canonical Dice Gate, Explicit Alarm Thresholds, & KASANE8 H1/H2 Re-calculation",
+            "version": "1.2",
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "base_commit": "ae992e5",
             "gate_3a_status": GATE3A_STATUS,
             "gate_3b_status": GATE3B_STATUS,
-            "evaluated_datasets": [
-                "data/usir_v5_eval/tier_c_modern_benchmark.jsonl (n=32)",
-                "data/usir_v5_eval/tier_c_modern_benchmark_expanded.jsonl (n=64)",
-            ],
+            "frozen_artifacts_untouched": not overwrite_frozen,
         },
-        "gate_3a_official_decision": b10_eval["gate_3a_official_decision"],
-        "gate_3b_official_decision": b10_eval["gate_3b_official_decision"],
-        "task2_fixed_h1_h2_ratings": b10_eval["task2_fixed_h1_h2_ratings"],
-        "b10_scene_scale_redesign_evaluation": b10_eval["scene_scale_evaluation"],
-        "reference_only_scheme_2": b10_eval["reference_only_scheme_2"],
-        "task1_level3b_scale_separated_specificity": task1_data,
-        "task2_u6_provisional_micro_v2_calibration": task2_data,
-        "benchmark_32_samples": eval_32,
-        "benchmark_64_samples": eval_64,
-        "b9_comparative_summary": synthesis["comparative_summary"],
+        "task1_dice_gate_canonical_parity": f14_parity,
+        "task2_gate3a_explicit_alarm_thresholds": b12_summary,
+        "task3_kasane8_unification_and_h1_h2_recalc": kasane8_recalc,
     }
+    OUTPUT_B12_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_B12_JSON_PATH.write_text(json.dumps(b12_canonical, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"Wrote Stage B-12 Canonical JSON: {OUTPUT_B12_JSON_PATH} ({round(time.time() - t0, 2)}s)")
 
-    OUTPUT_B10_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_B10_JSON_PATH, "w", encoding="utf-8") as f:
-        json.dump(b10_synthesis, f, ensure_ascii=False, indent=2)
-
-    print(f"Successfully generated Stage B-10 JSON report: {OUTPUT_B10_JSON_PATH}")
-
-    # Stage B-11: Gate 3a Finite-Sample Calibration & F-14 Hybrid Alignment
-    print("\n--- Running Stage B-11 Gate 3a Calibration & F-14 Hybrid Parity ---")
-    from scale_separated_level3 import evaluate_f14_hybrid_alignment_and_parity
-
-    b11_gate3a_calib = build_b11_threshold_calibration_comparison(b10_eval)
-    b11_f14_parity = evaluate_f14_hybrid_alignment_and_parity()
-    b11_synthesis = {
-        "metadata": {
-            "title": "USIR v5 Stage B-11: Gate 3a Finite-Sample Calibration & F-14 Hybrid Reference Alignment",
-            "version": "1.0",
-            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "base_commit": "8b82177",
-            "gate_3a_status": GATE3A_STATUS,
-            "gate_3b_status": GATE3B_STATUS,
-            "non_conflation_note": (
-                "Gate 3a within-register scene variance (sigma_scene_r in 24D ortho24_cont) and harvest "
-                "adjacent-paragraph noise floor sigma (paragraph_noise_floor_all_novel.json) are distinct quantities."
-            ),
-        },
-        "task1_gate3a_finite_sample_calibration": b11_gate3a_calib,
-        "task2_f14_hybrid_judgment_and_sigma_parity": b11_f14_parity,
-        "reference_only_scheme_2": b10_eval["reference_only_scheme_2"],
-    }
-
-    OUTPUT_B11_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_B11_JSON_PATH, "w", encoding="utf-8") as f:
-        json.dump(b11_synthesis, f, ensure_ascii=False, indent=2)
-
-    print(f"Successfully generated Stage B-11 JSON report: {OUTPUT_B11_JSON_PATH}")
+    if overwrite_frozen:
+        records_32 = load_benchmark_records(BENCHMARK_32_PATH)
+        eval_32 = evaluate_dataset(records_32, aozora_atlas, "tier_c_modern_benchmark_32")
+        eval_64 = evaluate_dataset(records_64, aozora_atlas, "tier_c_modern_benchmark_expanded_64")
+        print(f"Frozen artifacts overwrite skipped unless needed ({len(eval_32['dataset_name'])}, {len(eval_64['dataset_name'])})")
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description="Gate 3a Register Centering & Stage B-12 Canonical Evaluation")
+    parser.add_argument("--overwrite-frozen", action="store_true", help="Do not set; frozen B-9..B-11 artifacts must stay unchanged")
+    args = parser.parse_args()
+    main(overwrite_frozen=args.overwrite_frozen)

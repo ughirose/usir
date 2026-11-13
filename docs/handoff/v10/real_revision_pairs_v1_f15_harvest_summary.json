@@ -1,0 +1,1168 @@
+{
+  "dataset_path": "data\\usir_v5_eval\\real_revision_pairs_v1.jsonl",
+  "f15_noise_floor_path": "docs\\handoff\\v10\\paragraph_noise_floor_f15_all_novel.json",
+  "f15_noise_floor_sha256": "5a6095659d4ef7defeab238f7ffb7aed3a980d6c8a9a83d0ca229f4c11a05910",
+  "f15_sha256_matches_expected": true,
+  "rust_binary_used": "C:\\dev\\nishiki\\target\\f14\\release\\nishiki.exe",
+  "python_rust_parity_discrepancy_count": 0,
+  "python_rust_parity_discrepancies": [],
+  "target_achievement": {
+    "total_pairs": 415,
+    "band_M_count": 245,
+    "band_M_target": 30,
+    "band_M_target_met": true,
+    "band_L_count": 130,
+    "band_L_target": 20,
+    "band_L_target_met": true,
+    "mixed_window_count": 84,
+    "mixed_window_target": 20,
+    "mixed_window_target_met": true
+  },
+  "provenance_breakdown": {
+    "by_work_group": {
+      "ginga_initial_vs_final": 34,
+      "horoki_first_vs_new": 49,
+      "oda_ame_first_vs_rev": 36,
+      "oda_horo_first_vs_rev": 39,
+      "oda_wagamachi_first_vs_rev": 10,
+      "kishida_kotoba_draft1_vs_final": 1,
+      "kishida_doin_draft1_vs_final": 5,
+      "origuchi_shisha_ed": 22,
+      "tanizaki_neko_ed": 9,
+      "ichiyo_takekurabe_ed": 30,
+      "ichiyo_nigorie_ed": 20,
+      "ichiyo_jusanya_ed": 14,
+      "ichiyo_otsugomori_ed": 10,
+      "ichiyo_yukukumo_ed": 13,
+      "ichiyo_utsusemi_ed": 11,
+      "kishida_hogen_ed": 1,
+      "yamamoto_aobeka_ed": 11,
+      "miyazawa_ginga_ed": 24,
+      "okamoto_rogisho_ed": 10,
+      "hisao_mugetsu_ed": 29,
+      "kikuchi_irefuda_ed": 2,
+      "kikuchi_tojuro_ed": 4,
+      "kusaka_saigo_ed": 28,
+      "ishikawa_yama_ed": 2,
+      "nakaya_alaska_ed": 1
+    },
+    "by_variant_relationship": {
+      "initial_draft_vs_final": 40,
+      "first_publication_vs_book": 221,
+      "single_volume_vs_complete_works": 81,
+      "cross_edition_variant": 73
+    }
+  },
+  "distributions": {
+    "overall": {
+      "n_pairs": 415,
+      "n_evaluated_distribution": {
+        "8": 196,
+        "10": 0,
+        "11": 219
+      },
+      "mixed_window_count": 84,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 415,
+          "min": 0.0,
+          "q25": 0.0017,
+          "median": 0.0235,
+          "q75": 0.2791,
+          "iqr": 0.2774,
+          "max": 1.0579,
+          "mean": 0.1735
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 415,
+          "min": 0.0,
+          "q25": 0.0223,
+          "median": 0.1252,
+          "q75": 0.4229,
+          "iqr": 0.4006,
+          "max": 1.4474,
+          "mean": 0.2461
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 415,
+          "min": 0.0,
+          "q25": 0.0987,
+          "median": 0.5015,
+          "q75": 1.3208,
+          "iqr": 1.2221,
+          "max": 5.0096,
+          "mean": 0.7874
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 415,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0909,
+          "iqr": 0.0909,
+          "max": 0.6364,
+          "mean": 0.0633
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 415,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.2727,
+          "mean": 0.0109
+        }
+      }
+    },
+    "band_S": {
+      "n_pairs": 40,
+      "n_evaluated_distribution": {
+        "8": 40,
+        "10": 0,
+        "11": 0
+      },
+      "mixed_window_count": 0,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 40,
+          "min": 0.0,
+          "q25": 0.0001,
+          "median": 0.0692,
+          "q75": 0.3247,
+          "iqr": 0.3246,
+          "max": 0.6647,
+          "mean": 0.182
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 40,
+          "min": 0.0,
+          "q25": 0.0679,
+          "median": 0.2564,
+          "q75": 0.4341,
+          "iqr": 0.3662,
+          "max": 0.7004,
+          "mean": 0.2649
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 40,
+          "min": 0.0,
+          "q25": 0.2472,
+          "median": 0.8256,
+          "q75": 1.3339,
+          "iqr": 1.0867,
+          "max": 2.0359,
+          "mean": 0.8001
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 40,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.125,
+          "iqr": 0.125,
+          "max": 0.375,
+          "mean": 0.0656
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 40,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.125,
+          "mean": 0.0063
+        }
+      }
+    },
+    "band_M": {
+      "n_pairs": 245,
+      "n_evaluated_distribution": {
+        "8": 106,
+        "10": 0,
+        "11": 139
+      },
+      "mixed_window_count": 65,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 245,
+          "min": 0.0,
+          "q25": 0.0033,
+          "median": 0.0988,
+          "q75": 0.3496,
+          "iqr": 0.3462,
+          "max": 1.0579,
+          "mean": 0.2082
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 245,
+          "min": 0.0,
+          "q25": 0.0404,
+          "median": 0.2016,
+          "q75": 0.4834,
+          "iqr": 0.443,
+          "max": 1.4474,
+          "mean": 0.2906
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 245,
+          "min": 0.0,
+          "q25": 0.2304,
+          "median": 0.6616,
+          "q75": 1.4206,
+          "iqr": 1.1902,
+          "max": 5.0096,
+          "mean": 0.931
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 245,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.125,
+          "iqr": 0.125,
+          "max": 0.6364,
+          "mean": 0.0762
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 245,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.2727,
+          "mean": 0.0134
+        }
+      }
+    },
+    "band_L": {
+      "n_pairs": 130,
+      "n_evaluated_distribution": {
+        "8": 50,
+        "10": 0,
+        "11": 80
+      },
+      "mixed_window_count": 19,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 130,
+          "min": 0.0,
+          "q25": 0.0006,
+          "median": 0.0036,
+          "q75": 0.0996,
+          "iqr": 0.099,
+          "max": 0.7808,
+          "mean": 0.1057
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 130,
+          "min": 0.0,
+          "q25": 0.0057,
+          "median": 0.0311,
+          "q75": 0.2021,
+          "iqr": 0.1963,
+          "max": 0.9824,
+          "mean": 0.1565
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 130,
+          "min": 0.0,
+          "q25": 0.0373,
+          "median": 0.1444,
+          "q75": 0.7809,
+          "iqr": 0.7436,
+          "max": 3.579,
+          "mean": 0.5128
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 130,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.4545,
+          "mean": 0.0385
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 130,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.1818,
+          "mean": 0.0077
+        }
+      }
+    },
+    "mixed_window_pairs": {
+      "n_pairs": 84,
+      "n_evaluated_distribution": {
+        "8": 0,
+        "10": 0,
+        "11": 84
+      },
+      "mixed_window_count": 84,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 84,
+          "min": 0.0014,
+          "q25": 0.2671,
+          "median": 0.4732,
+          "q75": 0.652,
+          "iqr": 0.3848,
+          "max": 1.0579,
+          "mean": 0.4617
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 84,
+          "min": 0.2763,
+          "q25": 0.4515,
+          "median": 0.5875,
+          "q75": 0.7369,
+          "iqr": 0.2855,
+          "max": 1.4474,
+          "mean": 0.6131
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 84,
+          "min": 0.8534,
+          "q25": 1.3126,
+          "median": 1.6715,
+          "q75": 2.2919,
+          "iqr": 0.9793,
+          "max": 5.0096,
+          "mean": 1.8683
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 84,
+          "min": 0.0,
+          "q25": 0.0909,
+          "median": 0.1818,
+          "q75": 0.2727,
+          "iqr": 0.1818,
+          "max": 0.6364,
+          "mean": 0.1937
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 84,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0909,
+          "iqr": 0.0909,
+          "max": 0.2727,
+          "mean": 0.0411
+        }
+      }
+    },
+    "non_mixed_both_single_window": {
+      "n_pairs": 196,
+      "n_evaluated_distribution": {
+        "8": 196,
+        "10": 0,
+        "11": 0
+      },
+      "mixed_window_count": 0,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 196,
+          "min": 0.0,
+          "q25": 0.0007,
+          "median": 0.0042,
+          "q75": 0.171,
+          "iqr": 0.1703,
+          "max": 0.91,
+          "mean": 0.1095
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 196,
+          "min": 0.0,
+          "q25": 0.0098,
+          "median": 0.0458,
+          "q75": 0.2537,
+          "iqr": 0.2439,
+          "max": 1.059,
+          "mean": 0.1588
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 196,
+          "min": 0.0,
+          "q25": 0.0482,
+          "median": 0.2739,
+          "q75": 0.7881,
+          "iqr": 0.7399,
+          "max": 2.8799,
+          "mean": 0.4902
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 196,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.5,
+          "mean": 0.0325
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 196,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.125,
+          "mean": 0.0032
+        }
+      }
+    },
+    "non_mixed_both_multi_window": {
+      "n_pairs": 135,
+      "n_evaluated_distribution": {
+        "8": 0,
+        "10": 0,
+        "11": 135
+      },
+      "mixed_window_count": 0,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 135,
+          "min": 0.0,
+          "q25": 0.0021,
+          "median": 0.0077,
+          "q75": 0.1141,
+          "iqr": 0.112,
+          "max": 0.6794,
+          "mean": 0.0873
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 135,
+          "min": 0.0,
+          "q25": 0.0149,
+          "median": 0.0625,
+          "q75": 0.1995,
+          "iqr": 0.1846,
+          "max": 1.0485,
+          "mean": 0.1445
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 135,
+          "min": 0.0,
+          "q25": 0.0753,
+          "median": 0.3248,
+          "q75": 0.7803,
+          "iqr": 0.705,
+          "max": 3.8239,
+          "mean": 0.5463
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 135,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.3636,
+          "mean": 0.0269
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 135,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.1818,
+          "mean": 0.0034
+        }
+      }
+    },
+    "band_M_n_eval_8": {
+      "n_pairs": 106,
+      "n_evaluated_distribution": {
+        "8": 106,
+        "10": 0,
+        "11": 0
+      },
+      "mixed_window_count": 0,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 106,
+          "min": 0.0,
+          "q25": 0.0026,
+          "median": 0.019,
+          "q75": 0.2032,
+          "iqr": 0.2006,
+          "max": 0.91,
+          "mean": 0.132
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 106,
+          "min": 0.0,
+          "q25": 0.03,
+          "median": 0.0919,
+          "q75": 0.2814,
+          "iqr": 0.2514,
+          "max": 1.059,
+          "mean": 0.1855
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 106,
+          "min": 0.0,
+          "q25": 0.1621,
+          "median": 0.4198,
+          "q75": 0.8929,
+          "iqr": 0.7308,
+          "max": 2.8799,
+          "mean": 0.5633
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 106,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.5,
+          "mean": 0.0354
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 106,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.125,
+          "mean": 0.0035
+        }
+      }
+    },
+    "band_M_n_eval_11": {
+      "n_pairs": 139,
+      "n_evaluated_distribution": {
+        "8": 0,
+        "10": 0,
+        "11": 139
+      },
+      "mixed_window_count": 65,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 139,
+          "min": 0.0,
+          "q25": 0.005,
+          "median": 0.1768,
+          "q75": 0.4727,
+          "iqr": 0.4678,
+          "max": 1.0579,
+          "mean": 0.2662
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 139,
+          "min": 0.0,
+          "q25": 0.0596,
+          "median": 0.3473,
+          "q75": 0.6168,
+          "iqr": 0.5572,
+          "max": 1.4474,
+          "mean": 0.3707
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 139,
+          "min": 0.0,
+          "q25": 0.3232,
+          "median": 1.2042,
+          "q75": 1.739,
+          "iqr": 1.4157,
+          "max": 5.0096,
+          "mean": 1.2113
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 139,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0909,
+          "q75": 0.1818,
+          "iqr": 0.1818,
+          "max": 0.6364,
+          "mean": 0.1073
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 139,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.2727,
+          "mean": 0.0209
+        }
+      }
+    },
+    "band_L_mixed_window": {
+      "n_pairs": 19,
+      "n_evaluated_distribution": {
+        "8": 0,
+        "10": 0,
+        "11": 19
+      },
+      "mixed_window_count": 19,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 19,
+          "min": 0.0042,
+          "q25": 0.2639,
+          "median": 0.3725,
+          "q75": 0.5561,
+          "iqr": 0.2923,
+          "max": 0.7808,
+          "mean": 0.3936
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 19,
+          "min": 0.2892,
+          "q25": 0.4165,
+          "median": 0.5363,
+          "q75": 0.7414,
+          "iqr": 0.325,
+          "max": 0.9824,
+          "mean": 0.5817
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 19,
+          "min": 0.8534,
+          "q25": 1.2463,
+          "median": 1.6901,
+          "q75": 2.27,
+          "iqr": 1.0236,
+          "max": 3.579,
+          "mean": 1.826
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 19,
+          "min": 0.0,
+          "q25": 0.0909,
+          "median": 0.1818,
+          "q75": 0.2727,
+          "iqr": 0.1818,
+          "max": 0.4545,
+          "mean": 0.1962
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 19,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0909,
+          "iqr": 0.0909,
+          "max": 0.1818,
+          "mean": 0.0526
+        }
+      }
+    },
+    "band_L_both_multi_window": {
+      "n_pairs": 111,
+      "n_evaluated_distribution": {
+        "8": 50,
+        "10": 0,
+        "11": 61
+      },
+      "mixed_window_count": 0,
+      "ratio_distributions": {
+        "per_pair_abs_ratio_median": {
+          "count": 111,
+          "min": 0.0,
+          "q25": 0.0005,
+          "median": 0.0023,
+          "q75": 0.0222,
+          "iqr": 0.0217,
+          "max": 0.6739,
+          "mean": 0.0564
+        },
+        "per_pair_abs_ratio_mean": {
+          "count": 111,
+          "min": 0.0,
+          "q25": 0.0033,
+          "median": 0.0249,
+          "q75": 0.0916,
+          "iqr": 0.0883,
+          "max": 0.6806,
+          "mean": 0.0837
+        },
+        "per_pair_abs_ratio_max": {
+          "count": 111,
+          "min": 0.0,
+          "q25": 0.0189,
+          "median": 0.0978,
+          "q75": 0.3575,
+          "iqr": 0.3385,
+          "max": 1.8692,
+          "mean": 0.2881
+        },
+        "per_pair_frac_above_1sd": {
+          "count": 111,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.2727,
+          "mean": 0.0115
+        },
+        "per_pair_frac_above_2sd": {
+          "count": 111,
+          "min": 0.0,
+          "q25": 0.0,
+          "median": 0.0,
+          "q75": 0.0,
+          "iqr": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        }
+      }
+    }
+  },
+  "governance_note": "Descriptive distributional measurements only under F-15 noise floor on strictly 1-line-per-paragraph authentic Aozora Bunko variants. No classification or rating (STYLE_POLISH etc.) claims are made.",
+  "work_pair_yields_all_extracted": [
+    {
+      "group_id": "ginga_initial_vs_final",
+      "desc": "宮沢賢治『〔「銀河鉄道の夜」初期形一〕』 vs 『銀河鉄道の夜』(新潮文庫)",
+      "rel": "initial_draft_vs_final",
+      "same_ortho": false,
+      "total": 34,
+      "S": 20,
+      "M": 10,
+      "L": 4,
+      "mixed": 7
+    },
+    {
+      "group_id": "horoki_first_vs_new",
+      "desc": "林芙美子『放浪記（初出）』 vs 『新版 放浪記』",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 149,
+      "S": 120,
+      "M": 28,
+      "L": 1,
+      "mixed": 16
+    },
+    {
+      "group_id": "oda_ame_first_vs_rev",
+      "desc": "織田作之助『雨』(俗臭 初出) vs 『雨』(日本文学全集72)",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 37,
+      "S": 1,
+      "M": 19,
+      "L": 17,
+      "mixed": 21
+    },
+    {
+      "group_id": "oda_horo_first_vs_rev",
+      "desc": "織田作之助『放浪』(俗臭 初出) vs 『放浪』(定本織田作之助全集1)",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 65,
+      "S": 26,
+      "M": 31,
+      "L": 8,
+      "mixed": 1
+    },
+    {
+      "group_id": "oda_wagamachi_first_vs_rev",
+      "desc": "織田作之助『わが町』(俗臭 初出) vs 『わが町』(名作選集9)",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 142,
+      "S": 132,
+      "M": 10,
+      "L": 0,
+      "mixed": 4
+    },
+    {
+      "group_id": "takeuchi_donso_draft_vs_rev",
+      "desc": "竹内浩三『鈍走記（草稿）』 vs 『鈍走記』",
+      "rel": "draft_vs_revision",
+      "same_ortho": true,
+      "total": 1,
+      "S": 1,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "kishida_kotoba_draft1_vs_final",
+      "desc": "岸田国士『言葉の魅力［第一稿］』 vs 『言葉の魅力』",
+      "rel": "initial_draft_vs_final",
+      "same_ortho": true,
+      "total": 4,
+      "S": 3,
+      "M": 1,
+      "L": 0,
+      "mixed": 1
+    },
+    {
+      "group_id": "kishida_doin_draft1_vs_final",
+      "desc": "岸田国士『動員挿話［第一稿］』 vs 『動員挿話（二幕）』",
+      "rel": "initial_draft_vs_final",
+      "same_ortho": true,
+      "total": 24,
+      "S": 19,
+      "M": 5,
+      "L": 0,
+      "mixed": 4
+    },
+    {
+      "group_id": "kishida_fujin_alt_vs_final",
+      "desc": "岸田国士『Ｓ夫人への手紙［別稿］』 vs 『Ｓ夫人への手紙』",
+      "rel": "draft_vs_revision",
+      "same_ortho": false,
+      "total": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "roka_muhon_draft_vs_final",
+      "desc": "徳冨蘆花『謀叛論（草稿）』 vs 『謀叛論』",
+      "rel": "draft_vs_revision",
+      "same_ortho": true,
+      "total": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "origuchi_kokubungaku_1_vs_3",
+      "desc": "折口信夫『国文学の発生（第一稿）』 vs 『国文学の発生（第三稿）』",
+      "rel": "draft_vs_revision",
+      "same_ortho": true,
+      "total": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "origuchi_kokubungaku_2_vs_4",
+      "desc": "折口信夫『国文学の発生（第二稿）』 vs 『国文学の発生（第四稿）』",
+      "rel": "draft_vs_revision",
+      "same_ortho": true,
+      "total": 2,
+      "S": 2,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "origuchi_shisha_ed",
+      "desc": "折口信夫『死者の書』(全集第廿四巻 vs 単行本)",
+      "rel": "single_volume_vs_complete_works",
+      "same_ortho": true,
+      "total": 139,
+      "S": 117,
+      "M": 19,
+      "L": 3,
+      "mixed": 3
+    },
+    {
+      "group_id": "tanizaki_neko_ed",
+      "desc": "谷崎潤一郎『猫と庄造と二人のをんな』(単行本 vs 全集18)",
+      "rel": "single_volume_vs_complete_works",
+      "same_ortho": true,
+      "total": 9,
+      "S": 0,
+      "M": 4,
+      "L": 5,
+      "mixed": 0
+    },
+    {
+      "group_id": "ichiyo_takekurabe_ed",
+      "desc": "樋口一葉『たけくらべ』(文藝倶樂部初出 vs 現代日本文學全集10)",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 39,
+      "S": 9,
+      "M": 10,
+      "L": 20,
+      "mixed": 0
+    },
+    {
+      "group_id": "ichiyo_nigorie_ed",
+      "desc": "樋口一葉『にごりえ』(文藝倶樂部初出 vs 現代日本文學全集10)",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 20,
+      "S": 0,
+      "M": 4,
+      "L": 16,
+      "mixed": 1
+    },
+    {
+      "group_id": "ichiyo_jusanya_ed",
+      "desc": "樋口一葉『十三夜』(文藝倶樂部初出 vs 現代日本文學全集10)",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 14,
+      "S": 0,
+      "M": 3,
+      "L": 11,
+      "mixed": 2
+    },
+    {
+      "group_id": "ichiyo_otsugomori_ed",
+      "desc": "樋口一葉『大つごもり』(太陽 vs 現代日本文學全集10)",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 15,
+      "S": 5,
+      "M": 2,
+      "L": 8,
+      "mixed": 1
+    },
+    {
+      "group_id": "ichiyo_yukukumo_ed",
+      "desc": "樋口一葉『ゆく雲』(太陽初出 vs 現代日本文學全集10)",
+      "rel": "first_publication_vs_book",
+      "same_ortho": true,
+      "total": 15,
+      "S": 2,
+      "M": 4,
+      "L": 9,
+      "mixed": 2
+    },
+    {
+      "group_id": "ichiyo_utsusemi_ed",
+      "desc": "樋口一葉『うつせみ』(現代日本文學全集10 vs 一葉全集2)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 21,
+      "S": 10,
+      "M": 7,
+      "L": 4,
+      "mixed": 2
+    },
+    {
+      "group_id": "kishida_hogen_ed",
+      "desc": "岸田国士『方言について』(名随筆別巻66 vs 全集22)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 8,
+      "S": 7,
+      "M": 1,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "nakahara_ware_ed",
+      "desc": "中原中也『我が生活』(名随筆別巻65 vs 新編全集4)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "yamamoto_aobeka_ed",
+      "desc": "山本周五郎『青べか物語』(単行本 vs 全集14)",
+      "rel": "single_volume_vs_complete_works",
+      "same_ortho": true,
+      "total": 46,
+      "S": 35,
+      "M": 9,
+      "L": 2,
+      "mixed": 0
+    },
+    {
+      "group_id": "miyazawa_ginga_ed",
+      "desc": "宮沢賢治『銀河鉄道の夜』(岩波文庫 vs 新潮文庫)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 202,
+      "S": 178,
+      "M": 22,
+      "L": 2,
+      "mixed": 5
+    },
+    {
+      "group_id": "okamoto_rogisho_ed",
+      "desc": "岡本かの子『老妓抄』(文庫 vs 全集5)",
+      "rel": "single_volume_vs_complete_works",
+      "same_ortho": true,
+      "total": 35,
+      "S": 25,
+      "M": 10,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "okamoto_paris_ed",
+      "desc": "岡本かの子『巴里のむす子へ』(単行本 vs 全集12)",
+      "rel": "single_volume_vs_complete_works",
+      "same_ortho": true,
+      "total": 1,
+      "S": 1,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "okamoto_michinoku_ed",
+      "desc": "岡本かの子『みちのく』(ちくま vs 全集5)",
+      "rel": "single_volume_vs_complete_works",
+      "same_ortho": true,
+      "total": 16,
+      "S": 16,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "okamoto_yuki_ed",
+      "desc": "岡本かの子『雪の日』(全集11 vs 世界紀行文学全集7)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 1,
+      "S": 1,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "okamoto_satsuki_ed",
+      "desc": "岡本かの子『五月の朝の花』(随筆1 vs 全集12)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 1,
+      "S": 1,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "hisao_mugetsu_ed",
+      "desc": "久生十蘭『無月物語』(短篇選 vs 全集Ⅱ)",
+      "rel": "single_volume_vs_complete_works",
+      "same_ortho": true,
+      "total": 77,
+      "S": 48,
+      "M": 26,
+      "L": 3,
+      "mixed": 9
+    },
+    {
+      "group_id": "sakaguchi_tantei_ed",
+      "desc": "坂口安吾『私の探偵小説』(選集8 vs 全集06)",
+      "rel": "selected_vs_complete_works",
+      "same_ortho": true,
+      "total": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "kikuchi_irefuda_ed",
+      "desc": "菊池寛『入れ札』(新潮文庫 vs 短篇と戯曲)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 11,
+      "S": 9,
+      "M": 2,
+      "L": 0,
+      "mixed": 1
+    },
+    {
+      "group_id": "kikuchi_tojuro_ed",
+      "desc": "菊池寛『藤十郎の恋』(短篇と戯曲 vs 新潮文庫)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 20,
+      "S": 16,
+      "M": 4,
+      "L": 0,
+      "mixed": 2
+    },
+    {
+      "group_id": "akutagawa_sennin_ed",
+      "desc": "芥川竜之介『仙人』(全集1 vs 全集5)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "kusaka_saigo_ed",
+      "desc": "久坂葉子『幾度目かの最期』(単行本 vs 作品集)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 41,
+      "S": 13,
+      "M": 11,
+      "L": 17,
+      "mixed": 2
+    },
+    {
+      "group_id": "ishikawa_yama_ed",
+      "desc": "石川欣一『可愛い山』(単行本 vs 山の旅)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 9,
+      "S": 7,
+      "M": 2,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "nakaya_alaska_ed",
+      "desc": "中谷宇吉郎『アラスカの氷河』(名随筆33 vs 紀行集)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 14,
+      "S": 13,
+      "M": 1,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "toyoshima_shii_ed",
+      "desc": "豊島与志雄『椎の木』(著作集3 vs 児童文学大系16)",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    },
+    {
+      "group_id": "toyoshima_bungaku_ed",
+      "desc": "豊島与志雄『文学以前』二種底本比較",
+      "rel": "cross_edition_variant",
+      "same_ortho": true,
+      "total": 0,
+      "S": 0,
+      "M": 0,
+      "L": 0,
+      "mixed": 0
+    }
+  ],
+  "candidate_pool_totals_before_s_cap": {
+    "total_extracted": 1212,
+    "S": 837,
+    "M": 245,
+    "L": 130,
+    "mixed_window": 84
+  }
+}

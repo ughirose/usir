@@ -1,0 +1,1189 @@
+{
+  "metadata": {
+    "title": "USIR v5 Stage B-12: Canonical Dice Gate, Explicit Alarm Thresholds, & KASANE8 H1/H2 Re-calculation",
+    "version": "1.2",
+    "timestamp": "2026-11-13 15:25:12",
+    "base_commit": "ae992e5",
+    "gate_3a_status": "SHIFT_QUANTIFIED_NOT_PASSED",
+    "gate_3b_status": "GATE3B_FROZEN",
+    "frozen_artifacts_untouched": true
+  },
+  "task1_dice_gate_canonical_parity": {
+    "provenance": {
+      "canonical_path": "docs/handoff/v10/paragraph_noise_floor_all_novel.json",
+      "upstream_evidence_path": "C:/dev/nishiki/docs/handoff/evidence/2026-11-13_f14/paragraph_noise_floor_all_novel.json",
+      "bootstrap_ci_path": "docs/handoff/v10/ac_sigma_bootstrap_ci.json",
+      "nishiki_commits": {
+        "f14_hybrid_and_all_novel_sigma": "48b6eb7",
+        "f14_bootstrap_ci_addendum": "fffae58"
+      },
+      "generator_command": "nishiki gen-paragraph-noise-floor --scope all-novel",
+      "scope": "all-novel",
+      "n_works": 46,
+      "n_authors": 10,
+      "n_pairs_total": 10859,
+      "sd_definition": "population SD (ddof=0) of adjacent paragraph differences (p_{t+1} - p_t)",
+      "sigma_kind": "adjacent_paragraph_diff_sd",
+      "hybrid_rule": {
+        "both_single_window": "w_before <= 1 and w_after <= 1 -> n_evaluated=8 (both_single_window:8)",
+        "any_multi_window": "w_before >= 2 or w_after >= 2 -> n_evaluated=11 (any_multi_window:11, ac_sigma_source=multi_window_pairs)"
+      },
+      "non_conflation_guard": "Harvest adjacent-paragraph noise floor sigma (sigma_kind='adjacent_paragraph_diff_sd' in kasane11_v1/ortho28) is strictly distinct from Gate 3a within-register scene variance sigma_scene_r (24D ortho24_cont). Never mix, equate, or substitute these quantities.",
+      "loaded_path": "C:\\dev\\usir\\docs\\handoff\\v10\\paragraph_noise_floor_all_novel.json",
+      "sha256": "16d3dae76ee9da350abadb7ad8b1f2ea15f4c4e7c2b0597018ac6c12e724f62d",
+      "n_works_in_file": 46,
+      "n_pairs_in_file": 10859,
+      "bootstrap_ci_sha256": "fdfef9522de47bdb44c05a6ad2491875e048cc37e29d48d312e176bebe80a964"
+    },
+    "dice_gate_canonical_rule": {
+      "align_min_similarity": 0.25,
+      "formula": "non-whitespace char 2-gram Dice coefficient matching crates/nishiki-cli/src/diff_harvester.rs",
+      "unaligned_behavior": "kind='unaligned', n_evaluated=None (excluded from evaluation)"
+    },
+    "ac_multi_window_per_dim_std_by_band": {
+      "S": {
+        "n_pairs": 8258,
+        "ac_multi_window_n_pairs": 0,
+        "ac_multi_window_per_dim_std": null,
+        "ac_mean_crest_band_std": 0.36395368387856997,
+        "structurally_dead_dims": [
+          "ac_mean_velocity",
+          "ac_max_sis",
+          "ac_coupling"
+        ]
+      },
+      "M": {
+        "n_pairs": 1952,
+        "ac_multi_window_n_pairs": 165,
+        "ac_multi_window_per_dim_std": {
+          "ac_coupling": 1.4078678674874479,
+          "ac_max_sis": 0.12661474438213988,
+          "ac_mean_velocity": 117.05236445381773
+        },
+        "ac_mean_crest_band_std": 0.537940060407693,
+        "structurally_dead_dims": []
+      },
+      "L": {
+        "n_pairs": 649,
+        "ac_multi_window_n_pairs": 225,
+        "ac_multi_window_per_dim_std": {
+          "ac_coupling": 1.0668175754568485,
+          "ac_max_sis": 0.14935699218887902,
+          "ac_mean_velocity": 117.05236445381773
+        },
+        "ac_mean_crest_band_std": 0.7740083235228371,
+        "structurally_dead_dims": []
+      }
+    },
+    "ac_sigma_bootstrap_ci_summary": [
+      {
+        "band": "S",
+        "dims": {
+          "ac_coupling": {
+            "ci95": null,
+            "n": 0,
+            "sigma": null
+          },
+          "ac_max_sis": {
+            "ci95": null,
+            "n": 0,
+            "sigma": null
+          },
+          "ac_mean_velocity": {
+            "ci95": null,
+            "n": 0,
+            "sigma": null
+          }
+        },
+        "n_pairs_both_multi": 0,
+        "n_works_contributing": 0
+      },
+      {
+        "band": "M",
+        "dims": {
+          "ac_coupling": {
+            "ci95": [
+              1.2940130323476504,
+              1.5011053510746946
+            ],
+            "ci_width_over_sigma": 0.14709641686519315,
+            "n": 165,
+            "sigma": 1.4078678674874479
+          },
+          "ac_max_sis": {
+            "ci95": [
+              0.10831516527179759,
+              0.1449204578596166
+            ],
+            "ci_width_over_sigma": 0.2891076609319642,
+            "n": 165,
+            "sigma": 0.12661474438213988
+          },
+          "ac_mean_velocity": {
+            "ci95": [
+              101.19505709065942,
+              168.29769707778087
+            ],
+            "ci_width_over_sigma": 0.49966067869254394,
+            "n": 165,
+            "sigma": 134.29641924737427
+          }
+        },
+        "n_pairs_both_multi": 165,
+        "n_works_contributing": 22
+      },
+      {
+        "band": "L",
+        "dims": {
+          "ac_coupling": {
+            "ci95": [
+              0.9884540274308324,
+              1.1400435804002487
+            ],
+            "ci_width_over_sigma": 0.14209510272128792,
+            "n": 225,
+            "sigma": 1.0668175754568485
+          },
+          "ac_max_sis": {
+            "ci95": [
+              0.132728522914929,
+              0.16521221226763383
+            ],
+            "ci_width_over_sigma": 0.2174902485424015,
+            "n": 225,
+            "sigma": 0.14935699218887902
+          },
+          "ac_mean_velocity": {
+            "ci95": [
+              86.374123702707,
+              118.5181009404126
+            ],
+            "ci_width_over_sigma": 0.31337593079307124,
+            "n": 225,
+            "sigma": 102.57321663587159
+          }
+        },
+        "n_pairs_both_multi": 225,
+        "n_works_contributing": 24
+      }
+    ],
+    "set1_aozora_10859_adjacent_pairs": {
+      "n_works": 46,
+      "n_pairs_total": 10859,
+      "dice_gate_applied": false,
+      "by_band_python": {
+        "S": {
+          "both_single": 8258,
+          "mixed_one_side_multi": 0,
+          "both_multi": 0,
+          "n_eval_8": 8258,
+          "n_eval_11": 0,
+          "n_pairs": 8258
+        },
+        "M": {
+          "both_single": 621,
+          "mixed_one_side_multi": 1166,
+          "both_multi": 165,
+          "n_eval_8": 621,
+          "n_eval_11": 1331,
+          "n_pairs": 1952
+        },
+        "L": {
+          "both_single": 0,
+          "mixed_one_side_multi": 424,
+          "both_multi": 225,
+          "n_eval_8": 0,
+          "n_eval_11": 649,
+          "n_pairs": 649
+        }
+      },
+      "by_band_rust_f14": {
+        "S": {
+          "n_pairs": 8258,
+          "both_multi": 0,
+          "both_single": 8258,
+          "mixed_one_side_multi": 0
+        },
+        "M": {
+          "n_pairs": 1952,
+          "both_multi": 165,
+          "both_single": 621,
+          "mixed_one_side_multi": 1166
+        },
+        "L": {
+          "n_pairs": 649,
+          "both_multi": 225,
+          "both_single": 0,
+          "mixed_one_side_multi": 424
+        }
+      },
+      "discrepancy_count": 0,
+      "discrepancies": []
+    },
+    "set2_u6_86_revision_pairs": {
+      "n_pairs_total": 86,
+      "dice_gate_applied": true,
+      "align_min_similarity": 0.25,
+      "python_aligned_pairs": 77,
+      "python_unaligned_low_dice_pairs": [
+        "A_29",
+        "A_35",
+        "B_19",
+        "B_20",
+        "B_22",
+        "C_19",
+        "C_20",
+        "C_21",
+        "C_22"
+      ],
+      "python_unaligned_dice_scores": {
+        "A_29": 0.214286,
+        "A_35": 0.228571,
+        "B_19": 0.203642,
+        "B_20": 0.176724,
+        "B_22": 0.167832,
+        "C_19": 0.064516,
+        "C_20": 0.044444,
+        "C_21": 0.103448,
+        "C_22": 0.12
+      },
+      "by_class": {
+        "Class_A_micro_polish": {
+          "n_pairs": 42,
+          "n_aligned": 40,
+          "n_eval_8": 40,
+          "n_eval_11": 0,
+          "n_eval_unaligned": 2,
+          "mixed_window_pairs": 0,
+          "bands": {
+            "S": 42,
+            "M": 0,
+            "L": 0
+          },
+          "ac_sigma_sources": {
+            "not_applicable": 42,
+            "multi_window_pairs": 0,
+            "band_all_pairs": 0
+          }
+        },
+        "Class_B_macro_revision": {
+          "n_pairs": 22,
+          "n_aligned": 19,
+          "n_eval_8": 0,
+          "n_eval_11": 19,
+          "n_eval_unaligned": 3,
+          "mixed_window_pairs": 0,
+          "bands": {
+            "S": 0,
+            "M": 4,
+            "L": 18
+          },
+          "ac_sigma_sources": {
+            "not_applicable": 3,
+            "multi_window_pairs": 19,
+            "band_all_pairs": 0
+          }
+        },
+        "Class_C_content_rewrite": {
+          "n_pairs": 22,
+          "n_aligned": 18,
+          "n_eval_8": 18,
+          "n_eval_11": 0,
+          "n_eval_unaligned": 4,
+          "mixed_window_pairs": 0,
+          "bands": {
+            "S": 22,
+            "M": 0,
+            "L": 0
+          },
+          "ac_sigma_sources": {
+            "not_applicable": 22,
+            "multi_window_pairs": 0,
+            "band_all_pairs": 0
+          }
+        }
+      },
+      "rust_cli_verification": {
+        "rust_binary_used": "C:\\dev\\nishiki\\target\\f14\\release\\nishiki.exe",
+        "cli_aligned_pairs": 77,
+        "cli_unaligned_low_dice_pairs": [
+          "A_29",
+          "A_35",
+          "B_19",
+          "B_20",
+          "B_22",
+          "C_19",
+          "C_20",
+          "C_21",
+          "C_22"
+        ],
+        "aligned_pair_ids_match_python": true,
+        "total_discrepancies_including_unaligned": 0,
+        "n_evaluated_discrepancy_on_aligned": 0,
+        "discrepancies": [],
+        "note": "With canonical Dice >= 0.25 gate implemented in Python, BOTH Python and Rust harvest-diff align the exact same 77 pairs (0 n_evaluated/band/window discrepancies) and mark the exact same 9 pairs (A_29, A_35, B_19, B_20, B_22, C_19, C_20, C_21, C_22) as unaligned without n_evaluated."
+      }
+    },
+    "set3_style_polish_28_pairs_3_granularities": {
+      "span_only": {
+        "n_pairs": 28,
+        "n_aligned": 28,
+        "n_eval_unaligned": 0,
+        "n_eval_8": 22,
+        "n_eval_11": 6,
+        "min_dice_similarity": 0.764706,
+        "mixed_window_pairs": 0,
+        "bands": {
+          "S": 17,
+          "M": 8,
+          "L": 3
+        },
+        "rust_checked": 28,
+        "rust_mismatches": 0
+      },
+      "local_context": {
+        "n_pairs": 28,
+        "n_aligned": 28,
+        "n_eval_unaligned": 0,
+        "n_eval_8": 7,
+        "n_eval_11": 21,
+        "min_dice_similarity": 0.916201,
+        "mixed_window_pairs": 0,
+        "bands": {
+          "S": 6,
+          "M": 8,
+          "L": 14
+        },
+        "rust_checked": 28,
+        "rust_mismatches": 0
+      },
+      "whole_scene": {
+        "n_pairs": 28,
+        "n_aligned": 28,
+        "n_eval_unaligned": 0,
+        "n_eval_8": 0,
+        "n_eval_11": 28,
+        "min_dice_similarity": 0.928898,
+        "mixed_window_pairs": 0,
+        "bands": {
+          "S": 0,
+          "M": 2,
+          "L": 26
+        },
+        "rust_checked": 28,
+        "rust_mismatches": 0
+      }
+    },
+    "python_rust_feature_extraction_scope_note": "Experiments/scale_separated_level3.py unifies extract_kasane8_active with KASANE8_ACTIVE_INDICES ([0..6, 10]) and provides verify_kasane8_index_unification_and_recalc_h1_h2() for supplementary H1/H2 audit without altering frozen B-8/B-9/B-10/B-11 artifacts. F-14/F-15 Python evaluation matches Rust hybrid judgment and canonical Dice >= 0.25 gate."
+  },
+  "task2_gate3a_explicit_alarm_thresholds": {
+    "metadata": {
+      "title": "USIR v5 Stage B-12: Gate 3a Summary with Explicit Primary & Auxiliary Alarm Thresholds",
+      "version": "1.2",
+      "timestamp": "2026-11-13 15:25:02",
+      "gate_3a_status": "SHIFT_QUANTIFIED_NOT_PASSED",
+      "gate_3b_status": "GATE3B_FROZEN",
+      "primary_alarm_threshold_key": "mc_indep_p95",
+      "primary_alarm_threshold_d": 6.9267,
+      "auxiliary_alarm_threshold_key": "mc_r4corr_p95",
+      "auxiliary_alarm_threshold_d": 7.6574
+    },
+    "gate_3a_status": "SHIFT_QUANTIFIED_NOT_PASSED",
+    "gate_3b_status": "GATE3B_FROZEN",
+    "primary_alarm_threshold_key": "mc_indep_p95",
+    "primary_alarm_threshold_d": 6.9267,
+    "auxiliary_alarm_threshold_key": "mc_r4corr_p95",
+    "auxiliary_alarm_threshold_d": 7.6574,
+    "alarm_threshold_specification": {
+      "primary_alarm": {
+        "role": "primary",
+        "label_ja": "一次警報",
+        "threshold_key": "mc_indep_p95",
+        "threshold_d": 6.9267,
+        "mc_quantile": "95%",
+        "null_model": "independent_gaussian_24d_loo",
+        "description": "Primary alarm threshold (一次警報): mc_indep_p95 (d=6.9267)."
+      },
+      "auxiliary_alarm": {
+        "role": "auxiliary",
+        "label_ja": "補助警報",
+        "threshold_key": "mc_r4corr_p95",
+        "threshold_d": 7.6574,
+        "mc_quantile": "95%",
+        "null_model": "r4_correlated_gaussian_24d_loo",
+        "description": "Auxiliary alarm threshold (補助警報): mc_r4corr_p95 (d=7.6574)."
+      },
+      "thresholds_unchanged_note": "Explicitly documents primary (mc_indep_p95, d=6.9267) and auxiliary (mc_r4corr_p95, d=7.6574) roles; threshold values and Gate 3a/3b decisions remain unchanged."
+    },
+    "gate3a_calibrated_evaluation": {
+      "canonical_space": "ortho24_cont",
+      "dimension": 24,
+      "canonical_denominator": "diagonal_sigma2_scene_r",
+      "gate_3a_status": "SHIFT_QUANTIFIED_NOT_PASSED",
+      "gate_3b_status": "GATE3B_FROZEN",
+      "threshold_calibration_note": "Threshold update from asymptotic chi2_0.95 to finite-sample Monte Carlo null quantiles (95%/99%) is strictly a calibration of the judgment criterion for finite-sample LOO inflation (1.2444x at n_r=16) and R4 correlation; it is NOT a change to Gate 3a's official decision (SHIFT_QUANTIFIED_NOT_PASSED).",
+      "scheme2_governance_note": "本値は自己レジスター平均を減算した差分を他分布（青空文庫アトラス）の分散で除算した同義反復的補正（self-register mean subtraction divided by another distribution's sigma）であり、独立した収束証拠とはみなさない参考値である。",
+      "scheme3_governance_note": "Condition (b) Scheme 3 within-register LOO convergence is an intake-normalization diagnostic only and is NOT counted as Gate 3a pass evidence.",
+      "primary_alarm_threshold_key": "mc_indep_p95",
+      "primary_alarm_threshold_d": 6.9267,
+      "auxiliary_alarm_threshold_key": "mc_r4corr_p95",
+      "auxiliary_alarm_threshold_d": 7.6574,
+      "alarm_threshold_specification": {
+        "primary_alarm": {
+          "role": "primary",
+          "label_ja": "一次警報",
+          "threshold_key": "mc_indep_p95",
+          "threshold_d": 6.9267,
+          "mc_quantile": "95%",
+          "null_model": "independent_gaussian_24d_loo",
+          "description": "Primary alarm threshold (一次警報): mc_indep_p95 (d=6.9267)."
+        },
+        "auxiliary_alarm": {
+          "role": "auxiliary",
+          "label_ja": "補助警報",
+          "threshold_key": "mc_r4corr_p95",
+          "threshold_d": 7.6574,
+          "mc_quantile": "95%",
+          "null_model": "r4_correlated_gaussian_24d_loo",
+          "description": "Auxiliary alarm threshold (補助警報): mc_r4corr_p95 (d=7.6574)."
+        },
+        "thresholds_unchanged_note": "Explicitly documents primary (mc_indep_p95, d=6.9267) and auxiliary (mc_r4corr_p95, d=7.6574) roles; threshold values and Gate 3a/3b decisions remain unchanged."
+      },
+      "thresholds": {
+        "atlas_3sigma": 7.2641,
+        "chi2_p95": 6.0345,
+        "chi2_p99": 6.5559,
+        "chi2_p9973": 6.9111,
+        "canonical_denominator": "sigma2_scene_r_diagonal",
+        "canonical_threshold_family": "finite_sample_mc_loo_student_t_null",
+        "primary_alarm_threshold_key": "mc_indep_p95",
+        "primary_alarm_threshold_d": 6.9267,
+        "auxiliary_alarm_threshold_key": "mc_r4corr_p95",
+        "auxiliary_alarm_threshold_d": 7.6574,
+        "mc_indep_p95": 6.9267,
+        "mc_indep_p99": 7.7032,
+        "mc_r4corr_p95": 7.6574,
+        "mc_r4corr_p99": 9.0381
+      },
+      "monte_carlo_quantiles": {
+        "seed": 42,
+        "n_trials": 5000,
+        "n_loo_evaluations_per_null": 80000,
+        "independent_gaussian_24d": {
+          "mean_d2": 29.8831,
+          "asymptotic_expected_d2": 24.0,
+          "empirical_inflation_ratio": 1.2451,
+          "exceedance_rate_chi2_p95_pct": 22.29,
+          "mc_p95_d2": 47.9796,
+          "mc_p95_d": 6.9267,
+          "mc_p99_d2": 59.3388,
+          "mc_p99_d": 7.7032,
+          "n_samples_total": 80000,
+          "exceedance_rate_mc_p95_pct": 5.0,
+          "exceedance_rate_mc_p99_pct": 1.0
+        },
+        "r4_correlated_gaussian_24d": {
+          "mean_d2": 28.6274,
+          "exceedance_rate_chi2_p95_pct": 24.51,
+          "mc_p95_d2": 58.6355,
+          "mc_p95_d": 7.6574,
+          "mc_p99_d2": 81.6877,
+          "mc_p99_d": 9.0381,
+          "n_samples_total": 80000,
+          "exceedance_rate_mc_p95_pct": 5.0,
+          "exceedance_rate_mc_p99_pct": 1.0
+        }
+      },
+      "condition_a_uncentered_scene_scaled": {
+        "in_sample": {
+          "R4": {
+            "n": 16,
+            "d_m_mean": 4.8108,
+            "d_m_max": 6.479,
+            "old_chi2_p95_pct": 6.25,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R1": {
+            "n": 16,
+            "d_m_mean": 10.0285,
+            "d_m_max": 11.6329,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 81.25
+          },
+          "R2": {
+            "n": 16,
+            "d_m_mean": 201.3124,
+            "d_m_max": 201.4285,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 100.0
+          },
+          "R3": {
+            "n": 16,
+            "d_m_mean": 283.9419,
+            "d_m_max": 284.0867,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 100.0
+          },
+          "R1_to_R3_pooled": {
+            "n": 48,
+            "d_m_mean": 165.0943,
+            "d_m_max": 284.0867,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 93.75
+          }
+        },
+        "shrinkage_loo": {
+          "R4": {
+            "n": 16,
+            "d_m_mean": 5.3354,
+            "d_m_max": 7.5838,
+            "old_chi2_p95_pct": 25.0,
+            "old_chi2_p99_pct": 6.25,
+            "old_chi2_p9973_pct": 6.25,
+            "new_mc_indep_p95_pct": 6.25,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R1": {
+            "n": 16,
+            "d_m_mean": 9.1969,
+            "d_m_max": 10.6735,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 87.5,
+            "new_mc_r4corr_p95_pct": 87.5,
+            "new_mc_r4corr_p99_pct": 62.5
+          },
+          "R2": {
+            "n": 16,
+            "d_m_mean": 14.7871,
+            "d_m_max": 15.6527,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 100.0
+          },
+          "R3": {
+            "n": 16,
+            "d_m_mean": 20.2337,
+            "d_m_max": 22.149,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 100.0
+          },
+          "R1_to_R3_pooled": {
+            "n": 48,
+            "d_m_mean": 14.7393,
+            "d_m_max": 22.149,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 95.83,
+            "new_mc_r4corr_p95_pct": 95.83,
+            "new_mc_r4corr_p99_pct": 87.5
+          }
+        },
+        "unregularized_loo": {
+          "R4": {
+            "n": 16,
+            "d_m_mean": 5.1874,
+            "d_m_max": 7.2194,
+            "old_chi2_p95_pct": 25.0,
+            "old_chi2_p99_pct": 6.25,
+            "old_chi2_p9973_pct": 6.25,
+            "new_mc_indep_p95_pct": 6.25,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R1": {
+            "n": 16,
+            "d_m_mean": 10.127,
+            "d_m_max": 11.8681,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 75.0
+          },
+          "R2": {
+            "n": 16,
+            "d_m_mean": 201.3101,
+            "d_m_max": 201.45,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 100.0
+          },
+          "R3": {
+            "n": 16,
+            "d_m_mean": 287.9511,
+            "d_m_max": 347.994,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 100.0
+          },
+          "R1_to_R3_pooled": {
+            "n": 48,
+            "d_m_mean": 166.4627,
+            "d_m_max": 347.994,
+            "old_chi2_p95_pct": 100.0,
+            "old_chi2_p99_pct": 100.0,
+            "old_chi2_p9973_pct": 100.0,
+            "new_mc_indep_p95_pct": 100.0,
+            "new_mc_indep_p99_pct": 100.0,
+            "new_mc_r4corr_p95_pct": 100.0,
+            "new_mc_r4corr_p99_pct": 91.67
+          }
+        }
+      },
+      "condition_b_scheme3_loo_centered_diagnostic_only": {
+        "in_sample": {
+          "R4": {
+            "n": 16,
+            "d_m_mean": 4.8781,
+            "d_m_max": 6.3396,
+            "old_chi2_p95_pct": 12.5,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R1": {
+            "n": 16,
+            "d_m_mean": 4.9035,
+            "d_m_max": 6.0477,
+            "old_chi2_p95_pct": 6.25,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R2": {
+            "n": 16,
+            "d_m_mean": 4.7991,
+            "d_m_max": 5.9283,
+            "old_chi2_p95_pct": 0.0,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R3": {
+            "n": 16,
+            "d_m_mean": 4.3933,
+            "d_m_max": 6.509,
+            "old_chi2_p95_pct": 12.5,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R1_to_R3_pooled": {
+            "n": 48,
+            "d_m_mean": 4.6986,
+            "d_m_max": 6.509,
+            "old_chi2_p95_pct": 6.25,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          }
+        },
+        "shrinkage_loo": {
+          "R4": {
+            "n": 16,
+            "d_m_mean": 5.4499,
+            "d_m_max": 7.546,
+            "old_chi2_p95_pct": 31.25,
+            "old_chi2_p99_pct": 12.5,
+            "old_chi2_p9973_pct": 12.5,
+            "new_mc_indep_p95_pct": 6.25,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R1": {
+            "n": 16,
+            "d_m_mean": 4.7468,
+            "d_m_max": 5.8782,
+            "old_chi2_p95_pct": 0.0,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R2": {
+            "n": 16,
+            "d_m_mean": 4.5664,
+            "d_m_max": 6.4051,
+            "old_chi2_p95_pct": 6.25,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R3": {
+            "n": 16,
+            "d_m_mean": 4.0976,
+            "d_m_max": 6.069,
+            "old_chi2_p95_pct": 6.25,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R1_to_R3_pooled": {
+            "n": 48,
+            "d_m_mean": 4.4703,
+            "d_m_max": 6.4051,
+            "old_chi2_p95_pct": 4.17,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          }
+        },
+        "unregularized_loo": {
+          "R4": {
+            "n": 16,
+            "d_m_mean": 5.2987,
+            "d_m_max": 7.1924,
+            "old_chi2_p95_pct": 12.5,
+            "old_chi2_p99_pct": 12.5,
+            "old_chi2_p9973_pct": 6.25,
+            "new_mc_indep_p95_pct": 6.25,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R1": {
+            "n": 16,
+            "d_m_mean": 5.1986,
+            "d_m_max": 6.4527,
+            "old_chi2_p95_pct": 18.75,
+            "old_chi2_p99_pct": 0.0,
+            "old_chi2_p9973_pct": 0.0,
+            "new_mc_indep_p95_pct": 0.0,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R2": {
+            "n": 16,
+            "d_m_mean": 5.2339,
+            "d_m_max": 7.3014,
+            "old_chi2_p95_pct": 25.0,
+            "old_chi2_p99_pct": 6.25,
+            "old_chi2_p9973_pct": 6.25,
+            "new_mc_indep_p95_pct": 6.25,
+            "new_mc_indep_p99_pct": 0.0,
+            "new_mc_r4corr_p95_pct": 0.0,
+            "new_mc_r4corr_p99_pct": 0.0
+          },
+          "R3": {
+            "n": 16,
+            "d_m_mean": 14.6691,
+            "d_m_max": 166.7421,
+            "old_chi2_p95_pct": 12.5,
+            "old_chi2_p99_pct": 12.5,
+            "old_chi2_p9973_pct": 12.5,
+            "new_mc_indep_p95_pct": 12.5,
+            "new_mc_indep_p99_pct": 6.25,
+            "new_mc_r4corr_p95_pct": 6.25,
+            "new_mc_r4corr_p99_pct": 6.25
+          },
+          "R1_to_R3_pooled": {
+            "n": 48,
+            "d_m_mean": 8.3672,
+            "d_m_max": 166.7421,
+            "old_chi2_p95_pct": 18.75,
+            "old_chi2_p99_pct": 6.25,
+            "old_chi2_p9973_pct": 6.25,
+            "new_mc_indep_p95_pct": 6.25,
+            "new_mc_indep_p99_pct": 2.08,
+            "new_mc_r4corr_p95_pct": 2.08,
+            "new_mc_r4corr_p99_pct": 2.08
+          }
+        }
+      }
+    },
+    "reference_only_scheme_2": {
+      "disclaimer": "本値は自己レジスター平均を減算した差分を他分布（青空文庫アトラス）の分散で除算した同義反復的補正（self-register mean subtraction divided by another distribution's sigma）であり、独立した収束証拠とはみなさない参考値である。",
+      "r1_colloquial_fiction_alignment": {
+        "baseline_a_r4_diagonal_31d": {
+          "unaligned_outlier_rate_3sigma_pct": 0.0,
+          "unaligned_outlier_rate_chi2_p95_pct": 62.5,
+          "aligned_outlier_rate_3sigma_pct": 0.0,
+          "aligned_outlier_rate_chi2_p95_pct": 0.0
+        },
+        "baseline_b_aozora_atlas_24d": {
+          "unaligned_outlier_rate_3sigma_pct": 100.0,
+          "aligned_outlier_rate_3sigma_pct": 0.0,
+          "aligned_outlier_rate_chi2_p95_pct": 25.0
+        }
+      },
+      "pooled_modern_prose_alignment": {
+        "baseline_a_r4_diagonal_31d": {
+          "unaligned_outlier_rate_3sigma_pct": 58.33,
+          "unaligned_outlier_rate_chi2_p95_pct": 87.5,
+          "aligned_outlier_rate_3sigma_pct": 0.0,
+          "aligned_outlier_rate_chi2_p95_pct": 35.42
+        },
+        "baseline_b_aozora_atlas_24d": {
+          "unaligned_outlier_rate_3sigma_pct": 100.0,
+          "aligned_outlier_rate_3sigma_pct": 72.92,
+          "aligned_outlier_rate_chi2_p95_pct": 87.5
+        }
+      }
+    }
+  },
+  "task3_kasane8_unification_and_h1_h2_recalc": {
+    "index_verification": {
+      "same_index_set": false,
+      "legacy_slice_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "unified_canonical_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10
+      ],
+      "only_in_legacy_indices": [
+        7
+      ],
+      "only_in_unified_indices": [
+        10
+      ],
+      "canonical_kasane11_dim_names": {
+        "legacy_slice_dims": [
+          "dc_showing",
+          "dc_staccato",
+          "dc_polyphony",
+          "dc_confession",
+          "dc_cadence",
+          "dc_speculation",
+          "semantic_tension",
+          "ac_mean_velocity"
+        ],
+        "unified_kasane8_active_dims": [
+          "dc_showing",
+          "dc_staccato",
+          "dc_polyphony",
+          "dc_confession",
+          "dc_cadence",
+          "dc_speculation",
+          "semantic_tension",
+          "ac_mean_crest"
+        ],
+        "dropped_from_legacy": [
+          "ac_mean_velocity"
+        ],
+        "added_in_unified": [
+          "ac_mean_crest"
+        ]
+      },
+      "python_surrogate_dim_names": {
+        "legacy_slice_dims": [
+          "c_comma",
+          "c_period",
+          "c_te",
+          "c_de",
+          "c_ni",
+          "c_wa",
+          "c_ga",
+          "c_no"
+        ],
+        "unified_indices_dims": [
+          "c_comma",
+          "c_period",
+          "c_te",
+          "c_de",
+          "c_ni",
+          "c_wa",
+          "c_ga",
+          "mean_cl_div_100"
+        ],
+        "dropped_from_legacy": [
+          "c_no"
+        ],
+        "added_in_unified": [
+          "mean_cl_div_100"
+        ]
+      },
+      "explanation": "scale_separated_level3.py::extract_kasane8_active historically sliced [:8] (indices 0..7), keeping index 7 (canonical ac_mean_velocity / Python surrogate c_no) and dropping index 10 (canonical ac_mean_crest / Python surrogate mean_cl_div_100). KASANE8_ACTIVE_DIM_NAMES instead excludes indices 7, 8, 9 and retains index 10 ([0..6, 10])."
+    },
+    "h1_32d_core": {
+      "frozen_b8_headline": {
+        "n_pairs": 42,
+        "n_quasi": 8,
+        "median_rho_perp": 0.1462,
+        "median_theta_deg": 8.41,
+        "mean_cos_spec": 0.1083,
+        "mean_cos_rand": -0.0001,
+        "mean_cos_other": -0.0128,
+        "vs_random": {
+          "w_stat": 552.0,
+          "p_one_sided": 0.011888620865233148,
+          "p_two_sided": 0.023777241730466296,
+          "sig_005_one": true,
+          "sig_005_two": true,
+          "bonferroni_p_one": 0.04755448346093259,
+          "bonferroni_p_two": 0.09510896692186518,
+          "n_nonzero": 39
+        },
+        "vs_other": {
+          "w_stat": 654.0,
+          "p_one_sided": 0.005252185545032262,
+          "p_two_sided": 0.010504371090064524,
+          "sig_005_one": true,
+          "sig_005_two": true,
+          "bonferroni_p_one": 0.021008742180129047,
+          "bonferroni_p_two": 0.042017484360258095,
+          "n_nonzero": 42
+        }
+      },
+      "reproduced_legacy_slice_0_to_7": {
+        "n_pairs": 42,
+        "n_quasi": 8,
+        "median_rho_perp": 0.1462,
+        "median_theta_deg": 8.41,
+        "mean_cos_spec": 0.1083,
+        "mean_cos_rand": -0.0001,
+        "mean_cos_other": -0.0128,
+        "vs_random": {
+          "w_stat": 552.0,
+          "p_one_sided": 0.011888620865233148,
+          "p_two_sided": 0.023777241730466296,
+          "sig_005_one": true,
+          "sig_005_two": true,
+          "bonferroni_p_one": 0.04755448346093259,
+          "bonferroni_p_two": 0.09510896692186518,
+          "n_nonzero": 39
+        },
+        "vs_other": {
+          "w_stat": 654.0,
+          "p_one_sided": 0.005252185545032262,
+          "p_two_sided": 0.010504371090064524,
+          "sig_005_one": true,
+          "sig_005_two": true,
+          "bonferroni_p_one": 0.021008742180129047,
+          "bonferroni_p_two": 0.042017484360258095,
+          "n_nonzero": 42
+        }
+      },
+      "unified_kasane8_indices_0_to_6_and_10": {
+        "n_pairs": 42,
+        "n_quasi": 8,
+        "median_rho_perp": 0.1464,
+        "median_theta_deg": 8.42,
+        "mean_cos_spec": 0.1083,
+        "mean_cos_rand": 0.002,
+        "mean_cos_other": -0.0128,
+        "vs_random": {
+          "w_stat": 553.0,
+          "p_one_sided": 0.011463026991353297,
+          "p_two_sided": 0.022926053982706595,
+          "sig_005_one": true,
+          "sig_005_two": true,
+          "bonferroni_p_one": 0.04585210796541319,
+          "bonferroni_p_two": 0.09170421593082638,
+          "n_nonzero": 39
+        },
+        "vs_other": {
+          "w_stat": 654.0,
+          "p_one_sided": 0.005252185545032262,
+          "p_two_sided": 0.010504371090064524,
+          "sig_005_one": true,
+          "sig_005_two": true,
+          "bonferroni_p_one": 0.021008742180129047,
+          "bonferroni_p_two": 0.042017484360258095,
+          "n_nonzero": 42
+        }
+      },
+      "diff_unified_vs_frozen": {
+        "mean_cos_spec_frozen": 0.1083,
+        "mean_cos_spec_unified": 0.1083,
+        "delta_mean_cos_spec": 0.0,
+        "mean_cos_rand_frozen": -0.0001,
+        "mean_cos_rand_unified": 0.002,
+        "delta_mean_cos_rand": 0.0021,
+        "mean_cos_other_frozen": -0.0128,
+        "mean_cos_other_unified": -0.0128,
+        "delta_mean_cos_other": 0.0,
+        "vs_other_w_delta": 0.0,
+        "vs_other_p_two_frozen": 0.010504,
+        "vs_other_p_two_unified": 0.010504,
+        "vs_other_bonferroni_p_two_frozen": 0.042017,
+        "vs_other_bonferroni_p_two_unified": 0.042017,
+        "vs_other_bonf_sig_unchanged": true,
+        "vs_random_w_delta": 1.0,
+        "vs_random_p_one_frozen": 0.011889,
+        "vs_random_p_one_unified": 0.011463,
+        "vs_random_p_two_frozen": 0.023777,
+        "vs_random_p_two_unified": 0.022926,
+        "vs_random_bonferroni_p_two_frozen": 0.095109,
+        "vs_random_bonferroni_p_two_unified": 0.091704,
+        "vs_random_bonf_sig_unchanged": true,
+        "legacy_repro_matches_frozen_exact": true
+      }
+    },
+    "h2_5d_continuous_core": {
+      "frozen_b8_headline": {
+        "n_pairs": 22,
+        "n_quasi": 11,
+        "median_rho_perp": 0.101,
+        "median_theta_deg": 5.8,
+        "mean_cos_spec": 0.0849,
+        "mean_cos_rand": 0.0001,
+        "mean_cos_other": -0.1089,
+        "vs_random": {
+          "w_stat": 153.0,
+          "p_one_sided": 0.2030165195465088,
+          "p_two_sided": 0.4060330390930176,
+          "sig_005_one": false,
+          "sig_005_two": false,
+          "bonferroni_p_one": 0.8120660781860352,
+          "bonferroni_p_two": 1.0,
+          "n_nonzero": 22
+        },
+        "vs_other": {
+          "w_stat": 214.0,
+          "p_one_sided": 0.001619577407836914,
+          "p_two_sided": 0.003239154815673828,
+          "sig_005_one": true,
+          "sig_005_two": true,
+          "bonferroni_p_one": 0.006478309631347656,
+          "bonferroni_p_two": 0.012956619262695312,
+          "n_nonzero": 22
+        }
+      },
+      "recalculated": {
+        "n_pairs": 22,
+        "n_quasi": 11,
+        "median_rho_perp": 0.101,
+        "median_theta_deg": 5.8,
+        "mean_cos_spec": 0.0849,
+        "mean_cos_rand": 0.0001,
+        "mean_cos_other": -0.1089,
+        "vs_random": {
+          "w_stat": 153.0,
+          "p_one_sided": 0.2030165195465088,
+          "p_two_sided": 0.4060330390930176,
+          "sig_005_one": false,
+          "sig_005_two": false,
+          "bonferroni_p_one": 0.8120660781860352,
+          "bonferroni_p_two": 1.0,
+          "n_nonzero": 22
+        },
+        "vs_other": {
+          "w_stat": 214.0,
+          "p_one_sided": 0.001619577407836914,
+          "p_two_sided": 0.003239154815673828,
+          "sig_005_one": true,
+          "sig_005_two": true,
+          "bonferroni_p_one": 0.006478309631347656,
+          "bonferroni_p_two": 0.012956619262695312,
+          "n_nonzero": 22
+        }
+      },
+      "diff_vs_frozen": {
+        "depends_on_kasane8_active": false,
+        "mean_cos_spec_frozen": 0.0849,
+        "mean_cos_spec_recalc": 0.0849,
+        "delta_mean_cos_spec": 0.0,
+        "vs_other_p_two_frozen": 0.003239,
+        "vs_other_p_two_recalc": 0.003239,
+        "vs_other_bonferroni_p_two_frozen": 0.012957,
+        "vs_other_bonferroni_p_two_recalc": 0.012957,
+        "vs_random_p_two_frozen": 0.406033,
+        "vs_random_p_two_recalc": 0.406033,
+        "vs_random_bonferroni_p_two_frozen": 1.0,
+        "vs_random_bonferroni_p_two_recalc": 1.0,
+        "exact_match_with_frozen": true
+      }
+    },
+    "rating_conclusions_assessment": {
+      "rating_conclusion_changed": false,
+      "h1_rating_unchanged": true,
+      "h2_rating_unchanged": true,
+      "summary": "Unified KASANE8_ACTIVE_INDICES ([0..6, 10]) differs from legacy [:8] ([0..7]) at the 8th slot (index 10 mean_cl_div_100 / ac_mean_crest instead of index 7 c_no / ac_mean_velocity). Re-calculating H1 (32D core, n=42) changes vs_other W=654.0, p_two=0.010504, bonferroni_p_two=0.042017 by 0.0, and shifts vs_random W from 552.0 to 553.0 (p_two: 0.023777 -> 0.022926, bonferroni_p_two: 0.095109 -> 0.091704; nominal sig <0.05 preserved, two-sided Bonferroni non-sig preserved). H2 (5D continuous core, n=22) does not use KASANE8 and is bit-identical. Rating conclusions and Gate 3a/3b decisions do NOT change."
+    },
+    "frozen_artifacts_not_modified": true
+  }
+}

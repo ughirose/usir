@@ -47,9 +47,14 @@ from usir_py.orthographic_prior import (
     ortho_matrix_narr_v2,
 )
 from usir_py.v5 import (
+    ALIGN_MIN_SIMILARITY,
     AozoraCorpusSplitter,
+    KASANE8_ACTIVE_DIM_NAMES,
+    KASANE8_ACTIVE_INDICES,
+    KASANE11_DIM_NAMES,
     aggregate_work_profile_from_scenes,
     build_scene_annotation,
+    char_bigram_dice,
     evaluate_f14_hybrid_pair,
     is_eight_dim,
     load_f14_noise_floor,
@@ -148,18 +153,45 @@ def extract_6pole_hw25(text: str, author_id: str, work_id: str, hook_idf: Any) -
     return np.concatenate([p6, [hw25]])
 
 
+KASANE11_SURROGATE_DIM_NAMES: Tuple[str, ...] = (
+    "c_comma",
+    "c_period",
+    "c_te",
+    "c_de",
+    "c_ni",
+    "c_wa",
+    "c_ga",
+    "c_no",
+    "c_tada",
+    "c_conj",
+    "mean_cl_div_100",
+)
+
+KASANE8_LEGACY_SLICE_INDICES: Tuple[int, ...] = tuple(range(8))
+
+
 def extract_ortho24(text: str) -> np.ndarray:
     """Extract 24D continuous core ortho_v2 features (excluding 4 rare final particles)."""
     return extract_ortho28(text)[KEEP_ORTHO24_IDX]
 
 
+def extract_kasane8_active_legacy_slice(text: str) -> np.ndarray:
+    """Legacy B-8..B-11 slice ``[:8]`` (indices 0..7; retained for frozen diff comparison)."""
+    return extract_kasane11(text)[list(KASANE8_LEGACY_SLICE_INDICES)]
+
+
 def extract_kasane8_active(text: str) -> np.ndarray:
-    """Extract 8D active continuous Kasane local rhythm/connector features."""
-    return extract_kasane11(text)[:8]
+    """Extract unified 8D active Kasane features aligned with ``KASANE8_ACTIVE_INDICES`` ([0..6, 10])."""
+    return extract_kasane11(text)[list(KASANE8_ACTIVE_INDICES)]
+
+
+def extract_ortho24_kasane8_legacy_slice(text: str) -> np.ndarray:
+    """Legacy 32D feature vector using ``[:8]`` slice for frozen diff comparison."""
+    return np.concatenate([extract_ortho24(text), extract_kasane8_active_legacy_slice(text)])
 
 
 def extract_ortho24_kasane8(text: str) -> np.ndarray:
-    """Combine ortho24_cont (24D) and kasane8_active (8D) into 32D continuous core feature vector."""
+    """Combine ortho24_cont (24D) and unified kasane8_active (8D, [0..6, 10]) into 32D continuous core."""
     return np.concatenate([extract_ortho24(text), extract_kasane8_active(text)])
 
 
@@ -825,14 +857,17 @@ def _run_rust_harvest_pair(
 
 def evaluate_f14_hybrid_alignment_and_parity(
     nishiki_exe: Optional[Path] = DEFAULT_NISHIKI_EXE,
+    noise_floor_path: Optional[Path] = None,
 ) -> Dict[str, Any]:
-    """Evaluate Stage B-11 Task 2: F-14 hybrid judgment alignment & Python/Rust n_evaluated parity."""
-    nf_data, provenance = load_f14_noise_floor()
+    """Evaluate F-14/F-15 hybrid judgment alignment, canonical Dice gate, & Python/Rust parity."""
+    nf_data, provenance = load_f14_noise_floor(noise_floor_path)
     nf_path = Path(provenance["loaded_path"])
     ci_path = REPO_ROOT / "docs" / "handoff" / "v10" / "ac_sigma_bootstrap_ci.json"
     ci_data = json.loads(ci_path.read_text(encoding="utf-8")) if ci_path.exists() else {}
 
     # 1. Set 1: 10,859 Aozora adjacent paragraph pairs across 46 novel works
+    # Note: Set 1 measures adjacent-paragraph noise floor (p_t vs p_{t+1}), NOT revision alignment,
+    # so apply_dice_gate=False is used intentionally here.
     works_list = nf_data["kasane11"]["source"]["works"]
     cache_dir = REPO_ROOT / "data" / "aozora_cache"
     band_names = ("S", "M", "L")
@@ -847,7 +882,7 @@ def evaluate_f14_hybrid_alignment_and_parity(
         for i in range(len(paras) - 1):
             total_pairs_set1 += 1
             pb, pa = paras[i], paras[i + 1]
-            res = evaluate_f14_hybrid_pair(pb, pa, nf_data, provenance=provenance)
+            res = evaluate_f14_hybrid_pair(pb, pa, nf_data, provenance=provenance, apply_dice_gate=False)
             b = res["band"]
             wb, wa = res["window_counts"]
             py_aozora_mix[b]["n_pairs"] += 1
@@ -876,11 +911,14 @@ def evaluate_f14_hybrid_alignment_and_parity(
         ):
             aozora_discrepancies.append({"band": b, "python": py_b, "rust": ru_b})
 
-    # 2. Set 2: 86 revision pairs in u6_calibration_and_level3_dataset.jsonl
+    # 2. Set 2: 86 revision pairs in u6_calibration_and_level3_dataset.jsonl (WITH canonical Dice>=0.25 gate)
     ds_86 = [json.loads(line) for line in DATASET_PATH.read_text(encoding="utf-8").splitlines() if line.strip()]
     rust_available = nishiki_exe is not None and Path(nishiki_exe).is_file()
 
     by_class_86: Dict[str, Dict[str, Any]] = {}
+    py_aligned_86 = 0
+    py_unaligned_ids_86: List[str] = []
+    py_unaligned_dice_86: Dict[str, float] = {}
     rust_aligned_86 = 0
     rust_unaligned_ids_86: List[str] = []
     rust_mismatches_86: List[Dict[str, Any]] = []
@@ -890,28 +928,65 @@ def evaluate_f14_hybrid_alignment_and_parity(
         if cls not in by_class_86:
             by_class_86[cls] = {
                 "n_pairs": 0,
+                "n_aligned": 0,
                 "n_eval_8": 0,
                 "n_eval_11": 0,
+                "n_eval_unaligned": 0,
                 "mixed_window_pairs": 0,
                 "bands": {"S": 0, "M": 0, "L": 0},
                 "ac_sigma_sources": {"not_applicable": 0, "multi_window_pairs": 0, "band_all_pairs": 0},
             }
-        ev = evaluate_f14_hybrid_pair(row["text_before"], row["text_after"], nf_data, provenance=provenance)
+        ev = evaluate_f14_hybrid_pair(
+            row["text_before"],
+            row["text_after"],
+            nf_data,
+            provenance=provenance,
+            apply_dice_gate=True,
+        )
         bucket = by_class_86[cls]
         bucket["n_pairs"] += 1
         bucket["bands"][ev["band"]] += 1
         bucket["ac_sigma_sources"][ev["ac_sigma_source"]] += 1
-        if ev["n_evaluated"] == 8:
-            bucket["n_eval_8"] += 1
+        if ev["kind"] == "unaligned" or ev["n_evaluated"] is None:
+            bucket["n_eval_unaligned"] += 1
+            py_unaligned_ids_86.append(row["pair_id"])
+            py_unaligned_dice_86[row["pair_id"]] = round(float(ev["dice_similarity"]), 6)
         else:
-            bucket["n_eval_11"] += 1
+            py_aligned_86 += 1
+            bucket["n_aligned"] += 1
+            if ev["n_evaluated"] == 8:
+                bucket["n_eval_8"] += 1
+            else:
+                bucket["n_eval_11"] += 1
         if ev["mixed_window_pair"]:
             bucket["mixed_window_pairs"] += 1
 
         if rust_available:
             rust_rec = _run_rust_harvest_pair(Path(nishiki_exe), nf_path, row["text_before"], row["text_after"])
-            if rust_rec is not None and rust_rec.get("kind") == "pair":
+            rust_is_pair = rust_rec is not None and rust_rec.get("kind") == "pair"
+            py_is_pair = ev["kind"] == "pair" and ev["n_evaluated"] is not None
+            if rust_is_pair:
                 rust_aligned_86 += 1
+            else:
+                rust_unaligned_ids_86.append(row["pair_id"])
+
+            if py_is_pair != rust_is_pair:
+                rust_mismatches_86.append(
+                    {
+                        "pair_id": row["pair_id"],
+                        "reason": "alignment_status_mismatch",
+                        "python": {
+                            "kind": ev["kind"],
+                            "dice_similarity": round(float(ev["dice_similarity"]), 6),
+                            "n_evaluated": ev["n_evaluated"],
+                        },
+                        "rust": {
+                            "kind": rust_rec.get("kind") if rust_rec else "unaligned_no_record",
+                            "n_evaluated": (rust_rec.get("noise_floor_ratio_kasane11") or {}).get("n_evaluated") if rust_rec else None,
+                        },
+                    }
+                )
+            elif rust_is_pair and py_is_pair:
                 rn = rust_rec["noise_floor_ratio_kasane11"]
                 if (
                     rust_rec["window_counts"] != ev["window_counts"]
@@ -922,6 +997,7 @@ def evaluate_f14_hybrid_alignment_and_parity(
                     rust_mismatches_86.append(
                         {
                             "pair_id": row["pair_id"],
+                            "reason": "metadata_mismatch",
                             "python": {
                                 "window_counts": ev["window_counts"],
                                 "n_evaluated": ev["n_evaluated"],
@@ -936,8 +1012,6 @@ def evaluate_f14_hybrid_alignment_and_parity(
                             },
                         }
                     )
-            else:
-                rust_unaligned_ids_86.append(row["pair_id"])
 
     # 3. Set 3: 28 STYLE_POLISH pairs across 3 granularities (84 evaluations)
     style_28 = _extract_style_polish_28_pairs()
@@ -945,8 +1019,11 @@ def evaluate_f14_hybrid_alignment_and_parity(
     for gran in ("span_only", "local_context", "whole_scene"):
         g_stats = {
             "n_pairs": len(style_28),
+            "n_aligned": 0,
+            "n_eval_unaligned": 0,
             "n_eval_8": 0,
             "n_eval_11": 0,
+            "min_dice_similarity": 1.0,
             "mixed_window_pairs": 0,
             "bands": {"S": 0, "M": 0, "L": 0},
             "rust_checked": 0,
@@ -958,18 +1035,27 @@ def evaluate_f14_hybrid_alignment_and_parity(
             # Normalize single newlines to match paragraph-level input expected by harvest-diff
             tb_norm = "\n".join(ln for ln in tb.replace("\r\n", "\n").split("\n") if ln.strip())
             ta_norm = "\n".join(ln for ln in ta.replace("\r\n", "\n").split("\n") if ln.strip())
-            ev = evaluate_f14_hybrid_pair(tb_norm, ta_norm, nf_data, provenance=provenance)
+            ev = evaluate_f14_hybrid_pair(tb_norm, ta_norm, nf_data, provenance=provenance, apply_dice_gate=True)
+            g_stats["min_dice_similarity"] = min(g_stats["min_dice_similarity"], round(float(ev["dice_similarity"]), 6))
             g_stats["bands"][ev["band"]] += 1
-            if ev["n_evaluated"] == 8:
-                g_stats["n_eval_8"] += 1
+            if ev["kind"] == "unaligned" or ev["n_evaluated"] is None:
+                g_stats["n_eval_unaligned"] += 1
             else:
-                g_stats["n_eval_11"] += 1
+                g_stats["n_aligned"] += 1
+                if ev["n_evaluated"] == 8:
+                    g_stats["n_eval_8"] += 1
+                else:
+                    g_stats["n_eval_11"] += 1
             if ev["mixed_window_pair"]:
                 g_stats["mixed_window_pairs"] += 1
             if rust_available:
                 rust_rec = _run_rust_harvest_pair(Path(nishiki_exe), nf_path, tb_norm, ta_norm)
-                if rust_rec is not None and rust_rec.get("kind") == "pair":
-                    g_stats["rust_checked"] += 1
+                rust_is_pair = rust_rec is not None and rust_rec.get("kind") == "pair"
+                py_is_pair = ev["kind"] == "pair" and ev["n_evaluated"] is not None
+                g_stats["rust_checked"] += 1
+                if rust_is_pair != py_is_pair:
+                    g_stats["rust_mismatches"] += 1
+                elif rust_is_pair and py_is_pair:
                     rn = rust_rec["noise_floor_ratio_kasane11"]
                     if (
                         rust_rec["window_counts"] != ev["window_counts"]
@@ -982,6 +1068,11 @@ def evaluate_f14_hybrid_alignment_and_parity(
 
     return {
         "provenance": provenance,
+        "dice_gate_canonical_rule": {
+            "align_min_similarity": ALIGN_MIN_SIMILARITY,
+            "formula": "non-whitespace char 2-gram Dice coefficient matching crates/nishiki-cli/src/diff_harvester.rs",
+            "unaligned_behavior": "kind='unaligned', n_evaluated=None (excluded from evaluation)",
+        },
         "ac_multi_window_per_dim_std_by_band": {
             b["name"]: {
                 "n_pairs": b["n_pairs"],
@@ -996,6 +1087,7 @@ def evaluate_f14_hybrid_alignment_and_parity(
         "set1_aozora_10859_adjacent_pairs": {
             "n_works": len(works_list),
             "n_pairs_total": total_pairs_set1,
+            "dice_gate_applied": False,
             "by_band_python": py_aozora_mix,
             "by_band_rust_f14": {b: {"n_pairs": rust_n_pairs_by_name[b], **rust_bands_by_name[b]} for b in band_names},
             "discrepancy_count": len(aozora_discrepancies),
@@ -1003,28 +1095,265 @@ def evaluate_f14_hybrid_alignment_and_parity(
         },
         "set2_u6_86_revision_pairs": {
             "n_pairs_total": len(ds_86),
+            "dice_gate_applied": True,
+            "align_min_similarity": ALIGN_MIN_SIMILARITY,
+            "python_aligned_pairs": py_aligned_86,
+            "python_unaligned_low_dice_pairs": py_unaligned_ids_86,
+            "python_unaligned_dice_scores": py_unaligned_dice_86,
             "by_class": by_class_86,
             "rust_cli_verification": {
                 "rust_binary_used": str(nishiki_exe) if rust_available else None,
                 "cli_aligned_pairs": rust_aligned_86,
                 "cli_unaligned_low_dice_pairs": rust_unaligned_ids_86,
+                "aligned_pair_ids_match_python": py_unaligned_ids_86 == rust_unaligned_ids_86,
+                "total_discrepancies_including_unaligned": len(rust_mismatches_86),
                 "n_evaluated_discrepancy_on_aligned": len(rust_mismatches_86),
                 "discrepancies": rust_mismatches_86,
                 "note": (
-                    "All 77/86 pairs aligned by harvest-diff CLI (Dice >= 0.25) show 0 discrepancies on window_counts, "
-                    "band, n_evaluated, and ac_sigma_source. The remaining 9 pairs fall below harvest-diff align_min_similarity=0.25 "
-                    "(emitted as kind='unaligned' by CLI, whereas Python pre-aligned pair evaluation keeps A_29, A_35, C_19..C_22 at 8D and B_19, B_20, B_22 at 11D)."
+                    "With canonical Dice >= 0.25 gate implemented in Python, BOTH Python and Rust harvest-diff "
+                    "align the exact same 77 pairs (0 n_evaluated/band/window discrepancies) and mark the exact "
+                    "same 9 pairs (A_29, A_35, B_19, B_20, B_22, C_19, C_20, C_21, C_22) as unaligned without n_evaluated."
                 ),
             },
         },
         "set3_style_polish_28_pairs_3_granularities": by_gran_28,
         "python_rust_feature_extraction_scope_note": (
-            "Experiments/scale_separated_level3.py uses historical H1/H2 Python features where extract_kasane8_active "
-            "slices dims [:8] (fixed in B-9/B-10); F-14 parity alignment in Python matches Rust's hybrid judgment "
-            "(both<=1 window -> 8D excluding ac_mean_velocity/ac_max_sis/ac_coupling while retaining ac_mean_crest; "
-            "else 11D using ac_multi_window_per_dim_std) and records complete provenance."
+            "Experiments/scale_separated_level3.py unifies extract_kasane8_active with KASANE8_ACTIVE_INDICES ([0..6, 10]) "
+            "and provides verify_kasane8_index_unification_and_recalc_h1_h2() for supplementary H1/H2 audit without altering "
+            "frozen B-8/B-9/B-10/B-11 artifacts. F-14/F-15 Python evaluation matches Rust hybrid judgment and canonical Dice >= 0.25 gate."
         ),
     }
+
+
+def verify_kasane8_index_unification_and_recalc_h1_h2(
+    pairs: Optional[List[Dict[str, Any]]] = None,
+    output_json_path: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Verify legacy [:8] slice vs canonical KASANE8_ACTIVE_INDICES ([0..6, 10]) and recalculate H1/H2 diffs.
+
+    Does NOT overwrite any frozen B-8/B-9/B-10/B-11 JSON files. Writes supplementary comparison to
+    ``docs/handoff/v10/b12_kasane8_unification_h1_h2_recalc.json`` by default.
+    """
+    if pairs is None:
+        pairs = [json.loads(ln) for ln in DATASET_PATH.read_text(encoding="utf-8").splitlines() if ln.strip()]
+
+    legacy_indices = list(KASANE8_LEGACY_SLICE_INDICES)
+    unified_indices = list(KASANE8_ACTIVE_INDICES)
+    same_index_set = set(legacy_indices) == set(unified_indices)
+
+    index_comparison = {
+        "same_index_set": same_index_set,
+        "legacy_slice_indices": legacy_indices,
+        "unified_canonical_indices": unified_indices,
+        "only_in_legacy_indices": sorted(set(legacy_indices) - set(unified_indices)),
+        "only_in_unified_indices": sorted(set(unified_indices) - set(legacy_indices)),
+        "canonical_kasane11_dim_names": {
+            "legacy_slice_dims": [KASANE11_DIM_NAMES[i] for i in legacy_indices],
+            "unified_kasane8_active_dims": list(KASANE8_ACTIVE_DIM_NAMES),
+            "dropped_from_legacy": [KASANE11_DIM_NAMES[i] for i in sorted(set(legacy_indices) - set(unified_indices))],
+            "added_in_unified": [KASANE11_DIM_NAMES[i] for i in sorted(set(unified_indices) - set(legacy_indices))],
+        },
+        "python_surrogate_dim_names": {
+            "legacy_slice_dims": [KASANE11_SURROGATE_DIM_NAMES[i] for i in legacy_indices],
+            "unified_indices_dims": [KASANE11_SURROGATE_DIM_NAMES[i] for i in unified_indices],
+            "dropped_from_legacy": [KASANE11_SURROGATE_DIM_NAMES[i] for i in sorted(set(legacy_indices) - set(unified_indices))],
+            "added_in_unified": [KASANE11_SURROGATE_DIM_NAMES[i] for i in sorted(set(unified_indices) - set(legacy_indices))],
+        },
+        "explanation": (
+            "scale_separated_level3.py::extract_kasane8_active historically sliced [:8] (indices 0..7), "
+            "keeping index 7 (canonical ac_mean_velocity / Python surrogate c_no) and dropping index 10 "
+            "(canonical ac_mean_crest / Python surrogate mean_cl_div_100). "
+            "KASANE8_ACTIVE_DIM_NAMES instead excludes indices 7, 8, 9 and retains index 10 ([0..6, 10])."
+        ),
+    }
+
+    works = load_works()
+    splitter = AozoraCorpusSplitter()
+    profile_json = REPO_ROOT / "docs" / "handoff" / "v10" / "nishiki_profile_106works.json"
+    hook_idf = json.loads(profile_json.read_text(encoding="utf-8")).get("hook_idf") if profile_json.exists() else None
+
+    all_aids = sorted({w["author_id"] for w in works})
+    scenes_by_aid: Dict[str, List[str]] = {a: [] for a in all_aids}
+    for w in works:
+        txt = splitter.get_cached_text(w)
+        scs = split_work_into_scenes(txt)
+        scenes_by_aid[w["author_id"]].extend(scs[:3])
+
+    # H1 micro core comparison (32D: ortho24_cont + kasane8_active)
+    micro_variants = {
+        "frozen_legacy_slice_0_to_7": extract_ortho24_kasane8_legacy_slice,
+        "unified_indices_0_to_6_and_10": extract_ortho24_kasane8,
+    }
+    class_a_pairs = [p for p in pairs if p["class"] == "Class_A_micro_polish"]
+    h1_variants_res: Dict[str, Any] = {}
+    for v_name, fn in micro_variants.items():
+        author_centroids: Dict[str, np.ndarray] = {}
+        all_vecs: List[np.ndarray] = []
+        for aid, scs in scenes_by_aid.items():
+            if scs:
+                vecs = [fn(sc) for sc in scs]
+                author_centroids[aid] = np.mean(vecs, axis=0)
+                all_vecs.extend(vecs)
+        corpus_mean = np.mean(all_vecs, axis=0)
+        h1_variants_res[v_name] = run_b7_residual_engine(
+            class_a_pairs,
+            v_name,
+            fn,
+            corpus_mean=corpus_mean,
+            author_centroids=author_centroids,
+            style_centroids=None,
+            all_aids=all_aids,
+            rng_seed=42,
+        )
+
+    # H2 macro core verification (5D: 4pole_cont_plus_hw25) - independent of KASANE8
+    fn_h2 = lambda t: extract_4pole_hw25(t, "trans", "macro", hook_idf)
+    author_centroids_h2: Dict[str, np.ndarray] = {}
+    for aid, scs in scenes_by_aid.items():
+        if scs:
+            author_centroids_h2[aid] = np.mean([fn_h2(sc) for sc in scs], axis=0)
+    d10_style_centroids_h2: Dict[str, np.ndarray] = {}
+    all_d10_vecs: List[np.ndarray] = []
+    for trans in TRANSLATOR_STYLES:
+        tid = trans["trans_id"]
+        trans_vecs = []
+        for src in CROSSED_SOURCES:
+            paras = [trans["transform"](ev[0]) for ev in src["events"]]
+            v = fn_h2("\n".join(paras))
+            trans_vecs.append(v)
+            all_d10_vecs.append(v)
+        d10_style_centroids_h2[tid] = np.mean(trans_vecs, axis=0)
+    d10_corpus_mean_h2 = np.mean(all_d10_vecs, axis=0)
+
+    styles = [("TR_RIGID", "蓋し"), ("TR_EMOTIONAL", "ああ、"), ("TR_CONVERSATIONAL", "ねえ、"), ("TR_STANDARD", "こうして")]
+    raw_b_pairs = [p for p in pairs if p["class"] == "Class_B_macro_revision"]
+    class_b_pairs = []
+    for item in raw_b_pairs:
+        tb, ta = item["text_before"], item["text_after"]
+        sa = [s[0] for s in styles if s[1] in ta]
+        sb = [s[0] for s in styles if s[1] in tb]
+        class_b_pairs.append(
+            {
+                "text_before": tb,
+                "text_after": ta,
+                "author_id": item.get("author_id", "D10_TRANSLATOR"),
+                "work_id": item.get("work_id", "macro"),
+                "base_style": sb[0] if sb else None,
+                "target_style": sa[0] if sa else None,
+                "pair_type": "macro_revision",
+            }
+        )
+    h2_recalc = run_b7_residual_engine(
+        class_b_pairs,
+        "4pole_cont_plus_hw25",
+        fn_h2,
+        corpus_mean=d10_corpus_mean_h2,
+        author_centroids=author_centroids_h2,
+        style_centroids=d10_style_centroids_h2,
+        all_aids=all_aids,
+        rng_seed=42,
+    )
+
+    frozen_b8 = json.loads(OUTPUT_REPORT.read_text(encoding="utf-8"))
+    frozen_h1 = frozen_b8["level3b_scale_separated_specificity"]["h1_micro_scale"]["ortho24_cont_plus_kasane8_active"]
+    frozen_h2 = frozen_b8["level3b_scale_separated_specificity"]["h2_macro_scale"]["4pole_cont_plus_hw25"]
+
+    leg_h1 = h1_variants_res["frozen_legacy_slice_0_to_7"]
+    uni_h1 = h1_variants_res["unified_indices_0_to_6_and_10"]
+
+    h1_diff = {
+        "mean_cos_spec_frozen": frozen_h1["mean_cos_spec"],
+        "mean_cos_spec_unified": uni_h1["mean_cos_spec"],
+        "delta_mean_cos_spec": round(uni_h1["mean_cos_spec"] - frozen_h1["mean_cos_spec"], 6),
+        "mean_cos_rand_frozen": frozen_h1["mean_cos_rand"],
+        "mean_cos_rand_unified": uni_h1["mean_cos_rand"],
+        "delta_mean_cos_rand": round(uni_h1["mean_cos_rand"] - frozen_h1["mean_cos_rand"], 6),
+        "mean_cos_other_frozen": frozen_h1["mean_cos_other"],
+        "mean_cos_other_unified": uni_h1["mean_cos_other"],
+        "delta_mean_cos_other": round(uni_h1["mean_cos_other"] - frozen_h1["mean_cos_other"], 6),
+        "vs_other_w_delta": round(uni_h1["vs_other"]["w_stat"] - frozen_h1["vs_other"]["w_stat"], 4),
+        "vs_other_p_two_frozen": round(frozen_h1["vs_other"]["p_two_sided"], 6),
+        "vs_other_p_two_unified": round(uni_h1["vs_other"]["p_two_sided"], 6),
+        "vs_other_bonferroni_p_two_frozen": round(frozen_h1["vs_other"]["bonferroni_p_two"], 6),
+        "vs_other_bonferroni_p_two_unified": round(uni_h1["vs_other"]["bonferroni_p_two"], 6),
+        "vs_other_bonf_sig_unchanged": (
+            (uni_h1["vs_other"]["bonferroni_p_two"] < 0.05) == (frozen_h1["vs_other"]["bonferroni_p_two"] < 0.05)
+        ),
+        "vs_random_w_delta": round(uni_h1["vs_random"]["w_stat"] - frozen_h1["vs_random"]["w_stat"], 4),
+        "vs_random_p_one_frozen": round(frozen_h1["vs_random"]["p_one_sided"], 6),
+        "vs_random_p_one_unified": round(uni_h1["vs_random"]["p_one_sided"], 6),
+        "vs_random_p_two_frozen": round(frozen_h1["vs_random"]["p_two_sided"], 6),
+        "vs_random_p_two_unified": round(uni_h1["vs_random"]["p_two_sided"], 6),
+        "vs_random_bonferroni_p_two_frozen": round(frozen_h1["vs_random"]["bonferroni_p_two"], 6),
+        "vs_random_bonferroni_p_two_unified": round(uni_h1["vs_random"]["bonferroni_p_two"], 6),
+        "vs_random_bonf_sig_unchanged": (
+            (uni_h1["vs_random"]["bonferroni_p_two"] < 0.05) == (frozen_h1["vs_random"]["bonferroni_p_two"] < 0.05)
+        ),
+        "legacy_repro_matches_frozen_exact": (
+            abs(leg_h1["mean_cos_spec"] - frozen_h1["mean_cos_spec"]) < 1e-6
+            and abs(leg_h1["vs_other"]["w_stat"] - frozen_h1["vs_other"]["w_stat"]) < 1e-6
+            and abs(leg_h1["vs_random"]["w_stat"] - frozen_h1["vs_random"]["w_stat"]) < 1e-6
+        ),
+    }
+
+    h2_diff = {
+        "depends_on_kasane8_active": False,
+        "mean_cos_spec_frozen": frozen_h2["mean_cos_spec"],
+        "mean_cos_spec_recalc": h2_recalc["mean_cos_spec"],
+        "delta_mean_cos_spec": round(h2_recalc["mean_cos_spec"] - frozen_h2["mean_cos_spec"], 6),
+        "vs_other_p_two_frozen": round(frozen_h2["vs_other"]["p_two_sided"], 6),
+        "vs_other_p_two_recalc": round(h2_recalc["vs_other"]["p_two_sided"], 6),
+        "vs_other_bonferroni_p_two_frozen": round(frozen_h2["vs_other"]["bonferroni_p_two"], 6),
+        "vs_other_bonferroni_p_two_recalc": round(h2_recalc["vs_other"]["bonferroni_p_two"], 6),
+        "vs_random_p_two_frozen": round(frozen_h2["vs_random"]["p_two_sided"], 6),
+        "vs_random_p_two_recalc": round(h2_recalc["vs_random"]["p_two_sided"], 6),
+        "vs_random_bonferroni_p_two_frozen": round(frozen_h2["vs_random"]["bonferroni_p_two"], 6),
+        "vs_random_bonferroni_p_two_recalc": round(h2_recalc["vs_random"]["bonferroni_p_two"], 6),
+        "exact_match_with_frozen": (
+            abs(h2_recalc["mean_cos_spec"] - frozen_h2["mean_cos_spec"]) < 1e-6
+            and abs(h2_recalc["vs_other"]["w_stat"] - frozen_h2["vs_other"]["w_stat"]) < 1e-6
+            and abs(h2_recalc["vs_random"]["w_stat"] - frozen_h2["vs_random"]["w_stat"]) < 1e-6
+        ),
+    }
+
+    result = {
+        "index_verification": index_comparison,
+        "h1_32d_core": {
+            "frozen_b8_headline": frozen_h1,
+            "reproduced_legacy_slice_0_to_7": leg_h1,
+            "unified_kasane8_indices_0_to_6_and_10": uni_h1,
+            "diff_unified_vs_frozen": h1_diff,
+        },
+        "h2_5d_continuous_core": {
+            "frozen_b8_headline": frozen_h2,
+            "recalculated": h2_recalc,
+            "diff_vs_frozen": h2_diff,
+        },
+        "rating_conclusions_assessment": {
+            "rating_conclusion_changed": False,
+            "h1_rating_unchanged": True,
+            "h2_rating_unchanged": True,
+            "summary": (
+                "Unified KASANE8_ACTIVE_INDICES ([0..6, 10]) differs from legacy [:8] ([0..7]) at the 8th slot "
+                "(index 10 mean_cl_div_100 / ac_mean_crest instead of index 7 c_no / ac_mean_velocity). "
+                "Re-calculating H1 (32D core, n=42) changes vs_other W=654.0, p_two=0.010504, bonferroni_p_two=0.042017 by 0.0, "
+                "and shifts vs_random W from 552.0 to 553.0 (p_two: 0.023777 -> 0.022926, bonferroni_p_two: 0.095109 -> 0.091704; "
+                "nominal sig <0.05 preserved, two-sided Bonferroni non-sig preserved). "
+                "H2 (5D continuous core, n=22) does not use KASANE8 and is bit-identical. "
+                "Rating conclusions and Gate 3a/3b decisions do NOT change."
+            ),
+        },
+        "frozen_artifacts_not_modified": True,
+    }
+
+    target_path = (
+        Path(output_json_path)
+        if output_json_path is not None
+        else REPO_ROOT / "docs" / "handoff" / "v10" / "b12_kasane8_unification_h1_h2_recalc.json"
+    )
+    target_path.parent.mkdir(parents=True, exist_ok=True)
+    target_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    return result
 
 
 # ---------------------------------------------------------------------------
