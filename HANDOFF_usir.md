@@ -1,7 +1,41 @@
 # USIR v5 実装引継ぎ台帳 (HANDOFF)
-**最終更新日時**: 2026-11-13 13:35:00 JST  
-**ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`)  
+**最終更新日時**: 2026-11-13 15:40:00 JST  
+**ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`, 実装コミット `6e526995a12407cd0404034aa1238c70335f18f6`)  
 **関連リポジトリ**: `C:\dev\nishiki`（Lane B 境界線厳守・変更ゼロ保証）
+
+---
+
+## -0.2 Stage B-12 実装・検証セッション（2026-11-13 実施）
+
+本セッションでは、Stage B-11（`ae992e5`）を起点として、`Gate 3a = SHIFT_QUANTIFIED_NOT_PASSED`・`Gate 3b = GATE3B_FROZEN`・層B-1不使用・有料API不使用・B-13非設計の確定事項を厳守し、以下の 4 タスクを完遂した。
+
+### 1. タスク1：Dice ゲートの Python 実装（正本統一）
+- `python/usir_py/v5/f14_hybrid_noise_floor.py` に `ALIGN_MIN_SIMILARITY = 0.25`、`char_bigrams()`、`char_bigram_dice()`、および `evaluate_f14_hybrid_pair(..., apply_dice_gate=True)` を実装。非空白文字 2-gram Dice `< 0.25` のペアを `kind = "unaligned"`・`n_evaluated = None` とする Rust `harvest-diff` 仕様を正本統一した。
+- `experiments/scale_separated_level3.py` の `evaluate_f14_hybrid_alignment_and_parity()` を再検証した結果：
+  - **Set 2 (U-6 86ペア)**: `77` ペアがアライン一致、exact 9 ペア（`A_29`, `A_35`, `B_19`, `B_20`, `B_22`, `C_19`, `C_20`, `C_21`, `C_22`）が両側 `unaligned` として Rust `nishiki.exe harvest-diff` と **不一致 0 件** で一致。
+  - **Set 1 (10,859ペア, `apply_dice_gate=False`)**: Band S=8,258 / M=1,952 / L=649、**不一致 0 件**。
+  - **Set 3 (28ペア×3粒度 = 84評価, `apply_dice_gate=True`)**: `span_only`・`local_context`・`whole_scene` すべて `unaligned=0`（最小 Dice=`0.764706`）、Rust 実測との **不一致 0 件**。
+
+### 2. タスク2：一次・補助警報閾値の明示記録
+- `experiments/gate3a_register_centering_eval.py`・`docs/handoff/v10/gate3a_register_centering_summary.json`（SHA-256: `6874a66eb78a8469c8c5878f90aa63a9aff5c34c6f01254d1d9664601cf2922b`）・`data/usir_v5_eval/usir_v5_b12_canonical_eval.json`（SHA-256: `50b1efb38b7d15195ea1da00cd049e51126f5100e90e03497fc7123d0b5c96fc`）に以下を明示記録（閾値・Gate 判定値は変更なし）：
+  - **一次警報 (`primary_alarm`)**: `mc_indep_p95` ($d = 6.9267$, $d^2 = 47.9796$)
+  - **補助警報 (`auxiliary_alarm`)**: `mc_r4corr_p95` ($d = 7.6574$, $d^2 = 58.6355$)
+
+### 3. タスク3：KASANE8 インデックス統一検証と H1／H2 再検算
+- `scale_separated_level3.py::extract_kasane8_active`（旧 `[:8]` = `[0..7]`、`ac_mean_velocity` / Python代理 `c_no` を含み `ac_mean_crest` を欠落）と `KASANE8_ACTIVE_DIM_NAMES`（`KASANE8_ACTIVE_INDICES = (0, 1, 2, 3, 4, 5, 6, 10)`、`ac_mean_crest` / Python代理 `mean_cl_div_100` を保持）が**異なる集合**（`same_index_set = False`）であることを特定し、統一側へ修正（旧スライスは監査比較用 `extract_kasane8_active_legacy_slice` として保持）。
+- 凍結済み成果物（B-8/B-9/B-10/B-11）は上書きせず、付属報告 `docs/handoff/v10/b12_kasane8_unification_h1_h2_recalc.json`（SHA-256: `0fdae7c4b66d06e26c1b4adc153fbdf1dbc33061f8a1c78c4116ec777770477f`）へ再検算結果を出力：
+  - **H1（32D コア, n=42）**: `mean_cos_spec = 0.1083 -> 0.1083`, `mean_cos_other = -0.0128 -> -0.0128`, `vs_other W=654.0, p_two=0.010504, bonf=0.042017`（差分 0.0）; `mean_cos_rand = -0.0001 -> 0.002`, `vs_random W=552.0 -> 553.0, p_two=0.023777 -> 0.022926, bonf=0.095109 -> 0.091704`。
+  - **H2（5D 連続コア, n=22）**: KASANE8 非依存であり凍結値とビット一致（`mean_cos_spec = 0.0849`, `vs_other W=214.0, p_two=0.003239, bonf=0.012957`, `vs_random W=153.0, p_two=0.406033, bonf=1.0`）。
+  - **格付け結論**: `rating_conclusion_changed = False`（結論不変）。
+
+### 4. タスク4：実推敲ペア拡充データセット v1 の構築と F-15 実測
+- 青空文庫公開著作権なし版異同 39 組を走査し、単一改行を厳密な 1 段落境界（`"\n" not in text`）として Rust `harvest-diff` でアラインした結果、25 作品組から **415 件** の一次資料段落ペアを構築：`data/usir_v5_eval/real_revision_pairs_v1.jsonl`（SHA-256: `62da75271f453bd3a8f161d916fdf7b7b87138b773b564b737f90aee85b6b8e4`）。
+  - **内訳**: Band S=`40`（両窓1限定で上限40件抽出; 元候補プール837件）、Band M=`245`（目安30件以上 達成）、Band L=`130`（目安20件以上 達成）、片側複窓混在=`84`（目安20件以上 達成）。正書法同一=`381` 件、歴史的/現代仮名遣い異同=`34` 件（宮沢賢治『銀河鉄道の夜』初期形 vs 新潮文庫）。
+- 現行 F-15 ノイズ床 `docs/handoff/v10/paragraph_noise_floor_f15_all_novel.json`（SHA-256: `5a6095659d4ef7defeab238f7ffb7aed3a980d6c8a9a83d0ca229f4c11a05910`）で全 415 ペアを実行・Python/Rust パリティ検証（不一致 **0 件**）：`docs/handoff/v10/real_revision_pairs_v1_f15_harvest_summary.json`（SHA-256: `82e594f30741551bff62494b269758ae73e7f6e1aaae3900eb97f8183cd03456`）。格付け主張なし。
+
+### 5. 単体・統合テストおよびレポート同期
+- `pytest python/tests/v5/ -v`: **62 passed in 129.95s**（`test_b12_dice_kasane8_and_v1_dataset.py` 5 件含む全 62 件 PASS、凍結 B-8〜B-11 SHA-256 不変検証含む）。
+- 総合レポート：`docs/handoff/2026-11-13_usir_v5_stage_b12_report.md`、`Claude-Sync/inbox/2026-11-13_usir_v5_stage_b12_report.md`、`F:\マイドライブ\Claude-Sync\inbox\2026-11-13_usir_v5_stage_b12_report.md`。
 
 ---
 
