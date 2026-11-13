@@ -1,5 +1,5 @@
 # USIR v5 実装引継ぎ台帳 (HANDOFF)
-**最終更新日時**: 2026-11-13 10:30:00 JST  
+**最終更新日時**: 2026-11-13 13:35:00 JST  
 **ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`)  
 **関連リポジトリ**: `C:\dev\nishiki`（Lane B 境界線厳守・変更ゼロ保証）
 
@@ -359,11 +359,39 @@
 
 ---
 
-## 6. 現在の門番状態および引継ぎ事項
+## 6. Stage B-11 完了記録（2026-11-13）
+
+**実装コミットハッシュ**: `7592579` (`7592579812f4212faeb351f7753b2650cf5f39ce`, ブランチ: `feat/fable-v5-shootout`)
+
+### 6.1 実施内容と定量確定値
+1. **タスク1：Gate 3a 閾値の有限標本較正の実装反映**
+   - `experiments/gate3a_register_centering_eval.py` において、24D 連続コア空間（`ortho24_cont`）および対角場面分散 $\sigma^2_{\text{scene}, r}$ 分母を正準とし、外れ値判定閾値を漸近 $\chi^2_{0.95}$ ($d=6.0345$) から B-10 §4 の有限標本 Monte Carlo 帰無分布分位点（`seed=42`, `5000` 回試行, $n_r=16, m=15, \nu=14$, LOO Student-$t$ インフレ $1.2444\times$）へ切り替えた（`get_or_compute_b10_mc_quantiles` / `compute_b10_mc_quantiles`、`usir_v5_b10_gate3a_scene_scale_and_level3.json` 優先読込・未格納時再計算）。
+   - 24D 較正閾値: `mc_indep_p95 = 6.9267`, `mc_indep_p99 = 7.7032`, `mc_r4corr_p95 = 7.6574`, `mc_r4corr_p99 = 9.0381`。
+   - 64件ベンチマーク（`tier_c_modern_benchmark_expanded.jsonl`）再評価結果（Condition a, 無中心化・$\sigma^2_{\text{scene}, r}$ 分母）:
+     * **R4（$n=16$）**: `in_sample` $\chi^2_{0.95}=6.25\% \to$ MC 各閾値 **0.00%**; `shrinkage_loo` / `unregularized_loo` $\chi^2_{0.95}=25.00\% \to$ MC indep 95% **6.25%**, MC indep 99%・R4corr 95%/99% **0.00%**。
+     * **R1〜R3 プール（$n=48$）**: `in_sample` / `unregularized_loo` は MC indep 95%/99%・R4corr 95% で **100.00%**（R4corr 99% で 93.75%/91.67%）; `shrinkage_loo` は MC indep 95% **100.00%**, MC indep 99%・R4corr 95% **95.83%**, R4corr 99% **87.50%**。
+   - Condition (b)（Scheme 3 レジスター内 LOO 中心化、`shrinkage_loo`）は MC 閾値下で R4（6.25% / 0.00%）・R1〜R3（0.00%）となるが診断値に留め、Gate 3a 通過証拠に算入しない。Scheme 2 は参考値（同義反復的補正注記付き）のまま維持。
+   - **ガバナンス**: 閾値変更は「判定基準の較正」であり、**Gate 3a は `SHIFT_QUANTIFIED_NOT_PASSED`、Gate 3b は `GATE3B_FROZEN` を維持**。
+
+2. **タスク2：F-14 ハイブリッド判定・新 $\sigma$ 参照整合**
+   - `python/usir_py/v5/f14_hybrid_noise_floor.py` を新設（`python/usir_py/v5/__init__.py` に公開）。Rust（`kasane_core::IncrementalAnalyzer::split_sentences` / `TrajectoryAnalyzer::analyze`）と完全同一の文分割・窓数判定およびハイブリッド判定ルール（両側 $\le 1$ 窓 $\to$ 8D `both_single_window:8`、片側でも $\ge 2$ 窓 $\to$ 11D `any_multi_window:11`）を実装。
+   - F-14 再生成版テーブル `docs/handoff/v10/paragraph_noise_floor_all_novel.json`（SHA-256: `00C398144ABE13288451A6C297438E884574EEF42E0B221EE2369F302DB03435`, `--scope all-novel`, 46作品・10,859ペア, `ac_multi_window_per_dim_std`）および `docs/handoff/v10/ac_sigma_bootstrap_ci.json`（SHA-256: `FDFEF9522DE47BDB44C05A6AD2491875E048CC37E29D48D312E176BEBE80A964`, `nishiki` コミット `48b6eb7`/`fa14019`）を参照し、由来と非混同ガード（Gate 3a $\sigma_{\text{scene}, r}$ と harvest ノイズ床 $\sigma$ の峻別）を記録。
+   - `experiments/scale_separated_level3.py::evaluate_f14_hybrid_alignment_and_parity()` による一致検証結果（成果物: `data/usir_v5_eval/usir_v5_b11_gate3a_calibrated_and_f14_parity.json`）:
+     * **Set 1（青空文庫 10,859 隣接段落ペア）**: 不一致 **0 / 10,859 (0.00%)**（Band M 621件が 8D、1,331件が 11D）。
+     * **Set 2（U-6 86改稿ペア）**: Rust `harvest-diff` CLI で段落アライメントが成立した **77 / 77ペア（Dice $\ge 0.25$）で不一致 0件**（Class A 40/40, B 19/19, C 18/18）。残り 9ペア（`A_29, A_35, B_19, B_20, B_22, C_19, C_20, C_21, C_22`）は Dice $< 0.25$ により CLI 側が `kind="unaligned"` として除外する一方、Python 事前対応済み評価では A/C 6件を 8D、B 3件を 11D として評価。
+     * **Set 3（`STYLE_POLISH` 28ペア $\times$ 3粒度 = 84評価）**: `span_only` (22/6), `local_context` (7/21), `whole_scene` (0/28) 全84評価で Rust CLI 不一致 **0件**。
+
+3. **検証テスト・レポート同期**
+   - `python/tests/v5/test_b11_gate3a_and_f14_parity.py`（5テスト）を含む `pytest python/tests/v5/ -v`: **全 57 件 100% PASS** (133.62s)。
+   - 総合報告書: `Claude-Sync/inbox/2026-11-13_usir_v5_stage_b11_report.md`、`docs/handoff/2026-11-13_usir_v5_stage_b11_report.md`、`F:\マイドライブ\Claude-Sync\inbox\2026-11-13_usir_v5_stage_b11_report.md` に同期。
+
+---
+
+## 7. 現在の門番状態および引継ぎ事項
 
 - **現在のブランチ**: `feat/fable-v5-shootout`
-- **Gate 3a 状態**: **`SHIFT_QUANTIFIED_NOT_PASSED`**（分布シフト定量確認済み・無条件通過却下）
-- **Gate 3b 状態**: **`GATE3B_FROZEN`（凍結継続）**
+- **Gate 3a 状態**: **`SHIFT_QUANTIFIED_NOT_PASSED`**（有限標本 MC 較正後も現代散文の分布シフトは定量維持・無条件通過却下）
+- **Gate 3b 状態**: **`GATE3B_FROZEN`（凍結継続・着手禁止）**
   * 理由: 現代散文各ジャンル（R1〜R3）は青空文庫規範多様体から有意に乖離しており、手元原稿（層B-1）の安全吸入には Scheme 3 型のレジスター条件付き正規化パイプラインの配備と Orion 合意が不可欠。
-- **Stage B-11 状態**: **未着手・自動開始厳禁**（Orion 監査およびコーディネーター指示待ち）。
+- **Stage B-12 状態**: **未設計・未着手・自動開始厳禁**（Orion 監査およびコーディネーター指示待ち）。
 
