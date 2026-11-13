@@ -1,0 +1,242 @@
+{
+ "n_works_in_tsv": 216,
+ "n_pairs_multi": 1317,
+ "n_pairs_M": 456,
+ "sigma_recomputed_M": {
+  "ac_mean_velocity": 134.6068880072154,
+  "ac_max_sis": 0.13877132490208524,
+  "ac_coupling": 1.3760201761745554
+ },
+ "sigma_json_M": {
+  "ac_coupling": 1.3760201761745554,
+  "ac_max_sis": 0.1387713249020852,
+  "ac_mean_velocity": 134.60688800721542
+ },
+ "n_pairs_L": 861,
+ "sigma_recomputed_L": {
+  "ac_mean_velocity": 98.73687423326402,
+  "ac_max_sis": 0.15225416930901606,
+  "ac_coupling": 1.0298860864917125
+ },
+ "sigma_json_L": {
+  "ac_coupling": 1.0298860864917128,
+  "ac_max_sis": 0.1522541693090161,
+  "ac_mean_velocity": 98.7368742332641
+ },
+ "authors_first106_n": 10,
+ "authors_last110_n": 110,
+ "authors_overlap_first106_last110": 0,
+ "subset_sigma": {
+  "first106_M": {
+   "n_pairs": 323,
+   "n_works": 53,
+   "ac_mean_velocity": 130.91762535050083,
+   "ac_max_sis": 0.12768932529756372,
+   "ac_coupling": 1.3729518530621458
+  },
+  "first106_L": {
+   "n_pairs": 566,
+   "n_works": 54,
+   "ac_mean_velocity": 100.6575080130202,
+   "ac_max_sis": 0.14496031468309198,
+   "ac_coupling": 1.0286322826305894
+  },
+  "last110_M": {
+   "n_pairs": 133,
+   "n_works": 44,
+   "ac_mean_velocity": 143.12526755280015,
+   "ac_max_sis": 0.16256907926018802,
+   "ac_coupling": 1.3827237360816058
+  },
+  "last110_L": {
+   "n_pairs": 295,
+   "n_works": 39,
+   "ac_mean_velocity": 94.93029973927257,
+   "ac_max_sis": 0.1653389448013674,
+   "ac_coupling": 1.0316320927036675
+  },
+  "all216_M": {
+   "n_pairs": 456,
+   "n_works": 97,
+   "ac_mean_velocity": 134.6068880072154,
+   "ac_max_sis": 0.13877132490208524,
+   "ac_coupling": 1.3760201761745554
+  },
+  "all216_L": {
+   "n_pairs": 861,
+   "n_works": 93,
+   "ac_mean_velocity": 98.73687423326402,
+   "ac_max_sis": 0.15225416930901606,
+   "ac_coupling": 1.0298860864917125
+  }
+ },
+ "concentration": {
+  "216_M": {
+   "n_pairs": 456,
+   "n_authors": 53,
+   "n_works": 97,
+   "top1_author_share": 0.2916666666666667,
+   "top3_author_share": 0.4736842105263158,
+   "top10_author_share": 0.7478070175438596,
+   "effective_n_authors_invHHI": 8.521967213114756,
+   "top1_work_share": 0.07675438596491228,
+   "effective_n_works_invHHI": 38.22352941176471
+  },
+  "first106_M": {
+   "n_pairs": 323,
+   "n_authors": 9,
+   "n_works": 53,
+   "top1_author_share": 0.4117647058823529,
+   "top3_author_share": 0.6687306501547988,
+   "top10_author_share": 1.0,
+   "effective_n_authors_invHHI": 4.396317053642914,
+   "top1_work_share": 0.10835913312693499,
+   "effective_n_works_invHHI": 21.867323412282538
+  },
+  "216_L": {
+   "n_pairs": 861,
+   "n_authors": 48,
+   "n_works": 93,
+   "top1_author_share": 0.22415795586527293,
+   "top3_author_share": 0.5261324041811847,
+   "top10_author_share": 0.7967479674796749,
+   "effective_n_authors_invHHI": 8.311984930539204,
+   "top1_work_share": 0.08130081300813008,
+   "effective_n_works_invHHI": 27.54508973358601
+  },
+  "first106_L": {
+   "n_pairs": 566,
+   "n_authors": 9,
+   "n_works": 54,
+   "top1_author_share": 0.3409893992932862,
+   "top3_author_share": 0.7844522968197879,
+   "top10_author_share": 1.0,
+   "effective_n_authors_invHHI": 3.9491617357001974,
+   "top1_work_share": 0.12014134275618374,
+   "effective_n_works_invHHI": 16.9986203969012
+  }
+ },
+ "influence": {
+  "M": {
+   "ac_mean_velocity": {
+    "loo_work_rel_min": -0.0691662107290365,
+    "loo_work_rel_max": 0.025389821525811485,
+    "max_abs_work": 13,
+    "max_abs_work_file": "novel_000035_000275.txt",
+    "max_abs_work_author": "000035",
+    "loo_author_rel_min": -0.09409002570107561,
+    "loo_author_rel_max": 0.07976236936167869,
+    "max_abs_author": "000035"
+   },
+   "ac_max_sis": {
+    "loo_work_rel_min": -0.030160879532225127,
+    "loo_work_rel_max": 0.027875537284994367,
+    "max_abs_work": 0,
+    "max_abs_work_file": "novel_000148_000752.txt",
+    "max_abs_work_author": "000148",
+    "loo_author_rel_min": -0.0254001250979764,
+    "loo_author_rel_max": 0.04849572597321061,
+    "max_abs_author": "000148"
+   },
+   "ac_coupling": {
+    "loo_work_rel_min": -0.00528788246137224,
+    "loo_work_rel_max": 0.005572828675747932,
+    "max_abs_work": 66,
+    "max_abs_work_file": "heldout_000148_000761.txt",
+    "max_abs_work_author": "000148",
+    "loo_author_rel_min": -0.0039027486283232937,
+    "loo_author_rel_max": 0.00637193000667069,
+    "max_abs_author": "001095"
+   }
+  },
+  "L": {
+   "ac_mean_velocity": {
+    "loo_work_rel_min": -0.041797943868899345,
+    "loo_work_rel_max": 0.03212323624710378,
+    "max_abs_work": 104,
+    "max_abs_work_file": "heldout_001383_056847.txt",
+    "max_abs_work_author": "001383",
+    "loo_author_rel_min": -0.10312103533883277,
+    "loo_author_rel_max": 0.07008059644403075,
+    "max_abs_author": "001383"
+   },
+   "ac_max_sis": {
+    "loo_work_rel_min": -0.01904599309191557,
+    "loo_work_rel_max": 0.009654393682355211,
+    "max_abs_work": 170,
+    "max_abs_work_file": "heldout3_000941_004491.txt",
+    "max_abs_work_author": "000941",
+    "loo_author_rel_min": -0.01904599309191557,
+    "loo_author_rel_max": 0.022989468294354998,
+    "max_abs_author": "000148"
+   },
+   "ac_coupling": {
+    "loo_work_rel_min": -0.009023899024630744,
+    "loo_work_rel_max": 0.02136790190163529,
+    "max_abs_work": 165,
+    "max_abs_work_file": "heldout3_000810_050686.txt",
+    "max_abs_work_author": "000810",
+    "loo_author_rel_min": -0.008048938378783621,
+    "loo_author_rel_max": 0.02136790190163529,
+    "max_abs_author": "000810"
+   }
+  }
+ },
+ "max_sis_M_decomp": {
+  "n_pairs_old": 323,
+  "n_pairs_new": 133,
+  "sigma_old": 0.12768932529756372,
+  "sigma_new_only": 0.16256907926018802,
+  "sigma_all": 0.13877132490208524,
+  "sigma_ratio_new_over_old": 1.2731610796857253,
+  "var_all": 0.019257480615080102,
+  "var_old": 0.016304563794947047,
+  "var_new": 0.02642870553150529,
+  "kurtosis_excess_all": 2.889543377773901,
+  "kurtosis_excess_old": 2.185052608192507,
+  "kurtosis_excess_new": 2.9316456301482354,
+  "frac_var_from_top5_pairs_all": 0.16921570509678896,
+  "sigma_all_drop_top5_abs": 0.1271296038786792,
+  "sigma_all_trim_1pct_each": 0.12331768974070596,
+  "sigma_old_trim_1pct_each": 0.11418532523426199,
+  "mad_sigma_old": 0.09241426910161972,
+  "mad_sigma_all": 0.09906370237469672,
+  "top5_pairs": [
+   {
+    "work_idx": 182,
+    "file": "heldout3_001157_043646.txt",
+    "author": "001157",
+    "diff": 0.6556075811386108
+   },
+   {
+    "work_idx": 202,
+    "file": "heldout3_001692_055044.txt",
+    "author": "001692",
+    "diff": 0.5351576805114746
+   },
+   {
+    "work_idx": 0,
+    "file": "novel_000148_000752.txt",
+    "author": "000148",
+    "diff": 0.5218530297279358
+   },
+   {
+    "work_idx": 146,
+    "file": "heldout3_000303_004728.txt",
+    "author": "000303",
+    "diff": -0.5025937557220459
+   },
+   {
+    "work_idx": 141,
+    "file": "heldout3_000280_059236.txt",
+    "author": "000280",
+    "diff": 0.5002682209014893
+   }
+  ],
+  "old106_work_bootstrap_sigma_p2.5_p97.5": [
+   0.10701647097137237,
+   0.15051929510143527
+  ],
+  "old106_work_bootstrap_note": "B=5000, seed=20261114, resample 'first106' contributing works with replacement"
+ }
+}
