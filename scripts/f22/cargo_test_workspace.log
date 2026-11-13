@@ -1,0 +1,1026 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.01s
+     Running unittests src\lib.rs (target\debug\deps\kamae_core-77e59fbc7bfdf936.exe)
+
+running 11 tests
+test auditor::tests::test_stem_cooccurrence_and_dialogue_isolation ... ok
+test tests::test_blockquote_sycophancy_ignored_no_false_positive ... ok
+test tests::test_english_sycophancy_detection ... ok
+test tests::test_modality_leak_on_hypothesis_and_hole ... ok
+test tests::test_honest_grounded_and_qualified_document_passes ... ok
+test tests::test_quotation_spans_ignored_no_false_positive ... ok
+test transaction::tests::test_transaction_commit_on_grounded_evidence ... ok
+test tests::test_sycophancy_and_overconfidence_detection ... ok
+test transaction::tests::test_transaction_abort_on_orphan_claim ... ok
+test tests::test_dialogue_parser_and_epistemic_flip ... ok
+test transaction::tests::test_transaction_commit_on_unverified_claim ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\main.rs (target\debug\deps\kasane_cli-101eddc25a417e37.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\readme_commands.rs (target\debug\deps\readme_commands-948457de051dd878.exe)
+
+running 8 tests
+test spectrum_json_output_works ... ok
+test readme_quickstart_default_rulebook ... ok
+test json_output_follows_the_public_contract ... ok
+test readme_quickstart_hardboiled_rulebook ... ok
+test spectrum_option_outputs_profile_bars ... ok
+test validate_rejects_invalid_rulebook_with_nonzero_exit ... ok
+test trajectory_option_outputs_sparklines_and_json ... ok
+test every_shipped_preset_runs_and_validates ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s
+
+     Running unittests src\lib.rs (target\debug\deps\kasane_core-b8bfc18d7be68326.exe)
+
+running 29 tests
+test byor::case_frame_table::tests::test_boundary_dictionary_functions ... ok
+test byor::case_frame_table::tests::test_conventional_idiom_pairs_table_sorted_and_searchable ... ok
+test byor::case_frame_table::tests::test_nominalizing_suffix_matching ... ok
+test byor::case_frame_table::tests::test_longest_prefix_predicate_matching ... ok
+test byor::case_frame_table::tests::test_sentence_terminal_symbols_sorted_and_searchable ... ok
+test byor::case_frame_table::tests::test_tool_artifact_table_binary_search_completeness ... ok
+test formatter::tests::test_cadence_smoothing_3_consecutive ... ok
+test byor::clause::tests::test_nominalization_formal_nouns_excluded_from_relative_clause ... ok
+test byor::clause::tests::test_clause_analysis_subordinate_chain ... ok
+test byor::clause::tests::test_relative_clause_adnominal_structure ... ok
+test byor::context_flow::tests::test_context_blocks_and_dialogue_cut_in ... ok
+test byor::context_flow::tests::test_dialogue_at_end_is_not_cut_in ... ok
+test byor::case_frame_table::tests::test_predicate_constraints_table_binary_search_completeness ... ok
+test byor::clause::tests::test_te_clause_with_comma_and_auxiliary_exclusion ... ok
+test byor::modality::tests::test_modality_rejects_false_positive_without_verb ... ok
+test byor::modality::tests::test_find_chunks_obligation_and_irreversible ... ok
+test optimizer::tests::test_cadence_deadzone_detection_and_smoothing ... ok
+test optimizer::tests::test_chunk_density_bounds ... ok
+test byor::modality::tests::test_find_chunks_emotional_and_epistemic ... ok
+test optimizer::tests::test_cognitive_overflow_depth_limiter ... ok
+test token::tests::test_char_offset_tracker_ascii_and_cjk ... ok
+test types::tests::test_cognitive_span_layout ... ok
+test types::tests::test_semantic_jump_span_ffi_layout ... ok
+test parser::tests::test_nested_context_routing_stack ... ok
+test formatter::tests::test_fenced_code_block_and_deontic_protection ... ok
+test token::tests::test_char_offset_tracker_surrogate_pairs_js_slice_equivalence ... ok
+test byor::case_frame_table::tests::test_noun_semantics_table_binary_search_completeness ... ok
+test formatter::tests::test_paragraph_decomposition_over_400_chars ... ok
+test incremental::tests::test_incremental_matches_full_analysis ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\audit_17_corpus.rs (target\debug\deps\audit_17_corpus-1b88436f26f8fe8d.exe)
+
+running 2 tests
+test test_generate_17_corpus_audit_data ... ignored, Heavy 1.06M-char corpus benchmark; run with: cargo test --release -- --ignored
+test test_fast_corpus_sample_smoke ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\byor_discrimination_test.rs (target\debug\deps\byor_discrimination_test-480a1614a5590cd5.exe)
+
+running 2 tests
+test test_feature_breakdown_specificity ... ok
+test test_hardboiled_vs_pure_literature_micro_discrimination ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\byor_test.rs (target\debug\deps\byor_test-434bd7b4849e91fd.exe)
+
+running 22 tests
+test validation_reports_all_problems ... ok
+test empty_input_scores_zero_without_events ... ok
+test penalties_are_not_expressible ... ok
+test default_rulebook_is_embedded_and_valid ... ok
+test unknown_detector_kind_is_rejected ... ok
+test legacy_distance_based_format_is_rejected ... ok
+test max_total_caps_awarded_points_and_flags_capped ... ok
+test modality_cluster_rewards_functional_expressions ... ok
+test phrase_offsets_are_utf8_byte_ranges_of_the_input ... ok
+test taigen_dome_rewards_noun_ending ... ok
+test points_per_1k_chars_normalizes_length ... ok
+test metaphor_is_rewarded_not_penalized ... ok
+test subordinate_clause_run_and_concessive_rewards_complex_syntax ... ok
+test dialogue_cut_in_and_alternation_rewards_tempo_dynamics ... ok
+test context_filter_separates_narrative_and_dialogue ... ok
+test long_breath_rewards_clauses_without_pause ... ok
+test kango_run_rewards_dense_kanji_compounds ... ok
+test tool_artifact_distinguishes_props_from_body_and_nature ... ok
+test breath_comfortable_mora_does_not_change_score ... ok
+test all_shipped_rulebooks_are_valid ... ok
+test score_is_never_negative_and_equals_sum_of_positive_events ... ok
+test short_sentence_streak_needs_min_run_and_rejects_subordinate_clauses ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\case_frame_test.rs (target\debug\deps\case_frame_test-02cedb666d3559b7.exe)
+
+running 6 tests
+test test_complex_clause_scoping_prevents_false_positive_jumps ... ok
+test test_syntax_no_depth_and_ga_stack ... ok
+test test_physical_selectional_preference_is_conventional ... ok
+test test_selectional_violation_is_reported_as_semantic_jump ... ok
+test test_unknown_noun_is_not_claimed_to_be_physical ... ok
+test test_linguistic_coverage_focus_and_quotation_and_adjectives ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\contract_test.rs (target\debug\deps\contract_test-e6b7819d9d1f09bc.exe)
+
+running 3 tests
+test test_complex_dialogue_and_clause_pipeline_contract ... ok
+test contract_has_version_and_required_fields ... ok
+test analysis_contract_matches_golden_v0 ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\contrastive_benchmark_test.rs (target\debug\deps\contrastive_benchmark_test-e5fadb7d0db34dcc.exe)
+
+running 6 tests
+test test_contrastive_showing_vs_telling ... ok
+test test_contrastive_cadence_vs_arhythmic_prose ... ok
+test test_contrastive_speculation_vs_concrete_and_confession ... ok
+test test_contrastive_inner_confession_vs_objective_observation ... ok
+test test_contrastive_trajectory_attractors ... ok
+test test_contrastive_staccato_vs_polyphony_bidirectional ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\generate_corpus_reports.rs (target\debug\deps\generate_corpus_reports-30e46a2dbdc97006.exe)
+
+running 1 test
+test test_generate_corpus_reports_and_summary ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.40s
+
+     Running tests\incremental_byor_test.rs (target\debug\deps\incremental_byor_test-47f63de2ef38ed0f.exe)
+
+running 3 tests
+test test_incremental_consecutive_keiki_and_relative_clauses ... ok
+test test_incremental_quotation_and_context_edits ... ok
+test test_incremental_complex_clauses_and_mid_sentence_edits ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\lexical_independence_test.rs (target\debug\deps\lexical_independence_test-ba3292923dc9b06a.exe)
+
+running 2 tests
+test test_radical_semantics_comparison_tension ... ok
+test test_lexical_independence_comparison_showing ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\mora_test.rs (target\debug\deps\mora_test-40c4ffa1292110a5.exe)
+
+running 2 tests
+test test_mora_count_yoon_and_sokuon ... ok
+test test_punctuation_and_breath_breaks ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\phase2_ffi_and_dead_metaphor_test.rs (target\debug\deps\phase2_ffi_and_dead_metaphor_test-fcbe31ea6a65bdf3.exe)
+
+running 4 tests
+test test_char_offset_tracker_surrogate_pairs_and_js_slice_matching ... ok
+test test_semantic_jump_span_ffi_size_and_alignment ... ok
+test test_incremental_analyzer_zero_copy_buffer_and_surrogate_offsets ... ok
+test test_track_k1_dead_metaphor_attenuation_and_false_positive_suppression ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\stylistic_profile_test.rs (target\debug\deps\stylistic_profile_test-d19f01736350bb91.exe)
+
+running 14 tests
+test test_5d_rulebook_detector_disjoint_orthogonality ... ok
+test test_blind_spots_cadence_and_speculation ... ok
+test test_cadence_score_metrical_rhythm ... ok
+test test_blind_spot_trajectory_window_aliasing_smoothing ... ok
+test test_stylistic_profile_computation ... ok
+test test_semantic_tension_cliche_attenuation_and_adnominal_metaphor ... ok
+test test_polyphony_and_speculation_orthogonality ... ok
+test test_incremental_spectrum_and_local_drift ... ok
+test test_speculation_score_abstract_vs_showing_vs_confession ... ok
+test test_trajectory_point_attractor_and_stagnation_spans ... ok
+test test_stylistic_trajectory_gear_shift_and_phase_coupling ... ok
+test test_trajectory_strange_attractor_multiphase_transitions ... ok
+test test_trajectory_limit_cycle_alternating_respiration ... ok
+test test_scale_invariance_long_text_no_saturation_decay ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\tokenize_trie_test.rs (target\debug\deps\tokenize_trie_test-fb8f37157cdcead4.exe)
+
+running 4 tests
+test test_compact_trie_custom_entry ... ok
+test test_adjective_stem_and_suffix_slicing ... ok
+test test_auxiliary_verb_slicing ... ok
+test test_particle_compound_slicing ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\upstream_sync_test.rs (target\debug\deps\upstream_sync_test-4549ad67c0d47504.exe)
+
+running 3 tests
+test test_32b_cognitive_span_layout_and_alignment ... ok
+test test_dialogue_scope_flag_and_sycophancy_attenuation ... ok
+test test_single_pass_cognitive_extraction_and_incremental_ffi ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\kasane_wasm-fb7f09eb207e8ede.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\web.rs (target\debug\deps\web-0f8a22ed073b93e1.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_cli-30da3fad27e5b253.exe)
+
+running 56 tests
+test diagram::tests::test_sanitize_label_preserves_fullwidth_brackets ... ok
+test diff_parser::tests::test_parse_hunk_header_variants ... ok
+test diff_parser::tests::test_extract_file_path ... ok
+test diagram::tests::test_cyclic_ir_diagram_rendering ... ok
+test gate3a_ppm::tests::jsonl_source_class_and_provenance ... ok
+test gate3a_ppm::tests::short_texts_counted_as_none_with_min_tokens ... ok
+test composer::tests::test_compose_english_chapters ... ok
+test paragraph_noise::tests::adjacent_diffs_are_within_work_b_minus_a ... ok
+test paragraph_noise::tests::f15_overlap_ratio_and_pool_rule ... ok
+test paragraph_noise::tests::f14_ac_sigma_excludes_single_window_and_mixed_pairs ... ok
+test paragraph_noise::tests::f16_log_ratio_drops_degenerate_resamples ... ok
+test gate3a_ppm::tests::report_has_categories_source_breakdown_and_d ... ok
+test paragraph_noise::tests::ortho28_vector_drops_comma_dims_and_matches_names ... ok
+test gate3a_ppm::tests::empty_inputs_are_errors ... ok
+test paragraph_noise::tests::python_compare_reports_zero_for_rounded_equal ... ok
+test paragraph_noise::tests::split_matches_python_rule ... ok
+test paragraph_noise::tests::std_is_population_with_mean_removed ... ok
+test diagram::tests::test_render_mermaid_and_dot_and_excalidraw ... ok
+test profiles::tests::test_architecture_spec_profile_calibration ... ok
+test profiles::tests::test_business_communication_profile_calibration ... ok
+test composer::tests::test_audit_chapter_summary_output ... ok
+test profiles::tests::test_detect_profile_from_path_heuristics ... ok
+test profiles::tests::test_literary_fiction_relaxes_gr_and_rc_thresholds ... ok
+test composer::tests::test_compose_json_serialization_roundtrip ... ok
+test sparsity::tests::constant_zero_and_continuous ... ok
+test sparsity::tests::schema_v2_adds_flags_without_touching_values ... ok
+test sparsity::tests::space_json_counts_classes ... ok
+test profiles::tests::test_literary_fiction_preserves_sycophancy_checks_and_kasane_trajectory ... ok
+test tests::test_compute_sha256_hex_golden_vector ... ok
+test paragraph_noise::tests::f16_log_ratio_bootstrap_detects_scale_difference_and_is_deterministic ... ok
+test profiles::tests::test_literary_fiction_passes_unsupported_prose_that_fails_technical_profile ... ok
+test tests::test_full_audit_english_slop_fails_with_prescriptions ... ok
+test tests::test_regression_soften_assertion_and_modality_protection ... ok
+test tests::test_full_audit_english_solid_text_passes ... ok
+test tests::test_apply_auto_fixes_english_overconfidence_and_achieves_pass ... ok
+test tests::test_apply_auto_fixes_preserves_subsequent_text_tokens ... ok
+test tests::test_full_audit_slop_text_fails ... ok
+test tests::test_suggested_repair_prompt_generation ... ok
+test gate3a_ppm::tests::load_items_dir_and_file ... ok
+test tests::test_full_audit_self_declared_fraudulent_ir_fails_and_generates_discredit_prescriptions ... ok
+test composer::tests::test_compose_well_crafted_multi_chapter_passes ... ok
+test tests::test_apply_auto_fixes_cleans_sycophancy_and_achieves_pass ... ok
+test tests::test_apply_auto_fixes_handles_mixed_sycophancy_and_overconfidence ... ok
+test tests::test_audit_manifest_emission_structure ... ok
+test tests::test_full_audit_solid_grounded_text_passes ... ok
+test composer::tests::test_compose_stagnation_slump_and_unresolved_foreshadowing_fails_and_generates_patches ... ok
+test composer::tests::test_compose_on_dir_with_temp_files ... ok
+test tests::test_apply_auto_fixes_lowers_overconfident_modality_and_achieves_pass ... ok
+test paragraph_noise::tests::b16_select_all_106_combines_manifests_and_tracks_missing ... ok
+test paragraph_noise::tests::b17_select_all_216_includes_heldout3_prefix ... ok
+test optimizer::tests::test_optimize_dry_run_and_apply ... ok
+test tests::test_opt_levels_execution_behavior ... ok
+test paragraph_noise::tests::f15_cluster_bootstrap_is_deterministic_and_wider_than_pair_when_clustered ... ok
+test tests::test_print_unified_diff_large_10k_lines_performance ... ok
+test paragraph_noise::tests::f20_max_sis_pool_frozen_while_others_unchanged ... ok
+test paragraph_noise::tests::f17_pool_requires_positive_equivalence_evidence ... ok
+
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.83s
+
+     Running unittests src\main.rs (target\debug\deps\nishiki-ba5763a756174b37.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\diff_harvester_test.rs (target\debug\deps\diff_harvester_test-9849298becf3f328.exe)
+
+running 69 tests
+test align_empty_sides ... ok
+test align_insertion_deletion_and_order ... ok
+test align_split_and_merge_are_unaligned ... ok
+test mangaichi_is_excluded_from_numerals ... ok
+test heuristic_entities_cases ... ok
+test negation_known_false_positives_and_misses ... ok
+test negation_corpus_sentences_f9 ... ok
+test negation_past_nanda_counted_once ... ok
+test negation_morphemes_measured_on_tokenizer ... ok
+test negation_modality_excluded ... ok
+test noise_floor_three_formats_are_detected ... ok
+test numeral_closed_class_rules_reject_lexical_words ... ok
+test numeral_counters_added_f9 ... ok
+test numeral_edge_cases_f10 ... ok
+test custom_extractor_and_nonfinite_sanitized ... ok
+test default_extractor_names_are_stable ... ok
+test numeral_known_limits_are_recorded ... ok
+test numeral_values_and_notation ... ok
+test numeral_idiom_exclusions_f9 ... ok
+test entities_declared_list_takes_precedence ... ok
+test paragraph_noise_floor_format_is_detected_and_named ... ok
+test paragraph_noise_floor_kasane11_malformed_is_error ... ok
+test pair_record_schema_fields ... ok
+test corpus_numeral_tally_f9 ... ok
+test numeral_notation_change_is_style_polish_f10 ... ok
+test harvest_texts_boundaries ... ok
+test crlf_bom_equivalence ... ok
+test negation_lexical_prefix_does_not_fire ... ok
+test negation_guard_tense_change_stays_style_polish ... ok
+test negation_double_negation_is_excluded_and_recorded ... ok
+test ortho_noise_floor_ratio_and_meta ... ok
+test ortho_spaces_v1_changes_more_dims_than_v2 ... ok
+test numeral_juppun_adverb_vs_time ... ok
+test paragraph_noise_floor_ratios_cover_v2_28_only ... ok
+test ortho_spaces_v2_comma_deletion_changes_only_comma_dims ... ok
+test numeral_approximate_sou_is_taken_as_unit_value ... ok
+test negation_guard_flip_is_rewrite ... ok
+test split_blank_line_and_newline_fallback ... ok
+test split_boundary_inputs ... ok
+test split_sentences_cases ... ok
+test paragraph_noise_floor_real_file ... ok
+test content_rewrite_examples ... ok
+test noise_floor_ratio_summary_has_mean_and_median ... ok
+test paragraph_noise_floor_kasane11_evidence_file ... ok
+test noise_floor_ratio_cases ... ok
+test pole_noise_floor_is_reference_only ... ok
+test paragraph_noise_floor_kasane11_block_synthetic ... ok
+test deterministic_output ... ok
+test numeral_guard_changes_value_is_rewrite ... ok
+test unchanged_and_ambiguous_and_degenerate ... ok
+test thresholds_are_overridable ... ok
+test u6_threshold_profiles_switch_and_record_scope ... ok
+test sentence_level_insert_delete_is_ambiguous ... ok
+test cli_ortho_spaces_option_and_noise_floor_files ... ok
+test sentence_level_keeps_long_style_polish ... ok
+test sentence_level_known_residual_false_passes ... ok
+test sentence_level_local_rewrite_in_long_paragraph ... ok
+test style_polish_only_filters ... ok
+test numeral_guard_notation_variants_stay_style_polish ... ok
+test style_polish_examples ... ok
+test python_reference_vectors_agree ... ok
+test python_reference_40_inputs_agree ... ok
+test real_text_rashomon_edit ... ok
+test watch_out_as_jsonl_file ... ok
+test watch_once_snapshot_then_update ... ok
+test cli_harvest_diff_out_and_flags ... ok
+test cli_errors_do_not_panic ... ok
+test very_long_paragraph ... ok
+test guards_do_not_fire_on_mechanical_style_edits_in_real_paragraphs ... ok
+
+test result: ok. 69 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.33s
+
+     Running tests\empirical_benchmark_test.rs (target\debug\deps\empirical_benchmark_test-f28405e18577f712.exe)
+
+running 1 test
+test test_empirical_human_correlation_and_precision_recall_benchmark ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests\f19_ci_procedures_evidence_test.rs (target\debug\deps\f19_ci_procedures_evidence_test-4b8a9c66cb2c53d2.exe)
+
+running 2 tests
+test f19_margin_unchanged_and_real_data_ci_self_consistent ... ok
+test f19_max_sis_upper_type1_exceeds_g1_for_all_procedures ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\fixture_provenance_test.rs (target\debug\deps\fixture_provenance_test-2b69f282a7a6ccde.exe)
+
+running 2 tests
+test sha256_known_vector ... ok
+test provenance_hashes_hold_for_either_line_ending ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\gate3a_ppm_shift_test.rs (target\debug\deps\gate3a_ppm_shift_test-4c55f800c6432683.exe)
+
+running 2 tests
+test cli_errors_on_missing_inputs_and_unknown_option ... ok
+test cli_run_on_fixtures_reports_all_categories ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests\invariants_test.rs (target\debug\deps\invariants_test-7b8ca8f95c3e31c3.exe)
+
+running 37 tests
+test inv5_fix_non_destructive_and_convergence ... ok
+test test_inv10_grounded_reversal_allowed ... ok
+test inv4_toulmin_dag_structure ... ok
+test test_inv10_steadfast_honest_argument_pass ... ok
+test test_inv11_cadence_monotony_deadzone ... ok
+test test_inv10_ungrounded_flip_detection ... ok
+test test_inv11_chunk_density_bounds ... ok
+test test_inv11_depth_limiter_cognitive_overflow ... ok
+test test_inv13_deontic_and_quoted_invariance ... ok
+test test_inv13_cadence_smoothing_and_ast_isomorphism ... ok
+test test_inv14_cfg_combinator_deterministic_parsing ... ok
+test test_inv15_transaction_abort_on_epistemic_violation ... ok
+test test_inv7_action_first_diagnostic_prescription ... ok
+test test_inv15_transaction_commit_on_grounded_output ... ok
+test test_inv15_swarm_echo_chamber_interception ... ok
+test test_inv7_explicit_unverified_tag_exemption ... ok
+test test_inv7_hedge_debt_epistemic_bankruptcy ... ok
+test test_inv13_paragraph_decomposition ... ok
+test inv2_epistemic_assertion_and_grounding ... ok
+test inv1_deontic_normative_protection ... ok
+test inv3_contextual_scope_and_negation_exclusion ... ok
+test test_inv14_syntactic_ambiguity_warning ... ok
+test test_inv14_unambiguous_spec_passes ... ok
+test test_inv8_ascii_art_bracket_exclusion_guard ... ok
+test test_inv8_broken_file_link_error ... ok
+test test_inv8_undefined_symbol_linker_error ... ok
+test test_inv12_unproven_requirement_error ... ok
+test test_inv8_duplicate_symbol_error ... ok
+test test_inv8_valid_multi_doc_link_pass ... ok
+test test_inv8_code_block_bracket_exclusion_guard ... ok
+test test_inv9_valid_modality_contract_pass ... ok
+test test_inv11_optimize_cli_subcommand ... ok
+test test_inv9_modality_contract_violation_error ... ok
+test test_inv12_proven_requirement_pass ... ok
+test test_inv9_link_diagram_mermaid_output ... ok
+test test_inv13_fmt_cli_subcommand ... ok
+test inv6_self_dogfooding_gate ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests\paragraph_noise_floor_test.rs (target\debug\deps\paragraph_noise_floor_test-cf2a16aa16922217.exe)
+
+running 18 tests
+test f18_band_l::band_l_with_only_single_and_mixed_pairs_has_no_ac_sigma ... ok
+test f18_band_l::single_window_and_mixed_pairs_never_enter_ac_sigma ... ok
+test f18_band_l::only_both_multi_pairs_define_ac_sigma_and_extra_pairs_do_not_change_it ... ok
+test short_pair_uses_band_s_with_eight_active_dims ... ok
+test floor_without_bands_behaves_as_f12 ... ok
+test all_novel_noise_floor_loads ... ok
+test f13_evidence_bands_load_and_s_band_dead_dims_have_zero_sigma ... ok
+test works12_rust_noise_floor_loads ... ok
+test f14_preconditions_fixture_window_counts ... ok
+test f14_both_single_window_is_eight_dims_even_in_band_m ... ok
+test f14_floor_without_multi_sigma_uses_band_sigma_for_eleven_dims ... ok
+test f14_both_multi_window_is_eleven_dims ... ok
+test rule_v2_mixed_pair_ac_values_do_not_affect_ratios ... ok
+test f14_one_side_multi_window_is_eight_dims_under_rule_v2 ... ok
+test rule_v2_three_states_dimension_count ... ok
+test long_pair_uses_band_l_with_eleven_dims_and_overall_flag_restores_f12 ... ok
+test f15_mixed_window_pair_flag ... ok
+test f18_band_l_single_window_pair_is_eight_dim_and_ac_sigma_unused ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+     Running tests\phase_a2_pr_audit_test.rs (target\debug\deps\phase_a2_pr_audit_test-d2d3b828ac96b574.exe)
+
+running 3 tests
+test test_sarif_v210_schema_compliance ... ok
+test test_changed_lines_filtering ... ok
+test test_github_suggestion_output ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\phase_a3_mcp_test.rs (target\debug\deps\phase_a3_mcp_test-08e9be49f1cb3c46.exe)
+
+running 5 tests
+test test_compiler_diagnostic_formatter_pass ... ok
+test test_compiler_diagnostic_formatter_violation ... ok
+test test_1_turn_self_correction_loop ... ok
+test test_mcp_guard_transaction_protocol_integration ... ok
+test test_mcp_server_protocol_integration ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests\pilot50_readable_test.rs (target\debug\deps\pilot50_readable_test-75ab219009846fb5.exe)
+
+running 1 test
+test pilot_50_scenes_parse_as_scene_annotation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\pr_audit_diff_integration_test.rs (target\debug\deps\pr_audit_diff_integration_test-df2f149bd70340f3.exe)
+
+running 3 tests
+test test_parse_git_diff_hunks ... ok
+test test_pr_audit_sarif_aggregation ... ok
+test test_pr_audit_cli_diff_file_e2e ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests\profile_test.rs (target\debug\deps\profile_test-f2e30724032829a1.exe)
+
+running 3 tests
+test profiles_a_work_with_six_pole_metrics ... ok
+test reports_errors_but_still_profiles_good_works ... ok
+test binary_prints_json_and_sets_exit_code ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\real_world_stress_test.rs (target\debug\deps\real_world_stress_test-3e7dd90eed8199c7.exe)
+
+running 7 tests
+test test_phase9_cross_chapter_temporal_and_foreshadowing_linker ... ok
+test test_stress_4_sarif_v210_schema_integrity ... ok
+test test_stress_1_crlf_lf_mixed_and_surrogate_pairs ... ok
+test test_stress_10_chapters_150k_chars_cross_file_linker_throughput ... ok
+test test_stress_3_real_world_open_source_documents ... ok
+test test_stress_5_boundary_and_fuzz_resilience ... ok
+test test_stress_2_malformed_markdown_fuzzing ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.30s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_core-0ebd89e03d328462.exe)
+
+running 11 tests
+test tests::test_belnap_bit_flags_serialization_deserialization ... ok
+test tests::test_cognitive_flags_bit_constants ... ok
+test tests::test_analyze_cognitive_spans_orphan_claim ... ok
+test tests::test_analyze_cognitive_spans_sycophancy_slop ... ok
+test tests::test_analyze_cognitive_spans_tautological_warrant ... ok
+test tests::test_is_span_in_dialogue_brackets ... ok
+test tests::test_cognitive_span_32byte_layout_size_align_offsets ... ok
+test tests::test_wasm_exports ... ok
+test tests::test_nishiki_core_toulmin_cycle_tautology_and_sycophancy ... ok
+test tests::test_round_trip_serialization_deserialization ... ok
+test tests::test_dialogue_scope_sycophancy_attenuation_and_flag_suppression ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\fingerprint_test.rs (target\debug\deps\fingerprint_test-9f847330dbc9b614.exe)
+
+running 7 tests
+test test_audit_text_convenience_method ... ok
+test test_heterogeneous_texts_distinct_deviation ... ok
+test test_json_roundtrip_serialization ... ok
+test test_homogeneous_texts_high_similarity ... ok
+test test_empty_and_boundary_input_robustness ... ok
+test test_extraction_accuracy_and_finite_metrics ... ok
+test test_corpus_real_data_stress_test ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_discourse-49a05b75649cbe50.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_fractal-47c3d92994e76ebe.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\fractal.rs (target\debug\deps\fractal-b7c6e79661972cc2.exe)
+
+running 6 tests
+test hvg_matches_naive_definition_including_ties ... ok
+test hvg_of_white_noise_matches_theory_and_edge_count_is_linear ... ok
+test mfdfa_is_total ... ok
+test multifractal_cascade_is_wider_than_monofractal ... ok
+test white_noise_has_hurst_half_and_random_walk_one_and_half ... ok
+test persistent_series_has_positive_memory_and_shuffle_removes_it ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.09s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_geom-fba9da2afb938f5d.exe)
+
+running 6 tests
+test simplex::tests::jeffreys_degenerate_inputs_give_valid_distribution ... ok
+test simplex::tests::jeffreys_top3_matches_hand_values ... ok
+test simplex::tests::softmax_degenerate_inputs ... ok
+test simplex::tests::softmax_is_shift_invariant_and_stable ... ok
+test simplex::tests::sqrt_lift_degenerate_inputs ... ok
+test simplex::tests::sqrt_lift_is_unit_norm ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\properties.rs (target\debug\deps\properties-2b66bdf5c0a5aa44.exe)
+
+running 13 tests
+test accel_is_nonzero_at_a_turn ... ok
+test accel_vanishes_on_uniformly_sampled_geodesic ... ok
+test angle_agrees_with_acos_away_from_zero ... ok
+test antipodal_points_do_not_panic_or_produce_nan ... ok
+test identical_points_give_exact_zeros ... ok
+test degenerate_inputs_never_panic_or_emit_non_finite ... ok
+test exp_inverts_log ... ok
+test log_map_norm_equals_angle_and_is_tangent ... ok
+test parallel_transport_preserves_norm_and_tangency ... ok
+test short_paths_return_empty_series ... ok
+test tiny_angles_stay_accurate ... ok
+test transport_of_velocity_is_minus_reverse_log ... ok
+test top3_rank_weights_give_coarse_discrete_angles ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\main.rs (target\debug\deps\nishiki_hardcore-dd5ae74dd538e074.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_ot-b13415fc0ea4fedd.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\ot.rs (target\debug\deps\ot-3bc8505c31974953.exe)
+
+running 5 tests
+test one_dimensional_w2_is_exact ... ok
+test subsample_keeps_order_and_bounds ... ok
+test directions_are_unit_and_isotropic ... ok
+test sliced_w2_basic_properties ... ok
+test sinkhorn_divergence_properties ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.85s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_ppm-be2bb17dad8942d3.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\gate3a.rs (target\debug\deps\gate3a-5546260ae809b8d0.exe)
+
+running 5 tests
+test cohens_d_none_cases ... ok
+test cohens_d_sign_and_value_match_hand_calculation ... ok
+test summarize_mean_sd_p95 ... ok
+test token_density_and_vocab_coverage_have_different_denominators ... ok
+test measure_text_uses_frozen_scorer_and_min_tokens ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\ppm.rs (target\debug\deps\ppm-e75943c57ce4c17c.exe)
+
+running 9 tests
+test empty_model_is_uniform ... ok
+test hand_computed_order0 ... ok
+test interner_caps_at_alphabet ... ok
+test exclusion_hand_computed ... ok
+test symbol_modes_collapse_punctuation ... ok
+test skeleton_is_topic_independent ... ok
+test learns_a_periodic_sequence_and_adaptive_matches_incremental ... ok
+test probabilities_sum_to_one_in_every_context ... ok
+test likelihood_ratio_identifies_the_source ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\shift.rs (target\debug\deps\shift-71ef64a5531184a8.exe)
+
+running 12 tests
+test centering_edge_cases ... ok
+test sign_convention_distance_is_exact_negation_of_score ... ok
+test coverage_boundaries ... ok
+test centering_excludes_own_author_and_hand_values ... ok
+test sign_convention_non_finite_inputs ... ok
+test sign_convention_scores_equal_python_b_cal_center ... ok
+test centering_has_no_eval_leakage ... ok
+test empty_text_is_none ... ok
+test uniform_model_gives_log2_alphabet ... ok
+test train_from_symbols_matches_train ... ok
+test trained_sequence_is_lower_than_unrelated ... ok
+test scorer_does_not_grow_interner ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_rqa-5c186c087a48a524.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\rqa.rs (target\debug\deps\rqa-954935c7dad7ed53.exe)
+
+running 6 tests
+test hand_computed_small_matrix ... ok
+test token_lsc_separates_cyclic_from_novel_text ... ok
+test rqa_is_total_and_subsamples ... ok
+test tarjan_matches_naive_on_random_graphs ... ok
+test laminar_states_raise_lam_and_trapping_time ... ok
+test periodic_signal_is_deterministic_and_noise_is_not ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running unittests src\lib.rs (target\debug\deps\nishiki_wasm-06237d4b15825320.exe)
+
+running 4 tests
+test tests::test_wasm_link_markdown_files_invalid_json_handled ... ok
+test tests::test_wasm_audit_dialogue_turns ... ok
+test tests::test_wasm_link_markdown_files ... ok
+test tests::test_wasm_audit_markdown_panic_free_and_surrogate_pairs ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\web.rs (target\debug\deps\web-7ff6ef9fede0cada.exe)
+
+running 5 tests
+test test_wasm_static_linker_end_to_end ... ok
+test test_wasm_cross_chapter_temporal_and_foreshadowing_linker ... ok
+test test_wasm_dialogue_ethos_end_to_end ... ok
+test test_wasm_surrogate_pairs_and_boundary_texts ... ok
+test test_wasm_consecutive_runs_no_leak_panic_free ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src\lib.rs (target\debug\deps\sasae_core-fe3540258b4b477d.exe)
+
+running 39 tests
+test code_linker::tests::test_python_proof_extraction ... ok
+test code_linker::tests::test_rust_proof_extraction ... ok
+test code_linker::tests::test_ts_proof_extraction ... ok
+test epistemic::tests::test_belnap_projection_aporia_conflict ... ok
+test epistemic::tests::test_cumulative_fusion_pile_bundle ... ok
+test epistemic::tests::test_epistemic_debt_bankruptcy ... ok
+test epistemic::tests::test_opinion_normalization_and_vacuous ... ok
+test epistemic::tests::test_source_tier_inference ... ok
+test epistemic::tests::test_trust_discounting_knee_brace ... ok
+test grammar::combinators::tests::test_alt_and_opt ... ok
+test grammar::combinators::tests::test_delimited_and_many0 ... ok
+test grammar::combinators::tests::test_tag_and_pair ... ok
+test grammar::combinators::tests::test_take_while1_and_recognize ... ok
+test grammar::proposition::tests::test_clause_structure_parsing ... ok
+test grammar::proposition::tests::test_unpunctuated_declinable_chain_detection ... ok
+test grammar::proposition::tests::test_modifier_scope_collision_detection ... ok
+test parser::tests::test_detect_unverified_tag ... ok
+test parser::tests::reservation_guard_f12 ... ok
+test symbol::tests::test_code_block_symbol_exclusion ... ok
+test symbol::tests::test_extract_excluded_code_spans ... ok
+test symbol::tests::test_mermaid_diagram_generation ... ok
+test symbol::tests::test_link_validation_undefined_and_duplicate ... ok
+test symbol::tests::test_modality_contract_violation_detection ... ok
+test symbol::tests::test_parse_heading_and_bracket_references ... ok
+test symbol::tests::test_valid_symbol_id_rules ... ok
+test tests::test_cross_verify_ir_catches_span_tampering_and_fraudulent_grounding ... ok
+test tests::test_cycle_detection_returns_error ... ok
+test tests::test_degrade_unrepaired_claims_preserves_dag_validity ... ok
+test tests::test_auto_span_resolution_and_drift_healing ... ok
+test tests::test_dialogue_not_false_positive_entity ... ok
+test tests::test_evidence_proximity_effective_distance_for_multi_sentence_explanation ... ok
+test tests::test_extract_ir_from_markdown_english ... ok
+test tests::test_hyperbolic_numeric_masquerade_prevention ... ok
+test tests::test_markdown_checkbox_not_false_positive_citation ... ok
+test tests::test_source_tier_machine_log_tamper_resistance ... ok
+test tests::test_tautological_warrant_rejection ... ok
+test tests::test_valid_dag_and_exact_math_metrics ... ok
+test verifier::tests::test_belnap_both_triggers_unresolved_aporia_violation ... ok
+test verifier::tests::test_counterfactual_sensitivity_prescription ... ok
+
+test result: ok. 39 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\lib.rs (target\debug\deps\usir_metrics-24f21d2bab61b359.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\calibration.rs (target\debug\deps\calibration-e04fdc7f4212530d.exe)
+
+running 7 tests
+test hook_idf_weights ... ok
+test fisher_align_by_name ... ok
+test back_and_forth_is_stagnation_even_at_full_speed ... ok
+test omega_is_a_unit_gain_smoother_and_short_inputs_are_total ... ok
+test fisher_55d_input_into_real_51d_artifact_if_present ... ok
+test unimodal_speed_has_no_threshold_and_no_still_runs ... ok
+test slow_plateau_is_detected_where_fixed_epsilon_fails ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\fisher_v2_names.rs (target\debug\deps\fisher_v2_names-cfa052b6a478591f.exe)
+
+running 7 tests
+test v1_values_do_not_silently_enter_a_v2_artifact ... ok
+test frozen_fisher_v1_rejects_v2_names ... ok
+test v2_columns_are_dropped_not_mixed_when_artifact_is_v1 ... ok
+test v2_names_are_prefixed_and_disjoint ... ok
+test v2_named_projection_equals_positional_projection ... ok
+test v2_named_projection_is_order_independent ... ok
+test v2_values_do_not_silently_enter_a_v1_artifact ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\fisher_v2_real_artifact.rs (target\debug\deps\fisher_v2_real_artifact-27f3bcb613d4481a.exe)
+
+running 7 tests
+test sha256_selftest ... ok
+test real_artifact_shape_and_names ... ok
+test v1_names_share_nothing_and_error ... ok
+test v2_31_drops_exactly_the_three_comma_columns ... ok
+test nearest_class_matches_python ... ok
+test name_order_does_not_change_result ... ok
+test rust_projection_matches_python_reference ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\kasane_order.rs (target\debug\deps\kasane_order-424e681dcf2efccd.exe)
+
+running 6 tests
+test wrapper_is_total_on_empty_input ... ok
+test wrapper_keeps_punctuation ... ok
+test wrapper_ignores_crlf_tab_and_fullwidth_space ... ok
+test wrapper_equals_direct_call_on_whitespace_free_text ... ok
+test wrapper_is_sentence_order_invariant_for_verified_components ... ok
+test control_without_wrapper_cadence_moves_with_newlines ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.57s
+
+     Running tests\metamorphic_calibration.rs (target\debug\deps\metamorphic_calibration-d6c85f8a9b27040b.exe)
+
+running 16 tests
+test c_m1_is_not_applicable ... ok
+test c_m2_hook_id_renumbering ... ok
+test c_m2_consistent_identifier_rename_is_exactly_invariant ... ok
+test c_m3_scene_order ... ok
+test m2_mask_overlapping_entities_is_longest_match ... ok
+test m3_dialogue_closed_paragraph_changes_sentence_boundaries ... ok
+test m3_unframed_narr_edge_drop_is_order_dependent ... ok
+test m1_edge_texts ... ok
+test diagnose_kasane_name_sensitivity ... ok
+test p3_cadence_moves_only_through_newline_carry_over ... ok
+test m2_name_substitution_on_synthetic ... ok
+test m1_comma_removal_on_fixtures ... ok
+test m2_name_substitution_on_real_text ... ok
+test p3_kasane_order_without_newlines ... ok
+test m3_text_order_on_fixtures ... ok
+test print_delta_tables ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.28s
+
+     Running tests\metrics.rs (target\debug\deps\metrics-1886f6acbeca8e49.exe)
+
+running 9 tests
+test awase_irony_and_detachment ... ok
+test sadame_intra_and_total ... ok
+test fisher_project_and_scores ... ok
+test kamae_survival ... ok
+test fisher_rejects_bad_json ... ok
+test sadame_inter ... ok
+test nagare_uses_logp_and_sorts_by_index ... ok
+test nagare_empty_single_and_still ... ok
+test fisher_reads_real_artifact_if_present ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\ortho.rs (target\debug\deps\ortho-6eb949dab815576f.exe)
+
+running 6 tests
+test hand_computed_values ... ok
+test masked_variant_is_longest_match_and_name_invariant ... ok
+test narr_drops_first_and_unterminated_fragments ... ok
+test names_and_dims_match_python_layout ... ok
+test matches_python_reference_values ... ok
+test total_on_degenerate_inputs ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\ortho_v2.rs (target\debug\deps\ortho_v2-3688ee7aca67f1d0.exe)
+
+running 8 tests
+test v2_ext_is_invariant_to_sentence_reversal ... ok
+test v2_hand_computed_example ... ok
+test v2_masked_is_invariant_to_listed_name_swap ... ok
+test v2_names_are_disjoint_from_v1 ... ok
+test v1_m1_spillover_matches_algebra ... ok
+test v2_ratio_dims_equal_v1_times_n_over_content_n ... ok
+test v2_is_invariant_to_comma_insertion ... ok
+test v2_m1_moves_only_the_three_comma_dims ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\lib.rs (target\debug\deps\usir_schema-ceaaa713ffafa5a6.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\residual.rs (target\debug\deps\residual-3b73800505029c40.exe)
+
+running 6 tests
+test ledger_issues ... ok
+test ledger_states ... ok
+test polarity_span_has_no_verdict_field ... ok
+test ledger_zero_scenes_and_empty ... ok
+test polarity_span_check_failures ... ok
+test ledger_serde_roundtrip_and_unknown_field ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\schema.rs (target\debug\deps\schema-8471f93f19a78ede.exe)
+
+running 7 tests
+test codes_index_and_names ... ok
+test collects_all_violations ... ok
+test degenerate_jsonl_input_does_not_panic ... ok
+test roundtrip_and_valid ... ok
+test json_schema_file_matches_rust_types ... ok
+test rejects_out_of_range_and_duplicates ... ok
+test group_by_work_orders_and_detects_gaps ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kamae_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kasane_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kasane_wasm
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_cli
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_discourse
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_fractal
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_geom
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_ot
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_ppm
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_rqa
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nishiki_wasm
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests sasae_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests usir_metrics
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests usir_schema
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+EXIT=0

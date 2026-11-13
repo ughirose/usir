@@ -1,0 +1,16 @@
+✔ golden contract version matches the TS constant (0.9081ms)
+✔ every contract field appears in types.ts (0.4681ms)
+✔ legacy field names are gone from the TS types (0.0925ms)
+✔ ByteOffsetMapper: ASCII and Japanese character mapping (0.5356ms)
+✔ ByteOffsetMapper: Surrogate pair emoji mapping (0.0836ms)
+✔ buildDecorationRanges: score events carry the reason and are sorted (0.3236ms)
+✔ buildDecorationRanges: options can hide score events or texture (0.4551ms)
+✔ KasanePluginOptions: triggerMode and transaction boundary contracts (0.1265ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.9058

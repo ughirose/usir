@@ -1,0 +1,316 @@
+{
+ "dataset_sha256": "55D2DDCF9F0F3AFDDC043E48B6D19632EACA71D601FC3AB98CD24341F78CD9F6",
+ "exe": "C:\\dev\\nishiki\\target\\f14\\release\\nishiki.exe",
+ "n_pairs": 439,
+ "default_path": "C:\\dev\\usir\\docs\\handoff\\v10\\paragraph_noise_floor_all_216_canonical.json",
+ "default_path_sha256": "2FC18E6717E4537ACBB522BC1D10F3C434B3C9BB434B19AF3803293EE7C84974",
+ "floors": {
+  "F17": {
+   "sha256": "0575B64A75A8AF8DD1AD0DB81BDF4D8898C473CE8AC1876C6E7E2F8B61A6F604",
+   "loaded_via_default": false,
+   "parity_mismatches": 0,
+   "parity_detail": [],
+   "abs_max_median": 0.4069306000580867,
+   "abs_max_mean": 0.6243197799832045,
+   "abs_max_max": 4.238313770624742,
+   "abs_max_p95": 1.8051895767430226,
+   "pairs_abs_max_gt_1": 111,
+   "n_above_1_total_dims": 171
+  },
+  "C216_canonical": {
+   "sha256": "2FC18E6717E4537ACBB522BC1D10F3C434B3C9BB434B19AF3803293EE7C84974",
+   "loaded_via_default": true,
+   "parity_mismatches": 0,
+   "parity_detail": [],
+   "abs_max_median": 0.383617840990408,
+   "abs_max_mean": 0.591033157842729,
+   "abs_max_max": 3.8670309954711075,
+   "abs_max_p95": 1.6994552403324126,
+   "pairs_abs_max_gt_1": 97,
+   "n_above_1_total_dims": 143
+  }
+ },
+ "crossings_F17_to_C216": {
+  "pairs_flip_total": 14,
+  "gt1_to_le1": 14,
+  "le1_to_gt1": 0,
+  "dim_level_flips": 14,
+  "max_abs_change_in_abs_max": 0.4931038572412789,
+  "median_ratio_new_over_old_abs_max": 0.9462077361914203,
+  "median_abs_max_delta": -0.013583967101933575,
+  "dim_level_flips_all_pairs_f21_definition": 28,
+  "dim_level_flips_note": "dim_level_flips counts only dims inside the 14 pairs whose abs_max>1 flag flipped; the all_pairs value (F-21 definition) also counts dims that flipped in pairs whose abs_max stayed >1."
+ },
+ "crossing_pairs": [
+  {
+   "index": 20,
+   "pair_id": "horoki_first_vs_new_p862_p445",
+   "band": "M",
+   "mixed": true,
+   "abs_max_f17": 1.0255259750617298,
+   "abs_max_c216": 0.9818989094615362,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "ac_mean_crest",
+     "f17": 1.0255259750617298,
+     "c216": 0.9818989094615362
+    }
+   ]
+  },
+  {
+   "index": 27,
+   "pair_id": "horoki_first_vs_new_p1320_p1219",
+   "band": "M",
+   "mixed": false,
+   "abs_max_f17": 1.1618595395603382,
+   "abs_max_c216": 0.973648968775351,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "semantic_tension",
+     "f17": 1.1618595395603382,
+     "c216": 0.973648968775351
+    }
+   ]
+  },
+  {
+   "index": 30,
+   "pair_id": "horoki_first_vs_new_p1687_p1514",
+   "band": "M",
+   "mixed": false,
+   "abs_max_f17": 1.1663454617439728,
+   "abs_max_c216": 0.9774082127797985,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "semantic_tension",
+     "f17": 1.1663454617439728,
+     "c216": 0.9774082127797985
+    }
+   ]
+  },
+  {
+   "index": 49,
+   "pair_id": "oda_ame_first_vs_rev_p9_p58",
+   "band": "L",
+   "mixed": true,
+   "abs_max_f17": 1.1021619006640815,
+   "abs_max_c216": 0.9813891256337313,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_speculation",
+     "f17": 1.1021619006640815,
+     "c216": 0.9813891256337313
+    }
+   ]
+  },
+  {
+   "index": 68,
+   "pair_id": "oda_ame_first_vs_rev_p38_p201",
+   "band": "L",
+   "mixed": true,
+   "abs_max_f17": 1.0203589058947884,
+   "abs_max_c216": 0.9085499452352017,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_speculation",
+     "f17": 1.0203589058947884,
+     "c216": 0.9085499452352017
+    }
+   ]
+  },
+  {
+   "index": 76,
+   "pair_id": "oda_ame_first_vs_rev_p49_p228",
+   "band": "M",
+   "mixed": false,
+   "abs_max_f17": 1.0502248839786872,
+   "abs_max_c216": 0.9871750776778875,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_showing",
+     "f17": 1.0502248839786872,
+     "c216": 0.9871750776778875
+    }
+   ]
+  },
+  {
+   "index": 123,
+   "pair_id": "oda_wagamachi_first_vs_rev_p165_p1044",
+   "band": "M",
+   "mixed": false,
+   "abs_max_f17": 1.041617531295169,
+   "abs_max_c216": 0.9353712033187928,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_staccato",
+     "f17": 1.041617531295169,
+     "c216": 0.9353712033187928
+    }
+   ]
+  },
+  {
+   "index": 131,
+   "pair_id": "kishida_doin_draft1_vs_final_p111_p161",
+   "band": "M",
+   "mixed": true,
+   "abs_max_f17": 1.0053173309129437,
+   "abs_max_c216": 0.9462065026801051,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_confession",
+     "f17": 1.0053173309129437,
+     "c216": 0.9462065026801051
+    }
+   ]
+  },
+  {
+   "index": 132,
+   "pair_id": "kishida_doin_draft1_vs_final_p181_p225",
+   "band": "M",
+   "mixed": true,
+   "abs_max_f17": 1.0366660207675906,
+   "abs_max_c216": 0.9607091611500502,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_cadence",
+     "f17": 1.0366660207675906,
+     "c216": 0.9607091611500502
+    }
+   ]
+  },
+  {
+   "index": 262,
+   "pair_id": "ichiyo_utsusemi_ed_p22_p22",
+   "band": "L",
+   "mixed": true,
+   "abs_max_f17": 1.04941427353252,
+   "abs_max_c216": 0.9824847914454894,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "ac_mean_crest",
+     "f17": 1.04941427353252,
+     "c216": 0.9824847914454894
+    }
+   ]
+  },
+  {
+   "index": 280,
+   "pair_id": "miyazawa_ginga_ed_p124_p118",
+   "band": "M",
+   "mixed": true,
+   "abs_max_f17": 1.006944875538018,
+   "abs_max_c216": 0.8438290570409354,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "semantic_tension",
+     "f17": 1.006944875538018,
+     "c216": 0.8438290570409354
+    }
+   ]
+  },
+  {
+   "index": 319,
+   "pair_id": "hisao_mugetsu_ed_p30_p29",
+   "band": "M",
+   "mixed": true,
+   "abs_max_f17": 1.0395463722888536,
+   "abs_max_c216": 0.9953228627131365,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "ac_mean_crest",
+     "f17": 1.0395463722888536,
+     "c216": 0.9953228627131365
+    }
+   ]
+  },
+  {
+   "index": 336,
+   "pair_id": "hisao_mugetsu_ed_p146_p149",
+   "band": "M",
+   "mixed": false,
+   "abs_max_f17": 1.0640487710031745,
+   "abs_max_c216": 0.9395287006537221,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "semantic_tension",
+     "f17": 1.0640487710031745,
+     "c216": 0.8916826460847062
+    }
+   ]
+  },
+  {
+   "index": 371,
+   "pair_id": "kusaka_saigo_ed_p88_p88",
+   "band": "M",
+   "mixed": false,
+   "abs_max_f17": 1.0265860695400648,
+   "abs_max_c216": 0.9218729699969805,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_staccato",
+     "f17": 1.0265860695400648,
+     "c216": 0.9218729699969805
+    }
+   ]
+  }
+ ],
+ "by_band": {
+  "L": {
+   "n": 137,
+   "F17": {
+    "median_abs_max": 0.1489352134704634,
+    "n_gt1": 23
+   },
+   "C216_canonical": {
+    "median_abs_max": 0.13471518493714207,
+    "n_gt1": 20
+   }
+  },
+  "M": {
+   "n": 252,
+   "F17": {
+    "median_abs_max": 0.5985084720714811,
+    "n_gt1": 75
+   },
+   "C216_canonical": {
+    "median_abs_max": 0.5644469641849231,
+    "n_gt1": 64
+   }
+  },
+  "S": {
+   "n": 50,
+   "F17": {
+    "median_abs_max": 0.6341505666097091,
+    "n_gt1": 13
+   },
+   "C216_canonical": {
+    "median_abs_max": 0.6185402956157094,
+    "n_gt1": 13
+   }
+  },
+  "mixed": {
+   "n": 84,
+   "F17": {
+    "median_abs_max": 1.0751206340885981,
+    "n_gt1": 51
+   },
+   "C216_canonical": {
+    "median_abs_max": 1.0056335921620296,
+    "n_gt1": 43
+   }
+  }
+ }
+}

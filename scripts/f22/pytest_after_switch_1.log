@@ -1,0 +1,32 @@
+...F...................................................................F [ 98%]
+.                                                                        [100%]
+================================== FAILURES ===================================
+_______________ test_f14_window_count_and_hybrid_rule_mechanics _______________
+
+    def test_f14_window_count_and_hybrid_rule_mechanics():
+        """Verify Rust-parity sentence splitting, window counting, Band M 8D/11D split, and ac_multi sigma."""
+        nf_data, prov = load_f14_noise_floor()
+        assert Path(CANONICAL_F14_NOISE_FLOOR_PATH).exists()
+        assert len(prov["sha256"]) == 64
+>       assert prov["n_works_in_file"] == 46
+E       assert 216 == 46
+
+tests\v5\test_b11_gate3a_and_f14_parity.py:121: AssertionError
+______________________ test_u6_test_vectors_fixture_pass ______________________
+
+    def test_u6_test_vectors_fixture_pass():
+        import json
+        from pathlib import Path
+    
+        fixture_path = Path("docs/handoff/v10/u6_guards_test_vectors.json")
+>       assert fixture_path.exists(), f"Missing fixture file: {fixture_path}"
+E       AssertionError: Missing fixture file: docs\handoff\v10\u6_guards_test_vectors.json
+E       assert False
+E        +  where False = exists()
+E        +    where exists = WindowsPath('docs/handoff/v10/u6_guards_test_vectors.json').exists
+
+tests\v5\test_u6_guards.py:234: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/v5/test_b11_gate3a_and_f14_parity.py::test_f14_window_count_and_hybrid_rule_mechanics
+FAILED tests/v5/test_u6_guards.py::test_u6_test_vectors_fixture_pass - Assert...
+2 failed, 71 passed in 137.12s (0:02:17)

@@ -1,0 +1,89 @@
+F17 mismatch 0 median 0.4069306000580867
+C216_canonical mismatch 0 median 0.383617840990408
+C:\dev\usir\scripts\f22\f22_v11_parity_and_floor_table.py:55: RuntimeWarning: invalid value encountered in divide
+  "max_abs_change_in_abs_max": float(np.nanmax(np.abs(a - b))), "median_ratio_new_over_old_abs_max": float(np.nanmedian(b / a)),
+{
+ "floors": {
+  "F17": {
+   "sha256": "0575B64A75A8AF8DD1AD0DB81BDF4D8898C473CE8AC1876C6E7E2F8B61A6F604",
+   "loaded_via_default": false,
+   "parity_mismatches": 0,
+   "parity_detail": [],
+   "abs_max_median": 0.4069306000580867,
+   "abs_max_mean": 0.6243197799832045,
+   "abs_max_max": 4.238313770624742,
+   "abs_max_p95": 1.8051895767430226,
+   "pairs_abs_max_gt_1": 111,
+   "n_above_1_total_dims": 171
+  },
+  "C216_canonical": {
+   "sha256": "2FC18E6717E4537ACBB522BC1D10F3C434B3C9BB434B19AF3803293EE7C84974",
+   "loaded_via_default": true,
+   "parity_mismatches": 0,
+   "parity_detail": [],
+   "abs_max_median": 0.383617840990408,
+   "abs_max_mean": 0.591033157842729,
+   "abs_max_max": 3.8670309954711075,
+   "abs_max_p95": 1.6994552403324126,
+   "pairs_abs_max_gt_1": 97,
+   "n_above_1_total_dims": 143
+  }
+ },
+ "crossings_F17_to_C216": {
+  "pairs_flip_total": 14,
+  "gt1_to_le1": 14,
+  "le1_to_gt1": 0,
+  "dim_level_flips": 14,
+  "max_abs_change_in_abs_max": 0.4931038572412789,
+  "median_ratio_new_over_old_abs_max": 0.9462077361914203,
+  "median_abs_max_delta": -0.013583967101933575,
+  "dim_level_flips_all_pairs_f21_definition": 28,
+  "dim_level_flips_note": "dim_level_flips counts only dims inside the 14 pairs whose abs_max>1 flag flipped; the all_pairs value (F-21 definition) also counts dims that flipped in pairs whose abs_max stayed >1."
+ },
+ "by_band": {
+  "L": {
+   "n": 137,
+   "F17": {
+    "median_abs_max": 0.1489352134704634,
+    "n_gt1": 23
+   },
+   "C216_canonical": {
+    "median_abs_max": 0.13471518493714207,
+    "n_gt1": 20
+   }
+  },
+  "M": {
+   "n": 252,
+   "F17": {
+    "median_abs_max": 0.5985084720714811,
+    "n_gt1": 75
+   },
+   "C216_canonical": {
+    "median_abs_max": 0.5644469641849231,
+    "n_gt1": 64
+   }
+  },
+  "S": {
+   "n": 50,
+   "F17": {
+    "median_abs_max": 0.6341505666097091,
+    "n_gt1": 13
+   },
+   "C216_canonical": {
+    "median_abs_max": 0.6185402956157094,
+    "n_gt1": 13
+   }
+  },
+  "mixed": {
+   "n": 84,
+   "F17": {
+    "median_abs_max": 1.0751206340885981,
+    "n_gt1": 51
+   },
+   "C216_canonical": {
+    "median_abs_max": 1.0056335921620296,
+    "n_gt1": 43
+   }
+  }
+ }
+}
