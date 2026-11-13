@@ -1,9 +1,17 @@
 # USIR v5 実装引継ぎ台帳 (HANDOFF)
-**最終更新日時**: 2026-11-13 15:40:00 JST  
-**ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`, 実装コミット `6e526995a12407cd0404034aa1238c70335f18f6`)  
+**最終更新日時**: 2026-11-13 17:45:00 JST  
+**ブランチ**: `feat/fable-v5-shootout` (`C:\dev\usir`, 実装コミット `978347facf82d5277d59743885767fe9c51bd2f8`)  
 **関連リポジトリ**: `C:\dev\nishiki`（Lane B 境界線厳守・変更ゼロ保証）
 
 ---
+
+## -0.3 Stage B-13 実装・検証セッション（2026-11-13 実施）
+- **前提検証**: `git pull` 後の HEAD `dfa787d`、F-17 ノイズ床 `docs/handoff/v10/paragraph_noise_floor_all_novel.json`（SHA-256: `0575b64a75a8af8dd1ad0db81bdf4d8898c473ce8ac1876c6e7e2f8b61a6f604`、M/L 帯別 `ac_*` 確定値）、データセット `data/usir_v5_eval/real_revision_pairs_v1.jsonl`（SHA-256: `62da75271f453bd3a8f161d916fdf7b7b87138b773b564b737f90aee85b6b8e4`、415件）を確認。
+- **タスク1（F-17 床再計測）**: `scripts/run_stage_b13_analysis.py` により `docs/handoff/v10/real_revision_pairs_v1_f17_harvest_summary.json`（SHA-256: `6b650b64f143355d862eb3ae47f12a58e425405ba610339404219335a5bd8611`）を生成。Python vs Rust パリティ不一致 `0/415`、`n_evaluated=8`（196件）のビット単位不変（0差分）、`n_evaluated=11`（219件）の分母 $\sigma$ 変化に伴う比率予測一致、1SD 境界跨ぎ件数（`velocity` 8件・`max_sis` 2件・いずれも M帯）、`band_L_both_single_window`（50件, 8D）と `band_L_both_multi_window`（61件, 11D）の分離を確認。
+- **タスク2（11D→8D→7D アブレーション）**: 1窓側 476 側すべてで `ac_mean_velocity`, `ac_max_sis`, `ac_coupling` が厳密に `0.0` であることを実測確認。混在84件全体では `dL/Lmax >= 30%` が 75.0%（63/84件）を占めるため 8D/7D でも高値が残存する（`abs_max` 中央値 `1.5714 -> 1.0751 -> 0.9331`）一方、微修正帯（`dL/Lmax < 15%` かつ `Dice >= 0.85`, `n=9`）では `2.3513 -> 0.3285 -> 0.1644` へ消失。混在ペア比率は純粋な文体変化として読めないことを結論づけ、規則改訂案（片側1窓は `n_evaluated=8` 正本）を提示。
+- **タスク3（正書法感度分析）**: `same_orthography == True`（381件）とコアセット（`dL/Lmax <= 0.30`, 267件）でも M/L 帯ノイズ比水準と 11D→8D スパイク消失が保たれることを確認（Primary 候補として 381件を支持）。
+- **タスク4（106作品 sparsity-audit 正本固定）**: `nishiki.exe sparsity-audit --scenes data/v5/aozora_106works_scenes.jsonl` を正式実行し、`docs/handoff/v10/sparsity_audit_106works_canonical.json`（LF SHA-256: `d16d95b54c89ad7010cadea6da4c1a0d553c2188c24b30cbea6b0e52c8c6e64a` / CRLF SHA-256: `efee120d503c929fd363f81a305cf8845a3c661c271faeea5867dcbb5f9c93a7`）を F-16 参照値とバイト一致で固定。
+- **検証・成果物**: `pytest python/tests/v5/ -v` 全 68 件パス。詳細レポートは [2026-11-13_usir_v5_stage_b13_report.md](file:///c:/dev/usir/docs/handoff/2026-11-13_usir_v5_stage_b13_report.md)（および Google Drive `Claude-Sync/inbox`）に格納。
 
 ## -0.2 Stage B-12 実装・検証セッション（2026-11-13 実施）
 
