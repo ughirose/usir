@@ -2,7 +2,7 @@
   "metadata": {
     "title": "USIR v5 Stage B-10: Gate 3a Scene-Level Denominator Redesign & Level 3b Scale Separation Report",
     "version": "1.0",
-    "timestamp": "2026-11-13 10:34:54",
+    "timestamp": "2026-11-13 13:22:25",
     "gate_3a_status": "SHIFT_QUANTIFIED_NOT_PASSED",
     "gate_3b_status": "GATE3B_FROZEN",
     "evaluated_datasets": [
@@ -163,7 +163,14 @@
       "thresholds": {
         "atlas_3sigma": 7.2641,
         "chi2_p95": 6.0345,
-        "chi2_p9973": 6.9111
+        "chi2_p99": 6.5559,
+        "chi2_p9973": 6.9111,
+        "canonical_denominator": "sigma2_scene_r_diagonal",
+        "canonical_threshold_family": "finite_sample_mc_loo_student_t_null",
+        "mc_indep_p95": 6.9267,
+        "mc_indep_p99": 7.7032,
+        "mc_r4corr_p95": 7.6574,
+        "mc_r4corr_p99": 9.0381
       },
       "condition_a_uncentered_scene_scaled": {
         "in_sample": {
@@ -177,7 +184,12 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0,
+              "outlier_rate_mc_r4corr_p95_pct": 100.0,
+              "outlier_rate_mc_r4corr_p99_pct": 81.25
             },
             "R2": {
               "n": 16,
@@ -187,7 +199,12 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0,
+              "outlier_rate_mc_r4corr_p95_pct": 100.0,
+              "outlier_rate_mc_r4corr_p99_pct": 100.0
             },
             "R3": {
               "n": 16,
@@ -197,7 +214,12 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0,
+              "outlier_rate_mc_r4corr_p95_pct": 100.0,
+              "outlier_rate_mc_r4corr_p99_pct": 100.0
             },
             "R4": {
               "n": 16,
@@ -207,7 +229,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 6.25,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             }
           },
           "modern_aggregate": {
@@ -218,7 +245,12 @@
             "outlier_rate_atlas_3sigma_pct": 100.0,
             "outlier_rate_r4_3sigma_pct": 100.0,
             "outlier_rate_chi2_p95_pct": 100.0,
-            "outlier_rate_chi2_p9973_pct": 100.0
+            "outlier_rate_chi2_p99_pct": 100.0,
+            "outlier_rate_chi2_p9973_pct": 100.0,
+            "outlier_rate_mc_indep_p95_pct": 100.0,
+            "outlier_rate_mc_indep_p99_pct": 100.0,
+            "outlier_rate_mc_r4corr_p95_pct": 100.0,
+            "outlier_rate_mc_r4corr_p99_pct": 93.75
           }
         },
         "shrinkage_loo": {
@@ -232,7 +264,12 @@
               "outlier_rate_atlas_3sigma_pct": 93.75,
               "outlier_rate_r4_3sigma_pct": 68.75,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 87.5,
+              "outlier_rate_mc_r4corr_p95_pct": 87.5,
+              "outlier_rate_mc_r4corr_p99_pct": 62.5
             },
             "R2": {
               "n": 16,
@@ -242,7 +279,12 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0,
+              "outlier_rate_mc_r4corr_p95_pct": 100.0,
+              "outlier_rate_mc_r4corr_p99_pct": 100.0
             },
             "R3": {
               "n": 16,
@@ -252,7 +294,12 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0,
+              "outlier_rate_mc_r4corr_p95_pct": 100.0,
+              "outlier_rate_mc_r4corr_p99_pct": 100.0
             },
             "R4": {
               "n": 16,
@@ -262,7 +309,12 @@
               "outlier_rate_atlas_3sigma_pct": 6.25,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 25.0,
-              "outlier_rate_chi2_p9973_pct": 6.25
+              "outlier_rate_chi2_p99_pct": 6.25,
+              "outlier_rate_chi2_p9973_pct": 6.25,
+              "outlier_rate_mc_indep_p95_pct": 6.25,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             }
           },
           "modern_aggregate": {
@@ -273,7 +325,12 @@
             "outlier_rate_atlas_3sigma_pct": 97.92,
             "outlier_rate_r4_3sigma_pct": 89.58,
             "outlier_rate_chi2_p95_pct": 100.0,
-            "outlier_rate_chi2_p9973_pct": 100.0
+            "outlier_rate_chi2_p99_pct": 100.0,
+            "outlier_rate_chi2_p9973_pct": 100.0,
+            "outlier_rate_mc_indep_p95_pct": 100.0,
+            "outlier_rate_mc_indep_p99_pct": 95.83,
+            "outlier_rate_mc_r4corr_p95_pct": 95.83,
+            "outlier_rate_mc_r4corr_p99_pct": 87.5
           }
         },
         "unregularized_loo": {
@@ -287,7 +344,12 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 87.5,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0,
+              "outlier_rate_mc_r4corr_p95_pct": 100.0,
+              "outlier_rate_mc_r4corr_p99_pct": 75.0
             },
             "R2": {
               "n": 16,
@@ -297,7 +359,12 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0,
+              "outlier_rate_mc_r4corr_p95_pct": 100.0,
+              "outlier_rate_mc_r4corr_p99_pct": 100.0
             },
             "R3": {
               "n": 16,
@@ -307,7 +374,12 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0,
+              "outlier_rate_mc_r4corr_p95_pct": 100.0,
+              "outlier_rate_mc_r4corr_p99_pct": 100.0
             },
             "R4": {
               "n": 16,
@@ -317,7 +389,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 25.0,
-              "outlier_rate_chi2_p9973_pct": 6.25
+              "outlier_rate_chi2_p99_pct": 6.25,
+              "outlier_rate_chi2_p9973_pct": 6.25,
+              "outlier_rate_mc_indep_p95_pct": 6.25,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             }
           },
           "modern_aggregate": {
@@ -328,7 +405,12 @@
             "outlier_rate_atlas_3sigma_pct": 100.0,
             "outlier_rate_r4_3sigma_pct": 95.83,
             "outlier_rate_chi2_p95_pct": 100.0,
-            "outlier_rate_chi2_p9973_pct": 100.0
+            "outlier_rate_chi2_p99_pct": 100.0,
+            "outlier_rate_chi2_p9973_pct": 100.0,
+            "outlier_rate_mc_indep_p95_pct": 100.0,
+            "outlier_rate_mc_indep_p99_pct": 100.0,
+            "outlier_rate_mc_r4corr_p95_pct": 100.0,
+            "outlier_rate_mc_r4corr_p99_pct": 91.67
           }
         }
       },
@@ -344,7 +426,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 6.25,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             },
             "R2": {
               "n": 16,
@@ -354,7 +441,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 0.0,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             },
             "R3": {
               "n": 16,
@@ -364,7 +456,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 12.5,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             },
             "R4": {
               "n": 16,
@@ -374,7 +471,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 12.5,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             }
           },
           "modern_aggregate": {
@@ -385,7 +487,12 @@
             "outlier_rate_atlas_3sigma_pct": 0.0,
             "outlier_rate_r4_3sigma_pct": 0.0,
             "outlier_rate_chi2_p95_pct": 6.25,
-            "outlier_rate_chi2_p9973_pct": 0.0
+            "outlier_rate_chi2_p99_pct": 0.0,
+            "outlier_rate_chi2_p9973_pct": 0.0,
+            "outlier_rate_mc_indep_p95_pct": 0.0,
+            "outlier_rate_mc_indep_p99_pct": 0.0,
+            "outlier_rate_mc_r4corr_p95_pct": 0.0,
+            "outlier_rate_mc_r4corr_p99_pct": 0.0
           }
         },
         "shrinkage_loo": {
@@ -399,7 +506,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 0.0,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             },
             "R2": {
               "n": 16,
@@ -409,7 +521,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 6.25,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             },
             "R3": {
               "n": 16,
@@ -419,7 +536,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 6.25,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             },
             "R4": {
               "n": 16,
@@ -429,7 +551,12 @@
               "outlier_rate_atlas_3sigma_pct": 6.25,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 31.25,
-              "outlier_rate_chi2_p9973_pct": 12.5
+              "outlier_rate_chi2_p99_pct": 12.5,
+              "outlier_rate_chi2_p9973_pct": 12.5,
+              "outlier_rate_mc_indep_p95_pct": 6.25,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             }
           },
           "modern_aggregate": {
@@ -440,7 +567,12 @@
             "outlier_rate_atlas_3sigma_pct": 0.0,
             "outlier_rate_r4_3sigma_pct": 0.0,
             "outlier_rate_chi2_p95_pct": 4.17,
-            "outlier_rate_chi2_p9973_pct": 0.0
+            "outlier_rate_chi2_p99_pct": 0.0,
+            "outlier_rate_chi2_p9973_pct": 0.0,
+            "outlier_rate_mc_indep_p95_pct": 0.0,
+            "outlier_rate_mc_indep_p99_pct": 0.0,
+            "outlier_rate_mc_r4corr_p95_pct": 0.0,
+            "outlier_rate_mc_r4corr_p99_pct": 0.0
           }
         },
         "unregularized_loo": {
@@ -454,7 +586,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 18.75,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             },
             "R2": {
               "n": 16,
@@ -464,7 +601,12 @@
               "outlier_rate_atlas_3sigma_pct": 6.25,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 25.0,
-              "outlier_rate_chi2_p9973_pct": 6.25
+              "outlier_rate_chi2_p99_pct": 6.25,
+              "outlier_rate_chi2_p9973_pct": 6.25,
+              "outlier_rate_mc_indep_p95_pct": 6.25,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             },
             "R3": {
               "n": 16,
@@ -474,7 +616,12 @@
               "outlier_rate_atlas_3sigma_pct": 12.5,
               "outlier_rate_r4_3sigma_pct": 6.25,
               "outlier_rate_chi2_p95_pct": 12.5,
-              "outlier_rate_chi2_p9973_pct": 12.5
+              "outlier_rate_chi2_p99_pct": 12.5,
+              "outlier_rate_chi2_p9973_pct": 12.5,
+              "outlier_rate_mc_indep_p95_pct": 12.5,
+              "outlier_rate_mc_indep_p99_pct": 6.25,
+              "outlier_rate_mc_r4corr_p95_pct": 6.25,
+              "outlier_rate_mc_r4corr_p99_pct": 6.25
             },
             "R4": {
               "n": 16,
@@ -484,7 +631,12 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 12.5,
-              "outlier_rate_chi2_p9973_pct": 6.25
+              "outlier_rate_chi2_p99_pct": 12.5,
+              "outlier_rate_chi2_p9973_pct": 6.25,
+              "outlier_rate_mc_indep_p95_pct": 6.25,
+              "outlier_rate_mc_indep_p99_pct": 0.0,
+              "outlier_rate_mc_r4corr_p95_pct": 0.0,
+              "outlier_rate_mc_r4corr_p99_pct": 0.0
             }
           },
           "modern_aggregate": {
@@ -495,7 +647,12 @@
             "outlier_rate_atlas_3sigma_pct": 6.25,
             "outlier_rate_r4_3sigma_pct": 2.08,
             "outlier_rate_chi2_p95_pct": 18.75,
-            "outlier_rate_chi2_p9973_pct": 6.25
+            "outlier_rate_chi2_p99_pct": 6.25,
+            "outlier_rate_chi2_p9973_pct": 6.25,
+            "outlier_rate_mc_indep_p95_pct": 6.25,
+            "outlier_rate_mc_indep_p99_pct": 2.08,
+            "outlier_rate_mc_r4corr_p95_pct": 2.08,
+            "outlier_rate_mc_r4corr_p99_pct": 2.08
           }
         }
       },
@@ -548,7 +705,12 @@
       "thresholds": {
         "atlas_3sigma": 8.0603,
         "chi2_p95": 6.7071,
-        "chi2_p9973": 7.5762
+        "chi2_p99": 7.2244,
+        "chi2_p9973": 7.5762,
+        "canonical_denominator": "sigma2_scene_r_diagonal",
+        "canonical_threshold_family": "finite_sample_mc_loo_student_t_null",
+        "mc_indep_p95": 7.6774,
+        "mc_indep_p99": 8.4392
       },
       "condition_a_uncentered_scene_scaled": {
         "in_sample": {
@@ -562,7 +724,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R2": {
               "n": 16,
@@ -572,7 +737,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R3": {
               "n": 16,
@@ -582,7 +750,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R4": {
               "n": 16,
@@ -592,7 +763,10 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 25.0,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0
             }
           },
           "modern_aggregate": {
@@ -603,7 +777,10 @@
             "outlier_rate_atlas_3sigma_pct": 100.0,
             "outlier_rate_r4_3sigma_pct": 100.0,
             "outlier_rate_chi2_p95_pct": 100.0,
-            "outlier_rate_chi2_p9973_pct": 100.0
+            "outlier_rate_chi2_p99_pct": 100.0,
+            "outlier_rate_chi2_p9973_pct": 100.0,
+            "outlier_rate_mc_indep_p95_pct": 100.0,
+            "outlier_rate_mc_indep_p99_pct": 100.0
           }
         },
         "shrinkage_loo": {
@@ -617,7 +794,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R2": {
               "n": 16,
@@ -627,7 +807,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R3": {
               "n": 16,
@@ -637,7 +820,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R4": {
               "n": 16,
@@ -647,7 +833,10 @@
               "outlier_rate_atlas_3sigma_pct": 31.25,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 37.5,
-              "outlier_rate_chi2_p9973_pct": 31.25
+              "outlier_rate_chi2_p99_pct": 31.25,
+              "outlier_rate_chi2_p9973_pct": 31.25,
+              "outlier_rate_mc_indep_p95_pct": 31.25,
+              "outlier_rate_mc_indep_p99_pct": 18.75
             }
           },
           "modern_aggregate": {
@@ -658,7 +847,10 @@
             "outlier_rate_atlas_3sigma_pct": 100.0,
             "outlier_rate_r4_3sigma_pct": 66.67,
             "outlier_rate_chi2_p95_pct": 100.0,
-            "outlier_rate_chi2_p9973_pct": 100.0
+            "outlier_rate_chi2_p99_pct": 100.0,
+            "outlier_rate_chi2_p9973_pct": 100.0,
+            "outlier_rate_mc_indep_p95_pct": 100.0,
+            "outlier_rate_mc_indep_p99_pct": 100.0
           }
         },
         "unregularized_loo": {
@@ -672,7 +864,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R2": {
               "n": 16,
@@ -682,7 +877,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R3": {
               "n": 16,
@@ -692,7 +890,10 @@
               "outlier_rate_atlas_3sigma_pct": 100.0,
               "outlier_rate_r4_3sigma_pct": 100.0,
               "outlier_rate_chi2_p95_pct": 100.0,
-              "outlier_rate_chi2_p9973_pct": 100.0
+              "outlier_rate_chi2_p99_pct": 100.0,
+              "outlier_rate_chi2_p9973_pct": 100.0,
+              "outlier_rate_mc_indep_p95_pct": 100.0,
+              "outlier_rate_mc_indep_p99_pct": 100.0
             },
             "R4": {
               "n": 16,
@@ -702,7 +903,10 @@
               "outlier_rate_atlas_3sigma_pct": 25.0,
               "outlier_rate_r4_3sigma_pct": 6.25,
               "outlier_rate_chi2_p95_pct": 31.25,
-              "outlier_rate_chi2_p9973_pct": 31.25
+              "outlier_rate_chi2_p99_pct": 31.25,
+              "outlier_rate_chi2_p9973_pct": 31.25,
+              "outlier_rate_mc_indep_p95_pct": 31.25,
+              "outlier_rate_mc_indep_p99_pct": 18.75
             }
           },
           "modern_aggregate": {
@@ -713,7 +917,10 @@
             "outlier_rate_atlas_3sigma_pct": 100.0,
             "outlier_rate_r4_3sigma_pct": 66.67,
             "outlier_rate_chi2_p95_pct": 100.0,
-            "outlier_rate_chi2_p9973_pct": 100.0
+            "outlier_rate_chi2_p99_pct": 100.0,
+            "outlier_rate_chi2_p9973_pct": 100.0,
+            "outlier_rate_mc_indep_p95_pct": 100.0,
+            "outlier_rate_mc_indep_p99_pct": 100.0
           }
         }
       },
@@ -729,7 +936,10 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 0.0,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0
             },
             "R2": {
               "n": 16,
@@ -739,7 +949,10 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 0.0,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0
             },
             "R3": {
               "n": 16,
@@ -749,7 +962,10 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 0.0,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0
             },
             "R4": {
               "n": 16,
@@ -759,7 +975,10 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 18.75,
-              "outlier_rate_chi2_p9973_pct": 6.25
+              "outlier_rate_chi2_p99_pct": 12.5,
+              "outlier_rate_chi2_p9973_pct": 6.25,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0
             }
           },
           "modern_aggregate": {
@@ -770,7 +989,10 @@
             "outlier_rate_atlas_3sigma_pct": 0.0,
             "outlier_rate_r4_3sigma_pct": 0.0,
             "outlier_rate_chi2_p95_pct": 0.0,
-            "outlier_rate_chi2_p9973_pct": 0.0
+            "outlier_rate_chi2_p99_pct": 0.0,
+            "outlier_rate_chi2_p9973_pct": 0.0,
+            "outlier_rate_mc_indep_p95_pct": 0.0,
+            "outlier_rate_mc_indep_p99_pct": 0.0
           }
         },
         "shrinkage_loo": {
@@ -784,7 +1006,10 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 0.0,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 0.0,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0
             },
             "R2": {
               "n": 16,
@@ -794,7 +1019,10 @@
               "outlier_rate_atlas_3sigma_pct": 6.25,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 6.25,
-              "outlier_rate_chi2_p9973_pct": 6.25
+              "outlier_rate_chi2_p99_pct": 6.25,
+              "outlier_rate_chi2_p9973_pct": 6.25,
+              "outlier_rate_mc_indep_p95_pct": 6.25,
+              "outlier_rate_mc_indep_p99_pct": 6.25
             },
             "R3": {
               "n": 16,
@@ -804,7 +1032,10 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 6.25,
-              "outlier_rate_chi2_p9973_pct": 0.0
+              "outlier_rate_chi2_p99_pct": 6.25,
+              "outlier_rate_chi2_p9973_pct": 0.0,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0
             },
             "R4": {
               "n": 16,
@@ -814,7 +1045,10 @@
               "outlier_rate_atlas_3sigma_pct": 25.0,
               "outlier_rate_r4_3sigma_pct": 6.25,
               "outlier_rate_chi2_p95_pct": 37.5,
-              "outlier_rate_chi2_p9973_pct": 31.25
+              "outlier_rate_chi2_p99_pct": 31.25,
+              "outlier_rate_chi2_p9973_pct": 31.25,
+              "outlier_rate_mc_indep_p95_pct": 31.25,
+              "outlier_rate_mc_indep_p99_pct": 18.75
             }
           },
           "modern_aggregate": {
@@ -825,7 +1059,10 @@
             "outlier_rate_atlas_3sigma_pct": 2.08,
             "outlier_rate_r4_3sigma_pct": 0.0,
             "outlier_rate_chi2_p95_pct": 4.17,
-            "outlier_rate_chi2_p9973_pct": 2.08
+            "outlier_rate_chi2_p99_pct": 4.17,
+            "outlier_rate_chi2_p9973_pct": 2.08,
+            "outlier_rate_mc_indep_p95_pct": 2.08,
+            "outlier_rate_mc_indep_p99_pct": 2.08
           }
         },
         "unregularized_loo": {
@@ -839,7 +1076,10 @@
               "outlier_rate_atlas_3sigma_pct": 0.0,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 31.25,
-              "outlier_rate_chi2_p9973_pct": 6.25
+              "outlier_rate_chi2_p99_pct": 12.5,
+              "outlier_rate_chi2_p9973_pct": 6.25,
+              "outlier_rate_mc_indep_p95_pct": 0.0,
+              "outlier_rate_mc_indep_p99_pct": 0.0
             },
             "R2": {
               "n": 16,
@@ -849,7 +1089,10 @@
               "outlier_rate_atlas_3sigma_pct": 6.25,
               "outlier_rate_r4_3sigma_pct": 0.0,
               "outlier_rate_chi2_p95_pct": 31.25,
-              "outlier_rate_chi2_p9973_pct": 12.5
+              "outlier_rate_chi2_p99_pct": 18.75,
+              "outlier_rate_chi2_p9973_pct": 12.5,
+              "outlier_rate_mc_indep_p95_pct": 6.25,
+              "outlier_rate_mc_indep_p99_pct": 6.25
             },
             "R3": {
               "n": 16,
@@ -859,7 +1102,10 @@
               "outlier_rate_atlas_3sigma_pct": 12.5,
               "outlier_rate_r4_3sigma_pct": 12.5,
               "outlier_rate_chi2_p95_pct": 25.0,
-              "outlier_rate_chi2_p9973_pct": 12.5
+              "outlier_rate_chi2_p99_pct": 18.75,
+              "outlier_rate_chi2_p9973_pct": 12.5,
+              "outlier_rate_mc_indep_p95_pct": 12.5,
+              "outlier_rate_mc_indep_p99_pct": 12.5
             },
             "R4": {
               "n": 16,
@@ -869,7 +1115,10 @@
               "outlier_rate_atlas_3sigma_pct": 18.75,
               "outlier_rate_r4_3sigma_pct": 6.25,
               "outlier_rate_chi2_p95_pct": 31.25,
-              "outlier_rate_chi2_p9973_pct": 31.25
+              "outlier_rate_chi2_p99_pct": 31.25,
+              "outlier_rate_chi2_p9973_pct": 31.25,
+              "outlier_rate_mc_indep_p95_pct": 31.25,
+              "outlier_rate_mc_indep_p99_pct": 18.75
             }
           },
           "modern_aggregate": {
@@ -880,7 +1129,10 @@
             "outlier_rate_atlas_3sigma_pct": 6.25,
             "outlier_rate_r4_3sigma_pct": 4.17,
             "outlier_rate_chi2_p95_pct": 29.17,
-            "outlier_rate_chi2_p9973_pct": 10.42
+            "outlier_rate_chi2_p99_pct": 16.67,
+            "outlier_rate_chi2_p9973_pct": 10.42,
+            "outlier_rate_mc_indep_p95_pct": 6.25,
+            "outlier_rate_mc_indep_p99_pct": 6.25
           }
         }
       },
@@ -1076,22 +1328,57 @@
         "explanation": "Scene-level variance sigma_scene^2 is on average 2.2645x larger than work-level variance sigma_work^2 (mean scale ratio 1.4233x, (mean)^2 = 2.0258x) due to short-scene sample variance vs full-book averaging. B-9 evaluated scenes against work-level denominators, creating an artificial 81.25% (31D) / 62.50% (24D) outlier rate on R4. Using sigma_scene resolves this scale mismatch."
       },
       "2_finite_sample_loo_student_t_inflation": {
+        "seed": 42,
+        "n_trials": 5000,
         "m_loo_observations": 15,
         "nu_degrees_of_freedom": 14,
         "theoretical_d2_inflation_factor": 1.244444,
+        "chi2_ref_24d": {
+          "chi2_p95_d2": 36.415,
+          "chi2_p95_d": 6.0345,
+          "chi2_p99_d2": 42.9798,
+          "chi2_p99_d": 6.5559
+        },
         "monte_carlo_5000_trials": {
           "independent_gaussian_24d": {
             "mean_d2": 29.8831,
             "asymptotic_expected_d2": 24.0,
             "empirical_inflation_ratio": 1.2451,
-            "exceedance_rate_chi2_p95_pct": 22.29
+            "exceedance_rate_chi2_p95_pct": 22.29,
+            "mc_p95_d2": 47.9796,
+            "mc_p95_d": 6.9267,
+            "mc_p99_d2": 59.3388,
+            "mc_p99_d": 7.7032,
+            "n_samples_total": 80000,
+            "exceedance_rate_mc_p95_pct": 5.0,
+            "exceedance_rate_mc_p99_pct": 1.0
           },
           "r4_correlated_gaussian_24d": {
             "mean_d2": 28.6274,
-            "exceedance_rate_chi2_p95_pct": 24.51
+            "exceedance_rate_chi2_p95_pct": 24.51,
+            "mc_p95_d2": 58.6355,
+            "mc_p95_d": 7.6574,
+            "mc_p99_d2": 81.6877,
+            "mc_p99_d": 9.0381,
+            "n_samples_total": 80000,
+            "exceedance_rate_mc_p95_pct": 5.0,
+            "exceedance_rate_mc_p99_pct": 1.0
+          },
+          "independent_gaussian_31d": {
+            "mean_d2": 38.5834,
+            "asymptotic_expected_d2": 31.0,
+            "empirical_inflation_ratio": 1.2446,
+            "exceedance_rate_chi2_p95_pct": 25.17,
+            "mc_p95_d2": 58.9418,
+            "mc_p95_d": 7.6774,
+            "mc_p99_d2": 71.2201,
+            "mc_p99_d": 8.4392,
+            "n_samples_total": 80000,
+            "exceedance_rate_mc_p95_pct": 5.0,
+            "exceedance_rate_mc_p99_pct": 1.0
           }
         },
-        "explanation": "Under LOO at n_r=16 (m=15, nu=14), standardized distance squares follow a scaled Student-t distribution with E[D^2] inflated by 1.2444x. Consequently, the nominal 5% asymptotic chi2_0.95 threshold is exceeded by 22.29% (independent) to 24.51% (R4-correlated) of true null samples. This proves that the observed R4 exceedance rate (~25-31%) is an expected mathematical property of finite-sample LOO, not abnormal register shift."
+        "explanation": "Under LOO at n_r=16 (m=15, nu=14), standardized distance squares follow a scaled Student-t distribution with E[D^2] inflated by 1.2444x. Consequently, the nominal 5% asymptotic chi2_0.95 threshold (d=6.0345) is exceeded by 22.29% (independent) to 24.51% (R4-correlated) of true null samples. Finite-sample Monte Carlo quantiles (24D indep: 95%=6.9267, 99%=7.7032; 24D R4-corr: 95%=7.6574, 99%=9.0381) calibrate this threshold."
       },
       "3_r4_correlation_matrix_geometry_23_active_dims": {
         "n_active_dims": 23,

@@ -21,6 +21,16 @@ __all__ = [
     "svd_lowdin_orthogonalize",
     "GoldilocksVoidFinder",
     "aggregate_work_profile_from_scenes",
+    "KASANE11_DIM_NAMES",
+    "KASANE8_ACTIVE_DIM_NAMES",
+    "SHORT_DEAD_DIMS",
+    "F14_SIGMA_PROVENANCE",
+    "load_f14_noise_floor",
+    "split_sentences_kasane",
+    "window_count_kasane",
+    "is_eight_dim",
+    "select_length_band",
+    "evaluate_f14_hybrid_pair",
 ]
 
 _DEFERRED_TABLE: dict[str, tuple[str, str]] = {
@@ -35,6 +45,16 @@ _DEFERRED_TABLE: dict[str, tuple[str, str]] = {
     "svd_lowdin_orthogonalize": ("six_pole_atlas", "svd_lowdin_orthogonalize"),
     "GoldilocksVoidFinder": ("six_pole_atlas", "GoldilocksVoidFinder"),
     "aggregate_work_profile_from_scenes": ("six_pole_atlas", "aggregate_work_profile_from_scenes"),
+    "KASANE11_DIM_NAMES": ("f14_hybrid_noise_floor", "KASANE11_DIM_NAMES"),
+    "KASANE8_ACTIVE_DIM_NAMES": ("f14_hybrid_noise_floor", "KASANE8_ACTIVE_DIM_NAMES"),
+    "SHORT_DEAD_DIMS": ("f14_hybrid_noise_floor", "SHORT_DEAD_DIMS"),
+    "F14_SIGMA_PROVENANCE": ("f14_hybrid_noise_floor", "F14_SIGMA_PROVENANCE"),
+    "load_f14_noise_floor": ("f14_hybrid_noise_floor", "load_f14_noise_floor"),
+    "split_sentences_kasane": ("f14_hybrid_noise_floor", "split_sentences_kasane"),
+    "window_count_kasane": ("f14_hybrid_noise_floor", "window_count_kasane"),
+    "is_eight_dim": ("f14_hybrid_noise_floor", "is_eight_dim"),
+    "select_length_band": ("f14_hybrid_noise_floor", "select_length_band"),
+    "evaluate_f14_hybrid_pair": ("f14_hybrid_noise_floor", "evaluate_f14_hybrid_pair"),
 }
 
 

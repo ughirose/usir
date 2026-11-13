@@ -29,7 +29,7 @@ import json
 from pathlib import Path
 import sys
 import time
-from typing import Any, Dict, List, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 from scipy import stats
@@ -53,6 +53,7 @@ TASK1_STAGE_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_stage_b8_scale
 TASK2_U6_META_PATH = ROOT / "docs" / "handoff" / "v10" / "u6_guards_calibration_metadata.json"
 OUTPUT_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_b9_register_centering_and_level3.json"
 OUTPUT_B10_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_b10_gate3a_scene_scale_and_level3.json"
+OUTPUT_B11_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_b11_gate3a_calibrated_and_f14_parity.json"
 
 # Gate status constants (Strictly frozen & maintained according to repository rules)
 GATE3A_STATUS = "SHIFT_QUANTIFIED_NOT_PASSED"
@@ -759,6 +760,168 @@ def evaluate_dataset(
     }
 
 
+def compute_b10_mc_quantiles(
+    X24_r4: np.ndarray,
+    seed: int = 42,
+    n_trials: int = 5000,
+) -> Dict[str, Any]:
+    """Compute B-10 finite-sample Monte Carlo null quantiles (24D & 31D) under exact B-10 §4 setup.
+
+    Setup: n_r=16, m=15, nu=14, LOO Student-t inflation factor = (16/15)*(14/12) = 1.244444.
+    Pools all n_trials * 16 LOO D^2 evaluations to extract the finite-sample 95% and 99% quantiles.
+    """
+    std_scene_r4 = np.sqrt(np.var(X24_r4, axis=0, ddof=1))
+    active_23_idx = [i for i, s in enumerate(std_scene_r4) if s > 1e-6]
+    assert len(active_23_idx) == 23
+
+    X23_r4 = X24_r4[:, active_23_idx]
+    corr23 = np.corrcoef(X23_r4, rowvar=False)
+    eigvals23 = np.linalg.eigvalsh(corr23)[::-1]
+    min_eig = np.min(eigvals23)
+    cov_safe = corr23.copy()
+    if min_eig < 1e-6:
+        cov_safe += np.eye(23) * (1e-6 - min_eig)
+    L_chol = np.linalg.cholesky(cov_safe)
+
+    m_val = 15
+    nu_val = 14
+    inflation_factor = (1.0 + 1.0 / m_val) * (nu_val / (nu_val - 2.0))
+
+    rng = np.random.default_rng(seed)
+    chi2_95_24 = float(stats.chi2.ppf(0.95, df=24))
+    chi2_99_24 = float(stats.chi2.ppf(0.99, df=24))
+
+    def _run_loo_mc(generator_fn) -> Tuple[List[float], List[float], np.ndarray]:
+        exceed_trial_rates: List[float] = []
+        mean_trial_d2: List[float] = []
+        pooled_d2 = np.empty(n_trials * 16, dtype=float)
+        offset = 0
+        for _ in range(n_trials):
+            X_sim = generator_fn()
+            d2_list = []
+            for i in range(16):
+                others = np.delete(X_sim, i, axis=0)
+                mu_l = np.mean(others, axis=0)
+                var_l = np.maximum(np.var(others, axis=0, ddof=1), 1e-6)
+                d2 = float(np.sum((X_sim[i] - mu_l) ** 2 / var_l))
+                d2_list.append(d2)
+            d2_arr = np.array(d2_list, dtype=float)
+            pooled_d2[offset : offset + 16] = d2_arr
+            offset += 16
+            exceed_trial_rates.append(float(np.mean(d2_arr > chi2_95_24)))
+            mean_trial_d2.append(float(np.mean(d2_arr)))
+        return exceed_trial_rates, mean_trial_d2, pooled_d2
+
+    mc_exceed_indep, mc_d2_indep, pooled_d2_indep = _run_loo_mc(lambda: rng.normal(size=(16, 24)))
+    mc_exceed_r4, mc_d2_r4, pooled_d2_r4 = _run_loo_mc(
+        lambda: np.hstack([rng.normal(size=(16, 23)) @ L_chol.T, np.zeros((16, 1))])
+    )
+
+    # Separate RNG for 31D independent baseline so 24D RNG stream remains bit-identical to B-10
+    rng31 = np.random.default_rng(seed)
+    chi2_95_31 = float(stats.chi2.ppf(0.95, df=31))
+    pooled_d2_31 = np.empty(n_trials * 16, dtype=float)
+    exceed_31 = []
+    offset31 = 0
+    for _ in range(n_trials):
+        X_sim31 = rng31.normal(size=(16, 31))
+        d2_list31 = []
+        for i in range(16):
+            others = np.delete(X_sim31, i, axis=0)
+            mu_l = np.mean(others, axis=0)
+            var_l = np.maximum(np.var(others, axis=0, ddof=1), 1e-6)
+            d2 = float(np.sum((X_sim31[i] - mu_l) ** 2 / var_l))
+            d2_list31.append(d2)
+        d2_arr31 = np.array(d2_list31, dtype=float)
+        pooled_d2_31[offset31 : offset31 + 16] = d2_arr31
+        offset31 += 16
+        exceed_31.append(float(np.mean(d2_arr31 > chi2_95_31)))
+
+    def _quantile_block(pooled: np.ndarray) -> Dict[str, float]:
+        q95_d2 = float(np.percentile(pooled, 95.0))
+        q99_d2 = float(np.percentile(pooled, 99.0))
+        return {
+            "mc_p95_d2": round(q95_d2, 4),
+            "mc_p95_d": round(float(np.sqrt(q95_d2)), 4),
+            "mc_p99_d2": round(q99_d2, 4),
+            "mc_p99_d": round(float(np.sqrt(q99_d2)), 4),
+            "n_samples_total": int(len(pooled)),
+            "exceedance_rate_mc_p95_pct": round(float(np.mean(pooled > q95_d2) * 100.0), 2),
+            "exceedance_rate_mc_p99_pct": round(float(np.mean(pooled > q99_d2) * 100.0), 2),
+        }
+
+    return {
+        "seed": seed,
+        "n_trials": n_trials,
+        "m_loo_observations": m_val,
+        "nu_degrees_of_freedom": nu_val,
+        "theoretical_d2_inflation_factor": round(inflation_factor, 6),
+        "active_23_idx": active_23_idx,
+        "corr23": corr23,
+        "eigvals23": eigvals23,
+        "chi2_ref_24d": {
+            "chi2_p95_d2": round(chi2_95_24, 4),
+            "chi2_p95_d": round(float(np.sqrt(chi2_95_24)), 4),
+            "chi2_p99_d2": round(chi2_99_24, 4),
+            "chi2_p99_d": round(float(np.sqrt(chi2_99_24)), 4),
+        },
+        "independent_gaussian_24d": {
+            "mean_d2": round(float(np.mean(mc_d2_indep)), 4),
+            "asymptotic_expected_d2": 24.0,
+            "empirical_inflation_ratio": round(float(np.mean(mc_d2_indep)) / 24.0, 4),
+            "exceedance_rate_chi2_p95_pct": round(float(np.mean(mc_exceed_indep) * 100.0), 2),
+            **_quantile_block(pooled_d2_indep),
+        },
+        "r4_correlated_gaussian_24d": {
+            "mean_d2": round(float(np.mean(mc_d2_r4)), 4),
+            "exceedance_rate_chi2_p95_pct": round(float(np.mean(mc_exceed_r4) * 100.0), 2),
+            **_quantile_block(pooled_d2_r4),
+        },
+        "independent_gaussian_31d": {
+            "mean_d2": round(float(np.mean(pooled_d2_31)), 4),
+            "asymptotic_expected_d2": 31.0,
+            "empirical_inflation_ratio": round(float(np.mean(pooled_d2_31)) / 31.0, 4),
+            "exceedance_rate_chi2_p95_pct": round(float(np.mean(exceed_31) * 100.0), 2),
+            **_quantile_block(pooled_d2_31),
+        },
+    }
+
+
+def get_or_compute_b10_mc_quantiles(
+    b10_json_path: Optional[Path] = None,
+    X24_r4: Optional[np.ndarray] = None,
+) -> Dict[str, Any]:
+    """Load MC 95%/99% quantiles from B-10 artifact if present; else recompute under B-10 §4."""
+    target = Path(b10_json_path) if b10_json_path is not None else OUTPUT_B10_JSON_PATH
+    if target.exists():
+        data = json.loads(target.read_text(encoding="utf-8"))
+        mc = (
+            data.get("b10_scene_scale_redesign_evaluation", {})
+            .get("r4_nominal_level_exceedance_quantification", {})
+            .get("2_finite_sample_loo_student_t_inflation", {})
+            .get("monte_carlo_5000_trials", {})
+        )
+        indep = mc.get("independent_gaussian_24d", {})
+        r4corr = mc.get("r4_correlated_gaussian_24d", {})
+        if "mc_p95_d" in indep and "mc_p99_d" in indep and "mc_p95_d" in r4corr and "mc_p99_d" in r4corr:
+            return {
+                "source": "loaded_from_b10_json",
+                "b10_json_path": str(target),
+                "independent_gaussian_24d": indep,
+                "r4_correlated_gaussian_24d": r4corr,
+                "independent_gaussian_31d": mc.get("independent_gaussian_31d", {}),
+            }
+
+    if X24_r4 is None:
+        records = load_benchmark_records(BENCHMARK_64_PATH)
+        r4_records = [r for r in records if r["register"] == "R4"]
+        X24_r4 = np.array([r["profile"]["ortho_v2_31d"] for r in r4_records])[:, CONT24_DIMS]
+    res = compute_b10_mc_quantiles(X24_r4, seed=42, n_trials=5000)
+    res["source"] = "recomputed_b10_sec4_conditions"
+    res["b10_json_path"] = str(target)
+    return res
+
+
 def evaluate_b10_scene_scale_redesign(
     records_64: List[Dict[str, Any]],
     aozora_atlas: Dict[str, Any],
@@ -919,15 +1082,59 @@ def evaluate_b10_scene_scale_redesign(
     }
 
     # -------------------------------------------------------------------------
-    # 2. Scene-Scale Evaluation (Condition a & b across 24D and 31D)
+    # 2. Precompute Finite-Sample MC Null Quantiles (B-10 §4 exact setup: seed=42, 5000 trials)
     # -------------------------------------------------------------------------
-    def _eval_space(X: np.ndarray, space_name: str, mu_aozora: np.ndarray, thresh_3s_atlas: float) -> Dict[str, Any]:
+    X24_r4 = X24[reg_indices["R4"]]
+    mc_quant = compute_b10_mc_quantiles(X24_r4, seed=42, n_trials=5000)
+    mc_24d_thresh = {
+        "mc_indep_p95": mc_quant["independent_gaussian_24d"]["mc_p95_d"],
+        "mc_indep_p99": mc_quant["independent_gaussian_24d"]["mc_p99_d"],
+        "mc_r4corr_p95": mc_quant["r4_correlated_gaussian_24d"]["mc_p95_d"],
+        "mc_r4corr_p99": mc_quant["r4_correlated_gaussian_24d"]["mc_p99_d"],
+    }
+    mc_31d_thresh = {
+        "mc_indep_p95": mc_quant["independent_gaussian_31d"]["mc_p95_d"],
+        "mc_indep_p99": mc_quant["independent_gaussian_31d"]["mc_p99_d"],
+    }
+
+    # -------------------------------------------------------------------------
+    # 3. Scene-Scale Evaluation (Condition a & b across 24D and 31D)
+    # -------------------------------------------------------------------------
+    def _eval_space(
+        X: np.ndarray,
+        space_name: str,
+        mu_aozora: np.ndarray,
+        thresh_3s_atlas: float,
+        mc_thresh: Optional[Dict[str, float]] = None,
+    ) -> Dict[str, Any]:
         d = X.shape[1]
         thresh_c2_95 = float(np.sqrt(stats.chi2.ppf(0.95, df=d)))
+        thresh_c2_99 = float(np.sqrt(stats.chi2.ppf(0.99, df=d)))
         thresh_c2_9973 = float(np.sqrt(stats.chi2.ppf(0.9973, df=d)))
+        mc_thresh = mc_thresh or {}
 
         var_insample = {r: np.maximum(np.var(X[reg_indices[r]], axis=0, ddof=1), 1e-6) for r in registers}
         var_pool = np.maximum(np.mean([var_insample[r] for r in registers], axis=0), 1e-6)
+
+        def _summarize_arr(arr: np.ndarray, thresh_3s_r4: float) -> Dict[str, Any]:
+            rec: Dict[str, Any] = {
+                "n": len(arr),
+                "d_m_mean": round(float(np.mean(arr)), 4),
+                "d_m_std": round(float(np.std(arr, ddof=1)), 4),
+                "d_m_max": round(float(np.max(arr)), 4),
+                "outlier_rate_atlas_3sigma_pct": round(float(np.mean(arr > thresh_3s_atlas) * 100.0), 2),
+                "outlier_rate_r4_3sigma_pct": round(float(np.mean(arr > thresh_3s_r4) * 100.0), 2),
+                "outlier_rate_chi2_p95_pct": round(float(np.mean(arr > thresh_c2_95) * 100.0), 2),
+                "outlier_rate_chi2_p99_pct": round(float(np.mean(arr > thresh_c2_99) * 100.0), 2),
+                "outlier_rate_chi2_p9973_pct": round(float(np.mean(arr > thresh_c2_9973) * 100.0), 2),
+            }
+            if "mc_indep_p95" in mc_thresh:
+                rec["outlier_rate_mc_indep_p95_pct"] = round(float(np.mean(arr > mc_thresh["mc_indep_p95"]) * 100.0), 2)
+                rec["outlier_rate_mc_indep_p99_pct"] = round(float(np.mean(arr > mc_thresh["mc_indep_p99"]) * 100.0), 2)
+            if "mc_r4corr_p95" in mc_thresh:
+                rec["outlier_rate_mc_r4corr_p95_pct"] = round(float(np.mean(arr > mc_thresh["mc_r4corr_p95"]) * 100.0), 2)
+                rec["outlier_rate_mc_r4corr_p99_pct"] = round(float(np.mean(arr > mc_thresh["mc_r4corr_p99"]) * 100.0), 2)
+            return rec
 
         def _run_cond(is_centered: bool) -> Dict[str, Any]:
             modes_res = {}
@@ -959,34 +1166,12 @@ def evaluate_b10_scene_scale_redesign(
                 d_r4_arr = np.array(d_per_reg["R4"])
                 thresh_3s_r4 = float(np.mean(d_r4_arr) + 3.0 * np.std(d_r4_arr, ddof=1))
 
-                reg_summary = {}
-                for r in registers:
-                    arr = np.array(d_per_reg[r])
-                    reg_summary[r] = {
-                        "n": len(arr),
-                        "d_m_mean": round(float(np.mean(arr)), 4),
-                        "d_m_std": round(float(np.std(arr, ddof=1)), 4),
-                        "d_m_max": round(float(np.max(arr)), 4),
-                        "outlier_rate_atlas_3sigma_pct": round(float(np.mean(arr > thresh_3s_atlas) * 100.0), 2),
-                        "outlier_rate_r4_3sigma_pct": round(float(np.mean(arr > thresh_3s_r4) * 100.0), 2),
-                        "outlier_rate_chi2_p95_pct": round(float(np.mean(arr > thresh_c2_95) * 100.0), 2),
-                        "outlier_rate_chi2_p9973_pct": round(float(np.mean(arr > thresh_c2_9973) * 100.0), 2),
-                    }
+                reg_summary = {r: _summarize_arr(np.array(d_per_reg[r]), thresh_3s_r4) for r in registers}
 
                 mod_d_list = []
                 for r in ["R1", "R2", "R3"]:
                     mod_d_list.extend(d_per_reg[r])
-                mod_arr = np.array(mod_d_list)
-                mod_summary = {
-                    "n": len(mod_arr),
-                    "d_m_mean": round(float(np.mean(mod_arr)), 4),
-                    "d_m_std": round(float(np.std(mod_arr, ddof=1)), 4),
-                    "d_m_max": round(float(np.max(mod_arr)), 4),
-                    "outlier_rate_atlas_3sigma_pct": round(float(np.mean(mod_arr > thresh_3s_atlas) * 100.0), 2),
-                    "outlier_rate_r4_3sigma_pct": round(float(np.mean(mod_arr > thresh_3s_r4) * 100.0), 2),
-                    "outlier_rate_chi2_p95_pct": round(float(np.mean(mod_arr > thresh_c2_95) * 100.0), 2),
-                    "outlier_rate_chi2_p9973_pct": round(float(np.mean(mod_arr > thresh_c2_9973) * 100.0), 2),
-                }
+                mod_summary = _summarize_arr(np.array(mod_d_list), thresh_3s_r4)
 
                 modes_res[var_mode] = {
                     "r4_empirical_3sigma_threshold": round(thresh_3s_r4, 4),
@@ -1066,14 +1251,20 @@ def evaluate_b10_scene_scale_redesign(
         eta2_within_c = compute_eta_squared(X_within_c, labels)
         eta2_within_s = compute_eta_squared(X_within_s, labels)
 
+        thresholds_dict: Dict[str, Any] = {
+            "atlas_3sigma": round(thresh_3s_atlas, 4),
+            "chi2_p95": round(thresh_c2_95, 4),
+            "chi2_p99": round(thresh_c2_99, 4),
+            "chi2_p9973": round(thresh_c2_9973, 4),
+            "canonical_denominator": "sigma2_scene_r_diagonal",
+            "canonical_threshold_family": "finite_sample_mc_loo_student_t_null",
+            **{k: round(float(v), 4) for k, v in mc_thresh.items()},
+        }
+
         return {
             "space_name": space_name,
             "dimension": d,
-            "thresholds": {
-                "atlas_3sigma": round(thresh_3s_atlas, 4),
-                "chi2_p95": round(thresh_c2_95, 4),
-                "chi2_p9973": round(thresh_c2_9973, 4),
-            },
+            "thresholds": thresholds_dict,
             "condition_a_uncentered_scene_scaled": _run_cond(is_centered=False),
             "condition_b_within_register_loo_centered_scene_scaled": _run_cond(is_centered=True),
             "covariance_rank_deficiency_diagnostic": {
@@ -1100,18 +1291,16 @@ def evaluate_b10_scene_scale_redesign(
             "intra_register_distance_structure_fidelity": intra_fidelity,
         }
 
-    scene_scale_24d = _eval_space(X24, "ortho24_cont", mu_aozora_24, thresh_3s_atlas_24)
-    scene_scale_31d = _eval_space(X31, "ortho_v2_31d", mu_aozora_31, thresh_3s_atlas_31)
+    scene_scale_24d = _eval_space(X24, "ortho24_cont", mu_aozora_24, thresh_3s_atlas_24, mc_24d_thresh)
+    scene_scale_31d = _eval_space(X31, "ortho_v2_31d", mu_aozora_31, thresh_3s_atlas_31, mc_31d_thresh)
 
     # -------------------------------------------------------------------------
-    # 3. R4 Nominal Level Exceedance Quantification
+    # 4. R4 Nominal Level Exceedance Quantification
     # -------------------------------------------------------------------------
     # 1) Scale ratio sigma_scene / sigma_work on 23 active continuous dims
-    X24_r4 = X24[reg_indices["R4"]]
     var_scene_r4 = np.var(X24_r4, axis=0, ddof=1)
     std_scene_r4 = np.sqrt(var_scene_r4)
-    active_23_idx = [i for i, s in enumerate(std_scene_r4) if s > 1e-6]
-    assert len(active_23_idx) == 23
+    active_23_idx = mc_quant["active_23_idx"]
 
     per_dim_scale = {}
     ratios = []
@@ -1131,53 +1320,9 @@ def evaluate_b10_scene_scale_redesign(
     median_scale_ratio = float(np.median(ratios))
     mean_var_ratio = float(np.mean(np.array(ratios) ** 2))
 
-    # 2) Finite-sample LOO Student-t inflation
-    m_val = 15
-    nu_val = 14
-    inflation_factor = (1.0 + 1.0 / m_val) * (nu_val / (nu_val - 2.0))
-
-    rng = np.random.default_rng(42)
-    n_trials = 5000
-    chi2_95_24 = stats.chi2.ppf(0.95, df=24)
-
-    mc_exceed_indep = []
-    mc_d2_indep = []
-    for _ in range(n_trials):
-        X_sim = rng.normal(size=(16, 24))
-        d2_list = []
-        for i in range(16):
-            others = np.delete(X_sim, i, axis=0)
-            mu_l = np.mean(others, axis=0)
-            var_l = np.maximum(np.var(others, axis=0, ddof=1), 1e-6)
-            d2 = np.sum((X_sim[i] - mu_l) ** 2 / var_l)
-            d2_list.append(d2)
-        mc_exceed_indep.append(np.mean(np.array(d2_list) > chi2_95_24))
-        mc_d2_indep.append(np.mean(d2_list))
-
-    X23_r4 = X24_r4[:, active_23_idx]
-    corr23 = np.corrcoef(X23_r4, rowvar=False)
-    eigvals23 = np.linalg.eigvalsh(corr23)[::-1]
-    min_eig = np.min(eigvals23)
-    cov_safe = corr23.copy()
-    if min_eig < 1e-6:
-        cov_safe += np.eye(23) * (1e-6 - min_eig)
-    L_chol = np.linalg.cholesky(cov_safe)
-
-    mc_exceed_r4 = []
-    mc_d2_r4 = []
-    for _ in range(n_trials):
-        Z = rng.normal(size=(16, 23))
-        X_sim23 = Z @ L_chol.T
-        X_sim24 = np.hstack([X_sim23, np.zeros((16, 1))])
-        d2_list = []
-        for i in range(16):
-            others = np.delete(X_sim24, i, axis=0)
-            mu_l = np.mean(others, axis=0)
-            var_l = np.maximum(np.var(others, axis=0, ddof=1), 1e-6)
-            d2 = np.sum((X_sim24[i] - mu_l) ** 2 / var_l)
-            d2_list.append(d2)
-        mc_exceed_r4.append(np.mean(np.array(d2_list) > chi2_95_24))
-        mc_d2_r4.append(np.mean(d2_list))
+    # 2) Finite-sample LOO Student-t inflation & MC quantiles (reusing precomputed mc_quant)
+    corr23 = mc_quant["corr23"]
+    eigvals23 = mc_quant["eigvals23"]
 
     # 3) R4 correlation matrix geometry
     off_diag_mask = ~np.eye(23, dtype=bool)
@@ -1214,25 +1359,21 @@ def evaluate_b10_scene_scale_redesign(
             ),
         },
         "2_finite_sample_loo_student_t_inflation": {
-            "m_loo_observations": m_val,
-            "nu_degrees_of_freedom": nu_val,
-            "theoretical_d2_inflation_factor": round(inflation_factor, 6),
+            "seed": mc_quant["seed"],
+            "n_trials": mc_quant["n_trials"],
+            "m_loo_observations": mc_quant["m_loo_observations"],
+            "nu_degrees_of_freedom": mc_quant["nu_degrees_of_freedom"],
+            "theoretical_d2_inflation_factor": mc_quant["theoretical_d2_inflation_factor"],
+            "chi2_ref_24d": mc_quant["chi2_ref_24d"],
             "monte_carlo_5000_trials": {
-                "independent_gaussian_24d": {
-                    "mean_d2": round(float(np.mean(mc_d2_indep)), 4),
-                    "asymptotic_expected_d2": 24.0,
-                    "empirical_inflation_ratio": round(float(np.mean(mc_d2_indep)) / 24.0, 4),
-                    "exceedance_rate_chi2_p95_pct": round(float(np.mean(mc_exceed_indep) * 100.0), 2),
-                },
-                "r4_correlated_gaussian_24d": {
-                    "mean_d2": round(float(np.mean(mc_d2_r4)), 4),
-                    "exceedance_rate_chi2_p95_pct": round(float(np.mean(mc_exceed_r4) * 100.0), 2),
-                },
+                "independent_gaussian_24d": mc_quant["independent_gaussian_24d"],
+                "r4_correlated_gaussian_24d": mc_quant["r4_correlated_gaussian_24d"],
+                "independent_gaussian_31d": mc_quant["independent_gaussian_31d"],
             },
             "explanation": (
                 "Under LOO at n_r=16 (m=15, nu=14), standardized distance squares follow a scaled Student-t distribution with E[D^2] inflated by 1.2444x. "
-                "Consequently, the nominal 5% asymptotic chi2_0.95 threshold is exceeded by 22.29% (independent) to 24.51% (R4-correlated) of true null samples. "
-                "This proves that the observed R4 exceedance rate (~25-31%) is an expected mathematical property of finite-sample LOO, not abnormal register shift."
+                "Consequently, the nominal 5% asymptotic chi2_0.95 threshold (d=6.0345) is exceeded by 22.29% (independent) to 24.51% (R4-correlated) of true null samples. "
+                "Finite-sample Monte Carlo quantiles (24D indep: 95%=6.9267, 99%=7.7032; 24D R4-corr: 95%=7.6574, 99%=9.0381) calibrate this threshold."
             ),
         },
         "3_r4_correlation_matrix_geometry_23_active_dims": {
@@ -1331,6 +1472,76 @@ def evaluate_b10_scene_scale_redesign(
             "r4_nominal_level_exceedance_quantification": r4_nominal_quant,
         },
         "reference_only_scheme_2": reference_only_scheme_2,
+    }
+
+
+def build_b11_threshold_calibration_comparison(b10_eval: Dict[str, Any]) -> Dict[str, Any]:
+    """Build Stage B-11 Task 1 comparison between old chi2 and finite-sample MC thresholds."""
+    s24 = b10_eval["scene_scale_evaluation"]["ortho24_cont"]
+    mc = b10_eval["scene_scale_evaluation"]["r4_nominal_level_exceedance_quantification"][
+        "2_finite_sample_loo_student_t_inflation"
+    ]["monte_carlo_5000_trials"]
+
+    def _extract_mode_comparison(cond_dict: Dict[str, Any]) -> Dict[str, Any]:
+        out: Dict[str, Any] = {}
+        for var_mode in ["in_sample", "shrinkage_loo", "unregularized_loo"]:
+            m = cond_dict[var_mode]
+            pr = m["per_register"]
+            agg = m["modern_aggregate"]
+
+            def _pick(entry: Dict[str, Any]) -> Dict[str, Any]:
+                return {
+                    "n": entry["n"],
+                    "d_m_mean": entry["d_m_mean"],
+                    "d_m_max": entry["d_m_max"],
+                    "old_chi2_p95_pct": entry["outlier_rate_chi2_p95_pct"],
+                    "old_chi2_p99_pct": entry["outlier_rate_chi2_p99_pct"],
+                    "old_chi2_p9973_pct": entry["outlier_rate_chi2_p9973_pct"],
+                    "new_mc_indep_p95_pct": entry["outlier_rate_mc_indep_p95_pct"],
+                    "new_mc_indep_p99_pct": entry["outlier_rate_mc_indep_p99_pct"],
+                    "new_mc_r4corr_p95_pct": entry["outlier_rate_mc_r4corr_p95_pct"],
+                    "new_mc_r4corr_p99_pct": entry["outlier_rate_mc_r4corr_p99_pct"],
+                }
+
+            out[var_mode] = {
+                "R4": _pick(pr["R4"]),
+                "R1": _pick(pr["R1"]),
+                "R2": _pick(pr["R2"]),
+                "R3": _pick(pr["R3"]),
+                "R1_to_R3_pooled": _pick(agg),
+            }
+        return out
+
+    return {
+        "canonical_space": "ortho24_cont",
+        "dimension": 24,
+        "canonical_denominator": "diagonal_sigma2_scene_r",
+        "gate_3a_status": GATE3A_STATUS,
+        "gate_3b_status": GATE3B_STATUS,
+        "threshold_calibration_note": (
+            "Threshold update from asymptotic chi2_0.95 to finite-sample Monte Carlo null quantiles (95%/99%) "
+            "is strictly a calibration of the judgment criterion for finite-sample LOO inflation (1.2444x at n_r=16) "
+            "and R4 correlation; it is NOT a change to Gate 3a's official decision (SHIFT_QUANTIFIED_NOT_PASSED)."
+        ),
+        "scheme2_governance_note": b10_eval["reference_only_scheme_2"]["disclaimer"],
+        "scheme3_governance_note": (
+            "Condition (b) Scheme 3 within-register LOO convergence is an intake-normalization diagnostic only "
+            "and is NOT counted as Gate 3a pass evidence."
+        ),
+        "thresholds": s24["thresholds"],
+        "monte_carlo_quantiles": {
+            "seed": 42,
+            "n_trials": 5000,
+            "n_loo_evaluations_per_null": 80000,
+            "independent_gaussian_24d": mc["independent_gaussian_24d"],
+            "r4_correlated_gaussian_24d": mc["r4_correlated_gaussian_24d"],
+        },
+        "condition_a_uncentered_scene_scaled": _extract_mode_comparison(
+            s24["condition_a_uncentered_scene_scaled"]
+        ),
+        "condition_b_scheme3_loo_centered_diagnostic_only": _extract_mode_comparison(
+            s24["condition_b_within_register_loo_centered_scene_scaled"]
+        ),
     }
 
 
@@ -1482,6 +1693,36 @@ def main() -> None:
         json.dump(b10_synthesis, f, ensure_ascii=False, indent=2)
 
     print(f"Successfully generated Stage B-10 JSON report: {OUTPUT_B10_JSON_PATH}")
+
+    # Stage B-11: Gate 3a Finite-Sample Calibration & F-14 Hybrid Alignment
+    print("\n--- Running Stage B-11 Gate 3a Calibration & F-14 Hybrid Parity ---")
+    from scale_separated_level3 import evaluate_f14_hybrid_alignment_and_parity
+
+    b11_gate3a_calib = build_b11_threshold_calibration_comparison(b10_eval)
+    b11_f14_parity = evaluate_f14_hybrid_alignment_and_parity()
+    b11_synthesis = {
+        "metadata": {
+            "title": "USIR v5 Stage B-11: Gate 3a Finite-Sample Calibration & F-14 Hybrid Reference Alignment",
+            "version": "1.0",
+            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "base_commit": "8b82177",
+            "gate_3a_status": GATE3A_STATUS,
+            "gate_3b_status": GATE3B_STATUS,
+            "non_conflation_note": (
+                "Gate 3a within-register scene variance (sigma_scene_r in 24D ortho24_cont) and harvest "
+                "adjacent-paragraph noise floor sigma (paragraph_noise_floor_all_novel.json) are distinct quantities."
+            ),
+        },
+        "task1_gate3a_finite_sample_calibration": b11_gate3a_calib,
+        "task2_f14_hybrid_judgment_and_sigma_parity": b11_f14_parity,
+        "reference_only_scheme_2": b10_eval["reference_only_scheme_2"],
+    }
+
+    OUTPUT_B11_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(OUTPUT_B11_JSON_PATH, "w", encoding="utf-8") as f:
+        json.dump(b11_synthesis, f, ensure_ascii=False, indent=2)
+
+    print(f"Successfully generated Stage B-11 JSON report: {OUTPUT_B11_JSON_PATH}")
 
 
 if __name__ == "__main__":

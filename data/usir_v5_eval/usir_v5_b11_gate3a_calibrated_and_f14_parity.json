@@ -1,0 +1,787 @@
+{
+  "metadata": {
+    "title": "USIR v5 Stage B-11: Gate 3a Finite-Sample Calibration & F-14 Hybrid Reference Alignment",
+    "version": "1.0",
+    "timestamp": "2026-11-13 13:22:31",
+    "base_commit": "8b82177",
+    "gate_3a_status": "SHIFT_QUANTIFIED_NOT_PASSED",
+    "gate_3b_status": "GATE3B_FROZEN",
+    "non_conflation_note": "Gate 3a within-register scene variance (sigma_scene_r in 24D ortho24_cont) and harvest adjacent-paragraph noise floor sigma (paragraph_noise_floor_all_novel.json) are distinct quantities."
+  },
+  "task1_gate3a_finite_sample_calibration": {
+    "canonical_space": "ortho24_cont",
+    "dimension": 24,
+    "canonical_denominator": "diagonal_sigma2_scene_r",
+    "gate_3a_status": "SHIFT_QUANTIFIED_NOT_PASSED",
+    "gate_3b_status": "GATE3B_FROZEN",
+    "threshold_calibration_note": "Threshold update from asymptotic chi2_0.95 to finite-sample Monte Carlo null quantiles (95%/99%) is strictly a calibration of the judgment criterion for finite-sample LOO inflation (1.2444x at n_r=16) and R4 correlation; it is NOT a change to Gate 3a's official decision (SHIFT_QUANTIFIED_NOT_PASSED).",
+    "scheme2_governance_note": "本値は自己レジスター平均を減算した差分を他分布（青空文庫アトラス）の分散で除算した同義反復的補正（self-register mean subtraction divided by another distribution's sigma）であり、独立した収束証拠とはみなさない参考値である。",
+    "scheme3_governance_note": "Condition (b) Scheme 3 within-register LOO convergence is an intake-normalization diagnostic only and is NOT counted as Gate 3a pass evidence.",
+    "thresholds": {
+      "atlas_3sigma": 7.2641,
+      "chi2_p95": 6.0345,
+      "chi2_p99": 6.5559,
+      "chi2_p9973": 6.9111,
+      "canonical_denominator": "sigma2_scene_r_diagonal",
+      "canonical_threshold_family": "finite_sample_mc_loo_student_t_null",
+      "mc_indep_p95": 6.9267,
+      "mc_indep_p99": 7.7032,
+      "mc_r4corr_p95": 7.6574,
+      "mc_r4corr_p99": 9.0381
+    },
+    "monte_carlo_quantiles": {
+      "seed": 42,
+      "n_trials": 5000,
+      "n_loo_evaluations_per_null": 80000,
+      "independent_gaussian_24d": {
+        "mean_d2": 29.8831,
+        "asymptotic_expected_d2": 24.0,
+        "empirical_inflation_ratio": 1.2451,
+        "exceedance_rate_chi2_p95_pct": 22.29,
+        "mc_p95_d2": 47.9796,
+        "mc_p95_d": 6.9267,
+        "mc_p99_d2": 59.3388,
+        "mc_p99_d": 7.7032,
+        "n_samples_total": 80000,
+        "exceedance_rate_mc_p95_pct": 5.0,
+        "exceedance_rate_mc_p99_pct": 1.0
+      },
+      "r4_correlated_gaussian_24d": {
+        "mean_d2": 28.6274,
+        "exceedance_rate_chi2_p95_pct": 24.51,
+        "mc_p95_d2": 58.6355,
+        "mc_p95_d": 7.6574,
+        "mc_p99_d2": 81.6877,
+        "mc_p99_d": 9.0381,
+        "n_samples_total": 80000,
+        "exceedance_rate_mc_p95_pct": 5.0,
+        "exceedance_rate_mc_p99_pct": 1.0
+      }
+    },
+    "condition_a_uncentered_scene_scaled": {
+      "in_sample": {
+        "R4": {
+          "n": 16,
+          "d_m_mean": 4.8108,
+          "d_m_max": 6.479,
+          "old_chi2_p95_pct": 6.25,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R1": {
+          "n": 16,
+          "d_m_mean": 10.0285,
+          "d_m_max": 11.6329,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 81.25
+        },
+        "R2": {
+          "n": 16,
+          "d_m_mean": 201.3124,
+          "d_m_max": 201.4285,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 100.0
+        },
+        "R3": {
+          "n": 16,
+          "d_m_mean": 283.9419,
+          "d_m_max": 284.0867,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 100.0
+        },
+        "R1_to_R3_pooled": {
+          "n": 48,
+          "d_m_mean": 165.0943,
+          "d_m_max": 284.0867,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 93.75
+        }
+      },
+      "shrinkage_loo": {
+        "R4": {
+          "n": 16,
+          "d_m_mean": 5.3354,
+          "d_m_max": 7.5838,
+          "old_chi2_p95_pct": 25.0,
+          "old_chi2_p99_pct": 6.25,
+          "old_chi2_p9973_pct": 6.25,
+          "new_mc_indep_p95_pct": 6.25,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R1": {
+          "n": 16,
+          "d_m_mean": 9.1969,
+          "d_m_max": 10.6735,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 87.5,
+          "new_mc_r4corr_p95_pct": 87.5,
+          "new_mc_r4corr_p99_pct": 62.5
+        },
+        "R2": {
+          "n": 16,
+          "d_m_mean": 14.7871,
+          "d_m_max": 15.6527,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 100.0
+        },
+        "R3": {
+          "n": 16,
+          "d_m_mean": 20.2337,
+          "d_m_max": 22.149,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 100.0
+        },
+        "R1_to_R3_pooled": {
+          "n": 48,
+          "d_m_mean": 14.7393,
+          "d_m_max": 22.149,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 95.83,
+          "new_mc_r4corr_p95_pct": 95.83,
+          "new_mc_r4corr_p99_pct": 87.5
+        }
+      },
+      "unregularized_loo": {
+        "R4": {
+          "n": 16,
+          "d_m_mean": 5.1874,
+          "d_m_max": 7.2194,
+          "old_chi2_p95_pct": 25.0,
+          "old_chi2_p99_pct": 6.25,
+          "old_chi2_p9973_pct": 6.25,
+          "new_mc_indep_p95_pct": 6.25,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R1": {
+          "n": 16,
+          "d_m_mean": 10.127,
+          "d_m_max": 11.8681,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 75.0
+        },
+        "R2": {
+          "n": 16,
+          "d_m_mean": 201.3101,
+          "d_m_max": 201.45,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 100.0
+        },
+        "R3": {
+          "n": 16,
+          "d_m_mean": 287.9511,
+          "d_m_max": 347.994,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 100.0
+        },
+        "R1_to_R3_pooled": {
+          "n": 48,
+          "d_m_mean": 166.4627,
+          "d_m_max": 347.994,
+          "old_chi2_p95_pct": 100.0,
+          "old_chi2_p99_pct": 100.0,
+          "old_chi2_p9973_pct": 100.0,
+          "new_mc_indep_p95_pct": 100.0,
+          "new_mc_indep_p99_pct": 100.0,
+          "new_mc_r4corr_p95_pct": 100.0,
+          "new_mc_r4corr_p99_pct": 91.67
+        }
+      }
+    },
+    "condition_b_scheme3_loo_centered_diagnostic_only": {
+      "in_sample": {
+        "R4": {
+          "n": 16,
+          "d_m_mean": 4.8781,
+          "d_m_max": 6.3396,
+          "old_chi2_p95_pct": 12.5,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R1": {
+          "n": 16,
+          "d_m_mean": 4.9035,
+          "d_m_max": 6.0477,
+          "old_chi2_p95_pct": 6.25,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R2": {
+          "n": 16,
+          "d_m_mean": 4.7991,
+          "d_m_max": 5.9283,
+          "old_chi2_p95_pct": 0.0,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R3": {
+          "n": 16,
+          "d_m_mean": 4.3933,
+          "d_m_max": 6.509,
+          "old_chi2_p95_pct": 12.5,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R1_to_R3_pooled": {
+          "n": 48,
+          "d_m_mean": 4.6986,
+          "d_m_max": 6.509,
+          "old_chi2_p95_pct": 6.25,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        }
+      },
+      "shrinkage_loo": {
+        "R4": {
+          "n": 16,
+          "d_m_mean": 5.4499,
+          "d_m_max": 7.546,
+          "old_chi2_p95_pct": 31.25,
+          "old_chi2_p99_pct": 12.5,
+          "old_chi2_p9973_pct": 12.5,
+          "new_mc_indep_p95_pct": 6.25,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R1": {
+          "n": 16,
+          "d_m_mean": 4.7468,
+          "d_m_max": 5.8782,
+          "old_chi2_p95_pct": 0.0,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R2": {
+          "n": 16,
+          "d_m_mean": 4.5664,
+          "d_m_max": 6.4051,
+          "old_chi2_p95_pct": 6.25,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R3": {
+          "n": 16,
+          "d_m_mean": 4.0976,
+          "d_m_max": 6.069,
+          "old_chi2_p95_pct": 6.25,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R1_to_R3_pooled": {
+          "n": 48,
+          "d_m_mean": 4.4703,
+          "d_m_max": 6.4051,
+          "old_chi2_p95_pct": 4.17,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        }
+      },
+      "unregularized_loo": {
+        "R4": {
+          "n": 16,
+          "d_m_mean": 5.2987,
+          "d_m_max": 7.1924,
+          "old_chi2_p95_pct": 12.5,
+          "old_chi2_p99_pct": 12.5,
+          "old_chi2_p9973_pct": 6.25,
+          "new_mc_indep_p95_pct": 6.25,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R1": {
+          "n": 16,
+          "d_m_mean": 5.1986,
+          "d_m_max": 6.4527,
+          "old_chi2_p95_pct": 18.75,
+          "old_chi2_p99_pct": 0.0,
+          "old_chi2_p9973_pct": 0.0,
+          "new_mc_indep_p95_pct": 0.0,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R2": {
+          "n": 16,
+          "d_m_mean": 5.2339,
+          "d_m_max": 7.3014,
+          "old_chi2_p95_pct": 25.0,
+          "old_chi2_p99_pct": 6.25,
+          "old_chi2_p9973_pct": 6.25,
+          "new_mc_indep_p95_pct": 6.25,
+          "new_mc_indep_p99_pct": 0.0,
+          "new_mc_r4corr_p95_pct": 0.0,
+          "new_mc_r4corr_p99_pct": 0.0
+        },
+        "R3": {
+          "n": 16,
+          "d_m_mean": 14.6691,
+          "d_m_max": 166.7421,
+          "old_chi2_p95_pct": 12.5,
+          "old_chi2_p99_pct": 12.5,
+          "old_chi2_p9973_pct": 12.5,
+          "new_mc_indep_p95_pct": 12.5,
+          "new_mc_indep_p99_pct": 6.25,
+          "new_mc_r4corr_p95_pct": 6.25,
+          "new_mc_r4corr_p99_pct": 6.25
+        },
+        "R1_to_R3_pooled": {
+          "n": 48,
+          "d_m_mean": 8.3672,
+          "d_m_max": 166.7421,
+          "old_chi2_p95_pct": 18.75,
+          "old_chi2_p99_pct": 6.25,
+          "old_chi2_p9973_pct": 6.25,
+          "new_mc_indep_p95_pct": 6.25,
+          "new_mc_indep_p99_pct": 2.08,
+          "new_mc_r4corr_p95_pct": 2.08,
+          "new_mc_r4corr_p99_pct": 2.08
+        }
+      }
+    }
+  },
+  "task2_f14_hybrid_judgment_and_sigma_parity": {
+    "provenance": {
+      "canonical_path": "docs/handoff/v10/paragraph_noise_floor_all_novel.json",
+      "upstream_evidence_path": "C:/dev/nishiki/docs/handoff/evidence/2026-11-13_f14/paragraph_noise_floor_all_novel.json",
+      "bootstrap_ci_path": "docs/handoff/v10/ac_sigma_bootstrap_ci.json",
+      "nishiki_commits": {
+        "f14_hybrid_and_all_novel_sigma": "48b6eb7",
+        "f14_bootstrap_ci_addendum": "fffae58"
+      },
+      "generator_command": "nishiki gen-paragraph-noise-floor --scope all-novel",
+      "scope": "all-novel",
+      "n_works": 46,
+      "n_authors": 10,
+      "n_pairs_total": 10859,
+      "sd_definition": "population SD (ddof=0) of adjacent paragraph differences (p_{t+1} - p_t)",
+      "sigma_kind": "adjacent_paragraph_diff_sd",
+      "hybrid_rule": {
+        "both_single_window": "w_before <= 1 and w_after <= 1 -> n_evaluated=8 (both_single_window:8)",
+        "any_multi_window": "w_before >= 2 or w_after >= 2 -> n_evaluated=11 (any_multi_window:11, ac_sigma_source=multi_window_pairs)"
+      },
+      "non_conflation_guard": "Harvest adjacent-paragraph noise floor sigma (sigma_kind='adjacent_paragraph_diff_sd' in kasane11_v1/ortho28) is strictly distinct from Gate 3a within-register scene variance sigma_scene_r (24D ortho24_cont). Never mix, equate, or substitute these quantities.",
+      "loaded_path": "C:\\dev\\usir\\docs\\handoff\\v10\\paragraph_noise_floor_all_novel.json",
+      "sha256": "00c398144abe13288451a6c297438e884574eef42e0b221ee2369f302db03435",
+      "n_works_in_file": 46,
+      "n_pairs_in_file": 10859,
+      "bootstrap_ci_sha256": "fdfef9522de47bdb44c05a6ad2491875e048cc37e29d48d312e176bebe80a964"
+    },
+    "ac_multi_window_per_dim_std_by_band": {
+      "S": {
+        "n_pairs": 8258,
+        "ac_multi_window_n_pairs": 0,
+        "ac_multi_window_per_dim_std": null,
+        "ac_mean_crest_band_std": 0.36395368387856997,
+        "structurally_dead_dims": [
+          "ac_mean_velocity",
+          "ac_max_sis",
+          "ac_coupling"
+        ]
+      },
+      "M": {
+        "n_pairs": 1952,
+        "ac_multi_window_n_pairs": 165,
+        "ac_multi_window_per_dim_std": {
+          "ac_coupling": 1.4078678674874479,
+          "ac_max_sis": 0.12661474438213988,
+          "ac_mean_velocity": 134.29641924737427
+        },
+        "ac_mean_crest_band_std": 0.537940060407693,
+        "structurally_dead_dims": []
+      },
+      "L": {
+        "n_pairs": 649,
+        "ac_multi_window_n_pairs": 225,
+        "ac_multi_window_per_dim_std": {
+          "ac_coupling": 1.0668175754568485,
+          "ac_max_sis": 0.14935699218887902,
+          "ac_mean_velocity": 102.57321663587159
+        },
+        "ac_mean_crest_band_std": 0.7740083235228371,
+        "structurally_dead_dims": []
+      }
+    },
+    "ac_sigma_bootstrap_ci_summary": [
+      {
+        "band": "S",
+        "dims": {
+          "ac_coupling": {
+            "ci95": null,
+            "n": 0,
+            "sigma": null
+          },
+          "ac_max_sis": {
+            "ci95": null,
+            "n": 0,
+            "sigma": null
+          },
+          "ac_mean_velocity": {
+            "ci95": null,
+            "n": 0,
+            "sigma": null
+          }
+        },
+        "n_pairs_both_multi": 0,
+        "n_works_contributing": 0
+      },
+      {
+        "band": "M",
+        "dims": {
+          "ac_coupling": {
+            "ci95": [
+              1.2940130323476504,
+              1.5011053510746946
+            ],
+            "ci_width_over_sigma": 0.14709641686519315,
+            "n": 165,
+            "sigma": 1.4078678674874479
+          },
+          "ac_max_sis": {
+            "ci95": [
+              0.10831516527179759,
+              0.1449204578596166
+            ],
+            "ci_width_over_sigma": 0.2891076609319642,
+            "n": 165,
+            "sigma": 0.12661474438213988
+          },
+          "ac_mean_velocity": {
+            "ci95": [
+              101.19505709065942,
+              168.29769707778087
+            ],
+            "ci_width_over_sigma": 0.49966067869254394,
+            "n": 165,
+            "sigma": 134.29641924737427
+          }
+        },
+        "n_pairs_both_multi": 165,
+        "n_works_contributing": 22
+      },
+      {
+        "band": "L",
+        "dims": {
+          "ac_coupling": {
+            "ci95": [
+              0.9884540274308324,
+              1.1400435804002487
+            ],
+            "ci_width_over_sigma": 0.14209510272128792,
+            "n": 225,
+            "sigma": 1.0668175754568485
+          },
+          "ac_max_sis": {
+            "ci95": [
+              0.132728522914929,
+              0.16521221226763383
+            ],
+            "ci_width_over_sigma": 0.2174902485424015,
+            "n": 225,
+            "sigma": 0.14935699218887902
+          },
+          "ac_mean_velocity": {
+            "ci95": [
+              86.374123702707,
+              118.5181009404126
+            ],
+            "ci_width_over_sigma": 0.31337593079307124,
+            "n": 225,
+            "sigma": 102.57321663587159
+          }
+        },
+        "n_pairs_both_multi": 225,
+        "n_works_contributing": 24
+      }
+    ],
+    "set1_aozora_10859_adjacent_pairs": {
+      "n_works": 46,
+      "n_pairs_total": 10859,
+      "by_band_python": {
+        "S": {
+          "both_single": 8258,
+          "mixed_one_side_multi": 0,
+          "both_multi": 0,
+          "n_eval_8": 8258,
+          "n_eval_11": 0,
+          "n_pairs": 8258
+        },
+        "M": {
+          "both_single": 621,
+          "mixed_one_side_multi": 1166,
+          "both_multi": 165,
+          "n_eval_8": 621,
+          "n_eval_11": 1331,
+          "n_pairs": 1952
+        },
+        "L": {
+          "both_single": 0,
+          "mixed_one_side_multi": 424,
+          "both_multi": 225,
+          "n_eval_8": 0,
+          "n_eval_11": 649,
+          "n_pairs": 649
+        }
+      },
+      "by_band_rust_f14": {
+        "S": {
+          "n_pairs": 8258,
+          "both_multi": 0,
+          "both_single": 8258,
+          "mixed_one_side_multi": 0
+        },
+        "M": {
+          "n_pairs": 1952,
+          "both_multi": 165,
+          "both_single": 621,
+          "mixed_one_side_multi": 1166
+        },
+        "L": {
+          "n_pairs": 649,
+          "both_multi": 225,
+          "both_single": 0,
+          "mixed_one_side_multi": 424
+        }
+      },
+      "discrepancy_count": 0,
+      "discrepancies": []
+    },
+    "set2_u6_86_revision_pairs": {
+      "n_pairs_total": 86,
+      "by_class": {
+        "Class_A_micro_polish": {
+          "n_pairs": 42,
+          "n_eval_8": 42,
+          "n_eval_11": 0,
+          "mixed_window_pairs": 0,
+          "bands": {
+            "S": 42,
+            "M": 0,
+            "L": 0
+          },
+          "ac_sigma_sources": {
+            "not_applicable": 42,
+            "multi_window_pairs": 0,
+            "band_all_pairs": 0
+          }
+        },
+        "Class_B_macro_revision": {
+          "n_pairs": 22,
+          "n_eval_8": 0,
+          "n_eval_11": 22,
+          "mixed_window_pairs": 0,
+          "bands": {
+            "S": 0,
+            "M": 4,
+            "L": 18
+          },
+          "ac_sigma_sources": {
+            "not_applicable": 0,
+            "multi_window_pairs": 22,
+            "band_all_pairs": 0
+          }
+        },
+        "Class_C_content_rewrite": {
+          "n_pairs": 22,
+          "n_eval_8": 22,
+          "n_eval_11": 0,
+          "mixed_window_pairs": 0,
+          "bands": {
+            "S": 22,
+            "M": 0,
+            "L": 0
+          },
+          "ac_sigma_sources": {
+            "not_applicable": 22,
+            "multi_window_pairs": 0,
+            "band_all_pairs": 0
+          }
+        }
+      },
+      "rust_cli_verification": {
+        "rust_binary_used": "C:\\dev\\nishiki\\target\\f14\\release\\nishiki.exe",
+        "cli_aligned_pairs": 77,
+        "cli_unaligned_low_dice_pairs": [
+          "A_29",
+          "A_35",
+          "B_19",
+          "B_20",
+          "B_22",
+          "C_19",
+          "C_20",
+          "C_21",
+          "C_22"
+        ],
+        "n_evaluated_discrepancy_on_aligned": 0,
+        "discrepancies": [],
+        "note": "All 77/86 pairs aligned by harvest-diff CLI (Dice >= 0.25) show 0 discrepancies on window_counts, band, n_evaluated, and ac_sigma_source. The remaining 9 pairs fall below harvest-diff align_min_similarity=0.25 (emitted as kind='unaligned' by CLI, whereas Python pre-aligned pair evaluation keeps A_29, A_35, C_19..C_22 at 8D and B_19, B_20, B_22 at 11D)."
+      }
+    },
+    "set3_style_polish_28_pairs_3_granularities": {
+      "span_only": {
+        "n_pairs": 28,
+        "n_eval_8": 22,
+        "n_eval_11": 6,
+        "mixed_window_pairs": 0,
+        "bands": {
+          "S": 17,
+          "M": 8,
+          "L": 3
+        },
+        "rust_checked": 28,
+        "rust_mismatches": 0
+      },
+      "local_context": {
+        "n_pairs": 28,
+        "n_eval_8": 7,
+        "n_eval_11": 21,
+        "mixed_window_pairs": 0,
+        "bands": {
+          "S": 6,
+          "M": 8,
+          "L": 14
+        },
+        "rust_checked": 28,
+        "rust_mismatches": 0
+      },
+      "whole_scene": {
+        "n_pairs": 28,
+        "n_eval_8": 0,
+        "n_eval_11": 28,
+        "mixed_window_pairs": 0,
+        "bands": {
+          "S": 0,
+          "M": 2,
+          "L": 26
+        },
+        "rust_checked": 28,
+        "rust_mismatches": 0
+      }
+    },
+    "python_rust_feature_extraction_scope_note": "Experiments/scale_separated_level3.py uses historical H1/H2 Python features where extract_kasane8_active slices dims [:8] (fixed in B-9/B-10); F-14 parity alignment in Python matches Rust's hybrid judgment (both<=1 window -> 8D excluding ac_mean_velocity/ac_max_sis/ac_coupling while retaining ac_mean_crest; else 11D using ac_multi_window_per_dim_std) and records complete provenance."
+  },
+  "reference_only_scheme_2": {
+    "disclaimer": "本値は自己レジスター平均を減算した差分を他分布（青空文庫アトラス）の分散で除算した同義反復的補正（self-register mean subtraction divided by another distribution's sigma）であり、独立した収束証拠とはみなさない参考値である。",
+    "r1_colloquial_fiction_alignment": {
+      "baseline_a_r4_diagonal_31d": {
+        "unaligned_outlier_rate_3sigma_pct": 0.0,
+        "unaligned_outlier_rate_chi2_p95_pct": 62.5,
+        "aligned_outlier_rate_3sigma_pct": 0.0,
+        "aligned_outlier_rate_chi2_p95_pct": 0.0
+      },
+      "baseline_b_aozora_atlas_24d": {
+        "unaligned_outlier_rate_3sigma_pct": 100.0,
+        "aligned_outlier_rate_3sigma_pct": 0.0,
+        "aligned_outlier_rate_chi2_p95_pct": 25.0
+      }
+    },
+    "pooled_modern_prose_alignment": {
+      "baseline_a_r4_diagonal_31d": {
+        "unaligned_outlier_rate_3sigma_pct": 58.33,
+        "unaligned_outlier_rate_chi2_p95_pct": 87.5,
+        "aligned_outlier_rate_3sigma_pct": 0.0,
+        "aligned_outlier_rate_chi2_p95_pct": 35.42
+      },
+      "baseline_b_aozora_atlas_24d": {
+        "unaligned_outlier_rate_3sigma_pct": 100.0,
+        "aligned_outlier_rate_3sigma_pct": 72.92,
+        "aligned_outlier_rate_chi2_p95_pct": 87.5
+      }
+    }
+  }
+}

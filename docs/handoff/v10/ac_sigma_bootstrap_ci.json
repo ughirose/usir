@@ -1,0 +1,101 @@
+{
+  "bands": [
+    {
+      "band": "S",
+      "dims": {
+        "ac_coupling": {
+          "ci95": null,
+          "n": 0,
+          "sigma": null
+        },
+        "ac_max_sis": {
+          "ci95": null,
+          "n": 0,
+          "sigma": null
+        },
+        "ac_mean_velocity": {
+          "ci95": null,
+          "n": 0,
+          "sigma": null
+        }
+      },
+      "n_pairs_both_multi": 0,
+      "n_works_contributing": 0
+    },
+    {
+      "band": "M",
+      "dims": {
+        "ac_coupling": {
+          "ci95": [
+            1.2940130323476504,
+            1.5011053510746946
+          ],
+          "ci_width_over_sigma": 0.14709641686519315,
+          "n": 165,
+          "sigma": 1.4078678674874479
+        },
+        "ac_max_sis": {
+          "ci95": [
+            0.10831516527179759,
+            0.1449204578596166
+          ],
+          "ci_width_over_sigma": 0.2891076609319642,
+          "n": 165,
+          "sigma": 0.12661474438213988
+        },
+        "ac_mean_velocity": {
+          "ci95": [
+            101.19505709065942,
+            168.29769707778087
+          ],
+          "ci_width_over_sigma": 0.49966067869254394,
+          "n": 165,
+          "sigma": 134.29641924737427
+        }
+      },
+      "n_pairs_both_multi": 165,
+      "n_works_contributing": 22
+    },
+    {
+      "band": "L",
+      "dims": {
+        "ac_coupling": {
+          "ci95": [
+            0.9884540274308324,
+            1.1400435804002487
+          ],
+          "ci_width_over_sigma": 0.14209510272128792,
+          "n": 225,
+          "sigma": 1.0668175754568485
+        },
+        "ac_max_sis": {
+          "ci95": [
+            0.132728522914929,
+            0.16521221226763383
+          ],
+          "ci_width_over_sigma": 0.2174902485424015,
+          "n": 225,
+          "sigma": 0.14935699218887902
+        },
+        "ac_mean_velocity": {
+          "ci95": [
+            86.374123702707,
+            118.5181009404126
+          ],
+          "ci_width_over_sigma": 0.31337593079307124,
+          "n": 225,
+          "sigma": 102.57321663587159
+        }
+      },
+      "n_pairs_both_multi": 225,
+      "n_works_contributing": 24
+    }
+  ],
+  "method": "ペア単位の単純ブートストラップ（復元抽出）。統計量は母集団 SD（ddof=0）。95% 区間はパーセンタイル法（2.5%/97.5%）",
+  "n_pairs_total": 10859,
+  "n_works": 46,
+  "population": "両段落とも 2 ウィンドウ以上の隣接ペア（paragraph_noise::length_bands_json と同じ）。帯は L_max（S≤250, M≤500, L>500）",
+  "resamples": 10000,
+  "rng": "SplitMix64",
+  "seed": 20261113
+}
