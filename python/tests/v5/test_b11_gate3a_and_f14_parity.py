@@ -142,15 +142,24 @@ def test_f14_window_count_and_hybrid_rule_mechanics():
     assert ev_m8["ac_sigma_source"] == "not_applicable"
     assert set(ev_m8["excluded_structurally_dead_dims"]) == set(SHORT_DEAD_DIMS)
 
-    # Multi-window >=2 on one side (Band M) -> 11D with ac_multi_window_per_dim_std
+    # Rule v2 (B-14): mixed pair (one side >=2 windows) -> 8D; ac_* excluded; 11D only when both >=2 windows.
     multi_390 = ("あ" * 129 + "。") * 3  # three 130-char sentences = 390 chars (Band M) -> 2 windows
     assert window_count_kasane(multi_390) == 2
-    assert is_eight_dim((1, 2)) is False
-    ev_m11 = evaluate_f14_hybrid_pair(single_260, multi_390, nf_data, provenance=prov)
+    assert is_eight_dim((1, 2)) is True
+    assert is_eight_dim((2, 2)) is False
+    ev_mixed = evaluate_f14_hybrid_pair(single_260, multi_390, nf_data, provenance=prov)
+    assert ev_mixed["band"] == "M"
+    assert ev_mixed["n_evaluated"] == 8
+    assert ev_mixed["n_eval_rule"] == "mixed_window:8"
+    assert ev_mixed["eval_rule"] == "v2"
+    assert ev_mixed["mixed_window_pair"] is True
+    assert ev_mixed["ac_sigma_source"] == "not_applicable"
+    assert set(ev_mixed["excluded_structurally_dead_dims"]) == set(SHORT_DEAD_DIMS)
+    ev_m11 = evaluate_f14_hybrid_pair(multi_390, multi_390, nf_data, provenance=prov)
     assert ev_m11["band"] == "M"
     assert ev_m11["n_evaluated"] == 11
-    assert ev_m11["n_eval_rule"] == "any_multi_window:11"
-    assert ev_m11["mixed_window_pair"] is True
+    assert ev_m11["n_eval_rule"] == "both_multi_window:11"
+    assert ev_m11["mixed_window_pair"] is False
     assert ev_m11["ac_sigma_source"] == "multi_window_pairs"
     assert ev_m11["excluded_structurally_dead_dims"] == []
     m_band = select_length_band(300, nf_data["length_bands"]["bands"])

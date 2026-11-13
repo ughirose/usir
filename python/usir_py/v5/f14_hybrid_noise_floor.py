@@ -7,12 +7,21 @@ implemented in ``nishiki`` (``crates/nishiki-cli/src/diff_harvester.rs`` and
 1. Trajectory window counting (``window_chars=250``, ``stride_chars=125``)
    with exact character-for-character parity with ``kasane_core::IncrementalAnalyzer::split_sentences``
    and ``kasane_core::TrajectoryAnalyzer::analyze``.
-2. Hybrid evaluation rule (``is_eight_dim``):
-   - Both before and after paragraphs have ``<= 1`` window -> **8 dimensions**
-     (``both_single_window:8``, excluding ``ac_mean_velocity``, ``ac_max_sis``, ``ac_coupling``;
-     ``ac_mean_crest`` stays active).
-   - Either side has ``>= 2`` windows -> **11 dimensions**
-     (``any_multi_window:11``).
+2. Evaluation rule v2 (2026-11-13, B-14; ``is_eight_dim``). Mirrors nishiki
+   ``diff_harvester::is_eight_dim`` / ``n_eval_rule_v2``:
+   - Both sides ``<= 1`` window -> **8 dimensions** (``both_single_window:8``, excluding
+     ``ac_mean_velocity``, ``ac_max_sis``, ``ac_coupling``; ``ac_mean_crest`` stays active).
+   - Mixed pair (one side ``<= 1`` window, the other ``>= 2``) -> **8 dimensions**
+     (``mixed_window:8``; ac_* enter neither numerator nor denominator). A 7-dim
+     diagnostic (dc 7 only, crest excluded) is attached as ``diagnostic_7d_no_crest``
+     (diagnostic only, NOT canonical).
+   - Both sides ``>= 2`` windows -> **11 dimensions** (``both_multi_window:11``).
+   Rationale (B-13 / F-18): 1-window ac_* are exactly 0.0 in 476/476 cases, so 11D on mixed
+   pairs yields a dimension-addition artifact ("value - 0"); ac_mean_crest inflates 1.7-2.0x across
+   window counts but its contribution is small on Set 1 mixed pairs (7D/8D = 0.942), so the
+   canonical dimension set keeps crest. ``is_eight_dim_v1`` keeps the old F-14 rule
+   (8D only if both <= 1 window) for before/after comparison; it is not used for evaluation.
+   The ac_* sigma population (both sides multi-window pairs only) is unchanged.
 3. Length-band lookup by ``L_max = max(len(before), len(after))`` (bands ``S``, ``M``, ``L``)
    and ``ac_multi_window_per_dim_std`` override for the 3 AC velocity/SIS/coupling dimensions
    when evaluating 11D pairs against ``docs/handoff/v10/paragraph_noise_floor_all_novel.json``.
@@ -95,7 +104,9 @@ F14_SIGMA_PROVENANCE: Dict[str, Any] = {
     "sigma_kind": "adjacent_paragraph_diff_sd",
     "hybrid_rule": {
         "both_single_window": "w_before <= 1 and w_after <= 1 -> n_evaluated=8 (both_single_window:8)",
-        "any_multi_window": "w_before >= 2 or w_after >= 2 -> n_evaluated=11 (any_multi_window:11, ac_sigma_source=multi_window_pairs)",
+        "mixed_window": "exactly one side >= 2 -> n_evaluated=8 (mixed_window:8, v2; was 11 under v1)",
+        "both_multi_window": "w_before >= 2 and w_after >= 2 -> n_evaluated=11 (both_multi_window:11, ac_sigma_source=multi_window_pairs)",
+        "rule_version": "v2",
     },
     "non_conflation_guard": (
         "Harvest adjacent-paragraph noise floor sigma (sigma_kind='adjacent_paragraph_diff_sd' in kasane11_v1/ortho28) "
@@ -183,9 +194,27 @@ def window_count_kasane(text: str, window_chars: int = 250, stride_chars: int = 
     return windows
 
 
+EVAL_RULE_VERSION: str = "v2"
+
+
 def is_eight_dim(windows: Tuple[int, int]) -> bool:
-    """Return True iff both sides have at most 1 window (8D active; otherwise 11D)."""
+    """Rule v2: 11D only when both sides have >= 2 windows; [1,1] and mixed pairs are 8D."""
+    return not (int(windows[0]) >= 2 and int(windows[1]) >= 2)
+
+
+def is_eight_dim_v1(windows: Tuple[int, int]) -> bool:
+    """Rule v1 (F-14): 8D only when both sides have <= 1 window. Comparison use only."""
     return int(windows[0]) <= 1 and int(windows[1]) <= 1
+
+
+def n_eval_rule_v2(windows: Tuple[int, int]) -> str:
+    """Mirror of Rust ``n_eval_rule_v2``."""
+    w0, w1 = int(windows[0]), int(windows[1])
+    if w0 <= 1 and w1 <= 1:
+        return "both_single_window:8"
+    if w0 >= 2 and w1 >= 2:
+        return "both_multi_window:11"
+    return "mixed_window:8"
 
 
 def char_bigrams(text: str) -> List[int]:
@@ -276,6 +305,8 @@ def evaluate_f14_hybrid_pair(
     if apply_dice_gate and dice_sim < align_min_similarity:
         return {
             "kind": "unaligned",
+            "eval_rule": EVAL_RULE_VERSION,
+            "eval_rule": EVAL_RULE_VERSION,
             "aligned": False,
             "dice_similarity": dice_sim,
             "align_min_similarity": align_min_similarity,
@@ -304,13 +335,13 @@ def evaluate_f14_hybrid_pair(
         if eight_dim:
             excluded = list(SHORT_DEAD_DIMS)
             active_dims = list(KASANE8_ACTIVE_DIM_NAMES)
-            n_eval_rule = "both_single_window:8"
+            n_eval_rule = n_eval_rule_v2(windows)
             ac_sigma_source = "not_applicable"
             merged_sigma = {d: base_sigma.get(d) for d in active_dims}
         else:
             excluded = []
             active_dims = list(KASANE11_DIM_NAMES)
-            n_eval_rule = "any_multi_window:11"
+            n_eval_rule = "both_multi_window:11"
             merged_sigma = dict(base_sigma)
             if isinstance(ac_multi_sigma, dict) and ac_multi_sigma:
                 for k, v in ac_multi_sigma.items():
@@ -322,7 +353,7 @@ def evaluate_f14_hybrid_pair(
         band_name = "overall"
         excluded = []
         active_dims = list(KASANE11_DIM_NAMES)
-        n_eval_rule = "both_single_window:8" if eight_dim else "any_multi_window:11"
+        n_eval_rule = n_eval_rule_v2(windows)
         ac_sigma_source = "not_applicable"
         merged_sigma = dict(noise_floor_data["kasane11"]["per_dim_std"])
 
@@ -362,8 +393,25 @@ def evaluate_f14_hybrid_pair(
             "invalid_or_missing_sigma": invalid_dims,
         }
 
+    diagnostic_7d: Optional[Dict[str, Any]] = None
+    if band is not None and mixed_window_pair and delta_kasane11 is not None:
+        # Diagnostic only (not canonical): dc 7 dims (ac_* and ac_mean_crest excluded), band sigma.
+        dc7 = [d for d in KASANE11_DIM_NAMES if not d.startswith("ac_")]
+        vals7 = [abs(float(delta_kasane11[d])) / float(base_sigma[d]) for d in dc7 if _is_valid_sigma(base_sigma.get(d))]
+        diagnostic_7d = {
+            "diagnostic_only": True,
+            "dims": dc7,
+            "n_evaluated": len(vals7),
+            "max": max(vals7) if vals7 else None,
+            "mean": (sum(vals7) / len(vals7)) if vals7 else None,
+            "median": statistics.median(vals7) if vals7 else None,
+            "n_above_1": sum(1 for v in vals7 if v > 1.0),
+        }
+
     return {
         "kind": "pair",
+        "eval_rule": EVAL_RULE_VERSION,
+        "diagnostic_7d_no_crest": diagnostic_7d,
         "aligned": True,
         "dice_similarity": dice_sim,
         "align_min_similarity": align_min_similarity if apply_dice_gate else None,
