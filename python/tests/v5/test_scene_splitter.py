@@ -23,6 +23,8 @@ from usir_py.v5.aozora_scene_splitter import (
     split_long_paragraph,
     split_work_into_scenes,
     SCHEMA_VERSION,
+    SCENE_ANNOTATION_KEYS,
+    split_pilot_records,
     EVENT_CODES,
     MOOD_CODES,
 )
@@ -462,3 +464,24 @@ def test_within_work_isf_hook_filtering():
     assert "水晶球" in filtered, "水晶球 must be retained as specific hook token"
 
 
+def test_pilot_50_split_is_schema_conformant_and_lossless(splitter: AozoraCorpusSplitter):
+    """HW-32 案A: pilot は スキーマ準拠(SceneAnnotation のキーのみ) と メタデータ に分離され、情報が失われない。"""
+    pilot = splitter.extract_pilot_scenes(per_author=5)
+    strict, meta = split_pilot_records(pilot)
+    assert len(strict) == len(meta) == len(pilot) == 50
+
+    # JSON スキーマ（additionalProperties: false のとき）のキーと、スキーマ準拠側のキー集合が矛盾しない
+    if SCHEMA_PATH.exists():
+        schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+        props = set(schema.get("properties", {}))
+        if props:
+            assert set(SCENE_ANNOTATION_KEYS) <= props
+
+    for r, s, m, in zip(pilot, strict, meta):
+        assert set(s) <= set(SCENE_ANNOTATION_KEYS), set(s) - set(SCENE_ANNOTATION_KEYS)
+        for k in ("scene_id", "author_ja", "title", "genre", "story_position", "text", "f_event_stream", "f_style_stream"):
+            assert k not in s
+            assert k in m
+        # 結合キーで 1 対 1 対応し、元の全フィールドが復元できる
+        assert (m["author_id"], m["work_id"], m["scene_index"]) == (s["author_id"], s["work_id"], s["scene_index"])
+        assert {**s, **m} == r

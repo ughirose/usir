@@ -1302,6 +1302,51 @@ class AozoraCorpusSplitter:
                 f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
+# usir-schema (Rust) の SceneAnnotation が受理するトップレベルキー。deny_unknown_fields のため、これ以外は
+# スキーマ準拠ファイルに入れない（HW-32 案A: Rust 側は無変更）。
+SCENE_ANNOTATION_KEYS = (
+    "schema_version", "author_id", "work_id", "scene_index", "scene_count", "char_len",
+    "annotator", "seed", "focal_character", "awase", "nagare", "sadame", "kamae",
+)
+# メタデータ側に残す結合キー（スキーマ準拠ファイルの行と 1 対 1 に対応させる）
+PILOT_JOIN_KEYS = ("scene_id", "author_id", "work_id", "scene_index")
+
+
+def split_pilot_records(records: List[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """pilot 記録を (スキーマ準拠, メタデータ) に分ける。同順・同数。
+
+    スキーマ準拠: SCENE_ANNOTATION_KEYS のみ。メタデータ: 結合キー + それ以外の全フィールド（text, title 等）。
+    """
+    strict: List[Dict[str, Any]] = []
+    meta: List[Dict[str, Any]] = []
+    for r in records:
+        strict.append({k: r[k] for k in SCENE_ANNOTATION_KEYS if k in r})
+        m = {k: r[k] for k in PILOT_JOIN_KEYS if k in r}
+        m.update({k: v for k, v in r.items() if k not in SCENE_ANNOTATION_KEYS and k not in m})
+        meta.append(m)
+    return strict, meta
+
+
+def write_pilot_outputs(splitter: "AozoraCorpusSplitter", data_dir: Path) -> None:
+    print("Generating pilot_50_scenes.jsonl (schema-conformant) and pilot_50_metadata.jsonl (50 scenes)...")
+    pilot_scenes = splitter.extract_pilot_scenes(per_author=5)
+    strict, meta = split_pilot_records(pilot_scenes)
+    pilot_path = data_dir / "v5" / "pilot_50_scenes.jsonl"
+    meta_path = data_dir / "v5" / "pilot_50_metadata.jsonl"
+    splitter.save_jsonl(strict, pilot_path)
+    splitter.save_jsonl(meta, meta_path)
+    print(f"Saved {len(strict)} scenes to {pilot_path} and metadata to {meta_path}")
+
+    import shutil
+    for src in (pilot_path, meta_path):
+        dst = Path("F:/マイドライブ/Claude-Sync/inbox") / src.name
+        if dst.parent.exists():
+            shutil.copyfile(src, dst)
+            print(f"Copied to {dst}")
+        else:
+            print(f"Warning: {dst.parent} not accessible, skipped drive copy.")
+
+
 def main() -> None:
     data_dir = Path("C:/dev/usir/data")
     splitter = AozoraCorpusSplitter(data_dir=data_dir)
@@ -1312,20 +1357,7 @@ def main() -> None:
     splitter.save_jsonl(all_scenes, all_path)
     print(f"Saved {len(all_scenes)} scenes to {all_path}")
 
-    print("Generating pilot_50_scenes.jsonl (50 scenes)...")
-    pilot_scenes = splitter.extract_pilot_scenes(per_author=5)
-    pilot_path = data_dir / "v5" / "pilot_50_scenes.jsonl"
-    splitter.save_jsonl(pilot_scenes, pilot_path)
-    print(f"Saved {len(pilot_scenes)} scenes to {pilot_path}")
-
-    drive_pilot_path = Path("F:/マイドライブ/Claude-Sync/inbox/pilot_50_scenes.jsonl")
-    if drive_pilot_path.parent.exists():
-        import shutil
-        shutil.copyfile(pilot_path, drive_pilot_path)
-        print(f"Copied pilot scenes to {drive_pilot_path}")
-    else:
-        print(f"Warning: {drive_pilot_path.parent} not accessible, skipped drive copy.")
-
+    write_pilot_outputs(splitter, data_dir)
 
 if __name__ == "__main__":
     main()
