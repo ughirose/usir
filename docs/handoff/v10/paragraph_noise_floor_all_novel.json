@@ -391,6 +391,206 @@
   },
   "length_bands": {
     "ac_activation_evidence": "sparsity-audit --length-bins: 250 字以下は全段落 1 ウィンドウで ac_mean_velocity / ac_max_sis / ac_coupling が厳密に 0.0。ウィンドウ数 2 以上で 0 以外（例外は coupling 4 件・max_sis 1 件）。M 帯（251..=500）は 1 ウィンドウの段落（最大 464 字）を含むため、ac_* は部分的にしか活性化しない。",
+    "ac_sigma_pool": {
+      "ci": "パーセンタイル法 95%",
+      "dims": {
+        "ac_coupling": {
+          "L": {
+            "cluster_ci95": [
+              0.9456281369224341,
+              1.2041520953485214
+            ],
+            "cluster_ci_width_over_sigma": 0.2423319266327032,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 225,
+            "n_works_contributing": 24,
+            "pair_ci95": [
+              0.9886786289891388,
+              1.1393625542533503
+            ],
+            "pair_ci_width_over_sigma": 0.14124619684830686,
+            "sigma": 1.0668175754568485
+          },
+          "M": {
+            "cluster_ci95": [
+              1.321663860948505,
+              1.4850464157848107
+            ],
+            "cluster_ci_width_over_sigma": 0.11604963690796244,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 165,
+            "n_works_contributing": 22,
+            "pair_ci95": [
+              1.2954799326255815,
+              1.5030175461794013
+            ],
+            "pair_ci_width_over_sigma": 0.14741270707754836,
+            "sigma": 1.4078678674874479
+          },
+          "cluster_would_pool": false,
+          "criteria_split": false,
+          "decision": "帯別を維持",
+          "log_ratio_criterion": {
+            "ci95_log": [
+              0.1297644944268498,
+              0.4167647700630531
+            ],
+            "ci95_ratio": [
+              1.1385602144723563,
+              1.5170456164156625
+            ],
+            "ci_contains_zero": false,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "note": "同一の作品再標本を両帯に適用。提案基準であり実効テーブルには未適用。",
+            "point_log_sigma_M_over_L": 0.2773964210967467,
+            "point_ratio": 1.3196894200815446,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 390,
+          "overlap_ratio_cluster": 0.0,
+          "overlap_ratio_pair": 0.0,
+          "pair_level_would_pool": false,
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": null
+        },
+        "ac_max_sis": {
+          "L": {
+            "cluster_ci95": [
+              0.12963194037996564,
+              0.17135424819749276
+            ],
+            "cluster_ci_width_over_sigma": 0.27934619736292277,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 225,
+            "n_works_contributing": 24,
+            "pair_ci95": [
+              0.1327457607068969,
+              0.16494146246652575
+            ],
+            "pair_ci_width_over_sigma": 0.2155620656776062,
+            "sigma": 0.14935699218887902
+          },
+          "M": {
+            "cluster_ci95": [
+              0.09942898942211556,
+              0.15545514563992077
+            ],
+            "cluster_ci_width_over_sigma": 0.4424931432054306,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 165,
+            "n_works_contributing": 22,
+            "pair_ci95": [
+              0.10836636234307427,
+              0.14434229139171112
+            ],
+            "pair_ci_width_over_sigma": 0.2841369638598865,
+            "sigma": 0.12661474438213988
+          },
+          "cluster_would_pool": true,
+          "criteria_split": true,
+          "decision": "基準が割れたため帯別（プール値は provisional として記録）",
+          "log_ratio_criterion": {
+            "ci95_log": [
+              -0.4552672670411793,
+              0.13236359280185145
+            ],
+            "ci95_ratio": [
+              0.6342784235748732,
+              1.1415232934744992
+            ],
+            "ci_contains_zero": true,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "note": "同一の作品再標本を両帯に適用。提案基準であり実効テーブルには未適用。",
+            "point_log_sigma_M_over_L": -0.16519039379190256,
+            "point_ratio": 0.8477322857574758,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 390,
+          "overlap_ratio_cluster": 0.6189304142257218,
+          "overlap_ratio_pair": 0.3601887845586724,
+          "pair_level_would_pool": false,
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": 0.14033568620762318
+        },
+        "ac_mean_velocity": {
+          "L": {
+            "cluster_ci95": [
+              74.9267825266713,
+              133.75995460235123
+            ],
+            "cluster_ci_width_over_sigma": 0.573572458827473,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 225,
+            "n_works_contributing": 24,
+            "pair_ci95": [
+              86.26854735645325,
+              118.62180105526096
+            ],
+            "pair_ci_width_over_sigma": 0.3154161949864525,
+            "sigma": 102.57321663587159
+          },
+          "M": {
+            "cluster_ci95": [
+              93.79314983281897,
+              194.16060780969713
+            ],
+            "cluster_ci_width_over_sigma": 0.7473576625449789,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 165,
+            "n_works_contributing": 22,
+            "pair_ci95": [
+              100.79776018086716,
+              168.01275906149434
+            ],
+            "pair_ci_width_over_sigma": 0.5004973271611733,
+            "sigma": 134.29641924737427
+          },
+          "cluster_would_pool": true,
+          "criteria_split": false,
+          "decision": "M+L プール（σ を M と L の両方に適用）",
+          "log_ratio_criterion": {
+            "ci95_log": [
+              -0.19344415559763384,
+              0.7091434629944925
+            ],
+            "ci95_ratio": [
+              0.824115857167616,
+              2.03224981577644
+            ],
+            "ci_contains_zero": true,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "note": "同一の作品再標本を両帯に適用。提案基準であり実効テーブルには未適用。",
+            "point_log_sigma_M_over_L": 0.2694725886069192,
+            "point_ratio": 1.309273742717049,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 390,
+          "overlap_ratio_cluster": 0.6793243226477921,
+          "overlap_ratio_pair": 0.550919577991337,
+          "pair_level_would_pool": true,
+          "pooled": true,
+          "pooled_sigma": 117.05236445381773,
+          "provisional_pooled_sigma": null
+        }
+      },
+      "n_works": 46,
+      "pool_rule": "F16: 両帯の重なり ≥ 狭い方の CI 幅 × 0.5 をクラスタ CI とペア単位 CI の両方で満たす次元だけ M+L プール。片方のみ満たす（割れた）次元は帯別を維持し、プール値は provisional として記録（F15 まではクラスタ CI のみで判定していた）",
+      "population": "両段落とも 2 ウィンドウ以上の隣接ペア。混在ペア（片側のみ複数ウィンドウ）と両方単窓ペアは含めない",
+      "resamples": 10000,
+      "rng": "SplitMix64",
+      "seed": 20261113,
+      "seed_rule": "帯番号 bi ごとに seed ^ bi（クラスタ）、seed ^ (0x100 + bi)（ペア単位）",
+      "statistic": "母集団 SD（ddof=0）",
+      "unit": "作品（全作品から復元抽出。作品内の両側複数ウィンドウペアは丸ごと入れ替わる）"
+    },
     "band_key": "L_max = max(chars(p_t), chars(p_t+1))（両段落の長い方）",
     "bands": [
       {
@@ -498,11 +698,22 @@
       },
       {
         "kasane11": {
+          "ac_multi_window_band_specific_per_dim_std": {
+            "ac_coupling": 1.4078678674874479,
+            "ac_max_sis": 0.12661474438213988,
+            "ac_mean_velocity": 134.29641924737427
+          },
           "ac_multi_window_n_pairs": 165,
           "ac_multi_window_per_dim_std": {
             "ac_coupling": 1.4078678674874479,
             "ac_max_sis": 0.12661474438213988,
-            "ac_mean_velocity": 134.29641924737427
+            "ac_mean_velocity": 117.05236445381773
+          },
+          "ac_multi_window_pooled_dims": [
+            "ac_mean_velocity"
+          ],
+          "ac_multi_window_provisional_pooled_per_dim_std": {
+            "ac_max_sis": 0.14033568620762318
           },
           "dead_dims_sigma_verified_zero": false,
           "mean_norm": 372.48651811822816,
@@ -601,11 +812,22 @@
       },
       {
         "kasane11": {
+          "ac_multi_window_band_specific_per_dim_std": {
+            "ac_coupling": 1.0668175754568485,
+            "ac_max_sis": 0.14935699218887902,
+            "ac_mean_velocity": 102.57321663587159
+          },
           "ac_multi_window_n_pairs": 225,
           "ac_multi_window_per_dim_std": {
             "ac_coupling": 1.0668175754568485,
             "ac_max_sis": 0.14935699218887902,
-            "ac_mean_velocity": 102.57321663587159
+            "ac_mean_velocity": 117.05236445381773
+          },
+          "ac_multi_window_pooled_dims": [
+            "ac_mean_velocity"
+          ],
+          "ac_multi_window_provisional_pooled_per_dim_std": {
+            "ac_max_sis": 0.14033568620762318
           },
           "dead_dims_sigma_verified_zero": false,
           "mean_norm": 325.2814722554349,
