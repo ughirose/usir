@@ -428,8 +428,8 @@
             "sigma": 1.4078678674874479
           },
           "cluster_would_pool": false,
-          "criteria_split": false,
-          "decision": "帯別を維持",
+          "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+          "diagnostic_overlap_criteria_disagree": false,
           "log_ratio_criterion": {
             "ci95_log": [
               0.1297644944268498,
@@ -442,7 +442,8 @@
             "ci_contains_zero": false,
             "ci_within_equivalence_margin": false,
             "equivalence_margin_ratio": 1.25,
-            "note": "同一の作品再標本を両帯に適用。提案基準であり実効テーブルには未適用。",
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
             "point_log_sigma_M_over_L": 0.2773964210967467,
             "point_ratio": 1.3196894200815446,
             "resamples_dropped": 0,
@@ -454,7 +455,7 @@
           "pair_level_would_pool": false,
           "pooled": false,
           "pooled_sigma": null,
-          "provisional_pooled_sigma": null
+          "provisional_pooled_sigma": 1.2239836336801238
         },
         "ac_max_sis": {
           "L": {
@@ -490,8 +491,8 @@
             "sigma": 0.12661474438213988
           },
           "cluster_would_pool": true,
-          "criteria_split": true,
-          "decision": "基準が割れたため帯別（プール値は provisional として記録）",
+          "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+          "diagnostic_overlap_criteria_disagree": true,
           "log_ratio_criterion": {
             "ci95_log": [
               -0.4552672670411793,
@@ -504,7 +505,8 @@
             "ci_contains_zero": true,
             "ci_within_equivalence_margin": false,
             "equivalence_margin_ratio": 1.25,
-            "note": "同一の作品再標本を両帯に適用。提案基準であり実効テーブルには未適用。",
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
             "point_log_sigma_M_over_L": -0.16519039379190256,
             "point_ratio": 0.8477322857574758,
             "resamples_dropped": 0,
@@ -552,8 +554,8 @@
             "sigma": 134.29641924737427
           },
           "cluster_would_pool": true,
-          "criteria_split": false,
-          "decision": "M+L プール（σ を M と L の両方に適用）",
+          "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+          "diagnostic_overlap_criteria_disagree": false,
           "log_ratio_criterion": {
             "ci95_log": [
               -0.19344415559763384,
@@ -566,7 +568,8 @@
             "ci_contains_zero": true,
             "ci_within_equivalence_margin": false,
             "equivalence_margin_ratio": 1.25,
-            "note": "同一の作品再標本を両帯に適用。提案基準であり実効テーブルには未適用。",
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
             "point_log_sigma_M_over_L": 0.2694725886069192,
             "point_ratio": 1.309273742717049,
             "resamples_dropped": 0,
@@ -576,13 +579,13 @@
           "overlap_ratio_cluster": 0.6793243226477921,
           "overlap_ratio_pair": 0.550919577991337,
           "pair_level_would_pool": true,
-          "pooled": true,
-          "pooled_sigma": 117.05236445381773,
-          "provisional_pooled_sigma": null
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": 117.05236445381773
         }
       },
       "n_works": 46,
-      "pool_rule": "F16: 両帯の重なり ≥ 狭い方の CI 幅 × 0.5 をクラスタ CI とペア単位 CI の両方で満たす次元だけ M+L プール。片方のみ満たす（割れた）次元は帯別を維持し、プール値は provisional として記録（F15 まではクラスタ CI のみで判定していた）",
+      "pool_rule": "F17: プールは等値主張。σ 比 σ_M/σ_L の作品単位クラスタ CI が同等マージン（σ比 0.80〜1.25、未検証の仮値）内に収まる次元だけプール可。それ以外は既定で帯別。プール値は provisional として記録。重なり比（0.5）は診断のみで判定に使わない",
       "population": "両段落とも 2 ウィンドウ以上の隣接ペア。混在ペア（片側のみ複数ウィンドウ）と両方単窓ペアは含めない",
       "resamples": 10000,
       "rng": "SplitMix64",
@@ -707,13 +710,13 @@
           "ac_multi_window_per_dim_std": {
             "ac_coupling": 1.4078678674874479,
             "ac_max_sis": 0.12661474438213988,
-            "ac_mean_velocity": 117.05236445381773
+            "ac_mean_velocity": 134.29641924737427
           },
-          "ac_multi_window_pooled_dims": [
-            "ac_mean_velocity"
-          ],
+          "ac_multi_window_pooled_dims": [],
           "ac_multi_window_provisional_pooled_per_dim_std": {
-            "ac_max_sis": 0.14033568620762318
+            "ac_coupling": 1.2239836336801238,
+            "ac_max_sis": 0.14033568620762318,
+            "ac_mean_velocity": 117.05236445381773
           },
           "dead_dims_sigma_verified_zero": false,
           "mean_norm": 372.48651811822816,
@@ -821,13 +824,13 @@
           "ac_multi_window_per_dim_std": {
             "ac_coupling": 1.0668175754568485,
             "ac_max_sis": 0.14935699218887902,
-            "ac_mean_velocity": 117.05236445381773
+            "ac_mean_velocity": 102.57321663587159
           },
-          "ac_multi_window_pooled_dims": [
-            "ac_mean_velocity"
-          ],
+          "ac_multi_window_pooled_dims": [],
           "ac_multi_window_provisional_pooled_per_dim_std": {
-            "ac_max_sis": 0.14033568620762318
+            "ac_coupling": 1.2239836336801238,
+            "ac_max_sis": 0.14033568620762318,
+            "ac_mean_velocity": 117.05236445381773
           },
           "dead_dims_sigma_verified_zero": false,
           "mean_norm": 325.2814722554349,
