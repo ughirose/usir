@@ -1,0 +1,343 @@
+{
+  "corpus": {
+    "n_paragraphs_split": 0,
+    "n_paragraphs_used": 0,
+    "n_works": 46,
+    "n_works_excluded_missing_cache": 0
+  },
+  "definition": "各次元について、段落（split_paragraphs_py で分割し 30〜200 字に限定）ごとの値のうち、厳密に 0.0 の割合(zero_rate)、最頻値とその割合(mode_value/mode_rate)、異なる値の数(n_distinct)。class は目安(discrete: 異なる値 3 個以下 / zero_heavy: 0.0 が 50% 以上 / mode_heavy: 最頻値が 50% 以上 / continuous)。閾値は点検用で較正値ではない。-0.0 は 0.0 と同一視。非有限値は 0.0 に置換。",
+  "edit_pairs": {
+    "kamae_core_report": {
+      "dims": [],
+      "n_continuous": 0,
+      "n_dims": 8,
+      "n_discrete": 0,
+      "n_mode_heavy": 0,
+      "n_rows": 0,
+      "n_zero_heavy": 0
+    },
+    "kasane11": {
+      "dims": [],
+      "n_continuous": 0,
+      "n_dims": 0,
+      "n_discrete": 0,
+      "n_mode_heavy": 0,
+      "n_rows": 0,
+      "n_zero_heavy": 0
+    },
+    "kasane_profile7": {
+      "dims": [],
+      "n_continuous": 0,
+      "n_dims": 7,
+      "n_discrete": 0,
+      "n_mode_heavy": 0,
+      "n_rows": 0,
+      "n_zero_heavy": 0
+    },
+    "n_pairs": 0,
+    "note": "ペア数が少ないため率ではなく『差が厳密に 0 だった次元数』の参考値。",
+    "ortho_v2_31": {
+      "dims": [],
+      "n_continuous": 0,
+      "n_dims": 0,
+      "n_discrete": 0,
+      "n_mode_heavy": 0,
+      "n_rows": 0,
+      "n_zero_heavy": 0
+    }
+  },
+  "not_measurable": {},
+  "paragraph_filter": {
+    "max_chars": 200,
+    "min_chars": 30
+  },
+  "schema": "nishiki.sparsity_audit.v1",
+  "spaces": {
+    "kamae_core_report": {
+      "dims": [],
+      "n_continuous": 0,
+      "n_dims": 8,
+      "n_discrete": 0,
+      "n_mode_heavy": 0,
+      "n_rows": 0,
+      "n_zero_heavy": 0
+    },
+    "kasane11": {
+      "dims": [],
+      "n_continuous": 0,
+      "n_dims": 0,
+      "n_discrete": 0,
+      "n_mode_heavy": 0,
+      "n_rows": 0,
+      "n_zero_heavy": 0
+    },
+    "kasane_profile7": {
+      "dims": [],
+      "n_continuous": 0,
+      "n_dims": 7,
+      "n_discrete": 0,
+      "n_mode_heavy": 0,
+      "n_rows": 0,
+      "n_zero_heavy": 0
+    },
+    "ortho_v2_31": {
+      "dims": [],
+      "n_continuous": 0,
+      "n_dims": 0,
+      "n_discrete": 0,
+      "n_mode_heavy": 0,
+      "n_rows": 0,
+      "n_zero_heavy": 0
+    }
+  },
+  "usir_metrics_poles": {
+    "aozora_106works_scenes.jsonl": {
+      "definition": "SceneAnnotation 入力。作品単位 = profile の作品別集約値。場面単位 = 場面ごとの irony / detachment / e_inter / edges_eff と、場面間遷移ごとの nagare speed / accel。",
+      "n_scenes_read": 4576,
+      "n_works": 106,
+      "notes": [
+        "kamae.hook_survival_idf の文書頻度は入力ファイル内の全作品から算出（profile.rs と同じ）。",
+        "sadame.total は作品集約値（κ=3.0、未較正）で場面ごとの値ではない。場面単位には e_inter と edges_eff のみ出す（e_intra は人物の時系列分散で、場面単独では定義されない）。",
+        "nagare の場面単位値は遷移（場面 t→t+1）ごとで、列の長さは場面数−1。",
+        "class の閾値は点検用の目安で較正値ではない。"
+      ],
+      "per_scene": {
+        "dims": [
+          {
+            "class": "zero_heavy",
+            "dim": "awase.detachment",
+            "mode_rate": 0.830201048951049,
+            "mode_value": 0.0,
+            "n": 4576,
+            "n_distinct": 6,
+            "zero_rate": 0.830201048951049
+          },
+          {
+            "class": "zero_heavy",
+            "dim": "awase.irony",
+            "mode_rate": 0.8979458041958042,
+            "mode_value": 0.0,
+            "n": 4576,
+            "n_distinct": 4,
+            "zero_rate": 0.8979458041958042
+          },
+          {
+            "class": "continuous",
+            "dim": "nagare.event_accel",
+            "mode_rate": 0.00022914757103574703,
+            "mode_value": 0.06950880404311725,
+            "n": 4364,
+            "n_distinct": 4364,
+            "zero_rate": 0.0
+          },
+          {
+            "class": "continuous",
+            "dim": "nagare.event_speed",
+            "mode_rate": 0.00022371364653243848,
+            "mode_value": 0.0190304844242168,
+            "n": 4470,
+            "n_distinct": 4470,
+            "zero_rate": 0.0
+          },
+          {
+            "class": "continuous",
+            "dim": "nagare.mood_accel",
+            "mode_rate": 0.00022914757103574703,
+            "mode_value": 0.028813046311241854,
+            "n": 4364,
+            "n_distinct": 4364,
+            "zero_rate": 0.0
+          },
+          {
+            "class": "continuous",
+            "dim": "nagare.mood_speed",
+            "mode_rate": 0.00022371364653243848,
+            "mode_value": 0.0018402836926746276,
+            "n": 4470,
+            "n_distinct": 4470,
+            "zero_rate": 0.0
+          },
+          {
+            "class": "continuous",
+            "dim": "sadame.e_inter",
+            "mode_rate": 0.3446241258741259,
+            "mode_value": 0.0,
+            "n": 4576,
+            "n_distinct": 134,
+            "zero_rate": 0.3446241258741259
+          },
+          {
+            "class": "mode_heavy",
+            "dim": "sadame.edges_eff",
+            "mode_rate": 0.6225961538461539,
+            "mode_value": 1.0,
+            "n": 4576,
+            "n_distinct": 7,
+            "zero_rate": 0.3446241258741259
+          }
+        ],
+        "n_continuous": 5,
+        "n_dims": 8,
+        "n_discrete": 0,
+        "n_mode_heavy": 1,
+        "n_zero_heavy": 2
+      },
+      "per_work": {
+        "dims": [
+          {
+            "class": "continuous",
+            "dim": "kamae.hook_survival",
+            "mode_rate": 0.03773584905660377,
+            "mode_value": 0.89999999999991,
+            "n": 106,
+            "n_distinct": 86,
+            "zero_rate": 0.009433962264150943
+          },
+          {
+            "class": "continuous",
+            "dim": "kamae.hook_survival_idf",
+            "mode_rate": 0.009433962264150943,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 106,
+            "zero_rate": 0.009433962264150943
+          },
+          {
+            "class": "continuous",
+            "dim": "kamae.opened_hooks",
+            "mode_rate": 0.0660377358490566,
+            "mode_value": 7.0,
+            "n": 106,
+            "n_distinct": 50,
+            "zero_rate": 0.0
+          },
+          {
+            "class": "continuous",
+            "dim": "sadame.e_inter",
+            "mode_rate": 0.018867924528301886,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 100,
+            "zero_rate": 0.018867924528301886
+          },
+          {
+            "class": "continuous",
+            "dim": "sadame.e_intra",
+            "mode_rate": 0.009433962264150943,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 106,
+            "zero_rate": 0.009433962264150943
+          },
+          {
+            "class": "continuous",
+            "dim": "sadame.edges_eff",
+            "mode_rate": 0.0660377358490566,
+            "mode_value": 7.0,
+            "n": 106,
+            "n_distinct": 47,
+            "zero_rate": 0.018867924528301886
+          },
+          {
+            "class": "continuous",
+            "dim": "sadame.total",
+            "mode_rate": 0.009433962264150943,
+            "mode_value": 0.21679409839132063,
+            "n": 106,
+            "n_distinct": 106,
+            "zero_rate": 0.0
+          },
+          {
+            "class": "continuous",
+            "dim": "nagare.phi_zeami",
+            "mode_rate": 0.009433962264150943,
+            "mode_value": 0.1988257216831249,
+            "n": 106,
+            "n_distinct": 106,
+            "zero_rate": 0.0
+          },
+          {
+            "class": "continuous",
+            "dim": "nagare.event_still_fraction",
+            "mode_rate": 0.2358490566037736,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 62,
+            "zero_rate": 0.2358490566037736
+          },
+          {
+            "class": "continuous",
+            "dim": "nagare.mood_still_fraction",
+            "mode_rate": 0.1792452830188679,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 68,
+            "zero_rate": 0.1792452830188679
+          },
+          {
+            "class": "discrete",
+            "dim": "nagare.event_zero_speed_fraction",
+            "mode_rate": 1.0,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 1,
+            "zero_rate": 1.0
+          },
+          {
+            "class": "discrete",
+            "dim": "nagare.mood_zero_speed_fraction",
+            "mode_rate": 1.0,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 1,
+            "zero_rate": 1.0
+          },
+          {
+            "class": "continuous",
+            "dim": "awase.irony_mean",
+            "mode_rate": 0.16037735849056603,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 58,
+            "zero_rate": 0.16037735849056603
+          },
+          {
+            "class": "discrete",
+            "dim": "awase.irony_max",
+            "mode_rate": 0.7924528301886793,
+            "mode_value": 1.0,
+            "n": 106,
+            "n_distinct": 3,
+            "zero_rate": 0.16037735849056603
+          },
+          {
+            "class": "continuous",
+            "dim": "awase.detachment_mean",
+            "mode_rate": 0.08490566037735849,
+            "mode_value": 0.0,
+            "n": 106,
+            "n_distinct": 78,
+            "zero_rate": 0.08490566037735849
+          },
+          {
+            "class": "continuous",
+            "dim": "awase.detachment_max",
+            "mode_rate": 0.4339622641509434,
+            "mode_value": 1.0,
+            "n": 106,
+            "n_distinct": 5,
+            "zero_rate": 0.08490566037735849
+          }
+        ],
+        "n_continuous": 13,
+        "n_dims": 16,
+        "n_discrete": 3,
+        "n_mode_heavy": 0,
+        "n_rows": 106,
+        "n_zero_heavy": 0
+      },
+      "profile_had_errors": false,
+      "source": "C:/dev/usir/data/v5/aozora_106works_scenes.jsonl"
+    }
+  }
+}
