@@ -32,6 +32,16 @@
    "pairs_abs_max_gt_1": 97,
    "n_above_1_total_dims": 143,
    "n_above_1_median_per_pair": 0.0
+  },
+  "C216_canonical": {
+   "sha256": "2FC18E6717E4537ACBB522BC1D10F3C434B3C9BB434B19AF3803293EE7C84974",
+   "parity_mismatches": 0,
+   "parity_detail": [],
+   "abs_max_median": 0.383617840990408,
+   "abs_max_mean": 0.591033157842729,
+   "pairs_abs_max_gt_1": 97,
+   "n_above_1_total_dims": 143,
+   "n_above_1_median_per_pair": 0.0
   }
  },
  "crossings": {
@@ -74,6 +84,10 @@
    "C216": {
     "median_abs_max": 0.13471518493714207,
     "n_gt1": 20
+   },
+   "C216_canonical": {
+    "median_abs_max": 0.13471518493714207,
+    "n_gt1": 20
    }
   },
   "M": {
@@ -87,6 +101,10 @@
     "n_gt1": 68
    },
    "C216": {
+    "median_abs_max": 0.5644469641849231,
+    "n_gt1": 64
+   },
+   "C216_canonical": {
     "median_abs_max": 0.5644469641849231,
     "n_gt1": 64
    }
@@ -104,6 +122,10 @@
    "C216": {
     "median_abs_max": 0.6185402956157094,
     "n_gt1": 13
+   },
+   "C216_canonical": {
+    "median_abs_max": 0.6185402956157094,
+    "n_gt1": 13
    }
   },
   "mixed": {
@@ -119,6 +141,10 @@
    "C216": {
     "median_abs_max": 1.0056335921620296,
     "n_gt1": 43
+   },
+   "C216_canonical": {
+    "median_abs_max": 1.0056335921620296,
+    "n_gt1": 43
    }
   }
  },
@@ -130,6 +156,9 @@
    "n_gt1": 102
   },
   "C216": {
+   "n_gt1": 96
+  },
+  "C216_canonical": {
    "n_gt1": 96
   }
  }

@@ -12,7 +12,7 @@ from usir_py.v5.f14_hybrid_noise_floor import load_f14_noise_floor
 EXE = Path(r"C:\dev\nishiki\target\f14\release\nishiki.exe")
 DS = REPO / "data/usir_v5_eval/real_revision_pairs_v1_1.jsonl"
 V10 = REPO / "docs/handoff/v10"
-FLOORS = {"F17": V10 / "paragraph_noise_floor_all_novel.json", "C106": V10 / "paragraph_noise_floor_all_106.json", "C216": V10 / "paragraph_noise_floor_all_216.json"}
+FLOORS = {"F17": V10 / "paragraph_noise_floor_all_novel.json", "C106": V10 / "paragraph_noise_floor_all_106.json", "C216": V10 / "paragraph_noise_floor_all_216.json", "C216_canonical": V10 / "paragraph_noise_floor_all_216_canonical.json"}
 OUT = Path(__file__).resolve().parent / "f21_v11_parity_and_floor_table.json"
 
 def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest().upper()
