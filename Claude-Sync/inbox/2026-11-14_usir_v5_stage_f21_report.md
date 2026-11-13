@@ -138,8 +138,9 @@
 
 ## コミット
 
-- `usir`：`be833a4`（Task 1）、`9ecd0fa`（Task 2）、レポート・検証ゲートのコミットは本レポートを含む最終コミット（下記の最終報告に記載）
-- `nishiki`：`60c8f01`（Task 3、正本証跡）、最終コミットは同上
+- `usir`（`feat/fable-v5-shootout`）：`be833a4`（Task 1：評価スクリプト・結果）、`9ecd0fa`（Task 2：正本採用）、`d5994bb`（Task 4/5：SHA ゲート、テストログ、本レポートの初版）
+- `nishiki`（`feat/fable-hardcore-v5`）：`60c8f01`（Task 3：`freeze_notes`、再生成証跡、正本コピー）、`7b7ebb1`（cargo test ログ、レポートコピー）
+- 本追記（ハッシュ記載）のコミットは、上記より後の各リポジトリ最新コミット。
 
 ## 死角・限界
 
