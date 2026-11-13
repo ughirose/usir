@@ -1,0 +1,1457 @@
+{
+  "aozora_index_stats": {
+    "total_copyright_free_works": 17347,
+    "ndc913_all": 4956,
+    "ndc913_shinjishinkana": 3493,
+    "ndc913_shinjishinkana_authors": 195
+  },
+  "v1_built_groups": 25,
+  "v1_unused_from_b12_list": [
+    {
+      "work_group_id": "takeuchi_donso_draft_vs_rev",
+      "ed_a": "054816",
+      "ed_b": "054776",
+      "rel": "draft_vs_revision",
+      "notes": "竹内浩三『鈍走記（草稿）』 vs 『鈍走記』"
+    },
+    {
+      "work_group_id": "kishida_fujin_alt_vs_final",
+      "ed_a": "044751",
+      "ed_b": "044750",
+      "rel": "draft_vs_revision",
+      "notes": "岸田国士『Ｓ夫人への手紙［別稿］』 vs 『Ｓ夫人への手紙』"
+    },
+    {
+      "work_group_id": "roka_muhon_draft_vs_final",
+      "ed_a": "001708",
+      "ed_b": "000371",
+      "rel": "draft_vs_revision",
+      "notes": "徳冨蘆花『謀叛論（草稿）』 vs 『謀叛論』"
+    },
+    {
+      "work_group_id": "origuchi_kokubungaku_1_vs_3",
+      "ed_a": "043764",
+      "ed_b": "042613",
+      "rel": "draft_vs_revision",
+      "notes": "折口信夫『国文学の発生（第一稿）』 vs 『国文学の発生（第三稿）』"
+    },
+    {
+      "work_group_id": "origuchi_kokubungaku_2_vs_4",
+      "ed_a": "047022",
+      "ed_b": "047023",
+      "rel": "draft_vs_revision",
+      "notes": "折口信夫『国文学の発生（第二稿）』 vs 『国文学の発生（第四稿）』"
+    },
+    {
+      "work_group_id": "nakahara_ware_ed",
+      "ed_a": "046579",
+      "ed_b": "055785",
+      "rel": "cross_edition_variant",
+      "notes": "中原中也『我が生活』(名随筆別巻65 vs 新編全集4)"
+    },
+    {
+      "work_group_id": "okamoto_paris_ed",
+      "ed_a": "004549",
+      "ed_b": "058435",
+      "rel": "single_volume_vs_complete_works",
+      "notes": "岡本かの子『巴里のむす子へ』(単行本 vs 全集12)"
+    },
+    {
+      "work_group_id": "okamoto_michinoku_ed",
+      "ed_a": "000444",
+      "ed_b": "058428",
+      "rel": "single_volume_vs_complete_works",
+      "notes": "岡本かの子『みちのく』(ちくま vs 全集5)"
+    },
+    {
+      "work_group_id": "okamoto_yuki_ed",
+      "ed_a": "058429",
+      "ed_b": "043089",
+      "rel": "cross_edition_variant",
+      "notes": "岡本かの子『雪の日』(全集11 vs 世界紀行文学全集7)"
+    },
+    {
+      "work_group_id": "okamoto_satsuki_ed",
+      "ed_a": "000436",
+      "ed_b": "058421",
+      "rel": "cross_edition_variant",
+      "notes": "岡本かの子『五月の朝の花』(随筆1 vs 全集12)"
+    },
+    {
+      "work_group_id": "sakaguchi_tantei_ed",
+      "ed_a": "045752",
+      "ed_b": "061107",
+      "rel": "selected_vs_complete_works",
+      "notes": "坂口安吾『私の探偵小説』(選集8 vs 全集06)"
+    },
+    {
+      "work_group_id": "akutagawa_sennin_ed",
+      "ed_a": "000143",
+      "ed_b": "000144",
+      "rel": "cross_edition_variant",
+      "notes": "芥川竜之介『仙人』(全集1 vs 全集5)"
+    },
+    {
+      "work_group_id": "toyoshima_shii_ed",
+      "ed_a": "042458",
+      "ed_b": "045066",
+      "rel": "cross_edition_variant",
+      "notes": "豊島与志雄『椎の木』(著作集3 vs 児童文学大系16)"
+    },
+    {
+      "work_group_id": "toyoshima_bungaku_ed",
+      "ed_a": "042536",
+      "ed_b": "042565",
+      "rel": "cross_edition_variant",
+      "notes": "豊島与志雄『文学以前』二種底本比較"
+    }
+  ],
+  "explicit_rev_same_ortho": [],
+  "explicit_rev_diff_ortho": [],
+  "cross_edition_same_ortho_count": 34,
+  "cross_edition_same_ortho": [
+    {
+      "author_id": "000026",
+      "author": "中原中也",
+      "norm_title": "寒い夜の自我像",
+      "norm_subtitle": "",
+      "ndc": "NDC 911",
+      "n_editions": 2,
+      "char_types": [
+        "新字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "051317",
+          "title": "寒い夜の自我像",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 911",
+          "base_book": "中原中也詩集",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000026/card51317.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000026/files/51317_ruby_49559.zip"
+        },
+        {
+          "work_id": "051892",
+          "title": "寒い夜の自我像",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 911",
+          "base_book": "新編中原中也全集　第二巻　詩Ⅱ",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000026/card51892.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000026/files/51892_txt_74189.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000026",
+      "author": "中原中也",
+      "norm_title": "我が生活",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "046579",
+          "title": "我が生活",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 914",
+          "base_book": "日本の名随筆　別巻65　家出",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000026/card46579.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000026/files/46579_ruby_24795.zip"
+        },
+        {
+          "work_id": "055785",
+          "title": "我が生活",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 914",
+          "base_book": "新編中原中也全集　第四巻　評論・小説",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000026/card55785.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000026/files/55785_ruby_64569.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000040",
+      "author": "織田作之助",
+      "norm_title": "わが町",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "001326",
+          "title": "わが町",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "織田作之助　名作選集9",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000040/card1326.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000040/files/1326_ruby.zip"
+        },
+        {
+          "work_id": "053808",
+          "title": "わが町",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "俗臭　織田作之助［初出］作品集",
+          "first_pub": "「文藝　第十巻年十一号」改造社、1942（昭和17）年11月",
+          "card_url": "https://www.aozora.gr.jp/cards/000040/card53808.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000040/files/53808_ruby_50551.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000040",
+      "author": "織田作之助",
+      "norm_title": "放浪",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000380",
+          "title": "放浪",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "定本織田作之助全集　第一巻",
+          "first_pub": "「文學界　第七年第五号」文藝春秋、1940（昭和15）年5月",
+          "card_url": "https://www.aozora.gr.jp/cards/000040/card380.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000040/files/380_ruby_2698.zip"
+        },
+        {
+          "work_id": "053806",
+          "title": "放浪",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "俗臭　織田作之助［初出］作品集",
+          "first_pub": "「文學界　第七年第五号」文藝春秋、1940（昭和15）年5月",
+          "card_url": "https://www.aozora.gr.jp/cards/000040/card53806.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000040/files/53806_ruby_50432.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000064",
+      "author": "樋口一葉",
+      "norm_title": "うつせみ",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字旧仮名",
+        "旧字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000390",
+          "title": "うつせみ",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "日本現代文學全集　10　樋口一葉集",
+          "first_pub": "「讀賣新聞」1895（明治28）年8月27～31日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card390.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/390_ruby_15298.zip"
+        },
+        {
+          "work_id": "056007",
+          "title": "うつせみ",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "樋口一葉全集第二卷",
+          "first_pub": "「讀賣新聞」1895（明治28）年8月27～31日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56007.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56007_ruby_54941.zip"
+        },
+        {
+          "work_id": "056880",
+          "title": "うつせみ",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "にごりえ・たけくらべ",
+          "first_pub": "「讀賣新聞」1895（明治28）年8月27日号～31日号",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56880.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56880_ruby_59989.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000064",
+      "author": "樋口一葉",
+      "norm_title": "たけくらべ",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字旧仮名",
+        "旧字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000389",
+          "title": "たけくらべ",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "日本現代文學全集　10　樋口一葉集",
+          "first_pub": "「文學界」文學界雑誌社、1895（明治28）年1～3、8、11、12月、1896（明治29）年1月",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card389.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/389_ruby_15296.zip"
+        },
+        {
+          "work_id": "055671",
+          "title": "たけくらべ",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "文藝倶樂部第二卷第五編",
+          "first_pub": "（一）～（三）「文學界　二十五號」文學界雜誌社、1895（明治28）年1月30日<br>（四）～（六）「文學界　二十六號」文學界雜誌社、1895（明治28）年2月28日<br>（七）～（八）「文學界　二十七號」文學界雜誌社、1895（明治28）年3月30日<br>（九）～（十）「文學界　三十二號」文學界雜誌社、1895（明治28）年8月30日<br>（十一）～（十二）「文學界　三十五號」文學界雜誌社、1895（明治28）年11月30日<br>（十三）～（十四）「文學界　三十六號」文學界雜誌社、1895（明治28）年12月30日<br>（十五）～（十六）「文學界　三十七號」文學界雜誌社、1896（明治29）年1月30日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card55671.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/55671_ruby_64542.zip"
+        },
+        {
+          "work_id": "056041",
+          "title": "たけくらべ",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "にごりえ・たけくらべ",
+          "first_pub": "「文学界」文学界雑誌社、1895（明治28）年1～3、8、11、12月、1896（明治29）年1月",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56041.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56041_ruby_54720.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000064",
+      "author": "樋口一葉",
+      "norm_title": "にごりえ",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字旧仮名",
+        "旧字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000387",
+          "title": "にごりえ",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "日本現代文學全集　10　樋口一葉集",
+          "first_pub": "「文藝倶樂部第九篇」博文館、1895（明治28）年9月20日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card387.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/387_ruby_15292.zip"
+        },
+        {
+          "work_id": "055672",
+          "title": "にごりえ",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "文藝倶樂部第九篇",
+          "first_pub": "「文藝倶樂部第九篇」1895（明治28）年9月20日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card55672.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/55672_ruby_58768.zip"
+        },
+        {
+          "work_id": "056042",
+          "title": "にごりえ",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "にごりえ・たけくらべ",
+          "first_pub": "「文芸倶楽部」1895（明治28）年9月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56042.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56042_ruby_54937.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000064",
+      "author": "樋口一葉",
+      "norm_title": "ゆく雲",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字旧仮名",
+        "旧字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000392",
+          "title": "ゆく雲",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "日本現代文學全集　10　樋口一葉集",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card392.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/392_ruby_15302.zip"
+        },
+        {
+          "work_id": "055674",
+          "title": "ゆく雲",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "太陽　第壱卷第五號",
+          "first_pub": "「太陽　第壱卷第五號」博文館、1895（明治28）年5月5日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card55674.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/55674_ruby_66292.zip"
+        },
+        {
+          "work_id": "056043",
+          "title": "ゆく雲",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "にごりえ・たけくらべ",
+          "first_pub": "「太陽」1895（明治28）年5月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56043.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56043_ruby_54743.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000064",
+      "author": "樋口一葉",
+      "norm_title": "わかれ道",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字旧仮名",
+        "旧字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000391",
+          "title": "わかれ道",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "日本現代文學全集　10　樋口一葉集",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card391.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/391_ruby_15300.zip"
+        },
+        {
+          "work_id": "056008",
+          "title": "わかれ道",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "樋口一葉全集第二卷",
+          "first_pub": "「国民之友　二七七号」1896（明治29）年1月4日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56008.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56008_ruby_54933.zip"
+        },
+        {
+          "work_id": "056889",
+          "title": "わかれ道",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "にごりえ・たけくらべ",
+          "first_pub": "「国民之友　二百七十七号」1896（明治29）年1月4日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56889.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56889_ruby_61291.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000064",
+      "author": "樋口一葉",
+      "norm_title": "十三夜",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字旧仮名",
+        "旧字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000386",
+          "title": "十三夜",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "日本現代文學全集　10　樋口一葉集",
+          "first_pub": "「文藝倶樂部　閨秀小説號」博文館、1895（明治28）年12月10日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card386.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/386_ruby_15290.zip"
+        },
+        {
+          "work_id": "055670",
+          "title": "十三夜",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "文藝倶樂部　閨秀小説號",
+          "first_pub": "「文藝倶樂部　閨秀小説號」博文館、1895（明治28）年12月10日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card55670.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/55670_ruby_57509.zip"
+        },
+        {
+          "work_id": "056040",
+          "title": "十三夜",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "にごりえ・たけくらべ",
+          "first_pub": "「文藝倶樂部・臨時増刊閨秀小説」博文館、1895（明治28）年12月10日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56040.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56040_ruby_57511.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000064",
+      "author": "樋口一葉",
+      "norm_title": "大つごもり",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字旧仮名",
+        "旧字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000388",
+          "title": "大つごもり",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "日本現代文學全集　10　樋口一葉集",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card388.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/388_ruby_15294.zip"
+        },
+        {
+          "work_id": "055668",
+          "title": "大つごもり",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "太陽　第二卷三號",
+          "first_pub": "「文學界　二十四號」文學界社雑誌社、1894（明治27）年12月30日",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card55668.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/55668_ruby_72089.zip"
+        },
+        {
+          "work_id": "056039",
+          "title": "大つごもり",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "にごりえ・たけくらべ",
+          "first_pub": "「文学界」1894（明治27）年12月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000064/card56039.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000064/files/56039_ruby_55938.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000076",
+      "author": "岡本かの子",
+      "norm_title": "みちのく",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000444",
+          "title": "みちのく",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "ちくま日本文学全集　岡本かの子",
+          "first_pub": "「雄弁」1938（昭和13）年9月",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card444.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/444_ruby_20627.zip"
+        },
+        {
+          "work_id": "058428",
+          "title": "みちのく",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "岡本かの子全集5",
+          "first_pub": "「雄弁」1938（昭和13）年9月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card58428.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/58428_ruby_71890.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000076",
+      "author": "岡本かの子",
+      "norm_title": "五月の朝の花",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000436",
+          "title": "五月の朝の花",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "日本の名随筆1　花",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card436.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/436_txt_20308.zip"
+        },
+        {
+          "work_id": "058421",
+          "title": "五月の朝の花",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "岡本かの子全集12",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card58421.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/58421_ruby_64554.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000076",
+      "author": "岡本かの子",
+      "norm_title": "巴里のむす子へ",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "004549",
+          "title": "巴里のむす子へ",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "愛よ、愛",
+          "first_pub": "「新女苑」1937（昭和12）年4月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card4549.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/4549_ruby_14929.zip"
+        },
+        {
+          "work_id": "058435",
+          "title": "巴里のむす子へ",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "岡本かの子全集12",
+          "first_pub": "「新女苑」1937（昭和12）年4月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card58435.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/58435_ruby_66671.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000076",
+      "author": "岡本かの子",
+      "norm_title": "老妓抄",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000447",
+          "title": "老妓抄",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "老妓抄",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card447.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/447_ruby_19591.zip"
+        },
+        {
+          "work_id": "058431",
+          "title": "老妓抄",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "岡本かの子全集5",
+          "first_pub": "「中央公論」1938（昭和13）年11月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card58431.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/58431_ruby_70147.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000076",
+      "author": "岡本かの子",
+      "norm_title": "雪の日",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "043089",
+          "title": "雪の日",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 915 293",
+          "base_book": "世界紀行文学全集　第七巻　ドイツ編",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card43089.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/43089_ruby_22294.zip"
+        },
+        {
+          "work_id": "058429",
+          "title": "雪の日",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "岡本かの子全集11",
+          "first_pub": "「モダン日本」1934（昭和9）年2月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000076/card58429.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000076/files/58429_ruby_64010.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000083",
+      "author": "菊池寛",
+      "norm_title": "入れ札",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000486",
+          "title": "入れ札",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 912",
+          "base_book": "菊池寛　短篇と戯曲",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000083/card486.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000083/files/486_ruby_19917.zip"
+        },
+        {
+          "work_id": "047858",
+          "title": "入れ札",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "藤十郎の恋・恩讐の彼方に",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000083/card47858.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000083/files/47858_ruby_32246.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000083",
+      "author": "菊池寛",
+      "norm_title": "藤十郎の恋",
+      "norm_subtitle": "",
+      "ndc": "NDC 912",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000503",
+          "title": "藤十郎の恋",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 912",
+          "base_book": "菊池寛　短篇と戯曲",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000083/card503.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000083/files/503_ruby_19915.zip"
+        },
+        {
+          "work_id": "047857",
+          "title": "藤十郎の恋",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "藤十郎の恋・恩讐の彼方に",
+          "first_pub": "「大阪毎日新聞」1919（大正8）年4月",
+          "card_url": "https://www.aozora.gr.jp/cards/000083/card47857.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000083/files/47857_ruby_31986.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000129",
+      "author": "森鴎外",
+      "norm_title": "高瀬舟",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字新仮名",
+        "旧字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000691",
+          "title": "高瀬舟",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "日本現代文學全集　7　森鴎外集",
+          "first_pub": "「中央公論　第三十一年第一號」1916（大正5）年1月",
+          "card_url": "https://www.aozora.gr.jp/cards/000129/card691.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000129/files/691_ruby_15351.zip"
+        },
+        {
+          "work_id": "000692",
+          "title": "高瀬舟",
+          "subtitle": "",
+          "char_type": "旧字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "中央公論　第三十一年第一號",
+          "first_pub": "「中央公論　第三十一年第一號」中央公論社、1916（大正5）年1月",
+          "card_url": "https://www.aozora.gr.jp/cards/000129/card692.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000129/files/692_ruby_16056.zip"
+        },
+        {
+          "work_id": "045245",
+          "title": "高瀬舟",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "山椒大夫・高瀬舟他四篇",
+          "first_pub": "「中央公論　第31年第1号」1916（大正5）年1月1日",
+          "card_url": "https://www.aozora.gr.jp/cards/000129/card45245.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000129/files/45245_ruby_21882.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000183",
+      "author": "牧野信一",
+      "norm_title": "西部劇通信",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "045218",
+          "title": "西部劇通信",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "牧野信一全集第三巻",
+          "first_pub": "「時事新報　第一六七八三号～第一六七八七号」（第一六七八六号は休載）1930（昭和5）年3月5～9日（8日は休載）",
+          "card_url": "https://www.aozora.gr.jp/cards/000183/card45218.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000183/files/45218_ruby_30423.zip"
+        },
+        {
+          "work_id": "052796",
+          "title": "西部劇通信",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 914",
+          "base_book": "牧野信一全集第四巻",
+          "first_pub": "「学藝往来　第十号（一九三一年第一号）」春陽堂、1931（昭和6）年1月",
+          "card_url": "https://www.aozora.gr.jp/cards/000183/card52796.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000183/files/52796_txt_44496.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000311",
+      "author": "宮本百合子",
+      "norm_title": "今年こそは",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "003276",
+          "title": "今年こそは",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第十五巻",
+          "first_pub": "NHKラジオ、1948（昭和23）年1月12日放送",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card3276.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/3276_ruby_10943.zip"
+        },
+        {
+          "work_id": "004044",
+          "title": "今年こそは",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第十七巻",
+          "first_pub": "「ぜんていグラフ」1950（昭和25）年1月号",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card4044.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/4044_ruby_12542.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000311",
+      "author": "宮本百合子",
+      "norm_title": "文芸時評",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 3,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "002781",
+          "title": "文芸時評",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第十一巻",
+          "first_pub": "「中外商業新報」1937（昭和12）年7月30日～8月1日、3日、4日号",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card2781.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/2781_ruby_8881.zip"
+        },
+        {
+          "work_id": "002784",
+          "title": "文芸時評",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第十一巻",
+          "first_pub": "「報知新聞」1937（昭和12）年8月25～29日号",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card2784.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/2784_ruby_8882.zip"
+        },
+        {
+          "work_id": "002836",
+          "title": "文芸時評",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第十巻",
+          "first_pub": "「東京朝日新聞」1932（昭和7）年1月28～31日号",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card2836.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/2836_ruby_8502.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000311",
+      "author": "宮本百合子",
+      "norm_title": "無題（一",
+      "norm_subtitle": "",
+      "ndc": "NDC 912",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "004158",
+          "title": "無題（一）",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第十八巻",
+          "first_pub": "「宮本百合子全集　第十八巻」新日本出版社、1981（昭和56）年5月30日",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card4158.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/4158_ruby_14652.zip"
+        },
+        {
+          "work_id": "007913",
+          "title": "無題（一）",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 912",
+          "base_book": "宮本百合子全集　第二十九巻",
+          "first_pub": "「宮本百合子全集　第二十九巻」新日本出版社、1981（昭和56）年12月25日",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card7913.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/7913_ruby_33881.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000311",
+      "author": "宮本百合子",
+      "norm_title": "無題（三",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "004162",
+          "title": "無題（三）",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "宮本百合子全集　第十八巻",
+          "first_pub": "「宮本百合子全集　第十八巻」新日本出版社、1981（昭和56）年5月30日",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card4162.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/4162_ruby_14656.zip"
+        },
+        {
+          "work_id": "007929",
+          "title": "無題（三）",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第二十九巻",
+          "first_pub": "「宮本百合子全集　第二十九巻」新日本出版社、1981（昭和56）年12月25日",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card7929.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/7929_txt_33869.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000311",
+      "author": "宮本百合子",
+      "norm_title": "無題（二",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "004161",
+          "title": "無題（二）",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第十八巻",
+          "first_pub": "「宮本百合子全集　第十八巻」新日本出版社、1981（昭和56）年5月30日",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card4161.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/4161_ruby_14655.zip"
+        },
+        {
+          "work_id": "007917",
+          "title": "無題（二）",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第二十九巻",
+          "first_pub": "「宮本百合子全集　第二十九巻」新日本出版社、1981（昭和56）年12月25日",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card7917.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/7917_txt_33875.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000311",
+      "author": "宮本百合子",
+      "norm_title": "無題（四",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "004195",
+          "title": "無題（四）",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第十八巻",
+          "first_pub": "「宮本百合子全集　第十八巻」新日本出版社、1981（昭和56）年5月30日",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card4195.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/4195_ruby_14677.zip"
+        },
+        {
+          "work_id": "007936",
+          "title": "無題（四）",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 914",
+          "base_book": "宮本百合子全集　第二十九巻",
+          "first_pub": "「宮本百合子全集　第二十九巻」新日本出版社、1981（昭和56）年12月25日",
+          "card_url": "https://www.aozora.gr.jp/cards/000311/card7936.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000311/files/7936_txt_33874.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000879",
+      "author": "芥川竜之介",
+      "norm_title": "仙人",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 3,
+      "char_types": [
+        "新字新仮名",
+        "新字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "000143",
+          "title": "仙人",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "芥川龍之介全集1",
+          "first_pub": "「新思潮」1916（大正5）年8月",
+          "card_url": "https://www.aozora.gr.jp/cards/000879/card143.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000879/files/143_ruby_833.zip"
+        },
+        {
+          "work_id": "000144",
+          "title": "仙人",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "芥川龍之介全集5",
+          "first_pub": "1922（大正11）年",
+          "card_url": "https://www.aozora.gr.jp/cards/000879/card144.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000879/files/144_ruby_1107.zip"
+        },
+        {
+          "work_id": "002325",
+          "title": "仙人",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "芥川龍之介全集　第四巻",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/000879/card2325.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000879/files/2325_ruby_1520.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "000906",
+      "author": "豊島与志雄",
+      "norm_title": "椎の木",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "042458",
+          "title": "椎の木",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "豊島与志雄著作集　第三巻（小説Ⅲ",
+          "first_pub": "「経済往来」1934（昭和9）年2月",
+          "card_url": "https://www.aozora.gr.jp/cards/000906/card42458.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000906/files/42458_ruby_33172.zip"
+        },
+        {
+          "work_id": "045066",
+          "title": "椎の木",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC K913",
+          "base_book": "日本児童文学大系　第一六巻",
+          "first_pub": "「赤とんぼ」実業之日本社、1946（昭和21）年4月",
+          "card_url": "https://www.aozora.gr.jp/cards/000906/card45066.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/000906/files/45066_ruby_45925.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "001052",
+      "author": "久坂葉子",
+      "norm_title": "幾度目かの最期",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "004970",
+          "title": "幾度目かの最期",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "久坂葉子作品集　女",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/001052/card4970.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001052/files/4970_ruby_18633.zip"
+        },
+        {
+          "work_id": "059900",
+          "title": "幾度目かの最期",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "幾度目かの最期",
+          "first_pub": "「ＶＩＫＩＮＧ47・ＶＩＬＬＯＮ4　共同刊行号」1953（昭和28）年3月",
+          "card_url": "https://www.aozora.gr.jp/cards/001052/card59900.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001052/files/59900_ruby_69717.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "001154",
+      "author": "岸田国士",
+      "norm_title": "方言について",
+      "norm_subtitle": "",
+      "ndc": "NDC 914",
+      "n_editions": 2,
+      "char_types": [
+        "新字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "043581",
+          "title": "方言について",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 914",
+          "base_book": "日本の名随筆　別巻66　方言",
+          "first_pub": "",
+          "card_url": "https://www.aozora.gr.jp/cards/001154/card43581.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001154/files/43581_txt_17343.zip"
+        },
+        {
+          "work_id": "044507",
+          "title": "方言について",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 818",
+          "base_book": "岸田國士全集22",
+          "first_pub": "「築地座　第二十三号」1934（昭和9）年6月23日",
+          "card_url": "https://www.aozora.gr.jp/cards/001154/card44507.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001154/files/44507_txt_36607.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "001154",
+      "author": "岸田国士",
+      "norm_title": "隣の花",
+      "norm_subtitle": "",
+      "ndc": "NDC 912",
+      "n_editions": 2,
+      "char_types": [
+        "新字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "044891",
+          "title": "隣の花",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 914",
+          "base_book": "岸田國士全集28",
+          "first_pub": "「帝劇　第六十六号」1928（昭和3）年4月23日",
+          "card_url": "https://www.aozora.gr.jp/cards/001154/card44891.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001154/files/44891_txt_42252.zip"
+        },
+        {
+          "work_id": "053193",
+          "title": "隣の花",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 912",
+          "base_book": "岸田國士全集3",
+          "first_pub": "「文芸倶楽部　第三十四巻第四号」1928（昭和3）年4月1日",
+          "card_url": "https://www.aozora.gr.jp/cards/001154/card53193.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001154/files/53193_txt_42918.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "001224",
+      "author": "久生十蘭",
+      "norm_title": "無月物語",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "046086",
+          "title": "無月物語",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "久生十蘭全集　Ⅱ",
+          "first_pub": "「オール讀物」1950（昭和25）年10月号",
+          "card_url": "https://www.aozora.gr.jp/cards/001224/card46086.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001224/files/46086_ruby_74167.zip"
+        },
+        {
+          "work_id": "052224",
+          "title": "無月物語",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "久生十蘭短篇選",
+          "first_pub": "「オール讀物」1950（昭和25）年10月号",
+          "card_url": "https://www.aozora.gr.jp/cards/001224/card52224.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001224/files/52224_ruby_43366.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "001383",
+      "author": "谷崎潤一郎",
+      "norm_title": "猫と庄造と二人のをんな",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字旧仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "059232",
+          "title": "猫と庄造と二人のをんな",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "谷崎潤一郎全集　第十八巻",
+          "first_pub": "「改造　新年号　第十八巻第一号」1936（昭和11）年1月1日<br>「改造　七月特大号　第十八巻第七号」1936（昭和11）年7月1日",
+          "card_url": "https://www.aozora.gr.jp/cards/001383/card59232.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001383/files/59232_ruby_68462.zip"
+        },
+        {
+          "work_id": "059300",
+          "title": "猫と庄造と二人のをんな",
+          "subtitle": "",
+          "char_type": "新字旧仮名",
+          "ndc": "NDC 913",
+          "base_book": "猫と庄造と二人のをんな",
+          "first_pub": "「改造　新年号　第十八巻第一号」1936（昭和11）年1月1日<br>「改造　七月特大号　第十八巻第七号」1936（昭和11）年7月1日",
+          "card_url": "https://www.aozora.gr.jp/cards/001383/card59300.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001383/files/59300_ruby_69898.zip"
+        }
+      ]
+    },
+    {
+      "author_id": "001869",
+      "author": "山本周五郎",
+      "norm_title": "青べか物語",
+      "norm_subtitle": "",
+      "ndc": "NDC 913",
+      "n_editions": 2,
+      "char_types": [
+        "新字新仮名"
+      ],
+      "has_revision_marker": false,
+      "editions": [
+        {
+          "work_id": "057495",
+          "title": "青べか物語",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "青べか物語",
+          "first_pub": "「文藝春秋」1960（昭和35）年1月号～1961（昭和36）年1月号",
+          "card_url": "https://www.aozora.gr.jp/cards/001869/card57495.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001869/files/57495_ruby_65434.zip"
+        },
+        {
+          "work_id": "057574",
+          "title": "青べか物語",
+          "subtitle": "",
+          "char_type": "新字新仮名",
+          "ndc": "NDC 913",
+          "base_book": "山本周五郎全集第十四巻　青べか物語・季節のない街",
+          "first_pub": "「文藝春秋」1960（昭和35）年1月号～1961（昭和36）年1月号",
+          "card_url": "https://www.aozora.gr.jp/cards/001869/card57574.html",
+          "zip_url": "https://www.aozora.gr.jp/cards/001869/files/57574_ruby_63586.zip"
+        }
+      ]
+    }
+  ]
+}

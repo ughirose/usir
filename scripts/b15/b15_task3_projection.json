@@ -1,0 +1,188 @@
+{
+  "note": "power_125_f18_interp and m80_f18_interp are log-K linear interpolations of F-18 B=2000 bootstrap scan (K=46 uses B=10000). m80_sqrt_k_approx uses ln(m80(K)) = ln(m80(46)) * sqrt(46/K) approximation.",
+  "f18_grid_ks": [
+    46,
+    56,
+    66,
+    76,
+    92,
+    138,
+    184,
+    200,
+    220,
+    240,
+    276,
+    368,
+    552,
+    570,
+    600,
+    640,
+    736,
+    920,
+    1288
+  ],
+  "projections": [
+    {
+      "K": 46,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.026,
+        "m80_f18_interp": 1.8783,
+        "m80_sqrt_k_approx": 1.8783
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 0.033,
+        "m80_f18_interp": 1.5379,
+        "m80_sqrt_k_approx": 1.5379
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 0.758,
+        "m80_f18_interp": 1.2577,
+        "m80_sqrt_k_approx": 1.2577
+      }
+    },
+    {
+      "K": 60,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.0227,
+        "m80_f18_interp": 1.7828,
+        "m80_sqrt_k_approx": 1.7367
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 0.0304,
+        "m80_f18_interp": 1.4717,
+        "m80_sqrt_k_approx": 1.4578
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 0.8989,
+        "m80_f18_interp": 1.2204,
+        "m80_sqrt_k_approx": 1.2223
+      }
+    },
+    {
+      "K": 80,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.0122,
+        "m80_f18_interp": 1.6885,
+        "m80_sqrt_k_approx": 1.6129
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 0.0859,
+        "m80_f18_interp": 1.4144,
+        "m80_sqrt_k_approx": 1.386
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 0.9666,
+        "m80_f18_interp": 1.1904,
+        "m80_sqrt_k_approx": 1.1899
+      }
+    },
+    {
+      "K": 100,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.01,
+        "m80_f18_interp": 1.615,
+        "m80_sqrt_k_approx": 1.5335
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 0.1889,
+        "m80_f18_interp": 1.3698,
+        "m80_sqrt_k_approx": 1.339
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 0.9919,
+        "m80_f18_interp": 1.1687,
+        "m80_sqrt_k_approx": 1.1682
+      }
+    },
+    {
+      "K": 106,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.01,
+        "m80_f18_interp": 1.5992,
+        "m80_sqrt_k_approx": 1.5148
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 0.2363,
+        "m80_f18_interp": 1.3599,
+        "m80_sqrt_k_approx": 1.3278
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 0.9931,
+        "m80_f18_interp": 1.1641,
+        "m80_sqrt_k_approx": 1.163
+      }
+    },
+    {
+      "K": 150,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.0158,
+        "m80_f18_interp": 1.5072,
+        "m80_sqrt_k_approx": 1.4178
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 0.5093,
+        "m80_f18_interp": 1.3037,
+        "m80_sqrt_k_approx": 1.2692
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 0.9993,
+        "m80_f18_interp": 1.1372,
+        "m80_sqrt_k_approx": 1.1354
+      }
+    },
+    {
+      "K": 219,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.0999,
+        "m80_f18_interp": 1.4048,
+        "m80_sqrt_k_approx": 1.335
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 0.799,
+        "m80_f18_interp": 1.25,
+        "m80_sqrt_k_approx": 1.2181
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 1.0,
+        "m80_f18_interp": 1.113,
+        "m80_sqrt_k_approx": 1.1108
+      }
+    },
+    {
+      "K": 300,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.335,
+        "m80_f18_interp": 1.3498,
+        "m80_sqrt_k_approx": 1.28
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 0.9168,
+        "m80_f18_interp": 1.2159,
+        "m80_sqrt_k_approx": 1.1836
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 1.0,
+        "m80_f18_interp": 1.0951,
+        "m80_sqrt_k_approx": 1.0939
+      }
+    },
+    {
+      "K": 554,
+      "ac_mean_velocity": {
+        "power_125_f18_interp": 0.7994,
+        "m80_f18_interp": 1.2499,
+        "m80_sqrt_k_approx": 1.1992
+      },
+      "ac_max_sis": {
+        "power_125_f18_interp": 1.0,
+        "m80_f18_interp": 1.1559,
+        "m80_sqrt_k_approx": 1.1321
+      },
+      "ac_coupling": {
+        "power_125_f18_interp": 1.0,
+        "m80_f18_interp": 1.0712,
+        "m80_sqrt_k_approx": 1.0683
+      }
+    }
+  ]
+}
