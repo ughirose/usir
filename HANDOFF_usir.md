@@ -318,12 +318,12 @@
 
 3. **タスク3：Gate 3a レジスター別中心化・時代オフセット補正の比較実測**
    - ベンチマークを32件から64件（4レジスター $\times$ 16件、D3クリーンルーム準拠不可逆プロファイル）へと拡充（`scripts/build_tier_c_modern_benchmark_expanded.py`, `data/usir_v5_eval/tier_c_modern_benchmark_expanded.jsonl`）。
-   - `experiments/gate3a_register_centering_eval.py` を新設し、青空106作品アトラス基準で4スキームを LOO 比較実測（`data/usir_v5_eval/usir_v5_b9_register_centering_and_level3.json`）。
-   - **Scheme 0 (Raw 31D Atlas)**: 現代散文全体 3-sigma 外れ値率 95.83%（R1=87.5%, R2=100.0%, R3=100.0%）。
-   - **Scheme 1 (Continuous Core 24D)**: スパース語尾除外後も外れ値率 100.0%（構造的オフセット未解消）。
-   - **Scheme 2 (LOO 時代オフセット補正)**: R1 現代小説において 3-sigma 外れ値率が 87.5% $\to$ **0.0%**（$0/16$ 件）へと激減し、青空文学多様体への収束を証明。一方で現代散文全体（R1〜R3）をプールした時代補正では外れ値率 81.25% が残存し、ジャンル乖離と時代ドリフトが直交することを確認。
-   - **Scheme 3 (Within-Register LOO 中心化)**: レジスター間分散比 $\eta^2_{\text{register}}$ を **100.0% 完全消去**（$0.4965 \to 0.0000$）しつつ、内部距離相関 Spearman $\rho = 1.0000$ を完全保持。
-   - **総合レポート**: `docs/handoff/2026-11-12_usir_v5_stage_b9_report.md` 作成、Google Drive inbox へ同期完了。
+   - `experiments/gate3a_register_centering_eval.py` により、**Baseline A（R4対角マハラノビス基準）** と **Baseline B（青空106作品アトラス基準）** の双方で4スキームを LOO 比較実測し、タスク1〜3統合 JSON `data/usir_v5_eval/usir_v5_b9_register_centering_and_level3.json` を出力。
+   - **Scheme 0 (Raw 31D)**: Baseline A で現代散文全体 3-sigma 62.50%(n=32) / 58.33%(n=64)（R2=75〜87.5%, R3=100%）、Baseline B で 95.83%（R1=87.5%, R2=100%, R3=100%）。
+   - **Scheme 1 (Continuous Core 24D)**: `ortho24_cont` および `ortho24_no_sparse_finals` でも現代散文全体 3-sigma 64.58%〜100.0% が残存し、スパース次元除外のみでは不十分。
+   - **Scheme 2 (LOO 時代オフセット補正)**: R1 現代小説は Baseline A（31D/24D）で $3\sigma$ **0.0%**・$\chi^2_{0.95}$ **0.0%**、Baseline B（24D, $n=64$）で $3\sigma$ **0.0%**（$0/16$件）へ収束。一方、現代散文プール（R1〜R3）の時代補正では Baseline A $\chi^2_{0.95}$ で **35.42%**・Baseline B $3\sigma$ で **72.92%** の外れ値率が残存し、ジャンル乖離と時代ドリフトが直交することを確認。
+   - **Scheme 3 (Within-Register LOO 中心化)**: レジスター間分散比 $\eta^2_{\text{register}}$ を **100.0% 完全消去**（$0.4965 \to 0.0000$）、内部距離相関 Spearman $\rho = 1.0000$ を完全保持。レジスター内 LOO 外れ値率は、R4分散併用で **0.0% / 0.0%**、縮約 LOO 分散併用で **0.0% ($3\sigma$) / 4.17% ($\chi^2_{0.95}$)** に収束（非正則化 LOO 分散では Single-Nonzero LOO Variance Collapse により $d_{\max}=166.7$ となる死角を定量記録）。
+   - **総合レポート**: `docs/handoff/2026-11-12_usir_v5_stage_b9_report.md` 更新、Google Drive inbox へ同期完了。
 
 4. **総合テスト検証**:
    - `pytest python/tests/v5/`: **全47件 PASS** (82.25s)。

@@ -48,20 +48,25 @@ from usir_py.orthographic_prior import (
 
 BENCHMARK_32_PATH = ROOT / "data" / "usir_v5_eval" / "tier_c_modern_benchmark.jsonl"
 BENCHMARK_64_PATH = ROOT / "data" / "usir_v5_eval" / "tier_c_modern_benchmark_expanded.jsonl"
+TASK1_STAGE_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_stage_b8_scale_separation_and_gate3a.json"
+TASK2_U6_META_PATH = ROOT / "docs" / "handoff" / "v10" / "u6_guards_calibration_metadata.json"
 OUTPUT_JSON_PATH = ROOT / "data" / "usir_v5_eval" / "usir_v5_b9_register_centering_and_level3.json"
 
 # 31D ortho_v2 dimensions
 ALL_ORTHO_NAMES = list(ORTHO_EXT_V2_NAMES) + list(NARR_V2_NAMES)
 assert len(ALL_ORTHO_NAMES) == 31
 
-# Exclusions for ortho24_cont:
-# Comma dimensions: [2, 3, 29]
-# Sparse particle finals: [21, 22, 23, 24] ('v2_final_ぬ', 'v2_final_う', 'v2_final_す', 'v2_final_か')
+# Exclusions for ortho24_cont (Task 1 continuous core parity: comma [2,3,29] + 4 sparse finals [21,22,23,24])
 COMMA_DIMS = [2, 3, 29]
 SPARSE_FINALS = [21, 22, 23, 24]
 EXCLUDED_DIMS_7 = sorted(COMMA_DIMS + SPARSE_FINALS)
 CONT24_DIMS = [i for i in range(31) if i not in EXCLUDED_DIMS_7]
 assert len(CONT24_DIMS) == 24
+
+# Exclusions for ortho24_no_sparse_finals (Gate 3a zero-rate > 80% sparse sentence-final/bracket dims: [19..25])
+SPARSE_FINALS_ALL_7 = [19, 20, 21, 22, 23, 24, 25]  # だ, い, う, す, ぬ, か, 」
+NO_SPARSE_FINALS_24_DIMS = [i for i in range(31) if i not in SPARSE_FINALS_ALL_7]
+assert len(NO_SPARSE_FINALS_24_DIMS) == 24
 
 
 def bootstrap_ci(
@@ -193,6 +198,200 @@ def extract_aozora_106_atlas() -> Dict[str, Any]:
         "thresh_chi2_24": thresh_chi2_24,
         "self_d_m_24_mean": float(np.mean(d_m_24_self)),
         "self_d_m_24_std": float(np.std(d_m_24_self, ddof=1)),
+    }
+
+
+def evaluate_baseline_a_diagonal(
+    X31: np.ndarray,
+    labels: List[str],
+    reg_indices: Dict[str, List[int]],
+    modern_indices: List[int],
+) -> Dict[str, Any]:
+    """Evaluate Schemes 0, 1, and 2 using Baseline A: In-benchmark R4 diagonal Mahalanobis."""
+    registers = ["R1", "R2", "R3", "R4"]
+    r4_idx = reg_indices["R4"]
+    r1_idx = reg_indices["R1"]
+
+    def _run_space(X: np.ndarray, space_name: str, dropped_dims: List[int]) -> Dict[str, Any]:
+        df = X.shape[1]
+        X_r4 = X[r4_idx]
+        mu_r4 = np.mean(X_r4, axis=0)
+        var_r4 = np.maximum(np.var(X_r4, axis=0, ddof=1), 1e-6)
+        d_r4_self = np.array([diagonal_mahalanobis(X_r4[i], mu_r4, var_r4) for i in range(len(X_r4))])
+        thresh_3s = float(np.mean(d_r4_self) + 3.0 * np.std(d_r4_self, ddof=1))
+        thresh_c2 = float(np.sqrt(stats.chi2.ppf(0.95, df=df)))
+
+        d_all = np.array([diagonal_mahalanobis(X[i], mu_r4, var_r4) for i in range(len(X))])
+        per_reg = {}
+        for r in registers:
+            idx = reg_indices[r]
+            d_vals = d_all[idx]
+            per_reg[r] = {
+                "n": len(idx),
+                "d_m_mean": round(float(np.mean(d_vals)), 4),
+                "d_m_std": round(float(np.std(d_vals, ddof=1)), 4),
+                "outlier_rate_3sigma_pct": round(float(np.mean(d_vals > thresh_3s) * 100.0), 2),
+                "outlier_rate_chi2_p95_pct": round(float(np.mean(d_vals > thresh_c2) * 100.0), 2),
+            }
+        mod_d = d_all[modern_indices]
+        mod_agg = {
+            "n": len(modern_indices),
+            "d_m_mean": round(float(np.mean(mod_d)), 4),
+            "outlier_rate_3sigma_pct": round(float(np.mean(mod_d > thresh_3s) * 100.0), 2),
+            "outlier_rate_chi2_p95_pct": round(float(np.mean(mod_d > thresh_c2) * 100.0), 2),
+        }
+
+        # Scheme 2: LOO Era Shift Alignment on R1 and Modern Pooled
+        def _loo_align(target_idx: List[int]) -> Dict[str, Any]:
+            d_un = []
+            d_al = []
+            for i in target_idx:
+                others = [j for j in target_idx if j != i]
+                delta = np.mean(X[others], axis=0) - mu_r4
+                d_un.append(diagonal_mahalanobis(X[i], mu_r4, var_r4))
+                d_al.append(diagonal_mahalanobis(X[i] - delta, mu_r4, var_r4))
+            d_un_arr = np.array(d_un)
+            d_al_arr = np.array(d_al)
+            out_al_3s = float(np.mean(d_al_arr > thresh_3s) * 100.0)
+            out_al_c2 = float(np.mean(d_al_arr > thresh_c2) * 100.0)
+            return {
+                "n_samples": len(target_idx),
+                "unaligned": {
+                    "d_m_mean": round(float(np.mean(d_un_arr)), 4),
+                    "outlier_rate_3sigma_pct": round(float(np.mean(d_un_arr > thresh_3s) * 100.0), 2),
+                    "outlier_rate_chi2_p95_pct": round(float(np.mean(d_un_arr > thresh_c2) * 100.0), 2),
+                },
+                "aligned": {
+                    "d_m_mean": round(float(np.mean(d_al_arr)), 4),
+                    "outlier_rate_3sigma_pct": round(out_al_3s, 2),
+                    "outlier_rate_chi2_p95_pct": round(out_al_c2, 2),
+                },
+                "passes_15pct_safety_threshold": bool(out_al_3s < 15.0 and out_al_c2 < 15.0),
+            }
+
+        return {
+            "space_name": space_name,
+            "dimension": df,
+            "dropped_dimensions": [ALL_ORTHO_NAMES[i] for i in dropped_dims],
+            "thresholds": {
+                "3sigma_threshold": round(thresh_3s, 4),
+                "chi2_p95_threshold": round(thresh_c2, 4),
+            },
+            "unaligned_modern_aggregate": mod_agg,
+            "unaligned_per_register": per_reg,
+            "scheme_2_loo_era_shift_alignment": {
+                "R1_fiction_alignment": _loo_align(r1_idx),
+                "all_modern_pooled_alignment": _loo_align(modern_indices),
+            },
+        }
+
+    return {
+        "description": "Baseline A: In-benchmark R4 diagonal Mahalanobis (Gate 3a canonical metric parity)",
+        "scheme_0_ortho_v2_31d": _run_space(X31, "ortho_v2_31d", []),
+        "scheme_1_ortho24_cont": _run_space(X31[:, CONT24_DIMS], "ortho24_cont", EXCLUDED_DIMS_7),
+        "scheme_1_ortho24_no_sparse_finals": _run_space(
+            X31[:, NO_SPARSE_FINALS_24_DIMS], "ortho24_no_sparse_finals", SPARSE_FINALS_ALL_7
+        ),
+    }
+
+
+def evaluate_within_register_outliers(
+    X: np.ndarray,
+    reg_indices: Dict[str, List[int]],
+    dim_names: List[str],
+) -> Dict[str, Any]:
+    """Compute within-register LOO Mahalanobis outlier rates and single-nonzero collapse diagnostics."""
+    registers = ["R1", "R2", "R3", "R4"]
+    df = X.shape[1]
+    r4_idx = reg_indices["R4"]
+    X_r4 = X[r4_idx]
+    mu_r4 = np.mean(X_r4, axis=0)
+    var_r4 = np.maximum(np.var(X_r4, axis=0, ddof=1), 1e-6)
+    d_r4_self = np.array([diagonal_mahalanobis(X_r4[i], mu_r4, var_r4) for i in range(len(X_r4))])
+    thresh_3s = float(np.mean(d_r4_self) + 3.0 * np.std(d_r4_self, ddof=1))
+    thresh_c2 = float(np.sqrt(stats.chi2.ppf(0.95, df=df)))
+
+    var_pool = np.maximum(
+        np.mean([np.var(X[reg_indices[r]], axis=0, ddof=1) for r in registers], axis=0),
+        1e-6,
+    )
+
+    modes: Dict[str, Any] = {}
+    collapse_events: List[Dict[str, Any]] = []
+
+    for mode_name in ["loo_mean_r4_var", "loo_mean_shrinkage_loo_var", "loo_mean_unregularized_loo_var"]:
+        per_reg: Dict[str, Any] = {}
+        mod_dists: List[float] = []
+        for r in registers:
+            idx = reg_indices[r]
+            sub = X[idx]
+            n_r = len(sub)
+            d_loo: List[float] = []
+            for i in range(n_r):
+                others = [j for j in range(n_r) if j != i]
+                mu_loo = np.mean(sub[others], axis=0)
+                if mode_name == "loo_mean_r4_var":
+                    v_use = var_r4
+                elif mode_name == "loo_mean_shrinkage_loo_var":
+                    v_loo = np.var(sub[others], axis=0, ddof=1)
+                    v_use = np.maximum(0.8 * v_loo + 0.2 * var_pool, 1e-6)
+                else:
+                    v_raw = np.var(sub[others], axis=0, ddof=1)
+                    # Record single-nonzero variance collapse events where v_raw == 0 while sample i is nonzero
+                    collapsed_dims = [
+                        dim_names[d_i]
+                        for d_i in range(df)
+                        if v_raw[d_i] < 1e-12 and abs(sub[i, d_i] - mu_loo[d_i]) > 1e-4
+                    ]
+                    if collapsed_dims:
+                        collapse_events.append({
+                            "register": r,
+                            "sample_local_idx": i,
+                            "collapsed_dims": collapsed_dims,
+                        })
+                    v_use = np.maximum(v_raw, 1e-6)
+
+                d_val = diagonal_mahalanobis(sub[i], mu_loo, v_use)
+                d_loo.append(d_val)
+                if r != "R4":
+                    mod_dists.append(d_val)
+
+            d_arr = np.array(d_loo)
+            per_reg[r] = {
+                "n": n_r,
+                "d_m_mean": round(float(np.mean(d_arr)), 4),
+                "d_m_max": round(float(np.max(d_arr)), 4),
+                "outlier_rate_3sigma_pct": round(float(np.mean(d_arr > thresh_3s) * 100.0), 2),
+                "outlier_rate_chi2_p95_pct": round(float(np.mean(d_arr > thresh_c2) * 100.0), 2),
+            }
+        mod_arr = np.array(mod_dists)
+        modes[mode_name] = {
+            "modern_aggregate": {
+                "n": len(mod_arr),
+                "d_m_mean": round(float(np.mean(mod_arr)), 4),
+                "d_m_max": round(float(np.max(mod_arr)), 4),
+                "outlier_rate_3sigma_pct": round(float(np.mean(mod_arr > thresh_3s) * 100.0), 2),
+                "outlier_rate_chi2_p95_pct": round(float(np.mean(mod_arr > thresh_c2) * 100.0), 2),
+            },
+            "per_register": per_reg,
+        }
+
+    return {
+        "dimension": df,
+        "thresholds": {
+            "r4_3sigma_threshold": round(thresh_3s, 4),
+            "chi2_p95_threshold": round(thresh_c2, 4),
+        },
+        "modes": modes,
+        "unregularized_loo_collapse_audit": {
+            "n_collapse_events": len(collapse_events),
+            "events": collapse_events,
+            "explanation": (
+                "Single-Nonzero LOO Variance Collapse: When only 1 sample in a small register cohort has a non-zero "
+                "value on a sparse dimension, leaving that sample out yields LOO variance = 0.0, dividing by the 1e-6 "
+                "variance floor and inflating Mahalanobis distance. Shrinkage (0.8*var_loo + 0.2*var_pool) or R4 baseline variance prevents this."
+            ),
+        },
     }
 
 
@@ -504,6 +703,16 @@ def evaluate_dataset(
     eta2_24_within_c = compute_eta_squared(X24_within_c, labels)
     eta2_24_within_s = compute_eta_squared(X24_within_s, labels)
 
+    baseline_a = evaluate_baseline_a_diagonal(X31, labels, reg_indices, modern_indices)
+    within_outliers_cont24 = evaluate_within_register_outliers(
+        X24, reg_indices, [ALL_ORTHO_NAMES[i] for i in CONT24_DIMS]
+    )
+    within_outliers_nosparse24 = evaluate_within_register_outliers(
+        X31[:, NO_SPARSE_FINALS_24_DIMS],
+        reg_indices,
+        [ALL_ORTHO_NAMES[i] for i in NO_SPARSE_FINALS_24_DIMS],
+    )
+
     scheme_3_results = {
         "description": "Within-register LOO centering & standardization: elimination of between-register variance",
         "eta_squared_register_elimination": {
@@ -525,12 +734,17 @@ def evaluate_dataset(
             },
         },
         "intra_register_distance_structure_fidelity": intra_distance_correlations,
+        "within_register_outlier_rates": {
+            "ortho24_cont": within_outliers_cont24,
+            "ortho24_no_sparse_finals": within_outliers_nosparse24,
+        },
     }
 
     return {
         "dataset_name": dataset_name,
         "n_samples": n_total,
         "n_per_register": n_per_reg,
+        "baseline_a_r4_in_benchmark_diagonal": baseline_a,
         "scheme_0_raw_r4_centering_31d": scheme_0_results,
         "scheme_1_continuous_core_subspace_24d": scheme_1_results,
         "scheme_2_loo_era_shift_alignment": scheme_2_results,
@@ -548,13 +762,22 @@ def main() -> None:
     print(f"  31D self-mean d_M: {aozora_atlas['self_d_m_31_mean']:.4f}, 3sigma threshold: {aozora_atlas['thresh_3sigma_31']:.4f}")
     print(f"  24D self-mean d_M: {aozora_atlas['self_d_m_24_mean']:.4f}, 3sigma threshold: {aozora_atlas['thresh_3sigma_24']:.4f}")
 
-    # 2. Load benchmark datasets
+    # 2. Load benchmark datasets and Task 1 / Task 2 artifacts
     assert BENCHMARK_32_PATH.exists(), f"Missing {BENCHMARK_32_PATH}"
     assert BENCHMARK_64_PATH.exists(), f"Missing {BENCHMARK_64_PATH}"
 
     records_32 = load_benchmark_records(BENCHMARK_32_PATH)
     records_64 = load_benchmark_records(BENCHMARK_64_PATH)
     print(f"Loaded benchmark 32 samples (n={len(records_32)}) and expanded 64 samples (n={len(records_64)})")
+
+    task1_data = {}
+    if TASK1_STAGE_JSON_PATH.exists():
+        task1_json = json.loads(TASK1_STAGE_JSON_PATH.read_text(encoding="utf-8"))
+        task1_data = task1_json.get("level3b_scale_separated_specificity", {})
+
+    task2_data = {}
+    if TASK2_U6_META_PATH.exists():
+        task2_data = json.loads(TASK2_U6_META_PATH.read_text(encoding="utf-8")).get("metadata", {})
 
     # 3. Run evaluation on both datasets
     print("\n--- Evaluating 32-sample benchmark (Original) ---")
@@ -564,10 +787,16 @@ def main() -> None:
     eval_64 = evaluate_dataset(records_64, aozora_atlas, "tier_c_modern_benchmark_expanded_64")
 
     # 4. Comparative Synthesis & Gate 3b Decision
+    r1_b64_diag_al = eval_64["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["aligned"]
+    r1_b64_atlas_al = eval_64["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["ortho24_cont"]["aligned"]
+    pool_b64_diag_al = eval_64["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["scheme_2_loo_era_shift_alignment"]["all_modern_pooled_alignment"]["aligned"]
+    pool_b64_atlas_al = eval_64["scheme_2_loo_era_shift_alignment"]["all_modern_pooled_alignment"]["ortho24_cont"]["aligned"]
+    s3_shrink_64 = eval_64["scheme_3_within_register_loo_centering"]["within_register_outlier_rates"]["ortho24_cont"]["modes"]["loo_mean_shrinkage_loo_var"]["modern_aggregate"]
+
     synthesis = {
         "metadata": {
-            "title": "USIR v5 Stage B-9: Gate 3a Register-Specific Centering & Diachronic Offset Alignment Report",
-            "version": "1.0",
+            "title": "USIR v5 Stage B-9: Gate 3a Register-Specific Centering & Level 3b Scale Separation Report",
+            "version": "1.1",
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
             "evaluated_datasets": [
                 "data/usir_v5_eval/tier_c_modern_benchmark.jsonl (n=32)",
@@ -576,41 +805,57 @@ def main() -> None:
             "gate_3b_status": "GATE3B_FROZEN",
             "gate_3b_decision_reason": (
                 "Gate 3b (intake of authentic personal manuscripts / Layer B-1) MUST REMAIN FROZEN until Orion consensus. "
-                "While Scheme 2 (LOO Era Shift Alignment) successfully brings R1 fiction outlier rate from 50.0% down to 0.0% "
-                "under 3-sigma (and 6.25% under chi^2_0.95), non-fiction registers (R2 essay: 68.75%, R3 technical: 81.25%) "
-                "remain heavily separated from the Aozora literary manifold. Furthermore, Scheme 3 (Within-Register Centering) "
-                "completely extinguishes register variance (eta^2: 0.354 -> 0.000) while maintaining perfect distance fidelity (rho=1.000), "
-                "confirming that multi-register prose requires register-conditioned normalization rather than a single universal shift."
+                f"While Scheme 2 (LOO Era Shift Alignment) brings R1 fiction outlier rate to {r1_b64_diag_al['outlier_rate_3sigma_pct']}% (3sigma) / "
+                f"{r1_b64_diag_al['outlier_rate_chi2_p95_pct']}% (chi2) under Baseline A (R4 diagonal) and "
+                f"{r1_b64_atlas_al['outlier_rate_3sigma_pct']}% (3sigma) under Baseline B (Aozora 106 Atlas 24D), "
+                f"pooled modern prose (R1-R3) retains {pool_b64_diag_al['outlier_rate_3sigma_pct']}% (Baseline A) / "
+                f"{pool_b64_atlas_al['outlier_rate_3sigma_pct']}% (Baseline B) 3-sigma outlier rates. "
+                "Register-conditioned normalization (Scheme 3, eliminating 100% of eta^2_register) is mandatory before Gate 3b."
             ),
         },
+        "task1_level3b_scale_separated_specificity": task1_data,
+        "task2_u6_provisional_micro_v2_calibration": task2_data,
         "benchmark_32_samples": eval_32,
         "benchmark_64_samples": eval_64,
         "comparative_summary": {
             "sample_size_stability": {
-                "n_32_to_n_64_comparison": "Doubling sample size from 32 to 64 narrows 95% bootstrap CIs by ~30-40% while preserving exact effect sizes.",
-                "scheme_0_modern_outlier_3sigma_pct": {
-                    "n32": eval_32["scheme_0_raw_r4_centering_31d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
-                    "n64": eval_64["scheme_0_raw_r4_centering_31d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
+                "n_32_to_n_64_comparison": "Doubling sample size from 32 to 64 narrows 95% bootstrap CIs and eliminates single-sample variance collapse in larger cohorts.",
+                "baseline_a_r4_diagonal_summary": {
+                    "scheme_0_modern_3sigma_pct": {
+                        "n32": eval_32["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["unaligned_modern_aggregate"]["outlier_rate_3sigma_pct"],
+                        "n64": eval_64["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["unaligned_modern_aggregate"]["outlier_rate_3sigma_pct"],
+                    },
+                    "scheme_2_r1_aligned_31d_pct": {
+                        "n32": eval_32["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["aligned"],
+                        "n64": eval_64["baseline_a_r4_in_benchmark_diagonal"]["scheme_0_ortho_v2_31d"]["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["aligned"],
+                    },
                 },
-                "scheme_1_modern_outlier_3sigma_pct": {
-                    "n32": eval_32["scheme_1_continuous_core_subspace_24d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
-                    "n64": eval_64["scheme_1_continuous_core_subspace_24d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
-                },
-                "scheme_2_r1_outlier_3sigma_pct_aligned_24d": {
-                    "n32": eval_32["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["ortho24_cont"]["aligned"]["outlier_rate_3sigma_pct"],
-                    "n64": eval_64["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["ortho24_cont"]["aligned"]["outlier_rate_3sigma_pct"],
+                "baseline_b_aozora_106_atlas_summary": {
+                    "scheme_0_modern_outlier_3sigma_pct": {
+                        "n32": eval_32["scheme_0_raw_r4_centering_31d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
+                        "n64": eval_64["scheme_0_raw_r4_centering_31d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
+                    },
+                    "scheme_1_modern_outlier_3sigma_pct": {
+                        "n32": eval_32["scheme_1_continuous_core_subspace_24d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
+                        "n64": eval_64["scheme_1_continuous_core_subspace_24d"]["modern_aggregate"]["outlier_rate_3sigma_pct"],
+                    },
+                    "scheme_2_r1_outlier_3sigma_pct_aligned_24d": {
+                        "n32": eval_32["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["ortho24_cont"]["aligned"]["outlier_rate_3sigma_pct"],
+                        "n64": eval_64["scheme_2_loo_era_shift_alignment"]["R1_fiction_alignment"]["ortho24_cont"]["aligned"]["outlier_rate_3sigma_pct"],
+                    },
                 },
                 "scheme_3_register_variance_elimination_24d_pct": {
                     "n32": eval_32["scheme_3_within_register_loo_centering"]["eta_squared_register_elimination"]["ortho24_cont"]["register_variance_elimination_rate_pct"],
                     "n64": eval_64["scheme_3_within_register_loo_centering"]["eta_squared_register_elimination"]["ortho24_cont"]["register_variance_elimination_rate_pct"],
                 },
+                "scheme_3_within_register_modern_shrinkage_outliers_n64": s3_shrink_64,
             },
             "core_scientific_findings": [
-                "1. Raw 31D Aozora Atlas exhibits severe distribution shift on modern prose (overall modern outlier rate ~68-70%).",
-                "2. Ortho24_cont (continuous core subspace) removes discrete sparsity artifacts but alone cannot eliminate register shift (outlier rate remains ~65%).",
-                "3. Scheme 2 (LOO Era Shift Alignment) dramatically recovers R1 modern fiction into the Aozora literary manifold (outlier rate drops from 50.0% to 0.0% under 3-sigma, perfectly passing the <15% safety threshold).",
-                "4. However, Scheme 2 on pooled modern prose (R1-R3) fails to bring expository/technical prose into the literary manifold, proving genre/register drift is orthogonal to chronological drift.",
-                "5. Scheme 3 (Within-Register LOO Centering) achieves 100% elimination of between-register variance (eta^2 -> 0.000) with Spearman rho=1.000 distance structure preservation across all registers, establishing the theoretical foundation for Stage B-10 register-conditioned inference.",
+                "1. Both Baseline A (in-benchmark R4 diagonal) and Baseline B (Aozora 106-works Atlas) confirm severe modern register shift (Baseline A R2=75-87.5%, R3=100% 3-sigma; Baseline B overall modern ~95.8% 3-sigma).",
+                "2. Scheme 1 (Continuous Core 24D) removes sparse dimensions but cannot eliminate register/era shift by itself.",
+                "3. Scheme 2 (LOO Era Shift Alignment) cleanly aligns R1 colloquial fiction into the literary manifold (3-sigma outlier rate drops to 0.0% on both Baseline A and Baseline B 24D in n=64, and chi2_0.95 drops to 0.0% on Baseline A).",
+                "4. Scheme 2 on pooled modern prose (R1-R3) fails to resolve R2/R3 outliers, demonstrating genre/register drift is orthogonal to chronological era drift.",
+                "5. Scheme 3 (Within-Register LOO Centering) achieves 100% elimination of between-register variance (eta^2 -> 0.000) and rho=1.000 distance fidelity, with 0.0% 3-sigma / 4.17% chi2 modern outlier rate under shrinkage LOO variance (while exposing single-nonzero LOO variance collapse on unregularized small cohorts).",
             ],
         },
     }
