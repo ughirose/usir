@@ -1,0 +1,2359 @@
+{
+  "6pole": {
+    "dim": 6,
+    "mean_norm": 2.8778,
+    "n_pairs": 3829,
+    "per_dim_std": [
+      2.6011,
+      2.1946,
+      0.4923,
+      0.0821,
+      0.0,
+      0.1818
+    ],
+    "rms_norm": 3.4444,
+    "sigma_para": 1.4389,
+    "std_norm": 1.8927,
+    "two_sigma_threshold": 2.8778
+  },
+  "kasane11": {
+    "dim": 11,
+    "extractor": "kasane_summary@1",
+    "feature_space": "kasane11_v1",
+    "mean_norm": 474.2649988063343,
+    "n_pairs": 52812,
+    "note": "同一作品内の隣接段落（両段落 30 字以上）の kasane11 特徴量差の次元別 SD。段落が自然に異なる大きさであり、推敲によるノイズの大きさではない。|Δ|/σ は隣接段落間のばらつきに対する比として読み、推敲の有意性の検定には使わない（未較正）。",
+    "per_dim_std": {
+      "ac_coupling": 0.3462361277655001,
+      "ac_max_sis": 0.06339748764408792,
+      "ac_mean_crest": 0.4247861206743815,
+      "ac_mean_velocity": 73.81350511848987,
+      "dc_cadence": 327.37522296139747,
+      "dc_confession": 132.01417645027735,
+      "dc_polyphony": 226.58502753181656,
+      "dc_showing": 212.5320352338362,
+      "dc_speculation": 196.8108960718729,
+      "dc_staccato": 157.16771436131324,
+      "semantic_tension": 82.27754496492138
+    },
+    "rms_norm": 544.7637640507363,
+    "sd_definition": "per_dim_std は母集団 SD（ddof=0）で差の平均を引いた後の SD（numpy np.std の既定と同じ）。差は『後の段落 − 前の段落』。生の特徴量（z 化なし）。",
+    "sigma_kind": "adjacent_paragraph_diff_sd",
+    "source": {
+      "authors": [
+        "000006",
+        "000008",
+        "000012",
+        "000020",
+        "000023",
+        "000025",
+        "000035",
+        "000037",
+        "000038",
+        "000040",
+        "000043",
+        "000050",
+        "000051",
+        "000058",
+        "000067",
+        "000074",
+        "000076",
+        "000081",
+        "000083",
+        "000104",
+        "000107",
+        "000111",
+        "000116",
+        "000119",
+        "000125",
+        "000126",
+        "000129",
+        "000134",
+        "000148",
+        "000156",
+        "000160",
+        "000168",
+        "000179",
+        "000216",
+        "000219",
+        "000221",
+        "000236",
+        "000255",
+        "000260",
+        "000262",
+        "000272",
+        "000273",
+        "000280",
+        "000283",
+        "000289",
+        "000290",
+        "000295",
+        "000303",
+        "000304",
+        "000308",
+        "000310",
+        "000311",
+        "000325",
+        "000331",
+        "000332",
+        "000371",
+        "000398",
+        "000416",
+        "000448",
+        "000507",
+        "000565",
+        "000595",
+        "000601",
+        "000800",
+        "000802",
+        "000805",
+        "000810",
+        "000870",
+        "000879",
+        "000906",
+        "000929",
+        "000930",
+        "000941",
+        "000956",
+        "000969",
+        "000974",
+        "000989",
+        "000997",
+        "001052",
+        "001082",
+        "001083",
+        "001095",
+        "001097",
+        "001151",
+        "001154",
+        "001157",
+        "001208",
+        "001243",
+        "001248",
+        "001261",
+        "001305",
+        "001308",
+        "001313",
+        "001316",
+        "001383",
+        "001397",
+        "001422",
+        "001454",
+        "001468",
+        "001499",
+        "001521",
+        "001562",
+        "001568",
+        "001579",
+        "001653",
+        "001669",
+        "001692",
+        "001750",
+        "001753",
+        "001779",
+        "001798",
+        "001801",
+        "001822",
+        "001823",
+        "001866",
+        "001867",
+        "001869",
+        "001875",
+        "001894",
+        "001958"
+      ],
+      "excluded_works": [],
+      "generator": "nishiki gen-paragraph-noise-floor",
+      "n_authors": 120,
+      "n_nonfinite_values_set_to_zero": 0,
+      "n_paragraphs": 53028,
+      "n_works": 216,
+      "paragraph_rule": "re.split(r\"\\n+\") → strip → len>=30 chars（usir_v5_edited_span_level3.py と同じ）",
+      "python_n_pairs_reference": 3829,
+      "scope": "all-216",
+      "works": [
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000752.txt",
+          "n_pairs": 344,
+          "n_paragraphs": 345,
+          "work_id": "000752"
+        },
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000799.txt",
+          "n_pairs": 130,
+          "n_paragraphs": 131,
+          "work_id": "000799"
+        },
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000776.txt",
+          "n_pairs": 574,
+          "n_paragraphs": 575,
+          "work_id": "000776"
+        },
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000794.txt",
+          "n_pairs": 1269,
+          "n_paragraphs": 1270,
+          "work_id": "000794"
+        },
+        {
+          "author_id": "000148",
+          "file": "novel_000148_000773.txt",
+          "n_pairs": 915,
+          "n_paragraphs": 916,
+          "work_id": "000773"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000127.txt",
+          "n_pairs": 30,
+          "n_paragraphs": 31,
+          "work_id": "000127"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000042.txt",
+          "n_pairs": 35,
+          "n_paragraphs": 36,
+          "work_id": "000042"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000055.txt",
+          "n_pairs": 71,
+          "n_paragraphs": 72,
+          "work_id": "000055"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000060.txt",
+          "n_pairs": 133,
+          "n_paragraphs": 134,
+          "work_id": "000060"
+        },
+        {
+          "author_id": "000879",
+          "file": "novel_000879_000179.txt",
+          "n_pairs": 35,
+          "n_paragraphs": 36,
+          "work_id": "000179"
+        },
+        {
+          "author_id": "000035",
+          "file": "novel_000035_001567.txt",
+          "n_pairs": 53,
+          "n_paragraphs": 54,
+          "work_id": "001567"
+        },
+        {
+          "author_id": "000035",
+          "file": "novel_000035_000301.txt",
+          "n_pairs": 436,
+          "n_paragraphs": 437,
+          "work_id": "000301"
+        },
+        {
+          "author_id": "000035",
+          "file": "novel_000035_001565.txt",
+          "n_pairs": 672,
+          "n_paragraphs": 673,
+          "work_id": "001565"
+        },
+        {
+          "author_id": "000035",
+          "file": "novel_000035_000275.txt",
+          "n_pairs": 82,
+          "n_paragraphs": 83,
+          "work_id": "000275"
+        },
+        {
+          "author_id": "000081",
+          "file": "novel_000081_000456.txt",
+          "n_pairs": 338,
+          "n_paragraphs": 339,
+          "work_id": "000456"
+        },
+        {
+          "author_id": "000081",
+          "file": "novel_000081_043754.txt",
+          "n_pairs": 72,
+          "n_paragraphs": 73,
+          "work_id": "043754"
+        },
+        {
+          "author_id": "000081",
+          "file": "novel_000081_000462.txt",
+          "n_pairs": 350,
+          "n_paragraphs": 351,
+          "work_id": "000462"
+        },
+        {
+          "author_id": "000081",
+          "file": "novel_000081_000470.txt",
+          "n_pairs": 127,
+          "n_paragraphs": 128,
+          "work_id": "000470"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000424.txt",
+          "n_pairs": 28,
+          "n_paragraphs": 29,
+          "work_id": "000424"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000427.txt",
+          "n_pairs": 13,
+          "n_paragraphs": 14,
+          "work_id": "000427"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000429.txt",
+          "n_pairs": 198,
+          "n_paragraphs": 199,
+          "work_id": "000429"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000415.txt",
+          "n_pairs": 19,
+          "n_paragraphs": 20,
+          "work_id": "000415"
+        },
+        {
+          "author_id": "000074",
+          "file": "novel_000074_000411.txt",
+          "n_pairs": 15,
+          "n_paragraphs": 16,
+          "work_id": "000411"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_045245.txt",
+          "n_pairs": 35,
+          "n_paragraphs": 36,
+          "work_id": "045245"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_000689.txt",
+          "n_pairs": 193,
+          "n_paragraphs": 194,
+          "work_id": "000689"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_000673.txt",
+          "n_pairs": 147,
+          "n_paragraphs": 148,
+          "work_id": "000673"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_045224.txt",
+          "n_pairs": 392,
+          "n_paragraphs": 393,
+          "work_id": "045224"
+        },
+        {
+          "author_id": "000129",
+          "file": "novel_000129_058126.txt",
+          "n_pairs": 71,
+          "n_paragraphs": 72,
+          "work_id": "058126"
+        },
+        {
+          "author_id": "000050",
+          "file": "novel_000050_000521.txt",
+          "n_pairs": 386,
+          "n_paragraphs": 387,
+          "work_id": "000521"
+        },
+        {
+          "author_id": "000050",
+          "file": "novel_000050_000360.txt",
+          "n_pairs": 80,
+          "n_paragraphs": 81,
+          "work_id": "000360"
+        },
+        {
+          "author_id": "000050",
+          "file": "novel_000050_000897.txt",
+          "n_pairs": 80,
+          "n_paragraphs": 81,
+          "work_id": "000897"
+        },
+        {
+          "author_id": "000050",
+          "file": "novel_000050_003586.txt",
+          "n_pairs": 763,
+          "n_paragraphs": 764,
+          "work_id": "003586"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_056641.txt",
+          "n_pairs": 54,
+          "n_paragraphs": 55,
+          "work_id": "056641"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_057349.txt",
+          "n_pairs": 90,
+          "n_paragraphs": 91,
+          "work_id": "057349"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_056643.txt",
+          "n_pairs": 204,
+          "n_paragraphs": 205,
+          "work_id": "056643"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_056866.txt",
+          "n_pairs": 26,
+          "n_paragraphs": 27,
+          "work_id": "056866"
+        },
+        {
+          "author_id": "001383",
+          "file": "novel_001383_058093.txt",
+          "n_pairs": 1353,
+          "n_paragraphs": 1354,
+          "work_id": "058093"
+        },
+        {
+          "author_id": "001095",
+          "file": "novel_001095_042621.txt",
+          "n_pairs": 65,
+          "n_paragraphs": 66,
+          "work_id": "042621"
+        },
+        {
+          "author_id": "001095",
+          "file": "novel_001095_042618.txt",
+          "n_pairs": 121,
+          "n_paragraphs": 122,
+          "work_id": "042618"
+        },
+        {
+          "author_id": "001095",
+          "file": "novel_001095_042877.txt",
+          "n_pairs": 209,
+          "n_paragraphs": 210,
+          "work_id": "042877"
+        },
+        {
+          "author_id": "001095",
+          "file": "novel_001095_042616.txt",
+          "n_pairs": 16,
+          "n_paragraphs": 17,
+          "work_id": "042616"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_000624.txt",
+          "n_pairs": 19,
+          "n_paragraphs": 20,
+          "work_id": "000624"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_001737.txt",
+          "n_pairs": 105,
+          "n_paragraphs": 106,
+          "work_id": "001737"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_001738.txt",
+          "n_pairs": 116,
+          "n_paragraphs": 117,
+          "work_id": "001738"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_000621.txt",
+          "n_pairs": 27,
+          "n_paragraphs": 28,
+          "work_id": "000621"
+        },
+        {
+          "author_id": "000119",
+          "file": "novel_000119_001743.txt",
+          "n_pairs": 368,
+          "n_paragraphs": 369,
+          "work_id": "001743"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000234.txt",
+          "n_pairs": 41,
+          "n_paragraphs": 42,
+          "work_id": "000234"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000235.txt",
+          "n_pairs": 57,
+          "n_paragraphs": 58,
+          "work_id": "000235"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000237.txt",
+          "n_pairs": 15,
+          "n_paragraphs": 16,
+          "work_id": "000237"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_000363.txt",
+          "n_pairs": 317,
+          "n_paragraphs": 318,
+          "work_id": "000363"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_000529.txt",
+          "n_pairs": 145,
+          "n_paragraphs": 146,
+          "work_id": "000529"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_001037.txt",
+          "n_pairs": 90,
+          "n_paragraphs": 91,
+          "work_id": "001037"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000412.txt",
+          "n_pairs": 63,
+          "n_paragraphs": 64,
+          "work_id": "000412"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000413.txt",
+          "n_pairs": 72,
+          "n_paragraphs": 73,
+          "work_id": "000413"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000414.txt",
+          "n_pairs": 34,
+          "n_paragraphs": 35,
+          "work_id": "000414"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000454.txt",
+          "n_pairs": 31,
+          "n_paragraphs": 32,
+          "work_id": "000454"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000459.txt",
+          "n_pairs": 127,
+          "n_paragraphs": 128,
+          "work_id": "000459"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000460.txt",
+          "n_pairs": 40,
+          "n_paragraphs": 41,
+          "work_id": "000460"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_000617.txt",
+          "n_pairs": 35,
+          "n_paragraphs": 36,
+          "work_id": "000617"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_000619.txt",
+          "n_pairs": 18,
+          "n_paragraphs": 19,
+          "work_id": "000619"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_000622.txt",
+          "n_pairs": 18,
+          "n_paragraphs": 19,
+          "work_id": "000622"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000675.txt",
+          "n_pairs": 79,
+          "n_paragraphs": 80,
+          "work_id": "000675"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000676.txt",
+          "n_pairs": 46,
+          "n_paragraphs": 47,
+          "work_id": "000676"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000678.txt",
+          "n_pairs": 101,
+          "n_paragraphs": 102,
+          "work_id": "000678"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000751.txt",
+          "n_pairs": 348,
+          "n_paragraphs": 349,
+          "work_id": "000751"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000753.txt",
+          "n_pairs": 66,
+          "n_paragraphs": 67,
+          "work_id": "000753"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000761.txt",
+          "n_pairs": 1897,
+          "n_paragraphs": 1898,
+          "work_id": "000761"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000027.txt",
+          "n_pairs": 44,
+          "n_paragraphs": 45,
+          "work_id": "000027"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000031.txt",
+          "n_pairs": 321,
+          "n_paragraphs": 322,
+          "work_id": "000031"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000032.txt",
+          "n_pairs": 32,
+          "n_paragraphs": 33,
+          "work_id": "000032"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042614.txt",
+          "n_pairs": 269,
+          "n_paragraphs": 270,
+          "work_id": "042614"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042615.txt",
+          "n_pairs": 61,
+          "n_paragraphs": 62,
+          "work_id": "042615"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042617.txt",
+          "n_pairs": 174,
+          "n_paragraphs": 175,
+          "work_id": "042617"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056644.txt",
+          "n_pairs": 97,
+          "n_paragraphs": 98,
+          "work_id": "056644"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056693.txt",
+          "n_pairs": 42,
+          "n_paragraphs": 43,
+          "work_id": "056693"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056698.txt",
+          "n_pairs": 709,
+          "n_paragraphs": 710,
+          "work_id": "056698"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000238.txt",
+          "n_pairs": 27,
+          "n_paragraphs": 28,
+          "work_id": "000238"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000239.txt",
+          "n_pairs": 22,
+          "n_paragraphs": 23,
+          "work_id": "000239"
+        },
+        {
+          "author_id": "000035",
+          "file": "heldout_000035_000241.txt",
+          "n_pairs": 39,
+          "n_paragraphs": 40,
+          "work_id": "000241"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_001087.txt",
+          "n_pairs": 1729,
+          "n_paragraphs": 1730,
+          "work_id": "001087"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_001174.txt",
+          "n_pairs": 179,
+          "n_paragraphs": 180,
+          "work_id": "001174"
+        },
+        {
+          "author_id": "000050",
+          "file": "heldout_000050_001176.txt",
+          "n_pairs": 115,
+          "n_paragraphs": 116,
+          "work_id": "001176"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000416.txt",
+          "n_pairs": 40,
+          "n_paragraphs": 41,
+          "work_id": "000416"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000417.txt",
+          "n_pairs": 101,
+          "n_paragraphs": 102,
+          "work_id": "000417"
+        },
+        {
+          "author_id": "000074",
+          "file": "heldout_000074_000419.txt",
+          "n_pairs": 39,
+          "n_paragraphs": 40,
+          "work_id": "000419"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000461.txt",
+          "n_pairs": 83,
+          "n_paragraphs": 84,
+          "work_id": "000461"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000466.txt",
+          "n_pairs": 67,
+          "n_paragraphs": 68,
+          "work_id": "000466"
+        },
+        {
+          "author_id": "000081",
+          "file": "heldout_000081_000469.txt",
+          "n_pairs": 49,
+          "n_paragraphs": 50,
+          "work_id": "000469"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_001741.txt",
+          "n_pairs": 48,
+          "n_paragraphs": 49,
+          "work_id": "001741"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_001742.txt",
+          "n_pairs": 16,
+          "n_paragraphs": 17,
+          "work_id": "001742"
+        },
+        {
+          "author_id": "000119",
+          "file": "heldout_000119_002521.txt",
+          "n_pairs": 76,
+          "n_paragraphs": 77,
+          "work_id": "002521"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000680.txt",
+          "n_pairs": 77,
+          "n_paragraphs": 78,
+          "work_id": "000680"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000686.txt",
+          "n_pairs": 37,
+          "n_paragraphs": 38,
+          "work_id": "000686"
+        },
+        {
+          "author_id": "000129",
+          "file": "heldout_000129_000690.txt",
+          "n_pairs": 62,
+          "n_paragraphs": 63,
+          "work_id": "000690"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000765.txt",
+          "n_pairs": 817,
+          "n_paragraphs": 818,
+          "work_id": "000765"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000769.txt",
+          "n_pairs": 139,
+          "n_paragraphs": 140,
+          "work_id": "000769"
+        },
+        {
+          "author_id": "000148",
+          "file": "heldout_000148_000774.txt",
+          "n_pairs": 555,
+          "n_paragraphs": 556,
+          "work_id": "000774"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000034.txt",
+          "n_pairs": 32,
+          "n_paragraphs": 33,
+          "work_id": "000034"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000036.txt",
+          "n_pairs": 71,
+          "n_paragraphs": 72,
+          "work_id": "000036"
+        },
+        {
+          "author_id": "000879",
+          "file": "heldout_000879_000038.txt",
+          "n_pairs": 167,
+          "n_paragraphs": 168,
+          "work_id": "000038"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042623.txt",
+          "n_pairs": 93,
+          "n_paragraphs": 94,
+          "work_id": "042623"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042626.txt",
+          "n_pairs": 1299,
+          "n_paragraphs": 1300,
+          "work_id": "042626"
+        },
+        {
+          "author_id": "001095",
+          "file": "heldout_001095_042764.txt",
+          "n_pairs": 96,
+          "n_paragraphs": 97,
+          "work_id": "042764"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056846.txt",
+          "n_pairs": 136,
+          "n_paragraphs": 137,
+          "work_id": "056846"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056847.txt",
+          "n_pairs": 341,
+          "n_paragraphs": 342,
+          "work_id": "056847"
+        },
+        {
+          "author_id": "001383",
+          "file": "heldout_001383_056849.txt",
+          "n_pairs": 83,
+          "n_paragraphs": 84,
+          "work_id": "056849"
+        },
+        {
+          "author_id": "000006",
+          "file": "heldout3_000006_001869.txt",
+          "n_pairs": 790,
+          "n_paragraphs": 791,
+          "work_id": "001869"
+        },
+        {
+          "author_id": "000008",
+          "file": "heldout3_000008_000697.txt",
+          "n_pairs": 122,
+          "n_paragraphs": 123,
+          "work_id": "000697"
+        },
+        {
+          "author_id": "000012",
+          "file": "heldout3_000012_002585.txt",
+          "n_pairs": 78,
+          "n_paragraphs": 79,
+          "work_id": "002585"
+        },
+        {
+          "author_id": "000020",
+          "file": "heldout3_000020_000220.txt",
+          "n_pairs": 76,
+          "n_paragraphs": 77,
+          "work_id": "000220"
+        },
+        {
+          "author_id": "000023",
+          "file": "heldout3_000023_001699.txt",
+          "n_pairs": 1278,
+          "n_paragraphs": 1279,
+          "work_id": "001699"
+        },
+        {
+          "author_id": "000025",
+          "file": "heldout3_000025_000216.txt",
+          "n_pairs": 737,
+          "n_paragraphs": 738,
+          "work_id": "000216"
+        },
+        {
+          "author_id": "000037",
+          "file": "heldout3_000037_050113.txt",
+          "n_pairs": 95,
+          "n_paragraphs": 96,
+          "work_id": "050113"
+        },
+        {
+          "author_id": "000038",
+          "file": "heldout3_000038_001057.txt",
+          "n_pairs": 66,
+          "n_paragraphs": 67,
+          "work_id": "001057"
+        },
+        {
+          "author_id": "000040",
+          "file": "heldout3_000040_047287.txt",
+          "n_pairs": 985,
+          "n_paragraphs": 986,
+          "work_id": "047287"
+        },
+        {
+          "author_id": "000043",
+          "file": "heldout3_000043_000340.txt",
+          "n_pairs": 76,
+          "n_paragraphs": 77,
+          "work_id": "000340"
+        },
+        {
+          "author_id": "000051",
+          "file": "heldout3_000051_000361.txt",
+          "n_pairs": 65,
+          "n_paragraphs": 66,
+          "work_id": "000361"
+        },
+        {
+          "author_id": "000058",
+          "file": "heldout3_000058_056569.txt",
+          "n_pairs": 112,
+          "n_paragraphs": 113,
+          "work_id": "056569"
+        },
+        {
+          "author_id": "000067",
+          "file": "heldout3_000067_000641.txt",
+          "n_pairs": 30,
+          "n_paragraphs": 31,
+          "work_id": "000641"
+        },
+        {
+          "author_id": "000076",
+          "file": "heldout3_000076_001278.txt",
+          "n_pairs": 128,
+          "n_paragraphs": 129,
+          "work_id": "001278"
+        },
+        {
+          "author_id": "000083",
+          "file": "heldout3_000083_000504.txt",
+          "n_pairs": 46,
+          "n_paragraphs": 47,
+          "work_id": "000504"
+        },
+        {
+          "author_id": "000104",
+          "file": "heldout3_000104_000541.txt",
+          "n_pairs": 568,
+          "n_paragraphs": 569,
+          "work_id": "000541"
+        },
+        {
+          "author_id": "000107",
+          "file": "heldout3_000107_001532.txt",
+          "n_pairs": 156,
+          "n_paragraphs": 157,
+          "work_id": "001532"
+        },
+        {
+          "author_id": "000111",
+          "file": "heldout3_000111_000592.txt",
+          "n_pairs": 178,
+          "n_paragraphs": 179,
+          "work_id": "000592"
+        },
+        {
+          "author_id": "000116",
+          "file": "heldout3_000116_003218.txt",
+          "n_pairs": 61,
+          "n_paragraphs": 62,
+          "work_id": "003218"
+        },
+        {
+          "author_id": "000125",
+          "file": "heldout3_000125_043418.txt",
+          "n_pairs": 44,
+          "n_paragraphs": 45,
+          "work_id": "043418"
+        },
+        {
+          "author_id": "000126",
+          "file": "heldout3_000126_000669.txt",
+          "n_pairs": 476,
+          "n_paragraphs": 477,
+          "work_id": "000669"
+        },
+        {
+          "author_id": "000134",
+          "file": "heldout3_000134_046177.txt",
+          "n_pairs": 70,
+          "n_paragraphs": 71,
+          "work_id": "046177"
+        },
+        {
+          "author_id": "000156",
+          "file": "heldout3_000156_004156.txt",
+          "n_pairs": 90,
+          "n_paragraphs": 91,
+          "work_id": "004156"
+        },
+        {
+          "author_id": "000160",
+          "file": "heldout3_000160_001242.txt",
+          "n_pairs": 159,
+          "n_paragraphs": 160,
+          "work_id": "001242"
+        },
+        {
+          "author_id": "000168",
+          "file": "heldout3_000168_002155.txt",
+          "n_pairs": 100,
+          "n_paragraphs": 101,
+          "work_id": "002155"
+        },
+        {
+          "author_id": "000179",
+          "file": "heldout3_000179_001416.txt",
+          "n_pairs": 51,
+          "n_paragraphs": 52,
+          "work_id": "001416"
+        },
+        {
+          "author_id": "000216",
+          "file": "heldout3_000216_046416.txt",
+          "n_pairs": 94,
+          "n_paragraphs": 95,
+          "work_id": "046416"
+        },
+        {
+          "author_id": "000219",
+          "file": "heldout3_000219_002932.txt",
+          "n_pairs": 134,
+          "n_paragraphs": 135,
+          "work_id": "002932"
+        },
+        {
+          "author_id": "000221",
+          "file": "heldout3_000221_048105.txt",
+          "n_pairs": 88,
+          "n_paragraphs": 89,
+          "work_id": "048105"
+        },
+        {
+          "author_id": "000236",
+          "file": "heldout3_000236_001263.txt",
+          "n_pairs": 116,
+          "n_paragraphs": 117,
+          "work_id": "001263"
+        },
+        {
+          "author_id": "000255",
+          "file": "heldout3_000255_047415.txt",
+          "n_pairs": 91,
+          "n_paragraphs": 92,
+          "work_id": "047415"
+        },
+        {
+          "author_id": "000260",
+          "file": "heldout3_000260_004069.txt",
+          "n_pairs": 98,
+          "n_paragraphs": 99,
+          "work_id": "004069"
+        },
+        {
+          "author_id": "000262",
+          "file": "heldout3_000262_048073.txt",
+          "n_pairs": 65,
+          "n_paragraphs": 66,
+          "work_id": "048073"
+        },
+        {
+          "author_id": "000272",
+          "file": "heldout3_000272_004368.txt",
+          "n_pairs": 225,
+          "n_paragraphs": 226,
+          "work_id": "004368"
+        },
+        {
+          "author_id": "000273",
+          "file": "heldout3_000273_004355.txt",
+          "n_pairs": 96,
+          "n_paragraphs": 97,
+          "work_id": "004355"
+        },
+        {
+          "author_id": "000280",
+          "file": "heldout3_000280_059236.txt",
+          "n_pairs": 32,
+          "n_paragraphs": 33,
+          "work_id": "059236"
+        },
+        {
+          "author_id": "000283",
+          "file": "heldout3_000283_003227.txt",
+          "n_pairs": 525,
+          "n_paragraphs": 526,
+          "work_id": "003227"
+        },
+        {
+          "author_id": "000289",
+          "file": "heldout3_000289_001798.txt",
+          "n_pairs": 195,
+          "n_paragraphs": 196,
+          "work_id": "001798"
+        },
+        {
+          "author_id": "000290",
+          "file": "heldout3_000290_048043.txt",
+          "n_pairs": 181,
+          "n_paragraphs": 182,
+          "work_id": "048043"
+        },
+        {
+          "author_id": "000295",
+          "file": "heldout3_000295_042145.txt",
+          "n_pairs": 393,
+          "n_paragraphs": 394,
+          "work_id": "042145"
+        },
+        {
+          "author_id": "000303",
+          "file": "heldout3_000303_004728.txt",
+          "n_pairs": 151,
+          "n_paragraphs": 152,
+          "work_id": "004728"
+        },
+        {
+          "author_id": "000304",
+          "file": "heldout3_000304_043648.txt",
+          "n_pairs": 47,
+          "n_paragraphs": 48,
+          "work_id": "043648"
+        },
+        {
+          "author_id": "000308",
+          "file": "heldout3_000308_046660.txt",
+          "n_pairs": 82,
+          "n_paragraphs": 83,
+          "work_id": "046660"
+        },
+        {
+          "author_id": "000310",
+          "file": "heldout3_000310_055137.txt",
+          "n_pairs": 342,
+          "n_paragraphs": 343,
+          "work_id": "055137"
+        },
+        {
+          "author_id": "000311",
+          "file": "heldout3_000311_002004.txt",
+          "n_pairs": 86,
+          "n_paragraphs": 87,
+          "work_id": "002004"
+        },
+        {
+          "author_id": "000325",
+          "file": "heldout3_000325_002187.txt",
+          "n_pairs": 720,
+          "n_paragraphs": 721,
+          "work_id": "002187"
+        },
+        {
+          "author_id": "000331",
+          "file": "heldout3_000331_002413.txt",
+          "n_pairs": 94,
+          "n_paragraphs": 95,
+          "work_id": "002413"
+        },
+        {
+          "author_id": "000332",
+          "file": "heldout3_000332_002223.txt",
+          "n_pairs": 63,
+          "n_paragraphs": 64,
+          "work_id": "002223"
+        },
+        {
+          "author_id": "000371",
+          "file": "heldout3_000371_002578.txt",
+          "n_pairs": 76,
+          "n_paragraphs": 77,
+          "work_id": "002578"
+        },
+        {
+          "author_id": "000398",
+          "file": "heldout3_000398_004089.txt",
+          "n_pairs": 126,
+          "n_paragraphs": 127,
+          "work_id": "004089"
+        },
+        {
+          "author_id": "000416",
+          "file": "heldout3_000416_003577.txt",
+          "n_pairs": 83,
+          "n_paragraphs": 84,
+          "work_id": "003577"
+        },
+        {
+          "author_id": "000448",
+          "file": "heldout3_000448_046483.txt",
+          "n_pairs": 167,
+          "n_paragraphs": 168,
+          "work_id": "046483"
+        },
+        {
+          "author_id": "000507",
+          "file": "heldout3_000507_046648.txt",
+          "n_pairs": 118,
+          "n_paragraphs": 119,
+          "work_id": "046648"
+        },
+        {
+          "author_id": "000565",
+          "file": "heldout3_000565_051949.txt",
+          "n_pairs": 58,
+          "n_paragraphs": 59,
+          "work_id": "051949"
+        },
+        {
+          "author_id": "000595",
+          "file": "heldout3_000595_046166.txt",
+          "n_pairs": 930,
+          "n_paragraphs": 931,
+          "work_id": "046166"
+        },
+        {
+          "author_id": "000601",
+          "file": "heldout3_000601_004088.txt",
+          "n_pairs": 52,
+          "n_paragraphs": 53,
+          "work_id": "004088"
+        },
+        {
+          "author_id": "000800",
+          "file": "heldout3_000800_056833.txt",
+          "n_pairs": 121,
+          "n_paragraphs": 122,
+          "work_id": "056833"
+        },
+        {
+          "author_id": "000802",
+          "file": "heldout3_000802_046650.txt",
+          "n_pairs": 249,
+          "n_paragraphs": 250,
+          "work_id": "046650"
+        },
+        {
+          "author_id": "000805",
+          "file": "heldout3_000805_046651.txt",
+          "n_pairs": 52,
+          "n_paragraphs": 53,
+          "work_id": "046651"
+        },
+        {
+          "author_id": "000810",
+          "file": "heldout3_000810_050686.txt",
+          "n_pairs": 335,
+          "n_paragraphs": 336,
+          "work_id": "050686"
+        },
+        {
+          "author_id": "000870",
+          "file": "heldout3_000870_002933.txt",
+          "n_pairs": 113,
+          "n_paragraphs": 114,
+          "work_id": "002933"
+        },
+        {
+          "author_id": "000906",
+          "file": "heldout3_000906_042561.txt",
+          "n_pairs": 44,
+          "n_paragraphs": 45,
+          "work_id": "042561"
+        },
+        {
+          "author_id": "000929",
+          "file": "heldout3_000929_047001.txt",
+          "n_pairs": 322,
+          "n_paragraphs": 323,
+          "work_id": "047001"
+        },
+        {
+          "author_id": "000930",
+          "file": "heldout3_000930_049701.txt",
+          "n_pairs": 83,
+          "n_paragraphs": 84,
+          "work_id": "049701"
+        },
+        {
+          "author_id": "000941",
+          "file": "heldout3_000941_004491.txt",
+          "n_pairs": 104,
+          "n_paragraphs": 105,
+          "work_id": "004491"
+        },
+        {
+          "author_id": "000956",
+          "file": "heldout3_000956_046645.txt",
+          "n_pairs": 299,
+          "n_paragraphs": 300,
+          "work_id": "046645"
+        },
+        {
+          "author_id": "000969",
+          "file": "heldout3_000969_002096.txt",
+          "n_pairs": 217,
+          "n_paragraphs": 218,
+          "work_id": "002096"
+        },
+        {
+          "author_id": "000974",
+          "file": "heldout3_000974_000249.txt",
+          "n_pairs": 85,
+          "n_paragraphs": 86,
+          "work_id": "000249"
+        },
+        {
+          "author_id": "000989",
+          "file": "heldout3_000989_001488.txt",
+          "n_pairs": 1546,
+          "n_paragraphs": 1547,
+          "work_id": "001488"
+        },
+        {
+          "author_id": "000997",
+          "file": "heldout3_000997_000398.txt",
+          "n_pairs": 139,
+          "n_paragraphs": 140,
+          "work_id": "000398"
+        },
+        {
+          "author_id": "001052",
+          "file": "heldout3_001052_004968.txt",
+          "n_pairs": 294,
+          "n_paragraphs": 295,
+          "work_id": "004968"
+        },
+        {
+          "author_id": "001082",
+          "file": "heldout3_001082_045648.txt",
+          "n_pairs": 253,
+          "n_paragraphs": 254,
+          "work_id": "045648"
+        },
+        {
+          "author_id": "001083",
+          "file": "heldout3_001083_042290.txt",
+          "n_pairs": 103,
+          "n_paragraphs": 104,
+          "work_id": "042290"
+        },
+        {
+          "author_id": "001097",
+          "file": "heldout3_001097_042692.txt",
+          "n_pairs": 1594,
+          "n_paragraphs": 1595,
+          "work_id": "042692"
+        },
+        {
+          "author_id": "001151",
+          "file": "heldout3_001151_043799.txt",
+          "n_pairs": 94,
+          "n_paragraphs": 95,
+          "work_id": "043799"
+        },
+        {
+          "author_id": "001154",
+          "file": "heldout3_001154_043848.txt",
+          "n_pairs": 1267,
+          "n_paragraphs": 1268,
+          "work_id": "043848"
+        },
+        {
+          "author_id": "001157",
+          "file": "heldout3_001157_043646.txt",
+          "n_pairs": 61,
+          "n_paragraphs": 62,
+          "work_id": "043646"
+        },
+        {
+          "author_id": "001208",
+          "file": "heldout3_001208_047592.txt",
+          "n_pairs": 54,
+          "n_paragraphs": 55,
+          "work_id": "047592"
+        },
+        {
+          "author_id": "001243",
+          "file": "heldout3_001243_046458.txt",
+          "n_pairs": 60,
+          "n_paragraphs": 61,
+          "work_id": "046458"
+        },
+        {
+          "author_id": "001248",
+          "file": "heldout3_001248_046789.txt",
+          "n_pairs": 64,
+          "n_paragraphs": 65,
+          "work_id": "046789"
+        },
+        {
+          "author_id": "001261",
+          "file": "heldout3_001261_047516.txt",
+          "n_pairs": 115,
+          "n_paragraphs": 116,
+          "work_id": "047516"
+        },
+        {
+          "author_id": "001305",
+          "file": "heldout3_001305_047417.txt",
+          "n_pairs": 69,
+          "n_paragraphs": 70,
+          "work_id": "047417"
+        },
+        {
+          "author_id": "001308",
+          "file": "heldout3_001308_049291.txt",
+          "n_pairs": 129,
+          "n_paragraphs": 130,
+          "work_id": "049291"
+        },
+        {
+          "author_id": "001313",
+          "file": "heldout3_001313_047601.txt",
+          "n_pairs": 1257,
+          "n_paragraphs": 1258,
+          "work_id": "047601"
+        },
+        {
+          "author_id": "001316",
+          "file": "heldout3_001316_047767.txt",
+          "n_pairs": 80,
+          "n_paragraphs": 81,
+          "work_id": "047767"
+        },
+        {
+          "author_id": "001397",
+          "file": "heldout3_001397_049870.txt",
+          "n_pairs": 238,
+          "n_paragraphs": 239,
+          "work_id": "049870"
+        },
+        {
+          "author_id": "001422",
+          "file": "heldout3_001422_050295.txt",
+          "n_pairs": 97,
+          "n_paragraphs": 98,
+          "work_id": "050295"
+        },
+        {
+          "author_id": "001454",
+          "file": "heldout3_001454_050633.txt",
+          "n_pairs": 106,
+          "n_paragraphs": 107,
+          "work_id": "050633"
+        },
+        {
+          "author_id": "001468",
+          "file": "heldout3_001468_051160.txt",
+          "n_pairs": 1126,
+          "n_paragraphs": 1127,
+          "work_id": "051160"
+        },
+        {
+          "author_id": "001499",
+          "file": "heldout3_001499_051278.txt",
+          "n_pairs": 132,
+          "n_paragraphs": 133,
+          "work_id": "051278"
+        },
+        {
+          "author_id": "001521",
+          "file": "heldout3_001521_051826.txt",
+          "n_pairs": 546,
+          "n_paragraphs": 547,
+          "work_id": "051826"
+        },
+        {
+          "author_id": "001562",
+          "file": "heldout3_001562_052433.txt",
+          "n_pairs": 1225,
+          "n_paragraphs": 1226,
+          "work_id": "052433"
+        },
+        {
+          "author_id": "001568",
+          "file": "heldout3_001568_052467.txt",
+          "n_pairs": 90,
+          "n_paragraphs": 91,
+          "work_id": "052467"
+        },
+        {
+          "author_id": "001579",
+          "file": "heldout3_001579_053012.txt",
+          "n_pairs": 292,
+          "n_paragraphs": 293,
+          "work_id": "053012"
+        },
+        {
+          "author_id": "001653",
+          "file": "heldout3_001653_054261.txt",
+          "n_pairs": 52,
+          "n_paragraphs": 53,
+          "work_id": "054261"
+        },
+        {
+          "author_id": "001669",
+          "file": "heldout3_001669_054473.txt",
+          "n_pairs": 139,
+          "n_paragraphs": 140,
+          "work_id": "054473"
+        },
+        {
+          "author_id": "001692",
+          "file": "heldout3_001692_055044.txt",
+          "n_pairs": 619,
+          "n_paragraphs": 620,
+          "work_id": "055044"
+        },
+        {
+          "author_id": "001750",
+          "file": "heldout3_001750_055811.txt",
+          "n_pairs": 92,
+          "n_paragraphs": 93,
+          "work_id": "055811"
+        },
+        {
+          "author_id": "001753",
+          "file": "heldout3_001753_055844.txt",
+          "n_pairs": 227,
+          "n_paragraphs": 228,
+          "work_id": "055844"
+        },
+        {
+          "author_id": "001779",
+          "file": "heldout3_001779_057522.txt",
+          "n_pairs": 1280,
+          "n_paragraphs": 1281,
+          "work_id": "057522"
+        },
+        {
+          "author_id": "001798",
+          "file": "heldout3_001798_056637.txt",
+          "n_pairs": 184,
+          "n_paragraphs": 185,
+          "work_id": "056637"
+        },
+        {
+          "author_id": "001801",
+          "file": "heldout3_001801_059968.txt",
+          "n_pairs": 52,
+          "n_paragraphs": 53,
+          "work_id": "059968"
+        },
+        {
+          "author_id": "001822",
+          "file": "heldout3_001822_057022.txt",
+          "n_pairs": 181,
+          "n_paragraphs": 182,
+          "work_id": "057022"
+        },
+        {
+          "author_id": "001823",
+          "file": "heldout3_001823_057023.txt",
+          "n_pairs": 802,
+          "n_paragraphs": 803,
+          "work_id": "057023"
+        },
+        {
+          "author_id": "001866",
+          "file": "heldout3_001866_057499.txt",
+          "n_pairs": 243,
+          "n_paragraphs": 244,
+          "work_id": "057499"
+        },
+        {
+          "author_id": "001867",
+          "file": "heldout3_001867_058065.txt",
+          "n_pairs": 74,
+          "n_paragraphs": 75,
+          "work_id": "058065"
+        },
+        {
+          "author_id": "001869",
+          "file": "heldout3_001869_057748.txt",
+          "n_pairs": 139,
+          "n_paragraphs": 140,
+          "work_id": "057748"
+        },
+        {
+          "author_id": "001875",
+          "file": "heldout3_001875_059830.txt",
+          "n_pairs": 86,
+          "n_paragraphs": 87,
+          "work_id": "059830"
+        },
+        {
+          "author_id": "001894",
+          "file": "heldout3_001894_058055.txt",
+          "n_pairs": 470,
+          "n_paragraphs": 471,
+          "work_id": "058055"
+        },
+        {
+          "author_id": "001958",
+          "file": "heldout3_001958_058812.txt",
+          "n_pairs": 69,
+          "n_paragraphs": 70,
+          "work_id": "058812"
+        }
+      ],
+      "works_per_author": null
+    },
+    "std_norm": 268.0303518819348
+  },
+  "length_bands": {
+    "ac_activation_evidence": "sparsity-audit --length-bins: 250 字以下は全段落 1 ウィンドウで ac_mean_velocity / ac_max_sis / ac_coupling が厳密に 0.0。ウィンドウ数 2 以上で 0 以外（例外は coupling 4 件・max_sis 1 件）。M 帯（251..=500）は 1 ウィンドウの段落（最大 464 字）を含むため、ac_* は部分的にしか活性化しない。",
+    "ac_sigma_pool": {
+      "ci": "パーセンタイル法 95%",
+      "dims": {
+        "ac_coupling": {
+          "L": {
+            "cluster_ci95": [
+              0.9622152624106026,
+              1.102970583593546
+            ],
+            "cluster_ci_width_over_sigma": 0.1366707668247307,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 861,
+            "n_works_contributing": 93,
+            "pair_ci95": [
+              0.9880138473377647,
+              1.0692656431442387
+            ],
+            "pair_ci_width_over_sigma": 0.07889396397543023,
+            "sigma": 1.0298860864917128
+          },
+          "M": {
+            "cluster_ci95": [
+              1.3221405889270201,
+              1.4299780763923664
+            ],
+            "cluster_ci_width_over_sigma": 0.07836911793338888,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 456,
+            "n_works_contributing": 97,
+            "pair_ci95": [
+              1.311713519383192,
+              1.4369832741686666
+            ],
+            "pair_ci_width_over_sigma": 0.09103773109907039,
+            "sigma": 1.3760201761745554
+          },
+          "ci_would_pool_diagnostic_only": null,
+          "cluster_would_pool": false,
+          "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+          "diagnostic_overlap_criteria_disagree": false,
+          "freeze_reason": null,
+          "lift_conditions": null,
+          "log_ratio_criterion": {
+            "ci95_log": [
+              0.20808453604259816,
+              0.37250891046238194
+            ],
+            "ci95_ratio": [
+              1.2313172558372756,
+              1.4513714114759009
+            ],
+            "ci_contains_zero": false,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+            "point_log_sigma_M_over_L": 0.2897472018349253,
+            "point_ratio": 1.3360896843086227,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 1317,
+          "overlap_ratio_cluster": 0.0,
+          "overlap_ratio_pair": 0.0,
+          "pair_level_would_pool": false,
+          "pool_frozen": false,
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": 1.1633159390266363
+        },
+        "ac_max_sis": {
+          "L": {
+            "cluster_ci95": [
+              0.14117009177376216,
+              0.16371563265581454
+            ],
+            "cluster_ci_width_over_sigma": 0.14807831525646956,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 861,
+            "n_works_contributing": 93,
+            "pair_ci95": [
+              0.14122779478245515,
+              0.1640455431823454
+            ],
+            "pair_ci_width_over_sigma": 0.1498661646078092,
+            "sigma": 0.1522541693090161
+          },
+          "M": {
+            "cluster_ci95": [
+              0.12045392429007121,
+              0.1577978722607968
+            ],
+            "cluster_ci_width_over_sigma": 0.26910421152983066,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 456,
+            "n_works_contributing": 97,
+            "pair_ci95": [
+              0.12435058063593053,
+              0.15256855763905447
+            ],
+            "pair_ci_width_over_sigma": 0.20334155505854024,
+            "sigma": 0.1387713249020852
+          },
+          "ci_would_pool_diagnostic_only": false,
+          "cluster_would_pool": true,
+          "decision": "帯別（F-20 凍結: ac_max_sis は CI にかかわらず常に帯別。CI は参考診断値）",
+          "diagnostic_overlap_criteria_disagree": true,
+          "freeze_reason": "F-19 fallback: all 4 CI procedures exceeded G1 at m=1.25 (upper error 14.6-17.3% > 5.5%)",
+          "lift_conditions": [
+            "corpus_works >= 100",
+            "F-19 benchmark re-run on expanded population passes G1/G2 for ac_max_sis"
+          ],
+          "log_ratio_criterion": {
+            "ci95_log": [
+              -0.24459632092763453,
+              0.055177738245311705
+            ],
+            "ci95_ratio": [
+              0.783020563465895,
+              1.056728419039962
+            ],
+            "ci_contains_zero": true,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+            "point_log_sigma_M_over_L": -0.0927238570341458,
+            "point_ratio": 0.9114451547164792,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 1317,
+          "overlap_ratio_cluster": 0.737519697310583,
+          "overlap_ratio_pair": 0.4970149840311968,
+          "pair_level_would_pool": false,
+          "pool_frozen": true,
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": 0.14772578282863832
+        },
+        "ac_mean_velocity": {
+          "L": {
+            "cluster_ci95": [
+              84.26811096247657,
+              115.19760826295115
+            ],
+            "cluster_ci_width_over_sigma": 0.3132517364019869,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 861,
+            "n_works_contributing": 93,
+            "pair_ci95": [
+              90.32994385772899,
+              106.93421693904081
+            ],
+            "pair_ci_width_over_sigma": 0.16816689013351302,
+            "sigma": 98.7368742332641
+          },
+          "M": {
+            "cluster_ci95": [
+              112.16820151624192,
+              160.34162655697028
+            ],
+            "cluster_ci_width_over_sigma": 0.35788231756866773,
+            "cluster_resamples_dropped_lt2_pairs": 0,
+            "n_pairs": 456,
+            "n_works_contributing": 97,
+            "pair_ci95": [
+              115.15977978168284,
+              155.05340245034554
+            ],
+            "pair_ci_width_over_sigma": 0.2963713318037949,
+            "sigma": 134.60688800721542
+          },
+          "ci_would_pool_diagnostic_only": null,
+          "cluster_would_pool": false,
+          "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+          "diagnostic_overlap_criteria_disagree": false,
+          "freeze_reason": null,
+          "lift_conditions": null,
+          "log_ratio_criterion": {
+            "ci95_log": [
+              0.07898337606269877,
+              0.5455301315315225
+            ],
+            "ci95_ratio": [
+              1.0821863317230531,
+              1.7255228940437788
+            ],
+            "ci_contains_zero": false,
+            "ci_within_equivalence_margin": false,
+            "equivalence_margin_ratio": 1.25,
+            "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+            "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+            "point_log_sigma_M_over_L": 0.30990011401345613,
+            "point_ratio": 1.363288933870937,
+            "resamples_dropped": 0,
+            "seed": 20261625
+          },
+          "n_pairs_pooled": 1317,
+          "overlap_ratio_cluster": 0.09794555395708758,
+          "overlap_ratio_pair": 0.0,
+          "pair_level_would_pool": false,
+          "pool_frozen": false,
+          "pooled": false,
+          "pooled_sigma": null,
+          "provisional_pooled_sigma": 112.47723226334047
+        }
+      },
+      "frozen_dims": [
+        "ac_max_sis"
+      ],
+      "n_works": 216,
+      "pool_rule": "F17: プールは等値主張。σ 比 σ_M/σ_L の作品単位クラスタ CI が同等マージン（σ比 0.80〜1.25、未検証の仮値）内に収まる次元だけプール可。それ以外は既定で帯別。プール値は provisional として記録。重なり比（0.5）は診断のみで判定に使わない",
+      "population": "両段落とも 2 ウィンドウ以上の隣接ペア。混在ペア（片側のみ複数ウィンドウ）と両方単窓ペアは含めない",
+      "resamples": 10000,
+      "rng": "SplitMix64",
+      "seed": 20261113,
+      "seed_rule": "帯番号 bi ごとに seed ^ bi（クラスタ）、seed ^ (0x100 + bi)（ペア単位）",
+      "statistic": "母集団 SD（ddof=0）",
+      "unit": "作品（全作品から復元抽出。作品内の両側複数ウィンドウペアは丸ごと入れ替わる）"
+    },
+    "band_key": "L_max = max(chars(p_t), chars(p_t+1))（両段落の長い方）",
+    "bands": [
+      {
+        "kasane11": {
+          "ac_multi_window_n_pairs": 0,
+          "ac_multi_window_per_dim_std": null,
+          "dead_dims_sigma_verified_zero": true,
+          "mean_norm": 495.461543712792,
+          "n_active_dims": 8,
+          "pair_window_mix": {
+            "both_multi": 0,
+            "both_single": 43361,
+            "mixed_one_side_multi": 0
+          },
+          "per_dim_std": {
+            "ac_coupling": 0.0,
+            "ac_max_sis": 0.0,
+            "ac_mean_crest": 0.3580766571618041,
+            "ac_mean_velocity": 0.0,
+            "dc_cadence": 348.49343049021644,
+            "dc_confession": 138.30144349257202,
+            "dc_polyphony": 235.575258306878,
+            "dc_showing": 223.02743391568993,
+            "dc_speculation": 206.5651862588497,
+            "dc_staccato": 163.74942307834579,
+            "semantic_tension": 85.69482356218862
+          },
+          "rms_norm": 568.0133355769583,
+          "std_norm": 277.77150338903374,
+          "structurally_dead_dims": [
+            "ac_mean_velocity",
+            "ac_max_sis",
+            "ac_coupling"
+          ]
+        },
+        "max_chars": 250,
+        "min_chars": 30,
+        "n_pairs": 43361,
+        "name": "S",
+        "ortho28": {
+          "dim_names": [
+            "v2_log_mean_sent_len",
+            "v2_sent_len_cv",
+            "v2_kanji_ratio",
+            "v2_hiragana_ratio",
+            "v2_quote_ratio",
+            "v2_kana_は",
+            "v2_kana_が",
+            "v2_kana_の",
+            "v2_kana_に",
+            "v2_kana_を",
+            "v2_kana_と",
+            "v2_kana_で",
+            "v2_kana_も",
+            "v2_kana_て",
+            "v2_kana_た",
+            "v2_final_た",
+            "v2_final_る",
+            "v2_final_だ",
+            "v2_final_い",
+            "v2_final_う",
+            "v2_final_す",
+            "v2_final_ぬ",
+            "v2_final_か",
+            "v2_final_」",
+            "v2_final_other",
+            "v2_narr_log_mean_sent_len",
+            "v2_narr_log_p90_sent_len",
+            "v2_dialogue_char_ratio"
+          ],
+          "mean_norm": 8.988929924638597,
+          "per_dim_std": [
+            0.651970124553807,
+            0.34548130943804933,
+            0.10947179991868053,
+            0.11651814085144721,
+            0.03263442547931741,
+            2.5483589488559684,
+            2.470733217922367,
+            3.7160615948922766,
+            2.727176732882547,
+            2.5628718970235225,
+            2.8628571380638697,
+            2.5405883490131993,
+            2.434579803599394,
+            2.9984318393061105,
+            3.0245719431457374,
+            0.5129469653570933,
+            0.27413824976867684,
+            0.19489827006015367,
+            0.1948183112843492,
+            0.16296039225414977,
+            0.18739029725843484,
+            0.07447744683519741,
+            0.1573984175873165,
+            0.3319164298356062,
+            0.4127256296110292,
+            1.9810972019344522,
+            2.013444381638727,
+            0.5311682792899245
+          ],
+          "rms_norm": 9.42065873981668,
+          "std_norm": 2.8192108651219785
+        }
+      },
+      {
+        "kasane11": {
+          "ac_multi_window_band_specific_per_dim_std": {
+            "ac_coupling": 1.3760201761745554,
+            "ac_max_sis": 0.1387713249020852,
+            "ac_mean_velocity": 134.60688800721542
+          },
+          "ac_multi_window_n_pairs": 456,
+          "ac_multi_window_per_dim_std": {
+            "ac_coupling": 1.3760201761745554,
+            "ac_max_sis": 0.1387713249020852,
+            "ac_mean_velocity": 134.60688800721542
+          },
+          "ac_multi_window_pooled_dims": [],
+          "ac_multi_window_provisional_pooled_per_dim_std": {
+            "ac_coupling": 1.1633159390266363,
+            "ac_max_sis": 0.14772578282863832,
+            "ac_mean_velocity": 112.47723226334047
+          },
+          "dead_dims_sigma_verified_zero": false,
+          "mean_norm": 393.0652170923466,
+          "n_active_dims": 11,
+          "pair_window_mix": {
+            "both_multi": 456,
+            "both_single": 2329,
+            "mixed_one_side_multi": 3985
+          },
+          "per_dim_std": {
+            "ac_coupling": 0.823609550720862,
+            "ac_max_sis": 0.13308267747925526,
+            "ac_mean_crest": 0.5618414478909,
+            "ac_mean_velocity": 176.41316906601293,
+            "dc_cadence": 212.75880988151644,
+            "dc_confession": 102.48259314458076,
+            "dc_polyphony": 185.47876438010684,
+            "dc_showing": 162.12158952308386,
+            "dc_speculation": 149.7401096267036,
+            "dc_staccato": 128.1945602950135,
+            "semantic_tension": 67.15420317113285
+          },
+          "rms_norm": 436.9906956904439,
+          "std_norm": 190.94659785438404,
+          "structurally_dead_dims": []
+        },
+        "max_chars": 500,
+        "min_chars": 251,
+        "n_pairs": 6770,
+        "name": "M",
+        "ortho28": {
+          "dim_names": [
+            "v2_log_mean_sent_len",
+            "v2_sent_len_cv",
+            "v2_kanji_ratio",
+            "v2_hiragana_ratio",
+            "v2_quote_ratio",
+            "v2_kana_は",
+            "v2_kana_が",
+            "v2_kana_の",
+            "v2_kana_に",
+            "v2_kana_を",
+            "v2_kana_と",
+            "v2_kana_で",
+            "v2_kana_も",
+            "v2_kana_て",
+            "v2_kana_た",
+            "v2_final_た",
+            "v2_final_る",
+            "v2_final_だ",
+            "v2_final_い",
+            "v2_final_う",
+            "v2_final_す",
+            "v2_final_ぬ",
+            "v2_final_か",
+            "v2_final_」",
+            "v2_final_other",
+            "v2_narr_log_mean_sent_len",
+            "v2_narr_log_p90_sent_len",
+            "v2_dialogue_char_ratio"
+          ],
+          "mean_norm": 6.260693133485413,
+          "per_dim_std": [
+            0.646216709006639,
+            0.3594986421628865,
+            0.08151222451997481,
+            0.0887113104073843,
+            0.02315560309922516,
+            1.6576314637780185,
+            1.6703446446834667,
+            2.709438429874591,
+            1.9322055311565745,
+            1.7486348987559288,
+            1.9552198960505445,
+            1.7417993549142632,
+            1.639717304213981,
+            2.0589967031522347,
+            2.122310062971786,
+            0.4187466500935337,
+            0.24334400489580663,
+            0.14806834209427788,
+            0.16315537665033147,
+            0.13422988876772912,
+            0.17839059777349403,
+            0.07190130444666466,
+            0.09796154087729747,
+            0.21607606756903672,
+            0.30062242677626105,
+            1.685357600367525,
+            1.8144821725047555,
+            0.4248551724918558
+          ],
+          "rms_norm": 6.732335492533621,
+          "std_norm": 2.475492410078529
+        }
+      },
+      {
+        "kasane11": {
+          "ac_multi_window_band_specific_per_dim_std": {
+            "ac_coupling": 1.0298860864917128,
+            "ac_max_sis": 0.1522541693090161,
+            "ac_mean_velocity": 98.7368742332641
+          },
+          "ac_multi_window_n_pairs": 861,
+          "ac_multi_window_per_dim_std": {
+            "ac_coupling": 1.0298860864917128,
+            "ac_max_sis": 0.1522541693090161,
+            "ac_mean_velocity": 98.7368742332641
+          },
+          "ac_multi_window_pooled_dims": [],
+          "ac_multi_window_provisional_pooled_per_dim_std": {
+            "ac_coupling": 1.1633159390266363,
+            "ac_max_sis": 0.14772578282863832,
+            "ac_mean_velocity": 112.47723226334047
+          },
+          "dead_dims_sigma_verified_zero": false,
+          "mean_norm": 336.48772857691546,
+          "n_active_dims": 11,
+          "pair_window_mix": {
+            "both_multi": 861,
+            "both_single": 86,
+            "mixed_one_side_multi": 1734
+          },
+          "per_dim_std": {
+            "ac_coupling": 0.80481241707668,
+            "ac_max_sis": 0.18560433921800928,
+            "ac_mean_crest": 0.8267358330736132,
+            "ac_mean_velocity": 169.52007684851736,
+            "dc_cadence": 180.6180432768631,
+            "dc_confession": 86.12289367452802,
+            "dc_polyphony": 164.00351406565167,
+            "dc_showing": 137.54664026212285,
+            "dc_speculation": 127.61217197623293,
+            "dc_staccato": 106.83998968868269,
+            "semantic_tension": 56.49823185438782
+          },
+          "rms_norm": 381.464947463185,
+          "std_norm": 179.698399158807,
+          "structurally_dead_dims": []
+        },
+        "max_chars": null,
+        "min_chars": 501,
+        "n_pairs": 2681,
+        "name": "L",
+        "ortho28": {
+          "dim_names": [
+            "v2_log_mean_sent_len",
+            "v2_sent_len_cv",
+            "v2_kanji_ratio",
+            "v2_hiragana_ratio",
+            "v2_quote_ratio",
+            "v2_kana_は",
+            "v2_kana_が",
+            "v2_kana_の",
+            "v2_kana_に",
+            "v2_kana_を",
+            "v2_kana_と",
+            "v2_kana_で",
+            "v2_kana_も",
+            "v2_kana_て",
+            "v2_kana_た",
+            "v2_final_た",
+            "v2_final_る",
+            "v2_final_だ",
+            "v2_final_い",
+            "v2_final_う",
+            "v2_final_す",
+            "v2_final_ぬ",
+            "v2_final_か",
+            "v2_final_」",
+            "v2_final_other",
+            "v2_narr_log_mean_sent_len",
+            "v2_narr_log_p90_sent_len",
+            "v2_dialogue_char_ratio"
+          ],
+          "mean_norm": 5.151358821110359,
+          "per_dim_std": [
+            0.6331578093701784,
+            0.3520005992797769,
+            0.07182466157613462,
+            0.1088065431527747,
+            0.022419130145522975,
+            1.448550196411103,
+            1.349974079403207,
+            2.3351343234528747,
+            1.6532280935870287,
+            1.470504017433742,
+            1.6599985481211337,
+            1.4257555337676988,
+            1.3674074707295998,
+            1.6801495707851062,
+            1.7782772025395321,
+            0.37676788670378175,
+            0.22543484098203748,
+            0.13682952349498545,
+            0.1499801073405275,
+            0.11837849154821387,
+            0.166083371117921,
+            0.06154991803419457,
+            0.09682777783836825,
+            0.20266916173443125,
+            0.30035279923373875,
+            1.4592234243098314,
+            1.6097807180147115,
+            0.38601046336867867
+          ],
+          "rms_norm": 5.7230533659201015,
+          "std_norm": 2.4933596061013685
+        }
+      }
+    ],
+    "f14_rule": "n_evaluated は前後段落のウィンドウ数で決める（両方 1 窓 → ac_* 3 次元を除く 8 次元／片方でも 2 窓以上 → 11 次元）。σ は文字数帯（L_max）で検索。ac_* の σ は kasane11.ac_multi_window_per_dim_std（両段落とも 2 窓以上のペアだけ）。混在ペア（片側のみ複数窓）は 11 次元評価で、単窓側の ac_* は 0 なので Δ_ac = 値 − 0 になる（非対称）。",
+    "lmin_diagnostic": {
+      "n_pairs_lmin_le_250": 50739,
+      "n_pairs_lmin_le_250_but_lmax_gt_250": 7378,
+      "n_pairs_total": 52812,
+      "note": "L_min で S 帯を切ると、この混在ペア（短い段落＋250 字超の段落）が S に入り、ac_* の差が 0 にならない。そのため S 帯は L_max で切る。"
+    },
+    "pair_window_mix_total": {
+      "both_multi": 1317,
+      "both_single": 45776,
+      "mixed_one_side_multi": 5719,
+      "n_pairs": 52812
+    },
+    "sd_definition": "per_dim_std は母集団 SD（ddof=0）で差の平均を引いた後の SD（numpy np.std の既定と同じ）。差は『後の段落 − 前の段落』。生の特徴量（z 化なし）。",
+    "thresholds": {
+      "M_max_chars": 500,
+      "S_max_chars": 250
+    }
+  },
+  "note": "6pole と ppm3d は base-json（Python 生成、3 著者×4 作品=12 作品）のコピーで、再生成していない（12 作品時点）。ortho28 と kasane11 は Rust で scope に従い再生成。σ は隣接段落差の SD であり推敲ノイズそのものではない。",
+  "ortho28": {
+    "definition": "ortho_v2 の 31 次元（ext 27 + narr 4）から読点 3 次元（添字 2,3,29）を除いた 28 次元の生特徴量について、kasane11 と同じ隣接段落ペア（後−前）の次元別 SD（ddof=0）。Rust（ortho_named(text, true)）で計算。",
+    "dim": 28,
+    "dim_names": [
+      "v2_log_mean_sent_len",
+      "v2_sent_len_cv",
+      "v2_kanji_ratio",
+      "v2_hiragana_ratio",
+      "v2_quote_ratio",
+      "v2_kana_は",
+      "v2_kana_が",
+      "v2_kana_の",
+      "v2_kana_に",
+      "v2_kana_を",
+      "v2_kana_と",
+      "v2_kana_で",
+      "v2_kana_も",
+      "v2_kana_て",
+      "v2_kana_た",
+      "v2_final_た",
+      "v2_final_る",
+      "v2_final_だ",
+      "v2_final_い",
+      "v2_final_う",
+      "v2_final_す",
+      "v2_final_ぬ",
+      "v2_final_か",
+      "v2_final_」",
+      "v2_final_other",
+      "v2_narr_log_mean_sent_len",
+      "v2_narr_log_p90_sent_len",
+      "v2_dialogue_char_ratio"
+    ],
+    "mean_norm": 8.444381503736805,
+    "n_pairs": 52812,
+    "note": "隣接段落差の SD であり推敲ノイズそのものではない。",
+    "per_dim_std": [
+      0.65029673855019,
+      0.3476483720444194,
+      0.10465705497474596,
+      0.1129462337771282,
+      0.0311234535636144,
+      2.4064149597001956,
+      2.3371753065193697,
+      3.543423761362708,
+      2.59305260555873,
+      2.4278926067629105,
+      2.7127827370879127,
+      2.406613627348678,
+      2.3035007152272287,
+      2.840524459834822,
+      2.8721165520353575,
+      0.4956948893945352,
+      0.26809366319841227,
+      0.18694625805241571,
+      0.18898811405313407,
+      0.15755942967116215,
+      0.18523340391989304,
+      0.07354788803320805,
+      0.14848248440377215,
+      0.3138859268556791,
+      0.3950009061216454,
+      1.922175841662996,
+      1.9703421263022463,
+      0.5122113239400262
+    ],
+    "python_comparison": {
+      "comparable": false,
+      "reason": "base の Python 値は 3 著者×4 作品（12 作品）のため、このスコープとは比較しない"
+    },
+    "rms_norm": 8.963235744410555,
+    "scope": "all-216",
+    "sd_definition": "per_dim_std は母集団 SD（ddof=0）で差の平均を引いた後の SD（numpy np.std の既定と同じ）。差は『後の段落 − 前の段落』。生の特徴量（z 化なし）。",
+    "sigma_kind": "adjacent_paragraph_diff_sd",
+    "std_norm": 3.0053312678019113
+  },
+  "ppm3d": {
+    "dim": 3,
+    "mean_norm": 1.0664,
+    "n_pairs": 3829,
+    "per_dim_std": [
+      0.662,
+      0.5932,
+      1.0104
+    ],
+    "rms_norm": 1.3458,
+    "sigma_para": 0.5332,
+    "std_norm": 0.8209,
+    "two_sigma_threshold": 1.0664
+  }
+}

@@ -1,0 +1,291 @@
+{
+  "sha256_all_216": "07E43FDF11E3C91D641A08FF509AB9DDFE153C9F0DBE2030B3C81DFFF199888D",
+  "106_meta": {
+    "K": 106,
+    "n_authors": 10,
+    "n_paragraphs": 22989,
+    "n_pairs": 22883,
+    "K_active": 64,
+    "K_M": 53,
+    "K_L": 54
+  },
+  "216_meta": {
+    "K": 216,
+    "n_authors": 120,
+    "excluded_works": 0,
+    "n_paragraphs": 53028,
+    "n_pairs": 52812,
+    "K_active": 121,
+    "K_M": 97,
+    "K_L": 93
+  },
+  "band_comparison": {
+    "M": {
+      "n_all_106": 3676,
+      "n_multi_106": 323,
+      "n_all_216": 6770,
+      "n_multi_216": 456,
+      "dims": {
+        "ac_mean_velocity": {
+          "sigma_106": 130.91762535050083,
+          "sigma_216": 134.60688800721542,
+          "pct_change": 2.818003035754327
+        },
+        "ac_max_sis": {
+          "sigma_106": 0.12768932529756372,
+          "sigma_216": 0.1387713249020852,
+          "pct_change": 8.678877093834044
+        },
+        "ac_coupling": {
+          "sigma_106": 1.3729518530621458,
+          "sigma_216": 1.3760201761745554,
+          "pct_change": 0.22348366445379492
+        }
+      }
+    },
+    "L": {
+      "n_all_106": 1553,
+      "n_multi_106": 566,
+      "n_all_216": 2681,
+      "n_multi_216": 861,
+      "dims": {
+        "ac_mean_velocity": {
+          "sigma_106": 100.65750801302019,
+          "sigma_216": 98.7368742332641,
+          "pct_change": -1.9080879485985796
+        },
+        "ac_max_sis": {
+          "sigma_106": 0.14496031468309192,
+          "sigma_216": 0.1522541693090161,
+          "pct_change": 5.031621683403355
+        },
+        "ac_coupling": {
+          "sigma_106": 1.0286322826305896,
+          "sigma_216": 1.0298860864917128,
+          "pct_change": 0.1218903861267833
+        }
+      }
+    }
+  },
+  "ac_sigma_pool_216": {
+    "ci": "パーセンタイル法 95%",
+    "dims": {
+      "ac_coupling": {
+        "L": {
+          "cluster_ci95": [
+            0.9622152624106026,
+            1.102970583593546
+          ],
+          "cluster_ci_width_over_sigma": 0.1366707668247307,
+          "cluster_resamples_dropped_lt2_pairs": 0,
+          "n_pairs": 861,
+          "n_works_contributing": 93,
+          "pair_ci95": [
+            0.9880138473377647,
+            1.0692656431442387
+          ],
+          "pair_ci_width_over_sigma": 0.07889396397543023,
+          "sigma": 1.0298860864917128
+        },
+        "M": {
+          "cluster_ci95": [
+            1.3221405889270201,
+            1.4299780763923664
+          ],
+          "cluster_ci_width_over_sigma": 0.07836911793338888,
+          "cluster_resamples_dropped_lt2_pairs": 0,
+          "n_pairs": 456,
+          "n_works_contributing": 97,
+          "pair_ci95": [
+            1.311713519383192,
+            1.4369832741686666
+          ],
+          "pair_ci_width_over_sigma": 0.09103773109907039,
+          "sigma": 1.3760201761745554
+        },
+        "ci_would_pool_diagnostic_only": null,
+        "cluster_would_pool": false,
+        "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+        "diagnostic_overlap_criteria_disagree": false,
+        "freeze_reason": null,
+        "lift_conditions": null,
+        "log_ratio_criterion": {
+          "ci95_log": [
+            0.20808453604259816,
+            0.37250891046238194
+          ],
+          "ci95_ratio": [
+            1.2313172558372756,
+            1.4513714114759009
+          ],
+          "ci_contains_zero": false,
+          "ci_within_equivalence_margin": false,
+          "equivalence_margin_ratio": 1.25,
+          "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+          "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+          "point_log_sigma_M_over_L": 0.2897472018349253,
+          "point_ratio": 1.3360896843086227,
+          "resamples_dropped": 0,
+          "seed": 20261625
+        },
+        "n_pairs_pooled": 1317,
+        "overlap_ratio_cluster": 0.0,
+        "overlap_ratio_pair": 0.0,
+        "pair_level_would_pool": false,
+        "pool_frozen": false,
+        "pooled": false,
+        "pooled_sigma": null,
+        "provisional_pooled_sigma": 1.1633159390266363
+      },
+      "ac_max_sis": {
+        "L": {
+          "cluster_ci95": [
+            0.14117009177376216,
+            0.16371563265581454
+          ],
+          "cluster_ci_width_over_sigma": 0.14807831525646956,
+          "cluster_resamples_dropped_lt2_pairs": 0,
+          "n_pairs": 861,
+          "n_works_contributing": 93,
+          "pair_ci95": [
+            0.14122779478245515,
+            0.1640455431823454
+          ],
+          "pair_ci_width_over_sigma": 0.1498661646078092,
+          "sigma": 0.1522541693090161
+        },
+        "M": {
+          "cluster_ci95": [
+            0.12045392429007121,
+            0.1577978722607968
+          ],
+          "cluster_ci_width_over_sigma": 0.26910421152983066,
+          "cluster_resamples_dropped_lt2_pairs": 0,
+          "n_pairs": 456,
+          "n_works_contributing": 97,
+          "pair_ci95": [
+            0.12435058063593053,
+            0.15256855763905447
+          ],
+          "pair_ci_width_over_sigma": 0.20334155505854024,
+          "sigma": 0.1387713249020852
+        },
+        "ci_would_pool_diagnostic_only": false,
+        "cluster_would_pool": true,
+        "decision": "帯別（F-20 凍結: ac_max_sis は CI にかかわらず常に帯別。CI は参考診断値）",
+        "diagnostic_overlap_criteria_disagree": true,
+        "freeze_reason": "F-19 fallback: all 4 CI procedures exceeded G1 at m=1.25 (upper error 14.6-17.3% > 5.5%)",
+        "lift_conditions": [
+          "corpus_works >= 100",
+          "F-19 benchmark re-run on expanded population passes G1/G2 for ac_max_sis"
+        ],
+        "log_ratio_criterion": {
+          "ci95_log": [
+            -0.24459632092763453,
+            0.055177738245311705
+          ],
+          "ci95_ratio": [
+            0.783020563465895,
+            1.056728419039962
+          ],
+          "ci_contains_zero": true,
+          "ci_within_equivalence_margin": false,
+          "equivalence_margin_ratio": 1.25,
+          "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+          "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+          "point_log_sigma_M_over_L": -0.0927238570341458,
+          "point_ratio": 0.9114451547164792,
+          "resamples_dropped": 0,
+          "seed": 20261625
+        },
+        "n_pairs_pooled": 1317,
+        "overlap_ratio_cluster": 0.737519697310583,
+        "overlap_ratio_pair": 0.4970149840311968,
+        "pair_level_would_pool": false,
+        "pool_frozen": true,
+        "pooled": false,
+        "pooled_sigma": null,
+        "provisional_pooled_sigma": 0.14772578282863832
+      },
+      "ac_mean_velocity": {
+        "L": {
+          "cluster_ci95": [
+            84.26811096247657,
+            115.19760826295115
+          ],
+          "cluster_ci_width_over_sigma": 0.3132517364019869,
+          "cluster_resamples_dropped_lt2_pairs": 0,
+          "n_pairs": 861,
+          "n_works_contributing": 93,
+          "pair_ci95": [
+            90.32994385772899,
+            106.93421693904081
+          ],
+          "pair_ci_width_over_sigma": 0.16816689013351302,
+          "sigma": 98.7368742332641
+        },
+        "M": {
+          "cluster_ci95": [
+            112.16820151624192,
+            160.34162655697028
+          ],
+          "cluster_ci_width_over_sigma": 0.35788231756866773,
+          "cluster_resamples_dropped_lt2_pairs": 0,
+          "n_pairs": 456,
+          "n_works_contributing": 97,
+          "pair_ci95": [
+            115.15977978168284,
+            155.05340245034554
+          ],
+          "pair_ci_width_over_sigma": 0.2963713318037949,
+          "sigma": 134.60688800721542
+        },
+        "ci_would_pool_diagnostic_only": null,
+        "cluster_would_pool": false,
+        "decision": "帯別（同等性の積極証拠なし。プール値は provisional として記録）",
+        "diagnostic_overlap_criteria_disagree": false,
+        "freeze_reason": null,
+        "lift_conditions": null,
+        "log_ratio_criterion": {
+          "ci95_log": [
+            0.07898337606269877,
+            0.5455301315315225
+          ],
+          "ci95_ratio": [
+            1.0821863317230531,
+            1.7255228940437788
+          ],
+          "ci_contains_zero": false,
+          "ci_within_equivalence_margin": false,
+          "equivalence_margin_ratio": 1.25,
+          "equivalence_margin_status": "未検証の仮値（検証は F-18）",
+          "note": "F17: この判定がプール可否の正本。同一の作品再標本を両帯に適用。",
+          "point_log_sigma_M_over_L": 0.30990011401345613,
+          "point_ratio": 1.363288933870937,
+          "resamples_dropped": 0,
+          "seed": 20261625
+        },
+        "n_pairs_pooled": 1317,
+        "overlap_ratio_cluster": 0.09794555395708758,
+        "overlap_ratio_pair": 0.0,
+        "pair_level_would_pool": false,
+        "pool_frozen": false,
+        "pooled": false,
+        "pooled_sigma": null,
+        "provisional_pooled_sigma": 112.47723226334047
+      }
+    },
+    "frozen_dims": [
+      "ac_max_sis"
+    ],
+    "n_works": 216,
+    "pool_rule": "F17: プールは等値主張。σ 比 σ_M/σ_L の作品単位クラスタ CI が同等マージン（σ比 0.80〜1.25、未検証の仮値）内に収まる次元だけプール可。それ以外は既定で帯別。プール値は provisional として記録。重なり比（0.5）は診断のみで判定に使わない",
+    "population": "両段落とも 2 ウィンドウ以上の隣接ペア。混在ペア（片側のみ複数ウィンドウ）と両方単窓ペアは含めない",
+    "resamples": 10000,
+    "rng": "SplitMix64",
+    "seed": 20261113,
+    "seed_rule": "帯番号 bi ごとに seed ^ bi（クラスタ）、seed ^ (0x100 + bi)（ペア単位）",
+    "statistic": "母集団 SD（ddof=0）",
+    "unit": "作品（全作品から復元抽出。作品内の両側複数ウィンドウペアは丸ごと入れ替わる）"
+  }
+}
