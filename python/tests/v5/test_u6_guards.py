@@ -230,7 +230,9 @@ def test_u6_test_vectors_fixture_pass():
     import json
     from pathlib import Path
 
-    fixture_path = Path("docs/handoff/v10/u6_guards_test_vectors.json")
+    # cwd 非依存: tests/v5/ から 3 階層上がリポジトリルート
+    repo_root = Path(__file__).resolve().parents[3]
+    fixture_path = repo_root / "docs/handoff/v10/u6_guards_test_vectors.json"
     assert fixture_path.exists(), f"Missing fixture file: {fixture_path}"
 
     data = json.loads(fixture_path.read_text(encoding="utf-8"))
