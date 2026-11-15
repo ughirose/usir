@@ -1,0 +1,7 @@
+[package]
+name = "b18_rust_probe"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+nishiki-linalg = { path = "C:/dev/nishiki/crates/nishiki-linalg" }
