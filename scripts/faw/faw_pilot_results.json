@@ -1,0 +1,266 @@
+{
+ "POSTWAR": {
+  "n_authors_ge2_works": 19,
+  "n_works": 56,
+  "indicators": {
+   "L_irony_mean": {
+    "n_pairs": 19,
+    "pearson": -0.0525389653760306,
+    "spearman": -0.07192982456140351,
+    "zero_rate_group": 0.07894736842105263,
+    "distinct_group_values": 33
+   },
+   "L_detachment_mean": {
+    "n_pairs": 19,
+    "pearson": 0.5302660236217099,
+    "spearman": 0.3456140350877193,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 37
+   },
+   "L_irony_active": {
+    "n_pairs": 19,
+    "pearson": 0.0035313263701207505,
+    "spearman": -0.056140350877192984,
+    "zero_rate_group": 0.07894736842105263,
+    "distinct_group_values": 34
+   },
+   "L_irony_grad": {
+    "n_pairs": 19,
+    "pearson": 0.06951540854298617,
+    "spearman": 0.0456140350877193,
+    "zero_rate_group": 0.3684210526315789,
+    "distinct_group_values": 22
+   },
+   "A1_signed_irony_mean": {
+    "n_pairs": 19,
+    "pearson": -0.5289941818467431,
+    "spearman": -0.3368421052631579,
+    "zero_rate_group": 0.07894736842105263,
+    "distinct_group_values": 32
+   },
+   "A1d_signed_detach_mean": {
+    "n_pairs": 19,
+    "pearson": 0.48053503930266683,
+    "spearman": 0.5491228070175439,
+    "zero_rate_group": 0.02631578947368421,
+    "distinct_group_values": 38
+   },
+   "A2_raw_signed_irony_mean": {
+    "n_pairs": 19,
+    "pearson": -0.20920157250357863,
+    "spearman": -0.18771929824561404,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "A3_neg_centered_cov_int": {
+    "n_pairs": 19,
+    "pearson": -0.5027812225970997,
+    "spearman": -0.2263157894736842,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "A3r_neg_centered_cov_raw": {
+    "n_pairs": 19,
+    "pearson": -0.21818843712076338,
+    "spearman": -0.0543859649122807,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "A5_signed_irony_slope": {
+    "n_pairs": 19,
+    "pearson": -0.33347362676978115,
+    "spearman": -0.25789473684210523,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "L_phi_zeami": {
+    "n_pairs": 19,
+    "pearson": 0.19961615834689939,
+    "spearman": 0.03859649122807017,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "L_mood_speed_mean": {
+    "n_pairs": 19,
+    "pearson": 0.21374873503379535,
+    "spearman": 0.2,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "L_still_density": {
+    "n_pairs": 19,
+    "pearson": null,
+    "spearman": null,
+    "zero_rate_group": 0.9736842105263158,
+    "distinct_group_values": 2
+   },
+   "L_speed_ratio": {
+    "n_pairs": 19,
+    "pearson": -0.15930062109185575,
+    "spearman": -0.11929824561403508,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "N2a_p10_joint_speed": {
+    "n_pairs": 19,
+    "pearson": 0.08293261683984515,
+    "spearman": -0.02631578947368421,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "N2b_soft_still_mass": {
+    "n_pairs": 19,
+    "pearson": 0.6548133776613801,
+    "spearman": 0.37543859649122807,
+    "zero_rate_group": 0.7368421052631579,
+    "distinct_group_values": 11
+   },
+   "N3_mood_speed_slope": {
+    "n_pairs": 19,
+    "pearson": 0.046412578698766464,
+    "spearman": 0.11403508771929824,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   },
+   "N4_mood_speed_lag1ac": {
+    "n_pairs": 19,
+    "pearson": -0.511662836877487,
+    "spearman": -0.2631578947368421,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 38
+   }
+  }
+ },
+ "AOZORA106": {
+  "n_authors_ge2_works": 10,
+  "n_works": 106,
+  "indicators": {
+   "L_irony_mean": {
+    "n_pairs": 10,
+    "pearson": 0.697469295660294,
+    "spearman": 0.5878787878787878,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "L_detachment_mean": {
+    "n_pairs": 10,
+    "pearson": 0.6754778285602466,
+    "spearman": 0.6484848484848483,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "L_irony_active": {
+    "n_pairs": 10,
+    "pearson": 0.6656541010026045,
+    "spearman": 0.6121212121212121,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "L_irony_grad": {
+    "n_pairs": 10,
+    "pearson": 0.5346965073856711,
+    "spearman": 0.32121212121212117,
+    "zero_rate_group": 0.05,
+    "distinct_group_values": 20
+   },
+   "A1_signed_irony_mean": {
+    "n_pairs": 10,
+    "pearson": 0.7260954679084157,
+    "spearman": 0.7696969696969697,
+    "zero_rate_group": 0.05,
+    "distinct_group_values": 20
+   },
+   "A1d_signed_detach_mean": {
+    "n_pairs": 10,
+    "pearson": 0.48997526173554606,
+    "spearman": 0.13939393939393938,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 19
+   },
+   "A2_raw_signed_irony_mean": {
+    "n_pairs": 10,
+    "pearson": 0.4682619571322769,
+    "spearman": 0.28484848484848485,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "A3_neg_centered_cov_int": {
+    "n_pairs": 10,
+    "pearson": 0.32794397632117017,
+    "spearman": 0.1515151515151515,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "A3r_neg_centered_cov_raw": {
+    "n_pairs": 10,
+    "pearson": 0.4499137457258442,
+    "spearman": 0.4545454545454545,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "A5_signed_irony_slope": {
+    "n_pairs": 10,
+    "pearson": -0.05069046286984997,
+    "spearman": -0.12727272727272726,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "L_phi_zeami": {
+    "n_pairs": 10,
+    "pearson": 0.3228983968370435,
+    "spearman": 0.24848484848484845,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "L_mood_speed_mean": {
+    "n_pairs": 10,
+    "pearson": 0.7318021712620121,
+    "spearman": 0.5151515151515151,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "L_still_density": {
+    "n_pairs": 10,
+    "pearson": -0.08038730484330307,
+    "spearman": 0.6121212121212121,
+    "zero_rate_group": 0.7,
+    "distinct_group_values": 7
+   },
+   "L_speed_ratio": {
+    "n_pairs": 10,
+    "pearson": -0.05380650737051674,
+    "spearman": -0.10303030303030303,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "N2a_p10_joint_speed": {
+    "n_pairs": 10,
+    "pearson": 0.0444584261234265,
+    "spearman": 0.04242424242424241,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "N2b_soft_still_mass": {
+    "n_pairs": 10,
+    "pearson": 0.1652758658651419,
+    "spearman": 0.1515151515151515,
+    "zero_rate_group": 0.2,
+    "distinct_group_values": 17
+   },
+   "N3_mood_speed_slope": {
+    "n_pairs": 10,
+    "pearson": -0.5233206544443874,
+    "spearman": -0.33333333333333326,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   },
+   "N4_mood_speed_lag1ac": {
+    "n_pairs": 10,
+    "pearson": 0.3264144640865094,
+    "spearman": 0.07878787878787878,
+    "zero_rate_group": 0.0,
+    "distinct_group_values": 20
+   }
+  }
+ }
+}
