@@ -113,6 +113,7 @@ def nagare_vec(recs):
         "L_phi_zeami": ph, "L_mood_speed_mean": float(ms_all.mean()), "L_still_density": L_still, "L_speed_ratio": L_ratio,
         "N2a_p10_joint_speed": float(np.quantile(joint, 0.10)),
         "N2b_soft_still_mass": float(np.mean(np.maximum(0.0, 1.0 - joint / THETA))),
+        "N2c_smooth_still_mass": float(np.mean(np.exp(-(joint / THETA) ** 2))),
         "N3_mood_speed_slope": wmean(logratio_slope),
         "N4_mood_speed_lag1ac": wmean(lambda r: lag1(r["ms"])),
     }
