@@ -1,0 +1,10 @@
+{
+  "stage": "P-2b",
+  "canonical_layer_c": "data/usir_v5_eval/tier_c_modern_benchmark_expanded_v2_postwar.jsonl",
+  "mapping": "data/usir_v5_eval/tier_c_v2_postwar_mapping.json",
+  "evidence_only": [
+    "data/usir_v5_eval/tier_c_modern_benchmark.jsonl",
+    "data/usir_v5_eval/tier_c_modern_benchmark_expanded.jsonl"
+  ],
+  "note": "R1-R3 (48) in the canonical file are non-reversible profiles of Aozora postwar fiction windows; R4 (16) is unchanged. The evidence files are the pre-replacement set whose R1-R3 provenance could not be verified (P-2 Task A). Frozen B-9..B-12 outputs were computed on the evidence file and are not regenerated; existing consumers (experiments/gate3a_*.py, tests) still point at the evidence file and are unchanged."
+}
