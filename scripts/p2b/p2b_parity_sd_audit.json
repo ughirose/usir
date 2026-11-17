@@ -1,0 +1,1818 @@
+{
+ "dataset_sha256": "55D2DDCF9F0F3AFDDC043E48B6D19632EACA71D601FC3AB98CD24341F78CD9F6",
+ "parity_mismatch_F17": 0,
+ "parity_mismatch_C216": 0,
+ "n_pairs": 439,
+ "labels_note": "All 439 pairs are real revisions/edition variants (positives). No negative (no-revision) pairs exist in v1.1; FPR cannot be computed.",
+ "flips14": [
+  {
+   "index": 20,
+   "pair_id": "horoki_first_vs_new_p862_p445",
+   "author": "林芙美子",
+   "variant_relationship": "first_publication_vs_book",
+   "band": "M",
+   "dice": 0.520971,
+   "abs_max_f17": 1.0255259750617298,
+   "abs_max_c216": 0.9818989094615362,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "ac_mean_crest",
+     "f17": 1.0255259750617298,
+     "c216": 0.9818989094615362
+    }
+   ],
+   "len_a": 135,
+   "len_b": 320,
+   "len_delta": 185,
+   "n_edit_blocks": 13,
+   "ins_chars": 183,
+   "del_chars": 0,
+   "replace_chars_a": 8,
+   "replace_chars_b": 10,
+   "changed_chars": 193,
+   "char_change_ratio": 0.603125,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.5582417582417583,
+   "changed_punct_share": 0.04975124378109453,
+   "changed_kana_share": 0.6019900497512438,
+   "changed_kanji_share": 0.34328358208955223
+  },
+  {
+   "index": 27,
+   "pair_id": "horoki_first_vs_new_p1320_p1219",
+   "author": "林芙美子",
+   "variant_relationship": "first_publication_vs_book",
+   "band": "M",
+   "dice": 0.453488,
+   "abs_max_f17": 1.1618595395603382,
+   "abs_max_c216": 0.973648968775351,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "semantic_tension",
+     "f17": 1.1618595395603382,
+     "c216": 0.973648968775351
+    }
+   ],
+   "len_a": 87,
+   "len_b": 260,
+   "len_delta": 173,
+   "n_edit_blocks": 7,
+   "ins_chars": 175,
+   "del_chars": 2,
+   "replace_chars_a": 1,
+   "replace_chars_b": 1,
+   "changed_chars": 178,
+   "char_change_ratio": 0.6846153846153846,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.484149855907781,
+   "changed_punct_share": 0.11173184357541899,
+   "changed_kana_share": 0.664804469273743,
+   "changed_kanji_share": 0.21787709497206703
+  },
+  {
+   "index": 30,
+   "pair_id": "horoki_first_vs_new_p1687_p1514",
+   "author": "林芙美子",
+   "variant_relationship": "first_publication_vs_book",
+   "band": "M",
+   "dice": 0.426036,
+   "abs_max_f17": 1.1663454617439728,
+   "abs_max_c216": 0.9774082127797985,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "semantic_tension",
+     "f17": 1.1663454617439728,
+     "c216": 0.9774082127797985
+    }
+   ],
+   "len_a": 81,
+   "len_b": 259,
+   "len_delta": 178,
+   "n_edit_blocks": 10,
+   "ins_chars": 179,
+   "del_chars": 1,
+   "replace_chars_a": 3,
+   "replace_chars_b": 3,
+   "changed_chars": 183,
+   "char_change_ratio": 0.7065637065637066,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.45294117647058824,
+   "changed_punct_share": 0.0913978494623656,
+   "changed_kana_share": 0.5591397849462365,
+   "changed_kanji_share": 0.34946236559139787
+  },
+  {
+   "index": 49,
+   "pair_id": "oda_ame_first_vs_rev_p9_p58",
+   "author": "織田作之助",
+   "variant_relationship": "first_publication_vs_book",
+   "band": "L",
+   "dice": 0.355224,
+   "abs_max_f17": 1.1021619006640815,
+   "abs_max_c216": 0.9813891256337313,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_speculation",
+     "f17": 1.1021619006640815,
+     "c216": 0.9813891256337313
+    }
+   ],
+   "len_a": 527,
+   "len_b": 145,
+   "len_delta": -382,
+   "n_edit_blocks": 14,
+   "ins_chars": 0,
+   "del_chars": 386,
+   "replace_chars_a": 16,
+   "replace_chars_b": 20,
+   "changed_chars": 406,
+   "char_change_ratio": 0.7703984819734345,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.37202380952380953,
+   "changed_punct_share": 0.05924170616113744,
+   "changed_kana_share": 0.5971563981042654,
+   "changed_kanji_share": 0.33886255924170616
+  },
+  {
+   "index": 68,
+   "pair_id": "oda_ame_first_vs_rev_p38_p201",
+   "author": "織田作之助",
+   "variant_relationship": "first_publication_vs_book",
+   "band": "L",
+   "dice": 0.257683,
+   "abs_max_f17": 1.0203589058947884,
+   "abs_max_c216": 0.9085499452352017,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_speculation",
+     "f17": 1.0203589058947884,
+     "c216": 0.9085499452352017
+    }
+   ],
+   "len_a": 621,
+   "len_b": 227,
+   "len_delta": -394,
+   "n_edit_blocks": 28,
+   "ins_chars": 20,
+   "del_chars": 417,
+   "replace_chars_a": 117,
+   "replace_chars_b": 120,
+   "changed_chars": 557,
+   "char_change_ratio": 0.8969404186795491,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.20518867924528303,
+   "changed_punct_share": 0.050445103857566766,
+   "changed_kana_share": 0.6097922848664689,
+   "changed_kanji_share": 0.33827893175074186
+  },
+  {
+   "index": 76,
+   "pair_id": "oda_ame_first_vs_rev_p49_p228",
+   "author": "織田作之助",
+   "variant_relationship": "first_publication_vs_book",
+   "band": "M",
+   "dice": 0.604563,
+   "abs_max_f17": 1.0502248839786872,
+   "abs_max_c216": 0.9871750776778875,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_showing",
+     "f17": 1.0502248839786872,
+     "c216": 0.9871750776778875
+    }
+   ],
+   "len_a": 306,
+   "len_b": 222,
+   "len_delta": -84,
+   "n_edit_blocks": 22,
+   "ins_chars": 16,
+   "del_chars": 105,
+   "replace_chars_a": 32,
+   "replace_chars_b": 37,
+   "changed_chars": 158,
+   "char_change_ratio": 0.5163398692810458,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.6401515151515151,
+   "changed_punct_share": 0.06315789473684211,
+   "changed_kana_share": 0.6210526315789474,
+   "changed_kanji_share": 0.30526315789473685
+  },
+  {
+   "index": 123,
+   "pair_id": "oda_wagamachi_first_vs_rev_p165_p1044",
+   "author": "織田作之助",
+   "variant_relationship": "first_publication_vs_book",
+   "band": "M",
+   "dice": 0.37931,
+   "abs_max_f17": 1.041617531295169,
+   "abs_max_c216": 0.9353712033187928,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_staccato",
+     "f17": 1.041617531295169,
+     "c216": 0.9353712033187928
+    }
+   ],
+   "len_a": 364,
+   "len_b": 102,
+   "len_delta": -262,
+   "n_edit_blocks": 7,
+   "ins_chars": 7,
+   "del_chars": 266,
+   "replace_chars_a": 5,
+   "replace_chars_b": 2,
+   "changed_chars": 278,
+   "char_change_ratio": 0.7637362637362637,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.39914163090128757,
+   "changed_punct_share": 0.05357142857142857,
+   "changed_kana_share": 0.6857142857142857,
+   "changed_kanji_share": 0.2571428571428571
+  },
+  {
+   "index": 131,
+   "pair_id": "kishida_doin_draft1_vs_final_p111_p161",
+   "author": "岸田国士",
+   "variant_relationship": "initial_draft_vs_final",
+   "band": "M",
+   "dice": 0.504348,
+   "abs_max_f17": 1.0053173309129437,
+   "abs_max_c216": 0.9462065026801051,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_confession",
+     "f17": 1.0053173309129437,
+     "c216": 0.9462065026801051
+    }
+   ],
+   "len_a": 299,
+   "len_b": 165,
+   "len_delta": -134,
+   "n_edit_blocks": 22,
+   "ins_chars": 3,
+   "del_chars": 114,
+   "replace_chars_a": 60,
+   "replace_chars_b": 37,
+   "changed_chars": 177,
+   "char_change_ratio": 0.5919732441471572,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.5387931034482759,
+   "changed_punct_share": 0.08411214953271028,
+   "changed_kana_share": 0.6728971962616822,
+   "changed_kanji_share": 0.22897196261682243
+  },
+  {
+   "index": 132,
+   "pair_id": "kishida_doin_draft1_vs_final_p181_p225",
+   "author": "岸田国士",
+   "variant_relationship": "initial_draft_vs_final",
+   "band": "M",
+   "dice": 0.509091,
+   "abs_max_f17": 1.0366660207675906,
+   "abs_max_c216": 0.9607091611500502,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_cadence",
+     "f17": 1.0366660207675906,
+     "c216": 0.9607091611500502
+    }
+   ],
+   "len_a": 361,
+   "len_b": 248,
+   "len_delta": -113,
+   "n_edit_blocks": 26,
+   "ins_chars": 57,
+   "del_chars": 161,
+   "replace_chars_a": 43,
+   "replace_chars_b": 34,
+   "changed_chars": 261,
+   "char_change_ratio": 0.7229916897506925,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.5155993431855501,
+   "changed_punct_share": 0.08813559322033898,
+   "changed_kana_share": 0.6949152542372882,
+   "changed_kanji_share": 0.21016949152542372
+  },
+  {
+   "index": 262,
+   "pair_id": "ichiyo_utsusemi_ed_p22_p22",
+   "author": "樋口一葉",
+   "variant_relationship": "cross_edition_variant",
+   "band": "L",
+   "dice": 0.738209,
+   "abs_max_f17": 1.04941427353252,
+   "abs_max_c216": 0.9824847914454894,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "ac_mean_crest",
+     "f17": 1.04941427353252,
+     "c216": 0.9824847914454894
+    }
+   ],
+   "len_a": 574,
+   "len_b": 891,
+   "len_delta": 317,
+   "n_edit_blocks": 17,
+   "ins_chars": 320,
+   "del_chars": 1,
+   "replace_chars_a": 17,
+   "replace_chars_b": 15,
+   "changed_chars": 338,
+   "char_change_ratio": 0.3793490460157127,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.7590443686006826,
+   "changed_punct_share": 0.06515580736543909,
+   "changed_kana_share": 0.5949008498583569,
+   "changed_kanji_share": 0.3342776203966006
+  },
+  {
+   "index": 280,
+   "pair_id": "miyazawa_ginga_ed_p124_p118",
+   "author": "宮沢賢治",
+   "variant_relationship": "cross_edition_variant",
+   "band": "M",
+   "dice": 0.704883,
+   "abs_max_f17": 1.006944875538018,
+   "abs_max_c216": 0.8438290570409354,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "semantic_tension",
+     "f17": 1.006944875538018,
+     "c216": 0.8438290570409354
+    }
+   ],
+   "len_a": 173,
+   "len_b": 300,
+   "len_delta": 127,
+   "n_edit_blocks": 5,
+   "ins_chars": 129,
+   "del_chars": 1,
+   "replace_chars_a": 3,
+   "replace_chars_b": 2,
+   "changed_chars": 133,
+   "char_change_ratio": 0.44333333333333336,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.7145877378435518,
+   "changed_punct_share": 0.1111111111111111,
+   "changed_kana_share": 0.7111111111111111,
+   "changed_kanji_share": 0.17037037037037037
+  },
+  {
+   "index": 319,
+   "pair_id": "hisao_mugetsu_ed_p30_p29",
+   "author": "久生十蘭",
+   "variant_relationship": "single_volume_vs_complete_works",
+   "band": "M",
+   "dice": 0.678125,
+   "abs_max_f17": 1.0395463722888536,
+   "abs_max_c216": 0.9953228627131365,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "ac_mean_crest",
+     "f17": 1.0395463722888536,
+     "c216": 0.9953228627131365
+    }
+   ],
+   "len_a": 345,
+   "len_b": 297,
+   "len_delta": -48,
+   "n_edit_blocks": 22,
+   "ins_chars": 46,
+   "del_chars": 107,
+   "replace_chars_a": 23,
+   "replace_chars_b": 36,
+   "changed_chars": 189,
+   "char_change_ratio": 0.5478260869565217,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.6697819314641744,
+   "changed_punct_share": 0.05188679245283019,
+   "changed_kana_share": 0.7735849056603774,
+   "changed_kanji_share": 0.17452830188679244
+  },
+  {
+   "index": 336,
+   "pair_id": "hisao_mugetsu_ed_p146_p149",
+   "author": "久生十蘭",
+   "variant_relationship": "single_volume_vs_complete_works",
+   "band": "M",
+   "dice": 0.820189,
+   "abs_max_f17": 1.0640487710031745,
+   "abs_max_c216": 0.9395287006537221,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "semantic_tension",
+     "f17": 1.0640487710031745,
+     "c216": 0.8916826460847062
+    }
+   ],
+   "len_a": 334,
+   "len_b": 302,
+   "len_delta": -32,
+   "n_edit_blocks": 19,
+   "ins_chars": 12,
+   "del_chars": 21,
+   "replace_chars_a": 37,
+   "replace_chars_b": 14,
+   "changed_chars": 70,
+   "char_change_ratio": 0.20958083832335328,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.8679245283018868,
+   "changed_punct_share": 0.03571428571428571,
+   "changed_kana_share": 0.7619047619047619,
+   "changed_kanji_share": 0.20238095238095238
+  },
+  {
+   "index": 371,
+   "pair_id": "kusaka_saigo_ed_p88_p88",
+   "author": "久坂葉子",
+   "variant_relationship": "cross_edition_variant",
+   "band": "M",
+   "dice": 0.669492,
+   "abs_max_f17": 1.0265860695400648,
+   "abs_max_c216": 0.9218729699969805,
+   "direction": "gt1->le1",
+   "flipped_dims": [
+    {
+     "dim": "dc_staccato",
+     "f17": 1.0265860695400648,
+     "c216": 0.9218729699969805
+    }
+   ],
+   "len_a": 315,
+   "len_b": 159,
+   "len_delta": -156,
+   "n_edit_blocks": 1,
+   "ins_chars": 0,
+   "del_chars": 156,
+   "replace_chars_a": 0,
+   "replace_chars_b": 0,
+   "changed_chars": 156,
+   "char_change_ratio": 0.49523809523809526,
+   "paras_a": 1,
+   "paras_b": 1,
+   "ratio_edit_similarity": 0.6708860759493671,
+   "changed_punct_share": 0.10256410256410256,
+   "changed_kana_share": 0.6346153846153846,
+   "changed_kanji_share": 0.26282051282051283
+  }
+ ],
+ "n_gt1_f17": 111,
+ "n_gt1_c216": 97,
+ "groups": {
+  "all439": {
+   "n": 439,
+   "char_change_ratio_median": 0.04187437686939183,
+   "char_change_ratio_mean": 0.24249641029242755,
+   "changed_chars_median": 16.0,
+   "n_edit_blocks_median": 7.0,
+   "dice_median": 0.937253,
+   "len_delta_abs_median": 4.0,
+   "paras_changed": 0,
+   "punct_share_median": 0.061452513966480445
+  },
+  "flip14": {
+   "n": 14,
+   "char_change_ratio_median": 0.5975491220735787,
+   "char_change_ratio_mean": 0.5951436756153036,
+   "changed_chars_median": 186.0,
+   "n_edit_blocks_median": 15.5,
+   "dice_median": 0.515031,
+   "len_delta_abs_median": 164.5,
+   "paras_changed": 0,
+   "punct_share_median": 0.0641568510511406
+  },
+  "gt1_c216_97": {
+   "n": 97,
+   "char_change_ratio_median": 0.6666666666666666,
+   "char_change_ratio_mean": 0.5721042339903737,
+   "changed_chars_median": 215.0,
+   "n_edit_blocks_median": 11.0,
+   "dice_median": 0.469914,
+   "len_delta_abs_median": 170.0,
+   "paras_changed": 0,
+   "punct_share_median": 0.06909090909090909
+  },
+  "le1_c216": {
+   "n": 342,
+   "char_change_ratio_median": 0.019699218557006636,
+   "char_change_ratio_mean": 0.14901115035470597,
+   "changed_chars_median": 9.0,
+   "n_edit_blocks_median": 6.0,
+   "dice_median": 0.968818,
+   "len_delta_abs_median": 2.0,
+   "paras_changed": 0,
+   "punct_share_median": 0.05357142857142857
+  },
+  "gt1_both_floors": {
+   "n": 97,
+   "char_change_ratio_median": 0.6666666666666666,
+   "char_change_ratio_mean": 0.5721042339903737,
+   "changed_chars_median": 215.0,
+   "n_edit_blocks_median": 11.0,
+   "dice_median": 0.469914,
+   "len_delta_abs_median": 170.0,
+   "paras_changed": 0,
+   "punct_share_median": 0.06909090909090909
+  },
+  "gt1_f17_only_equals_flip14": {
+   "n": 14,
+   "char_change_ratio_median": 0.5975491220735787,
+   "char_change_ratio_mean": 0.5951436756153036,
+   "changed_chars_median": 186.0,
+   "n_edit_blocks_median": 15.5,
+   "dice_median": 0.515031,
+   "len_delta_abs_median": 164.5,
+   "paras_changed": 0,
+   "punct_share_median": 0.0641568510511406
+  }
+ },
+ "edit_scale_quartiles": [
+  {
+   "q": 1,
+   "ccr_range": [
+    0.0006146281499692685,
+    0.007956478733926804
+   ],
+   "n": 110,
+   "gt1_f17": 1,
+   "gt1_c216": 1,
+   "median_abs_max_f17": 0.020686085442653164,
+   "median_abs_max_c216": 0.018759325932777154
+  },
+  {
+   "q": 2,
+   "ccr_range": [
+    0.007956478733926804,
+    0.04187437686939183
+   ],
+   "n": 109,
+   "gt1_f17": 9,
+   "gt1_c216": 9,
+   "median_abs_max_f17": 0.2502931421705886,
+   "median_abs_max_c216": 0.23986586968479562
+  },
+  {
+   "q": 3,
+   "ccr_range": [
+    0.04187437686939183,
+    0.4976190476190476
+   ],
+   "n": 110,
+   "gt1_f17": 24,
+   "gt1_c216": 20,
+   "median_abs_max_f17": 0.6478563903431657,
+   "median_abs_max_c216": 0.6109605377742346
+  },
+  {
+   "q": 4,
+   "ccr_range": [
+    0.4976190476190476,
+    1.3422053231939164
+   ],
+   "n": 110,
+   "gt1_f17": 77,
+   "gt1_c216": 67,
+   "median_abs_max_f17": 1.1866249568770013,
+   "median_abs_max_c216": 1.1069601748442202
+  }
+ ],
+ "spearman_abs_max_vs_char_change_ratio": {
+  "F17": {
+   "rho": 0.8072920432993328,
+   "p": 3.8473124546557076e-102
+  },
+  "C216": {
+   "rho": 0.8045609772998845,
+   "p": 6.00490304432282e-101
+  }
+ },
+ "spearman_abs_max_vs_1_minus_dice": {
+  "F17": {
+   "rho": 0.8024985325184847,
+   "p": 4.64780489528893e-100
+  },
+  "C216": {
+   "rho": 0.7998447172362071,
+   "p": 6.243780228298453e-99
+  }
+ },
+ "proxy_label": "substantive = char_change_ratio >= median(439); proxy only, not ground truth",
+ "proxy_auc_abs_max": {
+  "F17": 0.8915628891656289,
+  "C216": 0.8901307596513076
+ },
+ "flag_vs_proxy": {
+  "F17@0.8": {
+   "n_flagged": 145,
+   "tpr_proxy": 0.6045454545454545,
+   "precision_proxy": 0.9172413793103448,
+   "flag_rate_among_nonsubstantive": 0.0547945205479452
+  },
+  "F17@0.85": {
+   "n_flagged": 140,
+   "tpr_proxy": 0.5863636363636363,
+   "precision_proxy": 0.9214285714285714,
+   "flag_rate_among_nonsubstantive": 0.0502283105022831
+  },
+  "F17@0.9": {
+   "n_flagged": 131,
+   "tpr_proxy": 0.5454545454545454,
+   "precision_proxy": 0.916030534351145,
+   "flag_rate_among_nonsubstantive": 0.0502283105022831
+  },
+  "F17@0.95": {
+   "n_flagged": 121,
+   "tpr_proxy": 0.5,
+   "precision_proxy": 0.9090909090909091,
+   "flag_rate_among_nonsubstantive": 0.0502283105022831
+  },
+  "F17@1.0": {
+   "n_flagged": 111,
+   "tpr_proxy": 0.4590909090909091,
+   "precision_proxy": 0.9099099099099099,
+   "flag_rate_among_nonsubstantive": 0.045662100456621
+  },
+  "C216@0.8": {
+   "n_flagged": 140,
+   "tpr_proxy": 0.5863636363636363,
+   "precision_proxy": 0.9214285714285714,
+   "flag_rate_among_nonsubstantive": 0.0502283105022831
+  },
+  "C216@0.85": {
+   "n_flagged": 132,
+   "tpr_proxy": 0.55,
+   "precision_proxy": 0.9166666666666666,
+   "flag_rate_among_nonsubstantive": 0.0502283105022831
+  },
+  "C216@0.9": {
+   "n_flagged": 118,
+   "tpr_proxy": 0.4863636363636364,
+   "precision_proxy": 0.9067796610169492,
+   "flag_rate_among_nonsubstantive": 0.0502283105022831
+  },
+  "C216@0.95": {
+   "n_flagged": 106,
+   "tpr_proxy": 0.43636363636363634,
+   "precision_proxy": 0.9056603773584906,
+   "flag_rate_among_nonsubstantive": 0.045662100456621
+  },
+  "C216@1.0": {
+   "n_flagged": 97,
+   "tpr_proxy": 0.39545454545454545,
+   "precision_proxy": 0.8969072164948454,
+   "flag_rate_among_nonsubstantive": 0.045662100456621
+  }
+ },
+ "c216_pairs_in_(0.8,1.0]": {
+  "n": 43,
+  "of_which_flip14": 14,
+  "char_change_ratio_median": 0.5175644028103045
+ },
+ "c216_pairs_in_(0.9,1.0]": {
+  "n": 21,
+  "of_which_flip14": 13,
+  "char_change_ratio_median": 0.6213991769547325
+ },
+ "c216_pairs_in_(0.95,1.0]": {
+  "n": 9,
+  "of_which_flip14": 8,
+  "char_change_ratio_median": 0.6213991769547325
+ },
+ "flip14_ccr_percentile_in_all439": [
+  0.8018223234624146,
+  0.856492027334852,
+  0.8724373576309795,
+  0.9202733485193622,
+  0.9931662870159453,
+  0.7539863325740319,
+  0.9179954441913439,
+  0.7904328018223234,
+  0.8838268792710706,
+  0.6902050113895216,
+  0.7220956719817767,
+  0.7699316628701595,
+  0.6082004555808656,
+  0.7471526195899773
+ ],
+ "gt1_97_by_variant": {
+  "cross_edition_variant": {
+   "n": 81,
+   "gt1_c216": 9,
+   "ccr_median_all": 0.03374233128834356,
+   "ccr_median_gt1": 0.2727272727272727
+  },
+  "first_publication_vs_book": {
+   "n": 237,
+   "gt1_c216": 62,
+   "ccr_median_all": 0.035211267605633804,
+   "ccr_median_gt1": 0.709860191317145
+  },
+  "initial_draft_vs_final": {
+   "n": 40,
+   "gt1_c216": 15,
+   "ccr_median_all": 0.32717569786535305,
+   "ccr_median_gt1": 0.5973333333333334
+  },
+  "single_volume_vs_complete_works": {
+   "n": 81,
+   "gt1_c216": 11,
+   "ccr_median_all": 0.013888888888888888,
+   "ccr_median_gt1": 0.44808743169398907
+  }
+ },
+ "pairs97": [
+  {
+   "pair_id": "ginga_initial_vs_final_p6_p309",
+   "band": "L",
+   "abs_max_c216": 1.0953980147026106,
+   "char_change_ratio": 0.6330472103004292,
+   "changed_chars": 590,
+   "len_delta": -574,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.517081
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p8_p316",
+   "band": "M",
+   "abs_max_c216": 1.4745157583801947,
+   "char_change_ratio": 0.1724137931034483,
+   "changed_chars": 50,
+   "len_delta": 26,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.797101
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p11_p320",
+   "band": "M",
+   "abs_max_c216": 1.1137501615620653,
+   "char_change_ratio": 0.4645669291338583,
+   "changed_chars": 177,
+   "len_delta": -159,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.618968
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p13_p325",
+   "band": "L",
+   "abs_max_c216": 1.9387362978503007,
+   "char_change_ratio": 0.6666666666666666,
+   "changed_chars": 368,
+   "len_delta": -312,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.475949
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p24_p360",
+   "band": "M",
+   "abs_max_c216": 1.3315324427139397,
+   "char_change_ratio": 0.40808823529411764,
+   "changed_chars": 111,
+   "len_delta": -103,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.692483
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p25_p369",
+   "band": "M",
+   "abs_max_c216": 1.1434992575183502,
+   "char_change_ratio": 0.44854881266490765,
+   "changed_chars": 170,
+   "len_delta": -161,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.668908
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p26_p370",
+   "band": "M",
+   "abs_max_c216": 1.4534670600253534,
+   "char_change_ratio": 0.034482758620689655,
+   "changed_chars": 11,
+   "len_delta": 0,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.930818
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p50_p416",
+   "band": "L",
+   "abs_max_c216": 1.1104584023035298,
+   "char_change_ratio": 0.8152985074626866,
+   "changed_chars": 437,
+   "len_delta": -323,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.367292
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p640_p328",
+   "band": "M",
+   "abs_max_c216": 1.7460777748948038,
+   "char_change_ratio": 0.8461538461538461,
+   "changed_chars": 275,
+   "len_delta": 272,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.25
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p702_p353",
+   "band": "M",
+   "abs_max_c216": 2.269647458830495,
+   "char_change_ratio": 0.828996282527881,
+   "changed_chars": 223,
+   "len_delta": 219,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.290221
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p750_p397",
+   "band": "M",
+   "abs_max_c216": 1.244693489653865,
+   "char_change_ratio": 0.8265765765765766,
+   "changed_chars": 367,
+   "len_delta": 355,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.282486
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p768_p403",
+   "band": "M",
+   "abs_max_c216": 1.6563574003804795,
+   "char_change_ratio": 0.67003367003367,
+   "changed_chars": 199,
+   "len_delta": 185,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.447174
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p777_p408",
+   "band": "M",
+   "abs_max_c216": 1.0003697879204956,
+   "char_change_ratio": 0.7724719101123596,
+   "changed_chars": 275,
+   "len_delta": 261,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.360802
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p791_p414",
+   "band": "M",
+   "abs_max_c216": 2.1208536977105803,
+   "char_change_ratio": 0.7303030303030303,
+   "changed_chars": 241,
+   "len_delta": 222,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.389908
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p932_p484",
+   "band": "M",
+   "abs_max_c216": 1.238875699572214,
+   "char_change_ratio": 0.8463114754098361,
+   "changed_chars": 413,
+   "len_delta": 400,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.25784
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p934_p485",
+   "band": "M",
+   "abs_max_c216": 1.338836245637727,
+   "char_change_ratio": 0.7364341085271318,
+   "changed_chars": 190,
+   "len_delta": 188,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.4
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p1104_p984",
+   "band": "M",
+   "abs_max_c216": 1.4078833516367535,
+   "char_change_ratio": 0.75,
+   "changed_chars": 246,
+   "len_delta": 246,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.392157
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p1175_p1036",
+   "band": "M",
+   "abs_max_c216": 2.5075307926985486,
+   "char_change_ratio": 0.7279596977329975,
+   "changed_chars": 289,
+   "len_delta": 258,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.402256
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p1205_p1052",
+   "band": "M",
+   "abs_max_c216": 1.6137677819138334,
+   "char_change_ratio": 0.8187919463087249,
+   "changed_chars": 244,
+   "len_delta": 241,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.294618
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p1322_p1220",
+   "band": "M",
+   "abs_max_c216": 1.4274094531578325,
+   "char_change_ratio": 0.8129770992366412,
+   "changed_chars": 213,
+   "len_delta": 210,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.282051
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p1698_p1522",
+   "band": "M",
+   "abs_max_c216": 1.4235424733072857,
+   "char_change_ratio": 0.6978609625668449,
+   "changed_chars": 261,
+   "len_delta": 255,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.435845
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p1733_p1534",
+   "band": "M",
+   "abs_max_c216": 1.2660619207599262,
+   "char_change_ratio": 0.7111111111111111,
+   "changed_chars": 192,
+   "len_delta": 187,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.42735
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p2246_p1804",
+   "band": "M",
+   "abs_max_c216": 1.9969026258895335,
+   "char_change_ratio": 0.7482014388489209,
+   "changed_chars": 208,
+   "len_delta": 180,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.374332
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p2340_p1878",
+   "band": "M",
+   "abs_max_c216": 1.1963678445895736,
+   "char_change_ratio": 0.6523929471032746,
+   "changed_chars": 259,
+   "len_delta": 244,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.467153
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p2361_p1889",
+   "band": "M",
+   "abs_max_c216": 1.1462144206037423,
+   "char_change_ratio": 0.6929133858267716,
+   "changed_chars": 176,
+   "len_delta": 169,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.416667
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p2788_p2295",
+   "band": "M",
+   "abs_max_c216": 1.694274958714371,
+   "char_change_ratio": 0.6602564102564102,
+   "changed_chars": 206,
+   "len_delta": 199,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.50237
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p2878_p2343",
+   "band": "M",
+   "abs_max_c216": 1.0441684871040937,
+   "char_change_ratio": 0.7730337078651686,
+   "changed_chars": 344,
+   "len_delta": 340,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.357664
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p2906_p2349",
+   "band": "L",
+   "abs_max_c216": 1.3343749254218549,
+   "char_change_ratio": 0.8554913294797688,
+   "changed_chars": 444,
+   "len_delta": 406,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.285714
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p2_p3",
+   "band": "M",
+   "abs_max_c216": 1.1751738269809517,
+   "char_change_ratio": 0.596958174904943,
+   "changed_chars": 157,
+   "len_delta": -124,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.475
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p4_p19",
+   "band": "L",
+   "abs_max_c216": 1.050211752149021,
+   "char_change_ratio": 0.8683760683760684,
+   "changed_chars": 508,
+   "len_delta": -419,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.275033
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p5_p20",
+   "band": "M",
+   "abs_max_c216": 1.1057855636883585,
+   "char_change_ratio": 0.8627450980392157,
+   "changed_chars": 308,
+   "len_delta": -202,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.34902
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p6_p31",
+   "band": "M",
+   "abs_max_c216": 1.0169241304029897,
+   "char_change_ratio": 0.8414239482200647,
+   "changed_chars": 260,
+   "len_delta": -203,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.305085
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p7_p49",
+   "band": "L",
+   "abs_max_c216": 1.9007292178457669,
+   "char_change_ratio": 0.8529048207663782,
+   "changed_chars": 690,
+   "len_delta": -674,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.26327
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p8_p50",
+   "band": "M",
+   "abs_max_c216": 1.7664041730448488,
+   "char_change_ratio": 0.7303822937625755,
+   "changed_chars": 363,
+   "len_delta": -164,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.435308
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p12_p69",
+   "band": "L",
+   "abs_max_c216": 1.574488901776346,
+   "char_change_ratio": 0.7428571428571429,
+   "changed_chars": 390,
+   "len_delta": -327,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.38835
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p15_p84",
+   "band": "M",
+   "abs_max_c216": 1.9337572408365824,
+   "char_change_ratio": 0.654945054945055,
+   "changed_chars": 298,
+   "len_delta": -292,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.49026
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p16_p89",
+   "band": "M",
+   "abs_max_c216": 1.9432929500039884,
+   "char_change_ratio": 0.8,
+   "changed_chars": 364,
+   "len_delta": -327,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.299484
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p17_p98",
+   "band": "L",
+   "abs_max_c216": 1.399508767226093,
+   "char_change_ratio": 0.715547703180212,
+   "changed_chars": 405,
+   "len_delta": -351,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.392811
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p19_p103",
+   "band": "M",
+   "abs_max_c216": 1.2590754944355274,
+   "char_change_ratio": 0.5686746987951807,
+   "changed_chars": 236,
+   "len_delta": -153,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.568889
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p24_p126",
+   "band": "L",
+   "abs_max_c216": 1.1081347860000819,
+   "char_change_ratio": 0.8246753246753247,
+   "changed_chars": 635,
+   "len_delta": -608,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.275269
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p29_p145",
+   "band": "L",
+   "abs_max_c216": 1.0714056852731189,
+   "char_change_ratio": 0.7743764172335601,
+   "changed_chars": 683,
+   "len_delta": -595,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.358183
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p30_p149",
+   "band": "L",
+   "abs_max_c216": 1.2074458357529525,
+   "char_change_ratio": 0.7398058252427184,
+   "changed_chars": 381,
+   "len_delta": -220,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.457921
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p31_p150",
+   "band": "L",
+   "abs_max_c216": 1.4105220416129594,
+   "char_change_ratio": 0.726530612244898,
+   "changed_chars": 1246,
+   "len_delta": -1194,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.397849
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p32_p179",
+   "band": "L",
+   "abs_max_c216": 1.9362666941998403,
+   "char_change_ratio": 0.48484848484848486,
+   "changed_chars": 352,
+   "len_delta": -263,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.611486
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p34_p190",
+   "band": "M",
+   "abs_max_c216": 1.4534670600253534,
+   "char_change_ratio": 0.584,
+   "changed_chars": 219,
+   "len_delta": -41,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.545969
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p37_p192",
+   "band": "L",
+   "abs_max_c216": 1.336438126148144,
+   "char_change_ratio": 0.7387820512820513,
+   "changed_chars": 461,
+   "len_delta": -182,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.464286
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p41_p211",
+   "band": "L",
+   "abs_max_c216": 1.123062778536343,
+   "char_change_ratio": 0.8167860798362334,
+   "changed_chars": 798,
+   "len_delta": -616,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.360902
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p42_p212",
+   "band": "M",
+   "abs_max_c216": 1.1351960296540753,
+   "char_change_ratio": 0.6674418604651163,
+   "changed_chars": 287,
+   "len_delta": -207,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.466974
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p47_p222",
+   "band": "M",
+   "abs_max_c216": 1.1248860321599927,
+   "char_change_ratio": 0.659942363112392,
+   "changed_chars": 229,
+   "len_delta": -159,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.465291
+  },
+  {
+   "pair_id": "oda_ame_first_vs_rev_p53_p232",
+   "band": "M",
+   "abs_max_c216": 1.3377672354416736,
+   "char_change_ratio": 0.7086092715231788,
+   "changed_chars": 321,
+   "len_delta": -300,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.437086
+  },
+  {
+   "pair_id": "oda_horo_first_vs_rev_p12_p12",
+   "band": "M",
+   "abs_max_c216": 1.4534670600253534,
+   "char_change_ratio": 0.05863192182410423,
+   "changed_chars": 18,
+   "len_delta": -5,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.919275
+  },
+  {
+   "pair_id": "oda_horo_first_vs_rev_p31_p31",
+   "band": "M",
+   "abs_max_c216": 1.4534670600253534,
+   "char_change_ratio": 0.033942558746736295,
+   "changed_chars": 13,
+   "len_delta": 1,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.946265
+  },
+  {
+   "pair_id": "oda_horo_first_vs_rev_p45_p42",
+   "band": "M",
+   "abs_max_c216": 1.4534670167086596,
+   "char_change_ratio": 0.042492917847025496,
+   "changed_chars": 15,
+   "len_delta": 4,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.934286
+  },
+  {
+   "pair_id": "oda_horo_first_vs_rev_p66_p64",
+   "band": "M",
+   "abs_max_c216": 2.0816132290818032,
+   "char_change_ratio": 0.24493927125506074,
+   "changed_chars": 121,
+   "len_delta": -116,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.841379
+  },
+  {
+   "pair_id": "oda_wagamachi_first_vs_rev_p8_p19",
+   "band": "M",
+   "abs_max_c216": 1.4792283607025658,
+   "char_change_ratio": 0.7308868501529052,
+   "changed_chars": 239,
+   "len_delta": -235,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.422062
+  },
+  {
+   "pair_id": "oda_wagamachi_first_vs_rev_p143_p584",
+   "band": "M",
+   "abs_max_c216": 1.0833710722160648,
+   "char_change_ratio": 0.6706948640483383,
+   "changed_chars": 222,
+   "len_delta": -140,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.588462
+  },
+  {
+   "pair_id": "oda_wagamachi_first_vs_rev_p180_p1216",
+   "band": "M",
+   "abs_max_c216": 2.4133852304696175,
+   "char_change_ratio": 0.6781609195402298,
+   "changed_chars": 177,
+   "len_delta": -171,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.469914
+  },
+  {
+   "pair_id": "oda_wagamachi_first_vs_rev_p285_p1833",
+   "band": "M",
+   "abs_max_c216": 1.6690451754879292,
+   "char_change_ratio": 0.6970588235294117,
+   "changed_chars": 237,
+   "len_delta": -236,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.457014
+  },
+  {
+   "pair_id": "oda_wagamachi_first_vs_rev_p296_p1871",
+   "band": "M",
+   "abs_max_c216": 1.030526038584731,
+   "char_change_ratio": 0.5640138408304498,
+   "changed_chars": 163,
+   "len_delta": -145,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.612529
+  },
+  {
+   "pair_id": "kishida_kotoba_draft1_vs_final_p22_p9",
+   "band": "M",
+   "abs_max_c216": 2.550919749617041,
+   "char_change_ratio": 1.1067073170731707,
+   "changed_chars": 363,
+   "len_delta": 94,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.260714
+  },
+  {
+   "pair_id": "kishida_doin_draft1_vs_final_p34_p73",
+   "band": "M",
+   "abs_max_c216": 1.0965439853361831,
+   "char_change_ratio": 0.7908847184986595,
+   "changed_chars": 295,
+   "len_delta": -245,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.358149
+  },
+  {
+   "pair_id": "kishida_doin_draft1_vs_final_p266_p260",
+   "band": "M",
+   "abs_max_c216": 1.0976313099853452,
+   "char_change_ratio": 0.5973333333333334,
+   "changed_chars": 224,
+   "len_delta": 198,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.525547
+  },
+  {
+   "pair_id": "origuchi_shisha_ed_p296_p292",
+   "band": "L",
+   "abs_max_c216": 1.4547628130379366,
+   "char_change_ratio": 0.47942754919499103,
+   "changed_chars": 268,
+   "len_delta": 268,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.683962
+  },
+  {
+   "pair_id": "origuchi_shisha_ed_p599_p593",
+   "band": "M",
+   "abs_max_c216": 1.4110805488074503,
+   "char_change_ratio": 0.3712984054669704,
+   "changed_chars": 163,
+   "len_delta": 163,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.770745
+  },
+  {
+   "pair_id": "ichiyo_takekurabe_ed_p49_p50",
+   "band": "L",
+   "abs_max_c216": 1.3066607613423649,
+   "char_change_ratio": 0.008249312557286892,
+   "changed_chars": 9,
+   "len_delta": 2,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.986226
+  },
+  {
+   "pair_id": "ichiyo_nigorie_ed_p4_p4",
+   "band": "M",
+   "abs_max_c216": 3.5879408495105936,
+   "char_change_ratio": 0.006825938566552901,
+   "changed_chars": 2,
+   "len_delta": 0,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.986301
+  },
+  {
+   "pair_id": "ichiyo_utsusemi_ed_p1_p1",
+   "band": "L",
+   "abs_max_c216": 1.2322894527293657,
+   "char_change_ratio": 0.02567237163814181,
+   "changed_chars": 21,
+   "len_delta": -1,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.954072
+  },
+  {
+   "pair_id": "miyazawa_ginga_ed_p199_p188",
+   "band": "M",
+   "abs_max_c216": 1.4534670600253534,
+   "char_change_ratio": 0.025078369905956112,
+   "changed_chars": 8,
+   "len_delta": -3,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.969984
+  },
+  {
+   "pair_id": "miyazawa_ginga_ed_p384_p330",
+   "band": "M",
+   "abs_max_c216": 1.4534670600253534,
+   "char_change_ratio": 0.02064896755162242,
+   "changed_chars": 7,
+   "len_delta": -7,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.96861
+  },
+  {
+   "pair_id": "okamoto_rogisho_ed_p187_p188",
+   "band": "M",
+   "abs_max_c216": 1.4534670600253534,
+   "char_change_ratio": 0.017921146953405017,
+   "changed_chars": 5,
+   "len_delta": -2,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.974729
+  },
+  {
+   "pair_id": "hisao_mugetsu_ed_p18_p19",
+   "band": "M",
+   "abs_max_c216": 1.2611193861607701,
+   "char_change_ratio": 0.5295698924731183,
+   "changed_chars": 197,
+   "len_delta": -187,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.605405
+  },
+  {
+   "pair_id": "hisao_mugetsu_ed_p21_p22",
+   "band": "M",
+   "abs_max_c216": 3.8670309954711075,
+   "char_change_ratio": 0.4267352185089974,
+   "changed_chars": 166,
+   "len_delta": -27,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.803738
+  },
+  {
+   "pair_id": "hisao_mugetsu_ed_p53_p54",
+   "band": "M",
+   "abs_max_c216": 1.4534670600253534,
+   "char_change_ratio": 0.2903930131004367,
+   "changed_chars": 133,
+   "len_delta": -53,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.787456
+  },
+  {
+   "pair_id": "hisao_mugetsu_ed_p58_p59",
+   "band": "M",
+   "abs_max_c216": 1.1725333462988792,
+   "char_change_ratio": 0.5139186295503212,
+   "changed_chars": 240,
+   "len_delta": -217,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.615385
+  },
+  {
+   "pair_id": "hisao_mugetsu_ed_p87_p90",
+   "band": "M",
+   "abs_max_c216": 1.0286196441310298,
+   "char_change_ratio": 0.44966442953020136,
+   "changed_chars": 134,
+   "len_delta": -121,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.663848
+  },
+  {
+   "pair_id": "hisao_mugetsu_ed_p132_p135",
+   "band": "L",
+   "abs_max_c216": 1.8672714325214117,
+   "char_change_ratio": 0.44808743169398907,
+   "changed_chars": 246,
+   "len_delta": -127,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.672859
+  },
+  {
+   "pair_id": "hisao_mugetsu_ed_p134_p139",
+   "band": "M",
+   "abs_max_c216": 1.2551356550715975,
+   "char_change_ratio": 0.8082706766917294,
+   "changed_chars": 215,
+   "len_delta": -214,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.310127
+  },
+  {
+   "pair_id": "hisao_mugetsu_ed_p150_p153",
+   "band": "M",
+   "abs_max_c216": 1.471460664287175,
+   "char_change_ratio": 0.09067357512953368,
+   "changed_chars": 35,
+   "len_delta": 1,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.902471
+  },
+  {
+   "pair_id": "kikuchi_irefuda_ed_p19_p75",
+   "band": "M",
+   "abs_max_c216": 1.7507276611534535,
+   "char_change_ratio": 0.2727272727272727,
+   "changed_chars": 120,
+   "len_delta": 45,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.716707
+  },
+  {
+   "pair_id": "kikuchi_irefuda_ed_p22_p78",
+   "band": "M",
+   "abs_max_c216": 1.0108973964035635,
+   "char_change_ratio": 0.60828025477707,
+   "changed_chars": 191,
+   "len_delta": -170,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.494481
+  },
+  {
+   "pair_id": "kikuchi_tojuro_ed_p26_p31",
+   "band": "M",
+   "abs_max_c216": 3.3096246447553512,
+   "char_change_ratio": 0.8337129840546698,
+   "changed_chars": 366,
+   "len_delta": 14,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.394432
+  },
+  {
+   "pair_id": "kikuchi_tojuro_ed_p76_p75",
+   "band": "M",
+   "abs_max_c216": 1.276380073869221,
+   "char_change_ratio": 0.7238095238095238,
+   "changed_chars": 228,
+   "len_delta": 125,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.458167
+  },
+  {
+   "pair_id": "kikuchi_tojuro_ed_p82_p80",
+   "band": "M",
+   "abs_max_c216": 1.0795442294015642,
+   "char_change_ratio": 0.42359249329758714,
+   "changed_chars": 158,
+   "len_delta": -86,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.681887
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p21_p342",
+   "band": "S",
+   "abs_max_c216": 1.347474882216453,
+   "char_change_ratio": 0.592964824120603,
+   "changed_chars": 118,
+   "len_delta": -101,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.555932
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p38_p386",
+   "band": "S",
+   "abs_max_c216": 2.0660819329554823,
+   "char_change_ratio": 0.861271676300578,
+   "changed_chars": 149,
+   "len_delta": -115,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.366812
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p39_p387",
+   "band": "S",
+   "abs_max_c216": 1.38744522329047,
+   "char_change_ratio": 0.7984496124031008,
+   "changed_chars": 103,
+   "len_delta": -64,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.34375
+  },
+  {
+   "pair_id": "ginga_initial_vs_final_p49_p413",
+   "band": "S",
+   "abs_max_c216": 1.3806715569222963,
+   "char_change_ratio": 0.5714285714285714,
+   "changed_chars": 88,
+   "len_delta": -84,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.54955
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p597_p305",
+   "band": "S",
+   "abs_max_c216": 2.0692995618080317,
+   "char_change_ratio": 0.7122641509433962,
+   "changed_chars": 151,
+   "len_delta": 144,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.434783
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p626_p322",
+   "band": "S",
+   "abs_max_c216": 1.3898939836655273,
+   "char_change_ratio": 0.038461538461538464,
+   "changed_chars": 3,
+   "len_delta": 2,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.947368
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p660_p333",
+   "band": "S",
+   "abs_max_c216": 1.196556815576134,
+   "char_change_ratio": 0.5369127516778524,
+   "changed_chars": 80,
+   "len_delta": 78,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.592593
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p671_p339",
+   "band": "S",
+   "abs_max_c216": 1.5633691997772121,
+   "char_change_ratio": 0.5405405405405406,
+   "changed_chars": 60,
+   "len_delta": 53,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.550898
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p676_p341",
+   "band": "S",
+   "abs_max_c216": 1.5080664906387558,
+   "char_change_ratio": 0.42105263157894735,
+   "changed_chars": 32,
+   "len_delta": 25,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.608
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p680_p342",
+   "band": "S",
+   "abs_max_c216": 1.390039342920338,
+   "char_change_ratio": 0.7,
+   "changed_chars": 154,
+   "len_delta": 134,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.447368
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p682_p343",
+   "band": "S",
+   "abs_max_c216": 1.534231174671685,
+   "char_change_ratio": 0.6258064516129033,
+   "changed_chars": 97,
+   "len_delta": 92,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.5
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p688_p346",
+   "band": "S",
+   "abs_max_c216": 1.6047897805862492,
+   "char_change_ratio": 0.2682926829268293,
+   "changed_chars": 22,
+   "len_delta": 14,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.761905
+  },
+  {
+   "pair_id": "horoki_first_vs_new_p772_p404",
+   "band": "S",
+   "abs_max_c216": 1.0111318375175726,
+   "char_change_ratio": 0.4421052631578947,
+   "changed_chars": 42,
+   "len_delta": 39,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.657718
+  },
+  {
+   "pair_id": "ichiyo_wakaremichi_ed_p1_p1",
+   "band": "L",
+   "abs_max_c216": 1.8437190325779305,
+   "char_change_ratio": 0.03225806451612903,
+   "changed_chars": 41,
+   "len_delta": 2,
+   "paras_a": 1,
+   "paras_b": 1,
+   "dice": 0.941686
+  }
+ ]
+}

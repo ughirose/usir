@@ -1,0 +1,495 @@
+{
+ "stage": "P-2b",
+ "seed": 20261217,
+ "window_chars": [
+  400,
+  800
+ ],
+ "per_author": 4,
+ "n_authors": 12,
+ "register_correspondence": "none (R2/R3 counterparts do not exist in postwar NDC913 fiction); 48 windows assigned round-robin by author across R1-R3 slots",
+ "replaced": [
+  {
+   "sample_id": "R1_01",
+   "old_source_description": "現代口語小説：早朝の駅ホームと始発列車を待つ高校生たちの会話",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000252",
+   "work_id": "001398",
+   "scene_index": 28,
+   "window_sha256": "14ab1143dcbf67f40a1d4a2803b7eb6fab4b771e3cc2265fd9360562c06b44bf",
+   "char_len": 771
+  },
+  {
+   "sample_id": "R1_02",
+   "old_source_description": "現代口語小説：深夜のコインランドリーでの見知らぬ客との短い対話",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000291",
+   "work_id": "001816",
+   "scene_index": 19,
+   "window_sha256": "e1509fc25c74f84a3f9fa2a9c5901510c61e5e620f0c6f2efed0507217d285b7",
+   "char_len": 574
+  },
+  {
+   "sample_id": "R1_03",
+   "old_source_description": "現代サスペンス小説：深夜の部屋に鳴り響く不審なメッセージ通知音",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000293",
+   "work_id": "001854",
+   "scene_index": 16,
+   "window_sha256": "0c1d4da7234ca8404954bd6560d508f34d343af9aa0f34898a1398f32d91f199",
+   "char_len": 788
+  },
+  {
+   "sample_id": "R1_04",
+   "old_source_description": "現代お仕事小説：納期前夜のWeb制作会社オフィスでのデバッグ作業",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000826",
+   "work_id": "042756",
+   "scene_index": 40,
+   "window_sha256": "bebfc93cf9bb232715c9a1cdc0bc3922993ad428b597267dde94954512d47cfd",
+   "char_len": 791
+  },
+  {
+   "sample_id": "R1_05",
+   "old_source_description": "現代家族ドラマ：実家の整理で見つかった古い柱時計と母の思い出",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000900",
+   "work_id": "003829",
+   "scene_index": 5,
+   "window_sha256": "2dfee0e0b3c2474f31e20ab8995709ad6e4fe54e51091a62b3754a7a2fba1f7f",
+   "char_len": 795
+  },
+  {
+   "sample_id": "R1_06",
+   "old_source_description": "現代ファンタジー日常：路地裏の古書店で出会った不思議な店主と地図",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000933",
+   "work_id": "004398",
+   "scene_index": 115,
+   "window_sha256": "ed565725c761e484a753c9771c62a4d3c52713ef96667b65595be9c0f348670a",
+   "char_len": 778
+  },
+  {
+   "sample_id": "R1_07",
+   "old_source_description": "現代恋愛小説：雪の降る夕暮れの改札前での短い別れと決意",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000965",
+   "work_id": "000875",
+   "scene_index": 80,
+   "window_sha256": "106c119f00715d301509c5d42af9756f6ab63f7b5743729bac36094d1b3a0490",
+   "char_len": 763
+  },
+  {
+   "sample_id": "R1_08",
+   "old_source_description": "現代SF掌編：記憶修復アンドロイドの整備士と消去をめぐる問答",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "001030",
+   "work_id": "004798",
+   "scene_index": 14,
+   "window_sha256": "005c12484c85cfef40beaa07e8ef35d509917fe72c396c971e95ba94941621a5",
+   "char_len": 794
+  },
+  {
+   "sample_id": "R1_09",
+   "old_source_description": "現代短編：夜明け前の水族館と巨大な水槽を見上げる飼育員たちの対話",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "001055",
+   "work_id": "043739",
+   "scene_index": 148,
+   "window_sha256": "364f8ea57cec8c649fd324eb1033f068e994b92c6d79c36326e338c73b07d89d",
+   "char_len": 800
+  },
+  {
+   "sample_id": "R1_10",
+   "old_source_description": "現代日常小説：古本屋の店番と降り出した夕立をめぐる短いやりとり",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "001142",
+   "work_id": "043421",
+   "scene_index": 15,
+   "window_sha256": "3dbee1cd3aff54e803019255ee08837d46ba67c2849cf6e34f708396e135f2f5",
+   "char_len": 759
+  },
+  {
+   "sample_id": "R1_11",
+   "old_source_description": "現代青春小説：放課後の屋上望遠鏡と夏の星座を探す天文部の会話",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "001143",
+   "work_id": "046470",
+   "scene_index": 18,
+   "window_sha256": "06b36d4245f733c9b149b45207e21072c592e104bdfa06900eb79d55303e2623",
+   "char_len": 778
+  },
+  {
+   "sample_id": "R1_12",
+   "old_source_description": "現代心理短編：雨上がりのコインランドリーと乾いたシーツの温もり",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "001159",
+   "work_id": "043589",
+   "scene_index": 18,
+   "window_sha256": "6344c6251fa6de878bf728052a356a56d97b8f97e0a84355442fc8f2b64f0e18",
+   "char_len": 601
+  },
+  {
+   "sample_id": "R1_13",
+   "old_source_description": "現代日常小説：路地裏のパン屋と焼きたてのクロワッサンを待つ客たち",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000252",
+   "work_id": "052313",
+   "scene_index": 0,
+   "window_sha256": "0014068e8dec40e8dfb509331ab39cd7bd5f28ca20cc518a533a3314e55cc26e",
+   "char_len": 719
+  },
+  {
+   "sample_id": "R1_14",
+   "old_source_description": "現代家族小説：祖父の残した古いフィルムカメラと現像室の暗闇での発見",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000291",
+   "work_id": "001817",
+   "scene_index": 12,
+   "window_sha256": "b514fc4f7f9ff60204038db10cc90df082267eeb5abe4aa5a25867000d5a6654",
+   "char_len": 788
+  },
+  {
+   "sample_id": "R1_15",
+   "old_source_description": "現代職場短編：深夜のデザイン事務所と冷めた緑茶をすする同僚の会話",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000293",
+   "work_id": "060200",
+   "scene_index": 4,
+   "window_sha256": "4b1b11f5d76d41435a5d024c01ea8cabb9cadc0e7e4199d323e051d16f91c63f",
+   "char_len": 734
+  },
+  {
+   "sample_id": "R1_16",
+   "old_source_description": "現代旅情小説：終着駅の小さな待合室と遠い踏切の警報音",
+   "old_register_name": "R1_modern_colloquial_fiction",
+   "author_id": "000826",
+   "work_id": "042756",
+   "scene_index": 17,
+   "window_sha256": "6cf465b8e50f37ab222b2660aad8bf0ade798ca5ae7f1f1db2b8675d9fffa71d",
+   "char_len": 782
+  },
+  {
+   "sample_id": "R2_01",
+   "old_source_description": "現代文芸批評：ポストモダンの終焉とリアリズムの回帰に関する試論",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000900",
+   "work_id": "043606",
+   "scene_index": 8,
+   "window_sha256": "55170b6a23f9ea4fb766243a266217fcd0e399ed9e022778c4ce2ecd49a136a3",
+   "char_len": 777
+  },
+  {
+   "sample_id": "R2_02",
+   "old_source_description": "文化論エッセイ：デジタル時代の言語変化と配慮表現の多層化",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000933",
+   "work_id": "004398",
+   "scene_index": 72,
+   "window_sha256": "63463a8902c8591c1b25f7b138492ca3a0219f0587bab4613fa4c1d5a3c5a1c4",
+   "char_len": 780
+  },
+  {
+   "sample_id": "R2_03",
+   "old_source_description": "文化批評：電子空間における書物の記憶と公共図書館の役割",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000965",
+   "work_id": "003523",
+   "scene_index": 13,
+   "window_sha256": "6afe64e517139d5ee81fa751235916ea8f6163c71a158a3488cc0461f197db6a",
+   "char_len": 795
+  },
+  {
+   "sample_id": "R2_04",
+   "old_source_description": "現代都市論エッセイ：深夜のコンビニエンスストアと郊外の詩学",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "001030",
+   "work_id": "004805",
+   "scene_index": 121,
+   "window_sha256": "1e48b4e74f3a3f19da546732c2c94ed1c23bcd0701b8591bd555c93582881d46",
+   "char_len": 780
+  },
+  {
+   "sample_id": "R2_05",
+   "old_source_description": "比較文学エッセイ：翻訳という鏡と母語の境界線の揺らぎ",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "001055",
+   "work_id": "043739",
+   "scene_index": 4,
+   "window_sha256": "3dccc6b8a00d75332d58d92c2c3dbda9ad0ceadd1f7a6d6fb4dfcf0e11b9801a",
+   "char_len": 778
+  },
+  {
+   "sample_id": "R2_06",
+   "old_source_description": "科学文化エッセイ：人工知能と詩的言語の距離についての考察",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "001142",
+   "work_id": "047758",
+   "scene_index": 8,
+   "window_sha256": "c5fdbedb2b83b2901f83f326f8d9960b0afdb6e21c85e50250b066af78f1d2f5",
+   "char_len": 595
+  },
+  {
+   "sample_id": "R2_07",
+   "old_source_description": "読書論エッセイ：紙のページが持つ重みと身体的記憶の回路",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "001143",
+   "work_id": "055163",
+   "scene_index": 10,
+   "window_sha256": "22974c32a573ede829e828f9875950abc870dd1ca0c829f4016e286b564d23ed",
+   "char_len": 789
+  },
+  {
+   "sample_id": "R2_08",
+   "old_source_description": "現代社会論エッセイ：タイパ至上主義と物語を味わう時間の喪失",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "001159",
+   "work_id": "043589",
+   "scene_index": 7,
+   "window_sha256": "6a96cb8f19ae2b7f1073fd7f509ef317468c71c52210d54935c1942c77b549f0",
+   "char_len": 563
+  },
+  {
+   "sample_id": "R2_09",
+   "old_source_description": "メディア論エッセイ：スマートフォンの通知音と断片化される身体的注意の回復について",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000252",
+   "work_id": "052358",
+   "scene_index": 13,
+   "window_sha256": "6b8cf4fbda45737cc44d02f5c0712073f844f2be22c6b3b574f3c13c540a32da",
+   "char_len": 773
+  },
+  {
+   "sample_id": "R2_10",
+   "old_source_description": "建築文化論：木造建築の架構美と移ろいゆく陰影の美学",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000291",
+   "work_id": "003220",
+   "scene_index": 48,
+   "window_sha256": "3770c2c7dd86d4a06c4a00016da77441a107956809c7944033859366c638546c",
+   "char_len": 769
+  },
+  {
+   "sample_id": "R2_11",
+   "old_source_description": "音楽批評：アンビエントミュージックにおける環境音と沈黙のポリフォニー",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000293",
+   "work_id": "060449",
+   "scene_index": 13,
+   "window_sha256": "a0e247d6e9a988c00500fd362d1c1ca028a6928661975c7f8e49ac6fbd89d241",
+   "char_len": 781
+  },
+  {
+   "sample_id": "R2_12",
+   "old_source_description": "食文化エッセイ：出汁の抽出と味覚の記憶における不可逆な時間性",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000826",
+   "work_id": "042756",
+   "scene_index": 36,
+   "window_sha256": "f079ab58b210956626fff38965899574f495efcf84a6b4dc35d76d073d4dfe3f",
+   "char_len": 776
+  },
+  {
+   "sample_id": "R2_13",
+   "old_source_description": "現代社会論：都市の隙間に自生する雑草と偶発的な路地歩きの経験",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000900",
+   "work_id": "003829",
+   "scene_index": 20,
+   "window_sha256": "bd9286008d08d9dcb55415a41e33c155cc13bad622743a1238c3ebfc72bd2dbd",
+   "char_len": 779
+  },
+  {
+   "sample_id": "R2_14",
+   "old_source_description": "写真論エッセイ：銀塩フィルムの粒子感と不可逆なスナップショットの倫理",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000933",
+   "work_id": "004398",
+   "scene_index": 29,
+   "window_sha256": "20f27380f81524159cc7a5c086d4d9ec6fd4db91c261b30c73c11758d08119d8",
+   "char_len": 648
+  },
+  {
+   "sample_id": "R2_15",
+   "old_source_description": "演劇論：舞台における無言の身体と観客の呼吸が織りなす共振の空間",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "000965",
+   "work_id": "000875",
+   "scene_index": 17,
+   "window_sha256": "01ebe3a1c0de100e4853f1299298d468fbb755da2866bc1000ec226ae51e2d2e",
+   "char_len": 593
+  },
+  {
+   "sample_id": "R2_16",
+   "old_source_description": "歴史思想エッセイ：古文書の筆跡に残る書き手の迷いと歴史の微細な手触り",
+   "old_register_name": "R2_modern_essay_criticism",
+   "author_id": "001030",
+   "work_id": "004809",
+   "scene_index": 10,
+   "window_sha256": "f1088164e6a7e254da67f07bec9611eed9f4d788bcb41f70d0225a8c197d8000",
+   "char_len": 539
+  },
+  {
+   "sample_id": "R3_01",
+   "old_source_description": "デジタル庁『デジタル社会推進標準ガイドライン：ゼロトラストアーキテクチャ基本方針』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001055",
+   "work_id": "043739",
+   "scene_index": 79,
+   "window_sha256": "9ed968ff07cd9f3823421180e3595b7313f703fa203a42959e40976d397b5800",
+   "char_len": 747
+  },
+  {
+   "sample_id": "R3_02",
+   "old_source_description": "IPA『情報セキュリティ10大脅威：組織におけるサプライチェーン攻撃への対策』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001142",
+   "work_id": "053054",
+   "scene_index": 10,
+   "window_sha256": "90b29cf2d8246ac2abfa04dcf08324829b19ea6f6bfb9c7d27b31c59c5bd5659",
+   "char_len": 783
+  },
+  {
+   "sample_id": "R3_03",
+   "old_source_description": "総務省『情報通信白書：生成AIの社会実装とデータガバナンスの課題』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001143",
+   "work_id": "046470",
+   "scene_index": 6,
+   "window_sha256": "75420e7939adee94262a96321375d1e43f80c5cdb39c3189d5034fc6c93eebc5",
+   "char_len": 763
+  },
+  {
+   "sample_id": "R3_04",
+   "old_source_description": "金融庁『金融審議会ディスクロージャーワーキング・グループ報告書：非財務情報の開示基準』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001159",
+   "work_id": "043589",
+   "scene_index": 9,
+   "window_sha256": "6262ebb656feef532174f1d52f8ce3a768b7064bb126bc5f4954b660a209c1c5",
+   "char_len": 445
+  },
+  {
+   "sample_id": "R3_05",
+   "old_source_description": "Python公式ドキュメント日本語版『大規模プロジェクトにおける型ヒントと静的解析のベストプラクティス』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "000252",
+   "work_id": "001398",
+   "scene_index": 12,
+   "window_sha256": "7890946a60d5e16e3cc7b7cbc81609797ddb8dade17cc87858ce13e96f59c79c",
+   "char_len": 754
+  },
+  {
+   "sample_id": "R3_06",
+   "old_source_description": "Rust日本語ドキュメント『所有権・借用チェッカーとデータ競合フリーの並行処理』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "000291",
+   "work_id": "001816",
+   "scene_index": 2,
+   "window_sha256": "f3a62586fc46faab2e84f5d4ab6f274db19bdf8e2464a8cecc82bded6a21994f",
+   "char_len": 763
+  },
+  {
+   "sample_id": "R3_07",
+   "old_source_description": "科学技術振興機構『研究活動における公正性の確保とデータ管理ガイドライン』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "000293",
+   "work_id": "001854",
+   "scene_index": 0,
+   "window_sha256": "209cc20ce5442831ade3c49a6c62ab84e223bc4be3440b1b53df76b8285a918f",
+   "char_len": 790
+  },
+  {
+   "sample_id": "R3_08",
+   "old_source_description": "公正取引委員会『デジタルプラットフォーム取引の透明性及び公正性の向上に関する指針』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "000826",
+   "work_id": "042756",
+   "scene_index": 26,
+   "window_sha256": "4f186d91e01a5942a5cb18c6c2d1a79d984756c6bb0af16c3919893ea4ca2047",
+   "char_len": 768
+  },
+  {
+   "sample_id": "R3_09",
+   "old_source_description": "経済産業省『DX推進指標とそのガイダンス：レガシーシステム刷新と組織変革』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "000900",
+   "work_id": "043606",
+   "scene_index": 5,
+   "window_sha256": "9f61e076fc1becb6c688821c098cfa85a5efbb27be64e7554bd99b0c6cab6f71",
+   "char_len": 754
+  },
+  {
+   "sample_id": "R3_10",
+   "old_source_description": "環境省『サプライチェーン温室効果ガス排出量算定基準：Scope 3算定実務の手引』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "000933",
+   "work_id": "004398",
+   "scene_index": 94,
+   "window_sha256": "326c98710cd9e938cc678d987eb7b5451d5229f4ccdb3a77deccdbbe8848b35f",
+   "char_len": 507
+  },
+  {
+   "sample_id": "R3_11",
+   "old_source_description": "厚生労働省『テレワークにおける適切な労務管理及び労働者の健康確保のためのガイドライン』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "000965",
+   "work_id": "003523",
+   "scene_index": 12,
+   "window_sha256": "d6299b1115d83781c40011923a665e82358310da0a93448c3bf0f9093093bbf0",
+   "char_len": 798
+  },
+  {
+   "sample_id": "R3_12",
+   "old_source_description": "Go言語日本語技術解説『GoroutineとChannelによる高並行ネットワークプログラミングの設計原則』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001030",
+   "work_id": "004798",
+   "scene_index": 11,
+   "window_sha256": "80700a81eab326f4fedf323a105b0eb11f0c57791d8b0614f82bd4c8ca2661fe",
+   "char_len": 610
+  },
+  {
+   "sample_id": "R3_13",
+   "old_source_description": "PostgreSQL日本語技術マニュアル『WALアーカイブとストリーミングレプリケーションによる高可用性構成』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001055",
+   "work_id": "043739",
+   "scene_index": 36,
+   "window_sha256": "822431f8f3d236a1a0d7f51b680a05312128240ca868b58c807c9fb90af36426",
+   "char_len": 797
+  },
+  {
+   "sample_id": "R3_14",
+   "old_source_description": "日本銀行『決済システムレポート：即時グロス決済（RTGS）の耐障害性と流動性リスク管理』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001142",
+   "work_id": "043421",
+   "scene_index": 10,
+   "window_sha256": "6fc9b69e5fb6ba84ec3de77599de3b5bd1a36ec1b17378d860d32de26000989a",
+   "char_len": 794
+  },
+  {
+   "sample_id": "R3_15",
+   "old_source_description": "国土交通省『インフラ分野におけるBIM/CIM活用推進に向けた実施方針及び3次元データ標準』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001143",
+   "work_id": "055163",
+   "scene_index": 6,
+   "window_sha256": "a606ee0bf09676af7b1ae5dc13a7b019fc4ea2ea957a6399071ade50cf9fcd6d",
+   "char_len": 745
+  },
+  {
+   "sample_id": "R3_16",
+   "old_source_description": "個人情報保護委員会『仮名加工情報及び匿名加工情報の適正な取扱いに関する実務指針』",
+   "old_register_name": "R3_modern_technical_business_prose",
+   "author_id": "001159",
+   "work_id": "043589",
+   "scene_index": 17,
+   "window_sha256": "3347ed47fffd11b179267f3efee79e6c2ec6aaa5ae5727dc48039ffba1b45db0",
+   "char_len": 440
+  }
+ ],
+ "r4_unchanged": 16,
+ "evidence_old_file": "data/usir_v5_eval/tier_c_modern_benchmark_expanded.jsonl (unchanged, profiles of the 48 pre-replacement samples retained)"
+}

@@ -39,6 +39,16 @@ _NDC = re.compile(r"(?:^|\s)(?:NDC\s*)?913(?:\.\d+)?(?:\s|$)")
 _SPLIT_SUFFIX = re.compile(r"[（(](?:上|中|下|前|後|続|[一二三四五六七八九十0-9]+)[）)]$")
 
 
+def person_key_map():
+    """人物ID -> (生年月日, 没年月日)。別名義の人物ID（例: 海野十三 / 丘丘十郎 / 佐野昌一）を同一人物として扱うために使う。"""
+    km = {}
+    with INDEX.open(encoding="utf-8-sig", newline="") as f:
+        for r in csv.DictReader(f):
+            if r.get("役割フラグ") == "著者" and r.get("生年月日") and r.get("没年月日"):
+                km[r["人物ID"].zfill(6)] = (r["生年月日"], r["没年月日"])
+    return km
+
+
 def existing_ids():
     wids, aids = set(), set()
     for m in ["aozora_manifest", "aozora_heldout_manifest", "aozora_heldout2_manifest", "aozora_heldout3_manifest"]:
@@ -49,6 +59,9 @@ def existing_ids():
 
 def candidate_pool(ex_w, ex_a):
     by = defaultdict(list)
+    km = person_key_map()
+    ex_keys = {km[a] for a in ex_a if a in km}
+    canon = {}  # 同一人物（生没年月日一致）の人物ID を最小 ID に統合
     with INDEX.open(encoding="utf-8-sig", newline="") as f:
         for r in csv.DictReader(f):
             if r.get("作品著作権フラグ") != "なし" or r.get("文字遣い種別") != "新字新仮名" or r.get("役割フラグ") != "著者":
@@ -65,8 +78,18 @@ def candidate_pool(ex_w, ex_a):
             wid, aid = r["作品ID"].zfill(6), r["人物ID"].zfill(6)
             if wid in ex_w or aid in ex_a:
                 continue
+            if km.get(aid) in ex_keys:  # 既存作家の別名義
+                continue
             by[aid].append(r)
-    return by
+    # 候補内で同一人物の別 ID を統合（v3 で追加）
+    key_to_ids = defaultdict(list)
+    for aid in by:
+        key_to_ids[km.get(aid, aid)].append(aid)
+    merged = {}
+    for ids in key_to_ids.values():
+        c = min(ids)
+        merged[c] = [r for i in sorted(ids) for r in by[i]]
+    return merged
 
 
 def main():
@@ -135,7 +158,7 @@ def main():
         "stage": "P-2b", "seed": SEED, "selection_script": "scripts/p2b/p2b_select.py",
         "criteria": {"death_year": [DEATH_LO, DEATH_HI], "ndc": "913 (exclude K913)", "char_type": "新字新仮名", "copyright": "なし",
                      "chars": [MIN_CHARS, MAX_CHARS], "min_paragraphs": MIN_PARAS, "max_per_author": MAX_PER_AUTHOR,
-                     "min_works_per_author": MIN_WORKS_PER_AUTHOR, "min_scenes_per_author": MIN_SCENES_PER_AUTHOR,
+                     "min_works_per_author": MIN_WORKS_PER_AUTHOR, "identity_rule": "same 生年月日+没年月日 = same person (existing-author aliases excluded, candidate aliases merged)", "min_scenes_per_author": MIN_SCENES_PER_AUTHOR,
                      "target_authors": TARGET_AUTHORS, "excluded_existing_authors": len(ex_a)},
         "n_authors": n_auth, "n_works": len(accepted), "works": accepted,
         "rejected_authors": rejected_authors, "skipped_count": len(skipped), "skipped": skipped[:80],

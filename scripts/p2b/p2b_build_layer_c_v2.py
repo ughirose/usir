@@ -29,7 +29,7 @@ OLD = REPO / "data" / "usir_v5_eval" / "tier_c_modern_benchmark_expanded.jsonl"
 NEW = REPO / "data" / "usir_v5_eval" / "tier_c_modern_benchmark_expanded_v2_postwar.jsonl"
 MAPPING = REPO / "data" / "usir_v5_eval" / "tier_c_v2_postwar_mapping.json"
 SEED = 20261117 + 100
-PER_AUTHOR = 4
+PER_AUTHOR = None  # 作家数から決める: ceil(48 / 作家数)
 LO, HI = 400, 800
 TERMS = "。」！？"  # 窓の終端（v1 は「。」のみ → 佐野昌一で 3 窓しか取れず、終端に 」！？ を追加）
 REG_NAMES = {"R1": "R1_postwar_fiction_slot", "R2": "R2_postwar_fiction_slot", "R3": "R3_postwar_fiction_slot"}
@@ -52,8 +52,9 @@ def main():
     man = json.loads(MANIFEST.read_text(encoding="utf-8"))
     works = man["works"]
     authors = sorted({w["author_id"] for w in works})
-    assert len(authors) >= 12
-    authors = authors[:12] if len(authors) > 12 else authors
+    global PER_AUTHOR
+    assert len(authors) >= 10
+    PER_AUTHOR = -(-48 // len(authors))
     rng = np.random.default_rng(SEED)
     picked = {}  # aid -> list of dict(work_id, scene_index, text)
     for a in authors:
@@ -98,7 +99,7 @@ def main():
             out.append(rec)
             mapping.append({"sample_id": sid, "author_id": a, "work_id": w["work_id"], "scene_index": w["scene_index"],
                             "window_sha256": sha, "char_len": len(w["text"])})
-    assert all(c == PER_AUTHOR for c in counters.values()), counters
+    assert all(c <= PER_AUTHOR for c in counters.values()), counters
     # R4: unchanged from old file
     for line in OLD.read_text(encoding="utf-8").splitlines():
         if line.strip():
