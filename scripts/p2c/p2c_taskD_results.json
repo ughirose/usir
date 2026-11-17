@@ -1,0 +1,128 @@
+{
+ "n_real_pairs": 439,
+ "n_proxy_substantive": 220,
+ "n_N1": 405,
+ "n_N1_aligned_valid": 405,
+ "n_N0": 405,
+ "N0_note": "harvest-diff emits no record for identical pairs (Expected 405 records, got 0); identical pairs are treated as unchanged and never flagged",
+ "N0_n_nan": 405,
+ "N1_edit_scale": {
+  "char_change_ratio_median": 0.006369426751592357,
+  "max": 0.07692307692307693
+ },
+ "caveat": "N1 is synthetic (typo-scale edits), not real no-revision pairs; positives are proxy labels (char_change_ratio >= median), not ground truth.",
+ "N1_abs_max_quantiles": {
+  "50": 0.05665448375763865,
+  "75": 0.17026080709973868,
+  "90": 0.32049375192029483,
+  "95": 0.4809376834434919,
+  "99": 1.2219515015204867,
+  "100": 2.2956172373094863
+ },
+ "N1_abs_max_by_k": {
+  "1": {
+   "n": 135,
+   "median": 0.019106634746474453,
+   "p95": 0.39551619280828576
+  },
+  "2": {
+   "n": 135,
+   "median": 0.07900173513925765,
+   "p95": 0.4885664598536305
+  },
+  "3": {
+   "n": 135,
+   "median": 0.09681089303231709,
+   "p95": 0.5126645742635455
+  }
+ },
+ "N1_abs_max_by_band": {
+  "L": {
+   "n": 133,
+   "median": 0.03055613637962191,
+   "p95": 0.2828268475311546,
+   "flag_rate_at_1.0": 0.0
+  },
+  "M": {
+   "n": 242,
+   "median": 0.08917228815965236,
+   "p95": 0.4830703398290484,
+   "flag_rate_at_1.0": 0.012396694214876033
+  },
+  "S": {
+   "n": 30,
+   "median": 0.07816672212020494,
+   "p95": 1.1734788246098065,
+   "flag_rate_at_1.0": 0.06666666666666667
+  }
+ },
+ "real_abs_max_quantiles_proxy_substantive": {
+  "5": 0.14257975068802786,
+  "25": 0.571108238680549,
+  "50": 0.8913346389439144,
+  "75": 1.259586467366838
+ },
+ "auc_proxy_substantive_vs_N1": 0.934736251402918,
+ "auc_proxy_substantive_vs_proxy_nonsubstantive": 0.8901307596513076,
+ "threshold_table": {
+  "0.8": {
+   "sensitivity_proxy": 0.5863636363636363,
+   "n_flag_real": 140,
+   "N1_flag_rate": 0.022222222222222223,
+   "N1_specificity": 0.9777777777777777,
+   "proxy_nonsubstantive_flag_rate": 0.0502283105022831
+  },
+  "0.85": {
+   "sensitivity_proxy": 0.55,
+   "n_flag_real": 132,
+   "N1_flag_rate": 0.019753086419753086,
+   "N1_specificity": 0.980246913580247,
+   "proxy_nonsubstantive_flag_rate": 0.0502283105022831
+  },
+  "0.9": {
+   "sensitivity_proxy": 0.4863636363636364,
+   "n_flag_real": 118,
+   "N1_flag_rate": 0.01728395061728395,
+   "N1_specificity": 0.9827160493827161,
+   "proxy_nonsubstantive_flag_rate": 0.0502283105022831
+  },
+  "0.95": {
+   "sensitivity_proxy": 0.43636363636363634,
+   "n_flag_real": 106,
+   "N1_flag_rate": 0.014814814814814815,
+   "N1_specificity": 0.9851851851851852,
+   "proxy_nonsubstantive_flag_rate": 0.045662100456621
+  },
+  "1.0": {
+   "sensitivity_proxy": 0.39545454545454545,
+   "n_flag_real": 97,
+   "N1_flag_rate": 0.012345679012345678,
+   "N1_specificity": 0.9876543209876543,
+   "proxy_nonsubstantive_flag_rate": 0.045662100456621
+  },
+  "1.1": {
+   "sensitivity_proxy": 0.33181818181818185,
+   "n_flag_real": 83,
+   "N1_flag_rate": 0.012345679012345678,
+   "N1_specificity": 0.9876543209876543,
+   "proxy_nonsubstantive_flag_rate": 0.045662100456621
+  },
+  "1.25": {
+   "sensitivity_proxy": 0.2590909090909091,
+   "n_flag_real": 66,
+   "N1_flag_rate": 0.009876543209876543,
+   "N1_specificity": 0.9901234567901235,
+   "proxy_nonsubstantive_flag_rate": 0.0410958904109589
+  }
+ },
+ "N1_threshold_for_specificity": {
+  "0.9": 0.32049375192029483,
+  "0.95": 0.4809376834434919,
+  "0.99": 1.2219515015204867
+ },
+ "sensitivity_at_N1_specificity": {
+  "0.9": 0.8590909090909091,
+  "0.95": 0.8,
+  "0.99": 0.2681818181818182
+ }
+}

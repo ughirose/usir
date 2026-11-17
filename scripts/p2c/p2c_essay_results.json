@@ -1,0 +1,36 @@
+{
+ "n_scenes": 1114,
+ "n_authors": 8,
+ "n_works": 22,
+ "technical_scan": {
+  "authors": 5,
+  "authors_ge2_works": 4,
+  "works": 17
+ },
+ "R_xx_work_split_essay_register_reference": {
+  "000035": 0.5700249554250844,
+  "000040": 0.6378114849412715,
+  "000168": -0.42241483310353456,
+  "000291": 0.5720522520442953,
+  "000311": 0.42175715095073857,
+  "000355": 0.633940702623085,
+  "000924": 0.5778595338474944,
+  "001030": 0.7460109871429605
+ },
+ "R_xx_work_split_median_essay_ref": 0.5749558929458949,
+ "R_xx_work_split_fiction_reference": {
+  "000035": 0.6132020399551344,
+  "000040": 0.5331171850264119,
+  "000168": 0.09383229969663327,
+  "000291": 0.40198109457247555,
+  "000311": 0.7484639585373921,
+  "000355": 0.47351367136441264,
+  "000924": 0.7005385943623503,
+  "001030": 0.5161187824206319
+ },
+ "R_xx_work_split_median_fiction_ref": 0.5246179837235219,
+ "essay_minus_fiction_mean_shift_sd_rms": 0.37464495169868817,
+ "essay_minus_fiction_mean_shift_sd_max_abs": 0.7844561841395156,
+ "n_essay_authors_also_in_fiction_corpus": 4,
+ "note": "descriptive only; author effects are not separated from register effects"
+}

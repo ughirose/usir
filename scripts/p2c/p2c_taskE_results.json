@@ -1,0 +1,596 @@
+{
+ "step0_reproduce_P1": {
+  "n": 49,
+  "n_work_groups": 3,
+  "authors_with_centroid": [
+   "宮沢賢治",
+   "森鴎外",
+   "谷崎潤一郎"
+  ],
+  "authors_without_centroid": [
+   "中谷宇吉郎",
+   "久坂葉子",
+   "久生十蘭",
+   "山本周五郎",
+   "岡本かの子",
+   "岸田国士",
+   "折口信夫",
+   "林芙美子",
+   "樋口一葉",
+   "石川欣一",
+   "織田作之助",
+   "菊池寛"
+  ],
+  "n_excluded_pairs": 356,
+  "median_rho_perp": 0.3369520554119384,
+  "n_quasi_parallel_rho_lt_0.10": 0,
+  "mean_cos_spec": 0.04323706141154631,
+  "mean_cos_rand": -0.012093188651936536,
+  "mean_cos_other": -0.005121224698680839,
+  "vs_random": {
+   "W": 346.0,
+   "p_two": 0.38965509072114246,
+   "p_bonf_k4": 1.0,
+   "n": 49
+  },
+  "vs_other": {
+   "W": 342.0,
+   "p_two": 0.3607125280374267,
+   "p_bonf_k4": 1.0,
+   "n": 49
+  },
+  "cluster_ci_vs_random": {
+   "mean_diff": 0.05533025006348286,
+   "ci95_lo": -0.02802981913978327,
+   "ci95_hi": 0.09584266896875694,
+   "n_clusters": 3
+  },
+  "cluster_ci_vs_other": {
+   "mean_diff": 0.04835828611022715,
+   "ci95_lo": -0.03146922557217673,
+   "ci95_hi": 0.08938453152965155,
+   "n_clusters": 3
+  },
+  "by_author": {
+   "宮沢賢治": {
+    "n": 24,
+    "mean_cos_spec": 0.07860075402445547,
+    "mean_cos_other": -0.007591031175090146
+   },
+   "森鴎外": {
+    "n": 16,
+    "mean_cos_spec": -0.029550439745689928,
+    "mean_cos_other": 0.0019187858264867997
+   },
+   "谷崎潤一郎": {
+    "n": 9,
+    "mean_cos_spec": 0.07833388316776416,
+    "mean_cos_other": -0.011050648361887374
+   }
+  },
+  "sens_cluster_level_vs_random": {
+   "n_units": 3,
+   "W": 1.0,
+   "p_two": 0.5,
+   "p_bonf_k4": 1.0,
+   "n_pos": 2,
+   "mean_of_unit_means": 0.05443522046510329
+  },
+  "sens_cluster_level_vs_other": {
+   "n_units": 3,
+   "W": 1.0,
+   "p_two": 0.5,
+   "p_bonf_k4": 1.0,
+   "n_pos": 2,
+   "mean_of_unit_means": 0.04803569705234014
+  },
+  "sens_author_level_vs_random": {
+   "n_units": 3,
+   "W": 1.0,
+   "p_two": 0.5,
+   "p_bonf_k4": 1.0,
+   "n_pos": 2,
+   "mean_of_unit_means": 0.05443522046510329
+  },
+  "sens_author_level_vs_other": {
+   "n_units": 3,
+   "W": 1.0,
+   "p_two": 0.5,
+   "p_bonf_k4": 1.0,
+   "n_pos": 2,
+   "mean_of_unit_means": 0.04803569705234014
+  },
+  "leave_one_author_out_vs_other": {
+   "宮沢賢治": {
+    "W": 62.0,
+    "p_two": 0.7563688628810696,
+    "p_bonf_k4": 1.0,
+    "n": 25
+   },
+   "森鴎外": {
+    "W": 117.0,
+    "p_two": 0.22085246989634644,
+    "p_bonf_k4": 0.8834098795853857,
+    "n": 33
+   },
+   "谷崎潤一郎": {
+    "W": 342.0,
+    "p_two": 0.5029598552524116,
+    "p_bonf_k4": 1.0,
+    "n": 40
+   }
+  }
+ },
+ "extended": {
+  "n": 405,
+  "n_work_groups": 26,
+  "authors_with_centroid": [
+   "中谷宇吉郎",
+   "久坂葉子",
+   "久生十蘭",
+   "宮沢賢治",
+   "山本周五郎",
+   "岡本かの子",
+   "岸田国士",
+   "折口信夫",
+   "林芙美子",
+   "森鴎外",
+   "樋口一葉",
+   "石川欣一",
+   "織田作之助",
+   "菊池寛",
+   "谷崎潤一郎"
+  ],
+  "authors_without_centroid": [],
+  "n_excluded_pairs": 0,
+  "median_rho_perp": 0.4421885961158336,
+  "n_quasi_parallel_rho_lt_0.10": 0,
+  "mean_cos_spec": 0.05453719191047249,
+  "mean_cos_rand": 0.003651480702148087,
+  "mean_cos_other": -0.00030925656923274985,
+  "vs_random": {
+   "W": 28174.0,
+   "p_two": 0.0007552021642808707,
+   "p_bonf_k4": 0.0030208086571234826,
+   "n": 405
+  },
+  "vs_other": {
+   "W": 26903.0,
+   "p_two": 7.073359497735382e-05,
+   "p_bonf_k4": 0.00028293437990941527,
+   "n": 405
+  },
+  "cluster_ci_vs_random": {
+   "mean_diff": 0.0508857112083244,
+   "ci95_lo": 0.01173859474361037,
+   "ci95_hi": 0.08458114912679736,
+   "n_clusters": 26
+  },
+  "cluster_ci_vs_other": {
+   "mean_diff": 0.05484644847970524,
+   "ci95_lo": 0.013429940734861173,
+   "ci95_hi": 0.09240890998737027,
+   "n_clusters": 26
+  },
+  "by_author": {
+   "中谷宇吉郎": {
+    "n": 1,
+    "mean_cos_spec": 0.02151308960999803,
+    "mean_cos_other": -8.479272906138918e-05
+   },
+   "久坂葉子": {
+    "n": 28,
+    "mean_cos_spec": 0.052167985898855074,
+    "mean_cos_other": 0.004761053911321642
+   },
+   "久生十蘭": {
+    "n": 29,
+    "mean_cos_spec": 0.011300444180297778,
+    "mean_cos_other": 0.0019468263159374834
+   },
+   "宮沢賢治": {
+    "n": 24,
+    "mean_cos_spec": 0.07860075402445547,
+    "mean_cos_other": -0.006942849264048267
+   },
+   "山本周五郎": {
+    "n": 11,
+    "mean_cos_spec": -0.037985098264545665,
+    "mean_cos_other": -0.0010019754404745423
+   },
+   "岡本かの子": {
+    "n": 10,
+    "mean_cos_spec": -0.08865721730611487,
+    "mean_cos_other": 0.004750768295132534
+   },
+   "岸田国士": {
+    "n": 7,
+    "mean_cos_spec": 0.0071594647414744235,
+    "mean_cos_other": 0.01317487244597046
+   },
+   "折口信夫": {
+    "n": 22,
+    "mean_cos_spec": -0.09075798572745258,
+    "mean_cos_other": -0.0032264778076803824
+   },
+   "林芙美子": {
+    "n": 49,
+    "mean_cos_spec": 0.15651609664383515,
+    "mean_cos_other": -0.018319696507954418
+   },
+   "森鴎外": {
+    "n": 16,
+    "mean_cos_spec": -0.029550439745689928,
+    "mean_cos_other": -0.0010517867622822368
+   },
+   "樋口一葉": {
+    "n": 106,
+    "mean_cos_spec": 0.0683076801476207,
+    "mean_cos_other": 0.008264019511901945
+   },
+   "石川欣一": {
+    "n": 2,
+    "mean_cos_spec": 0.5374386624094023,
+    "mean_cos_other": -0.0022673479033355395
+   },
+   "織田作之助": {
+    "n": 85,
+    "mean_cos_spec": 0.06797628120305726,
+    "mean_cos_other": -0.0028647322368886494
+   },
+   "菊池寛": {
+    "n": 6,
+    "mean_cos_spec": -0.05879653882009875,
+    "mean_cos_other": 0.013544877855374553
+   },
+   "谷崎潤一郎": {
+    "n": 9,
+    "mean_cos_spec": 0.07833388316776416,
+    "mean_cos_other": -8.393766405912571e-05
+   }
+  },
+  "sens_cluster_level_vs_random": {
+   "n_units": 26,
+   "W": 135.0,
+   "p_two": 0.3152514398097992,
+   "p_bonf_k4": 1.0,
+   "n_pos": 14,
+   "mean_of_unit_means": 0.05531463988271097
+  },
+  "sens_cluster_level_vs_other": {
+   "n_units": 26,
+   "W": 118.0,
+   "p_two": 0.14990898966789246,
+   "p_bonf_k4": 0.5996359586715698,
+   "n_pos": 16,
+   "mean_of_unit_means": 0.05124512560004797
+  },
+  "sens_author_level_vs_random": {
+   "n_units": 15,
+   "W": 46.0,
+   "p_two": 0.45428466796875,
+   "p_bonf_k4": 1.0,
+   "n_pos": 9,
+   "mean_of_unit_means": 0.04599520072928969
+  },
+  "sens_author_level_vs_other": {
+   "n_units": 15,
+   "W": 44.0,
+   "p_two": 0.389404296875,
+   "p_bonf_k4": 1.0,
+   "n_pos": 9,
+   "mean_of_unit_means": 0.05086454934286698
+  },
+  "leave_one_author_out_vs_other": {
+   "中谷宇吉郎": {
+    "W": 26767.0,
+    "p_two": 7.336041012732545e-05,
+    "p_bonf_k4": 0.0002934416405093018,
+    "n": 404
+   },
+   "久坂葉子": {
+    "W": 22794.0,
+    "p_two": 7.667893329303496e-05,
+    "p_bonf_k4": 0.00030671573317213985,
+    "n": 377
+   },
+   "久生十蘭": {
+    "W": 22351.0,
+    "p_two": 3.8479702545393716e-05,
+    "p_bonf_k4": 0.00015391881018157486,
+    "n": 376
+   },
+   "宮沢賢治": {
+    "W": 23586.0,
+    "p_two": 0.00012386240147630004,
+    "p_bonf_k4": 0.0004954496059052002,
+    "n": 381
+   },
+   "山本周五郎": {
+    "W": 26398.0,
+    "p_two": 4.733848476541467e-05,
+    "p_bonf_k4": 0.0001893539390616587,
+    "n": 394
+   },
+   "岡本かの子": {
+    "W": 24996.0,
+    "p_two": 3.1132922417625036e-05,
+    "p_bonf_k4": 0.00012453168967050014,
+    "n": 395
+   },
+   "岸田国士": {
+    "W": 25711.0,
+    "p_two": 5.4904852731225646e-05,
+    "p_bonf_k4": 0.00021961941092490258,
+    "n": 398
+   },
+   "折口信夫": {
+    "W": 22847.0,
+    "p_two": 8.664016657461584e-06,
+    "p_bonf_k4": 3.4656066629846336e-05,
+    "n": 383
+   },
+   "林芙美子": {
+    "W": 22471.0,
+    "p_two": 0.014124118793183918,
+    "p_bonf_k4": 0.05649647517273567,
+    "n": 356
+   },
+   "森鴎外": {
+    "W": 24430.0,
+    "p_two": 4.5203399078777925e-05,
+    "p_bonf_k4": 0.0001808135963151117,
+    "n": 389
+   },
+   "樋口一葉": {
+    "W": 15098.0,
+    "p_two": 0.0007481257686280498,
+    "p_bonf_k4": 0.002992503074512199,
+    "n": 299
+   },
+   "石川欣一": {
+    "W": 26889.0,
+    "p_two": 0.0001267136823377302,
+    "p_bonf_k4": 0.0005068547293509207,
+    "n": 403
+   },
+   "織田作之助": {
+    "W": 16668.0,
+    "p_two": 0.0019415074466709913,
+    "p_bonf_k4": 0.007766029786683965,
+    "n": 320
+   },
+   "菊池寛": {
+    "W": 25729.0,
+    "p_two": 4.157579033566663e-05,
+    "p_bonf_k4": 0.00016630316134266652,
+    "n": 399
+   },
+   "谷崎潤一郎": {
+    "W": 26902.0,
+    "p_two": 9.595945854445072e-05,
+    "p_bonf_k4": 0.0003838378341778029,
+    "n": 396
+   }
+  }
+ },
+ "n_other_pool_p1": 10,
+ "n_other_pool_ext": 22,
+ "v11_work_overlap_with_106_corpus": {
+  "n_overlap_work_ids": 1,
+  "ids": [
+   "000456"
+  ],
+  "n_v11_work_ids": 53
+ },
+ "centroid_selection": {
+  "中谷宇吉郎": {
+   "n_candidates": 242,
+   "n_selected": 4,
+   "skipped": [
+    [
+     "057459",
+     "length:2787"
+    ],
+    [
+     "057449",
+     "length:1265"
+    ],
+    [
+     "059770",
+     "length:1265"
+    ],
+    [
+     "059204",
+     "length:1381"
+    ]
+   ],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "久坂葉子": {
+   "n_candidates": 9,
+   "n_selected": 4,
+   "skipped": [],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "久生十蘭": {
+   "n_candidates": 106,
+   "n_selected": 4,
+   "skipped": [],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "宮沢賢治": {
+   "status": "P-1 centroid retained (106-work corpus)"
+  },
+  "山本周五郎": {
+   "n_candidates": 267,
+   "n_selected": 4,
+   "skipped": [],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "岡本かの子": {
+   "n_candidates": 105,
+   "n_selected": 4,
+   "skipped": [
+    [
+     "058340",
+     "length:2924"
+    ],
+    [
+     "058353",
+     "length:2450"
+    ],
+    [
+     "046921",
+     "length:775"
+    ]
+   ],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "岸田国士": {
+   "n_candidates": 604,
+   "n_selected": 4,
+   "skipped": [
+    [
+     "044830",
+     "length:978"
+    ],
+    [
+     "044547",
+     "length:2416"
+    ]
+   ],
+   "char_types_allowed": [
+    "新字旧仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "折口信夫": {
+   "n_candidates": 15,
+   "n_selected": 4,
+   "skipped": [
+    [
+     "054995",
+     "length:1477"
+    ]
+   ],
+   "char_types_allowed": [
+    "旧字旧仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "林芙美子": {
+   "n_candidates": 25,
+   "n_selected": 4,
+   "skipped": [
+    [
+     "056044",
+     "length:1995"
+    ]
+   ],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "森鴎外": {
+   "status": "P-1 centroid retained (106-work corpus)"
+  },
+  "樋口一葉": {
+   "n_candidates": 14,
+   "n_selected": 4,
+   "skipped": [
+    [
+     "055667",
+     "length:2527"
+    ],
+    [
+     "004379",
+     "length:994"
+    ]
+   ],
+   "char_types_allowed": [
+    "旧字旧仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "石川欣一": {
+   "n_candidates": 6,
+   "n_selected": 3,
+   "skipped": [
+    [
+     "057357",
+     "length:2540"
+    ],
+    [
+     "053781",
+     "length:1147"
+    ],
+    [
+     "059870",
+     "length:2560"
+    ]
+   ],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 9
+  },
+  "織田作之助": {
+   "n_candidates": 62,
+   "n_selected": 4,
+   "skipped": [
+    [
+     "047842",
+     "length:414"
+    ],
+    [
+     "047837",
+     "length:432"
+    ],
+    [
+     "047832",
+     "length:308"
+    ]
+   ],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "菊池寛": {
+   "n_candidates": 71,
+   "n_selected": 4,
+   "skipped": [
+    [
+     "001387",
+     "length:1256"
+    ]
+   ],
+   "char_types_allowed": [
+    "新字新仮名"
+   ],
+   "n_centroid_scenes": 12
+  },
+  "谷崎潤一郎": {
+   "status": "P-1 centroid retained (106-work corpus)"
+  }
+ },
+ "excluded_authors": {},
+ "n_authors_with_centroid": 15
+}

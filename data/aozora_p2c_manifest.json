@@ -1,0 +1,774 @@
+{
+ "stage": "P-2c",
+ "seed": 20261317,
+ "selection_script": "scripts/p2c/p2c_select.py",
+ "criteria": {
+  "death_year": [
+   1946,
+   1955
+  ],
+  "ndc": "913 (exclude K913)",
+  "char_type": "新字新仮名",
+  "copyright": "なし",
+  "chars": [
+   6000,
+   200000
+  ],
+  "min_paragraphs": 30,
+  "max_per_author": 3,
+  "min_works_per_author": 2,
+  "min_scenes_per_author": 12,
+  "target_authors": 12,
+  "identity_rule": "same 生年月日+没年月日 = same person; P-2b adopted persons excluded; existing-manifest authors allowed (R_xx / detector-v2 evaluation only, NOT Layer C)",
+  "excluded_p2b_authors": 10
+ },
+ "n_authors": 12,
+ "n_works": 34,
+ "works": [
+  {
+   "author_id": "000035",
+   "author_ja": "太宰治",
+   "death_year": 1948,
+   "work_id": "000263",
+   "title": "薄明",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000035/card263.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000035/files/263_ruby_20160.zip",
+   "sha256": "fa8726ef78f7cb2335f1c23318530fd064f101972ca5f6fab1b668f4d07828dd",
+   "char_count": 9132,
+   "n_scenes": 11,
+   "source_manifests": [
+    "aozora_heldout2_manifest",
+    "aozora_heldout3_manifest",
+    "aozora_heldout_manifest",
+    "aozora_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000035",
+   "author_ja": "太宰治",
+   "death_year": 1948,
+   "work_id": "000267",
+   "title": "皮膚と心",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000035/card267.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000035/files/267_ruby_1462.zip",
+   "sha256": "7b3c5a625f6ef304a780c68aa88eb5628113912a0ae06a43411c25d6f1e26452",
+   "char_count": 15892,
+   "n_scenes": 17,
+   "source_manifests": [
+    "aozora_heldout2_manifest",
+    "aozora_heldout3_manifest",
+    "aozora_heldout_manifest",
+    "aozora_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000035",
+   "author_ja": "太宰治",
+   "death_year": 1948,
+   "work_id": "000295",
+   "title": "メリイクリスマス",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000035/card295.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000035/files/295_ruby_20169.zip",
+   "sha256": "57dca432e7b150407f7310f8c6ab5017299349599caaf05c5440a52bd097d96e",
+   "char_count": 6619,
+   "n_scenes": 8,
+   "source_manifests": [
+    "aozora_heldout2_manifest",
+    "aozora_heldout3_manifest",
+    "aozora_heldout_manifest",
+    "aozora_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000040",
+   "author_ja": "織田作之助",
+   "death_year": 1947,
+   "work_id": "042689",
+   "title": "雨",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000040/card42689.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000040/files/42689_ruby_45447.zip",
+   "sha256": "9fe42283f7331d549dfe2d3828f1d089c4a9fdfe3f9f34b05727893ee131dc6e",
+   "char_count": 22364,
+   "n_scenes": 34,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000040",
+   "author_ja": "織田作之助",
+   "death_year": 1947,
+   "work_id": "046171",
+   "title": "勧善懲悪",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000040/card46171.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000040/files/46171_ruby_23890.zip",
+   "sha256": "bb6dd2ab8596fbe3d7937366d4958875f4729485083695881693d27ccf489f39",
+   "char_count": 29502,
+   "n_scenes": 43,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000040",
+   "author_ja": "織田作之助",
+   "death_year": 1947,
+   "work_id": "053487",
+   "title": "婚期はずれ",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000040/card53487.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000040/files/53487_ruby_44372.zip",
+   "sha256": "70ed5c6d93c4805cdd339207c8ba2f5b342a347ef7f2869254c386b3ac982a29",
+   "char_count": 8055,
+   "n_scenes": 11,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000051",
+   "author_ja": "幸田露伴",
+   "death_year": 1947,
+   "work_id": "003508",
+   "title": "雁坂越",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000051/card3508.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000051/files/3508_ruby_4030.zip",
+   "sha256": "940fd193e13aa9cb5b7fa7969e43b5b6011c97f23fcc746eb17b0caecd2ef666",
+   "char_count": 14208,
+   "n_scenes": 19,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000051",
+   "author_ja": "幸田露伴",
+   "death_year": 1947,
+   "work_id": "004153",
+   "title": "太郎坊",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000051/card4153.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000051/files/4153_ruby_7782.zip",
+   "sha256": "e829c94ab895f4d1bdba3dbb88ae73a8845c0bcd4f296d9cb90c8e5daaeed1fa",
+   "char_count": 7925,
+   "n_scenes": 9,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000051",
+   "author_ja": "幸田露伴",
+   "death_year": 1947,
+   "work_id": "050351",
+   "title": "五重塔",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000051/card50351.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000051/files/50351_ruby_36038.zip",
+   "sha256": "c6ac16568ab67cb0ae1758da9ddc98fddee7ec33c518a082a705c483dc59b0b0",
+   "char_count": 56271,
+   "n_scenes": 60,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000125",
+   "author_ja": "小栗虫太郎",
+   "death_year": 1946,
+   "work_id": "000667",
+   "title": "失楽園殺人事件",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000125/card667.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000125/files/667_ruby_441.zip",
+   "sha256": "bd70bb9087949a18aad0b9c40bd1f6eccdaa98ec7d3681911756adf95783d8d0",
+   "char_count": 14432,
+   "n_scenes": 20,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000125",
+   "author_ja": "小栗虫太郎",
+   "death_year": 1946,
+   "work_id": "004841",
+   "title": "後光殺人事件",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000125/card4841.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000125/files/4841_ruby_16998.zip",
+   "sha256": "286292a87f4fb5d980d4d9c2f1e3fdf9207ecbb554cce1d5108944dd3a38f03c",
+   "char_count": 24086,
+   "n_scenes": 29,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000125",
+   "author_ja": "小栗虫太郎",
+   "death_year": 1946,
+   "work_id": "045231",
+   "title": "オフェリヤ殺し",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000125/card45231.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000125/files/45231_ruby_24950.zip",
+   "sha256": "ec4614bacb3f37cd441f4e29ca7090cb757ba68ae3c503547d339378fb1520e6",
+   "char_count": 29483,
+   "n_scenes": 40,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000126",
+   "author_ja": "田中英光",
+   "death_year": 1949,
+   "work_id": "000669",
+   "title": "オリンポスの果実",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000126/card669.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000126/files/669_ruby_3264.zip",
+   "sha256": "e7cf4e2dc39c66b5ce929d1ac9c0f0e12cb9b3d4b76ee8aafaa7d72978dc7c11",
+   "char_count": 75405,
+   "n_scenes": 105,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": [
+    "aozora_heldout3_manifest"
+   ]
+  },
+  {
+   "author_id": "000126",
+   "author_ja": "田中英光",
+   "death_year": 1949,
+   "work_id": "001663",
+   "title": "野狐",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000126/card1663.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000126/files/1663_ruby_5194.zip",
+   "sha256": "95c8a246ed9cedf59c18a56250d9d7c0a3524ad19ff81a8fba81aa97a2918fc8",
+   "char_count": 19627,
+   "n_scenes": 23,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000126",
+   "author_ja": "田中英光",
+   "death_year": 1949,
+   "work_id": "049384",
+   "title": "箱根の山",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000126/card49384.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000126/files/49384_ruby_63009.zip",
+   "sha256": "b27d22b9ac2920b523201b9b11b24568031a51bece95f91a73e8f69808af38fc",
+   "char_count": 16956,
+   "n_scenes": 19,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000160",
+   "author_ja": "海野十三",
+   "death_year": 1949,
+   "work_id": "002715",
+   "title": "すり替え怪画",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000160/card2715.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000160/files/2715_ruby_28478.zip",
+   "sha256": "7522acd6cd2d6c7e0625111a4c7c0f9f9036ecef88bb37fcb0e7fcc12bb7327f",
+   "char_count": 12830,
+   "n_scenes": 18,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000160",
+   "author_ja": "海野十三",
+   "death_year": 1949,
+   "work_id": "003052",
+   "title": "地獄の使者",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000160/card3052.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000160/files/3052_ruby_20533.zip",
+   "sha256": "f86c20a04f28a789a6d0922c2372ef51af0e8df7477b87c2f29ec03645e064ba",
+   "char_count": 76296,
+   "n_scenes": 102,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000160",
+   "author_ja": "海野十三",
+   "death_year": 1949,
+   "work_id": "003234",
+   "title": "未来の地下戦車長",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000160/card3234.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000160/files/3234_ruby_23227.zip",
+   "sha256": "6141eb25235de8b022ec4769ae7951de89e8fd32be7fa54f5fa852528660e9bd",
+   "char_count": 42325,
+   "n_scenes": 62,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000906",
+   "author_ja": "豊島与志雄",
+   "death_year": 1955,
+   "work_id": "042395",
+   "title": "運命のままに",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000906/card42395.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000906/files/42395_ruby_40360.zip",
+   "sha256": "b6d0197a0c7c9f86d26a0c3179f9d05cc3dcd6d4f76883d42639347206826b14",
+   "char_count": 28479,
+   "n_scenes": 39,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000906",
+   "author_ja": "豊島与志雄",
+   "death_year": 1955,
+   "work_id": "042466",
+   "title": "坂田の場合",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000906/card42466.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000906/files/42466_ruby_29810.zip",
+   "sha256": "e4b93654dc6edc5a0ac9400ba2cc210b48751b1fec22983b1e9241090919c4cc",
+   "char_count": 14412,
+   "n_scenes": 17,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000906",
+   "author_ja": "豊島与志雄",
+   "death_year": 1955,
+   "work_id": "042714",
+   "title": "立札",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000906/card42714.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000906/files/42714_ruby_28205.zip",
+   "sha256": "b613b9d6791cc2ce4b16333dfd669a43ab7a85f0f6ecda8febe35945550debd1",
+   "char_count": 10300,
+   "n_scenes": 14,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000930",
+   "author_ja": "山本禾太郎",
+   "death_year": 1951,
+   "work_id": "046484",
+   "title": "抱茗荷の説",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000930/card46484.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000930/files/46484_ruby_29069.zip",
+   "sha256": "8b91f396a23d7bfb0df971321ca51ade4de1c6322313faea36b8646af8ab252c",
+   "char_count": 17332,
+   "n_scenes": 21,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000930",
+   "author_ja": "山本禾太郎",
+   "death_year": 1951,
+   "work_id": "049701",
+   "title": "仙人掌の花",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000930/card49701.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000930/files/49701_ruby_33412.zip",
+   "sha256": "6d4d900f2f6a45f3a7b574c9ad4f15029424d5a8c09f03eaa4d33b08105c75b8",
+   "char_count": 9283,
+   "n_scenes": 18,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": [
+    "aozora_heldout3_manifest"
+   ]
+  },
+  {
+   "author_id": "000941",
+   "author_ja": "水野葉舟",
+   "death_year": 1947,
+   "work_id": "004470",
+   "title": "遠野へ",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000941/card4470.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000941/files/4470_ruby_14515.zip",
+   "sha256": "7f699bdc08679e78ac97f7b5e2a93c56cb7798d12c59fcf1b9c3eb8a178cd12a",
+   "char_count": 14411,
+   "n_scenes": 24,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "000941",
+   "author_ja": "水野葉舟",
+   "death_year": 1947,
+   "work_id": "004491",
+   "title": "北国の人",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000941/card4491.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000941/files/4491_ruby_14519.zip",
+   "sha256": "0e8d86c54c2a40d43ce524feec403968ad9565f020f7d8afb50f849d640719ec",
+   "char_count": 11321,
+   "n_scenes": 15,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": [
+    "aozora_heldout3_manifest"
+   ]
+  },
+  {
+   "author_id": "000941",
+   "author_ja": "水野葉舟",
+   "death_year": 1947,
+   "work_id": "004493",
+   "title": "帰途",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000941/card4493.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000941/files/4493_ruby_14521.zip",
+   "sha256": "64fb2dd7fd1792fd09831595db3d10a6d6cf4a508bd6bc35e70de967ad137be7",
+   "char_count": 12497,
+   "n_scenes": 19,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "001052",
+   "author_ja": "久坂葉子",
+   "death_year": 1952,
+   "work_id": "004967",
+   "title": "落ちてゆく世界",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001052/card4967.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001052/files/4967_ruby_18634.zip",
+   "sha256": "3729e0e76642d81253704fbd511497085cf60ffc68d8011e0fd4fd3761fec507",
+   "char_count": 19878,
+   "n_scenes": 25,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "001052",
+   "author_ja": "久坂葉子",
+   "death_year": 1952,
+   "work_id": "004968",
+   "title": "灰色の記憶",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001052/card4968.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001052/files/4968_ruby_18637.zip",
+   "sha256": "f50bb7b8b8fb595a1d6242cfb175970d8215e2fa18980feaf755f3a13f397b89",
+   "char_count": 65697,
+   "n_scenes": 81,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": [
+    "aozora_heldout3_manifest"
+   ]
+  },
+  {
+   "author_id": "001052",
+   "author_ja": "久坂葉子",
+   "death_year": 1952,
+   "work_id": "059900",
+   "title": "幾度目かの最期",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001052/card59900.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001052/files/59900_ruby_69717.zip",
+   "sha256": "9eca4f82f274931ba7da31fa2436db280923ac1d7b3aea1e1f4585bf5157d7bd",
+   "char_count": 36605,
+   "n_scenes": 36,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "001082",
+   "author_ja": "相馬泰三",
+   "death_year": 1952,
+   "work_id": "042289",
+   "title": "六月",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001082/card42289.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001082/files/42289_ruby_15591.zip",
+   "sha256": "c15151f0257624402727f7661eedba2e684a25cd93bb75af5d9dd7fcb3499b34",
+   "char_count": 18730,
+   "n_scenes": 23,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "001082",
+   "author_ja": "相馬泰三",
+   "death_year": 1952,
+   "work_id": "045648",
+   "title": "田舎医師の子",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001082/card45648.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001082/files/45648_ruby_27859.zip",
+   "sha256": "3333ab25a13c897a2f766f6794c812be3f74d3698d7f110911431efaba1fd541",
+   "char_count": 38032,
+   "n_scenes": 49,
+   "source_manifests": [
+    "aozora_heldout3_manifest"
+   ],
+   "work_in_manifests": [
+    "aozora_heldout3_manifest"
+   ]
+  },
+  {
+   "author_id": "001095",
+   "author_ja": "坂口安吾",
+   "death_year": 1955,
+   "work_id": "042951",
+   "title": "正午の殺人",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001095/card42951.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001095/files/42951_ruby_35354.zip",
+   "sha256": "565fac5cead83f3e002ce5f1fcd0cc4ab747be68457b2a9edba17121fb63386d",
+   "char_count": 14031,
+   "n_scenes": 19,
+   "source_manifests": [
+    "aozora_heldout2_manifest",
+    "aozora_heldout_manifest",
+    "aozora_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "001095",
+   "author_ja": "坂口安吾",
+   "death_year": 1955,
+   "work_id": "045934",
+   "title": "犯人",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001095/card45934.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001095/files/45934_ruby_38242.zip",
+   "sha256": "6b0e9edbfe83b54e1c05de38591a000a9cb09f134e467159844dd018a9731ad2",
+   "char_count": 12825,
+   "n_scenes": 19,
+   "source_manifests": [
+    "aozora_heldout2_manifest",
+    "aozora_heldout_manifest",
+    "aozora_manifest"
+   ],
+   "work_in_manifests": []
+  },
+  {
+   "author_id": "001095",
+   "author_ja": "坂口安吾",
+   "death_year": 1955,
+   "work_id": "057481",
+   "title": "小さな部屋",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001095/card57481.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001095/files/57481_ruby_62776.zip",
+   "sha256": "126e78fbeb2c3b5aea2433a0a4e4e663b567e0e79d6f870f8ccf5e8fc5efa6e9",
+   "char_count": 15262,
+   "n_scenes": 19,
+   "source_manifests": [
+    "aozora_heldout2_manifest",
+    "aozora_heldout_manifest",
+    "aozora_manifest"
+   ],
+   "work_in_manifests": []
+  }
+ ],
+ "rejected_authors": [
+  {
+   "author_id": "001359",
+   "author_ja": null,
+   "works_ok": 0,
+   "scenes": 0
+  },
+  {
+   "author_id": "001151",
+   "author_ja": "久米正雄",
+   "works_ok": 1,
+   "scenes": 21
+  }
+ ],
+ "skipped_count": 15,
+ "skipped": [
+  {
+   "work_id": "004471",
+   "author_id": "000941",
+   "reason": "too_short",
+   "char_count": 1225
+  },
+  {
+   "work_id": "049208",
+   "author_id": "000941",
+   "reason": "too_short",
+   "char_count": 1701
+  },
+  {
+   "work_id": "049207",
+   "author_id": "000941",
+   "reason": "too_short",
+   "char_count": 696
+  },
+  {
+   "work_id": "042710",
+   "author_id": "000906",
+   "reason": "too_short",
+   "char_count": 4768
+  },
+  {
+   "work_id": "000248",
+   "author_id": "000035",
+   "reason": "insufficient_paragraphs",
+   "char_count": 11997
+  },
+  {
+   "work_id": "003357",
+   "author_id": "000160",
+   "reason": "too_short",
+   "char_count": 4828
+  },
+  {
+   "work_id": "001239",
+   "author_id": "000160",
+   "reason": "too_short",
+   "char_count": 2643
+  },
+  {
+   "work_id": "049254",
+   "author_id": "001359",
+   "reason": "too_short",
+   "char_count": 2357
+  },
+  {
+   "work_id": "049255",
+   "author_id": "001359",
+   "reason": "too_short",
+   "char_count": 2674
+  },
+  {
+   "work_id": "046169",
+   "author_id": "000040",
+   "reason": "insufficient_paragraphs",
+   "char_count": 8179
+  },
+  {
+   "work_id": "047841",
+   "author_id": "000040",
+   "reason": "too_short",
+   "char_count": 1781
+  },
+  {
+   "work_id": "059901",
+   "author_id": "001052",
+   "reason": "too_short",
+   "char_count": 3363
+  },
+  {
+   "work_id": "013203",
+   "author_id": "001052",
+   "reason": "insufficient_paragraphs",
+   "char_count": 7583
+  },
+  {
+   "work_id": "042616",
+   "author_id": "001095",
+   "reason": "too_short",
+   "char_count": 5391
+  },
+  {
+   "work_id": "047523",
+   "author_id": "001151",
+   "reason": "too_short",
+   "char_count": 2723
+  }
+ ],
+ "limitation": "Authors overlap with other benchmarks (see source_manifests); use for R_xx and detector-v2 evaluation only."
+}
