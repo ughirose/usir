@@ -1,0 +1,601 @@
+{
+ "faw_cohort_works": 162,
+ "faw_cohort_authors": 30,
+ "p2cE": {
+  "n_listed": 47,
+  "n_cached": 47,
+  "n_dup_work": 2,
+  "n_works_after_dedup": 45,
+  "n_authors": 12,
+  "authors_ge2": 12,
+  "works_author_seen_in_faw": 14,
+  "n_authors_unseen": 8,
+  "unseen_authors_ge2": 8,
+  "scenes_total": 1149,
+  "scenes_min": 4,
+  "scenes_median": 16,
+  "n_works_T_ge10": 29,
+  "n_works_T_lt5": 3
+ },
+ "p2cA2": {
+  "n_listed": 22,
+  "n_cached": 22,
+  "n_dup_work": 0,
+  "n_works_after_dedup": 22,
+  "n_authors": 8,
+  "authors_ge2": 8,
+  "works_author_seen_in_faw": 12,
+  "n_authors_unseen": 4,
+  "unseen_authors_ge2": 4,
+  "scenes_total": 1114,
+  "scenes_min": 8,
+  "scenes_median": 18,
+  "n_works_T_ge10": 21,
+  "n_works_T_lt5": 0
+ },
+ "p2cE_rows": [
+  {
+   "author_id": "001569",
+   "work_id": "057455",
+   "cached": true,
+   "n_scenes": 8,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001569",
+   "work_id": "059195",
+   "cached": true,
+   "n_scenes": 11,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001569",
+   "work_id": "059805",
+   "cached": true,
+   "n_scenes": 20,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001569",
+   "work_id": "057263",
+   "cached": true,
+   "n_scenes": 8,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001052",
+   "work_id": "059901",
+   "cached": true,
+   "n_scenes": 8,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "001052",
+   "work_id": "059891",
+   "cached": true,
+   "n_scenes": 26,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "001052",
+   "work_id": "004968",
+   "cached": true,
+   "n_scenes": 81,
+   "dup_work": true,
+   "author_seen": true
+  },
+  {
+   "author_id": "001052",
+   "work_id": "059902",
+   "cached": true,
+   "n_scenes": 14,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "001224",
+   "work_id": "046089",
+   "cached": true,
+   "n_scenes": 36,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001224",
+   "work_id": "047492",
+   "cached": true,
+   "n_scenes": 22,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001224",
+   "work_id": "046098",
+   "cached": true,
+   "n_scenes": 15,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001224",
+   "work_id": "046145",
+   "cached": true,
+   "n_scenes": 66,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001869",
+   "work_id": "058563",
+   "cached": true,
+   "n_scenes": 19,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001869",
+   "work_id": "057647",
+   "cached": true,
+   "n_scenes": 18,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001869",
+   "work_id": "057818",
+   "cached": true,
+   "n_scenes": 14,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001869",
+   "work_id": "057557",
+   "cached": true,
+   "n_scenes": 19,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000076",
+   "work_id": "046943",
+   "cached": true,
+   "n_scenes": 8,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000076",
+   "work_id": "050628",
+   "cached": true,
+   "n_scenes": 7,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000076",
+   "work_id": "046939",
+   "cached": true,
+   "n_scenes": 9,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000076",
+   "work_id": "000446",
+   "cached": true,
+   "n_scenes": 9,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001154",
+   "work_id": "044668",
+   "cached": true,
+   "n_scenes": 9,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001154",
+   "work_id": "044615",
+   "cached": true,
+   "n_scenes": 5,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001154",
+   "work_id": "044469",
+   "cached": true,
+   "n_scenes": 4,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001154",
+   "work_id": "044609",
+   "cached": true,
+   "n_scenes": 6,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000933",
+   "work_id": "050194",
+   "cached": true,
+   "n_scenes": 87,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000933",
+   "work_id": "042613",
+   "cached": true,
+   "n_scenes": 49,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000933",
+   "work_id": "012624",
+   "cached": true,
+   "n_scenes": 24,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000933",
+   "work_id": "045497",
+   "cached": true,
+   "n_scenes": 16,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000291",
+   "work_id": "042333",
+   "cached": true,
+   "n_scenes": 13,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000291",
+   "work_id": "042332",
+   "cached": true,
+   "n_scenes": 10,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000291",
+   "work_id": "024370",
+   "cached": true,
+   "n_scenes": 60,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000291",
+   "work_id": "059364",
+   "cached": true,
+   "n_scenes": 17,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000064",
+   "work_id": "055675",
+   "cached": true,
+   "n_scenes": 27,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000064",
+   "work_id": "056009",
+   "cached": true,
+   "n_scenes": 4,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000064",
+   "work_id": "055663",
+   "cached": true,
+   "n_scenes": 18,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000064",
+   "work_id": "056010",
+   "cached": true,
+   "n_scenes": 4,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001380",
+   "work_id": "050461",
+   "cached": true,
+   "n_scenes": 154,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001380",
+   "work_id": "050467",
+   "cached": true,
+   "n_scenes": 18,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "001380",
+   "work_id": "050475",
+   "cached": true,
+   "n_scenes": 83,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000040",
+   "work_id": "000737",
+   "cached": true,
+   "n_scenes": 38,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000040",
+   "work_id": "047288",
+   "cached": true,
+   "n_scenes": 110,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000040",
+   "work_id": "046353",
+   "cached": true,
+   "n_scenes": 6,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000040",
+   "work_id": "053487",
+   "cached": true,
+   "n_scenes": 11,
+   "dup_work": true,
+   "author_seen": true
+  },
+  {
+   "author_id": "000083",
+   "work_id": "000490",
+   "cached": true,
+   "n_scenes": 9,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000083",
+   "work_id": "001361",
+   "cached": true,
+   "n_scenes": 16,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000083",
+   "work_id": "000488",
+   "cached": true,
+   "n_scenes": 19,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000083",
+   "work_id": "055989",
+   "cached": true,
+   "n_scenes": 6,
+   "dup_work": false,
+   "author_seen": false
+  }
+ ],
+ "p2cA2_rows": [
+  {
+   "author_id": "000924",
+   "work_id": "050659",
+   "cached": true,
+   "n_scenes": 86,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000924",
+   "work_id": "054870",
+   "cached": true,
+   "n_scenes": 155,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000924",
+   "work_id": "049192",
+   "cached": true,
+   "n_scenes": 134,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000040",
+   "work_id": "046304",
+   "cached": true,
+   "n_scenes": 17,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000040",
+   "work_id": "046301",
+   "cached": true,
+   "n_scenes": 10,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000040",
+   "work_id": "046168",
+   "cached": true,
+   "n_scenes": 14,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000355",
+   "work_id": "047324",
+   "cached": true,
+   "n_scenes": 10,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000355",
+   "work_id": "047311",
+   "cached": true,
+   "n_scenes": 24,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000035",
+   "work_id": "000317",
+   "cached": true,
+   "n_scenes": 13,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000035",
+   "work_id": "001570",
+   "cached": true,
+   "n_scenes": 20,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000035",
+   "work_id": "001084",
+   "cached": true,
+   "n_scenes": 30,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000168",
+   "work_id": "056934",
+   "cached": true,
+   "n_scenes": 256,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000168",
+   "work_id": "001103",
+   "cached": true,
+   "n_scenes": 12,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000291",
+   "work_id": "042333",
+   "cached": true,
+   "n_scenes": 13,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000291",
+   "work_id": "047818",
+   "cached": true,
+   "n_scenes": 10,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000291",
+   "work_id": "042335",
+   "cached": true,
+   "n_scenes": 10,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "001030",
+   "work_id": "004806",
+   "cached": true,
+   "n_scenes": 81,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "001030",
+   "work_id": "004847",
+   "cached": true,
+   "n_scenes": 8,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "001030",
+   "work_id": "004844",
+   "cached": true,
+   "n_scenes": 12,
+   "dup_work": false,
+   "author_seen": true
+  },
+  {
+   "author_id": "000311",
+   "work_id": "016002",
+   "cached": true,
+   "n_scenes": 18,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000311",
+   "work_id": "002734",
+   "cached": true,
+   "n_scenes": 38,
+   "dup_work": false,
+   "author_seen": false
+  },
+  {
+   "author_id": "000311",
+   "work_id": "046242",
+   "cached": true,
+   "n_scenes": 143,
+   "dup_work": false,
+   "author_seen": false
+  }
+ ],
+ "heldout3": {
+  "n": 110,
+  "authors": 110,
+  "works_per_author": {
+   "1": 110
+  },
+  "authors_seen_in_faw": 10,
+  "authors_in_p2cE": 6
+ }
+}
