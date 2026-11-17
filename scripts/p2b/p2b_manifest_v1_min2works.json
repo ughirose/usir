@@ -1,0 +1,415 @@
+{
+ "stage": "P-2b",
+ "seed": 20261117,
+ "selection_script": "scripts/p2b/p2b_select.py",
+ "criteria": {
+  "death_year": [
+   1946,
+   1955
+  ],
+  "ndc": "913 (exclude K913)",
+  "char_type": "新字新仮名",
+  "copyright": "なし",
+  "chars": [
+   6000,
+   200000
+  ],
+  "min_paragraphs": 30,
+  "max_per_author": 3,
+  "min_works_per_author": 2,
+  "min_scenes_per_author": 12,
+  "target_authors": 12,
+  "excluded_existing_authors": 122
+ },
+ "n_authors": 8,
+ "n_works": 21,
+ "works": [
+  {
+   "author_id": "000252",
+   "author_ja": "金史良",
+   "death_year": 1950,
+   "work_id": "002929",
+   "title": "天馬",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000252/card2929.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000252/files/2929_ruby_37327.zip",
+   "sha256": "e9b7fd6cf39dc3688b7969ad8ed976e70ca917d059b21c0dec9e072ba114688e",
+   "char_count": 35504,
+   "n_scenes": 38
+  },
+  {
+   "author_id": "000252",
+   "author_ja": "金史良",
+   "death_year": 1950,
+   "work_id": "052313",
+   "title": "親方コブセ",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000252/card52313.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000252/files/52313_ruby_70381.zip",
+   "sha256": "01e21d00e7a4cdaf8cb405622aede1fd42f1bcfbe9eba0e6edf0d37f7461c8e6",
+   "char_count": 8067,
+   "n_scenes": 10
+  },
+  {
+   "author_id": "000252",
+   "author_ja": "金史良",
+   "death_year": 1950,
+   "work_id": "052358",
+   "title": "土城廊",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000252/card52358.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000252/files/52358_ruby_70382.zip",
+   "sha256": "eb00c67eb2eef4e5ca4e17d2aa67ff607af5c8cdc80a19e708b5f174ad48aed3",
+   "char_count": 25874,
+   "n_scenes": 35
+  },
+  {
+   "author_id": "000291",
+   "author_ja": "林芙美子",
+   "death_year": 1951,
+   "work_id": "001814",
+   "title": "風琴と魚の町",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000291/card1814.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000291/files/1814_ruby_24165.zip",
+   "sha256": "a9a873945d74e09dc9288ff34eb92f9abae50669571375a01cbe2258c8f14b03",
+   "char_count": 13580,
+   "n_scenes": 22
+  },
+  {
+   "author_id": "000291",
+   "author_ja": "林芙美子",
+   "death_year": 1951,
+   "work_id": "001816",
+   "title": "清貧の書",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000291/card1816.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000291/files/1816_ruby_24167.zip",
+   "sha256": "62cb031465e6c3ab21be8221168e391de52a989927c7f04a70a2cf5a3f7ceee5",
+   "char_count": 18212,
+   "n_scenes": 33
+  },
+  {
+   "author_id": "000291",
+   "author_ja": "林芙美子",
+   "death_year": 1951,
+   "work_id": "045649",
+   "title": "放浪記（初出）",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000291/card45649.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000291/files/45649_ruby_26492.zip",
+   "sha256": "6de1c7b3221f7b6bcf333e5a34351e35314392ec7be45008a08e4b398a0bef05",
+   "char_count": 104921,
+   "n_scenes": 291
+  },
+  {
+   "author_id": "000293",
+   "author_ja": "原民喜",
+   "death_year": 1951,
+   "work_id": "001848",
+   "title": "秋日記",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000293/card1848.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000293/files/1848_ruby_5794.zip",
+   "sha256": "94a7baa10385674ea821c2ac8abb18e3ff5a7a57e4b53793297a46ca4d34251a",
+   "char_count": 9547,
+   "n_scenes": 16
+  },
+  {
+   "author_id": "000293",
+   "author_ja": "原民喜",
+   "death_year": 1951,
+   "work_id": "001851",
+   "title": "死のなかの風景",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000293/card1851.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000293/files/1851_ruby_5806.zip",
+   "sha256": "0eb1d7d08c20eba134f7222a44c5050707a1673383b0218a8155797e6a503399",
+   "char_count": 10283,
+   "n_scenes": 11
+  },
+  {
+   "author_id": "000293",
+   "author_ja": "原民喜",
+   "death_year": 1951,
+   "work_id": "004680",
+   "title": "夏の花",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000293/card4680.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000293/files/4680_ruby_18429.zip",
+   "sha256": "3f4cb66836b8deff08a22c2122fac1137ce7ec54af86d89972fa528ed563a961",
+   "char_count": 12808,
+   "n_scenes": 18
+  },
+  {
+   "author_id": "000900",
+   "author_ja": "橋本五郎",
+   "death_year": 1948,
+   "work_id": "003829",
+   "title": "地図にない街",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000900/card3829.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000900/files/3829_ruby_15600.zip",
+   "sha256": "0a85024e967f26330c6a3736f55f7fb6c3cf0f64517378ce9f189150955b47ad",
+   "char_count": 16198,
+   "n_scenes": 23
+  },
+  {
+   "author_id": "000900",
+   "author_ja": "橋本五郎",
+   "death_year": 1948,
+   "work_id": "043606",
+   "title": "自殺を買う話",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000900/card43606.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000900/files/43606_ruby_17004.zip",
+   "sha256": "59ddf0df0288d16e453f6fea6eb4d4eab3def36e5bb9c9ee9b00d800ea83547e",
+   "char_count": 7713,
+   "n_scenes": 12
+  },
+  {
+   "author_id": "000965",
+   "author_ja": "丘丘十郎",
+   "death_year": 1949,
+   "work_id": "000875",
+   "title": "地球発狂事件",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000160/card875.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000160/files/875_ruby_3249.zip",
+   "sha256": "0d54c04c3d4a6729aa2b5b9bd6004c16e9ea05ee2b59bce31e3e8a9e46f62b90",
+   "char_count": 87103,
+   "n_scenes": 125
+  },
+  {
+   "author_id": "000965",
+   "author_ja": "丘丘十郎",
+   "death_year": 1949,
+   "work_id": "003523",
+   "title": "ヒルミ夫人の冷蔵鞄",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/000160/card3523.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/000160/files/3523_ruby_18319.zip",
+   "sha256": "b227129b8ea2648f3b04408156136a6c3a2cd3b3d1068161e4153a7c4518f409",
+   "char_count": 14453,
+   "n_scenes": 20
+  },
+  {
+   "author_id": "001030",
+   "author_ja": "堀辰雄",
+   "death_year": 1953,
+   "work_id": "004813",
+   "title": "麦藁帽子",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001030/card4813.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001030/files/4813_ruby_14369.zip",
+   "sha256": "f907c11ada126c87d9874f70c08585ca42ac0eeeae17cb0c1772ad179a8904c8",
+   "char_count": 15549,
+   "n_scenes": 27
+  },
+  {
+   "author_id": "001030",
+   "author_ja": "堀辰雄",
+   "death_year": 1953,
+   "work_id": "004815",
+   "title": "ルウベンスの偽画",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001030/card4815.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001030/files/4815_ruby_14375.zip",
+   "sha256": "c9971b85e78d534264005cc397e3faaf077cb8fec93305611914e738465f96b7",
+   "char_count": 10680,
+   "n_scenes": 20
+  },
+  {
+   "author_id": "001030",
+   "author_ja": "堀辰雄",
+   "death_year": 1953,
+   "work_id": "004848",
+   "title": "楡の家",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001030/card4848.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001030/files/4848_ruby_14152.zip",
+   "sha256": "8e4b0239da7eb431581af24ac4a97050c38a2667108c5ed0cb4317eb4641760d",
+   "char_count": 31045,
+   "n_scenes": 43
+  },
+  {
+   "author_id": "001142",
+   "author_ja": "酒井嘉七",
+   "death_year": 1946,
+   "work_id": "046471",
+   "title": "京鹿子娘道成寺",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001142/card46471.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001142/files/46471_ruby_24305.zip",
+   "sha256": "b58bb1c6bba9ad61c1676b3923d12ef14e2faae1e54ccc2020c3de83a27f88b6",
+   "char_count": 24629,
+   "n_scenes": 36
+  },
+  {
+   "author_id": "001142",
+   "author_ja": "酒井嘉七",
+   "death_year": 1946,
+   "work_id": "047758",
+   "title": "ながうた勧進帳",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001142/card47758.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001142/files/47758_ruby_32679.zip",
+   "sha256": "304c67690bcfc28f701589f3f0e953da8877dc372572de27fd3c4c5446812ea2",
+   "char_count": 12530,
+   "n_scenes": 24
+  },
+  {
+   "author_id": "001142",
+   "author_ja": "酒井嘉七",
+   "death_year": 1946,
+   "work_id": "053054",
+   "title": "ある完全犯罪人の手記",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001142/card53054.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001142/files/53054_ruby_50514.zip",
+   "sha256": "618da65b1f489dfdbac40bedb00f6a927cd964d554f9dda91b1182ae6423ca3f",
+   "char_count": 8721,
+   "n_scenes": 13
+  },
+  {
+   "author_id": "001143",
+   "author_ja": "西尾正",
+   "death_year": 1949,
+   "work_id": "046470",
+   "title": "放浪作家の冒険",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001143/card46470.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001143/files/46470_ruby_24304.zip",
+   "sha256": "75b793b5814b9e736971c32a896b9233b2aeea0c3c77da082f4b86f0f2f6ccf4",
+   "char_count": 16663,
+   "n_scenes": 21
+  },
+  {
+   "author_id": "001143",
+   "author_ja": "西尾正",
+   "death_year": 1949,
+   "work_id": "055163",
+   "title": "墓場",
+   "ndc": "NDC 913",
+   "char_type": "新字新仮名",
+   "card_url": "https://www.aozora.gr.jp/cards/001143/card55163.html",
+   "zip_url": "https://www.aozora.gr.jp/cards/001143/files/55163_ruby_48046.zip",
+   "sha256": "97f001150fbf74a7d56ce73d2f5da04895fe35ece480e819f77c1876b1e22bfb",
+   "char_count": 9968,
+   "n_scenes": 13
+  }
+ ],
+ "rejected_authors": [
+  {
+   "author_id": "001159",
+   "works_ok": 1,
+   "scenes": 19
+  },
+  {
+   "author_id": "001359",
+   "works_ok": 0,
+   "scenes": 0
+  }
+ ],
+ "skipped_count": 13,
+ "skipped": [
+  {
+   "work_id": "043422",
+   "author_id": "001143",
+   "reason": "insufficient_paragraphs",
+   "char_count": 19487
+  },
+  {
+   "work_id": "043627",
+   "author_id": "001159",
+   "reason": "too_short",
+   "char_count": 3876
+  },
+  {
+   "work_id": "043629",
+   "author_id": "001159",
+   "reason": "too_short",
+   "char_count": 1576
+  },
+  {
+   "work_id": "043664",
+   "author_id": "001159",
+   "reason": "too_short",
+   "char_count": 1913
+  },
+  {
+   "work_id": "003357",
+   "author_id": "000965",
+   "reason": "too_short",
+   "char_count": 4828
+  },
+  {
+   "work_id": "049255",
+   "author_id": "001359",
+   "reason": "too_short",
+   "char_count": 2674
+  },
+  {
+   "work_id": "049254",
+   "author_id": "001359",
+   "reason": "too_short",
+   "char_count": 2357
+  },
+  {
+   "work_id": "053050",
+   "author_id": "001142",
+   "reason": "too_short",
+   "char_count": 4874
+  },
+  {
+   "work_id": "053058",
+   "author_id": "001142",
+   "reason": "too_short",
+   "char_count": 2917
+  },
+  {
+   "work_id": "024360",
+   "author_id": "000291",
+   "reason": "insufficient_paragraphs",
+   "char_count": 8113
+  },
+  {
+   "work_id": "047607",
+   "author_id": "000900",
+   "reason": "too_short",
+   "char_count": 3475
+  },
+  {
+   "work_id": "047768",
+   "author_id": "000900",
+   "reason": "too_short",
+   "char_count": 5615
+  },
+  {
+   "work_id": "047606",
+   "author_id": "000900",
+   "reason": "too_short",
+   "char_count": 2467
+  }
+ ]
+}

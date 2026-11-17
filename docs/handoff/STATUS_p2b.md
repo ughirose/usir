@@ -24,6 +24,12 @@
 - 著者あたり 2〜3 作品、場面数合計 12 以上。目標 12 作家（要件は 10 以上）。
 - 原文は `data/aozora_cache/p2b_*.txt`（gitignore 対象）。リポジトリに残すのは `data/aozora_p2b_manifest.json`（出所と SHA-256）と非可逆プロファイルのみ。
 
+### 登録 1 の変更記録（選定の再実行、結果計算前）
+- v1 実行（著者あたり作品 2 以上）: 候補著者 10 人、採用 8 作家 / 21 作品。要件（10 作家以上）未達。ログ `scripts/p2b/p2b_select_v1_min2works.log`、manifest `scripts/p2b/p2b_manifest_v1_min2works.json`。
+- 原因: 既存 4 マニフェストの 122 著者を除外すると、戦後・NDC913・新字新仮名で 2 作品以上を持つ著者が 10 人のみ。
+- v2 実行: `MIN_WORKS_PER_AUTHOR` を 2 → 1 に変更（他は不変、seed 20261117 のまま）。候補著者 16 人、採用 12 作家 / 25 作品。ログ `scripts/p2b/p2b_select.log`、manifest `data/aozora_p2b_manifest.json`。v2 を以後の正とする。
+- 1 作品のみの著者（蒲原有明・折口信夫・佐野昌一・森田草平）は、作品単位の副解析（登録 3 の副）から除外される。
+
 ### 登録 2: 特徴・正規化（R_xx、検出器共通）
 - 特徴: P-1 Level 3a と同じ `extract_ortho24_kasane8`（32D）。場面分割は `split_work_into_scenes`（既定パラメータ）。
 - 場面集合: 作家ごとに、作品 ID 昇順 → 作品内の場面順に連結。
