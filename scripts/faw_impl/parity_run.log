@@ -1,0 +1,91 @@
+F17 parity mismatches 0
+C216 parity mismatches 0
+{
+ "parity_mismatch_F17": 0,
+ "parity_mismatch_C216": 0,
+ "n_gt1_f17": 111,
+ "n_gt1_c216": 97,
+ "groups": {
+  "all439": {
+   "n": 439,
+   "char_change_ratio_median": 0.04187437686939183,
+   "char_change_ratio_mean": 0.24249641029242755,
+   "changed_chars_median": 16.0,
+   "n_edit_blocks_median": 7.0,
+   "dice_median": 0.937253,
+   "len_delta_abs_median": 4.0,
+   "paras_changed": 0,
+   "punct_share_median": 0.061452513966480445
+  },
+  "flip14": {
+   "n": 14,
+   "char_change_ratio_median": 0.5975491220735787,
+   "char_change_ratio_mean": 0.5951436756153036,
+   "changed_chars_median": 186.0,
+   "n_edit_blocks_median": 15.5,
+   "dice_median": 0.515031,
+   "len_delta_abs_median": 164.5,
+   "paras_changed": 0,
+   "punct_share_median": 0.0641568510511406
+  },
+  "gt1_c216_97": {
+   "n": 97,
+   "char_change_ratio_median": 0.6666666666666666,
+   "char_change_ratio_mean": 0.5721042339903737,
+   "changed_chars_median": 215.0,
+   "n_edit_blocks_median": 11.0,
+   "dice_median": 0.469914,
+   "len_delta_abs_median": 170.0,
+   "paras_changed": 0,
+   "punct_share_median": 0.06909090909090909
+  },
+  "le1_c216": {
+   "n": 342,
+   "char_change_ratio_median": 0.019699218557006636,
+   "char_change_ratio_mean": 0.14901115035470597,
+   "changed_chars_median": 9.0,
+   "n_edit_blocks_median": 6.0,
+   "dice_median": 0.968818,
+   "len_delta_abs_median": 2.0,
+   "paras_changed": 0,
+   "punct_share_median": 0.05357142857142857
+  },
+  "gt1_both_floors": {
+   "n": 97,
+   "char_change_ratio_median": 0.6666666666666666,
+   "char_change_ratio_mean": 0.5721042339903737,
+   "changed_chars_median": 215.0,
+   "n_edit_blocks_median": 11.0,
+   "dice_median": 0.469914,
+   "len_delta_abs_median": 170.0,
+   "paras_changed": 0,
+   "punct_share_median": 0.06909090909090909
+  },
+  "gt1_f17_only_equals_flip14": {
+   "n": 14,
+   "char_change_ratio_median": 0.5975491220735787,
+   "char_change_ratio_mean": 0.5951436756153036,
+   "changed_chars_median": 186.0,
+   "n_edit_blocks_median": 15.5,
+   "dice_median": 0.515031,
+   "len_delta_abs_median": 164.5,
+   "paras_changed": 0,
+   "punct_share_median": 0.0641568510511406
+  }
+ },
+ "proxy_auc_abs_max": {
+  "F17": 0.8915628891656289,
+  "C216": 0.8901307596513076
+ },
+ "spearman_abs_max_vs_char_change_ratio": {
+  "F17": {
+   "rho": 0.8072920432993328,
+   "p": 3.8473124546557076e-102
+  },
+  "C216": {
+   "rho": 0.8045609772998845,
+   "p": 6.00490304432282e-101
+  }
+ }
+}
+exit=0
