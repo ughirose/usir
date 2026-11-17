@@ -209,7 +209,7 @@ def load_cohort(prefix, rows):
     for r in sorted(rows, key=lambda r: (r["author_id"], r["work_id"])):
         if not r["cached"] or r["dup_work"]:
             continue
-        text = (D / f"{prefix}_{r['author_id']}_{r['work_id']}.txt").read_text(encoding="utf-8")
+        text = (D / f"{r.get('prefix', prefix)}_{r['author_id']}_{r['work_id']}.txt").read_text(encoding="utf-8")
         texts = split_work_into_scenes(text)
         works.append({"author_id": r["author_id"], "work_id": r["work_id"], "author_seen": r["author_seen"], "chars": len(text),
                       "texts": texts, "n_scenes": len(texts)})
@@ -355,6 +355,18 @@ def main():
     out["primary_p2cE"] = prim
     sec, _ = analyse("p2cA2", load_cohort("p2cA2", sel["p2cA2_rows"]), deep=False)
     out["secondary_p2cA2"] = sec
+    # extended cohorts (supplement from heldout3 authors absent from FAW / p2cE / p2cA2; work-ID dedup done in supplement_plan.py)
+    D = REPO / "data"
+    sup = json.loads((D / "aozora_faw_supplement_manifest.json").read_text(encoding="utf-8"))
+    sup_a = {e["author_id"] for e in sup}
+    h3 = json.loads((D / "aozora_heldout3_manifest.json").read_text(encoding="utf-8"))
+    mk = lambda e, pre: {"author_id": e["author_id"], "work_id": e["work_id"], "cached": True, "dup_work": False, "author_seen": False, "prefix": pre}
+    rows_new = [mk(e, "fawsup") for e in sup]
+    rows_h3 = [mk(e, "heldout3") for e in h3 if e["author_id"] in sup_a]
+    ext, _ = analyse("p2cE+supplement(new+heldout3-first)", load_cohort("p2cE", sel["p2cE_rows"] + rows_new + rows_h3))
+    out["extended_with_h3first"] = ext
+    ext2, _ = analyse("p2cE+supplement(new only)", load_cohort("p2cE", sel["p2cE_rows"] + rows_new))
+    out["extended_new_only"] = ext2
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print("wrote", OUT)
 
