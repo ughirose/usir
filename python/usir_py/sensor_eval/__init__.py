@@ -11,6 +11,12 @@ from usir_py.sensor_eval.f9_loader import (
     load_f9_dataset,
     number_outer_quotes,
 )
+from usir_py.sensor_eval.features import (
+    UtteranceFeatures,
+    extract_utterance_features_from_text,
+    extract_work_utterance_features,
+    format_utterance_features_block,
+)
 from usir_py.sensor_eval.metrics import (
     FORBIDDEN_NULL_LITERALS,
     STEP1_PASS_THRESHOLDS,
@@ -41,6 +47,7 @@ __all__ = [
     "PROMPT_REGISTRY",
     "PROMPT_VERSION",
     "STEP1_PASS_THRESHOLDS",
+    "UtteranceFeatures",
     "build_ollama_utterances_format_schema",
     "build_work_messages",
     "call_ollama_chat",
@@ -49,6 +56,9 @@ __all__ = [
     "evaluate_model_predictions",
     "evaluate_step1_gate",
     "extract_outer_quote_spans",
+    "extract_utterance_features_from_text",
+    "extract_work_utterance_features",
+    "format_utterance_features_block",
     "get_prompt",
     "is_forbidden_null_literal",
     "load_f9_dataset",

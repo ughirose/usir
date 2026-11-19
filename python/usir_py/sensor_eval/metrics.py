@@ -166,6 +166,12 @@ def _empty_bucket() -> dict[str, Any]:
         "excluded_total": 0,
         "excluded_abstained": 0,
         "excluded_over_attributed": 0,
+        "not_speech_total": 0,
+        "not_speech_abstained": 0,
+        "not_speech_over_attributed": 0,
+        "undetermined_total": 0,
+        "undetermined_abstained": 0,
+        "undetermined_over_attributed": 0,
         "non_roster_speaker_count": 0,
         "null_string_speaker_count": 0,
         "politeness_distribution_attributed": Counter(),
@@ -204,6 +210,14 @@ def _finalize_bucket(b: dict[str, Any]) -> dict[str, Any]:
         "excluded_abstention_rate": _rate(b["excluded_abstained"], b["excluded_total"]),
         "excluded_abstained": b["excluded_abstained"],
         "excluded_over_attributed": b["excluded_over_attributed"],
+        "not_speech_total": b["not_speech_total"],
+        "not_speech_abstention_rate": _rate(b["not_speech_abstained"], b["not_speech_total"]),
+        "not_speech_abstained": b["not_speech_abstained"],
+        "not_speech_over_attributed": b["not_speech_over_attributed"],
+        "undetermined_total": b["undetermined_total"],
+        "undetermined_abstention_rate": _rate(b["undetermined_abstained"], b["undetermined_total"]),
+        "undetermined_abstained": b["undetermined_abstained"],
+        "undetermined_over_attributed": b["undetermined_over_attributed"],
         "non_roster_speaker_count": b["non_roster_speaker_count"],
         "null_string_speaker_count": b["null_string_speaker_count"],
         "error_breakdown": {
@@ -361,6 +375,18 @@ def evaluate_model_predictions(
                         b["excluded_abstained"] += 1
                     elif over_attr:
                         b["excluded_over_attributed"] += 1
+                    if gold_u.status == "not_speech":
+                        b["not_speech_total"] += 1
+                        if abstained:
+                            b["not_speech_abstained"] += 1
+                        elif over_attr:
+                            b["not_speech_over_attributed"] += 1
+                    elif gold_u.status == "undetermined":
+                        b["undetermined_total"] += 1
+                        if abstained:
+                            b["undetermined_abstained"] += 1
+                        elif over_attr:
+                            b["undetermined_over_attributed"] += 1
                 if over_attr:
                     excluded_over_attr_details.append(
                         {

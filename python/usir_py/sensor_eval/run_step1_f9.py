@@ -149,6 +149,12 @@ def _build_model_summary_entry(
         "ambiguous_attributed_count": ov["ambiguous_attributed_count"],
         "ambiguous_rate_all_quotes": ov["ambiguous_rate_all_quotes"],
         "excluded_abstention_rate": ov["excluded_abstention_rate"],
+        "not_speech_abstention_rate": ov.get("not_speech_abstention_rate"),
+        "not_speech_abstained": ov.get("not_speech_abstained"),
+        "not_speech_total": ov.get("not_speech_total"),
+        "undetermined_abstention_rate": ov.get("undetermined_abstention_rate"),
+        "undetermined_abstained": ov.get("undetermined_abstained"),
+        "undetermined_total": ov.get("undetermined_total"),
         "gate": gate,
         "by_evidence": ov["by_evidence"],
         "by_narration": {

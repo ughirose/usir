@@ -7,10 +7,15 @@ import json
 from typing import Any
 
 from usir_py.sensor_eval.f9_loader import F9Work
+from usir_py.sensor_eval.features import (
+    extract_work_utterance_features,
+    format_utterance_features_block,
+)
 
 PROMPT_VERSION_V1 = "step1_utterances_v1"
 PROMPT_VERSION_V2 = "step1_utterances_v2"
 PROMPT_VERSION_V3 = "step1_utterances_v3"
+PROMPT_VERSION_V4 = "step1_utterances_v4"
 
 SYSTEM_PROMPT_V1 = """あなたは日本文学テクストの話者帰属・口調注釈センサー（sensor.v2）です。
 入力された場面本文には、最外のカギ括弧の直前に `[U0]`, `[U1]`, ... という連番マーカーが振られています。
@@ -150,10 +155,13 @@ SYSTEM_PROMPT_V3 = """あなたは日本文学テクストの話者帰属・口�
 - `register.politeness`: `"plain"`（常体・普通口語）/ `"polite"`（です・ます）/ `"honorific"`（ございます・おっしゃる等）/ `"rough"`（貴様・命令・粗暴）/ `"unknown"`（1語断片・非発話）。
 - `register.first_person`: セリフ内に明示された一人称代名詞（`"ぼく"`, `"私"`, `"おれ"`, `"うち"` 等）のみ記入。無ければ `null`。"""
 
+SYSTEM_PROMPT_V4 = SYSTEM_PROMPT_V3
+
 PROMPT_REGISTRY: dict[str, tuple[str, str]] = {
     "v1": (PROMPT_VERSION_V1, SYSTEM_PROMPT_V1),
     "v2": (PROMPT_VERSION_V2, SYSTEM_PROMPT_V2),
     "v3": (PROMPT_VERSION_V3, SYSTEM_PROMPT_V3),
+    "v4": (PROMPT_VERSION_V4, SYSTEM_PROMPT_V4),
 }
 DEFAULT_PROMPT_KEY = "v2"
 PROMPT_VERSION = PROMPT_VERSION_V2
@@ -247,7 +255,7 @@ def build_work_messages(
     prompt_version: str = DEFAULT_PROMPT_KEY,
 ) -> list[dict[str, str]]:
     """Build Ollama chat messages for one F9 work excerpt."""
-    _, sys_prompt = get_prompt(prompt_version)
+    ver_label, sys_prompt = get_prompt(prompt_version)
     roster_lines: list[str] = []
     for char in work.characters:
         aliases_str = ", ".join(char.aliases) if char.aliases else "(別名なし)"
@@ -257,6 +265,11 @@ def build_work_messages(
     roster_block = "\n".join(roster_lines)
 
     n_utts = len(work.utterances)
+    features_section = ""
+    if ver_label == PROMPT_VERSION_V4:
+        feats = extract_work_utterance_features(work)
+        features_section = f"\n\n{format_utterance_features_block(feats)}"
+
     user_prompt = (
         f"## 場面メタ情報\n"
         f"- 作品ID: {work.work_id}\n"
@@ -267,7 +280,8 @@ def build_work_messages(
         f"## 人物名簿（出力の speaker_id / addressee_id は必ずこの `id` のみ使用）\n"
         f"{roster_block}\n\n"
         f"## 番号付き本文\n"
-        f"{work.numbered_text}\n\n"
+        f"{work.numbered_text}"
+        f"{features_section}\n\n"
         f"上記 `[U0]` から `[U{n_utts - 1}]` までの全 {n_utts} 件について JSON を出力してください。"
     )
     return [

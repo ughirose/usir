@@ -17,6 +17,13 @@ from usir_py.sensor_eval.f9_loader import (
     load_f9_dataset,
     number_outer_quotes,
 )
+from usir_py.sensor_eval.features import (
+    extract_utterance_features_from_text,
+    extract_work_utterance_features,
+    find_speakers_in_text,
+    find_speech_verb,
+    format_utterance_features_block,
+)
 from usir_py.sensor_eval.metrics import (
     compute_politeness_pairwise_agreement,
     evaluate_model_predictions,
@@ -679,4 +686,180 @@ def test_cli_config_and_check_gate(tmp_path: Path) -> None:
     with patch("usir_py.sensor_eval.ollama_client._post_chat", return_value=resp_fail):
         rc_fail = main(["--config", str(cfg_path), "--check-gate"])
     assert rc_fail == 2
+
+
+def test_features_position_ownership_speakers_verbs_and_no_leakage() -> None:
+    text = (
+        "彼は所謂「自由」を嫌った。\n"
+        "　「もう時間だよ」ジョバンニは叫びました。\n"
+        "「ええ、\n本当です」\n"
+        "信一がこう云い出したので、仙吉が\n"
+        "「やりましょう」\n"
+        "\n"
+        "「誰だ」\n"
+    )
+    spans = extract_outer_quote_spans(text)
+    assert len(spans) == 5
+    chars = [
+        F9Character(id="giovanni", aliases=["ジョバンニ"], gender="Male"),
+        F9Character(id="shinichi", aliases=["信一"], gender="Male"),
+        F9Character(id="senkichi", aliases=["仙吉"], gender="Male"),
+        F9Character(id="boku", aliases=["僕"], gender="Male"),
+    ]
+    feats = extract_utterance_features_from_text(
+        text=text, spans=spans, characters=chars, narration="first", narrator="boku"
+    )
+    assert [f.position for f in feats] == [
+        "inline_embedded",
+        "line_head_with_trailing",
+        "standalone_line",
+        "standalone_line",
+        "standalone_line",
+    ]
+    assert [f.quote_chars for f in feats] == [2, 6, 8, 6, 2]
+
+    # U1 post-quote reporting clause does not leak into U2 pre-window.
+    assert feats[1].post_speakers == ("giovanni",)
+    assert feats[1].post_speech_verb == "叫び"
+    assert feats[1].post_speaker_and_verb is True
+    assert feats[2].pre_has_narration is False
+    assert feats[2].pre_speakers == ()
+    assert feats[2].pre_speech_verb is None
+    assert feats[2].pre_speaker_and_verb is False
+
+    # U2's newline-separated reporting clause splits off trailing subject intro for U3.
+    assert feats[2].post_speakers == ("shinichi",)
+    assert feats[2].post_speech_verb == "云い出"
+    assert feats[2].post_speaker_and_verb is True
+    assert feats[3].pre_speakers == ("senkichi",)
+    assert feats[3].pre_speech_verb is None
+
+    # Blank line before U4 clears pre_has_narration.
+    assert feats[4].pre_has_narration is False
+    assert feats[4].pre_speakers == ()
+
+    # Speaker & verb matching helpers: 1st-person guard, negations, noun vs verb.
+    assert find_speakers_in_text("私的な用事だが、私は言った", chars, "first", "boku") == ("boku",)
+    assert find_speakers_in_text("公私の別なく私は笑った", chars, "third", None) == ()
+    assert find_speech_verb("彼は言いませんでした") is None
+    assert find_speech_verb("彼女は言わない") is None
+    assert find_speech_verb("挨拶でもした") is None
+    assert find_speech_verb("話を聞いた") is None
+    assert find_speech_verb("と尋ねた") == "尋ね"
+    assert find_speech_verb("と聞きました") == "聞きまし"
+    assert find_speech_verb("と挨拶した") == "挨拶し"
+
+    # Zero gold-label leakage: altering gold status/speaker must not alter extracted features.
+    numbered, _ = number_outer_quotes(text)
+    utts_a = [
+        F9UtteranceGold(i, s[0], s[1], "h", "attributed", "giovanni", text[s[0] : s[1]])
+        for i, s in enumerate(spans)
+    ]
+    utts_b = [
+        F9UtteranceGold(i, s[0], s[1], "h", "not_speech", None, text[s[0] : s[1]])
+        for i, s in enumerate(spans)
+    ]
+    w_a = F9Work("w", None, None, "first", "boku", None, chars, text, numbered, "0" * 64, utts_a)
+    w_b = F9Work("w", None, None, "first", "boku", None, chars, text, numbered, "0" * 64, utts_b)
+    assert extract_work_utterance_features(w_a) == extract_work_utterance_features(w_b)
+
+
+def test_prompt_v4_strict_ablation_over_v3() -> None:
+    ver_v3, sys_v3 = get_prompt("v3")
+    ver_v4, sys_v4 = get_prompt("v4")
+    assert ver_v3 == "step1_utterances_v3"
+    assert ver_v4 == "step1_utterances_v4"
+    assert sys_v4 == sys_v3
+
+    hashes = {compute_prompt_hash(prompt_version=v) for v in ("v1", "v2", "v3", "v4")}
+    assert len(hashes) == 4
+
+    text = "「おはよう」と男が言った。\n彼は「自由」を嫌った。\n"
+    numbered, spans = number_outer_quotes(text)
+    chars = [F9Character(id="otoko", aliases=["男"], gender="Male")]
+    utts = [
+        F9UtteranceGold(0, spans[0][0], spans[0][1], "おはよう", "attributed", "otoko", "「おはよう」"),
+        F9UtteranceGold(1, spans[1][0], spans[1][1], "自由", "not_speech", None, "「自由」"),
+    ]
+    work = F9Work("w_ab", None, None, "third", None, None, chars, text, numbered, "e" * 64, utts)
+
+    msgs_v3 = build_work_messages(work, prompt_version="v3")
+    msgs_v4 = build_work_messages(work, prompt_version="v4")
+    assert msgs_v4[0] == msgs_v3[0]
+
+    feat_block = format_utterance_features_block(extract_work_utterance_features(work))
+    expected_user_v4 = msgs_v3[1]["content"].replace(
+        "\n\n上記 `[U0]`",
+        f"\n\n{feat_block}\n\n上記 `[U0]`",
+    )
+    assert msgs_v4[1]["content"] == expected_user_v4
+    assert "| U0 | line_head_with_trailing | 4 | - | - | false | otoko | 言っ | true |" in feat_block
+    assert "| U1 | inline_embedded | 2 | - | - | false | - | - | false |" in feat_block
+
+
+def test_not_speech_and_undetermined_abstention_breakdown() -> None:
+    work = F9Work(
+        work_id="w_exc",
+        author=None,
+        title=None,
+        narration="first",
+        narrator="yozo",
+        pov=None,
+        characters=[F9Character(id="yozo", aliases=["葉蔵"], gender="Male")],
+        text="x",
+        numbered_text="x",
+        scene_hash="f" * 64,
+        utterances=[
+            F9UtteranceGold(0, 0, 3, "h0", "attributed", "yozo", "「あ」"),
+            F9UtteranceGold(1, 3, 6, "h1", "not_speech", None, "「い」"),
+            F9UtteranceGold(2, 6, 9, "h2", "not_speech", None, "「う」"),
+            F9UtteranceGold(3, 9, 12, "h3", "undetermined", None, "「え」"),
+        ],
+    )
+    preds = {
+        "w_exc": [
+            {
+                "utterance_index": 0,
+                "speaker_id": "yozo",
+                "addressee_id": None,
+                "evidence": "explicit",
+                "register": {"politeness": "plain", "first_person": None},
+            },
+            {
+                "utterance_index": 1,
+                "speaker_id": None,
+                "addressee_id": None,
+                "evidence": "ambiguous",
+                "register": {"politeness": "unknown", "first_person": None},
+            },
+            {
+                "utterance_index": 2,
+                "speaker_id": "yozo",
+                "addressee_id": None,
+                "evidence": "inferred",
+                "register": {"politeness": "plain", "first_person": None},
+            },
+            {
+                "utterance_index": 3,
+                "speaker_id": None,
+                "addressee_id": None,
+                "evidence": "ambiguous",
+                "register": {"politeness": "unknown", "first_person": None},
+            },
+        ]
+    }
+    res = evaluate_model_predictions([work], preds, "m", compute_prompt_hash(prompt_version="v4"))
+    ov = res["overall"]
+    assert ov["excluded_total"] == 3
+    assert ov["excluded_abstained"] == 2
+    assert ov["excluded_abstention_rate"] == pytest.approx(2 / 3)
+    assert ov["not_speech_total"] == 2
+    assert ov["not_speech_abstained"] == 1
+    assert ov["not_speech_over_attributed"] == 1
+    assert ov["not_speech_abstention_rate"] == pytest.approx(0.5)
+    assert ov["undetermined_total"] == 1
+    assert ov["undetermined_abstained"] == 1
+    assert ov["undetermined_over_attributed"] == 0
+    assert ov["undetermined_abstention_rate"] == pytest.approx(1.0)
+
 
