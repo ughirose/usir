@@ -1,0 +1,450 @@
+"""Metrics computation and sensor.v2 JSON Schema validation for Step 1 evaluation."""
+
+from __future__ import annotations
+
+import json
+from collections import Counter
+from pathlib import Path
+from typing import Any
+
+from jsonschema import Draft202012Validator
+
+from usir_py.sensor_eval.f9_loader import F9Work
+
+EVIDENCE_LEVELS = ("explicit", "inferred", "ambiguous")
+POLITENESS_LEVELS = ("plain", "polite", "honorific", "rough", "unknown")
+
+
+def default_schema_path() -> Path:
+    """Return path to schemas/sensor_v2.schema.json inside the repository."""
+    return Path(__file__).resolve().parents[3] / "schemas" / "sensor_v2.schema.json"
+
+
+def load_sensor_v2_validator(schema_path: Path | None = None) -> Draft202012Validator:
+    """Load Draft 2020-12 JSON Schema validator for sensor.v2."""
+    path = schema_path or default_schema_path()
+    schema = json.loads(path.read_text(encoding="utf-8"))
+    Draft202012Validator.check_schema(schema)
+    return Draft202012Validator(schema)
+
+
+def validate_sensor_v2_utterances(
+    work: F9Work,
+    utterances: list[Any],
+    model_id: str,
+    prompt_hash: str,
+    validator: Draft202012Validator | None = None,
+) -> list[str]:
+    """Validate predicted utterances wrapped in a minimal sensor.v2 document."""
+    val = validator or load_sensor_v2_validator()
+    doc = {
+        "contract": {
+            "schema_version": "sensor.v2",
+            "splitter_version": "f9_gold_quotes@1",
+            "scene_id": f"f9:{work.work_id}",
+            "scene_hash": work.scene_hash,
+            "ledger_hash": "f9_gold_characters@1",
+            "model_id": model_id or "unknown-model",
+            "prompt_hash": prompt_hash or "unknown-prompt",
+        },
+        "scene_meta": {
+            "time": {"relative_order": "unknown"},
+            "location_id": None,
+            "present_character_ids": [c.id for c in work.characters],
+            "pov_character": work.pov,
+        },
+        "utterances": utterances,
+        "character_states": [],
+        "fact_updates": [],
+    }
+    errors: list[str] = [e.message for e in val.iter_errors(doc)]
+
+    # Runtime invariant from Phase 0 contract §5.2: unique utterance_index within scene.
+    seen: set[int] = set()
+    for item in utterances:
+        if isinstance(item, dict) and isinstance(item.get("utterance_index"), int):
+            idx = item["utterance_index"]
+            if idx in seen:
+                errors.append(f"Duplicate utterance_index={idx} in {work.work_id}")
+            seen.add(idx)
+    return errors
+
+
+def _rate(num: int, den: int) -> float | None:
+    if den == 0:
+        return None
+    return num / den
+
+
+def _empty_bucket() -> dict[str, Any]:
+    return {
+        "attributed_total": 0,
+        "all_quotes_total": 0,
+        "correct_strict": 0,
+        "correct_raw_speaker": 0,
+        "wrong_speaker": 0,
+        "ambiguous_evasion": 0,
+        "ambiguous_evasion_with_correct_speaker": 0,
+        "unattributed_null": 0,
+        "missing_utterance": 0,
+        "explicit_total": 0,
+        "explicit_correct": 0,
+        "explicit_errors": 0,
+        "inferred_total": 0,
+        "inferred_correct": 0,
+        "inferred_errors": 0,
+        "ambiguous_attributed": 0,
+        "ambiguous_all_quotes": 0,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "excluded_total": 0,
+        "excluded_abstained": 0,
+        "excluded_over_attributed": 0,
+        "politeness_distribution_attributed": Counter(),
+        "politeness_distribution_all": Counter(),
+    }
+
+
+def _finalize_bucket(b: dict[str, Any]) -> dict[str, Any]:
+    attr_tot = b["attributed_total"]
+    strict_err = attr_tot - b["correct_strict"]
+    raw_err = attr_tot - b["correct_raw_speaker"]
+    pol_tot = b["politeness_gold_total"]
+    return {
+        "attributed_total": attr_tot,
+        "all_quotes_total": b["all_quotes_total"],
+        "explicit_error_rate": _rate(b["explicit_errors"], b["explicit_total"]),
+        "explicit_correct": b["explicit_correct"],
+        "explicit_errors": b["explicit_errors"],
+        "explicit_denominator": b["explicit_total"],
+        "explicit_coverage": _rate(b["explicit_total"], attr_tot),
+        "overall_error_rate": _rate(strict_err, attr_tot),
+        "overall_errors": strict_err,
+        "overall_correct": b["correct_strict"],
+        "overall_error_rate_raw_speaker": _rate(raw_err, attr_tot),
+        "overall_errors_raw_speaker": raw_err,
+        "overall_correct_raw_speaker": b["correct_raw_speaker"],
+        "politeness_agreement_rate": _rate(b["politeness_correct"], pol_tot),
+        "politeness_gold_available": pol_tot > 0,
+        "politeness_gold_total": pol_tot,
+        "politeness_correct": b["politeness_correct"],
+        "ambiguous_rate": _rate(b["ambiguous_attributed"], attr_tot),
+        "ambiguous_attributed_count": b["ambiguous_attributed"],
+        "ambiguous_rate_all_quotes": _rate(b["ambiguous_all_quotes"], b["all_quotes_total"]),
+        "ambiguous_all_quotes_count": b["ambiguous_all_quotes"],
+        "excluded_total": b["excluded_total"],
+        "excluded_abstention_rate": _rate(b["excluded_abstained"], b["excluded_total"]),
+        "excluded_abstained": b["excluded_abstained"],
+        "excluded_over_attributed": b["excluded_over_attributed"],
+        "error_breakdown": {
+            "wrong_speaker": b["wrong_speaker"],
+            "ambiguous_evasion": b["ambiguous_evasion"],
+            "ambiguous_evasion_with_correct_speaker": b["ambiguous_evasion_with_correct_speaker"],
+            "unattributed_null": b["unattributed_null"],
+            "missing_utterance": b["missing_utterance"],
+        },
+        "by_evidence": {
+            "explicit": {
+                "count": b["explicit_total"],
+                "correct": b["explicit_correct"],
+                "errors": b["explicit_errors"],
+                "error_rate": _rate(b["explicit_errors"], b["explicit_total"]),
+                "accuracy": _rate(b["explicit_correct"], b["explicit_total"]),
+            },
+            "inferred": {
+                "count": b["inferred_total"],
+                "correct": b["inferred_correct"],
+                "errors": b["inferred_errors"],
+                "error_rate": _rate(b["inferred_errors"], b["inferred_total"]),
+                "accuracy": _rate(b["inferred_correct"], b["inferred_total"]),
+            },
+            "ambiguous": {
+                "count": b["ambiguous_attributed"],
+                "correct_raw_speaker": b["ambiguous_evasion_with_correct_speaker"],
+            },
+            "missing": {
+                "count": b["missing_utterance"],
+            },
+        },
+        "politeness_distribution_attributed": {
+            k: b["politeness_distribution_attributed"].get(k, 0)
+            for k in (*POLITENESS_LEVELS, "missing_or_invalid")
+            if b["politeness_distribution_attributed"].get(k, 0) > 0 or k in POLITENESS_LEVELS
+        },
+        "politeness_distribution_all": {
+            k: b["politeness_distribution_all"].get(k, 0)
+            for k in (*POLITENESS_LEVELS, "missing_or_invalid")
+            if b["politeness_distribution_all"].get(k, 0) > 0 or k in POLITENESS_LEVELS
+        },
+    }
+
+
+def evaluate_model_predictions(
+    works: list[F9Work],
+    predictions_by_work: dict[str, list[dict[str, Any]] | None],
+    model_id: str,
+    prompt_hash: str,
+    schema_validator: Draft202012Validator | None = None,
+) -> dict[str, Any]:
+    """Compute Step 1 metrics across works, narration types, and evidence levels."""
+    val = schema_validator or load_sensor_v2_validator()
+    total_bucket = _empty_bucket()
+    by_narration_buckets: dict[str, dict[str, Any]] = {
+        "first": _empty_bucket(),
+        "third": _empty_bucket(),
+    }
+    by_work_results: list[dict[str, Any]] = []
+    schema_validation_by_work: dict[str, dict[str, Any]] = {}
+    non_roster_speakers: list[dict[str, Any]] = []
+    error_details: list[dict[str, Any]] = []
+    excluded_over_attr_details: list[dict[str, Any]] = []
+
+    for work in works:
+        w_bucket = _empty_bucket()
+        nar_bucket = by_narration_buckets.setdefault(work.narration, _empty_bucket())
+        roster_ids = {c.id for c in work.characters}
+
+        raw_utts = predictions_by_work.get(work.work_id)
+        if raw_utts is None:
+            schema_errors = ["No valid parsed utterances payload"]
+            pred_list: list[Any] = []
+        else:
+            pred_list = list(raw_utts)
+            schema_errors = validate_sensor_v2_utterances(
+                work, pred_list, model_id=model_id, prompt_hash=prompt_hash, validator=val
+            )
+
+        pred_by_idx: dict[int, dict[str, Any]] = {}
+        duplicate_indices: list[int] = []
+        extra_indices: list[int] = []
+        expected_n = len(work.utterances)
+        for item in pred_list:
+            if not isinstance(item, dict):
+                continue
+            idx = item.get("utterance_index")
+            if not isinstance(idx, int):
+                continue
+            if idx in pred_by_idx:
+                duplicate_indices.append(idx)
+                continue
+            if idx < 0 or idx >= expected_n:
+                extra_indices.append(idx)
+                continue
+            pred_by_idx[idx] = item
+
+        schema_validation_by_work[work.work_id] = {
+            "schema_valid": len(schema_errors) == 0,
+            "schema_error_count": len(schema_errors),
+            "schema_errors": schema_errors[:20],
+            "predicted_count": len(pred_list),
+            "expected_count": expected_n,
+            "duplicate_indices": duplicate_indices,
+            "extra_indices": extra_indices,
+        }
+
+        for gold_u in work.utterances:
+            pred_u = pred_by_idx.get(gold_u.n)
+            pred_speaker = pred_u.get("speaker_id") if pred_u else None
+            pred_evidence = pred_u.get("evidence") if pred_u else None
+            pred_reg = (pred_u.get("register") or {}) if pred_u else {}
+            pred_politeness = pred_reg.get("politeness") if isinstance(pred_reg, dict) else None
+
+            pol_key = pred_politeness if pred_politeness in POLITENESS_LEVELS else "missing_or_invalid"
+
+            if pred_speaker is not None and pred_speaker not in roster_ids:
+                non_roster_speakers.append(
+                    {
+                        "work_id": work.work_id,
+                        "utterance_index": gold_u.n,
+                        "speaker_id": pred_speaker,
+                        "gold_status": gold_u.status,
+                        "gold_speaker": gold_u.speaker,
+                    }
+                )
+
+            for b in (total_bucket, w_bucket, nar_bucket):
+                b["all_quotes_total"] += 1
+                b["politeness_distribution_all"][pol_key] += 1
+                if pred_evidence == "ambiguous":
+                    b["ambiguous_all_quotes"] += 1
+
+            if gold_u.status != "attributed":
+                abstained = pred_u is not None and (
+                    pred_evidence == "ambiguous" or pred_speaker is None
+                )
+                for b in (total_bucket, w_bucket, nar_bucket):
+                    b["excluded_total"] += 1
+                    if abstained:
+                        b["excluded_abstained"] += 1
+                    elif pred_u is not None and pred_speaker is not None:
+                        b["excluded_over_attributed"] += 1
+                if pred_u is not None and not abstained and pred_speaker is not None:
+                    excluded_over_attr_details.append(
+                        {
+                            "work_id": work.work_id,
+                            "utterance_index": gold_u.n,
+                            "gold_status": gold_u.status,
+                            "head": gold_u.head,
+                            "pred_speaker": pred_speaker,
+                            "pred_evidence": pred_evidence,
+                            "pred_politeness": pred_politeness,
+                        }
+                    )
+                continue
+
+            # Gold attributed utterance evaluation.
+            raw_match = pred_u is not None and pred_speaker == gold_u.speaker
+            strict_match = raw_match and pred_evidence != "ambiguous"
+
+            if pred_u is None:
+                outcome = "missing_utterance"
+            elif pred_evidence == "ambiguous":
+                outcome = "ambiguous_evasion"
+            elif raw_match:
+                outcome = "correct"
+            elif pred_speaker is None:
+                outcome = "unattributed_null"
+            else:
+                outcome = "wrong_speaker"
+
+            for b in (total_bucket, w_bucket, nar_bucket):
+                b["attributed_total"] += 1
+                b["politeness_distribution_attributed"][pol_key] += 1
+                if raw_match:
+                    b["correct_raw_speaker"] += 1
+                if strict_match:
+                    b["correct_strict"] += 1
+
+                if outcome == "wrong_speaker":
+                    b["wrong_speaker"] += 1
+                elif outcome == "ambiguous_evasion":
+                    b["ambiguous_evasion"] += 1
+                    if raw_match:
+                        b["ambiguous_evasion_with_correct_speaker"] += 1
+                elif outcome == "unattributed_null":
+                    b["unattributed_null"] += 1
+                elif outcome == "missing_utterance":
+                    b["missing_utterance"] += 1
+
+                if pred_u is not None:
+                    if pred_evidence == "explicit":
+                        b["explicit_total"] += 1
+                        if raw_match:
+                            b["explicit_correct"] += 1
+                        else:
+                            b["explicit_errors"] += 1
+                    elif pred_evidence == "inferred":
+                        b["inferred_total"] += 1
+                        if raw_match:
+                            b["inferred_correct"] += 1
+                        else:
+                            b["inferred_errors"] += 1
+                    elif pred_evidence == "ambiguous":
+                        b["ambiguous_attributed"] += 1
+
+                if gold_u.gold_politeness is not None:
+                    b["politeness_gold_total"] += 1
+                    if pred_politeness == gold_u.gold_politeness:
+                        b["politeness_correct"] += 1
+
+            if outcome != "correct":
+                error_details.append(
+                    {
+                        "work_id": work.work_id,
+                        "narration": work.narration,
+                        "utterance_index": gold_u.n,
+                        "head": gold_u.head,
+                        "gold_speaker": gold_u.speaker,
+                        "pred_speaker": pred_speaker,
+                        "pred_evidence": pred_evidence,
+                        "pred_politeness": pred_politeness,
+                        "outcome": outcome,
+                    }
+                )
+
+        w_summary = _finalize_bucket(w_bucket)
+        w_summary["work_id"] = work.work_id
+        w_summary["title"] = work.title
+        w_summary["author"] = work.author
+        w_summary["narration"] = work.narration
+        w_summary["schema_valid"] = schema_validation_by_work[work.work_id]["schema_valid"]
+        by_work_results.append(w_summary)
+
+    return {
+        "overall": _finalize_bucket(total_bucket),
+        "by_narration": {
+            nar: _finalize_bucket(bucket) for nar, bucket in by_narration_buckets.items()
+        },
+        "by_work": by_work_results,
+        "schema_validation": {
+            "all_works_valid": all(
+                v["schema_valid"] for v in schema_validation_by_work.values()
+            ),
+            "valid_works": sum(1 for v in schema_validation_by_work.values() if v["schema_valid"]),
+            "total_works": len(works),
+            "per_work": schema_validation_by_work,
+        },
+        "non_roster_speaker_ids": non_roster_speakers,
+        "errors": error_details,
+        "excluded_over_attributions": excluded_over_attr_details,
+    }
+
+
+def compute_politeness_pairwise_agreement(
+    works: list[F9Work],
+    model_predictions: dict[str, dict[str, list[dict[str, Any]] | None]],
+    attributed_only: bool = True,
+) -> dict[str, Any]:
+    """Compute pairwise politeness label agreement across models (diagnostic when gold lacks labels)."""
+    tags = list(model_predictions.keys())
+    extracted: dict[str, dict[tuple[str, int], str | None]] = {}
+    keys: list[tuple[str, int]] = []
+    for work in works:
+        for u in work.utterances:
+            if attributed_only and u.status != "attributed":
+                continue
+            keys.append((work.work_id, u.n))
+
+    for tag in tags:
+        mapping: dict[tuple[str, int], str | None] = {}
+        preds_by_work = model_predictions[tag]
+        for work in works:
+            utts = preds_by_work.get(work.work_id) or []
+            idx_map = {
+                u.get("utterance_index"): (u.get("register") or {}).get("politeness")
+                for u in utts
+                if isinstance(u, dict)
+            }
+            for u in work.utterances:
+                if attributed_only and u.status != "attributed":
+                    continue
+                mapping[(work.work_id, u.n)] = idx_map.get(u.n)
+        extracted[tag] = mapping
+
+    pairs: list[dict[str, Any]] = []
+    for i in range(len(tags)):
+        for j in range(i + 1, len(tags)):
+            t1, t2 = tags[i], tags[j]
+            m1, m2 = extracted[t1], extracted[t2]
+            both_present = 0
+            agreed = 0
+            for k in keys:
+                p1, p2 = m1.get(k), m2.get(k)
+                if p1 is not None and p2 is not None:
+                    both_present += 1
+                    if p1 == p2:
+                        agreed += 1
+            pairs.append(
+                {
+                    "model_a": t1,
+                    "model_b": t2,
+                    "compared": both_present,
+                    "agreed": agreed,
+                    "agreement_rate": _rate(agreed, both_present),
+                }
+            )
+    return {
+        "scope": "attributed_only" if attributed_only else "all_quotes",
+        "total_items": len(keys),
+        "pairs": pairs,
+    }

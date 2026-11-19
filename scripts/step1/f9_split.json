@@ -1,0 +1,42 @@
+{
+  "split_version": "f9_step1_work_stratified_v1",
+  "created_at": "2026-11-19",
+  "source_gold_dir": "C:\\dev\\nishiki\\crates\\nishiki-discourse\\tests\\data\\f9_gold",
+  "gold_json_sha256": "35e9364d63a60098408e99374fec3bc2f3782bb086dcf4e9f384631ed81e2780",
+  "split_policy": "Work-level stratified split by narration (first/third) frozen prior to any model inference. Holdout works are sealed and must never be evaluated during prompt/model selection.",
+  "dev": {
+    "work_ids": [
+      "000035_000301",
+      "001383_056643",
+      "000050_003586",
+      "000081_000456"
+    ],
+    "summary": {
+      "works": 4,
+      "first_person_works": 2,
+      "third_person_works": 2,
+      "attributed_utterances": 90,
+      "undetermined_utterances": 9,
+      "not_speech_utterances": 8,
+      "total_outer_quotes": 107
+    }
+  },
+  "holdout": {
+    "sealed": true,
+    "work_ids": [
+      "000148_000752",
+      "000074_000429",
+      "000129_000689",
+      "001095_042618"
+    ],
+    "summary": {
+      "works": 4,
+      "first_person_works": 1,
+      "third_person_works": 3,
+      "attributed_utterances": 96,
+      "undetermined_utterances": 10,
+      "not_speech_utterances": 0,
+      "total_outer_quotes": 106
+    }
+  }
+}

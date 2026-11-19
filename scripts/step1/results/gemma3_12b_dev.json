@@ -1,0 +1,2296 @@
+{
+  "run_timestamp": "2026-11-19T10:09:12.601611+00:00",
+  "split": "dev",
+  "split_version": "f9_step1_work_stratified_v1",
+  "gold_json_sha256": "35e9364d63a60098408e99374fec3bc2f3782bb086dcf4e9f384631ed81e2780",
+  "work_ids_evaluated": [
+    "000035_000301",
+    "001383_056643",
+    "000050_003586",
+    "000081_000456"
+  ],
+  "model_spec": "gemma3:12b",
+  "model_name": "gemma3:12b",
+  "think": null,
+  "prompt_version": "step1_utterances_v1",
+  "prompt_hash": "7912bad97f799ce526ad60553adaac5456002c650f6981880f44bdb0b433de6a",
+  "inference_options": {
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "seed": 42,
+    "temperature": 0.0
+  },
+  "runtime_totals": {
+    "elapsed_sec": 149.487,
+    "prompt_eval_count": 17179,
+    "eval_count": 5793
+  },
+  "metrics": {
+    "overall": {
+      "attributed_total": 90,
+      "all_quotes_total": 107,
+      "explicit_error_rate": 0.43137254901960786,
+      "explicit_correct": 29,
+      "explicit_errors": 22,
+      "explicit_denominator": 51,
+      "explicit_coverage": 0.5666666666666667,
+      "overall_error_rate": 0.4222222222222222,
+      "overall_errors": 38,
+      "overall_correct": 52,
+      "overall_error_rate_raw_speaker": 0.4222222222222222,
+      "overall_errors_raw_speaker": 38,
+      "overall_correct_raw_speaker": 52,
+      "politeness_agreement_rate": null,
+      "politeness_gold_available": false,
+      "politeness_gold_total": 0,
+      "politeness_correct": 0,
+      "ambiguous_rate": 0.06666666666666667,
+      "ambiguous_attributed_count": 6,
+      "ambiguous_rate_all_quotes": 0.102803738317757,
+      "ambiguous_all_quotes_count": 11,
+      "excluded_total": 17,
+      "excluded_abstention_rate": 0.29411764705882354,
+      "excluded_abstained": 5,
+      "excluded_over_attributed": 12,
+      "error_breakdown": {
+        "wrong_speaker": 32,
+        "ambiguous_evasion": 6,
+        "ambiguous_evasion_with_correct_speaker": 0,
+        "unattributed_null": 0,
+        "missing_utterance": 0
+      },
+      "by_evidence": {
+        "explicit": {
+          "count": 51,
+          "correct": 29,
+          "errors": 22,
+          "error_rate": 0.43137254901960786,
+          "accuracy": 0.5686274509803921
+        },
+        "inferred": {
+          "count": 33,
+          "correct": 23,
+          "errors": 10,
+          "error_rate": 0.30303030303030304,
+          "accuracy": 0.696969696969697
+        },
+        "ambiguous": {
+          "count": 6,
+          "correct_raw_speaker": 0
+        },
+        "missing": {
+          "count": 0
+        }
+      },
+      "politeness_distribution_attributed": {
+        "plain": 70,
+        "polite": 14,
+        "honorific": 1,
+        "rough": 0,
+        "unknown": 5
+      },
+      "politeness_distribution_all": {
+        "plain": 82,
+        "polite": 14,
+        "honorific": 1,
+        "rough": 0,
+        "unknown": 10
+      }
+    },
+    "by_narration": {
+      "first": {
+        "attributed_total": 43,
+        "all_quotes_total": 54,
+        "explicit_error_rate": 0.45454545454545453,
+        "explicit_correct": 12,
+        "explicit_errors": 10,
+        "explicit_denominator": 22,
+        "explicit_coverage": 0.5116279069767442,
+        "overall_error_rate": 0.4186046511627907,
+        "overall_errors": 18,
+        "overall_correct": 25,
+        "overall_error_rate_raw_speaker": 0.4186046511627907,
+        "overall_errors_raw_speaker": 18,
+        "overall_correct_raw_speaker": 25,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": 0.06976744186046512,
+        "ambiguous_attributed_count": 3,
+        "ambiguous_rate_all_quotes": 0.1111111111111111,
+        "ambiguous_all_quotes_count": 6,
+        "excluded_total": 11,
+        "excluded_abstention_rate": 0.2727272727272727,
+        "excluded_abstained": 3,
+        "excluded_over_attributed": 8,
+        "error_breakdown": {
+          "wrong_speaker": 15,
+          "ambiguous_evasion": 3,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 22,
+            "correct": 12,
+            "errors": 10,
+            "error_rate": 0.45454545454545453,
+            "accuracy": 0.5454545454545454
+          },
+          "inferred": {
+            "count": 18,
+            "correct": 13,
+            "errors": 5,
+            "error_rate": 0.2777777777777778,
+            "accuracy": 0.7222222222222222
+          },
+          "ambiguous": {
+            "count": 3,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 36,
+          "polite": 5,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 2
+        },
+        "politeness_distribution_all": {
+          "plain": 44,
+          "polite": 5,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 5
+        }
+      },
+      "third": {
+        "attributed_total": 47,
+        "all_quotes_total": 53,
+        "explicit_error_rate": 0.41379310344827586,
+        "explicit_correct": 17,
+        "explicit_errors": 12,
+        "explicit_denominator": 29,
+        "explicit_coverage": 0.6170212765957447,
+        "overall_error_rate": 0.425531914893617,
+        "overall_errors": 20,
+        "overall_correct": 27,
+        "overall_error_rate_raw_speaker": 0.425531914893617,
+        "overall_errors_raw_speaker": 20,
+        "overall_correct_raw_speaker": 27,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": 0.06382978723404255,
+        "ambiguous_attributed_count": 3,
+        "ambiguous_rate_all_quotes": 0.09433962264150944,
+        "ambiguous_all_quotes_count": 5,
+        "excluded_total": 6,
+        "excluded_abstention_rate": 0.3333333333333333,
+        "excluded_abstained": 2,
+        "excluded_over_attributed": 4,
+        "error_breakdown": {
+          "wrong_speaker": 17,
+          "ambiguous_evasion": 3,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 29,
+            "correct": 17,
+            "errors": 12,
+            "error_rate": 0.41379310344827586,
+            "accuracy": 0.5862068965517241
+          },
+          "inferred": {
+            "count": 15,
+            "correct": 10,
+            "errors": 5,
+            "error_rate": 0.3333333333333333,
+            "accuracy": 0.6666666666666666
+          },
+          "ambiguous": {
+            "count": 3,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 34,
+          "polite": 9,
+          "honorific": 1,
+          "rough": 0,
+          "unknown": 3
+        },
+        "politeness_distribution_all": {
+          "plain": 38,
+          "polite": 9,
+          "honorific": 1,
+          "rough": 0,
+          "unknown": 5
+        }
+      }
+    },
+    "by_work": [
+      {
+        "attributed_total": 19,
+        "all_quotes_total": 27,
+        "explicit_error_rate": 0.5263157894736842,
+        "explicit_correct": 9,
+        "explicit_errors": 10,
+        "explicit_denominator": 19,
+        "explicit_coverage": 1.0,
+        "overall_error_rate": 0.5263157894736842,
+        "overall_errors": 10,
+        "overall_correct": 9,
+        "overall_error_rate_raw_speaker": 0.5263157894736842,
+        "overall_errors_raw_speaker": 10,
+        "overall_correct_raw_speaker": 9,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": 0.0,
+        "ambiguous_attributed_count": 0,
+        "ambiguous_rate_all_quotes": 0.0,
+        "ambiguous_all_quotes_count": 0,
+        "excluded_total": 8,
+        "excluded_abstention_rate": 0.0,
+        "excluded_abstained": 0,
+        "excluded_over_attributed": 8,
+        "error_breakdown": {
+          "wrong_speaker": 10,
+          "ambiguous_evasion": 0,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 19,
+            "correct": 9,
+            "errors": 10,
+            "error_rate": 0.5263157894736842,
+            "accuracy": 0.47368421052631576
+          },
+          "inferred": {
+            "count": 0,
+            "correct": 0,
+            "errors": 0,
+            "error_rate": null,
+            "accuracy": null
+          },
+          "ambiguous": {
+            "count": 0,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 19,
+          "polite": 0,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0
+        },
+        "politeness_distribution_all": {
+          "plain": 27,
+          "polite": 0,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0
+        },
+        "work_id": "000035_000301",
+        "title": "人間失格",
+        "author": "太宰治",
+        "narration": "first",
+        "schema_valid": true
+      },
+      {
+        "attributed_total": 24,
+        "all_quotes_total": 27,
+        "explicit_error_rate": 0.0,
+        "explicit_correct": 3,
+        "explicit_errors": 0,
+        "explicit_denominator": 3,
+        "explicit_coverage": 0.125,
+        "overall_error_rate": 0.3333333333333333,
+        "overall_errors": 8,
+        "overall_correct": 16,
+        "overall_error_rate_raw_speaker": 0.3333333333333333,
+        "overall_errors_raw_speaker": 8,
+        "overall_correct_raw_speaker": 16,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": 0.125,
+        "ambiguous_attributed_count": 3,
+        "ambiguous_rate_all_quotes": 0.2222222222222222,
+        "ambiguous_all_quotes_count": 6,
+        "excluded_total": 3,
+        "excluded_abstention_rate": 1.0,
+        "excluded_abstained": 3,
+        "excluded_over_attributed": 0,
+        "error_breakdown": {
+          "wrong_speaker": 5,
+          "ambiguous_evasion": 3,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 3,
+            "correct": 3,
+            "errors": 0,
+            "error_rate": 0.0,
+            "accuracy": 1.0
+          },
+          "inferred": {
+            "count": 18,
+            "correct": 13,
+            "errors": 5,
+            "error_rate": 0.2777777777777778,
+            "accuracy": 0.7222222222222222
+          },
+          "ambiguous": {
+            "count": 3,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 17,
+          "polite": 5,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 2
+        },
+        "politeness_distribution_all": {
+          "plain": 17,
+          "polite": 5,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 5
+        },
+        "work_id": "001383_056643",
+        "title": "少年",
+        "author": "谷崎潤一郎",
+        "narration": "first",
+        "schema_valid": true
+      },
+      {
+        "attributed_total": 26,
+        "all_quotes_total": 26,
+        "explicit_error_rate": 0.5,
+        "explicit_correct": 12,
+        "explicit_errors": 12,
+        "explicit_denominator": 24,
+        "explicit_coverage": 0.9230769230769231,
+        "overall_error_rate": 0.5,
+        "overall_errors": 13,
+        "overall_correct": 13,
+        "overall_error_rate_raw_speaker": 0.5,
+        "overall_errors_raw_speaker": 13,
+        "overall_correct_raw_speaker": 13,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": 0.0,
+        "ambiguous_attributed_count": 0,
+        "ambiguous_rate_all_quotes": 0.0,
+        "ambiguous_all_quotes_count": 0,
+        "excluded_total": 0,
+        "excluded_abstention_rate": null,
+        "excluded_abstained": 0,
+        "excluded_over_attributed": 0,
+        "error_breakdown": {
+          "wrong_speaker": 13,
+          "ambiguous_evasion": 0,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 24,
+            "correct": 12,
+            "errors": 12,
+            "error_rate": 0.5,
+            "accuracy": 0.5
+          },
+          "inferred": {
+            "count": 2,
+            "correct": 1,
+            "errors": 1,
+            "error_rate": 0.5,
+            "accuracy": 0.5
+          },
+          "ambiguous": {
+            "count": 0,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 21,
+          "polite": 4,
+          "honorific": 1,
+          "rough": 0,
+          "unknown": 0
+        },
+        "politeness_distribution_all": {
+          "plain": 21,
+          "polite": 4,
+          "honorific": 1,
+          "rough": 0,
+          "unknown": 0
+        },
+        "work_id": "000050_003586",
+        "title": "草迷宮",
+        "author": "泉鏡花",
+        "narration": "third",
+        "schema_valid": true
+      },
+      {
+        "attributed_total": 21,
+        "all_quotes_total": 27,
+        "explicit_error_rate": 0.0,
+        "explicit_correct": 5,
+        "explicit_errors": 0,
+        "explicit_denominator": 5,
+        "explicit_coverage": 0.23809523809523808,
+        "overall_error_rate": 0.3333333333333333,
+        "overall_errors": 7,
+        "overall_correct": 14,
+        "overall_error_rate_raw_speaker": 0.3333333333333333,
+        "overall_errors_raw_speaker": 7,
+        "overall_correct_raw_speaker": 14,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": 0.14285714285714285,
+        "ambiguous_attributed_count": 3,
+        "ambiguous_rate_all_quotes": 0.18518518518518517,
+        "ambiguous_all_quotes_count": 5,
+        "excluded_total": 6,
+        "excluded_abstention_rate": 0.3333333333333333,
+        "excluded_abstained": 2,
+        "excluded_over_attributed": 4,
+        "error_breakdown": {
+          "wrong_speaker": 4,
+          "ambiguous_evasion": 3,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 5,
+            "correct": 5,
+            "errors": 0,
+            "error_rate": 0.0,
+            "accuracy": 1.0
+          },
+          "inferred": {
+            "count": 13,
+            "correct": 9,
+            "errors": 4,
+            "error_rate": 0.3076923076923077,
+            "accuracy": 0.6923076923076923
+          },
+          "ambiguous": {
+            "count": 3,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 13,
+          "polite": 5,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 3
+        },
+        "politeness_distribution_all": {
+          "plain": 17,
+          "polite": 5,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 5
+        },
+        "work_id": "000081_000456",
+        "title": "銀河鉄道の夜",
+        "author": "宮沢賢治",
+        "narration": "third",
+        "schema_valid": true
+      }
+    ],
+    "schema_validation": {
+      "all_works_valid": true,
+      "valid_works": 4,
+      "total_works": 4,
+      "per_work": {
+        "000035_000301": {
+          "schema_valid": true,
+          "schema_error_count": 0,
+          "schema_errors": [],
+          "predicted_count": 27,
+          "expected_count": 27,
+          "duplicate_indices": [],
+          "extra_indices": []
+        },
+        "001383_056643": {
+          "schema_valid": true,
+          "schema_error_count": 0,
+          "schema_errors": [],
+          "predicted_count": 27,
+          "expected_count": 27,
+          "duplicate_indices": [],
+          "extra_indices": []
+        },
+        "000050_003586": {
+          "schema_valid": true,
+          "schema_error_count": 0,
+          "schema_errors": [],
+          "predicted_count": 26,
+          "expected_count": 26,
+          "duplicate_indices": [],
+          "extra_indices": []
+        },
+        "000081_000456": {
+          "schema_valid": true,
+          "schema_error_count": 0,
+          "schema_errors": [],
+          "predicted_count": 27,
+          "expected_count": 27,
+          "duplicate_indices": [],
+          "extra_indices": []
+        }
+      }
+    },
+    "non_roster_speaker_ids": [
+      {
+        "work_id": "001383_056643",
+        "utterance_index": 0,
+        "speaker_id": "null",
+        "gold_status": "attributed",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001383_056643",
+        "utterance_index": 1,
+        "speaker_id": "null",
+        "gold_status": "attributed",
+        "gold_speaker": "senkichi"
+      },
+      {
+        "work_id": "001383_056643",
+        "utterance_index": 2,
+        "speaker_id": "null",
+        "gold_status": "attributed",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001383_056643",
+        "utterance_index": 4,
+        "speaker_id": "null",
+        "gold_status": "undetermined",
+        "gold_speaker": null
+      },
+      {
+        "work_id": "001383_056643",
+        "utterance_index": 5,
+        "speaker_id": "null",
+        "gold_status": "undetermined",
+        "gold_speaker": null
+      },
+      {
+        "work_id": "001383_056643",
+        "utterance_index": 26,
+        "speaker_id": "null",
+        "gold_status": "undetermined",
+        "gold_speaker": null
+      }
+    ],
+    "errors": [
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 2,
+        "head": "ごめんなさい。下",
+        "gold_speaker": "musume",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 4,
+        "head": "あら、いやだ。あ",
+        "gold_speaker": "musume",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 6,
+        "head": "光栄だわ、飲んで",
+        "gold_speaker": "musume",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 9,
+        "head": "いいわよ、お金な",
+        "gold_speaker": "musume",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 11,
+        "head": "私を本当の姉だと",
+        "gold_speaker": "doshi",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 16,
+        "head": "心配要りません」",
+        "gold_speaker": "tsuneko",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 17,
+        "head": "こんなの、おすき",
+        "gold_speaker": "tsuneko",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 18,
+        "head": "お酒だけか？　う",
+        "gold_speaker": "tsuneko",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 24,
+        "head": "カフエか？」",
+        "gold_speaker": "horiki",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000035_000301",
+        "narration": "first",
+        "utterance_index": 26,
+        "head": "行こう！」",
+        "gold_speaker": "horiki",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "001383_056643",
+        "narration": "first",
+        "utterance_index": 0,
+        "head": "まだ其の外にも人",
+        "gold_speaker": "shinichi",
+        "pred_speaker": "null",
+        "pred_evidence": "ambiguous",
+        "pred_politeness": "unknown",
+        "outcome": "ambiguous_evasion"
+      },
+      {
+        "work_id": "001383_056643",
+        "narration": "first",
+        "utterance_index": 1,
+        "head": "もう此れだけでご",
+        "gold_speaker": "senkichi",
+        "pred_speaker": "null",
+        "pred_evidence": "ambiguous",
+        "pred_politeness": "plain",
+        "outcome": "ambiguous_evasion"
+      },
+      {
+        "work_id": "001383_056643",
+        "narration": "first",
+        "utterance_index": 2,
+        "head": "待て、待て。貴様",
+        "gold_speaker": "shinichi",
+        "pred_speaker": "null",
+        "pred_evidence": "ambiguous",
+        "pred_politeness": "unknown",
+        "outcome": "ambiguous_evasion"
+      },
+      {
+        "work_id": "001383_056643",
+        "narration": "first",
+        "utterance_index": 6,
+        "head": "坊ちゃん、もう乱",
+        "gold_speaker": "senkichi",
+        "pred_speaker": "mitsuko",
+        "pred_evidence": "inferred",
+        "pred_politeness": "polite",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "001383_056643",
+        "narration": "first",
+        "utterance_index": 12,
+        "head": "此奴の方が太って",
+        "gold_speaker": "shinichi",
+        "pred_speaker": "senkichi",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "001383_056643",
+        "narration": "first",
+        "utterance_index": 13,
+        "head": "あんまり非道いこ",
+        "gold_speaker": "senkichi",
+        "pred_speaker": "mitsuko",
+        "pred_evidence": "inferred",
+        "pred_politeness": "polite",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "001383_056643",
+        "narration": "first",
+        "utterance_index": 15,
+        "head": "さあ此れからお臀",
+        "gold_speaker": "shinichi",
+        "pred_speaker": "senkichi",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "001383_056643",
+        "narration": "first",
+        "utterance_index": 25,
+        "head": "おい仙吉、これか",
+        "gold_speaker": "shinichi",
+        "pred_speaker": "senkichi",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 0,
+        "head": "鎌倉は通越して、",
+        "gold_speaker": "tabiso",
+        "pred_speaker": "uba",
+        "pred_evidence": "explicit",
+        "pred_politeness": "polite",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 1,
+        "head": "よう御存じでござ",
+        "gold_speaker": "uba",
+        "pred_speaker": "niemon",
+        "pred_evidence": "explicit",
+        "pred_politeness": "polite",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 2,
+        "head": "まだ俗の中に知っ",
+        "gold_speaker": "tabiso",
+        "pred_speaker": "uba",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 8,
+        "head": "こりゃ仰有りそう",
+        "gold_speaker": "uba",
+        "pred_speaker": "tabiso",
+        "pred_evidence": "inferred",
+        "pred_politeness": "polite",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 9,
+        "head": "なあよ、宰八、」",
+        "gold_speaker": "niemon",
+        "pred_speaker": "saihachi",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 10,
+        "head": "やあ、」",
+        "gold_speaker": "saihachi",
+        "pred_speaker": "kundo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 11,
+        "head": "何か、お前が出会",
+        "gold_speaker": "niemon",
+        "pred_speaker": "saihachi",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 12,
+        "head": "直きだ、そうれ、",
+        "gold_speaker": "saihachi",
+        "pred_speaker": "kundo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 13,
+        "head": "おお、」",
+        "gold_speaker": "niemon",
+        "pred_speaker": "saihachi",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 14,
+        "head": "その根際だあ。帽",
+        "gold_speaker": "saihachi",
+        "pred_speaker": "kundo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 16,
+        "head": "見馴れねえ旅の書",
+        "gold_speaker": "saihachi",
+        "pred_speaker": "kundo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 17,
+        "head": "石竹だっぺい。」",
+        "gold_speaker": "niemon",
+        "pred_speaker": "saihachi",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000050_003586",
+        "narration": "third",
+        "utterance_index": 19,
+        "head": "ええ！驚かなくて",
+        "gold_speaker": "kundo",
+        "pred_speaker": "saihachi",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000081_000456",
+        "narration": "third",
+        "utterance_index": 2,
+        "head": "ハルレヤ、ハルレ",
+        "gold_speaker": "tabibito",
+        "pred_speaker": null,
+        "pred_evidence": "ambiguous",
+        "pred_politeness": "unknown",
+        "outcome": "ambiguous_evasion"
+      },
+      {
+        "work_id": "000081_000456",
+        "narration": "third",
+        "utterance_index": 5,
+        "head": "ぼくたちも降りて",
+        "gold_speaker": "giovanni",
+        "pred_speaker": null,
+        "pred_evidence": "ambiguous",
+        "pred_politeness": "unknown",
+        "outcome": "ambiguous_evasion"
+      },
+      {
+        "work_id": "000081_000456",
+        "narration": "third",
+        "utterance_index": 6,
+        "head": "降りよう。」",
+        "gold_speaker": "campanella",
+        "pred_speaker": null,
+        "pred_evidence": "ambiguous",
+        "pred_politeness": "unknown",
+        "outcome": "ambiguous_evasion"
+      },
+      {
+        "work_id": "000081_000456",
+        "narration": "third",
+        "utterance_index": 10,
+        "head": "おや、変なものが",
+        "gold_speaker": "campanella",
+        "pred_speaker": "giovanni",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000081_000456",
+        "narration": "third",
+        "utterance_index": 11,
+        "head": "くるみの実だよ。",
+        "gold_speaker": "giovanni",
+        "pred_speaker": "campanella",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000081_000456",
+        "narration": "third",
+        "utterance_index": 15,
+        "head": "君たちは参観かね",
+        "gold_speaker": "daigakushi",
+        "pred_speaker": "giovanni",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "000081_000456",
+        "narration": "third",
+        "utterance_index": 21,
+        "head": "そうですか。いや",
+        "gold_speaker": "daigakushi",
+        "pred_speaker": "giovanni",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      }
+    ],
+    "excluded_over_attributions": [
+      {
+        "work_id": "000035_000301",
+        "utterance_index": 0,
+        "gold_status": "not_speech",
+        "head": "生活」して行く能",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000035_000301",
+        "utterance_index": 1,
+        "gold_status": "not_speech",
+        "head": "聯絡」をつけるの",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000035_000301",
+        "utterance_index": 10,
+        "gold_status": "not_speech",
+        "head": "同志」でした。こ",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000035_000301",
+        "utterance_index": 13,
+        "gold_status": "not_speech",
+        "head": "同志」と言い、ど",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000035_000301",
+        "utterance_index": 14,
+        "gold_status": "not_speech",
+        "head": "伎倆」を、れいの",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000035_000301",
+        "utterance_index": 19,
+        "gold_status": "not_speech",
+        "head": "侘びしい」とは言",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000035_000301",
+        "utterance_index": 20,
+        "gold_status": "not_speech",
+        "head": "水底の岩に落ち附",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000035_000301",
+        "utterance_index": 22,
+        "gold_status": "not_speech",
+        "head": "金の切れめが縁の",
+        "pred_speaker": "yozo",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000081_000456",
+        "utterance_index": 9,
+        "gold_status": "undetermined",
+        "head": "行ってみよう。」",
+        "pred_speaker": "giovanni",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000081_000456",
+        "utterance_index": 12,
+        "gold_status": "undetermined",
+        "head": "大きいね、このく",
+        "pred_speaker": "giovanni",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000081_000456",
+        "utterance_index": 13,
+        "gold_status": "undetermined",
+        "head": "早くあすこへ行っ",
+        "pred_speaker": "giovanni",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain"
+      },
+      {
+        "work_id": "000081_000456",
+        "utterance_index": 17,
+        "gold_status": "undetermined",
+        "head": "標本にするんです",
+        "pred_speaker": "giovanni",
+        "pred_evidence": "inferred",
+        "pred_politeness": "plain"
+      }
+    ]
+  },
+  "raw_outputs": {
+    "000035_000301": {
+      "format_mode": "json_schema",
+      "elapsed_sec": 55.337,
+      "prompt_eval_count": 5084,
+      "eval_count": 1429,
+      "total_duration_ns": 55170432700,
+      "load_duration_ns": 7831242200,
+      "eval_duration_ns": 28955093000,
+      "parse_error": null,
+      "thinking_chars": 0,
+      "parsed_utterances": [
+        {
+          "utterance_index": 0,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 1,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 2,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 3,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 4,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 5,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 6,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 7,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 8,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 9,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 10,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 11,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 12,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 13,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 14,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 15,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 16,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 17,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 18,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 19,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 20,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 21,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 22,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 23,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 24,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 25,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 26,
+          "speaker_id": "yozo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        }
+      ],
+      "raw_content": "{\"utterances\": [\n    {\"utterance_index\": 0, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 1, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 2, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 3, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 4, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 5, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 6, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 7, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 8, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 9, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 10, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 11, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 12, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 13, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 14, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 15, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 16, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 17, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 18, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 19, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 20, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 21, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 22, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 23, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 24, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 25, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 26, \"speaker_id\": \"yozo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}}\n]}"
+    },
+    "001383_056643": {
+      "format_mode": "json_schema",
+      "elapsed_sec": 31.748,
+      "prompt_eval_count": 4258,
+      "eval_count": 1469,
+      "total_duration_ns": 31746382700,
+      "load_duration_ns": 5885200,
+      "eval_duration_ns": 29544527000,
+      "parse_error": null,
+      "thinking_chars": 0,
+      "parsed_utterances": [
+        {
+          "utterance_index": 0,
+          "speaker_id": "null",
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 1,
+          "speaker_id": "null",
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 2,
+          "speaker_id": "null",
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 3,
+          "speaker_id": "shinichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 4,
+          "speaker_id": "null",
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 5,
+          "speaker_id": "null",
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 6,
+          "speaker_id": "mitsuko",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 7,
+          "speaker_id": "shinichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 8,
+          "speaker_id": "senkichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 9,
+          "speaker_id": "shinichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 10,
+          "speaker_id": "hagiwara",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": "私"
+          }
+        },
+        {
+          "utterance_index": 11,
+          "speaker_id": "shinichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 12,
+          "speaker_id": "senkichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 13,
+          "speaker_id": "mitsuko",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 14,
+          "speaker_id": "shinichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 15,
+          "speaker_id": "senkichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 16,
+          "speaker_id": "jochu",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 17,
+          "speaker_id": "jochu",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 18,
+          "speaker_id": "hagiwara",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": "私"
+          }
+        },
+        {
+          "utterance_index": 19,
+          "speaker_id": "hagiwara",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": "私"
+          }
+        },
+        {
+          "utterance_index": 20,
+          "speaker_id": "hagiwara",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": "私"
+          }
+        },
+        {
+          "utterance_index": 21,
+          "speaker_id": "shinichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 22,
+          "speaker_id": "jochu",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 23,
+          "speaker_id": "senkichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 24,
+          "speaker_id": "shinichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 25,
+          "speaker_id": "senkichi",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 26,
+          "speaker_id": "null",
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        }
+      ],
+      "raw_content": "{\"utterances\": [\n    {\"utterance_index\": 0, \"speaker_id\": \"null\", \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 1, \"speaker_id\": \"null\", \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 2, \"speaker_id\": \"null\", \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 3, \"speaker_id\": \"shinichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 4, \"speaker_id\": \"null\", \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 5, \"speaker_id\": \"null\", \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 6, \"speaker_id\": \"mitsuko\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 7, \"speaker_id\": \"shinichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 8, \"speaker_id\": \"senkichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 9, \"speaker_id\": \"shinichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 10, \"speaker_id\": \"hagiwara\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": \"私\"}},\n    {\"utterance_index\": 11, \"speaker_id\": \"shinichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 12, \"speaker_id\": \"senkichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 13, \"speaker_id\": \"mitsuko\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 14, \"speaker_id\": \"shinichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 15, \"speaker_id\": \"senkichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 16, \"speaker_id\": \"jochu\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 17, \"speaker_id\": \"jochu\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 18, \"speaker_id\": \"hagiwara\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": \"私\"}},\n    {\"utterance_index\": 19, \"speaker_id\": \"hagiwara\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": \"私\"}},\n    {\"utterance_index\": 20, \"speaker_id\": \"hagiwara\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": \"私\"}},\n    {\"utterance_index\": 21, \"speaker_id\": \"shinichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 22, \"speaker_id\": \"jochu\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 23, \"speaker_id\": \"senkichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 24, \"speaker_id\": \"shinichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 25, \"speaker_id\": \"senkichi\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 26, \"speaker_id\": \"null\", \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}}\n]}"
+    },
+    "000050_003586": {
+      "format_mode": "json_schema",
+      "elapsed_sec": 29.911,
+      "prompt_eval_count": 3783,
+      "eval_count": 1388,
+      "total_duration_ns": 29909981500,
+      "load_duration_ns": 6868600,
+      "eval_duration_ns": 27814555000,
+      "parse_error": null,
+      "thinking_chars": 0,
+      "parsed_utterances": [
+        {
+          "utterance_index": 0,
+          "speaker_id": "uba",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 1,
+          "speaker_id": "niemon",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 2,
+          "speaker_id": "uba",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 3,
+          "speaker_id": "tabiso",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 4,
+          "speaker_id": "uba",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 5,
+          "speaker_id": "tabiso",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 6,
+          "speaker_id": "uba",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "honorific",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 7,
+          "speaker_id": "uba",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 8,
+          "speaker_id": "tabiso",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 9,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 10,
+          "speaker_id": "kundo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 11,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 12,
+          "speaker_id": "kundo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 13,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 14,
+          "speaker_id": "kundo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 15,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 16,
+          "speaker_id": "kundo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 17,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 18,
+          "speaker_id": "kundo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 19,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 20,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 21,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 22,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 23,
+          "speaker_id": "kundo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 24,
+          "speaker_id": "saihachi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 25,
+          "speaker_id": "kundo",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        }
+      ],
+      "raw_content": "{\"utterances\": [\n    {\"utterance_index\": 0, \"speaker_id\": \"uba\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 1, \"speaker_id\": \"niemon\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 2, \"speaker_id\": \"uba\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 3, \"speaker_id\": \"tabiso\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 4, \"speaker_id\": \"uba\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 5, \"speaker_id\": \"tabiso\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 6, \"speaker_id\": \"uba\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"honorific\", \"first_person\": null}},\n    {\"utterance_index\": 7, \"speaker_id\": \"uba\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 8, \"speaker_id\": \"tabiso\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 9, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 10, \"speaker_id\": \"kundo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 11, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 12, \"speaker_id\": \"kundo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 13, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 14, \"speaker_id\": \"kundo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 15, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 16, \"speaker_id\": \"kundo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 17, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 18, \"speaker_id\": \"kundo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 19, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 20, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 21, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 22, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 23, \"speaker_id\": \"kundo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 24, \"speaker_id\": \"saihachi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 25, \"speaker_id\": \"kundo\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}}\n]}"
+    },
+    "000081_000456": {
+      "format_mode": "json_schema",
+      "elapsed_sec": 32.491,
+      "prompt_eval_count": 4054,
+      "eval_count": 1507,
+      "total_duration_ns": 32479606400,
+      "load_duration_ns": 6257000,
+      "eval_duration_ns": 30283495000,
+      "parse_error": null,
+      "thinking_chars": 0,
+      "parsed_utterances": [
+        {
+          "utterance_index": 0,
+          "speaker_id": "giovanni",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 1,
+          "speaker_id": "campanella",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 2,
+          "speaker_id": null,
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 3,
+          "speaker_id": null,
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 4,
+          "speaker_id": null,
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 5,
+          "speaker_id": null,
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 6,
+          "speaker_id": null,
+          "addressee_id": null,
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "unknown",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 7,
+          "speaker_id": "campanella",
+          "addressee_id": "giovanni",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 8,
+          "speaker_id": "giovanni",
+          "addressee_id": "campanella",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 9,
+          "speaker_id": "giovanni",
+          "addressee_id": "campanella",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 10,
+          "speaker_id": "giovanni",
+          "addressee_id": "campanella",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 11,
+          "speaker_id": "campanella",
+          "addressee_id": "giovanni",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 12,
+          "speaker_id": "giovanni",
+          "addressee_id": "campanella",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 13,
+          "speaker_id": "giovanni",
+          "addressee_id": "campanella",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 14,
+          "speaker_id": "daigakushi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 15,
+          "speaker_id": "giovanni",
+          "addressee_id": "daigakushi",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 16,
+          "speaker_id": "daigakushi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 17,
+          "speaker_id": "giovanni",
+          "addressee_id": "daigakushi",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 18,
+          "speaker_id": "daigakushi",
+          "addressee_id": null,
+          "evidence": "explicit",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 19,
+          "speaker_id": "campanella",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 20,
+          "speaker_id": "giovanni",
+          "addressee_id": "campanella",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 21,
+          "speaker_id": "giovanni",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 22,
+          "speaker_id": "toritori",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 23,
+          "speaker_id": "giovanni",
+          "addressee_id": "toritori",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 24,
+          "speaker_id": "toritori",
+          "addressee_id": "giovanni",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 25,
+          "speaker_id": "giovanni",
+          "addressee_id": "toritori",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 26,
+          "speaker_id": "toritori",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        }
+      ],
+      "raw_content": "{\"utterances\": [\n    {\"utterance_index\": 0, \"speaker_id\": \"giovanni\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 1, \"speaker_id\": \"campanella\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 2, \"speaker_id\": null, \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 3, \"speaker_id\": null, \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 4, \"speaker_id\": null, \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 5, \"speaker_id\": null, \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 6, \"speaker_id\": null, \"addressee_id\": null, \"evidence\": \"ambiguous\", \"register\": {\"politeness\": \"unknown\", \"first_person\": null}},\n    {\"utterance_index\": 7, \"speaker_id\": \"campanella\", \"addressee_id\": \"giovanni\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 8, \"speaker_id\": \"giovanni\", \"addressee_id\": \"campanella\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 9, \"speaker_id\": \"giovanni\", \"addressee_id\": \"campanella\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 10, \"speaker_id\": \"giovanni\", \"addressee_id\": \"campanella\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 11, \"speaker_id\": \"campanella\", \"addressee_id\": \"giovanni\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 12, \"speaker_id\": \"giovanni\", \"addressee_id\": \"campanella\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 13, \"speaker_id\": \"giovanni\", \"addressee_id\": \"campanella\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 14, \"speaker_id\": \"daigakushi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 15, \"speaker_id\": \"giovanni\", \"addressee_id\": \"daigakushi\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 16, \"speaker_id\": \"daigakushi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 17, \"speaker_id\": \"giovanni\", \"addressee_id\": \"daigakushi\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 18, \"speaker_id\": \"daigakushi\", \"addressee_id\": null, \"evidence\": \"explicit\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 19, \"speaker_id\": \"campanella\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 20, \"speaker_id\": \"giovanni\", \"addressee_id\": \"campanella\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 21, \"speaker_id\": \"giovanni\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 22, \"speaker_id\": \"toritori\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 23, \"speaker_id\": \"giovanni\", \"addressee_id\": \"toritori\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 24, \"speaker_id\": \"toritori\", \"addressee_id\": \"giovanni\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 25, \"speaker_id\": \"giovanni\", \"addressee_id\": \"toritori\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 26, \"speaker_id\": \"toritori\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}}\n]}"
+    }
+  }
+}

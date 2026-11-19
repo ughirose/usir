@@ -1,0 +1,329 @@
+{
+  "run_timestamp": "2026-11-19T10:14:59.077081+00:00",
+  "split": "dev",
+  "split_version": "f9_step1_work_stratified_v1",
+  "gold_json_sha256": "35e9364d63a60098408e99374fec3bc2f3782bb086dcf4e9f384631ed81e2780",
+  "work_ids_evaluated": [
+    "000035_000301",
+    "001383_056643",
+    "000050_003586",
+    "000081_000456"
+  ],
+  "prompt_version": "step1_utterances_v1",
+  "prompt_hash": "7912bad97f799ce526ad60553adaac5456002c650f6981880f44bdb0b433de6a",
+  "step1_pass_thresholds": {
+    "explicit_error_rate_lt": 0.05,
+    "overall_error_rate_lt": 0.1,
+    "politeness_agreement_rate_ge": 0.9
+  },
+  "models": [
+    {
+      "model_spec": "qwen3:8b::think=false",
+      "model_name": "qwen3:8b",
+      "think": false,
+      "result_file": "qwen3_8b_think_false_dev.json",
+      "elapsed_sec": 73.439,
+      "prompt_eval_count": 18665,
+      "eval_count": 4917,
+      "schema_valid_works": 4,
+      "total_works": 4,
+      "non_roster_speaker_count": 0,
+      "explicit_error_rate": 0.22807017543859648,
+      "explicit_errors": 13,
+      "explicit_denominator": 57,
+      "overall_error_rate": 0.43333333333333335,
+      "overall_errors": 39,
+      "overall_error_rate_raw_speaker": 0.43333333333333335,
+      "overall_errors_raw_speaker": 39,
+      "attributed_total": 90,
+      "politeness_agreement_rate": null,
+      "politeness_gold_available": false,
+      "ambiguous_rate": 0.2777777777777778,
+      "ambiguous_attributed_count": 25,
+      "ambiguous_rate_all_quotes": 0.2616822429906542,
+      "excluded_abstention_rate": 0.17647058823529413,
+      "by_evidence": {
+        "explicit": {
+          "count": 57,
+          "correct": 44,
+          "errors": 13,
+          "error_rate": 0.22807017543859648,
+          "accuracy": 0.7719298245614035
+        },
+        "inferred": {
+          "count": 8,
+          "correct": 7,
+          "errors": 1,
+          "error_rate": 0.125,
+          "accuracy": 0.875
+        },
+        "ambiguous": {
+          "count": 25,
+          "correct_raw_speaker": 0
+        },
+        "missing": {
+          "count": 0
+        }
+      },
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": 0.3684210526315789,
+          "overall_error_rate": 0.7209302325581395,
+          "overall_error_rate_raw_speaker": 0.7209302325581395,
+          "ambiguous_rate": 0.5581395348837209,
+          "attributed_total": 43
+        },
+        "third": {
+          "explicit_error_rate": 0.15789473684210525,
+          "overall_error_rate": 0.1702127659574468,
+          "overall_error_rate_raw_speaker": 0.1702127659574468,
+          "ambiguous_rate": 0.02127659574468085,
+          "attributed_total": 47
+        }
+      }
+    },
+    {
+      "model_spec": "qwen3:8b::think=true",
+      "model_name": "qwen3:8b",
+      "think": true,
+      "result_file": "qwen3_8b_think_true_dev.json",
+      "elapsed_sec": 176.32,
+      "prompt_eval_count": 18641,
+      "eval_count": 11782,
+      "schema_valid_works": 4,
+      "total_works": 4,
+      "non_roster_speaker_count": 0,
+      "explicit_error_rate": 0.1643835616438356,
+      "explicit_errors": 12,
+      "explicit_denominator": 73,
+      "overall_error_rate": 0.2111111111111111,
+      "overall_errors": 19,
+      "overall_error_rate_raw_speaker": 0.2111111111111111,
+      "overall_errors_raw_speaker": 19,
+      "attributed_total": 90,
+      "politeness_agreement_rate": null,
+      "politeness_gold_available": false,
+      "ambiguous_rate": 0.011111111111111112,
+      "ambiguous_attributed_count": 1,
+      "ambiguous_rate_all_quotes": 0.009345794392523364,
+      "excluded_abstention_rate": 0.0,
+      "by_evidence": {
+        "explicit": {
+          "count": 73,
+          "correct": 61,
+          "errors": 12,
+          "error_rate": 0.1643835616438356,
+          "accuracy": 0.8356164383561644
+        },
+        "inferred": {
+          "count": 16,
+          "correct": 10,
+          "errors": 6,
+          "error_rate": 0.375,
+          "accuracy": 0.625
+        },
+        "ambiguous": {
+          "count": 1,
+          "correct_raw_speaker": 0
+        },
+        "missing": {
+          "count": 0
+        }
+      },
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": 0.1951219512195122,
+          "overall_error_rate": 0.20930232558139536,
+          "overall_error_rate_raw_speaker": 0.20930232558139536,
+          "ambiguous_rate": 0.0,
+          "attributed_total": 43
+        },
+        "third": {
+          "explicit_error_rate": 0.125,
+          "overall_error_rate": 0.2127659574468085,
+          "overall_error_rate_raw_speaker": 0.2127659574468085,
+          "ambiguous_rate": 0.02127659574468085,
+          "attributed_total": 47
+        }
+      }
+    },
+    {
+      "model_spec": "gemma3:12b",
+      "model_name": "gemma3:12b",
+      "think": null,
+      "result_file": "gemma3_12b_dev.json",
+      "elapsed_sec": 149.487,
+      "prompt_eval_count": 17179,
+      "eval_count": 5793,
+      "schema_valid_works": 4,
+      "total_works": 4,
+      "non_roster_speaker_count": 6,
+      "explicit_error_rate": 0.43137254901960786,
+      "explicit_errors": 22,
+      "explicit_denominator": 51,
+      "overall_error_rate": 0.4222222222222222,
+      "overall_errors": 38,
+      "overall_error_rate_raw_speaker": 0.4222222222222222,
+      "overall_errors_raw_speaker": 38,
+      "attributed_total": 90,
+      "politeness_agreement_rate": null,
+      "politeness_gold_available": false,
+      "ambiguous_rate": 0.06666666666666667,
+      "ambiguous_attributed_count": 6,
+      "ambiguous_rate_all_quotes": 0.102803738317757,
+      "excluded_abstention_rate": 0.29411764705882354,
+      "by_evidence": {
+        "explicit": {
+          "count": 51,
+          "correct": 29,
+          "errors": 22,
+          "error_rate": 0.43137254901960786,
+          "accuracy": 0.5686274509803921
+        },
+        "inferred": {
+          "count": 33,
+          "correct": 23,
+          "errors": 10,
+          "error_rate": 0.30303030303030304,
+          "accuracy": 0.696969696969697
+        },
+        "ambiguous": {
+          "count": 6,
+          "correct_raw_speaker": 0
+        },
+        "missing": {
+          "count": 0
+        }
+      },
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": 0.45454545454545453,
+          "overall_error_rate": 0.4186046511627907,
+          "overall_error_rate_raw_speaker": 0.4186046511627907,
+          "ambiguous_rate": 0.06976744186046512,
+          "attributed_total": 43
+        },
+        "third": {
+          "explicit_error_rate": 0.41379310344827586,
+          "overall_error_rate": 0.425531914893617,
+          "overall_error_rate_raw_speaker": 0.425531914893617,
+          "ambiguous_rate": 0.06382978723404255,
+          "attributed_total": 47
+        }
+      }
+    },
+    {
+      "model_spec": "qwen2.5:14b",
+      "model_name": "qwen2.5:14b",
+      "think": null,
+      "result_file": "qwen2.5_14b_dev.json",
+      "elapsed_sec": 145.948,
+      "prompt_eval_count": 18633,
+      "eval_count": 5668,
+      "schema_valid_works": 4,
+      "total_works": 4,
+      "non_roster_speaker_count": 0,
+      "explicit_error_rate": 0.17045454545454544,
+      "explicit_errors": 15,
+      "explicit_denominator": 88,
+      "overall_error_rate": 0.17777777777777778,
+      "overall_errors": 16,
+      "overall_error_rate_raw_speaker": 0.17777777777777778,
+      "overall_errors_raw_speaker": 16,
+      "attributed_total": 90,
+      "politeness_agreement_rate": null,
+      "politeness_gold_available": false,
+      "ambiguous_rate": 0.011111111111111112,
+      "ambiguous_attributed_count": 1,
+      "ambiguous_rate_all_quotes": 0.028037383177570093,
+      "excluded_abstention_rate": 0.11764705882352941,
+      "by_evidence": {
+        "explicit": {
+          "count": 88,
+          "correct": 73,
+          "errors": 15,
+          "error_rate": 0.17045454545454544,
+          "accuracy": 0.8295454545454546
+        },
+        "inferred": {
+          "count": 1,
+          "correct": 1,
+          "errors": 0,
+          "error_rate": 0.0,
+          "accuracy": 1.0
+        },
+        "ambiguous": {
+          "count": 1,
+          "correct_raw_speaker": 0
+        },
+        "missing": {
+          "count": 0
+        }
+      },
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": 0.07142857142857142,
+          "overall_error_rate": 0.06976744186046512,
+          "overall_error_rate_raw_speaker": 0.06976744186046512,
+          "ambiguous_rate": 0.0,
+          "attributed_total": 43
+        },
+        "third": {
+          "explicit_error_rate": 0.2608695652173913,
+          "overall_error_rate": 0.2765957446808511,
+          "overall_error_rate_raw_speaker": 0.2765957446808511,
+          "ambiguous_rate": 0.02127659574468085,
+          "attributed_total": 47
+        }
+      }
+    }
+  ],
+  "politeness_pairwise_agreement": {
+    "scope": "attributed_only",
+    "total_items": 90,
+    "pairs": [
+      {
+        "model_a": "qwen3:8b::think=false",
+        "model_b": "qwen3:8b::think=true",
+        "compared": 90,
+        "agreed": 60,
+        "agreement_rate": 0.6666666666666666
+      },
+      {
+        "model_a": "qwen3:8b::think=false",
+        "model_b": "gemma3:12b",
+        "compared": 90,
+        "agreed": 53,
+        "agreement_rate": 0.5888888888888889
+      },
+      {
+        "model_a": "qwen3:8b::think=false",
+        "model_b": "qwen2.5:14b",
+        "compared": 90,
+        "agreed": 60,
+        "agreement_rate": 0.6666666666666666
+      },
+      {
+        "model_a": "qwen3:8b::think=true",
+        "model_b": "gemma3:12b",
+        "compared": 90,
+        "agreed": 63,
+        "agreement_rate": 0.7
+      },
+      {
+        "model_a": "qwen3:8b::think=true",
+        "model_b": "qwen2.5:14b",
+        "compared": 90,
+        "agreed": 72,
+        "agreement_rate": 0.8
+      },
+      {
+        "model_a": "gemma3:12b",
+        "model_b": "qwen2.5:14b",
+        "compared": 90,
+        "agreed": 70,
+        "agreement_rate": 0.7777777777777778
+      }
+    ]
+  }
+}
