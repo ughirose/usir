@@ -303,29 +303,58 @@ def extract_work_utterance_features(work: F9Work) -> list[UtteranceFeatures]:
     )
 
 
-def format_utterance_features_block(features: Sequence[UtteranceFeatures]) -> str:
-    """Format extracted features as a compact Markdown table for prompt v4."""
+def format_utterance_features_block(
+    features: Sequence[UtteranceFeatures],
+    *,
+    include_speaker_ids: bool = True,
+) -> str:
+    """Format extracted features as a compact Markdown table for prompt v4/v5."""
+    if include_speaker_ids:
+        lines = [
+            "## 各引用の機械抽出特徴（参考前情報）",
+            (
+                "各 `[Uk]` の決定論的特徴（`pos`: `standalone_line`=行頭独立発話行 / "
+                "`line_head_with_trailing`=行頭開始+同一行後続地の文 / `inline_embedded`=地の文途中埋込、"
+                "`chars`=括弧内文字数、`pre_*`/`post_*`=直前/直後の地の文の話者名候補・発話動詞・両方あり判定）。"
+                "判定自体は本文と人物名簿に基づきモデルが行うこと。"
+            ),
+            "| id | pos | chars | pre_spk | pre_verb | pre_spk_verb | post_spk | post_verb | post_spk_verb |",
+            "|---|---|---:|---|---|---|---|---|---|",
+        ]
+        for feat in features:
+            pre_spk = ",".join(feat.pre_speakers) if feat.pre_speakers else "-"
+            post_spk = ",".join(feat.post_speakers) if feat.post_speakers else "-"
+            pre_verb = feat.pre_speech_verb or "-"
+            post_verb = feat.post_speech_verb or "-"
+            pre_sv = "true" if feat.pre_speaker_and_verb else "false"
+            post_sv = "true" if feat.post_speaker_and_verb else "false"
+            lines.append(
+                f"| U{feat.utterance_index} | {feat.position} | {feat.quote_chars} "
+                f"| {pre_spk} | {pre_verb} | {pre_sv} "
+                f"| {post_spk} | {post_verb} | {post_sv} |"
+            )
+        return "\n".join(lines)
+
     lines = [
         "## 各引用の機械抽出特徴（参考前情報）",
         (
             "各 `[Uk]` の決定論的特徴（`pos`: `standalone_line`=行頭独立発話行 / "
             "`line_head_with_trailing`=行頭開始+同一行後続地の文 / `inline_embedded`=地の文途中埋込、"
-            "`chars`=括弧内文字数、`pre_*`/`post_*`=直前/直後の地の文の話者名候補・発話動詞・両方あり判定）。"
+            "`chars`=括弧内文字数、`pre_verb`/`post_verb`=直前/直後の地の文の発話動詞、"
+            "`pre_spk_verb`/`post_spk_verb`=直前/直後の地の文に話者名と発話動詞の両方があるか）。"
             "判定自体は本文と人物名簿に基づきモデルが行うこと。"
         ),
-        "| id | pos | chars | pre_spk | pre_verb | pre_spk_verb | post_spk | post_verb | post_spk_verb |",
-        "|---|---|---:|---|---|---|---|---|---|",
+        "| id | pos | chars | pre_verb | pre_spk_verb | post_verb | post_spk_verb |",
+        "|---|---|---:|---|---|---|---|",
     ]
     for feat in features:
-        pre_spk = ",".join(feat.pre_speakers) if feat.pre_speakers else "-"
-        post_spk = ",".join(feat.post_speakers) if feat.post_speakers else "-"
         pre_verb = feat.pre_speech_verb or "-"
         post_verb = feat.post_speech_verb or "-"
         pre_sv = "true" if feat.pre_speaker_and_verb else "false"
         post_sv = "true" if feat.post_speaker_and_verb else "false"
         lines.append(
             f"| U{feat.utterance_index} | {feat.position} | {feat.quote_chars} "
-            f"| {pre_spk} | {pre_verb} | {pre_sv} "
-            f"| {post_spk} | {post_verb} | {post_sv} |"
+            f"| {pre_verb} | {pre_sv} "
+            f"| {post_verb} | {post_sv} |"
         )
     return "\n".join(lines)

@@ -16,6 +16,7 @@ PROMPT_VERSION_V1 = "step1_utterances_v1"
 PROMPT_VERSION_V2 = "step1_utterances_v2"
 PROMPT_VERSION_V3 = "step1_utterances_v3"
 PROMPT_VERSION_V4 = "step1_utterances_v4"
+PROMPT_VERSION_V5 = "step1_utterances_v5"
 
 SYSTEM_PROMPT_V1 = """あなたは日本文学テクストの話者帰属・口調注釈センサー（sensor.v2）です。
 入力された場面本文には、最外のカギ括弧の直前に `[U0]`, `[U1]`, ... という連番マーカーが振られています。
@@ -156,12 +157,14 @@ SYSTEM_PROMPT_V3 = """あなたは日本文学テクストの話者帰属・口�
 - `register.first_person`: セリフ内に明示された一人称代名詞（`"ぼく"`, `"私"`, `"おれ"`, `"うち"` 等）のみ記入。無ければ `null`。"""
 
 SYSTEM_PROMPT_V4 = SYSTEM_PROMPT_V3
+SYSTEM_PROMPT_V5 = SYSTEM_PROMPT_V3
 
 PROMPT_REGISTRY: dict[str, tuple[str, str]] = {
     "v1": (PROMPT_VERSION_V1, SYSTEM_PROMPT_V1),
     "v2": (PROMPT_VERSION_V2, SYSTEM_PROMPT_V2),
     "v3": (PROMPT_VERSION_V3, SYSTEM_PROMPT_V3),
     "v4": (PROMPT_VERSION_V4, SYSTEM_PROMPT_V4),
+    "v5": (PROMPT_VERSION_V5, SYSTEM_PROMPT_V5),
 }
 DEFAULT_PROMPT_KEY = "v2"
 PROMPT_VERSION = PROMPT_VERSION_V2
@@ -268,7 +271,10 @@ def build_work_messages(
     features_section = ""
     if ver_label == PROMPT_VERSION_V4:
         feats = extract_work_utterance_features(work)
-        features_section = f"\n\n{format_utterance_features_block(feats)}"
+        features_section = f"\n\n{format_utterance_features_block(feats, include_speaker_ids=True)}"
+    elif ver_label == PROMPT_VERSION_V5:
+        feats = extract_work_utterance_features(work)
+        features_section = f"\n\n{format_utterance_features_block(feats, include_speaker_ids=False)}"
 
     user_prompt = (
         f"## 場面メタ情報\n"

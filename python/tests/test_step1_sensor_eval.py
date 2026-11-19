@@ -797,6 +797,57 @@ def test_prompt_v4_strict_ablation_over_v3() -> None:
     assert "| U1 | inline_embedded | 2 | - | - | false | - | - | false |" in feat_block
 
 
+def test_prompt_v5_strict_ablation_over_v4() -> None:
+    ver_v3, sys_v3 = get_prompt("v3")
+    ver_v4, sys_v4 = get_prompt("v4")
+    ver_v5, sys_v5 = get_prompt("v5")
+    assert ver_v3 == "step1_utterances_v3"
+    assert ver_v4 == "step1_utterances_v4"
+    assert ver_v5 == "step1_utterances_v5"
+    assert sys_v5 == sys_v4 == sys_v3
+
+    hashes = {compute_prompt_hash(prompt_version=v) for v in ("v1", "v2", "v3", "v4", "v5")}
+    assert len(hashes) == 5
+
+    text = (
+        "自分の机に向って、娘が言った。\n"
+        "「お帰りなさい」とツネ子が呟いた。\n"
+        "彼は「自由」を嫌った。\n"
+    )
+    numbered, spans = number_outer_quotes(text)
+    chars = [
+        F9Character(id="yozo", aliases=["葉蔵"], gender="Male"),
+        F9Character(id="musume", aliases=["娘"], gender="Female"),
+        F9Character(id="tsuneko", aliases=["ツネ子"], gender="Female"),
+    ]
+    utts = [
+        F9UtteranceGold(0, spans[0][0], spans[0][1], "お帰りなさい", "attributed", "tsuneko", "「お帰りなさい」"),
+        F9UtteranceGold(1, spans[1][0], spans[1][1], "自由", "not_speech", None, "「自由」"),
+    ]
+    work = F9Work("w_ab5", None, None, "first", "yozo", None, chars, text, numbered, "f" * 64, utts)
+
+    msgs_v3 = build_work_messages(work, prompt_version="v3")
+    msgs_v4 = build_work_messages(work, prompt_version="v4")
+    msgs_v5 = build_work_messages(work, prompt_version="v5")
+    assert msgs_v5[0] == msgs_v4[0] == msgs_v3[0]
+
+    feat_block_v5 = format_utterance_features_block(
+        extract_work_utterance_features(work), include_speaker_ids=False
+    )
+    expected_user_v5 = msgs_v3[1]["content"].replace(
+        "\n\n上記 `[U0]`",
+        f"\n\n{feat_block_v5}\n\n上記 `[U0]`",
+    )
+    assert msgs_v5[1]["content"] == expected_user_v5
+    assert "| id | pos | chars | pre_verb | pre_spk_verb | post_verb | post_spk_verb |" in feat_block_v5
+    assert "pre_spk |" not in feat_block_v5
+    assert "post_spk |" not in feat_block_v5
+    assert "| U0 | line_head_with_trailing | 6 | 言っ | true | 呟い | true |" in feat_block_v5
+    assert "| U1 | inline_embedded | 2 | - | false | - | false |" in feat_block_v5
+    for forbidden in ("yozo", "musume", "tsuneko", "葉蔵", "娘", "ツネ子", "自分"):
+        assert forbidden not in feat_block_v5
+
+
 def test_not_speech_and_undetermined_abstention_breakdown() -> None:
     work = F9Work(
         work_id="w_exc",
