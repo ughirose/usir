@@ -28,6 +28,13 @@ from usir_py.sensor_eval.metrics import (
     validate_speaker_id,
 )
 from usir_py.sensor_eval.ollama_client import OllamaResponse, call_ollama_chat
+from usir_py.sensor_eval.postprocess import (
+    PostprocessConfig,
+    analyze_inline_non_speech_thresholds,
+    apply_postprocessing_to_predictions,
+    apply_postprocessing_to_work,
+    replay_saved_result_with_postprocess,
+)
 from usir_py.sensor_eval.prompt import (
     PROMPT_REGISTRY,
     PROMPT_VERSION,
@@ -46,8 +53,12 @@ __all__ = [
     "OllamaResponse",
     "PROMPT_REGISTRY",
     "PROMPT_VERSION",
+    "PostprocessConfig",
     "STEP1_PASS_THRESHOLDS",
     "UtteranceFeatures",
+    "analyze_inline_non_speech_thresholds",
+    "apply_postprocessing_to_predictions",
+    "apply_postprocessing_to_work",
     "build_ollama_utterances_format_schema",
     "build_work_messages",
     "call_ollama_chat",
@@ -63,6 +74,7 @@ __all__ = [
     "is_forbidden_null_literal",
     "load_f9_dataset",
     "number_outer_quotes",
+    "replay_saved_result_with_postprocess",
     "validate_sensor_v2_utterances",
     "validate_speaker_id",
 ]

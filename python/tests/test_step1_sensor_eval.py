@@ -33,6 +33,11 @@ from usir_py.sensor_eval.metrics import (
     validate_speaker_id,
 )
 from usir_py.sensor_eval.ollama_client import call_ollama_chat, parse_json_content
+from usir_py.sensor_eval.postprocess import (
+    PostprocessConfig,
+    apply_postprocessing_to_work,
+    replay_saved_result_with_postprocess,
+)
 from usir_py.sensor_eval.prompt import (
     build_ollama_utterances_format_schema,
     build_work_messages,
@@ -912,5 +917,262 @@ def test_not_speech_and_undetermined_abstention_breakdown() -> None:
     assert ov["undetermined_abstained"] == 1
     assert ov["undetermined_over_attributed"] == 0
     assert ov["undetermined_abstention_rate"] == pytest.approx(1.0)
+
+
+def test_postprocess_config_validation_and_defaults() -> None:
+    default_cfg = PostprocessConfig()
+    assert default_cfg.explicit_evidence_gate is False
+    assert default_cfg.inline_non_speech_filter is False
+    assert default_cfg.inline_non_speech_max_chars == 11
+    assert default_cfg.is_enabled is False
+    assert PostprocessConfig.from_dict(None) == default_cfg
+
+    enabled_cfg = PostprocessConfig.from_dict(
+        {
+            "explicit_evidence_gate": True,
+            "inline_non_speech_filter": True,
+            "inline_non_speech_max_chars": 8,
+        }
+    )
+    assert enabled_cfg.is_enabled is True
+    assert enabled_cfg.to_dict() == {
+        "explicit_evidence_gate": True,
+        "inline_non_speech_filter": True,
+        "inline_non_speech_max_chars": 8,
+    }
+
+    with pytest.raises(ValueError, match="dict"):
+        PostprocessConfig.from_dict(["invalid"])  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="Unknown postprocess config keys"):
+        PostprocessConfig.from_dict({"unknown_flag": True})
+    with pytest.raises(ValueError, match="non-negative integer"):
+        PostprocessConfig.from_dict({"inline_non_speech_max_chars": True})
+    with pytest.raises(ValueError, match="non-negative integer"):
+        PostprocessConfig.from_dict({"inline_non_speech_max_chars": -1})
+    with pytest.raises(ValueError, match="bool"):
+        PostprocessConfig.from_dict({"explicit_evidence_gate": 1})
+
+
+def test_postprocess_explicit_evidence_gate_and_inline_non_speech_filter() -> None:
+    text = (
+        "男が言った。\n"
+        "「おはよう」\n"
+        "「こんばんは」\n"
+        "「おやすみ」\n"
+        "彼は所謂「自由」を嫌った。\n"
+        "彼は所謂「一二三四五六」を嫌った。\n"
+        "誰かが「はい」と言った。\n"
+        "「あ」\n"
+    )
+    numbered, spans = number_outer_quotes(text)
+    assert len(spans) == 7
+    chars = [
+        F9Character(id="otoko", aliases=["男"], gender="Male"),
+        F9Character(id="onna", aliases=["女"], gender="Female"),
+    ]
+    utts_gold_a = [
+        F9UtteranceGold(i, s[0], s[1], "h", "attributed", "otoko", text[s[0] : s[1]])
+        for i, s in enumerate(spans)
+    ]
+    utts_gold_b = [
+        F9UtteranceGold(i, s[0], s[1], "h", "not_speech", None, text[s[0] : s[1]])
+        for i, s in enumerate(spans)
+    ]
+    work_a = F9Work("w_pp", None, None, "third", None, None, chars, text, numbered, "1" * 64, utts_gold_a)
+    work_b = F9Work("w_pp", None, None, "third", None, None, chars, text, numbered, "1" * 64, utts_gold_b)
+
+    raw_preds = [
+        {"utterance_index": 0, "speaker_id": "otoko", "addressee_id": None, "evidence": "explicit", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 1, "speaker_id": "onna", "addressee_id": None, "evidence": "explicit", "register": {"politeness": "polite", "first_person": None}},
+        {"utterance_index": 2, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 3, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 4, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 5, "speaker_id": "otoko", "addressee_id": None, "evidence": "explicit", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 6, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+    ]
+    snapshot = json.loads(json.dumps(raw_preds))
+    cfg = PostprocessConfig(
+        explicit_evidence_gate=True,
+        inline_non_speech_filter=True,
+        inline_non_speech_max_chars=5,
+    )
+    out_a, audit_a = apply_postprocessing_to_work(work_a, raw_preds, cfg)
+    out_b, audit_b = apply_postprocessing_to_work(work_b, raw_preds, cfg)
+
+    # Zero mutation of original inputs and zero gold-label leakage.
+    assert raw_preds == snapshot
+    assert out_a == out_b
+    assert audit_a == audit_b
+    assert out_a is not None
+
+    # U0: pre_speaker_and_verb=True -> keeps explicit.
+    assert out_a[0]["evidence"] == "explicit" and out_a[0]["speaker_id"] == "otoko"
+    # U1: no speaker+verb -> downgraded to inferred, speaker preserved.
+    assert out_a[1]["evidence"] == "inferred" and out_a[1]["speaker_id"] == "onna"
+    # U2: already inferred -> unchanged.
+    assert out_a[2]["evidence"] == "inferred" and out_a[2]["speaker_id"] == "otoko"
+    # U3: inline_embedded, no verb, 2 chars <= 5 -> forced null/ambiguous.
+    assert out_a[3]["speaker_id"] is None and out_a[3]["evidence"] == "ambiguous"
+    # U4: inline_embedded, no verb, 6 chars > 5 -> untouched.
+    assert out_a[4]["speaker_id"] == "otoko" and out_a[4]["evidence"] == "inferred"
+    # U5: inline_embedded, 2 chars <= 5, BUT post_speech_verb="言っ" (post_spk=()) -> (B) skips, (A) downgrades!
+    assert out_a[5]["speaker_id"] == "otoko" and out_a[5]["evidence"] == "inferred"
+    # U6: standalone_line, 1 char <= 5 -> (B) skips because position != inline_embedded.
+    assert out_a[6]["speaker_id"] == "otoko" and out_a[6]["evidence"] == "inferred"
+
+    assert [r["utterance_index"] for r in audit_a["inline_non_speech_forced"]] == [3]
+    assert [r["utterance_index"] for r in audit_a["explicit_downgraded"]] == [1, 5]
+
+    # None input stays None; missing indices are never fabricated.
+    none_out, none_audit = apply_postprocessing_to_work(work_a, None, cfg)
+    assert none_out is None
+    assert none_audit["inline_non_speech_forced"] == []
+    partial_out, _ = apply_postprocessing_to_work(work_a, [raw_preds[1]], cfg)
+    assert partial_out is not None and len(partial_out) == 1
+    assert partial_out[0]["evidence"] == "inferred"
+
+
+def test_postprocess_cli_config_toggles_and_threshold(tmp_path: Path) -> None:
+    from usir_py.sensor_eval.run_step1_f9 import main
+
+    gold_dir = tmp_path / "gold"
+    gold_dir.mkdir()
+    w1_text = "「おはよう」\n彼は「自由」を嫌った。\n"
+    (gold_dir / "w1.txt").write_text(w1_text, encoding="utf-8")
+    s1 = extract_outer_quote_spans(w1_text)
+    gold_obj = {
+        "works": [
+            {
+                "id": "w1",
+                "narration": "third",
+                "narrator": None,
+                "pov": "otoko",
+                "characters": [
+                    {"id": "otoko", "aliases": ["男"], "gender": "Male"},
+                    {"id": "onna", "aliases": ["女"], "gender": "Female"},
+                ],
+                "utterances": [
+                    {"n": 0, "open": s1[0][0], "head": "おはよう", "status": "attributed", "speaker": "otoko"},
+                    {"n": 1, "open": s1[1][0], "head": "自由", "status": "not_speech", "speaker": None},
+                ],
+            }
+        ]
+    }
+    gold_bytes = json.dumps(gold_obj, ensure_ascii=False).encode("utf-8")
+    (gold_dir / "gold.json").write_bytes(gold_bytes)
+    sha = hashlib.sha256(gold_bytes).hexdigest()
+    split_path = tmp_path / "split.json"
+    split_path.write_text(
+        json.dumps(
+            {
+                "split_version": "test_pp_v1",
+                "gold_json_sha256": sha,
+                "dev": {"work_ids": ["w1"]},
+                "holdout": {"sealed": True, "work_ids": ["w1"]},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    out_dir = tmp_path / "out_pp"
+    cfg_path = tmp_path / "cfg_pp.json"
+    cfg_path.write_text(
+        json.dumps(
+            {
+                "gold_dir": str(gold_dir),
+                "split_file": str(split_path),
+                "split": "dev",
+                "prompt_version": "v5",
+                "out_dir": str(out_dir),
+                "postprocess": {
+                    "explicit_evidence_gate": True,
+                    "inline_non_speech_filter": True,
+                    "inline_non_speech_max_chars": 2,
+                },
+                "models": [{"spec": "m_pp:1b", "num_ctx": 4096, "num_predict": 512}],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    # U0: wrong speaker + explicit (no verb/speaker cue -> Rule A downgrades to inferred -> explicit_den=0).
+    # U1: not_speech inline 2 chars -> Rule B forces null/ambiguous -> not_speech_abstained=1/1.
+    fake_resp = {
+        "message": {
+            "content": json.dumps(
+                {
+                    "utterances": [
+                        {
+                            "utterance_index": 0,
+                            "speaker_id": "onna",
+                            "addressee_id": None,
+                            "evidence": "explicit",
+                            "register": {"politeness": "plain", "first_person": None},
+                        },
+                        {
+                            "utterance_index": 1,
+                            "speaker_id": "otoko",
+                            "addressee_id": None,
+                            "evidence": "inferred",
+                            "register": {"politeness": "unknown", "first_person": None},
+                        },
+                    ]
+                }
+            )
+        },
+        "prompt_eval_count": 40,
+        "eval_count": 20,
+    }
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", return_value=fake_resp):
+        rc = main(["--config", str(cfg_path), "--check-gate"])
+    assert rc == 2  # explicit_denominator == 0 and overall_error_rate == 1.0
+
+    report = json.loads((out_dir / "m_pp_1b_dev.json").read_text(encoding="utf-8"))
+    summary = json.loads((out_dir / "summary_dev.json").read_text(encoding="utf-8"))
+    assert report["postprocess"] == {
+        "explicit_evidence_gate": True,
+        "inline_non_speech_filter": True,
+        "inline_non_speech_max_chars": 2,
+    }
+    assert report["postprocess_summary"] == {
+        "inline_non_speech_forced_count": 1,
+        "inline_non_speech_changed_count": 1,
+        "explicit_downgraded_count": 1,
+    }
+    assert summary["models"][0]["postprocess"] == report["postprocess"]
+    assert summary["models"][0]["postprocess_summary"] == report["postprocess_summary"]
+    raw_w1 = report["raw_outputs"]["w1"]
+    assert raw_w1["stage1_parsed_utterances"][0]["evidence"] == "explicit"
+    assert raw_w1["parsed_utterances"][0]["evidence"] == "inferred"
+    assert raw_w1["parsed_utterances"][1]["speaker_id"] is None
+    assert raw_w1["parsed_utterances"][1]["evidence"] == "ambiguous"
+    assert report["metrics"]["overall"]["not_speech_abstained"] == 1
+
+    # CLI flags override config: disable Rule (A), lower Rule (B) max_chars to 1.
+    out_dir_override = tmp_path / "out_pp_override"
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", return_value=fake_resp):
+        rc2 = main(
+            [
+                "--config",
+                str(cfg_path),
+                "--out-dir",
+                str(out_dir_override),
+                "--no-explicit-evidence-gate",
+                "--inline-non-speech-max-chars",
+                "1",
+            ]
+        )
+    assert rc2 == 0
+    rep2 = json.loads((out_dir_override / "m_pp_1b_dev.json").read_text(encoding="utf-8"))
+    assert rep2["metrics"]["overall"]["explicit_errors"] == 1
+    assert rep2["metrics"]["overall"]["not_speech_abstained"] == 0
+
+    # Verify offline replay helper agrees with live pipeline output.
+    ds = load_f9_dataset(gold_dir, split_path, split="dev")
+    replayed = replay_saved_result_with_postprocess(
+        ds, rep2, PostprocessConfig.from_dict(report["postprocess"])
+    )
+    assert replayed["metrics"]["overall"] == report["metrics"]["overall"]
+
 
 

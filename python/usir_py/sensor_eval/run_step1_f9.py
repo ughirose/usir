@@ -18,6 +18,7 @@ from usir_py.sensor_eval.metrics import (
     load_sensor_v2_validator,
 )
 from usir_py.sensor_eval.ollama_client import call_ollama_chat
+from usir_py.sensor_eval.postprocess import PostprocessConfig, apply_postprocessing_to_work
 from usir_py.sensor_eval.prompt import (
     DEFAULT_PROMPT_KEY,
     build_ollama_utterances_format_schema,
@@ -90,6 +91,7 @@ def load_eval_config(config_path: Path) -> dict[str, Any]:
                 raise ValueError(f"Invalid model entry in config {config_path}: {entry!r}")
         cfg["models"] = model_specs
         cfg["per_model_options"] = per_model_options
+    cfg["postprocess"] = PostprocessConfig.from_dict(cfg.get("postprocess")).to_dict()
     return cfg
 
 
@@ -116,9 +118,11 @@ def _build_model_summary_entry(
     prompt_hash: str,
     context_window_warning: bool,
     gate: dict[str, Any],
+    postprocess: dict[str, Any] | None = None,
+    postprocess_summary: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     ov = metrics["overall"]
-    return {
+    entry: dict[str, Any] = {
         "model_spec": label,
         "model_name": model_name,
         "think": think,
@@ -168,6 +172,11 @@ def _build_model_summary_entry(
             for k, v in metrics["by_narration"].items()
         },
     }
+    if postprocess is not None:
+        entry["postprocess"] = postprocess
+    if postprocess_summary is not None:
+        entry["postprocess_summary"] = postprocess_summary
+    return entry
 
 
 def _write_summary(
@@ -273,6 +282,8 @@ def merge_result_files_to_summary(
                 prompt_hash=rep_ph,
                 context_window_warning=ctx_warn,
                 gate=gate,
+                postprocess=report.get("postprocess"),
+                postprocess_summary=report.get("postprocess_summary"),
             )
         )
         predictions_index[label] = {
@@ -296,11 +307,13 @@ def run_evaluation(
     dry_run: bool,
     prompt_version: str = DEFAULT_PROMPT_KEY,
     per_model_options: dict[str, dict[str, Any]] | None = None,
+    postprocess: PostprocessConfig | None = None,
 ) -> dict[str, Any]:
     """Run all specified models against `dataset` and write per-model and summary JSONs."""
     out_dir.mkdir(parents=True, exist_ok=True)
     ver_label, _ = get_prompt(prompt_version)
     prompt_hash = compute_prompt_hash(prompt_version=prompt_version)
+    pp_cfg = postprocess or PostprocessConfig()
     format_schema = build_ollama_utterances_format_schema()
     validator = load_sensor_v2_validator()
 
@@ -330,6 +343,7 @@ def run_evaluation(
             "gold_json_sha256": dataset.gold_json_sha256,
             "prompt_version": ver_label,
             "prompt_hash": prompt_hash,
+            "postprocess": pp_cfg.to_dict(),
             "works": work_rows,
             "totals": {
                 "works": len(dataset.works),
@@ -359,6 +373,9 @@ def run_evaluation(
         total_prompt_tokens = 0
         total_eval_tokens = 0
         any_ctx_warning = False
+        pp_forced_total = 0
+        pp_changed_total = 0
+        pp_downgraded_total = 0
 
         for work in dataset.works:
             messages = build_work_messages(work, prompt_version=prompt_version)
@@ -374,8 +391,19 @@ def run_evaluation(
                 timeout_sec=eff_timeout,
                 think=think,
             )
-            utts = _extract_utterances(resp.parsed_json)
-            predictions_by_work[work.work_id] = utts
+            raw_utts = _extract_utterances(resp.parsed_json)
+            if pp_cfg.is_enabled:
+                final_utts, pp_audit = apply_postprocessing_to_work(work, raw_utts, pp_cfg)
+                pp_forced_total += len(pp_audit["inline_non_speech_forced"])
+                pp_changed_total += sum(
+                    1 for r in pp_audit["inline_non_speech_forced"] if r["changed"]
+                )
+                pp_downgraded_total += len(pp_audit["explicit_downgraded"])
+            else:
+                final_utts = raw_utts
+                pp_audit = None
+
+            predictions_by_work[work.work_id] = final_utts
             total_elapsed += resp.elapsed_sec
             p_tok = int(resp.prompt_eval_count or 0)
             e_tok = int(resp.eval_count or 0)
@@ -385,7 +413,7 @@ def run_evaluation(
             if ctx_warn:
                 any_ctx_warning = True
 
-            raw_work_records[work.work_id] = {
+            work_rec: dict[str, Any] = {
                 "format_mode": resp.format_mode,
                 "elapsed_sec": resp.elapsed_sec,
                 "prompt_eval_count": resp.prompt_eval_count,
@@ -399,9 +427,13 @@ def run_evaluation(
                 "eval_duration_ns": resp.eval_duration_ns,
                 "parse_error": resp.parse_error,
                 "thinking_chars": len(resp.thinking_content) if resp.thinking_content else 0,
-                "parsed_utterances": utts,
+                "parsed_utterances": final_utts,
                 "raw_content": resp.raw_content,
             }
+            if pp_cfg.is_enabled:
+                work_rec["stage1_parsed_utterances"] = raw_utts
+                work_rec["postprocess_audit"] = pp_audit
+            raw_work_records[work.work_id] = work_rec
 
         metrics = evaluate_model_predictions(
             works=dataset.works,
@@ -413,7 +445,18 @@ def run_evaluation(
         gate = evaluate_step1_gate(metrics)
         predictions_index[label] = predictions_by_work
 
-        model_report = {
+        pp_dict_out = pp_cfg.to_dict() if pp_cfg.is_enabled else None
+        pp_summary_out = (
+            {
+                "inline_non_speech_forced_count": pp_forced_total,
+                "inline_non_speech_changed_count": pp_changed_total,
+                "explicit_downgraded_count": pp_downgraded_total,
+            }
+            if pp_cfg.is_enabled
+            else None
+        )
+
+        model_report: dict[str, Any] = {
             "run_timestamp": dt.datetime.now(dt.timezone.utc).isoformat(),
             "split": dataset.split,
             "split_version": dataset.split_version,
@@ -441,6 +484,9 @@ def run_evaluation(
             "metrics": metrics,
             "raw_outputs": raw_work_records,
         }
+        if pp_cfg.is_enabled:
+            model_report["postprocess"] = pp_dict_out
+            model_report["postprocess_summary"] = pp_summary_out
         out_file = out_dir / f"{safe_tag}_{dataset.split}.json"
         out_file.write_text(
             json.dumps(model_report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
@@ -460,6 +506,8 @@ def run_evaluation(
                 prompt_hash=prompt_hash,
                 context_window_warning=any_ctx_warning,
                 gate=gate,
+                postprocess=pp_dict_out,
+                postprocess_summary=pp_summary_out,
             )
         )
 
@@ -495,6 +543,24 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--timeout", type=float, default=None)
     parser.add_argument("--out-dir", default=None, help="Directory for JSON outputs")
+    parser.add_argument(
+        "--explicit-evidence-gate",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="Enable/disable Stage 2 Rule (A) explicit evidence gate",
+    )
+    parser.add_argument(
+        "--inline-non-speech-filter",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="Enable/disable Stage 2 Rule (B) inline non-speech pre-filter",
+    )
+    parser.add_argument(
+        "--inline-non-speech-max-chars",
+        type=int,
+        default=None,
+        help="Max quote_chars threshold (inclusive) for Stage 2 Rule (B)",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Verify data & split without calling Ollama")
     parser.add_argument(
         "--merge-only",
@@ -534,6 +600,15 @@ def main(argv: list[str] | None = None) -> int:
         if args.out_dir is not None
         else cfg.get("out_dir", str(root / "scripts" / "step1" / "results"))
     )
+
+    pp_dict = dict(cfg.get("postprocess") or {})
+    if args.explicit_evidence_gate is not None:
+        pp_dict["explicit_evidence_gate"] = args.explicit_evidence_gate
+    if args.inline_non_speech_filter is not None:
+        pp_dict["inline_non_speech_filter"] = args.inline_non_speech_filter
+    if args.inline_non_speech_max_chars is not None:
+        pp_dict["inline_non_speech_max_chars"] = args.inline_non_speech_max_chars
+    postprocess_cfg = PostprocessConfig.from_dict(pp_dict if pp_dict else None)
 
     per_model_options: dict[str, dict[str, Any]] = {
         k: dict(v) for k, v in (cfg.get("per_model_options") or {}).items()
@@ -576,6 +651,7 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
             prompt_version=prompt_version,
             per_model_options=per_model_options,
+            postprocess=postprocess_cfg,
         )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     if args.check_gate and not args.dry_run:
