@@ -13,6 +13,33 @@ from usir_py.sensor_eval.f9_loader import F9Work
 
 EVIDENCE_LEVELS = ("explicit", "inferred", "ambiguous")
 POLITENESS_LEVELS = ("plain", "polite", "honorific", "rough", "unknown")
+FORBIDDEN_NULL_LITERALS = frozenset({"null", "none", "nil", "undefined"})
+STEP1_PASS_THRESHOLDS = {
+    "explicit_error_rate_lt": 0.05,
+    "overall_error_rate_lt": 0.10,
+    "politeness_agreement_rate_ge": 0.90,
+}
+
+
+def is_forbidden_null_literal(value: Any) -> bool:
+    """Return True if value is a string masquerading as null/empty (e.g. 'null')."""
+    if not isinstance(value, str):
+        return False
+    stripped = value.strip()
+    return stripped == "" or stripped.lower() in FORBIDDEN_NULL_LITERALS
+
+
+def validate_speaker_id(speaker_id: Any, roster_ids: set[str]) -> str | None:
+    """Validate speaker_id against null-string literals and character roster."""
+    if speaker_id is None:
+        return None
+    if not isinstance(speaker_id, str):
+        return "invalid_type"
+    if is_forbidden_null_literal(speaker_id):
+        return "string_null_literal"
+    if speaker_id not in roster_ids:
+        return "not_in_roster"
+    return None
 
 
 def default_schema_path() -> Path:
@@ -59,14 +86,53 @@ def validate_sensor_v2_utterances(
     }
     errors: list[str] = [e.message for e in val.iter_errors(doc)]
 
-    # Runtime invariant from Phase 0 contract §5.2: unique utterance_index within scene.
+    # Runtime invariant from Phase 0 contract §5.2: unique utterance_index within scene,
+    # plus deterministic rejection of string-null literals and non-roster speaker_id.
+    roster_ids = {c.id for c in work.characters}
     seen: set[int] = set()
     for item in utterances:
-        if isinstance(item, dict) and isinstance(item.get("utterance_index"), int):
-            idx = item["utterance_index"]
+        if not isinstance(item, dict):
+            continue
+        idx = item.get("utterance_index")
+        if isinstance(idx, int):
             if idx in seen:
                 errors.append(f"Duplicate utterance_index={idx} in {work.work_id}")
             seen.add(idx)
+
+        spk = item.get("speaker_id")
+        spk_violation = validate_speaker_id(spk, roster_ids)
+        if spk_violation == "string_null_literal":
+            errors.append(
+                f"Rejected string-null speaker_id={spk!r} as non-roster at utterance_index={idx} in {work.work_id}"
+            )
+        elif spk_violation == "not_in_roster":
+            errors.append(
+                f"Non-roster speaker_id={spk!r} at utterance_index={idx} in {work.work_id}"
+            )
+
+        addr = item.get("addressee_id")
+        if is_forbidden_null_literal(addr):
+            errors.append(
+                f"Rejected string-null addressee_id={addr!r} at utterance_index={idx} in {work.work_id}"
+            )
+
+        reg = item.get("register")
+        if isinstance(reg, dict) and is_forbidden_null_literal(reg.get("first_person")):
+            errors.append(
+                f"Rejected string-null first_person={reg.get('first_person')!r} at utterance_index={idx} in {work.work_id}"
+            )
+
+    if work.utterances:
+        expected_indices = {u.n for u in work.utterances}
+        missing_indices = sorted(expected_indices - seen)
+        extra_indices = sorted(seen - expected_indices)
+        if missing_indices:
+            errors.append(
+                f"Missing utterance_index(es) {missing_indices} in {work.work_id} "
+                f"(expected {len(expected_indices)}, got {len(seen)})"
+            )
+        if extra_indices:
+            errors.append(f"Out-of-range utterance_index(es) {extra_indices} in {work.work_id}")
     return errors
 
 
@@ -100,6 +166,8 @@ def _empty_bucket() -> dict[str, Any]:
         "excluded_total": 0,
         "excluded_abstained": 0,
         "excluded_over_attributed": 0,
+        "non_roster_speaker_count": 0,
+        "null_string_speaker_count": 0,
         "politeness_distribution_attributed": Counter(),
         "politeness_distribution_all": Counter(),
     }
@@ -136,6 +204,8 @@ def _finalize_bucket(b: dict[str, Any]) -> dict[str, Any]:
         "excluded_abstention_rate": _rate(b["excluded_abstained"], b["excluded_total"]),
         "excluded_abstained": b["excluded_abstained"],
         "excluded_over_attributed": b["excluded_over_attributed"],
+        "non_roster_speaker_count": b["non_roster_speaker_count"],
+        "null_string_speaker_count": b["null_string_speaker_count"],
         "error_breakdown": {
             "wrong_speaker": b["wrong_speaker"],
             "ambiguous_evasion": b["ambiguous_evasion"],
@@ -251,16 +321,24 @@ def evaluate_model_predictions(
 
             pol_key = pred_politeness if pred_politeness in POLITENESS_LEVELS else "missing_or_invalid"
 
-            if pred_speaker is not None and pred_speaker not in roster_ids:
+            spk_violation = (
+                validate_speaker_id(pred_speaker, roster_ids) if pred_u is not None else None
+            )
+            if spk_violation is not None:
                 non_roster_speakers.append(
                     {
                         "work_id": work.work_id,
                         "utterance_index": gold_u.n,
                         "speaker_id": pred_speaker,
+                        "reason": spk_violation,
                         "gold_status": gold_u.status,
                         "gold_speaker": gold_u.speaker,
                     }
                 )
+                for b in (total_bucket, w_bucket, nar_bucket):
+                    b["non_roster_speaker_count"] += 1
+                    if spk_violation == "string_null_literal":
+                        b["null_string_speaker_count"] += 1
 
             for b in (total_bucket, w_bucket, nar_bucket):
                 b["all_quotes_total"] += 1
@@ -269,16 +347,21 @@ def evaluate_model_predictions(
                     b["ambiguous_all_quotes"] += 1
 
             if gold_u.status != "attributed":
-                abstained = pred_u is not None and (
-                    pred_evidence == "ambiguous" or pred_speaker is None
+                abstained = (
+                    pred_u is not None
+                    and spk_violation is None
+                    and (pred_evidence == "ambiguous" or pred_speaker is None)
+                )
+                over_attr = pred_u is not None and not abstained and (
+                    pred_speaker is not None or spk_violation is not None
                 )
                 for b in (total_bucket, w_bucket, nar_bucket):
                     b["excluded_total"] += 1
                     if abstained:
                         b["excluded_abstained"] += 1
-                    elif pred_u is not None and pred_speaker is not None:
+                    elif over_attr:
                         b["excluded_over_attributed"] += 1
-                if pred_u is not None and not abstained and pred_speaker is not None:
+                if over_attr:
                     excluded_over_attr_details.append(
                         {
                             "work_id": work.work_id,
@@ -288,12 +371,17 @@ def evaluate_model_predictions(
                             "pred_speaker": pred_speaker,
                             "pred_evidence": pred_evidence,
                             "pred_politeness": pred_politeness,
+                            "speaker_violation": spk_violation,
                         }
                     )
                 continue
 
             # Gold attributed utterance evaluation.
-            raw_match = pred_u is not None and pred_speaker == gold_u.speaker
+            raw_match = (
+                pred_u is not None
+                and spk_violation is None
+                and pred_speaker == gold_u.speaker
+            )
             strict_match = raw_match and pred_evidence != "ambiguous"
 
             if pred_u is None:
@@ -385,8 +473,57 @@ def evaluate_model_predictions(
             "per_work": schema_validation_by_work,
         },
         "non_roster_speaker_ids": non_roster_speakers,
+        "non_roster_speaker_count": len(non_roster_speakers),
+        "null_string_speaker_count": total_bucket["null_string_speaker_count"],
         "errors": error_details,
         "excluded_over_attributions": excluded_over_attr_details,
+    }
+
+
+def evaluate_step1_gate(
+    metrics: dict[str, Any], require_politeness: bool = False
+) -> dict[str, Any]:
+    """Evaluate deterministic Step 1 pass/fail thresholds on computed metrics."""
+    ov = metrics["overall"]
+    sv = metrics["schema_validation"]
+    non_roster = metrics.get("non_roster_speaker_ids", [])
+
+    explicit_rate = ov["explicit_error_rate"]
+    explicit_den = ov["explicit_denominator"]
+    overall_rate = ov["overall_error_rate"]
+
+    explicit_passed = (
+        explicit_rate is not None
+        and explicit_den > 0
+        and explicit_rate < STEP1_PASS_THRESHOLDS["explicit_error_rate_lt"]
+    )
+    overall_passed = (
+        overall_rate is not None
+        and overall_rate < STEP1_PASS_THRESHOLDS["overall_error_rate_lt"]
+    )
+    validation_passed = bool(sv.get("all_works_valid", False)) and len(non_roster) == 0
+
+    if ov.get("politeness_gold_available"):
+        pol_rate = ov.get("politeness_agreement_rate")
+        politeness_passed: bool | None = (
+            pol_rate is not None
+            and pol_rate >= STEP1_PASS_THRESHOLDS["politeness_agreement_rate_ge"]
+        )
+    else:
+        politeness_passed = False if require_politeness else None
+
+    speaker_gate_passed = explicit_passed and overall_passed and validation_passed
+    passed = speaker_gate_passed and (
+        politeness_passed is True if require_politeness else True
+    )
+    return {
+        "passed": passed,
+        "speaker_gate_passed": speaker_gate_passed,
+        "explicit_passed": explicit_passed,
+        "overall_passed": overall_passed,
+        "validation_passed": validation_passed,
+        "politeness_passed": politeness_passed,
+        "thresholds": dict(STEP1_PASS_THRESHOLDS),
     }
 
 

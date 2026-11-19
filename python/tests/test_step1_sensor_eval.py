@@ -20,10 +20,18 @@ from usir_py.sensor_eval.f9_loader import (
 from usir_py.sensor_eval.metrics import (
     compute_politeness_pairwise_agreement,
     evaluate_model_predictions,
+    evaluate_step1_gate,
+    is_forbidden_null_literal,
     validate_sensor_v2_utterances,
+    validate_speaker_id,
 )
 from usir_py.sensor_eval.ollama_client import call_ollama_chat, parse_json_content
-from usir_py.sensor_eval.prompt import build_ollama_utterances_format_schema, compute_prompt_hash
+from usir_py.sensor_eval.prompt import (
+    build_ollama_utterances_format_schema,
+    build_work_messages,
+    compute_prompt_hash,
+    get_prompt,
+)
 
 
 def _make_synthetic_gold_dir(tmp_path: Path) -> tuple[Path, Path]:
@@ -365,4 +373,310 @@ def test_merge_result_files_to_summary(tmp_path: Path) -> None:
     merged = merge_result_files_to_summary(ds, ["m_a:1b", "m_b:2b"], out_dir)
     assert [m["model_spec"] for m in merged["models"]] == ["m_a:1b", "m_b:2b"]
     assert merged["politeness_pairwise_agreement"]["pairs"][0]["agreement_rate"] == pytest.approx(0.5)
+
+
+def test_validator_rejects_string_null_and_non_roster_speaker_id() -> None:
+    work = F9Work(
+        work_id="w_null",
+        author=None,
+        title=None,
+        narration="third",
+        narrator=None,
+        pov=None,
+        characters=[F9Character(id="otoko", aliases=["男"], gender="Male")],
+        text="「あ」「い」「う」「え」「お」「か」",
+        numbered_text="[U0]「あ」[U1]「い」[U2]「う」[U3]「え」[U4]「お」[U5]「か」",
+        scene_hash="b" * 64,
+        utterances=[
+            F9UtteranceGold(0, 0, 3, "あ", "attributed", "otoko", "「あ」"),
+            F9UtteranceGold(1, 3, 6, "い", "attributed", "otoko", "「い」"),
+            F9UtteranceGold(2, 6, 9, "う", "attributed", "otoko", "「う」"),
+            F9UtteranceGold(3, 9, 12, "え", "attributed", "otoko", "「え」"),
+            F9UtteranceGold(4, 12, 15, "お", "attributed", "otoko", "「お」"),
+            F9UtteranceGold(5, 15, 18, "か", "undetermined", None, "「か」"),
+        ],
+    )
+    assert is_forbidden_null_literal("null") is True
+    assert is_forbidden_null_literal(" NULL ") is True
+    assert is_forbidden_null_literal("none") is True
+    assert is_forbidden_null_literal("otoko") is False
+    assert validate_speaker_id("null", {"otoko"}) == "string_null_literal"
+    assert validate_speaker_id("unknown_char", {"otoko"}) == "not_in_roster"
+    assert validate_speaker_id("otoko", {"otoko"}) is None
+    assert validate_speaker_id(None, {"otoko"}) is None
+
+    bad_utts = [
+        {
+            "utterance_index": 0,
+            "speaker_id": "null",
+            "addressee_id": "null",
+            "evidence": "inferred",
+            "register": {"politeness": "plain", "first_person": "null"},
+        },
+        {
+            "utterance_index": 1,
+            "speaker_id": "NULL",
+            "addressee_id": None,
+            "evidence": "explicit",
+            "register": {"politeness": "plain", "first_person": None},
+        },
+        {
+            "utterance_index": 2,
+            "speaker_id": " null ",
+            "addressee_id": None,
+            "evidence": "inferred",
+            "register": {"politeness": "plain", "first_person": None},
+        },
+        {
+            "utterance_index": 3,
+            "speaker_id": "none",
+            "addressee_id": None,
+            "evidence": "inferred",
+            "register": {"politeness": "plain", "first_person": None},
+        },
+        {
+            "utterance_index": 4,
+            "speaker_id": "unknown_char",
+            "addressee_id": None,
+            "evidence": "inferred",
+            "register": {"politeness": "plain", "first_person": None},
+        },
+        {
+            "utterance_index": 5,
+            "speaker_id": "null",
+            "addressee_id": None,
+            "evidence": "ambiguous",
+            "register": {"politeness": "unknown", "first_person": None},
+        },
+    ]
+    errs = validate_sensor_v2_utterances(work, bad_utts, "m", "h")
+    assert any("Rejected string-null speaker_id='null'" in e for e in errs)
+    assert any("Rejected string-null addressee_id='null'" in e for e in errs)
+    assert any("Rejected string-null first_person='null'" in e for e in errs)
+    assert any("Non-roster speaker_id='unknown_char'" in e for e in errs)
+
+    metrics = evaluate_model_predictions([work], {"w_null": bad_utts}, "m", "h")
+    assert metrics["schema_validation"]["all_works_valid"] is False
+    assert metrics["non_roster_speaker_count"] == 6
+    assert metrics["null_string_speaker_count"] == 5
+    reasons = [entry["reason"] for entry in metrics["non_roster_speaker_ids"]]
+    assert reasons == [
+        "string_null_literal",
+        "string_null_literal",
+        "string_null_literal",
+        "string_null_literal",
+        "not_in_roster",
+        "string_null_literal",
+    ]
+    assert metrics["overall"]["excluded_abstained"] == 0
+    assert metrics["overall"]["excluded_over_attributed"] == 1
+    gate = evaluate_step1_gate(metrics)
+    assert gate["validation_passed"] is False
+    assert gate["speaker_gate_passed"] is False
+
+
+def test_prompt_versions_and_v1_hash_regression() -> None:
+    assert (
+        compute_prompt_hash(prompt_version="v1")
+        == "7912bad97f799ce526ad60553adaac5456002c650f6981880f44bdb0b433de6a"
+    )
+    ver_v2, text_v2 = get_prompt("v2")
+    assert ver_v2 == "step1_utterances_v2"
+    assert compute_prompt_hash(prompt_version="v2") != compute_prompt_hash(prompt_version="v1")
+
+    work = F9Work(
+        work_id="w_p",
+        author="a",
+        title="t",
+        narration="third",
+        narrator=None,
+        pov=None,
+        characters=[F9Character(id="otoko", aliases=["男"], gender="Male")],
+        text="「あ」",
+        numbered_text="[U0]「あ」",
+        scene_hash="c" * 64,
+        utterances=[F9UtteranceGold(0, 0, 3, "あ", "attributed", "otoko", "「あ」")],
+    )
+    msgs_v2 = build_work_messages(work, prompt_version="v2")
+    sys_msg = msgs_v2[0]["content"]
+    assert sys_msg == text_v2
+    assert "後置伝達節" in sys_msg
+    assert "非発話引用" in sys_msg
+    assert "ambiguous" in sys_msg
+    assert "厳格基準" in sys_msg
+
+    ver_v3, text_v3 = get_prompt("v3")
+    assert ver_v3 == "step1_utterances_v3"
+    h1 = compute_prompt_hash(prompt_version="v1")
+    h2 = compute_prompt_hash(prompt_version="v2")
+    h3 = compute_prompt_hash(prompt_version="v3")
+    assert len({h1, h2, h3}) == 3
+    msgs_v3 = build_work_messages(work, prompt_version="v3")
+    assert msgs_v3[0]["content"] == text_v3
+
+
+def test_validator_rejects_missing_and_extra_utterance_indices() -> None:
+    work = F9Work(
+        work_id="w_miss",
+        author=None,
+        title=None,
+        narration="third",
+        narrator=None,
+        pov=None,
+        characters=[F9Character(id="otoko", aliases=["男"], gender="Male")],
+        text="「あ」「い」",
+        numbered_text="[U0]「あ」[U1]「い」",
+        scene_hash="d" * 64,
+        utterances=[
+            F9UtteranceGold(0, 0, 3, "あ", "attributed", "otoko", "「あ」"),
+            F9UtteranceGold(1, 3, 6, "い", "attributed", "otoko", "「い」"),
+        ],
+    )
+    preds_missing = [
+        {
+            "utterance_index": 0,
+            "speaker_id": "otoko",
+            "addressee_id": None,
+            "evidence": "explicit",
+            "register": {"politeness": "plain", "first_person": None},
+        }
+    ]
+    errs_missing = validate_sensor_v2_utterances(work, preds_missing, "m", "h")
+    assert any("Missing utterance_index(es) [1]" in e for e in errs_missing)
+
+    m_missing = evaluate_model_predictions([work], {"w_miss": preds_missing}, "m", "h")
+    assert m_missing["schema_validation"]["all_works_valid"] is False
+    assert evaluate_step1_gate(m_missing)["validation_passed"] is False
+
+    preds_extra = preds_missing + [
+        {
+            "utterance_index": 1,
+            "speaker_id": "otoko",
+            "addressee_id": None,
+            "evidence": "explicit",
+            "register": {"politeness": "plain", "first_person": None},
+        },
+        {
+            "utterance_index": 2,
+            "speaker_id": "otoko",
+            "addressee_id": None,
+            "evidence": "inferred",
+            "register": {"politeness": "plain", "first_person": None},
+        },
+    ]
+    errs_extra = validate_sensor_v2_utterances(work, preds_extra, "m", "h")
+    assert any("Out-of-range utterance_index(es) [2]" in e for e in errs_extra)
+
+
+def test_evaluate_step1_gate_boundaries() -> None:
+    def _mk_metrics(
+        exp_err: float | None,
+        exp_den: int,
+        ov_err: float | None,
+        all_valid: bool = True,
+        non_roster: int = 0,
+    ) -> dict:
+        return {
+            "overall": {
+                "explicit_error_rate": exp_err,
+                "explicit_denominator": exp_den,
+                "overall_error_rate": ov_err,
+                "politeness_gold_available": False,
+                "politeness_agreement_rate": None,
+            },
+            "schema_validation": {"all_works_valid": all_valid},
+            "non_roster_speaker_ids": [{"x": i} for i in range(non_roster)],
+        }
+
+    g_pass = evaluate_step1_gate(_mk_metrics(0.049, 20, 0.099))
+    assert g_pass["speaker_gate_passed"] is True
+    assert g_pass["passed"] is True
+    assert g_pass["politeness_passed"] is None
+
+    assert evaluate_step1_gate(_mk_metrics(0.05, 20, 0.05))["speaker_gate_passed"] is False
+    assert evaluate_step1_gate(_mk_metrics(0.0, 20, 0.10))["speaker_gate_passed"] is False
+    assert evaluate_step1_gate(_mk_metrics(0.0, 0, 0.0))["speaker_gate_passed"] is False
+    assert evaluate_step1_gate(_mk_metrics(0.0, 20, 0.0, non_roster=1))["speaker_gate_passed"] is False
+    assert evaluate_step1_gate(_mk_metrics(0.0, 20, 0.0, all_valid=False))["speaker_gate_passed"] is False
+
+
+def test_cli_config_and_check_gate(tmp_path: Path) -> None:
+    from usir_py.sensor_eval.run_step1_f9 import main
+
+    gold_dir, split_path = _make_synthetic_gold_dir(tmp_path)
+    out_dir = tmp_path / "cli_out"
+    cfg_path = tmp_path / "cfg.json"
+    cfg_path.write_text(
+        json.dumps(
+            {
+                "gold_dir": str(gold_dir),
+                "split_file": str(split_path),
+                "split": "dev",
+                "prompt_version": "v2",
+                "out_dir": str(out_dir),
+                "models": [{"spec": "m_pass:1b", "num_ctx": 4096, "num_predict": 512}],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    resp_pass = {
+        "message": {
+            "content": json.dumps(
+                {
+                    "utterances": [
+                        {
+                            "utterance_index": 0,
+                            "speaker_id": "otoko",
+                            "addressee_id": "onna",
+                            "evidence": "explicit",
+                            "register": {"politeness": "plain", "first_person": None},
+                        },
+                        {
+                            "utterance_index": 1,
+                            "speaker_id": "onna",
+                            "addressee_id": "otoko",
+                            "evidence": "inferred",
+                            "register": {"politeness": "polite", "first_person": None},
+                        },
+                    ]
+                }
+            )
+        },
+        "prompt_eval_count": 50,
+        "eval_count": 30,
+    }
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", return_value=resp_pass):
+        rc_pass = main(["--config", str(cfg_path), "--check-gate"])
+    assert rc_pass == 0
+
+    resp_fail = {
+        "message": {
+            "content": json.dumps(
+                {
+                    "utterances": [
+                        {
+                            "utterance_index": 0,
+                            "speaker_id": "onna",
+                            "addressee_id": None,
+                            "evidence": "explicit",
+                            "register": {"politeness": "plain", "first_person": None},
+                        },
+                        {
+                            "utterance_index": 1,
+                            "speaker_id": "otoko",
+                            "addressee_id": None,
+                            "evidence": "inferred",
+                            "register": {"politeness": "polite", "first_person": None},
+                        },
+                    ]
+                }
+            )
+        },
+        "prompt_eval_count": 50,
+        "eval_count": 30,
+    }
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", return_value=resp_fail):
+        rc_fail = main(["--config", str(cfg_path), "--check-gate"])
+    assert rc_fail == 2
 
