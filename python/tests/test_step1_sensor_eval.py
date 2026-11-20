@@ -44,6 +44,19 @@ from usir_py.sensor_eval.prompt import (
     compute_prompt_hash,
     get_prompt,
 )
+from usir_py.sensor_eval.speaker_recheck import (
+    SpeakerRecheckConfig,
+    apply_speaker_recheck_to_work,
+    build_ollama_recheck_format_schema,
+    build_ollama_recheck_v2_format_schema,
+    build_ollama_work_audit_format_schema,
+    build_speaker_recheck_messages,
+    build_work_audit_recheck_messages,
+    compute_recheck_prompt_hash,
+    extract_in_quote_aliases,
+    is_recheck_target,
+    replay_saved_result_with_speaker_recheck,
+)
 
 
 def _make_synthetic_gold_dir(tmp_path: Path) -> tuple[Path, Path]:
@@ -1173,6 +1186,623 @@ def test_postprocess_cli_config_toggles_and_threshold(tmp_path: Path) -> None:
         ds, rep2, PostprocessConfig.from_dict(report["postprocess"])
     )
     assert replayed["metrics"]["overall"] == report["metrics"]["overall"]
+
+
+def test_speaker_recheck_config_validation_and_defaults() -> None:
+    default_cfg = SpeakerRecheckConfig()
+    assert default_cfg.enabled is False
+    assert default_cfg.model == "qwen2.5:14b"
+    assert default_cfg.prompt_version == "recheck_v1"
+    assert default_cfg.is_enabled is False
+    assert SpeakerRecheckConfig.from_dict(None) == default_cfg
+
+    custom_cfg = SpeakerRecheckConfig.from_dict(
+        {
+            "enabled": True,
+            "model": "qwen3:8b::think=false",
+            "prompt_version": "recheck_v1",
+            "flow_window_before": 5,
+            "flow_window_after": 3,
+            "context_chars_before": 500,
+            "context_chars_after": 400,
+            "sequential": False,
+            "num_ctx": 4096,
+            "num_predict": 256,
+            "seed": 7,
+            "timeout": 60,
+        }
+    )
+    assert custom_cfg.is_enabled is True
+    assert custom_cfg.to_dict()["timeout"] == 60.0
+    assert len(compute_recheck_prompt_hash()) == 64
+
+    with pytest.raises(ValueError, match="dict"):
+        SpeakerRecheckConfig.from_dict(["invalid"])  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="Unknown speaker_recheck config keys"):
+        SpeakerRecheckConfig.from_dict({"unknown_key": 1})
+    with pytest.raises(ValueError, match="bool"):
+        SpeakerRecheckConfig.from_dict({"enabled": 1})
+    with pytest.raises(ValueError, match="non-empty string"):
+        SpeakerRecheckConfig.from_dict({"model": "   "})
+    with pytest.raises(ValueError, match="Unsupported recheck prompt_version"):
+        SpeakerRecheckConfig.from_dict({"prompt_version": "nonexistent"})
+    with pytest.raises(ValueError, match="non-negative integer"):
+        SpeakerRecheckConfig.from_dict({"flow_window_before": -1})
+    with pytest.raises(ValueError, match="positive integer"):
+        SpeakerRecheckConfig.from_dict({"num_ctx": 0})
+    with pytest.raises(ValueError, match="positive number"):
+        SpeakerRecheckConfig.from_dict({"timeout": True})
+
+
+def test_speaker_recheck_target_filtering_immutability_and_zero_gold_leakage() -> None:
+    text = (
+        "男が言った。\n"
+        "「おはよう」\n"
+        "「こんばんは」\n"
+        "「秘密」\n"
+        "「さようなら」\n"
+    )
+    numbered, spans = number_outer_quotes(text)
+    chars = [
+        F9Character(id="otoko", aliases=["男"], gender="Male"),
+        F9Character(id="onna", aliases=["女"], gender="Female"),
+    ]
+    utts_a = [
+        F9UtteranceGold(0, spans[0][0], spans[0][1], "おはよう", "attributed", "otoko", text[spans[0][0] : spans[0][1]]),
+        F9UtteranceGold(1, spans[1][0], spans[1][1], "こんばんは", "attributed", "onna", text[spans[1][0] : spans[1][1]]),
+        F9UtteranceGold(2, spans[2][0], spans[2][1], "秘密", "not_speech", None, text[spans[2][0] : spans[2][1]]),
+        F9UtteranceGold(3, spans[3][0], spans[3][1], "さようなら", "attributed", "otoko", text[spans[3][0] : spans[3][1]]),
+    ]
+    utts_b = [
+        F9UtteranceGold(i, u.open_offset, u.close_offset, u.head, "undetermined", "onna", u.quote_text)
+        for i, u in enumerate(utts_a)
+    ]
+    work_a = F9Work("w_sr", None, None, "third", None, None, chars, text, numbered, "a" * 64, utts_a)
+    work_b = F9Work("w_sr", None, None, "third", None, None, chars, text, numbered, "a" * 64, utts_b)
+
+    stage2_preds = [
+        {"utterance_index": 0, "speaker_id": "otoko", "addressee_id": "onna", "evidence": "explicit", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 1, "speaker_id": "otoko", "addressee_id": "onna", "evidence": "inferred", "register": {"politeness": "polite", "first_person": None}},
+        {"utterance_index": 2, "speaker_id": None, "addressee_id": None, "evidence": "ambiguous", "register": {"politeness": "unknown", "first_person": None}},
+        {"utterance_index": 3, "speaker_id": None, "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+    ]
+    assert [is_recheck_target(item) for item in stage2_preds] == [False, True, False, False]
+
+    snapshot = json.loads(json.dumps(stage2_preds))
+    cfg = SpeakerRecheckConfig(enabled=True, model="qwen2.5:14b")
+    seen_prompts: list[str] = []
+
+    def fake_post(_url: str, payload: dict, _timeout: float) -> dict:
+        seen_prompts.append(payload["messages"][1]["content"])
+        return {
+            "message": {"content": json.dumps({"reason": "敬体なので女", "speaker_id": "onna"})},
+            "prompt_eval_count": 50,
+            "eval_count": 12,
+        }
+
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", side_effect=fake_post):
+        out_a, audit_a = apply_speaker_recheck_to_work(work_a, stage2_preds, cfg)
+        out_b, audit_b = apply_speaker_recheck_to_work(work_b, stage2_preds, cfg)
+
+    # Input untouched, zero gold leakage, only U1 targeted & only speaker_id modified.
+    assert stage2_preds == snapshot
+    assert out_a == out_b
+    assert audit_a == audit_b
+    assert len(seen_prompts) == 2
+    assert seen_prompts[0] == seen_prompts[1]
+    assert out_a is not None
+    assert out_a[0] == stage2_preds[0]
+    assert out_a[1]["speaker_id"] == "onna"
+    assert out_a[1]["evidence"] == "inferred"
+    assert out_a[1]["addressee_id"] == "onna"
+    assert out_a[1]["register"] == {"politeness": "polite", "first_person": None}
+    assert out_a[2] == stage2_preds[2]
+    assert out_a[3] == stage2_preds[3]
+    assert audit_a["target_count"] == 1
+    assert audit_a["changed_count"] == 1
+    assert audit_a["rejected_count"] == 0
+
+
+def test_speaker_recheck_rejects_non_roster_null_and_parse_errors() -> None:
+    text = "「一つ目」\n「二つ目」\n「三つ目」\n「四つ目」\n"
+    numbered, spans = number_outer_quotes(text)
+    chars = [
+        F9Character(id="otoko", aliases=["男"], gender="Male"),
+        F9Character(id="onna", aliases=["女"], gender="Female"),
+    ]
+    utts = [
+        F9UtteranceGold(i, s[0], s[1], "h", "attributed", "otoko", text[s[0] : s[1]])
+        for i, s in enumerate(spans)
+    ]
+    work = F9Work("w_rej", None, None, "third", None, None, chars, text, numbered, "b" * 64, utts)
+    preds = [
+        {"utterance_index": i, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}}
+        for i in range(4)
+    ]
+    schema = build_ollama_recheck_format_schema(["otoko", "onna"])
+    assert schema["properties"]["speaker_id"]["enum"] == ["otoko", "onna"]
+
+    responses = iter(
+        [
+            {"message": {"content": json.dumps({"reason": "x", "speaker_id": "outsider"})}},
+            {"message": {"content": json.dumps({"reason": "x", "speaker_id": None})}},
+            {"message": {"content": json.dumps({"reason": "x", "speaker_id": "null"})}},
+            {"message": {"content": "NOT_JSON"}},
+        ]
+    )
+    cfg = SpeakerRecheckConfig(enabled=True)
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", side_effect=lambda *a, **k: next(responses)):
+        out, audit = apply_speaker_recheck_to_work(work, preds, cfg)
+
+    assert out is not None
+    assert [u["speaker_id"] for u in out] == ["otoko", "otoko", "otoko", "otoko"]
+    assert audit["rejected_count"] == 4
+    assert audit["changed_count"] == 0
+    assert [d["rejected_reason"] for d in audit["decisions"]] == [
+        "not_in_roster",
+        "null_speaker_id",
+        "string_null_literal",
+        "parse_error",
+    ]
+
+
+def test_speaker_recheck_sequential_vs_independent_and_cues() -> None:
+    text = (
+        "男が歩いている。\n"
+        "「おや、女さんかい」\n"
+        "「ええ、そうですよ」\n"
+    )
+    numbered, spans = number_outer_quotes(text)
+    chars = [
+        F9Character(id="otoko", aliases=["男"], gender="Male"),
+        F9Character(id="onna", aliases=["女", "女さん"], gender="Female"),
+    ]
+    utts = [
+        F9UtteranceGold(0, spans[0][0], spans[0][1], "おや", "attributed", "otoko", text[spans[0][0] : spans[0][1]]),
+        F9UtteranceGold(1, spans[1][0], spans[1][1], "ええ", "attributed", "onna", text[spans[1][0] : spans[1][1]]),
+    ]
+    work = F9Work("w_seq", None, None, "third", None, None, chars, text, numbered, "c" * 64, utts)
+    assert extract_in_quote_aliases(utts[0].quote_text, chars) == [("onna", "女さん")]
+
+    # Both start with wrong speaker "onna" for U0, "otoko" for U1.
+    preds = [
+        {"utterance_index": 0, "speaker_id": "onna", "addressee_id": "otoko", "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 1, "speaker_id": "otoko", "addressee_id": "onna", "evidence": "inferred", "register": {"politeness": "polite", "first_person": None}},
+    ]
+
+    def run_mode(sequential: bool) -> list[str]:
+        prompts: list[str] = []
+        replies = iter(
+            [
+                {"message": {"content": json.dumps({"reason": "呼びかけ修正", "speaker_id": "otoko"})}},
+                {"message": {"content": json.dumps({"reason": "応答交代", "speaker_id": "onna"})}},
+            ]
+        )
+
+        def fake_post(_url: str, payload: dict, _timeout: float) -> dict:
+            prompts.append(payload["messages"][1]["content"])
+            return next(replies)
+
+        cfg = SpeakerRecheckConfig(enabled=True, sequential=sequential)
+        with patch("usir_py.sensor_eval.ollama_client._post_chat", side_effect=fake_post):
+            apply_speaker_recheck_to_work(work, preds, cfg)
+        return prompts
+
+    seq_prompts = run_mode(True)
+    ind_prompts = run_mode(False)
+    # In U0 prompt: in-quote alias cue & addressee_id cue present.
+    assert "「女さん」→ onna" in seq_prompts[0]
+    assert "聞き手推定 (`addressee_id`): `otoko`" in seq_prompts[0]
+    # In U1 sequential prompt, U0 shows updated "otoko" & "再確認済(inferred)".
+    assert "| U0 | 再確認済(inferred) | otoko |" in seq_prompts[1]
+    # In U1 independent prompt, U0 still shows original "onna" & "仮推定(inferred)".
+    assert "| U0 | 仮推定(inferred) | onna |" in ind_prompts[1]
+
+
+def test_threestage_cli_config_model_swap_and_offline_replay(tmp_path: Path) -> None:
+    from usir_py.sensor_eval.run_step1_f9 import main
+
+    gold_dir = tmp_path / "gold"
+    gold_dir.mkdir()
+    w1_text = "男が言った。\n「こんにちは」\n「おはよう」\n「はい」\n"
+    (gold_dir / "w1.txt").write_text(w1_text, encoding="utf-8")
+    s1 = extract_outer_quote_spans(w1_text)
+    gold_obj = {
+        "works": [
+            {
+                "id": "w1",
+                "narration": "third",
+                "narrator": None,
+                "pov": None,
+                "characters": [
+                    {"id": "otoko", "aliases": ["男"], "gender": "Male"},
+                    {"id": "onna", "aliases": ["女"], "gender": "Female"},
+                ],
+                "utterances": [
+                    {"n": 0, "open": s1[0][0], "head": "こんにちは", "status": "attributed", "speaker": "otoko"},
+                    {"n": 1, "open": s1[1][0], "head": "おはよう", "status": "attributed", "speaker": "otoko"},
+                    {"n": 2, "open": s1[2][0], "head": "はい", "status": "attributed", "speaker": "onna"},
+                ],
+            }
+        ]
+    }
+    gold_bytes = json.dumps(gold_obj, ensure_ascii=False).encode("utf-8")
+    (gold_dir / "gold.json").write_bytes(gold_bytes)
+    sha = hashlib.sha256(gold_bytes).hexdigest()
+    split_path = tmp_path / "split.json"
+    split_path.write_text(
+        json.dumps(
+            {
+                "split_version": "test_3s_v1",
+                "gold_json_sha256": sha,
+                "dev": {"work_ids": ["w1"]},
+                "holdout": {"sealed": True, "work_ids": ["w1"]},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    out_dir = tmp_path / "out_3s"
+    cfg_path = tmp_path / "cfg_3s.json"
+    cfg_path.write_text(
+        json.dumps(
+            {
+                "gold_dir": str(gold_dir),
+                "split_file": str(split_path),
+                "split": "dev",
+                "prompt_version": "v5",
+                "out_dir": str(out_dir),
+                "postprocess": {
+                    "explicit_evidence_gate": True,
+                    "inline_non_speech_filter": True,
+                    "inline_non_speech_max_chars": 11,
+                },
+                "speaker_recheck": {
+                    "enabled": True,
+                    "model": "recheck-cfg-model:7b",
+                    "prompt_version": "recheck_v1",
+                    "num_ctx": 4096,
+                    "num_predict": 256,
+                },
+                "models": [{"spec": "stage1-model:7b", "num_ctx": 4096, "num_predict": 512}],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    # U0 keeps explicit (pre_speaker_and_verb=True); U1 explicit->downgraded to inferred by Stage 2; U2 inferred & wrong.
+    calls: list[str] = []
+
+    def fake_post(_url: str, payload: dict, _timeout: float) -> dict:
+        calls.append(payload["model"])
+        if payload["model"] == "stage1-model:7b":
+            return {
+                "message": {
+                    "content": json.dumps(
+                        {
+                            "utterances": [
+                                {"utterance_index": 0, "speaker_id": "otoko", "addressee_id": "onna", "evidence": "explicit", "register": {"politeness": "plain", "first_person": None}},
+                                {"utterance_index": 1, "speaker_id": "otoko", "addressee_id": "onna", "evidence": "explicit", "register": {"politeness": "plain", "first_person": None}},
+                                {"utterance_index": 2, "speaker_id": "otoko", "addressee_id": "otoko", "evidence": "inferred", "register": {"politeness": "polite", "first_person": None}},
+                            ]
+                        }
+                    )
+                },
+                "prompt_eval_count": 100,
+                "eval_count": 40,
+            }
+        # Stage 3 calls (only U1 and U2, NOT U0): keep U1=otoko, fix U2->onna.
+        user_msg = payload["messages"][1]["content"]
+        spk = "otoko" if "`[U1]` の話者" in user_msg else "onna"
+        return {
+            "message": {"content": json.dumps({"reason": "recheck", "speaker_id": spk})},
+            "prompt_eval_count": 30,
+            "eval_count": 10,
+        }
+
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", side_effect=fake_post):
+        rc = main(["--config", str(cfg_path), "--recheck-model", "recheck-cli-model:14b", "--check-gate"])
+
+    assert rc == 0
+    assert calls == ["stage1-model:7b", "recheck-cli-model:14b", "recheck-cli-model:14b"]
+
+    report = json.loads((out_dir / "stage1-model_7b_dev.json").read_text(encoding="utf-8"))
+    summary = json.loads((out_dir / "summary_dev.json").read_text(encoding="utf-8"))
+    assert report["speaker_recheck"]["model"] == "recheck-cli-model:14b"
+    assert report["speaker_recheck_summary"]["target_count"] == 2
+    assert report["speaker_recheck_summary"]["changed_count"] == 1
+    assert report["runtime_totals"]["stage1_prompt_eval_count"] == 100
+    assert report["runtime_totals"]["stage3_prompt_eval_count"] == 60
+    assert report["runtime_totals"]["prompt_eval_count"] == 160
+    assert report["runtime_totals"]["stage1_eval_count"] == 40
+    assert report["runtime_totals"]["stage3_eval_count"] == 20
+    assert report["runtime_totals"]["eval_count"] == 60
+    assert report["metrics"]["overall"]["overall_errors"] == 0
+    assert summary["models"][0]["speaker_recheck"]["model"] == "recheck-cli-model:14b"
+    assert summary["models"][0]["speaker_recheck_summary"]["changed_count"] == 1
+
+    # Verify offline replay on a Stage 1+2-equivalent report produces identical Stage 3 result.
+    twostage_equiv = json.loads(json.dumps(report))
+    twostage_equiv["raw_outputs"]["w1"]["parsed_utterances"] = report["raw_outputs"]["w1"]["stage2_parsed_utterances"]
+    ds = load_f9_dataset(gold_dir, split_path, split="dev")
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", side_effect=fake_post):
+        replayed = replay_saved_result_with_speaker_recheck(
+            ds, twostage_equiv, SpeakerRecheckConfig.from_dict(report["speaker_recheck"])
+        )
+    assert replayed["before_metrics"]["overall"]["overall_errors"] == 1
+    assert replayed["after_metrics"]["overall"]["overall_errors"] == 0
+    assert len(replayed["diff"]["fixed_errors"]) == 1
+    assert replayed["diff"]["regressions"] == []
+
+
+def test_speaker_recheck_work_audit_mode_filtering_rejection_and_zero_leakage() -> None:
+    from usir_py.sensor_eval.run_step1_f9 import load_eval_config
+
+    text = (
+        "男が言った。\n"
+        "「こんにちは」\n"
+        "「女さん、お帰り」\n"
+        "「ただいま」\n"
+        "彼は「秘密」と言葉にした。\n"
+        "「じゃあね」\n"
+    )
+    numbered, spans = number_outer_quotes(text)
+    chars = [
+        F9Character(id="otoko", aliases=["男"], gender="Male"),
+        F9Character(id="onna", aliases=["女", "女さん"], gender="Female"),
+    ]
+    utts_a = [
+        F9UtteranceGold(0, spans[0][0], spans[0][1], "こんにちは", "attributed", "otoko", text[spans[0][0] : spans[0][1]]),
+        F9UtteranceGold(1, spans[1][0], spans[1][1], "女さん", "attributed", "otoko", text[spans[1][0] : spans[1][1]]),
+        F9UtteranceGold(2, spans[2][0], spans[2][1], "ただいま", "attributed", "onna", text[spans[2][0] : spans[2][1]]),
+        F9UtteranceGold(3, spans[3][0], spans[3][1], "秘密", "not_speech", None, text[spans[3][0] : spans[3][1]]),
+        F9UtteranceGold(4, spans[4][0], spans[4][1], "じゃあね", "undetermined", None, text[spans[4][0] : spans[4][1]]),
+    ]
+    utts_b = [
+        F9UtteranceGold(i, u.open_offset, u.close_offset, u.head, "undetermined", "onna", u.quote_text)
+        for i, u in enumerate(utts_a)
+    ]
+    work_a = F9Work("w_wa", None, None, "third", None, None, chars, text, numbered, "d" * 64, utts_a)
+    work_b = F9Work("w_wa", None, None, "third", None, None, chars, text, numbered, "d" * 64, utts_b)
+
+    stage2_preds = [
+        {"utterance_index": 0, "speaker_id": "otoko", "addressee_id": "onna", "evidence": "explicit", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 1, "speaker_id": "onna", "addressee_id": "otoko", "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 2, "speaker_id": "onna", "addressee_id": "otoko", "evidence": "inferred", "register": {"politeness": "polite", "first_person": None}},
+        {"utterance_index": 3, "speaker_id": None, "addressee_id": None, "evidence": "ambiguous", "register": {"politeness": "unknown", "first_person": None}},
+        {"utterance_index": 4, "speaker_id": None, "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+    ]
+    schema = build_ollama_work_audit_format_schema(["otoko", "onna"])
+    assert schema["properties"]["corrections"]["items"]["properties"]["speaker_id"]["enum"] == ["otoko", "onna"]
+    msgs = build_work_audit_recheck_messages(work_a, {u["utterance_index"]: u for u in stage2_preds})
+    assert "女さん→onna" in msgs[1]["content"]
+    assert "監査対象発話（`状態 == 対象`）: [U1, U2]" in msgs[1]["content"]
+
+    snapshot = json.loads(json.dumps(stage2_preds))
+    cfg = SpeakerRecheckConfig(
+        enabled=True,
+        mode="work_audit",
+        prompt_version="recheck_work_v1",
+        num_ctx=9216,
+        num_predict=1024,
+    )
+    seen_prompts: list[str] = []
+
+    def fake_post(_url: str, payload: dict, _timeout: float) -> dict:
+        seen_prompts.append(payload["messages"][1]["content"])
+        return {
+            "message": {
+                "content": json.dumps(
+                    {
+                        "corrections": [
+                            {"utterance_index": 1, "reason": "女さんと呼びかけている", "speaker_id": "otoko"},
+                            {"utterance_index": 1, "reason": "重複", "speaker_id": "onna"},
+                            {"utterance_index": 0, "reason": "explicitへの違法変更", "speaker_id": "onna"},
+                            {"utterance_index": 3, "reason": "ambiguousへの違法変更", "speaker_id": "otoko"},
+                            {"utterance_index": 4, "reason": "nullへの違法変更", "speaker_id": "otoko"},
+                            {"utterance_index": 99, "reason": "範囲外", "speaker_id": "otoko"},
+                            {"utterance_index": 2, "reason": "文字列null", "speaker_id": "null"},
+                            {"utterance_index": 2, "reason": "名簿外", "speaker_id": "outsider"},
+                        ]
+                    }
+                )
+            },
+            "prompt_eval_count": 200,
+            "eval_count": 80,
+        }
+
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", side_effect=fake_post):
+        out_a, audit_a = apply_speaker_recheck_to_work(work_a, stage2_preds, cfg)
+        out_b, audit_b = apply_speaker_recheck_to_work(work_b, stage2_preds, cfg)
+
+    assert stage2_preds == snapshot
+    assert out_a == out_b
+    assert audit_a == audit_b
+    assert len(seen_prompts) == 2
+    assert seen_prompts[0] == seen_prompts[1]
+    assert out_a is not None
+    # Only U1 accepted and updated (speaker_id only); U0/U2/U3/U4 untouched.
+    assert out_a[0] == stage2_preds[0]
+    assert out_a[1]["speaker_id"] == "otoko"
+    assert out_a[1]["evidence"] == "inferred"
+    assert out_a[1]["addressee_id"] == "otoko"
+    assert out_a[1]["register"] == {"politeness": "plain", "first_person": None}
+    assert out_a[2] == stage2_preds[2]
+    assert out_a[3] == stage2_preds[3]
+    assert out_a[4] == stage2_preds[4]
+    assert audit_a["mode"] == "work_audit"
+    assert audit_a["target_count"] == 2
+    assert audit_a["rechecked_count"] == 2
+    assert audit_a["changed_count"] == 1
+    # Note: U2 duplicate index rule hits only on seen_indices; idx=2 in second call above hits duplicate because idx=2 was seen on string null!
+    assert audit_a["rejected_count"] == 7
+    rejected_reasons = [d["rejected_reason"] for d in audit_a["decisions"] if not d["accepted"]]
+    assert rejected_reasons == [
+        "duplicate_utterance_index",
+        "not_recheck_target",
+        "not_recheck_target",
+        "not_recheck_target",
+        "out_of_range",
+        "string_null_literal",
+        "duplicate_utterance_index",
+    ]
+
+    with pytest.raises(ValueError, match="mode must be one of"):
+        SpeakerRecheckConfig.from_dict({"mode": "invalid_mode"})
+
+    cfg_path = Path(__file__).resolve().parents[2] / "scripts" / "step1" / "step1_eval_config_v5_threestage.json"
+    loaded_cfg = load_eval_config(cfg_path)
+    assert loaded_cfg["speaker_recheck"]["enabled"] is True
+
+
+def test_speaker_recheck_v2_contradiction_gate_and_immediate_context() -> None:
+    from usir_py.sensor_eval.run_step1_f9 import load_eval_config
+
+    text = (
+        "男の家で会話が始まった。\n"
+        "「おや、女さんかい」\n"
+        "「ええ、そうですよ」と女が微笑んだ。\n"
+        "「それはよかった」\n"
+    )
+    numbered, spans = number_outer_quotes(text)
+    chars = [
+        F9Character(id="otoko", aliases=["男"], gender="Male"),
+        F9Character(id="onna", aliases=["女", "女さん"], gender="Female"),
+    ]
+    utts = [
+        F9UtteranceGold(0, spans[0][0], spans[0][1], "おや", "attributed", "otoko", text[spans[0][0] : spans[0][1]]),
+        F9UtteranceGold(1, spans[1][0], spans[1][1], "ええ", "attributed", "onna", text[spans[1][0] : spans[1][1]]),
+        F9UtteranceGold(2, spans[2][0], spans[2][1], "それ", "attributed", "otoko", text[spans[2][0] : spans[2][1]]),
+    ]
+    work = F9Work("w_v2", None, None, "third", None, None, chars, text, numbered, "e" * 64, utts)
+    preds = [
+        {"utterance_index": 0, "speaker_id": "otoko", "addressee_id": "onna", "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+        {"utterance_index": 1, "speaker_id": "otoko", "addressee_id": "otoko", "evidence": "inferred", "register": {"politeness": "polite", "first_person": None}},
+        {"utterance_index": 2, "speaker_id": "otoko", "addressee_id": "onna", "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+    ]
+
+    schema = build_ollama_recheck_v2_format_schema(["otoko", "onna"])
+    assert schema["required"] == ["provisional_speaker_check", "contradiction_found", "speaker_id"]
+    assert schema["properties"]["contradiction_found"]["type"] == "boolean"
+    assert schema["properties"]["speaker_id"]["enum"] == ["otoko", "onna"]
+
+    cfg = SpeakerRecheckConfig(
+        enabled=True,
+        mode="per_utterance",
+        prompt_version="recheck_v2",
+        flow_window_before=4,
+        flow_window_after=3,
+        context_chars_before=700,
+        context_chars_after=500,
+        sequential=False,
+        num_ctx=9216,
+        num_predict=384,
+    )
+    msgs = build_speaker_recheck_messages(work, 1, {p["utterance_index"]: p for p in preds}, set(), config=cfg)
+    assert "## 直前・対象・直後の本文（最優先確認）" in msgs[1]["content"]
+    assert "直前（最大180文字）:" in msgs[1]["content"]
+    assert "直後（最大180文字）:" in msgs[1]["content"]
+    assert "暫定話者 `otoko` が `[U1]` の話者として成立するか検証" in msgs[1]["content"]
+
+    replies = iter(
+        [
+            # U0: contradiction_found=False must preserve before_speaker ("otoko") even though speaker_id says "onna"!
+            {
+                "message": {
+                    "content": json.dumps(
+                        {
+                            "provisional_speaker_check": "矛盾なし",
+                            "contradiction_found": False,
+                            "speaker_id": "onna",
+                        }
+                    )
+                },
+                "prompt_eval_count": 80,
+                "eval_count": 20,
+            },
+            # U1: contradiction_found=True updates ONLY speaker_id to "onna".
+            {
+                "message": {
+                    "content": json.dumps(
+                        {
+                            "provisional_speaker_check": "直後に女が微笑んだとあり、敬体",
+                            "contradiction_found": True,
+                            "speaker_id": "onna",
+                        }
+                    )
+                },
+                "prompt_eval_count": 85,
+                "eval_count": 25,
+            },
+            # U2: invalid contradiction_found type ("yes") must be rejected & keep before_speaker.
+            {
+                "message": {
+                    "content": json.dumps(
+                        {
+                            "provisional_speaker_check": "不正フラグ",
+                            "contradiction_found": "yes",
+                            "speaker_id": "onna",
+                        }
+                    )
+                },
+                "prompt_eval_count": 75,
+                "eval_count": 15,
+            },
+        ]
+    )
+
+    with patch("usir_py.sensor_eval.ollama_client._post_chat", side_effect=lambda *a, **k: next(replies)):
+        out, audit = apply_speaker_recheck_to_work(work, preds, cfg)
+
+    assert out is not None
+    assert out[0]["speaker_id"] == "otoko"
+    assert out[1]["speaker_id"] == "onna"
+    assert out[1]["evidence"] == "inferred"
+    assert out[1]["addressee_id"] == "otoko"
+    assert out[1]["register"] == {"politeness": "polite", "first_person": None}
+    assert out[2]["speaker_id"] == "otoko"
+
+    assert audit["target_count"] == 3
+    assert audit["changed_count"] == 1
+    assert audit["rejected_count"] == 1
+    assert [d["contradiction_found"] for d in audit["decisions"]] == [False, True, None]
+    assert audit["decisions"][0]["accepted"] is True
+    assert audit["decisions"][0]["changed"] is False
+    assert audit["decisions"][1]["accepted"] is True
+    assert audit["decisions"][1]["changed"] is True
+    assert audit["decisions"][2]["accepted"] is False
+    assert audit["decisions"][2]["rejected_reason"] == "invalid_contradiction_flag"
+
+    # Also test non-roster speaker_id rejection when contradiction_found=True.
+    with patch(
+        "usir_py.sensor_eval.ollama_client._post_chat",
+        return_value={
+            "message": {
+                "content": json.dumps(
+                    {
+                        "provisional_speaker_check": "名簿外テスト",
+                        "contradiction_found": True,
+                        "speaker_id": "outsider",
+                    }
+                )
+            }
+        },
+    ):
+        out_rej, audit_rej = apply_speaker_recheck_to_work(work, [preds[0]], cfg)
+    assert out_rej is not None and out_rej[0]["speaker_id"] == "otoko"
+    assert audit_rej["rejected_count"] == 1
+    assert audit_rej["decisions"][0]["rejected_reason"] == "not_in_roster"
+
+    cfg_path = Path(__file__).resolve().parents[2] / "scripts" / "step1" / "step1_eval_config_v5_threestage.json"
+    loaded_cfg = load_eval_config(cfg_path)
+    sr_loaded = loaded_cfg["speaker_recheck"]
+    assert sr_loaded["mode"] == "per_utterance"
+    assert sr_loaded["prompt_version"] == "recheck_v2"
+    assert sr_loaded["sequential"] is False
+    assert sr_loaded["num_ctx"] == 9216
+
+
+
 
 
 

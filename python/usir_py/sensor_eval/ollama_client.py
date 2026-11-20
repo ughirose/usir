@@ -30,6 +30,23 @@ class OllamaResponse:
     eval_duration_ns: int | None
 
 
+def parse_model_spec(spec: str) -> tuple[str, bool | None, str]:
+    """Parse `model_name[::think=true|false]` into `(model, think, safe_tag)`."""
+    think: bool | None = None
+    model = spec
+    if "::" in spec:
+        model, opt = spec.split("::", 1)
+        if opt == "think=true":
+            think = True
+        elif opt == "think=false":
+            think = False
+        else:
+            raise ValueError(f"Unsupported model option {opt!r} in {spec!r}")
+    label = spec if think is not None else model
+    safe_tag = re.sub(r"[^a-zA-Z0-9._-]+", "_", label).strip("_")
+    return model, think, safe_tag
+
+
 def _strip_markdown_fences(text: str) -> str:
     stripped = text.strip()
     m = re.match(r"^```(?:json)?\s*(.*?)\s*```$", stripped, flags=re.DOTALL | re.IGNORECASE)

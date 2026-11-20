@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -17,7 +16,7 @@ from usir_py.sensor_eval.metrics import (
     evaluate_step1_gate,
     load_sensor_v2_validator,
 )
-from usir_py.sensor_eval.ollama_client import call_ollama_chat
+from usir_py.sensor_eval.ollama_client import call_ollama_chat, parse_model_spec
 from usir_py.sensor_eval.postprocess import PostprocessConfig, apply_postprocessing_to_work
 from usir_py.sensor_eval.prompt import (
     DEFAULT_PROMPT_KEY,
@@ -26,23 +25,12 @@ from usir_py.sensor_eval.prompt import (
     compute_prompt_hash,
     get_prompt,
 )
-
-
-def parse_model_spec(spec: str) -> tuple[str, bool | None, str]:
-    """Parse `model_name[::think=true|false]` into `(model, think, safe_tag)`."""
-    think: bool | None = None
-    model = spec
-    if "::" in spec:
-        model, opt = spec.split("::", 1)
-        if opt == "think=true":
-            think = True
-        elif opt == "think=false":
-            think = False
-        else:
-            raise ValueError(f"Unsupported model option {opt!r} in {spec!r}")
-    label = spec if think is not None else model
-    safe_tag = re.sub(r"[^a-zA-Z0-9._-]+", "_", label).strip("_")
-    return model, think, safe_tag
+from usir_py.sensor_eval.speaker_recheck import (
+    SpeakerRecheckConfig,
+    apply_speaker_recheck_to_work,
+    compute_recheck_prompt_hash,
+    get_recheck_prompt,
+)
 
 
 def _default_repo_root() -> Path:
@@ -92,6 +80,7 @@ def load_eval_config(config_path: Path) -> dict[str, Any]:
         cfg["models"] = model_specs
         cfg["per_model_options"] = per_model_options
     cfg["postprocess"] = PostprocessConfig.from_dict(cfg.get("postprocess")).to_dict()
+    cfg["speaker_recheck"] = SpeakerRecheckConfig.from_dict(cfg.get("speaker_recheck")).to_dict()
     return cfg
 
 
@@ -120,6 +109,8 @@ def _build_model_summary_entry(
     gate: dict[str, Any],
     postprocess: dict[str, Any] | None = None,
     postprocess_summary: dict[str, Any] | None = None,
+    speaker_recheck: dict[str, Any] | None = None,
+    speaker_recheck_summary: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     ov = metrics["overall"]
     entry: dict[str, Any] = {
@@ -176,6 +167,10 @@ def _build_model_summary_entry(
         entry["postprocess"] = postprocess
     if postprocess_summary is not None:
         entry["postprocess_summary"] = postprocess_summary
+    if speaker_recheck is not None:
+        entry["speaker_recheck"] = speaker_recheck
+    if speaker_recheck_summary is not None:
+        entry["speaker_recheck_summary"] = speaker_recheck_summary
     return entry
 
 
@@ -284,6 +279,8 @@ def merge_result_files_to_summary(
                 gate=gate,
                 postprocess=report.get("postprocess"),
                 postprocess_summary=report.get("postprocess_summary"),
+                speaker_recheck=report.get("speaker_recheck"),
+                speaker_recheck_summary=report.get("speaker_recheck_summary"),
             )
         )
         predictions_index[label] = {
@@ -308,12 +305,14 @@ def run_evaluation(
     prompt_version: str = DEFAULT_PROMPT_KEY,
     per_model_options: dict[str, dict[str, Any]] | None = None,
     postprocess: PostprocessConfig | None = None,
+    speaker_recheck: SpeakerRecheckConfig | None = None,
 ) -> dict[str, Any]:
     """Run all specified models against `dataset` and write per-model and summary JSONs."""
     out_dir.mkdir(parents=True, exist_ok=True)
     ver_label, _ = get_prompt(prompt_version)
     prompt_hash = compute_prompt_hash(prompt_version=prompt_version)
     pp_cfg = postprocess or PostprocessConfig()
+    sr_cfg = speaker_recheck or SpeakerRecheckConfig()
     format_schema = build_ollama_utterances_format_schema()
     validator = load_sensor_v2_validator()
 
@@ -344,6 +343,7 @@ def run_evaluation(
             "prompt_version": ver_label,
             "prompt_hash": prompt_hash,
             "postprocess": pp_cfg.to_dict(),
+            "speaker_recheck": sr_cfg.to_dict(),
             "works": work_rows,
             "totals": {
                 "works": len(dataset.works),
@@ -369,13 +369,22 @@ def run_evaluation(
 
         predictions_by_work: dict[str, list[dict[str, Any]] | None] = {}
         raw_work_records: dict[str, Any] = {}
-        total_elapsed = 0.0
-        total_prompt_tokens = 0
-        total_eval_tokens = 0
-        any_ctx_warning = False
+        stage1_elapsed_total = 0.0
+        stage1_prompt_tokens_total = 0
+        stage1_eval_tokens_total = 0
+        stage1_ctx_warning = False
         pp_forced_total = 0
         pp_changed_total = 0
         pp_downgraded_total = 0
+
+        sr_target_total = 0
+        sr_rechecked_total = 0
+        sr_changed_total = 0
+        sr_rejected_total = 0
+        sr_elapsed_total = 0.0
+        sr_prompt_tokens_total = 0
+        sr_eval_tokens_total = 0
+        sr_ctx_warning = False
 
         for work in dataset.works:
             messages = build_work_messages(work, prompt_version=prompt_version)
@@ -393,25 +402,45 @@ def run_evaluation(
             )
             raw_utts = _extract_utterances(resp.parsed_json)
             if pp_cfg.is_enabled:
-                final_utts, pp_audit = apply_postprocessing_to_work(work, raw_utts, pp_cfg)
+                stage2_utts, pp_audit = apply_postprocessing_to_work(work, raw_utts, pp_cfg)
                 pp_forced_total += len(pp_audit["inline_non_speech_forced"])
                 pp_changed_total += sum(
                     1 for r in pp_audit["inline_non_speech_forced"] if r["changed"]
                 )
                 pp_downgraded_total += len(pp_audit["explicit_downgraded"])
             else:
-                final_utts = raw_utts
+                stage2_utts = raw_utts
                 pp_audit = None
 
+            if sr_cfg.is_enabled:
+                final_utts, sr_audit = apply_speaker_recheck_to_work(
+                    work,
+                    stage2_utts,
+                    sr_cfg,
+                    ollama_url=ollama_url,
+                )
+                sr_target_total += int(sr_audit["target_count"])
+                sr_rechecked_total += int(sr_audit["rechecked_count"])
+                sr_changed_total += int(sr_audit["changed_count"])
+                sr_rejected_total += int(sr_audit["rejected_count"])
+                sr_elapsed_total += float(sr_audit["elapsed_sec"])
+                sr_prompt_tokens_total += int(sr_audit["prompt_eval_count"])
+                sr_eval_tokens_total += int(sr_audit["eval_count"])
+                if sr_audit["any_context_window_warning"]:
+                    sr_ctx_warning = True
+            else:
+                final_utts = stage2_utts
+                sr_audit = None
+
             predictions_by_work[work.work_id] = final_utts
-            total_elapsed += resp.elapsed_sec
+            stage1_elapsed_total += resp.elapsed_sec
             p_tok = int(resp.prompt_eval_count or 0)
             e_tok = int(resp.eval_count or 0)
-            total_prompt_tokens += p_tok
-            total_eval_tokens += e_tok
+            stage1_prompt_tokens_total += p_tok
+            stage1_eval_tokens_total += e_tok
             ctx_warn = bool((p_tok + e_tok) >= eff_num_ctx or e_tok >= eff_num_predict)
             if ctx_warn:
-                any_ctx_warning = True
+                stage1_ctx_warning = True
 
             work_rec: dict[str, Any] = {
                 "format_mode": resp.format_mode,
@@ -433,6 +462,9 @@ def run_evaluation(
             if pp_cfg.is_enabled:
                 work_rec["stage1_parsed_utterances"] = raw_utts
                 work_rec["postprocess_audit"] = pp_audit
+            if sr_cfg.is_enabled:
+                work_rec["stage2_parsed_utterances"] = stage2_utts
+                work_rec["speaker_recheck_audit"] = sr_audit
             raw_work_records[work.work_id] = work_rec
 
         metrics = evaluate_model_predictions(
@@ -445,6 +477,11 @@ def run_evaluation(
         gate = evaluate_step1_gate(metrics)
         predictions_index[label] = predictions_by_work
 
+        total_elapsed = round(stage1_elapsed_total + sr_elapsed_total, 3)
+        total_prompt_tokens = stage1_prompt_tokens_total + sr_prompt_tokens_total
+        total_eval_tokens = stage1_eval_tokens_total + sr_eval_tokens_total
+        any_ctx_warning = stage1_ctx_warning or sr_ctx_warning
+
         pp_dict_out = pp_cfg.to_dict() if pp_cfg.is_enabled else None
         pp_summary_out = (
             {
@@ -455,6 +492,43 @@ def run_evaluation(
             if pp_cfg.is_enabled
             else None
         )
+        sr_dict_out = sr_cfg.to_dict() if sr_cfg.is_enabled else None
+        sr_summary_out = (
+            {
+                "recheck_prompt_version": get_recheck_prompt(sr_cfg.prompt_version)[0],
+                "recheck_prompt_hash": compute_recheck_prompt_hash(
+                    prompt_version=sr_cfg.prompt_version
+                ),
+                "target_count": sr_target_total,
+                "rechecked_count": sr_rechecked_total,
+                "changed_count": sr_changed_total,
+                "rejected_count": sr_rejected_total,
+                "elapsed_sec": round(sr_elapsed_total, 3),
+                "prompt_eval_count": sr_prompt_tokens_total,
+                "eval_count": sr_eval_tokens_total,
+                "any_context_window_warning": sr_ctx_warning,
+            }
+            if sr_cfg.is_enabled
+            else None
+        )
+
+        runtime_totals_out: dict[str, Any] = {
+            "elapsed_sec": total_elapsed,
+            "prompt_eval_count": total_prompt_tokens,
+            "eval_count": total_eval_tokens,
+            "any_context_window_warning": any_ctx_warning,
+        }
+        if sr_cfg.is_enabled:
+            runtime_totals_out.update(
+                {
+                    "stage1_elapsed_sec": round(stage1_elapsed_total, 3),
+                    "stage3_elapsed_sec": round(sr_elapsed_total, 3),
+                    "stage1_prompt_eval_count": stage1_prompt_tokens_total,
+                    "stage3_prompt_eval_count": sr_prompt_tokens_total,
+                    "stage1_eval_count": stage1_eval_tokens_total,
+                    "stage3_eval_count": sr_eval_tokens_total,
+                }
+            )
 
         model_report: dict[str, Any] = {
             "run_timestamp": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -474,12 +548,7 @@ def run_evaluation(
                 "timeout": eff_timeout,
                 "temperature": 0.0,
             },
-            "runtime_totals": {
-                "elapsed_sec": round(total_elapsed, 3),
-                "prompt_eval_count": total_prompt_tokens,
-                "eval_count": total_eval_tokens,
-                "any_context_window_warning": any_ctx_warning,
-            },
+            "runtime_totals": runtime_totals_out,
             "gate": gate,
             "metrics": metrics,
             "raw_outputs": raw_work_records,
@@ -487,6 +556,9 @@ def run_evaluation(
         if pp_cfg.is_enabled:
             model_report["postprocess"] = pp_dict_out
             model_report["postprocess_summary"] = pp_summary_out
+        if sr_cfg.is_enabled:
+            model_report["speaker_recheck"] = sr_dict_out
+            model_report["speaker_recheck_summary"] = sr_summary_out
         out_file = out_dir / f"{safe_tag}_{dataset.split}.json"
         out_file.write_text(
             json.dumps(model_report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
@@ -508,6 +580,8 @@ def run_evaluation(
                 gate=gate,
                 postprocess=pp_dict_out,
                 postprocess_summary=pp_summary_out,
+                speaker_recheck=sr_dict_out,
+                speaker_recheck_summary=sr_summary_out,
             )
         )
 
@@ -561,6 +635,52 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="Max quote_chars threshold (inclusive) for Stage 2 Rule (B)",
     )
+    parser.add_argument(
+        "--speaker-recheck",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="Enable/disable Stage 3 speaker-only recheck on inferred utterances",
+    )
+    parser.add_argument(
+        "--recheck-mode",
+        choices=["per_utterance", "work_audit"],
+        default=None,
+        help="Stage 3 execution mode (per_utterance or work_audit)",
+    )
+    parser.add_argument(
+        "--recheck-model",
+        default=None,
+        help="Ollama model spec for Stage 3 speaker recheck (default: qwen2.5:14b)",
+    )
+    parser.add_argument(
+        "--recheck-prompt-version",
+        default=None,
+        help="Prompt version key or label for Stage 3 speaker recheck",
+    )
+    parser.add_argument(
+        "--recheck-num-ctx",
+        type=int,
+        default=None,
+        help="Context window size for Stage 3 speaker recheck",
+    )
+    parser.add_argument(
+        "--recheck-num-predict",
+        type=int,
+        default=None,
+        help="Max output tokens for Stage 3 speaker recheck",
+    )
+    parser.add_argument(
+        "--recheck-timeout",
+        type=float,
+        default=None,
+        help="HTTP timeout (seconds) per Stage 3 speaker recheck call",
+    )
+    parser.add_argument(
+        "--recheck-sequential",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="Propagate updated Stage 3 speaker IDs sequentially in the conversation flow table",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Verify data & split without calling Ollama")
     parser.add_argument(
         "--merge-only",
@@ -610,6 +730,25 @@ def main(argv: list[str] | None = None) -> int:
         pp_dict["inline_non_speech_max_chars"] = args.inline_non_speech_max_chars
     postprocess_cfg = PostprocessConfig.from_dict(pp_dict if pp_dict else None)
 
+    sr_dict = dict(cfg.get("speaker_recheck") or {})
+    if args.speaker_recheck is not None:
+        sr_dict["enabled"] = args.speaker_recheck
+    if args.recheck_mode is not None:
+        sr_dict["mode"] = args.recheck_mode
+    if args.recheck_model is not None:
+        sr_dict["model"] = args.recheck_model
+    if args.recheck_prompt_version is not None:
+        sr_dict["prompt_version"] = args.recheck_prompt_version
+    if args.recheck_num_ctx is not None:
+        sr_dict["num_ctx"] = args.recheck_num_ctx
+    if args.recheck_num_predict is not None:
+        sr_dict["num_predict"] = args.recheck_num_predict
+    if args.recheck_timeout is not None:
+        sr_dict["timeout"] = args.recheck_timeout
+    if args.recheck_sequential is not None:
+        sr_dict["sequential"] = args.recheck_sequential
+    speaker_recheck_cfg = SpeakerRecheckConfig.from_dict(sr_dict if sr_dict else None)
+
     per_model_options: dict[str, dict[str, Any]] = {
         k: dict(v) for k, v in (cfg.get("per_model_options") or {}).items()
     }
@@ -652,6 +791,7 @@ def main(argv: list[str] | None = None) -> int:
             prompt_version=prompt_version,
             per_model_options=per_model_options,
             postprocess=postprocess_cfg,
+            speaker_recheck=speaker_recheck_cfg,
         )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     if args.check_gate and not args.dry_run:
