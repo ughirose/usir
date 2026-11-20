@@ -1,0 +1,172 @@
+[
+ {
+  "item": "発話の話者（正解が attributed の発話）",
+  "hybrid": "165/166 = 0.994",
+  "local": "157/166 = 0.946"
+ },
+ {
+  "item": "not_speech に対し話者 null で棄権",
+  "hybrid": "7/9",
+  "local": "8/9"
+ },
+ {
+  "item": "undetermined に対し話者 null で棄権",
+  "hybrid": "2/9",
+  "local": "0/9"
+ },
+ {
+  "item": "同席 P / R",
+  "hybrid": "1.000 / 0.989 (TP 90, FP 0, FN 1)",
+  "local": "0.962 / 0.824 (TP 75, FP 3, FN 16)"
+ },
+ {
+  "item": "時間順序の一致",
+  "hybrid": "0.971 (34/35)",
+  "local": "0.914 (32/35)"
+ },
+ {
+  "item": "明示時刻の一致",
+  "hybrid": "0.943 (33/35)",
+  "local": "0.629 (22/35)"
+ },
+ {
+  "item": "場所の一致",
+  "hybrid": "0.914 (32/35)",
+  "local": "0.771 (27/35)"
+ },
+ {
+  "item": "事実 P / R（述語＋対象）",
+  "hybrid": "0.523 / 0.770 (TP 57, FP 52, FN 17)",
+  "local": "0.152 / 0.189 (TP 14, FP 78, FN 60)"
+ },
+ {
+  "item": "事実の出力件数（ゴールは 74）",
+  "hybrid": "109",
+  "local": "92"
+ },
+ {
+  "item": "特性・場面単位 非0軸の同符号（ゴール非0軸 全 97）",
+  "hybrid": "48/97",
+  "local": "17/97"
+ },
+ {
+  "item": "特性・ベクトル完全一致",
+  "hybrid": "0.282 (20/71)",
+  "local": "0.022 (1/46)"
+ },
+ {
+  "item": "特性・人物単位（47 軸に限定）",
+  "hybrid": "24 same / 0 opposite",
+  "local": "5/47（v3 報告）"
+ },
+ {
+  "item": "出来事 top3 の重なり（スロットあり場面）",
+  "hybrid": "0.7905（35/35 場面）",
+  "local": "0.5208（32/35 場面）"
+ },
+ {
+  "item": "出来事 top3 の重なり（35 場面、null=0）",
+  "hybrid": "0.7905",
+  "local": "0.4762"
+ },
+ {
+  "item": "出来事 top3 一致数の分布 0/1/2/3",
+  "hybrid": "0/1/20/14",
+  "local": "1/15/13/3"
+ },
+ {
+  "item": "出来事 1 位一致",
+  "hybrid": "27/35",
+  "local": "13/32"
+ },
+ {
+  "item": "参考: 定数 top3 {E03,E02,E10}（自己データ）",
+  "hybrid": "0.4667",
+  "local": "0.4667"
+ },
+ {
+  "item": "参考: ランダム期待値",
+  "hybrid": "0.1875",
+  "local": "0.1875"
+ },
+ {
+  "item": "diagnose: 6 レンズ ok の作品数",
+  "hybrid": "kasane:7 sasae:7 kamae:7 sadame:7 nagare:7 awase:7",
+  "local": "kasane:7 sasae:7 kamae:7 sadame:7 nagare:7 awase:7"
+ },
+ {
+  "item": "Nagare フルカーネル（annotated_slot）の作品数",
+  "hybrid": "7/7",
+  "local": "4/7"
+ },
+ {
+  "item": "Awase scenes_scored 合計",
+  "hybrid": "35",
+  "local": "35"
+ },
+ {
+  "item": "Awase irony_mean が正の作品数",
+  "hybrid": "5/7",
+  "local": "0/7"
+ },
+ {
+  "item": "Awase detachment_mean が正の作品数",
+  "hybrid": "7/7",
+  "local": "2/7"
+ },
+ {
+  "item": "Sadame edges_eff > 0 の作品数",
+  "hybrid": "7/7",
+  "local": "2/7"
+ },
+ {
+  "item": "Sadame edges_eff 合計",
+  "hybrid": "65",
+  "local": "6"
+ },
+ {
+  "item": "Sasae findings: off_stage_speaker",
+  "hybrid": "1",
+  "local": "24"
+ },
+ {
+  "item": "Sasae findings: presence_unconfirmed",
+  "hybrid": "3",
+  "local": "4"
+ },
+ {
+  "item": "Sasae findings: move_destination_mismatch",
+  "hybrid": "3",
+  "local": "2"
+ },
+ {
+  "item": "Sasae findings: place_conflict",
+  "hybrid": "2",
+  "local": "0"
+ },
+ {
+  "item": "Sasae findings: stay_location_conflict",
+  "hybrid": "0",
+  "local": "0"
+ },
+ {
+  "item": "Sasae findings: double_location",
+  "hybrid": "0",
+  "local": "0"
+ },
+ {
+  "item": "Sasae findings: pov_contamination",
+  "hybrid": "12",
+  "local": "12"
+ },
+ {
+  "item": "Sasae findings: quote_bracket",
+  "hybrid": "4",
+  "local": "4"
+ },
+ {
+  "item": "Sasae findings 合計",
+  "hybrid": "25",
+  "local": "46"
+ }
+]
