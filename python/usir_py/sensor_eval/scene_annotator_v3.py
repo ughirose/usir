@@ -331,12 +331,11 @@ def validate_trait(parsed: dict[str, Any] | None, excerpts: str) -> tuple[dict[s
         return None, "bad_values_6d"
     if parsed.get("evidence") not in EVIDENCE:
         return None, "bad_evidence"
-    if any(v):  # an all-zero trait needs no evidence; a non-zero trait needs a verbatim basis from the excerpts
-        plain = re.sub(r"\(場面\d+\)\s*", "", excerpts)
-        frags = [f for f in re.split(r"[。\n]",parsed.get("basis") or "") if f.strip()]
-        if not frags or not all(in_text(f, plain) for f in frags):  # basis may quote several sentences; every fragment must be verbatim
-            return None, "basis_not_in_excerpts"
-    return {"values_6d": v, "evidence": parsed["evidence"]}, None
+    # basis is recorded, not enforced: a non-zero trait whose basis is not verbatim in the excerpts is kept and flagged
+    plain = re.sub(r"\(場面\d+\)\s*", "", excerpts)
+    frags = [f for f in re.split("[。\n]",parsed.get("basis") or "") if f.strip()]
+    basis_ok = bool(frags) and all(in_text(f, plain) for f in frags)
+    return {"values_6d": v, "evidence": parsed["evidence"], "basis_verbatim": basis_ok}, None
 
 
 def dumps(x: Any) -> str:
