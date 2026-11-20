@@ -1,0 +1,1532 @@
+{
+ "note": "Stage B gold. Written by reading scene text directly, independent of sensor output. 11 modern scenes + 24 F9 Dev scenes.",
+ "scenes": {
+  "001798_056779:s0": {
+   "relative_order": "unknown",
+   "explicit_time": [
+    "三日目"
+   ],
+   "location_surfaces": [
+    "代田橋"
+   ],
+   "present": [
+    "boku",
+    "fuwa"
+   ],
+   "states": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "fuwa": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "boku",
+     "predicate": "MOVED_TO",
+     "object": "代田橋"
+    }
+   ]
+  },
+  "001798_056779:s1": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "失踪の前の晩"
+   ],
+   "location_surfaces": [
+    "僕の部屋"
+   ],
+   "present": [
+    "boku",
+    "fuwa"
+   ],
+   "states": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "fuwa": [
+     0,
+     -1,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "fuwa",
+     "predicate": "STATE_CHANGED",
+     "object": "失踪"
+    },
+    {
+     "subject": "fuwa",
+     "predicate": "ACQUIRED",
+     "object": "二千円"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "不破の借金の事情"
+    }
+   ]
+  },
+  "001798_056779:s2": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "翌朝"
+   ],
+   "location_surfaces": [
+    "板の間",
+    "台所",
+    "庭"
+   ],
+   "present": [
+    "boku",
+    "noro"
+   ],
+   "states": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "noro": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "noro",
+     "predicate": "MOVED_TO",
+     "object": "この家"
+    },
+    {
+     "subject": "noro",
+     "predicate": "LEARNED",
+     "object": "不破が出発したこと"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "家の所有をめぐる食い違い"
+    }
+   ]
+  },
+  "001798_056779:s3": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "板の間"
+   ],
+   "present": [
+    "boku",
+    "noro"
+   ],
+   "states": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "noro": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "noro",
+     "predicate": "STATE_CHANGED",
+     "object": "不安と困惑"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "家の二重契約の誤解"
+    }
+   ]
+  },
+  "001801_001786:s0": {
+   "relative_order": "unknown",
+   "explicit_time": [
+    "深夜"
+   ],
+   "location_surfaces": [
+    "海"
+   ],
+   "present": [
+    "shinichi",
+    "onna"
+   ],
+   "states": {
+    "shinichi": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "onna": [
+     -1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "shinichi",
+     "predicate": "LEARNED",
+     "object": "女が今日スポーツ・カーで来た女であること"
+    },
+    {
+     "subject": "shinichi",
+     "predicate": "MOVED_TO",
+     "object": "女の方"
+    }
+   ]
+  },
+  "001801_001786:s1": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [],
+   "present": [
+    "shinichi",
+    "onna"
+   ],
+   "states": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "onna": [
+     -1,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "shinichi",
+     "predicate": "LOST",
+     "object": "父"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "女の自殺の意図"
+    },
+    {
+     "subject": "onna",
+     "predicate": "LEARNED",
+     "object": "慎一の父の死生観"
+    }
+   ]
+  },
+  "001801_001786:s2": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "海",
+    "沖"
+   ],
+   "present": [
+    "shinichi",
+    "onna"
+   ],
+   "states": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "onna": [
+     -1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "onna",
+     "predicate": "LEARNED",
+     "object": "慎一の父が自殺したこと"
+    },
+    {
+     "subject": "shinichi",
+     "predicate": "MOVED_TO",
+     "object": "岸"
+    }
+   ]
+  },
+  "001875_059897:s0": {
+   "relative_order": "unknown",
+   "explicit_time": [
+    "斎木少年がきて一か月目ぐらい"
+   ],
+   "location_surfaces": [
+    "安江の家"
+   ],
+   "present": [
+    "yasue",
+    "otoe",
+    "heiroku",
+    "susumu"
+   ],
+   "states": {
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "heiroku": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "yasue",
+     "predicate": "ACQUIRED",
+     "object": "夏樹（赤ん坊）"
+    },
+    {
+     "subject": "heiroku",
+     "predicate": "MOVED_TO",
+     "object": "安江の家"
+    }
+   ]
+  },
+  "001875_059897:s1": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [],
+   "present": [
+    "yasue",
+    "heiroku",
+    "otoe",
+    "bunkichi"
+   ],
+   "states": {
+    "yasue": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "bunkichi": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ],
+    "heiroku": [
+     0,
+     -1,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "bunkichi",
+     "predicate": "LOST",
+     "object": "二千円"
+    },
+    {
+     "subject": "heiroku",
+     "predicate": "STATE_CHANGED",
+     "object": "食糧統制違反で新聞に出る"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "兵六への貸金の行方"
+    }
+   ]
+  },
+  "001875_059897:s2": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [],
+   "present": [
+    "yasue",
+    "otoe",
+    "susumu"
+   ],
+   "states": {
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "otoe": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "susumu": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "yasue",
+     "predicate": "LEARNED",
+     "object": "進君の生活費が兵六に預けられていること"
+    },
+    {
+     "subject": "susumu",
+     "predicate": "ACQUIRED",
+     "object": "五百円"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "兵六が進君の生活費を渡さない"
+    }
+   ]
+  },
+  "001875_059897:s3": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [],
+   "present": [
+    "yasue",
+    "susumu"
+   ],
+   "states": {
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "susumu": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "facts": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "進君の部屋探し"
+    },
+    {
+     "subject": "susumu",
+     "predicate": "MOVED_TO",
+     "object": "鷲さんのところ"
+    }
+   ]
+  },
+  "000035_000301:s0": {
+   "relative_order": "unknown",
+   "explicit_time": [
+    "二年目の十一月"
+   ],
+   "location_surfaces": [
+    "下宿"
+   ],
+   "present": [
+    "yozo"
+   ],
+   "states": {
+    "yozo": [
+     -1,
+     -1,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "yozo",
+     "predicate": "ACQUIRED",
+     "object": "行動隊長の地位"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "STATE_CHANGED",
+     "object": "情死事件で身の上が一変した"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "STATE_CHANGED",
+     "object": "運動から逃げ、死ぬ事にした"
+    }
+   ]
+  },
+  "000035_000301:s1": {
+   "relative_order": "parallel",
+   "explicit_time": [
+    "その頃"
+   ],
+   "location_surfaces": [
+    "仙遊館",
+    "自分の部屋"
+   ],
+   "present": [
+    "yozo",
+    "musume"
+   ],
+   "states": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ],
+    "musume": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "facts": []
+  },
+  "000035_000301:s2": {
+   "relative_order": "parallel",
+   "explicit_time": [
+    "或る夏の夜",
+    "同じ頃"
+   ],
+   "location_surfaces": [
+    "銀座",
+    "大カフエ",
+    "ビルの事務所"
+   ],
+   "present": [
+    "yozo",
+    "doshi",
+    "tsuneko"
+   ],
+   "states": {
+    "yozo": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     -1
+    ],
+    "doshi": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "yozo",
+     "predicate": "MOVED_TO",
+     "object": "銀座の大カフエ"
+    },
+    {
+     "subject": "doshi",
+     "predicate": "STATE_CHANGED",
+     "object": "狂乱の如く興奮した"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "ACQUIRED",
+     "object": "女給の恩"
+    }
+   ]
+  },
+  "000035_000301:s3": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "秋の、寒い夜"
+   ],
+   "location_surfaces": [
+    "銀座裏",
+    "屋台のお鮨や",
+    "屋台"
+   ],
+   "present": [
+    "yozo",
+    "tsuneko"
+   ],
+   "states": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tsuneko": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "yozo",
+     "predicate": "STATE_CHANGED",
+     "object": "震えおののく心が静まった"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "MOVED_TO",
+     "object": "銀座裏の屋台の鮨や"
+    }
+   ]
+  },
+  "000035_000301:s4": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "本所の大工さんの二階",
+    "二階"
+   ],
+   "present": [
+    "yozo",
+    "tsuneko"
+   ],
+   "states": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tsuneko": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "yozo",
+     "predicate": "MOVED_TO",
+     "object": "本所の二階"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "LEARNED",
+     "object": "ツネ子の身の上（広島、夫は詐欺罪で服役中）"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "STATE_CHANGED",
+     "object": "恐怖と不安から離れる"
+    }
+   ]
+  },
+  "000035_000301:s5": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "朝"
+   ],
+   "location_surfaces": [],
+   "present": [
+    "yozo",
+    "tsuneko"
+   ],
+   "states": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "yozo",
+     "predicate": "STATE_CHANGED",
+     "object": "もとのお道化者に戻る"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "MOVED_TO",
+     "object": "引上げ"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "「金の切れめが縁の切れめ」の放言"
+    }
+   ]
+  },
+  "000035_000301:s6": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "十一月の末",
+    "ひとつき"
+   ],
+   "location_surfaces": [
+    "神田",
+    "屋台"
+   ],
+   "present": [
+    "yozo",
+    "horiki"
+   ],
+   "states": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "horiki": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "カフエ行きの約束"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "STATE_CHANGED",
+     "object": "酔って大胆になる"
+    }
+   ]
+  },
+  "001383_056643:s0": {
+   "relative_order": "unknown",
+   "explicit_time": [],
+   "location_surfaces": [],
+   "present": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "states": {
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "senkichi",
+     "predicate": "STATE_CHANGED",
+     "object": "縛られ額に炭を塗られる"
+    },
+    {
+     "subject": "hagiwara",
+     "predicate": "STATE_CHANGED",
+     "object": "不思議な快感に襲われる"
+    }
+   ]
+  },
+  "001383_056643:s1": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "暫くしてから"
+   ],
+   "location_surfaces": [
+    "物置小屋",
+    "お堂"
+   ],
+   "present": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "states": {
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "senkichi",
+     "predicate": "STATE_CHANGED",
+     "object": "遊戯で狼に喰い殺される"
+    }
+   ]
+  },
+  "001383_056643:s2": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "土間"
+   ],
+   "present": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "states": {
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "hagiwara",
+     "predicate": "STATE_CHANGED",
+     "object": "遊戯で狼に喰い殺される"
+    },
+    {
+     "subject": "senkichi",
+     "predicate": "STATE_CHANGED",
+     "object": "体中泥だらけになる"
+    }
+   ]
+  },
+  "001383_056643:s3": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [],
+   "present": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "states": {
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     -1
+    ],
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "hagiwara",
+     "predicate": "STATE_CHANGED",
+     "object": "恐怖が快感に変わり信一の傀儡となることを喜ぶ"
+    }
+   ]
+  },
+  "001383_056643:s4": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "夕靄"
+   ],
+   "location_surfaces": [
+    "小屋",
+    "門"
+   ],
+   "present": [
+    "hagiwara",
+    "shinichi",
+    "senkichi",
+    "jochu"
+   ],
+   "states": {
+    "jochu": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     -1
+    ],
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "jochu",
+     "predicate": "MOVED_TO",
+     "object": "小屋"
+    },
+    {
+     "subject": "hagiwara",
+     "predicate": "MOVED_TO",
+     "object": "家"
+    },
+    {
+     "subject": "hagiwara",
+     "predicate": "STATE_CHANGED",
+     "object": "信一に心を奪われる"
+    }
+   ]
+  },
+  "001383_056643:s5": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "明くる日",
+    "四五日立った或る日"
+   ],
+   "location_surfaces": [
+    "学校",
+    "運動場",
+    "中二階の十畳の間"
+   ],
+   "present": [
+    "hagiwara",
+    "shinichi",
+    "senkichi",
+    "jochu",
+    "mitsuko"
+   ],
+   "states": {
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "mitsuko": [
+     0,
+     -1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "hagiwara",
+     "predicate": "MOVED_TO",
+     "object": "信一の家"
+    },
+    {
+     "subject": "shinichi",
+     "predicate": "STATE_CHANGED",
+     "object": "学校ではいつもの意気地なしに戻る"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "仙吉を白酒で酔わせる企み"
+    }
+   ]
+  },
+  "000050_003586:s0": {
+   "relative_order": "unknown",
+   "explicit_time": [
+    "今日"
+   ],
+   "location_surfaces": [],
+   "present": [
+    "tabiso",
+    "uba"
+   ],
+   "states": {
+    "tabiso": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "uba": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "tabiso",
+     "predicate": "MOVED_TO",
+     "object": "鎌倉"
+    },
+    {
+     "subject": "tabiso",
+     "predicate": "LEARNED",
+     "object": "嘉吉の話"
+    }
+   ]
+  },
+  "000050_003586:s1": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "お店"
+   ],
+   "present": [
+    "tabiso",
+    "uba"
+   ],
+   "states": {
+    "tabiso": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0
+    ],
+    "uba": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "tabiso",
+     "predicate": "STATE_CHANGED",
+     "object": "念仏の声が出る"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "黒門の別宅での回向の依頼"
+    }
+   ]
+  },
+  "000050_003586:s2": {
+   "relative_order": "unknown",
+   "explicit_time": [
+    "夜"
+   ],
+   "location_surfaces": [
+    "小川べり",
+    "黒門",
+    "秋谷"
+   ],
+   "present": [
+    "niemon",
+    "saihachi",
+    "kundo"
+   ],
+   "states": {
+    "kundo": [
+     0,
+     1,
+     0,
+     0,
+     -1,
+     0
+    ],
+    "saihachi": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "手毬と旅の書生をめぐる出来事"
+    }
+   ]
+  },
+  "000050_003586:s3": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "川"
+   ],
+   "present": [
+    "niemon",
+    "saihachi",
+    "kundo"
+   ],
+   "states": {
+    "saihachi": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "手毬の下の猫"
+    }
+   ]
+  },
+  "000050_003586:s4": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [],
+   "present": [
+    "niemon",
+    "saihachi",
+    "kundo"
+   ],
+   "states": {
+    "kundo": [
+     0,
+     1,
+     0,
+     0,
+     -1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "kundo",
+     "predicate": "LEARNED",
+     "object": "猫は死骸だったこと"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_RESOLVED",
+     "object": "手毬の下の猫の正体"
+    }
+   ]
+  },
+  "000081_000456:s0": {
+   "relative_order": "unknown",
+   "explicit_time": [],
+   "location_surfaces": [
+    "車のなか",
+    "車室",
+    "銀河"
+   ],
+   "present": [
+    "giovanni",
+    "campanella",
+    "tabibito"
+   ],
+   "states": {
+    "giovanni": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "campanella": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "campanella",
+     "predicate": "STATE_CHANGED",
+     "object": "決心している"
+    }
+   ]
+  },
+  "000081_000456:s1": {
+   "relative_order": "continuous",
+   "explicit_time": [
+    "十一時"
+   ],
+   "location_surfaces": [
+    "白鳥停車場",
+    "停車場",
+    "河原"
+   ],
+   "present": [
+    "giovanni",
+    "campanella"
+   ],
+   "states": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ],
+    "campanella": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "giovanni",
+     "predicate": "MOVED_TO",
+     "object": "白鳥停車場"
+    },
+    {
+     "subject": "giovanni",
+     "predicate": "MOVED_TO",
+     "object": "河原"
+    },
+    {
+     "subject": "campanella",
+     "predicate": "MOVED_TO",
+     "object": "河原"
+    }
+   ]
+  },
+  "000081_000456:s2": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "プリオシン海岸",
+    "河原",
+    "渚"
+   ],
+   "present": [
+    "giovanni",
+    "campanella"
+   ],
+   "states": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ],
+    "campanella": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "giovanni",
+     "predicate": "MOVED_TO",
+     "object": "プリオシン海岸"
+    },
+    {
+     "subject": "campanella",
+     "predicate": "ACQUIRED",
+     "object": "くるみの実"
+    }
+   ]
+  },
+  "000081_000456:s3": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "白い岩",
+    "岩"
+   ],
+   "present": [
+    "giovanni",
+    "campanella",
+    "daigakushi"
+   ],
+   "states": {
+    "daigakushi": [
+     0,
+     1,
+     0,
+     0,
+     -1,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "giovanni",
+     "predicate": "LEARNED",
+     "object": "くるみが百二十万年前のものであること"
+    },
+    {
+     "subject": "giovanni",
+     "predicate": "LEARNED",
+     "object": "ボスは牛の先祖であること"
+    }
+   ]
+  },
+  "000081_000456:s4": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "白い岩",
+    "河原",
+    "車室"
+   ],
+   "present": [
+    "giovanni",
+    "campanella",
+    "daigakushi"
+   ],
+   "states": {
+    "giovanni": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "facts": [
+    {
+     "subject": "giovanni",
+     "predicate": "MOVED_TO",
+     "object": "車室の席"
+    },
+    {
+     "subject": "campanella",
+     "predicate": "MOVED_TO",
+     "object": "車室の席"
+    }
+   ]
+  },
+  "000081_000456:s5": {
+   "relative_order": "continuous",
+   "explicit_time": [],
+   "location_surfaces": [
+    "汽車"
+   ],
+   "present": [
+    "giovanni",
+    "campanella",
+    "toritori"
+   ],
+   "states": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "toritori": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   "facts": [
+    {
+     "subject": "toritori",
+     "predicate": "MOVED_TO",
+     "object": "二人の席のうしろ"
+    },
+    {
+     "subject": "giovanni",
+     "predicate": "STATE_CHANGED",
+     "object": "さびしいようなかなしい気持になる"
+    }
+   ]
+  }
+ }
+}
