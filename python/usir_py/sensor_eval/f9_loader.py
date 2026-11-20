@@ -131,6 +131,7 @@ def load_f9_dataset(
     unlock_holdout: bool = False,
     politeness_gold_path: str | Path | None = None,
     nishiki_bin: str | Path | None = None,
+    gold_json_path: str | Path | None = None,
 ) -> F9Dataset:
     """Load the requested F9 split (`dev` or `holdout`) with strict holdout sealing."""
     if split not in ("dev", "holdout"):
@@ -149,8 +150,10 @@ def load_f9_dataset(
             )
 
     gold_root = Path(gold_dir)
-    gold_json_path = gold_root / "gold.json"
-    gold_bytes = gold_json_path.read_bytes()
+    resolved_gold_json = (
+        Path(gold_json_path) if gold_json_path is not None else (gold_root / "gold.json")
+    )
+    gold_bytes = resolved_gold_json.read_bytes()
     actual_sha = hashlib.sha256(gold_bytes).hexdigest()
     expected_sha = split_cfg.get("gold_json_sha256")
     if expected_sha and actual_sha != expected_sha:

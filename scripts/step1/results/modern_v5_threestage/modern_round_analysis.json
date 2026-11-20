@@ -1,0 +1,4143 @@
+{
+  "provenance": {
+    "config_file": "scripts/step1/step1_eval_config_modern_v5_threestage.json",
+    "result_file": "scripts/step1/results/modern_v5_threestage/qwen2.5_14b_dev.json",
+    "summary_file": "scripts/step1/results/modern_v5_threestage/summary_dev.json",
+    "gold_json_path": "F:\\マイドライブ\\Claude-Sync\\inbox\\2026-11-20_modern_gold_frozen.json",
+    "gold_json_sha256": "a40477af3df55ca844546fb7aeb2d35836eae2b3d4cea2588a27d553a7b4e3d4",
+    "split": "dev",
+    "split_version": "modern_gold_frozen_v1",
+    "work_ids_evaluated": [
+      "001798_056779",
+      "001875_059897",
+      "001801_001786"
+    ],
+    "model_spec": "qwen2.5:14b",
+    "prompt_version": "step1_utterances_v5",
+    "prompt_hash": "dfeb6de4ec57c881ef1650afcfee9d173cab681b2453f00ecb5c277b1f7c553a",
+    "postprocess": {
+      "explicit_evidence_gate": true,
+      "inline_non_speech_filter": true,
+      "inline_non_speech_max_chars": 11
+    },
+    "speaker_recheck": {
+      "enabled": true,
+      "mode": "per_utterance",
+      "model": "qwen2.5:14b",
+      "prompt_version": "recheck_v2",
+      "flow_window_before": 4,
+      "flow_window_after": 3,
+      "context_chars_before": 700,
+      "context_chars_after": 500,
+      "sequential": false,
+      "num_ctx": 9216,
+      "num_predict": 384,
+      "seed": 42,
+      "timeout": 120.0
+    },
+    "speaker_recheck_summary": {
+      "recheck_prompt_version": "step1_speaker_recheck_v2",
+      "recheck_prompt_hash": "c8a85d1b3a2d34f55d17980925ad67c2ab560c8ea4238e7ba73cad668d0e83b7",
+      "target_count": 73,
+      "rechecked_count": 73,
+      "changed_count": 0,
+      "rejected_count": 0,
+      "elapsed_sec": 158.707,
+      "prompt_eval_count": 212793,
+      "eval_count": 3514,
+      "any_context_window_warning": false
+    },
+    "runtime_totals": {
+      "elapsed_sec": 282.179,
+      "prompt_eval_count": 225444,
+      "eval_count": 7939,
+      "any_context_window_warning": false,
+      "stage1_elapsed_sec": 123.472,
+      "stage3_elapsed_sec": 158.707,
+      "stage1_prompt_eval_count": 12651,
+      "stage3_prompt_eval_count": 212793,
+      "stage1_eval_count": 4425,
+      "stage3_eval_count": 3514
+    },
+    "schema_validation": {
+      "all_works_valid": true,
+      "valid_works": 3,
+      "total_works": 3,
+      "per_work": {
+        "001798_056779": {
+          "schema_valid": true,
+          "schema_error_count": 0,
+          "schema_errors": [],
+          "predicted_count": 25,
+          "expected_count": 25,
+          "duplicate_indices": [],
+          "extra_indices": []
+        },
+        "001875_059897": {
+          "schema_valid": true,
+          "schema_error_count": 0,
+          "schema_errors": [],
+          "predicted_count": 28,
+          "expected_count": 28,
+          "duplicate_indices": [],
+          "extra_indices": []
+        },
+        "001801_001786": {
+          "schema_valid": true,
+          "schema_error_count": 0,
+          "schema_errors": [],
+          "predicted_count": 24,
+          "expected_count": 24,
+          "duplicate_indices": [],
+          "extra_indices": []
+        }
+      }
+    },
+    "non_roster_speaker_count": 0,
+    "null_string_speaker_count": 0,
+    "summary_json_gate": {
+      "passed": true,
+      "speaker_gate_passed": true,
+      "explicit_passed": true,
+      "overall_passed": true,
+      "validation_passed": true,
+      "politeness_passed": false,
+      "thresholds": {
+        "explicit_error_rate_lt": 0.05,
+        "overall_error_rate_lt": 0.1,
+        "politeness_agreement_rate_ge": 0.9
+      }
+    }
+  },
+  "stage_progression": {
+    "stage1_raw": {
+      "explicit_error_rate": 0.0,
+      "explicit_errors": 0,
+      "explicit_denominator": 13,
+      "overall_error_rate": 0.013157894736842105,
+      "overall_errors": 1,
+      "overall_error_rate_raw_speaker": 0.013157894736842105,
+      "overall_errors_raw_speaker": 1,
+      "attributed_total": 76,
+      "all_quotes_total": 77,
+      "inferred_error_rate": 0.015873015873015872,
+      "inferred_errors": 1,
+      "inferred_count": 63,
+      "ambiguous_rate": 0.0,
+      "ambiguous_attributed_count": 0,
+      "ambiguous_rate_all_quotes": 0.0,
+      "ambiguous_all_quotes_count": 0,
+      "not_speech_abstention_rate": 0.0,
+      "not_speech_abstained": 0,
+      "not_speech_total": 1,
+      "politeness_agreement_rate": 0.6521739130434783,
+      "politeness_evaluation": {
+        "mode": "3way_decided",
+        "mapping_5to3": {
+          "polite": "polite",
+          "honorific": "polite",
+          "plain": "plain",
+          "rough": "plain",
+          "unknown": "ambiguous"
+        },
+        "decided_mapped_5to3": {
+          "correct": 30,
+          "total": 46,
+          "rate": 0.6521739130434783,
+          "passed_ge_90": false
+        },
+        "decided_strict_exact": {
+          "correct": 30,
+          "total": 46,
+          "rate": 0.6521739130434783,
+          "passed_ge_90": false
+        },
+        "all_attributed_mapped_5to3": {
+          "correct": 30,
+          "total": 76,
+          "rate": 0.39473684210526316,
+          "passed_ge_90": false
+        },
+        "all_attributed_raw_exact": {
+          "correct": 30,
+          "total": 76,
+          "rate": 0.39473684210526316,
+          "passed_ge_90": false
+        },
+        "gold_distribution_attributed": {
+          "polite": 17,
+          "plain": 29,
+          "ambiguous": 30
+        },
+        "confusion_matrix_3x5": {
+          "polite": {
+            "plain": 11,
+            "polite": 6,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          },
+          "plain": {
+            "plain": 24,
+            "polite": 5,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          },
+          "ambiguous": {
+            "plain": 26,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          }
+        }
+      },
+      "by_narration": {
+        "first": {
+          "attributed_total": 24,
+          "all_quotes_total": 25,
+          "explicit_error_rate": null,
+          "explicit_correct": 0,
+          "explicit_errors": 0,
+          "explicit_denominator": 0,
+          "explicit_coverage": 0.0,
+          "overall_error_rate": 0.0,
+          "overall_errors": 0,
+          "overall_correct": 24,
+          "overall_error_rate_raw_speaker": 0.0,
+          "overall_errors_raw_speaker": 0,
+          "overall_correct_raw_speaker": 24,
+          "politeness_agreement_rate": 0.6470588235294118,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 17,
+          "politeness_correct": 11,
+          "ambiguous_rate": 0.0,
+          "ambiguous_attributed_count": 0,
+          "ambiguous_rate_all_quotes": 0.0,
+          "ambiguous_all_quotes_count": 0,
+          "excluded_total": 1,
+          "excluded_abstention_rate": 0.0,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 1,
+          "not_speech_total": 1,
+          "not_speech_abstention_rate": 0.0,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 1,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 0,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 0,
+              "correct": 0,
+              "errors": 0,
+              "error_rate": null,
+              "accuracy": null
+            },
+            "inferred": {
+              "count": 24,
+              "correct": 24,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 0,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 13,
+            "polite": 11,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 13,
+            "polite": 12,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 5,
+              "plain": 12,
+              "ambiguous": 7
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 1,
+                "polite": 4,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 7,
+                "polite": 5,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 5,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          }
+        },
+        "third": {
+          "attributed_total": 52,
+          "all_quotes_total": 52,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 13,
+          "explicit_errors": 0,
+          "explicit_denominator": 13,
+          "explicit_coverage": 0.25,
+          "overall_error_rate": 0.019230769230769232,
+          "overall_errors": 1,
+          "overall_correct": 51,
+          "overall_error_rate_raw_speaker": 0.019230769230769232,
+          "overall_errors_raw_speaker": 1,
+          "overall_correct_raw_speaker": 51,
+          "politeness_agreement_rate": 0.6551724137931034,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 29,
+          "politeness_correct": 19,
+          "ambiguous_rate": 0.0,
+          "ambiguous_attributed_count": 0,
+          "ambiguous_rate_all_quotes": 0.0,
+          "ambiguous_all_quotes_count": 0,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 1,
+            "ambiguous_evasion": 0,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 13,
+              "correct": 13,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 39,
+              "correct": 38,
+              "errors": 1,
+              "error_rate": 0.02564102564102564,
+              "accuracy": 0.9743589743589743
+            },
+            "ambiguous": {
+              "count": 0,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 48,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 48,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 19,
+              "total": 29,
+              "rate": 0.6551724137931034,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 19,
+              "total": 29,
+              "rate": 0.6551724137931034,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 19,
+              "total": 52,
+              "rate": 0.36538461538461536,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 19,
+              "total": 52,
+              "rate": 0.36538461538461536,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 12,
+              "plain": 17,
+              "ambiguous": 23
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 10,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 17,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 21,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          }
+        }
+      },
+      "by_work": [
+        {
+          "attributed_total": 24,
+          "all_quotes_total": 25,
+          "explicit_error_rate": null,
+          "explicit_correct": 0,
+          "explicit_errors": 0,
+          "explicit_denominator": 0,
+          "explicit_coverage": 0.0,
+          "overall_error_rate": 0.0,
+          "overall_errors": 0,
+          "overall_correct": 24,
+          "overall_error_rate_raw_speaker": 0.0,
+          "overall_errors_raw_speaker": 0,
+          "overall_correct_raw_speaker": 24,
+          "politeness_agreement_rate": 0.6470588235294118,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 17,
+          "politeness_correct": 11,
+          "ambiguous_rate": 0.0,
+          "ambiguous_attributed_count": 0,
+          "ambiguous_rate_all_quotes": 0.0,
+          "ambiguous_all_quotes_count": 0,
+          "excluded_total": 1,
+          "excluded_abstention_rate": 0.0,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 1,
+          "not_speech_total": 1,
+          "not_speech_abstention_rate": 0.0,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 1,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 0,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 0,
+              "correct": 0,
+              "errors": 0,
+              "error_rate": null,
+              "accuracy": null
+            },
+            "inferred": {
+              "count": 24,
+              "correct": 24,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 0,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 13,
+            "polite": 11,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 13,
+            "polite": 12,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 5,
+              "plain": 12,
+              "ambiguous": 7
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 1,
+                "polite": 4,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 7,
+                "polite": 5,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 5,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001798_056779",
+          "title": "ボロ家の春秋",
+          "author": "梅崎春生",
+          "narration": "first",
+          "schema_valid": true
+        },
+        {
+          "attributed_total": 28,
+          "all_quotes_total": 28,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 12,
+          "explicit_errors": 0,
+          "explicit_denominator": 12,
+          "explicit_coverage": 0.42857142857142855,
+          "overall_error_rate": 0.0,
+          "overall_errors": 0,
+          "overall_correct": 28,
+          "overall_error_rate_raw_speaker": 0.0,
+          "overall_errors_raw_speaker": 0,
+          "overall_correct_raw_speaker": 28,
+          "politeness_agreement_rate": 0.8888888888888888,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 18,
+          "politeness_correct": 16,
+          "ambiguous_rate": 0.0,
+          "ambiguous_attributed_count": 0,
+          "ambiguous_rate_all_quotes": 0.0,
+          "ambiguous_all_quotes_count": 0,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 0,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 12,
+              "correct": 12,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 16,
+              "correct": 16,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 0,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 24,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 24,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 16,
+              "total": 18,
+              "rate": 0.8888888888888888,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 16,
+              "total": 18,
+              "rate": 0.8888888888888888,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 16,
+              "total": 28,
+              "rate": 0.5714285714285714,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 16,
+              "total": 28,
+              "rate": 0.5714285714285714,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 4,
+              "plain": 14,
+              "ambiguous": 10
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 2,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 14,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 8,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001875_059897",
+          "title": "雑居家族",
+          "author": "壺井栄",
+          "narration": "third",
+          "schema_valid": true
+        },
+        {
+          "attributed_total": 24,
+          "all_quotes_total": 24,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 1,
+          "explicit_errors": 0,
+          "explicit_denominator": 1,
+          "explicit_coverage": 0.041666666666666664,
+          "overall_error_rate": 0.041666666666666664,
+          "overall_errors": 1,
+          "overall_correct": 23,
+          "overall_error_rate_raw_speaker": 0.041666666666666664,
+          "overall_errors_raw_speaker": 1,
+          "overall_correct_raw_speaker": 23,
+          "politeness_agreement_rate": 0.2727272727272727,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 11,
+          "politeness_correct": 3,
+          "ambiguous_rate": 0.0,
+          "ambiguous_attributed_count": 0,
+          "ambiguous_rate_all_quotes": 0.0,
+          "ambiguous_all_quotes_count": 0,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 1,
+            "ambiguous_evasion": 0,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 1,
+              "correct": 1,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 23,
+              "correct": 22,
+              "errors": 1,
+              "error_rate": 0.043478260869565216,
+              "accuracy": 0.9565217391304348
+            },
+            "ambiguous": {
+              "count": 0,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 24,
+            "polite": 0,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 24,
+            "polite": 0,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 3,
+              "total": 11,
+              "rate": 0.2727272727272727,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 3,
+              "total": 11,
+              "rate": 0.2727272727272727,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 3,
+              "total": 24,
+              "rate": 0.125,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 3,
+              "total": 24,
+              "rate": 0.125,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 8,
+              "plain": 3,
+              "ambiguous": 13
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 8,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 3,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 13,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001801_001786",
+          "title": "他人の夏",
+          "author": "山川方夫",
+          "narration": "third",
+          "schema_valid": true
+        }
+      ],
+      "gate": {
+        "passed": true,
+        "speaker_gate_passed": true,
+        "explicit_passed": true,
+        "overall_passed": true,
+        "validation_passed": true,
+        "politeness_passed": false,
+        "thresholds": {
+          "explicit_error_rate_lt": 0.05,
+          "overall_error_rate_lt": 0.1,
+          "politeness_agreement_rate_ge": 0.9
+        }
+      }
+    },
+    "stage1_plus_stage2": {
+      "explicit_error_rate": 0.0,
+      "explicit_errors": 0,
+      "explicit_denominator": 2,
+      "overall_error_rate": 0.039473684210526314,
+      "overall_errors": 3,
+      "overall_error_rate_raw_speaker": 0.039473684210526314,
+      "overall_errors_raw_speaker": 3,
+      "attributed_total": 76,
+      "all_quotes_total": 77,
+      "inferred_error_rate": 0.013888888888888888,
+      "inferred_errors": 1,
+      "inferred_count": 72,
+      "ambiguous_rate": 0.02631578947368421,
+      "ambiguous_attributed_count": 2,
+      "ambiguous_rate_all_quotes": 0.025974025974025976,
+      "ambiguous_all_quotes_count": 2,
+      "not_speech_abstention_rate": 0.0,
+      "not_speech_abstained": 0,
+      "not_speech_total": 1,
+      "politeness_agreement_rate": 0.6521739130434783,
+      "politeness_evaluation": {
+        "mode": "3way_decided",
+        "mapping_5to3": {
+          "polite": "polite",
+          "honorific": "polite",
+          "plain": "plain",
+          "rough": "plain",
+          "unknown": "ambiguous"
+        },
+        "decided_mapped_5to3": {
+          "correct": 30,
+          "total": 46,
+          "rate": 0.6521739130434783,
+          "passed_ge_90": false
+        },
+        "decided_strict_exact": {
+          "correct": 30,
+          "total": 46,
+          "rate": 0.6521739130434783,
+          "passed_ge_90": false
+        },
+        "all_attributed_mapped_5to3": {
+          "correct": 30,
+          "total": 76,
+          "rate": 0.39473684210526316,
+          "passed_ge_90": false
+        },
+        "all_attributed_raw_exact": {
+          "correct": 30,
+          "total": 76,
+          "rate": 0.39473684210526316,
+          "passed_ge_90": false
+        },
+        "gold_distribution_attributed": {
+          "polite": 17,
+          "plain": 29,
+          "ambiguous": 30
+        },
+        "confusion_matrix_3x5": {
+          "polite": {
+            "plain": 11,
+            "polite": 6,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          },
+          "plain": {
+            "plain": 24,
+            "polite": 5,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          },
+          "ambiguous": {
+            "plain": 26,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          }
+        }
+      },
+      "by_narration": {
+        "first": {
+          "attributed_total": 24,
+          "all_quotes_total": 25,
+          "explicit_error_rate": null,
+          "explicit_correct": 0,
+          "explicit_errors": 0,
+          "explicit_denominator": 0,
+          "explicit_coverage": 0.0,
+          "overall_error_rate": 0.041666666666666664,
+          "overall_errors": 1,
+          "overall_correct": 23,
+          "overall_error_rate_raw_speaker": 0.041666666666666664,
+          "overall_errors_raw_speaker": 1,
+          "overall_correct_raw_speaker": 23,
+          "politeness_agreement_rate": 0.6470588235294118,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 17,
+          "politeness_correct": 11,
+          "ambiguous_rate": 0.041666666666666664,
+          "ambiguous_attributed_count": 1,
+          "ambiguous_rate_all_quotes": 0.04,
+          "ambiguous_all_quotes_count": 1,
+          "excluded_total": 1,
+          "excluded_abstention_rate": 0.0,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 1,
+          "not_speech_total": 1,
+          "not_speech_abstention_rate": 0.0,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 1,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 1,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 0,
+              "correct": 0,
+              "errors": 0,
+              "error_rate": null,
+              "accuracy": null
+            },
+            "inferred": {
+              "count": 23,
+              "correct": 23,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 1,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 13,
+            "polite": 11,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 13,
+            "polite": 12,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 5,
+              "plain": 12,
+              "ambiguous": 7
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 1,
+                "polite": 4,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 7,
+                "polite": 5,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 5,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          }
+        },
+        "third": {
+          "attributed_total": 52,
+          "all_quotes_total": 52,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 2,
+          "explicit_errors": 0,
+          "explicit_denominator": 2,
+          "explicit_coverage": 0.038461538461538464,
+          "overall_error_rate": 0.038461538461538464,
+          "overall_errors": 2,
+          "overall_correct": 50,
+          "overall_error_rate_raw_speaker": 0.038461538461538464,
+          "overall_errors_raw_speaker": 2,
+          "overall_correct_raw_speaker": 50,
+          "politeness_agreement_rate": 0.6551724137931034,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 29,
+          "politeness_correct": 19,
+          "ambiguous_rate": 0.019230769230769232,
+          "ambiguous_attributed_count": 1,
+          "ambiguous_rate_all_quotes": 0.019230769230769232,
+          "ambiguous_all_quotes_count": 1,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 1,
+            "ambiguous_evasion": 1,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 2,
+              "correct": 2,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 49,
+              "correct": 48,
+              "errors": 1,
+              "error_rate": 0.02040816326530612,
+              "accuracy": 0.9795918367346939
+            },
+            "ambiguous": {
+              "count": 1,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 48,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 48,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 19,
+              "total": 29,
+              "rate": 0.6551724137931034,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 19,
+              "total": 29,
+              "rate": 0.6551724137931034,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 19,
+              "total": 52,
+              "rate": 0.36538461538461536,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 19,
+              "total": 52,
+              "rate": 0.36538461538461536,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 12,
+              "plain": 17,
+              "ambiguous": 23
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 10,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 17,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 21,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          }
+        }
+      },
+      "by_work": [
+        {
+          "attributed_total": 24,
+          "all_quotes_total": 25,
+          "explicit_error_rate": null,
+          "explicit_correct": 0,
+          "explicit_errors": 0,
+          "explicit_denominator": 0,
+          "explicit_coverage": 0.0,
+          "overall_error_rate": 0.041666666666666664,
+          "overall_errors": 1,
+          "overall_correct": 23,
+          "overall_error_rate_raw_speaker": 0.041666666666666664,
+          "overall_errors_raw_speaker": 1,
+          "overall_correct_raw_speaker": 23,
+          "politeness_agreement_rate": 0.6470588235294118,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 17,
+          "politeness_correct": 11,
+          "ambiguous_rate": 0.041666666666666664,
+          "ambiguous_attributed_count": 1,
+          "ambiguous_rate_all_quotes": 0.04,
+          "ambiguous_all_quotes_count": 1,
+          "excluded_total": 1,
+          "excluded_abstention_rate": 0.0,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 1,
+          "not_speech_total": 1,
+          "not_speech_abstention_rate": 0.0,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 1,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 1,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 0,
+              "correct": 0,
+              "errors": 0,
+              "error_rate": null,
+              "accuracy": null
+            },
+            "inferred": {
+              "count": 23,
+              "correct": 23,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 1,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 13,
+            "polite": 11,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 13,
+            "polite": 12,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 5,
+              "plain": 12,
+              "ambiguous": 7
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 1,
+                "polite": 4,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 7,
+                "polite": 5,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 5,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001798_056779",
+          "title": "ボロ家の春秋",
+          "author": "梅崎春生",
+          "narration": "first",
+          "schema_valid": true
+        },
+        {
+          "attributed_total": 28,
+          "all_quotes_total": 28,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 1,
+          "explicit_errors": 0,
+          "explicit_denominator": 1,
+          "explicit_coverage": 0.03571428571428571,
+          "overall_error_rate": 0.0,
+          "overall_errors": 0,
+          "overall_correct": 28,
+          "overall_error_rate_raw_speaker": 0.0,
+          "overall_errors_raw_speaker": 0,
+          "overall_correct_raw_speaker": 28,
+          "politeness_agreement_rate": 0.8888888888888888,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 18,
+          "politeness_correct": 16,
+          "ambiguous_rate": 0.0,
+          "ambiguous_attributed_count": 0,
+          "ambiguous_rate_all_quotes": 0.0,
+          "ambiguous_all_quotes_count": 0,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 0,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 1,
+              "correct": 1,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 27,
+              "correct": 27,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 0,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 24,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 24,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 16,
+              "total": 18,
+              "rate": 0.8888888888888888,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 16,
+              "total": 18,
+              "rate": 0.8888888888888888,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 16,
+              "total": 28,
+              "rate": 0.5714285714285714,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 16,
+              "total": 28,
+              "rate": 0.5714285714285714,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 4,
+              "plain": 14,
+              "ambiguous": 10
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 2,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 14,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 8,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001875_059897",
+          "title": "雑居家族",
+          "author": "壺井栄",
+          "narration": "third",
+          "schema_valid": true
+        },
+        {
+          "attributed_total": 24,
+          "all_quotes_total": 24,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 1,
+          "explicit_errors": 0,
+          "explicit_denominator": 1,
+          "explicit_coverage": 0.041666666666666664,
+          "overall_error_rate": 0.08333333333333333,
+          "overall_errors": 2,
+          "overall_correct": 22,
+          "overall_error_rate_raw_speaker": 0.08333333333333333,
+          "overall_errors_raw_speaker": 2,
+          "overall_correct_raw_speaker": 22,
+          "politeness_agreement_rate": 0.2727272727272727,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 11,
+          "politeness_correct": 3,
+          "ambiguous_rate": 0.041666666666666664,
+          "ambiguous_attributed_count": 1,
+          "ambiguous_rate_all_quotes": 0.041666666666666664,
+          "ambiguous_all_quotes_count": 1,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 1,
+            "ambiguous_evasion": 1,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 1,
+              "correct": 1,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 22,
+              "correct": 21,
+              "errors": 1,
+              "error_rate": 0.045454545454545456,
+              "accuracy": 0.9545454545454546
+            },
+            "ambiguous": {
+              "count": 1,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 24,
+            "polite": 0,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 24,
+            "polite": 0,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 3,
+              "total": 11,
+              "rate": 0.2727272727272727,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 3,
+              "total": 11,
+              "rate": 0.2727272727272727,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 3,
+              "total": 24,
+              "rate": 0.125,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 3,
+              "total": 24,
+              "rate": 0.125,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 8,
+              "plain": 3,
+              "ambiguous": 13
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 8,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 3,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 13,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001801_001786",
+          "title": "他人の夏",
+          "author": "山川方夫",
+          "narration": "third",
+          "schema_valid": true
+        }
+      ],
+      "gate": {
+        "passed": true,
+        "speaker_gate_passed": true,
+        "explicit_passed": true,
+        "overall_passed": true,
+        "validation_passed": true,
+        "politeness_passed": false,
+        "thresholds": {
+          "explicit_error_rate_lt": 0.05,
+          "overall_error_rate_lt": 0.1,
+          "politeness_agreement_rate_ge": 0.9
+        }
+      }
+    },
+    "stage1_plus_stage2_plus_stage3_final": {
+      "explicit_error_rate": 0.0,
+      "explicit_errors": 0,
+      "explicit_denominator": 2,
+      "overall_error_rate": 0.039473684210526314,
+      "overall_errors": 3,
+      "overall_error_rate_raw_speaker": 0.039473684210526314,
+      "overall_errors_raw_speaker": 3,
+      "attributed_total": 76,
+      "all_quotes_total": 77,
+      "inferred_error_rate": 0.013888888888888888,
+      "inferred_errors": 1,
+      "inferred_count": 72,
+      "ambiguous_rate": 0.02631578947368421,
+      "ambiguous_attributed_count": 2,
+      "ambiguous_rate_all_quotes": 0.025974025974025976,
+      "ambiguous_all_quotes_count": 2,
+      "not_speech_abstention_rate": 0.0,
+      "not_speech_abstained": 0,
+      "not_speech_total": 1,
+      "politeness_agreement_rate": 0.6521739130434783,
+      "politeness_evaluation": {
+        "mode": "3way_decided",
+        "mapping_5to3": {
+          "polite": "polite",
+          "honorific": "polite",
+          "plain": "plain",
+          "rough": "plain",
+          "unknown": "ambiguous"
+        },
+        "decided_mapped_5to3": {
+          "correct": 30,
+          "total": 46,
+          "rate": 0.6521739130434783,
+          "passed_ge_90": false
+        },
+        "decided_strict_exact": {
+          "correct": 30,
+          "total": 46,
+          "rate": 0.6521739130434783,
+          "passed_ge_90": false
+        },
+        "all_attributed_mapped_5to3": {
+          "correct": 30,
+          "total": 76,
+          "rate": 0.39473684210526316,
+          "passed_ge_90": false
+        },
+        "all_attributed_raw_exact": {
+          "correct": 30,
+          "total": 76,
+          "rate": 0.39473684210526316,
+          "passed_ge_90": false
+        },
+        "gold_distribution_attributed": {
+          "polite": 17,
+          "plain": 29,
+          "ambiguous": 30
+        },
+        "confusion_matrix_3x5": {
+          "polite": {
+            "plain": 11,
+            "polite": 6,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          },
+          "plain": {
+            "plain": 24,
+            "polite": 5,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          },
+          "ambiguous": {
+            "plain": 26,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          }
+        }
+      },
+      "by_narration": {
+        "first": {
+          "attributed_total": 24,
+          "all_quotes_total": 25,
+          "explicit_error_rate": null,
+          "explicit_correct": 0,
+          "explicit_errors": 0,
+          "explicit_denominator": 0,
+          "explicit_coverage": 0.0,
+          "overall_error_rate": 0.041666666666666664,
+          "overall_errors": 1,
+          "overall_correct": 23,
+          "overall_error_rate_raw_speaker": 0.041666666666666664,
+          "overall_errors_raw_speaker": 1,
+          "overall_correct_raw_speaker": 23,
+          "politeness_agreement_rate": 0.6470588235294118,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 17,
+          "politeness_correct": 11,
+          "ambiguous_rate": 0.041666666666666664,
+          "ambiguous_attributed_count": 1,
+          "ambiguous_rate_all_quotes": 0.04,
+          "ambiguous_all_quotes_count": 1,
+          "excluded_total": 1,
+          "excluded_abstention_rate": 0.0,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 1,
+          "not_speech_total": 1,
+          "not_speech_abstention_rate": 0.0,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 1,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 1,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 0,
+              "correct": 0,
+              "errors": 0,
+              "error_rate": null,
+              "accuracy": null
+            },
+            "inferred": {
+              "count": 23,
+              "correct": 23,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 1,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 13,
+            "polite": 11,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 13,
+            "polite": 12,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 5,
+              "plain": 12,
+              "ambiguous": 7
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 1,
+                "polite": 4,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 7,
+                "polite": 5,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 5,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          }
+        },
+        "third": {
+          "attributed_total": 52,
+          "all_quotes_total": 52,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 2,
+          "explicit_errors": 0,
+          "explicit_denominator": 2,
+          "explicit_coverage": 0.038461538461538464,
+          "overall_error_rate": 0.038461538461538464,
+          "overall_errors": 2,
+          "overall_correct": 50,
+          "overall_error_rate_raw_speaker": 0.038461538461538464,
+          "overall_errors_raw_speaker": 2,
+          "overall_correct_raw_speaker": 50,
+          "politeness_agreement_rate": 0.6551724137931034,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 29,
+          "politeness_correct": 19,
+          "ambiguous_rate": 0.019230769230769232,
+          "ambiguous_attributed_count": 1,
+          "ambiguous_rate_all_quotes": 0.019230769230769232,
+          "ambiguous_all_quotes_count": 1,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 1,
+            "ambiguous_evasion": 1,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 2,
+              "correct": 2,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 49,
+              "correct": 48,
+              "errors": 1,
+              "error_rate": 0.02040816326530612,
+              "accuracy": 0.9795918367346939
+            },
+            "ambiguous": {
+              "count": 1,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 48,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 48,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 19,
+              "total": 29,
+              "rate": 0.6551724137931034,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 19,
+              "total": 29,
+              "rate": 0.6551724137931034,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 19,
+              "total": 52,
+              "rate": 0.36538461538461536,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 19,
+              "total": 52,
+              "rate": 0.36538461538461536,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 12,
+              "plain": 17,
+              "ambiguous": 23
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 10,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 17,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 21,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          }
+        }
+      },
+      "by_work": [
+        {
+          "attributed_total": 24,
+          "all_quotes_total": 25,
+          "explicit_error_rate": null,
+          "explicit_correct": 0,
+          "explicit_errors": 0,
+          "explicit_denominator": 0,
+          "explicit_coverage": 0.0,
+          "overall_error_rate": 0.041666666666666664,
+          "overall_errors": 1,
+          "overall_correct": 23,
+          "overall_error_rate_raw_speaker": 0.041666666666666664,
+          "overall_errors_raw_speaker": 1,
+          "overall_correct_raw_speaker": 23,
+          "politeness_agreement_rate": 0.6470588235294118,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 17,
+          "politeness_correct": 11,
+          "ambiguous_rate": 0.041666666666666664,
+          "ambiguous_attributed_count": 1,
+          "ambiguous_rate_all_quotes": 0.04,
+          "ambiguous_all_quotes_count": 1,
+          "excluded_total": 1,
+          "excluded_abstention_rate": 0.0,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 1,
+          "not_speech_total": 1,
+          "not_speech_abstention_rate": 0.0,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 1,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 1,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 0,
+              "correct": 0,
+              "errors": 0,
+              "error_rate": null,
+              "accuracy": null
+            },
+            "inferred": {
+              "count": 23,
+              "correct": 23,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 1,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 13,
+            "polite": 11,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 13,
+            "polite": 12,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 11,
+              "total": 17,
+              "rate": 0.6470588235294118,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 11,
+              "total": 24,
+              "rate": 0.4583333333333333,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 5,
+              "plain": 12,
+              "ambiguous": 7
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 1,
+                "polite": 4,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 7,
+                "polite": 5,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 5,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001798_056779",
+          "title": "ボロ家の春秋",
+          "author": "梅崎春生",
+          "narration": "first",
+          "schema_valid": true
+        },
+        {
+          "attributed_total": 28,
+          "all_quotes_total": 28,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 1,
+          "explicit_errors": 0,
+          "explicit_denominator": 1,
+          "explicit_coverage": 0.03571428571428571,
+          "overall_error_rate": 0.0,
+          "overall_errors": 0,
+          "overall_correct": 28,
+          "overall_error_rate_raw_speaker": 0.0,
+          "overall_errors_raw_speaker": 0,
+          "overall_correct_raw_speaker": 28,
+          "politeness_agreement_rate": 0.8888888888888888,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 18,
+          "politeness_correct": 16,
+          "ambiguous_rate": 0.0,
+          "ambiguous_attributed_count": 0,
+          "ambiguous_rate_all_quotes": 0.0,
+          "ambiguous_all_quotes_count": 0,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 0,
+            "ambiguous_evasion": 0,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 1,
+              "correct": 1,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 27,
+              "correct": 27,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "ambiguous": {
+              "count": 0,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 24,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 24,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 16,
+              "total": 18,
+              "rate": 0.8888888888888888,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 16,
+              "total": 18,
+              "rate": 0.8888888888888888,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 16,
+              "total": 28,
+              "rate": 0.5714285714285714,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 16,
+              "total": 28,
+              "rate": 0.5714285714285714,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 4,
+              "plain": 14,
+              "ambiguous": 10
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 2,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 14,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 8,
+                "polite": 2,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001875_059897",
+          "title": "雑居家族",
+          "author": "壺井栄",
+          "narration": "third",
+          "schema_valid": true
+        },
+        {
+          "attributed_total": 24,
+          "all_quotes_total": 24,
+          "explicit_error_rate": 0.0,
+          "explicit_correct": 1,
+          "explicit_errors": 0,
+          "explicit_denominator": 1,
+          "explicit_coverage": 0.041666666666666664,
+          "overall_error_rate": 0.08333333333333333,
+          "overall_errors": 2,
+          "overall_correct": 22,
+          "overall_error_rate_raw_speaker": 0.08333333333333333,
+          "overall_errors_raw_speaker": 2,
+          "overall_correct_raw_speaker": 22,
+          "politeness_agreement_rate": 0.2727272727272727,
+          "politeness_gold_available": true,
+          "politeness_gold_total": 11,
+          "politeness_correct": 3,
+          "ambiguous_rate": 0.041666666666666664,
+          "ambiguous_attributed_count": 1,
+          "ambiguous_rate_all_quotes": 0.041666666666666664,
+          "ambiguous_all_quotes_count": 1,
+          "excluded_total": 0,
+          "excluded_abstention_rate": null,
+          "excluded_abstained": 0,
+          "excluded_over_attributed": 0,
+          "not_speech_total": 0,
+          "not_speech_abstention_rate": null,
+          "not_speech_abstained": 0,
+          "not_speech_over_attributed": 0,
+          "undetermined_total": 0,
+          "undetermined_abstention_rate": null,
+          "undetermined_abstained": 0,
+          "undetermined_over_attributed": 0,
+          "non_roster_speaker_count": 0,
+          "null_string_speaker_count": 0,
+          "error_breakdown": {
+            "wrong_speaker": 1,
+            "ambiguous_evasion": 1,
+            "ambiguous_evasion_with_correct_speaker": 0,
+            "unattributed_null": 0,
+            "missing_utterance": 0
+          },
+          "by_evidence": {
+            "explicit": {
+              "count": 1,
+              "correct": 1,
+              "errors": 0,
+              "error_rate": 0.0,
+              "accuracy": 1.0
+            },
+            "inferred": {
+              "count": 22,
+              "correct": 21,
+              "errors": 1,
+              "error_rate": 0.045454545454545456,
+              "accuracy": 0.9545454545454546
+            },
+            "ambiguous": {
+              "count": 1,
+              "correct_raw_speaker": 0
+            },
+            "missing": {
+              "count": 0
+            }
+          },
+          "politeness_distribution_attributed": {
+            "plain": 24,
+            "polite": 0,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_distribution_all": {
+            "plain": 24,
+            "polite": 0,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0
+          },
+          "politeness_evaluation": {
+            "mode": "3way_decided",
+            "mapping_5to3": {
+              "polite": "polite",
+              "honorific": "polite",
+              "plain": "plain",
+              "rough": "plain",
+              "unknown": "ambiguous"
+            },
+            "decided_mapped_5to3": {
+              "correct": 3,
+              "total": 11,
+              "rate": 0.2727272727272727,
+              "passed_ge_90": false
+            },
+            "decided_strict_exact": {
+              "correct": 3,
+              "total": 11,
+              "rate": 0.2727272727272727,
+              "passed_ge_90": false
+            },
+            "all_attributed_mapped_5to3": {
+              "correct": 3,
+              "total": 24,
+              "rate": 0.125,
+              "passed_ge_90": false
+            },
+            "all_attributed_raw_exact": {
+              "correct": 3,
+              "total": 24,
+              "rate": 0.125,
+              "passed_ge_90": false
+            },
+            "gold_distribution_attributed": {
+              "polite": 8,
+              "plain": 3,
+              "ambiguous": 13
+            },
+            "confusion_matrix_3x5": {
+              "polite": {
+                "plain": 8,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "plain": {
+                "plain": 3,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              },
+              "ambiguous": {
+                "plain": 13,
+                "polite": 0,
+                "honorific": 0,
+                "rough": 0,
+                "unknown": 0,
+                "missing_or_invalid": 0
+              }
+            }
+          },
+          "work_id": "001801_001786",
+          "title": "他人の夏",
+          "author": "山川方夫",
+          "narration": "third",
+          "schema_valid": true
+        }
+      ],
+      "gate": {
+        "passed": true,
+        "speaker_gate_passed": true,
+        "explicit_passed": true,
+        "overall_passed": true,
+        "validation_passed": true,
+        "politeness_passed": false,
+        "thresholds": {
+          "explicit_error_rate_lt": 0.05,
+          "overall_error_rate_lt": 0.1,
+          "politeness_agreement_rate_ge": 0.9
+        }
+      }
+    }
+  },
+  "stage2_audit": {
+    "rule_a_downgrades_total": 12,
+    "rule_a_impact_counts": {
+      "downgraded_not_speech": 1,
+      "downgraded_correct_explicit": 11
+    },
+    "rule_a_items": [
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 2,
+        "quote_text": "『野呂君と仲良くしてやって呉れ給え。彼はしんからの好人物であります』",
+        "gold_status": "not_speech",
+        "gold_speaker": null,
+        "stage1_speaker": "fuwa",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_not_speech"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 17,
+        "quote_text": "「へえ、でもそんなこと、わたしの知ったこっちゃないよ。」",
+        "gold_status": "attributed",
+        "gold_speaker": "yasue",
+        "stage1_speaker": "yasue",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 18,
+        "quote_text": "「そりゃそうよ。でも、かわいそうみたいよ。それ、進君の何年間かの生活費なんですって。月々わたしてもらう約束なのにさ、兵六おじさん、なかなかくれないらしいわ。」",
+        "gold_status": "attributed",
+        "gold_speaker": "otoe",
+        "stage1_speaker": "otoe",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 19,
+        "quote_text": "「そんなこと、わたしが聞いてもしようがないじゃないか。」",
+        "gold_status": "attributed",
+        "gold_speaker": "yasue",
+        "stage1_speaker": "yasue",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 20,
+        "quote_text": "「ごめん。」",
+        "gold_status": "attributed",
+        "gold_speaker": "otoe",
+        "stage1_speaker": "otoe",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 21,
+        "quote_text": "「ね、おかあさん、進君が五百円かしてくれっていってんだけど。兵六おじさん、何べん行ってもあえないんですって。」",
+        "gold_status": "attributed",
+        "gold_speaker": "otoe",
+        "stage1_speaker": "otoe",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 22,
+        "quote_text": "「そのしりぬぐいまでわたしがするの？」",
+        "gold_status": "attributed",
+        "gold_speaker": "yasue",
+        "stage1_speaker": "yasue",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 23,
+        "quote_text": "「…………」",
+        "gold_status": "attributed",
+        "gold_speaker": "otoe",
+        "stage1_speaker": "otoe",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 24,
+        "quote_text": "「あんまり、甘く見られなさんな。権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。」",
+        "gold_status": "attributed",
+        "gold_speaker": "yasue",
+        "stage1_speaker": "yasue",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 25,
+        "quote_text": "「あんたも困ってでしょうけどね、わたしんとこも困るのよ。お金のことより、部屋のことよ。早く鷲さんに相談して、さがしてくださいね。」",
+        "gold_status": "attributed",
+        "gold_speaker": "yasue",
+        "stage1_speaker": "yasue",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 26,
+        "quote_text": "「そう思うていますけど、鷲さんになかなかあえんのです。ぼく、ここのところ、毎日のように行ってるんです。きょうもこれから出かけるところです。きょうは泊りこんででもあってくるつもりです。」",
+        "gold_status": "attributed",
+        "gold_speaker": "susumu",
+        "stage1_speaker": "susumu",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 27,
+        "quote_text": "「ま、ここまできて日ぎりはしませんけどね、ことしうちぐらいには、さがしてくださいね。」",
+        "gold_status": "attributed",
+        "gold_speaker": "yasue",
+        "stage1_speaker": "yasue",
+        "pre_speaker_and_verb": false,
+        "post_speaker_and_verb": false,
+        "impact_class": "downgraded_correct_explicit"
+      }
+    ],
+    "rule_b_forced_total": 2,
+    "rule_b_changed_total": 2,
+    "rule_b_impact_counts": {
+      "collateral_broke_correct": 2
+    },
+    "rule_b_items": [
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 9,
+        "quote_chars": 7,
+        "quote_text": "「そりゃ困るなあ」",
+        "gold_status": "attributed",
+        "gold_speaker": "noro",
+        "stage1_speaker": "noro",
+        "stage1_evidence": "inferred",
+        "changed_by_rule_b": true,
+        "impact_class": "collateral_broke_correct"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 15,
+        "quote_chars": 8,
+        "quote_text": "「で、お父さんは？」",
+        "gold_status": "attributed",
+        "gold_speaker": "onna",
+        "stage1_speaker": "onna",
+        "stage1_evidence": "inferred",
+        "changed_by_rule_b": true,
+        "impact_class": "collateral_broke_correct"
+      }
+    ]
+  },
+  "stage3_audit": {
+    "summary": {
+      "recheck_prompt_version": "step1_speaker_recheck_v2",
+      "recheck_prompt_hash": "c8a85d1b3a2d34f55d17980925ad67c2ab560c8ea4238e7ba73cad668d0e83b7",
+      "target_count": 73,
+      "rechecked_count": 73,
+      "changed_count": 0,
+      "rejected_count": 0,
+      "elapsed_sec": 158.707,
+      "prompt_eval_count": 212793,
+      "eval_count": 3514,
+      "any_context_window_warning": false
+    },
+    "impact_counts": {},
+    "notable_items": []
+  },
+  "final_speaker_errors": {
+    "count": 3,
+    "raw_speaker_errors": 3,
+    "items": [
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "narration": "first",
+        "utterance_index": 9,
+        "quote_text": "「そりゃ困るなあ」",
+        "gold_speaker": "noro",
+        "stage1_speaker": "noro",
+        "stage1_evidence": "inferred",
+        "stage2_speaker": null,
+        "stage2_evidence": "ambiguous",
+        "final_speaker": null,
+        "final_evidence": "ambiguous",
+        "pred_addressee": "boku",
+        "gold_equals_pred_addressee": false,
+        "pred_politeness": "plain",
+        "outcome": "ambiguous_evasion"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "narration": "third",
+        "utterance_index": 0,
+        "quote_text": "「……だあれ？　あなた」",
+        "gold_speaker": "onna",
+        "stage1_speaker": "shinichi",
+        "stage1_evidence": "inferred",
+        "stage2_speaker": "shinichi",
+        "stage2_evidence": "inferred",
+        "final_speaker": "shinichi",
+        "final_evidence": "inferred",
+        "pred_addressee": "onna",
+        "gold_equals_pred_addressee": true,
+        "pred_politeness": "plain",
+        "outcome": "wrong_speaker"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "narration": "third",
+        "utterance_index": 15,
+        "quote_text": "「で、お父さんは？」",
+        "gold_speaker": "onna",
+        "stage1_speaker": "onna",
+        "stage1_evidence": "inferred",
+        "stage2_speaker": null,
+        "stage2_evidence": "ambiguous",
+        "final_speaker": null,
+        "final_evidence": "ambiguous",
+        "pred_addressee": "shinichi",
+        "gold_equals_pred_addressee": false,
+        "pred_politeness": "plain",
+        "outcome": "ambiguous_evasion"
+      }
+    ]
+  },
+  "politeness_audit": {
+    "overall": {
+      "mode": "3way_decided",
+      "mapping_5to3": {
+        "polite": "polite",
+        "honorific": "polite",
+        "plain": "plain",
+        "rough": "plain",
+        "unknown": "ambiguous"
+      },
+      "decided_mapped_5to3": {
+        "correct": 30,
+        "total": 46,
+        "rate": 0.6521739130434783,
+        "passed_ge_90": false
+      },
+      "decided_strict_exact": {
+        "correct": 30,
+        "total": 46,
+        "rate": 0.6521739130434783,
+        "passed_ge_90": false
+      },
+      "all_attributed_mapped_5to3": {
+        "correct": 30,
+        "total": 76,
+        "rate": 0.39473684210526316,
+        "passed_ge_90": false
+      },
+      "all_attributed_raw_exact": {
+        "correct": 30,
+        "total": 76,
+        "rate": 0.39473684210526316,
+        "passed_ge_90": false
+      },
+      "gold_distribution_attributed": {
+        "polite": 17,
+        "plain": 29,
+        "ambiguous": 30
+      },
+      "confusion_matrix_3x5": {
+        "polite": {
+          "plain": 11,
+          "polite": 6,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0,
+          "missing_or_invalid": 0
+        },
+        "plain": {
+          "plain": 24,
+          "polite": 5,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0,
+          "missing_or_invalid": 0
+        },
+        "ambiguous": {
+          "plain": 26,
+          "polite": 4,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0,
+          "missing_or_invalid": 0
+        }
+      }
+    },
+    "by_work": [
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "narration": "first",
+        "attributed_total": 24,
+        "politeness_evaluation": {
+          "mode": "3way_decided",
+          "mapping_5to3": {
+            "polite": "polite",
+            "honorific": "polite",
+            "plain": "plain",
+            "rough": "plain",
+            "unknown": "ambiguous"
+          },
+          "decided_mapped_5to3": {
+            "correct": 11,
+            "total": 17,
+            "rate": 0.6470588235294118,
+            "passed_ge_90": false
+          },
+          "decided_strict_exact": {
+            "correct": 11,
+            "total": 17,
+            "rate": 0.6470588235294118,
+            "passed_ge_90": false
+          },
+          "all_attributed_mapped_5to3": {
+            "correct": 11,
+            "total": 24,
+            "rate": 0.4583333333333333,
+            "passed_ge_90": false
+          },
+          "all_attributed_raw_exact": {
+            "correct": 11,
+            "total": 24,
+            "rate": 0.4583333333333333,
+            "passed_ge_90": false
+          },
+          "gold_distribution_attributed": {
+            "polite": 5,
+            "plain": 12,
+            "ambiguous": 7
+          },
+          "confusion_matrix_3x5": {
+            "polite": {
+              "plain": 1,
+              "polite": 4,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            },
+            "plain": {
+              "plain": 7,
+              "polite": 5,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            },
+            "ambiguous": {
+              "plain": 5,
+              "polite": 2,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            }
+          }
+        }
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "narration": "third",
+        "attributed_total": 28,
+        "politeness_evaluation": {
+          "mode": "3way_decided",
+          "mapping_5to3": {
+            "polite": "polite",
+            "honorific": "polite",
+            "plain": "plain",
+            "rough": "plain",
+            "unknown": "ambiguous"
+          },
+          "decided_mapped_5to3": {
+            "correct": 16,
+            "total": 18,
+            "rate": 0.8888888888888888,
+            "passed_ge_90": false
+          },
+          "decided_strict_exact": {
+            "correct": 16,
+            "total": 18,
+            "rate": 0.8888888888888888,
+            "passed_ge_90": false
+          },
+          "all_attributed_mapped_5to3": {
+            "correct": 16,
+            "total": 28,
+            "rate": 0.5714285714285714,
+            "passed_ge_90": false
+          },
+          "all_attributed_raw_exact": {
+            "correct": 16,
+            "total": 28,
+            "rate": 0.5714285714285714,
+            "passed_ge_90": false
+          },
+          "gold_distribution_attributed": {
+            "polite": 4,
+            "plain": 14,
+            "ambiguous": 10
+          },
+          "confusion_matrix_3x5": {
+            "polite": {
+              "plain": 2,
+              "polite": 2,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            },
+            "plain": {
+              "plain": 14,
+              "polite": 0,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            },
+            "ambiguous": {
+              "plain": 8,
+              "polite": 2,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            }
+          }
+        }
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "narration": "third",
+        "attributed_total": 24,
+        "politeness_evaluation": {
+          "mode": "3way_decided",
+          "mapping_5to3": {
+            "polite": "polite",
+            "honorific": "polite",
+            "plain": "plain",
+            "rough": "plain",
+            "unknown": "ambiguous"
+          },
+          "decided_mapped_5to3": {
+            "correct": 3,
+            "total": 11,
+            "rate": 0.2727272727272727,
+            "passed_ge_90": false
+          },
+          "decided_strict_exact": {
+            "correct": 3,
+            "total": 11,
+            "rate": 0.2727272727272727,
+            "passed_ge_90": false
+          },
+          "all_attributed_mapped_5to3": {
+            "correct": 3,
+            "total": 24,
+            "rate": 0.125,
+            "passed_ge_90": false
+          },
+          "all_attributed_raw_exact": {
+            "correct": 3,
+            "total": 24,
+            "rate": 0.125,
+            "passed_ge_90": false
+          },
+          "gold_distribution_attributed": {
+            "polite": 8,
+            "plain": 3,
+            "ambiguous": 13
+          },
+          "confusion_matrix_3x5": {
+            "polite": {
+              "plain": 8,
+              "polite": 0,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            },
+            "plain": {
+              "plain": 3,
+              "polite": 0,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            },
+            "ambiguous": {
+              "plain": 13,
+              "polite": 0,
+              "honorific": 0,
+              "rough": 0,
+              "unknown": 0,
+              "missing_or_invalid": 0
+            }
+          }
+        }
+      }
+    ],
+    "decided_mismatches_count": 16,
+    "decided_mismatches": [
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 5,
+        "quote_text": "「不破さんは居ないんですか」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「です」（末尾: は居ないんですか）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "noro",
+        "gold_speaker": "noro"
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 13,
+        "quote_text": "「留守番じゃないよ」",
+        "gold_politeness": "plain",
+        "politeness_rule_id": "plain_aux_ない",
+        "politeness_reason": "常体助動詞「ない(ない)」（末尾: 留守番じゃないよ）",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "pred_evidence": "inferred",
+        "pred_speaker": "boku",
+        "gold_speaker": "boku"
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 14,
+        "quote_text": "「留守番は君じゃないか。僕はここの居住者だ」",
+        "gold_politeness": "plain",
+        "politeness_rule_id": "plain_aux_だ",
+        "politeness_reason": "常体助動詞「だ(だ)」（末尾: はここの居住者だ）",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "pred_evidence": "inferred",
+        "pred_speaker": "boku",
+        "gold_speaker": "boku"
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 19,
+        "quote_text": "「そ、そんな無茶な。僕だってちゃんと権利金を払い、きちんと賃貸借の契約をしたんだぞ」",
+        "gold_politeness": "plain",
+        "politeness_rule_id": "plain_aux_だ",
+        "politeness_reason": "常体助動詞「だ(だ)」（末尾: 契約をしたんだぞ）",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "pred_evidence": "inferred",
+        "pred_speaker": "boku",
+        "gold_speaker": "boku"
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 22,
+        "quote_text": "「君が買い受けたってのは、どんな事情だね」",
+        "gold_politeness": "plain",
+        "politeness_rule_id": "plain_aux_だ",
+        "politeness_reason": "常体助動詞「だ(だ)」（末尾: 、どんな事情だね）",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "pred_evidence": "inferred",
+        "pred_speaker": "boku",
+        "gold_speaker": "boku"
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 23,
+        "quote_text": "「不破数馬氏からちゃんと買い受けたのかい？」",
+        "gold_politeness": "plain",
+        "politeness_rule_id": "plain_aux_た",
+        "politeness_reason": "常体助動詞「た(た)」（末尾: 買い受けたのかい）",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "pred_evidence": "inferred",
+        "pred_speaker": "boku",
+        "gold_speaker": "boku"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 26,
+        "quote_text": "「そう思うていますけど、鷲さんになかなかあえんのです。ぼく、ここのところ、毎日のように行ってるんです。きょうもこれから出かけるところです。きょうは泊りこんででもあってくるつもりです。」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「です」（末尾: てくるつもりです）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "susumu",
+        "gold_speaker": "susumu"
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 27,
+        "quote_text": "「ま、ここまできて日ぎりはしませんけどね、ことしうちぐらいには、さがしてくださいね。」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_kudasai",
+        "politeness_reason": "丁寧依頼「ください」（末尾: がしてくださいね）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "yasue",
+        "gold_speaker": "yasue"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 2,
+        "quote_text": "「大丈夫ですか？」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「です」（末尾: 大丈夫ですか）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "shinichi",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 7,
+        "quote_text": "「そうです。だからこの海にはくわしいんです」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「です」（末尾: はくわしいんです）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "explicit",
+        "pred_speaker": "shinichi",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 9,
+        "quote_text": "「……親父が漁師でした」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「です」（末尾: 親父が漁師でした）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "shinichi",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 10,
+        "quote_text": "「親父は、沖で一人底引き網をやってたんです。銛も打ったんです。二十八貫もあるカジキを、三日がかりでつかまえたこともあります」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「ます」（末尾: たこともあります）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "shinichi",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 13,
+        "quote_text": "「そうです。とても重い銛なんです」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「です」（末尾: も重い銛なんです）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "shinichi",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 17,
+        "quote_text": "「……あなたは、自殺するつもりですか？」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「です」（末尾: するつもりですか）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "shinichi",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 19,
+        "quote_text": "「べつに、やめなさい、っていうつもりじゃないんですよ」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「です」（末尾: じゃないんですよ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "shinichi",
+        "gold_speaker": "shinichi"
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 23,
+        "quote_text": "「ぼくの親父も、自殺したんです。背骨を打ってもう漁ができなくなって、この沖で銛をからだに結えつけてとびこんじゃったんです。……あなたも、ぼくはとめはしません」",
+        "gold_politeness": "polite",
+        "politeness_rule_id": "polite_aux",
+        "politeness_reason": "丁寧助動詞「ます」（末尾: はとめはしません）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "pred_evidence": "inferred",
+        "pred_speaker": "shinichi",
+        "gold_speaker": "shinichi"
+      }
+    ],
+    "ambiguous_gold_total": 30,
+    "ambiguous_gold_by_rule_id": {
+      "conj_particle_ellipsis": 1,
+      "contracted_desho": 1,
+      "ellipsis_or_dash_cutoff": 1,
+      "final_ambiguous_earlier_plain": 6,
+      "final_ambiguous_earlier_polite": 4,
+      "mixed_polite_and_plain": 5,
+      "non_predicate_副詞_一般": 1,
+      "non_predicate_助動詞_*": 1,
+      "non_predicate_助詞_係助詞": 1,
+      "non_predicate_名詞_一般": 1,
+      "non_predicate_名詞_代名詞": 1,
+      "non_predicate_名詞_接尾": 3,
+      "non_predicate_感動詞_*": 1,
+      "plain_aux_らしい": 1,
+      "quotative_datte": 1,
+      "silence_or_punct_only": 1
+    },
+    "ambiguous_gold_items": [
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 1,
+        "quote_text": "「僕の先祖というのは、なにも数右衛門だけじゃありませんよ。数右衛門の息子だってそうだし、そのまた息子だってそうだし、代々が僕の先祖様なんだ」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "mixed_polite_and_plain",
+        "politeness_reason": "同一発話内に敬体・常体文末が混在（りませんよ。=polite, 先祖様なんだ=plain）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 4,
+        "quote_text": "「いかにも僕は野呂ですが――」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "ellipsis_or_dash_cutoff",
+        "politeness_reason": "文末が言いさし（……／――）のため保留（末尾: は野呂ですが）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 8,
+        "quote_text": "「十日？」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_名詞_接尾",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: 日[名詞,接尾,*]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 10,
+        "quote_text": "「困ることなんかないでしょ」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "contracted_desho",
+        "politeness_reason": "縮約形「でしょ」は常体会話にも現れるため保留",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 12,
+        "quote_text": "「一体君は何だね。留守番かね？」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_plain",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（非述語/体言止め/感嘆詞/倒置等（最終語: 留守番[名詞,サ変接続,*]）；参考：先行文末は plain のみ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 15,
+        "quote_text": "「居住者？」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_名詞_接尾",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: 者[名詞,接尾,*]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001798_056779",
+        "title": "ボロ家の春秋",
+        "utterance_index": 17,
+        "quote_text": "「買い受けただって？」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "quotative_datte",
+        "politeness_reason": "伝聞・引用止め「〜だって」のため保留",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 1,
+        "quote_text": "「進君から話を聞きましてな、今、あんたの物語を一席していたとこですよ。お安さんという人は、昔から実にできた人だといってね。」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_polite",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（接続助詞「て」止め（後続省略・末尾: た人だといってね）；参考：先行文末は polite のみ）",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 2,
+        "quote_text": "「おだてるのね、相変らず。」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_助動詞_*",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: ず[助動詞,*,連用ニ接続]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 3,
+        "quote_text": "「いやあ、ほんとですよ。わしは、実に何というか、ここの家との妙ないんねんにおどろいとるところですよ。音枝ちゃんはこりゃ、当り前だけどもさ、冬太郎くんでしょう、そしてきょうでしょう。ここの家へ赤ん坊が来た日には、必ずわしが、まるで立会人かなんぞのように三度が三度、ここへ来る回りあわせになる――」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_polite",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（文末が言いさし（……／――）のため保留（末尾: あわせになる）；参考：先行文末は polite のみ）",
+        "pred_politeness": "polite",
+        "pred_mapped_3way": "polite",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 4,
+        "quote_text": "「そういえば、そうだわ。あら、変ね。ふしぎね。三度が三度なんて、なんでしょう。奇縁ていうのかしら。」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "mixed_polite_and_plain",
+        "politeness_reason": "同一発話内に敬体・常体文末が混在（、そうだわ。=plain, あら、変ね。=ambiguous, ふしぎね。=ambiguous, んでしょう。=polite, うのかしら。=ambiguous）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 15,
+        "quote_text": "「いやだわ。男のくせにへそくりなんて。――そのお金、もうもどってなんかこないわよ。わたしに相談もしないでさ……」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_plain",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（文末が言いさし（……／――）のため保留（末尾: もしないでさ）；参考：先行文末は plain のみ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 18,
+        "quote_text": "「そりゃそうよ。でも、かわいそうみたいよ。それ、進君の何年間かの生活費なんですって。月々わたしてもらう約束なのにさ、兵六おじさん、なかなかくれないらしいわ。」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "plain_aux_らしい",
+        "politeness_reason": "Orion freeze: 丁寧形（んですって）と常体の混在のため Policy X（mix -> ambiguous）により変更",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": true,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 20,
+        "quote_text": "「ごめん。」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_感動詞_*",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: ごめん[感動詞,*,*]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 21,
+        "quote_text": "「ね、おかあさん、進君が五百円かしてくれっていってんだけど。兵六おじさん、何べん行ってもあえないんですって。」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_plain",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（伝聞「〜んですって」は敬体要素と口語伝聞が混在するため保留；参考：先行文末は plain のみ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 23,
+        "quote_text": "「…………」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "silence_or_punct_only",
+        "politeness_reason": "無言記号のみで文末表現なし",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": true
+      },
+      {
+        "work_id": "001875_059897",
+        "title": "雑居家族",
+        "utterance_index": 25,
+        "quote_text": "「あんたも困ってでしょうけどね、わたしんとこも困るのよ。お金のことより、部屋のことよ。早く鷲さんに相談して、さがしてくださいね。」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "mixed_polite_and_plain",
+        "politeness_reason": "同一発話内に敬体・常体文末が混在（も困るのよ。=plain, 屋のことよ。=ambiguous, くださいね。=polite）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 0,
+        "quote_text": "「……だあれ？　あなた」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_名詞_代名詞",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: あなた[名詞,代名詞,*]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 1,
+        "quote_text": "「知らない人ね、きっと。……」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_副詞_一般",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: きっと[副詞,一般,*]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 3,
+        "quote_text": "「いいの。ほっといてよ」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_plain",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（接続助詞「て」止め（後続省略・末尾: ほっといてよ）；参考：先行文末は plain のみ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 4,
+        "quote_text": "「……あぶないですよ、この海は。すぐうねりが変わるんです。もっと岸の近くで……」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_polite",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（文末が言いさし（……／――）のため保留（末尾: と岸の近くで）；参考：先行文末は polite のみ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 5,
+        "quote_text": "「かまわないで」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "conj_particle_ellipsis",
+        "politeness_reason": "接続助詞「で」止め（後続省略・末尾: かまわないで）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 6,
+        "quote_text": "「……あなた、この町の人ね？」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_名詞_一般",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: 人[名詞,一般,*]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 11,
+        "quote_text": "「そのときは、親父も生命からがらだったんです。牛みたいな大きなカジキを、ふらふらになって担ぎながら、親父は精も魂もつき果てたっていう感じでした。……でもその夜、親父はそのカジキの背をたたきながらぼくにいったんです。おい、よく見ろ、おれは、こいつに勝ったんだぞ。生きるってことは、こういう、この手ごたえのことなんだよ。……あのとき、親父は泣いていました」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "mixed_polite_and_plain",
+        "politeness_reason": "同一発話内に敬体・常体文末が混在（ったんです。=polite, 感じでした。=polite, ったんです。=polite, ったんだぞ。=plain, となんだよ。=plain, いていました=polite）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 14,
+        "quote_text": "「ずいぶん、原始的ね」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_名詞_接尾",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: 的[名詞,接尾,*]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 15,
+        "quote_text": "「で、お父さんは？」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "non_predicate_助詞_係助詞",
+        "politeness_reason": "非述語/体言止め/感嘆詞/倒置等（最終語: は[助詞,係助詞,*]）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 16,
+        "quote_text": "「死にました。去年」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_polite",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（非述語/体言止め/感嘆詞/倒置等（最終語: 去年[名詞,副詞可能,*]）；参考：先行文末は polite のみ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 20,
+        "quote_text": "「からかうの？　軽蔑しているのね、私を。子どものくせに」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_plain",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（非述語/体言止め/感嘆詞/倒置等（最終語: に[助詞,格助詞,*]）；参考：先行文末は plain のみ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 21,
+        "quote_text": "「ちがいます。親父がぼくにいったんです。死のうとしている人間を、軽蔑しちゃいけない。どんな人間にも、その人なりの苦労や、正義がある。その人だけの生き甲斐ってやつがある。そいつは、他の人間には、絶対にわかりっこないんだ、って」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "mixed_polite_and_plain",
+        "politeness_reason": "同一発話内に敬体・常体文末が混在（ちがいます。=polite, ったんです。=polite, ゃいけない。=plain, 正義がある。=plain, やつがある。=plain, いんだ、って=ambiguous）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      },
+      {
+        "work_id": "001801_001786",
+        "title": "他人の夏",
+        "utterance_index": 22,
+        "quote_text": "「人間には、他の人間のこと、ことにその生きるか死ぬかっていう肝心のことなんかは、決してわかりっこないんだ、人間は、だれでもそのことに耐えなくちゃいけないんだ、って。……だから、目の前で人間が死のうとしても、それをとめちゃいけない。その人を好きなように死なしてやるほうが、ずっと親切だし、ほんとうは、ずっと勇気のいることなんだ、って……」",
+        "gold_politeness": "ambiguous",
+        "politeness_rule_id": "final_ambiguous_earlier_plain",
+        "politeness_reason": "最終文が非終止・省略・断片のため保留（引用助詞「〜って」止め（後続述語省略）のため保留；参考：先行文末は plain のみ）",
+        "pred_politeness": "plain",
+        "pred_mapped_3way": "plain",
+        "orion_freeze_changed": false,
+        "is_silent_turn": false
+      }
+    ]
+  },
+  "not_speech_trace": [
+    {
+      "work_id": "001798_056779",
+      "title": "ボロ家の春秋",
+      "utterance_index": 2,
+      "quote_text": "『野呂君と仲良くしてやって呉れ給え。彼はしんからの好人物であります』",
+      "speaker_cue": "直前・直後「一枚の便箋が置いてあって…そう書いてありました。もちろん不破の筆跡です。」書置き文面の引用であり口頭発話ではないため not_speech（Orion確認対象）",
+      "gold_politeness": null,
+      "gold_politeness_rule_id": "not_speech(mixed_polite_and_plain)",
+      "features": {
+        "position": "standalone_line",
+        "quote_chars": 32,
+        "pre_has_narration": true,
+        "pre_speakers": [
+          "boku"
+        ],
+        "pre_speech_verb": null,
+        "pre_speaker_and_verb": false,
+        "post_speakers": [],
+        "post_speech_verb": null,
+        "post_speaker_and_verb": false
+      },
+      "stage1": {
+        "utterance_index": 2,
+        "speaker_id": "fuwa",
+        "addressee_id": null,
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      "stage2": {
+        "utterance_index": 2,
+        "speaker_id": "fuwa",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      "stage3_final": {
+        "utterance_index": 2,
+        "speaker_id": "fuwa",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      "matched_rule_a": true,
+      "matched_rule_b": false,
+      "stage3_rechecked": true,
+      "stage3_decision": {
+        "utterance_index": 2,
+        "before_speaker": "fuwa",
+        "after_speaker": "fuwa",
+        "addressee_id": null,
+        "changed": false,
+        "accepted": true,
+        "rejected_reason": null,
+        "reason": "不破が便箋を書いて置いたことと矛盾しない。",
+        "format_mode": "json_schema",
+        "elapsed_sec": 1.999,
+        "prompt_eval_count": 2937,
+        "eval_count": 42,
+        "context_window_warning": false,
+        "parse_error": null,
+        "contradiction_found": false
+      },
+      "abstained_in_final": false,
+      "over_attributed_in_final": true,
+      "final_politeness": "polite"
+    }
+  ],
+  "f9_comparison": {
+    "f9_dev": {
+      "label": "F9 Dev (Round 6)",
+      "split": "dev",
+      "work_ids_evaluated": [
+        "000035_000301",
+        "001383_056643",
+        "000050_003586",
+        "000081_000456"
+      ],
+      "attributed_total": 90,
+      "explicit_error_rate": 0.0,
+      "explicit_errors": 0,
+      "explicit_denominator": 5,
+      "overall_error_rate": 0.06666666666666667,
+      "overall_errors": 6,
+      "overall_error_rate_raw_speaker": 0.06666666666666667,
+      "overall_errors_raw_speaker": 6,
+      "ambiguous_rate": 0.0,
+      "ambiguous_attributed_count": 0,
+      "ambiguous_rate_all_quotes": 0.07476635514018691,
+      "not_speech_abstention_rate": 1.0,
+      "not_speech_abstained": 8,
+      "not_speech_total": 8,
+      "politeness_agreement_rate": null,
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": 0.0,
+          "overall_error_rate": 0.023255813953488372,
+          "overall_error_rate_raw_speaker": 0.023255813953488372,
+          "ambiguous_rate": 0.0,
+          "attributed_total": 43
+        },
+        "third": {
+          "explicit_error_rate": 0.0,
+          "overall_error_rate": 0.10638297872340426,
+          "overall_error_rate_raw_speaker": 0.10638297872340426,
+          "ambiguous_rate": 0.0,
+          "attributed_total": 47
+        }
+      },
+      "postprocess_summary": {
+        "inline_non_speech_forced_count": 7,
+        "inline_non_speech_changed_count": 1,
+        "explicit_downgraded_count": 26
+      },
+      "speaker_recheck_summary": {
+        "recheck_prompt_version": "step1_speaker_recheck_v2",
+        "recheck_prompt_hash": "c8a85d1b3a2d34f55d17980925ad67c2ab560c8ea4238e7ba73cad668d0e83b7",
+        "target_count": 94,
+        "rechecked_count": 94,
+        "changed_count": 1,
+        "rejected_count": 0,
+        "elapsed_sec": 212.275,
+        "prompt_eval_count": 282002,
+        "eval_count": 4731,
+        "any_context_window_warning": false
+      },
+      "gate": {
+        "passed": true,
+        "speaker_gate_passed": true,
+        "explicit_passed": true,
+        "overall_passed": true,
+        "validation_passed": true,
+        "politeness_passed": null,
+        "thresholds": {
+          "explicit_error_rate_lt": 0.05,
+          "overall_error_rate_lt": 0.1,
+          "politeness_agreement_rate_ge": 0.9
+        }
+      },
+      "elapsed_sec": 364.875,
+      "prompt_eval_count": 305561,
+      "eval_count": 10354
+    },
+    "f9_holdout": {
+      "label": "F9 Holdout (Round 6)",
+      "split": "holdout",
+      "work_ids_evaluated": [
+        "000148_000752",
+        "000074_000429",
+        "000129_000689",
+        "001095_042618"
+      ],
+      "attributed_total": 96,
+      "explicit_error_rate": 0.0,
+      "explicit_errors": 0,
+      "explicit_denominator": 5,
+      "overall_error_rate": 0.13541666666666666,
+      "overall_errors": 13,
+      "overall_error_rate_raw_speaker": 0.125,
+      "overall_errors_raw_speaker": 12,
+      "ambiguous_rate": 0.052083333333333336,
+      "ambiguous_attributed_count": 5,
+      "ambiguous_rate_all_quotes": 0.09433962264150944,
+      "not_speech_abstention_rate": null,
+      "not_speech_abstained": 0,
+      "not_speech_total": 0,
+      "politeness_agreement_rate": null,
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": null,
+          "overall_error_rate": 0.058823529411764705,
+          "overall_error_rate_raw_speaker": 0.058823529411764705,
+          "ambiguous_rate": 0.058823529411764705,
+          "attributed_total": 17
+        },
+        "third": {
+          "explicit_error_rate": 0.0,
+          "overall_error_rate": 0.1518987341772152,
+          "overall_error_rate_raw_speaker": 0.13924050632911392,
+          "ambiguous_rate": 0.05063291139240506,
+          "attributed_total": 79
+        }
+      },
+      "postprocess_summary": {
+        "inline_non_speech_forced_count": 9,
+        "inline_non_speech_changed_count": 9,
+        "explicit_downgraded_count": 5
+      },
+      "speaker_recheck_summary": {
+        "recheck_prompt_version": "step1_speaker_recheck_v2",
+        "recheck_prompt_hash": "c8a85d1b3a2d34f55d17980925ad67c2ab560c8ea4238e7ba73cad668d0e83b7",
+        "target_count": 90,
+        "rechecked_count": 90,
+        "changed_count": 0,
+        "rejected_count": 0,
+        "elapsed_sec": 194.525,
+        "prompt_eval_count": 261264,
+        "eval_count": 4466,
+        "any_context_window_warning": false
+      },
+      "gate": {
+        "passed": false,
+        "speaker_gate_passed": false,
+        "explicit_passed": true,
+        "overall_passed": false,
+        "validation_passed": true,
+        "politeness_passed": null,
+        "thresholds": {
+          "explicit_error_rate_lt": 0.05,
+          "overall_error_rate_lt": 0.1,
+          "politeness_agreement_rate_ge": 0.9
+        }
+      },
+      "elapsed_sec": 341.221,
+      "prompt_eval_count": 280048,
+      "eval_count": 10112
+    },
+    "modern_frozen": {
+      "label": "Modern Round (Frozen Gold)",
+      "split": "dev",
+      "work_ids_evaluated": [
+        "001798_056779",
+        "001875_059897",
+        "001801_001786"
+      ],
+      "attributed_total": 76,
+      "explicit_error_rate": 0.0,
+      "explicit_errors": 0,
+      "explicit_denominator": 2,
+      "overall_error_rate": 0.039473684210526314,
+      "overall_errors": 3,
+      "overall_error_rate_raw_speaker": 0.039473684210526314,
+      "overall_errors_raw_speaker": 3,
+      "ambiguous_rate": 0.02631578947368421,
+      "ambiguous_attributed_count": 2,
+      "ambiguous_rate_all_quotes": 0.025974025974025976,
+      "not_speech_abstention_rate": 0.0,
+      "not_speech_abstained": 0,
+      "not_speech_total": 1,
+      "politeness_agreement_rate": 0.6521739130434783,
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": null,
+          "overall_error_rate": 0.041666666666666664,
+          "overall_error_rate_raw_speaker": 0.041666666666666664,
+          "ambiguous_rate": 0.041666666666666664,
+          "attributed_total": 24
+        },
+        "third": {
+          "explicit_error_rate": 0.0,
+          "overall_error_rate": 0.038461538461538464,
+          "overall_error_rate_raw_speaker": 0.038461538461538464,
+          "ambiguous_rate": 0.019230769230769232,
+          "attributed_total": 52
+        }
+      },
+      "postprocess_summary": {
+        "inline_non_speech_forced_count": 2,
+        "inline_non_speech_changed_count": 2,
+        "explicit_downgraded_count": 12
+      },
+      "speaker_recheck_summary": {
+        "recheck_prompt_version": "step1_speaker_recheck_v2",
+        "recheck_prompt_hash": "c8a85d1b3a2d34f55d17980925ad67c2ab560c8ea4238e7ba73cad668d0e83b7",
+        "target_count": 73,
+        "rechecked_count": 73,
+        "changed_count": 0,
+        "rejected_count": 0,
+        "elapsed_sec": 158.707,
+        "prompt_eval_count": 212793,
+        "eval_count": 3514,
+        "any_context_window_warning": false
+      },
+      "gate": {
+        "passed": true,
+        "speaker_gate_passed": true,
+        "explicit_passed": true,
+        "overall_passed": true,
+        "validation_passed": true,
+        "politeness_passed": false,
+        "thresholds": {
+          "explicit_error_rate_lt": 0.05,
+          "overall_error_rate_lt": 0.1,
+          "politeness_agreement_rate_ge": 0.9
+        }
+      },
+      "elapsed_sec": 282.179,
+      "prompt_eval_count": 225444,
+      "eval_count": 7939
+    }
+  }
+}

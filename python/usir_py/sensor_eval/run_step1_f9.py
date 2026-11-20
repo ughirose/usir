@@ -55,7 +55,14 @@ def load_eval_config(config_path: Path) -> dict[str, Any]:
 
     repo_root = _default_repo_root()
     cfg = dict(raw)
-    for path_key in ("gold_dir", "split_file", "out_dir", "politeness_gold", "nishiki_bin"):
+    for path_key in (
+        "gold_dir",
+        "gold_json",
+        "split_file",
+        "out_dir",
+        "politeness_gold",
+        "nishiki_bin",
+    ):
         if path_key in cfg and cfg[path_key] is not None:
             cfg[path_key] = _resolve_repo_path(str(cfg[path_key]), repo_root)
 
@@ -163,6 +170,8 @@ def _build_model_summary_entry(
             for k, v in metrics["by_narration"].items()
         },
     }
+    if ov.get("politeness_evaluation") is not None:
+        entry["politeness_evaluation"] = ov["politeness_evaluation"]
     if postprocess is not None:
         entry["postprocess"] = postprocess
     if postprocess_summary is not None:
@@ -306,6 +315,8 @@ def run_evaluation(
     per_model_options: dict[str, dict[str, Any]] | None = None,
     postprocess: PostprocessConfig | None = None,
     speaker_recheck: SpeakerRecheckConfig | None = None,
+    politeness_mode: str = "exact",
+    gold_json_path: str | None = None,
 ) -> dict[str, Any]:
     """Run all specified models against `dataset` and write per-model and summary JSONs."""
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -473,6 +484,7 @@ def run_evaluation(
             model_id=label,
             prompt_hash=prompt_hash,
             schema_validator=validator,
+            politeness_mode=politeness_mode,
         )
         gate = evaluate_step1_gate(metrics)
         predictions_index[label] = predictions_by_work
@@ -535,6 +547,7 @@ def run_evaluation(
             "split": dataset.split,
             "split_version": dataset.split_version,
             "gold_json_sha256": dataset.gold_json_sha256,
+            "politeness_mode": politeness_mode,
             "work_ids_evaluated": [w.work_id for w in dataset.works],
             "model_spec": label,
             "model_name": model_name,
@@ -553,6 +566,8 @@ def run_evaluation(
             "metrics": metrics,
             "raw_outputs": raw_work_records,
         }
+        if gold_json_path is not None:
+            model_report["gold_json_path"] = str(gold_json_path)
         if pp_cfg.is_enabled:
             model_report["postprocess"] = pp_dict_out
             model_report["postprocess_summary"] = pp_summary_out
@@ -595,6 +610,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run Step 1 F9 speaker/politeness evaluation.")
     parser.add_argument("--config", default=None, help="Optional JSON config file for model-swap regression runs")
     parser.add_argument("--gold-dir", default=None, help="Directory containing F9 gold.json and *.txt")
+    parser.add_argument("--gold-json", default=None, help="Optional explicit gold JSON file overriding <gold_dir>/gold.json")
     parser.add_argument("--split-file", default=None, help="Path to f9_split.json")
     parser.add_argument("--split", choices=["dev", "holdout"], default=None)
     parser.add_argument(
@@ -603,6 +619,12 @@ def main(argv: list[str] | None = None) -> int:
         help="Required to unlock sealed holdout split.",
     )
     parser.add_argument("--politeness-gold", default=None, help="Optional politeness gold JSON path")
+    parser.add_argument(
+        "--politeness-mode",
+        choices=["exact", "3way_decided"],
+        default=None,
+        help="Politeness scoring mode (default: exact)",
+    )
     parser.add_argument("--nishiki-bin", default=None, help="Optional nishiki binary for segment cross-check")
     parser.add_argument(
         "--models",
@@ -700,6 +722,7 @@ def main(argv: list[str] | None = None) -> int:
     if not gold_dir:
         parser.error("--gold-dir is required unless specified in --config")
 
+    gold_json = args.gold_json if args.gold_json is not None else cfg.get("gold_json")
     split_file = (
         args.split_file
         if args.split_file is not None
@@ -707,6 +730,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     split = args.split if args.split is not None else cfg.get("split", "dev")
     politeness_gold = args.politeness_gold if args.politeness_gold is not None else cfg.get("politeness_gold")
+    politeness_mode = (
+        args.politeness_mode
+        if args.politeness_mode is not None
+        else cfg.get("politeness_mode", "exact")
+    )
     nishiki_bin = args.nishiki_bin if args.nishiki_bin is not None else cfg.get("nishiki_bin")
     model_specs = args.models if args.models is not None else cfg.get("models", ["qwen3:8b::think=false"])
     prompt_version = args.prompt_version if args.prompt_version is not None else cfg.get("prompt_version", DEFAULT_PROMPT_KEY)
@@ -769,6 +797,7 @@ def main(argv: list[str] | None = None) -> int:
         unlock_holdout=args.unlock_holdout,
         politeness_gold_path=politeness_gold,
         nishiki_bin=nishiki_bin,
+        gold_json_path=gold_json,
     )
     if args.merge_only:
         summary = merge_result_files_to_summary(
@@ -792,6 +821,8 @@ def main(argv: list[str] | None = None) -> int:
             per_model_options=per_model_options,
             postprocess=postprocess_cfg,
             speaker_recheck=speaker_recheck_cfg,
+            politeness_mode=politeness_mode,
+            gold_json_path=gold_json,
         )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     if args.check_gate and not args.dry_run:

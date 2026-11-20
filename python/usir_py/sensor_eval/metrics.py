@@ -13,6 +13,16 @@ from usir_py.sensor_eval.f9_loader import F9Work
 
 EVIDENCE_LEVELS = ("explicit", "inferred", "ambiguous")
 POLITENESS_LEVELS = ("plain", "polite", "honorific", "rough", "unknown")
+POLITENESS_3WAY_GOLD_LEVELS = ("polite", "plain", "ambiguous")
+POLITENESS_3WAY_DECIDED = frozenset({"polite", "plain"})
+POLITENESS_5_TO_3_MAP: dict[str, str] = {
+    "polite": "polite",
+    "honorific": "polite",
+    "plain": "plain",
+    "rough": "plain",
+    "unknown": "ambiguous",
+}
+POLITENESS_MODES = ("exact", "3way_decided")
 FORBIDDEN_NULL_LITERALS = frozenset({"null", "none", "nil", "undefined"})
 STEP1_PASS_THRESHOLDS = {
     "explicit_error_rate_lt": 0.05,
@@ -163,6 +173,13 @@ def _empty_bucket() -> dict[str, Any]:
         "ambiguous_all_quotes": 0,
         "politeness_gold_total": 0,
         "politeness_correct": 0,
+        "politeness_decided_total": 0,
+        "politeness_decided_mapped_correct": 0,
+        "politeness_decided_strict_correct": 0,
+        "politeness_all_mapped_correct": 0,
+        "politeness_all_raw_exact_correct": 0,
+        "politeness_gold_distribution_attributed": Counter(),
+        "politeness_confusion_3x5": {g: Counter() for g in POLITENESS_3WAY_GOLD_LEVELS},
         "excluded_total": 0,
         "excluded_abstained": 0,
         "excluded_over_attributed": 0,
@@ -179,12 +196,12 @@ def _empty_bucket() -> dict[str, Any]:
     }
 
 
-def _finalize_bucket(b: dict[str, Any]) -> dict[str, Any]:
+def _finalize_bucket(b: dict[str, Any], politeness_mode: str = "exact") -> dict[str, Any]:
     attr_tot = b["attributed_total"]
     strict_err = attr_tot - b["correct_strict"]
     raw_err = attr_tot - b["correct_raw_speaker"]
     pol_tot = b["politeness_gold_total"]
-    return {
+    out = {
         "attributed_total": attr_tot,
         "all_quotes_total": b["all_quotes_total"],
         "explicit_error_rate": _rate(b["explicit_errors"], b["explicit_total"]),
@@ -261,6 +278,60 @@ def _finalize_bucket(b: dict[str, Any]) -> dict[str, Any]:
             if b["politeness_distribution_all"].get(k, 0) > 0 or k in POLITENESS_LEVELS
         },
     }
+    all_pol_total = sum(b["politeness_gold_distribution_attributed"].values())
+    if all_pol_total > 0:
+        threshold = STEP1_PASS_THRESHOLDS["politeness_agreement_rate_ge"]
+        dec_tot = b["politeness_decided_total"]
+        dec_mapped_rate = _rate(b["politeness_decided_mapped_correct"], dec_tot)
+        dec_strict_rate = _rate(b["politeness_decided_strict_correct"], dec_tot)
+        all_mapped_rate = _rate(b["politeness_all_mapped_correct"], all_pol_total)
+        all_raw_rate = _rate(b["politeness_all_raw_exact_correct"], all_pol_total)
+
+        gold_dist_keys = list(POLITENESS_3WAY_GOLD_LEVELS) + [
+            k
+            for k in sorted(b["politeness_gold_distribution_attributed"])
+            if k not in POLITENESS_3WAY_GOLD_LEVELS
+        ]
+        pred_cols = (*POLITENESS_LEVELS, "missing_or_invalid")
+        conf_keys = list(POLITENESS_3WAY_GOLD_LEVELS) + [
+            k for k in sorted(b["politeness_confusion_3x5"]) if k not in POLITENESS_3WAY_GOLD_LEVELS
+        ]
+        out["politeness_evaluation"] = {
+            "mode": politeness_mode,
+            "mapping_5to3": dict(POLITENESS_5_TO_3_MAP),
+            "decided_mapped_5to3": {
+                "correct": b["politeness_decided_mapped_correct"],
+                "total": dec_tot,
+                "rate": dec_mapped_rate,
+                "passed_ge_90": dec_mapped_rate is not None and dec_mapped_rate >= threshold,
+            },
+            "decided_strict_exact": {
+                "correct": b["politeness_decided_strict_correct"],
+                "total": dec_tot,
+                "rate": dec_strict_rate,
+                "passed_ge_90": dec_strict_rate is not None and dec_strict_rate >= threshold,
+            },
+            "all_attributed_mapped_5to3": {
+                "correct": b["politeness_all_mapped_correct"],
+                "total": all_pol_total,
+                "rate": all_mapped_rate,
+                "passed_ge_90": all_mapped_rate is not None and all_mapped_rate >= threshold,
+            },
+            "all_attributed_raw_exact": {
+                "correct": b["politeness_all_raw_exact_correct"],
+                "total": all_pol_total,
+                "rate": all_raw_rate,
+                "passed_ge_90": all_raw_rate is not None and all_raw_rate >= threshold,
+            },
+            "gold_distribution_attributed": {
+                k: b["politeness_gold_distribution_attributed"].get(k, 0) for k in gold_dist_keys
+            },
+            "confusion_matrix_3x5": {
+                g: {p: b["politeness_confusion_3x5"][g].get(p, 0) for p in pred_cols}
+                for g in conf_keys
+            },
+        }
+    return out
 
 
 def evaluate_model_predictions(
@@ -269,8 +340,13 @@ def evaluate_model_predictions(
     model_id: str,
     prompt_hash: str,
     schema_validator: Draft202012Validator | None = None,
+    politeness_mode: str = "exact",
 ) -> dict[str, Any]:
     """Compute Step 1 metrics across works, narration types, and evidence levels."""
+    if politeness_mode not in POLITENESS_MODES:
+        raise ValueError(
+            f"Unsupported politeness_mode {politeness_mode!r}; expected one of {POLITENESS_MODES}"
+        )
     val = schema_validator or load_sensor_v2_validator()
     total_bucket = _empty_bucket()
     by_narration_buckets: dict[str, dict[str, Any]] = {
@@ -457,9 +533,31 @@ def evaluate_model_predictions(
                         b["ambiguous_attributed"] += 1
 
                 if gold_u.gold_politeness is not None:
-                    b["politeness_gold_total"] += 1
+                    mapped_pred = POLITENESS_5_TO_3_MAP.get(pred_politeness)
+                    b["politeness_gold_distribution_attributed"][gold_u.gold_politeness] += 1
+                    b["politeness_confusion_3x5"].setdefault(gold_u.gold_politeness, Counter())[
+                        pol_key
+                    ] += 1
                     if pred_politeness == gold_u.gold_politeness:
-                        b["politeness_correct"] += 1
+                        b["politeness_all_raw_exact_correct"] += 1
+                    if mapped_pred == gold_u.gold_politeness:
+                        b["politeness_all_mapped_correct"] += 1
+                    if gold_u.gold_politeness in POLITENESS_3WAY_DECIDED:
+                        b["politeness_decided_total"] += 1
+                        if mapped_pred == gold_u.gold_politeness:
+                            b["politeness_decided_mapped_correct"] += 1
+                        if pred_politeness == gold_u.gold_politeness:
+                            b["politeness_decided_strict_correct"] += 1
+
+                    if politeness_mode == "exact":
+                        b["politeness_gold_total"] += 1
+                        if pred_politeness == gold_u.gold_politeness:
+                            b["politeness_correct"] += 1
+                    elif politeness_mode == "3way_decided":
+                        if gold_u.gold_politeness in POLITENESS_3WAY_DECIDED:
+                            b["politeness_gold_total"] += 1
+                            if mapped_pred == gold_u.gold_politeness:
+                                b["politeness_correct"] += 1
 
             if outcome != "correct":
                 error_details.append(
@@ -476,7 +574,7 @@ def evaluate_model_predictions(
                     }
                 )
 
-        w_summary = _finalize_bucket(w_bucket)
+        w_summary = _finalize_bucket(w_bucket, politeness_mode=politeness_mode)
         w_summary["work_id"] = work.work_id
         w_summary["title"] = work.title
         w_summary["author"] = work.author
@@ -485,9 +583,10 @@ def evaluate_model_predictions(
         by_work_results.append(w_summary)
 
     return {
-        "overall": _finalize_bucket(total_bucket),
+        "overall": _finalize_bucket(total_bucket, politeness_mode=politeness_mode),
         "by_narration": {
-            nar: _finalize_bucket(bucket) for nar, bucket in by_narration_buckets.items()
+            nar: _finalize_bucket(bucket, politeness_mode=politeness_mode)
+            for nar, bucket in by_narration_buckets.items()
         },
         "by_work": by_work_results,
         "schema_validation": {

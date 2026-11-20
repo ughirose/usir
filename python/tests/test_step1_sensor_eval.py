@@ -1802,6 +1802,142 @@ def test_speaker_recheck_v2_contradiction_gate_and_immediate_context() -> None:
     assert sr_loaded["num_ctx"] == 9216
 
 
+def test_load_f9_dataset_external_gold_json_override(tmp_path: Path) -> None:
+    gold_dir, split_path = _make_synthetic_gold_dir(tmp_path)
+    repo_gold_path = gold_dir / "gold.json"
+    orig_bytes = repo_gold_path.read_bytes()
+    orig_obj = json.loads(orig_bytes.decode("utf-8"))
+    orig_obj["works"][0]["utterances"][0]["politeness"] = "plain"
+    orig_obj["works"][0]["utterances"][1]["politeness"] = "polite"
+
+    ext_gold_path = tmp_path / "frozen_gold.json"
+    ext_bytes = json.dumps(orig_obj, ensure_ascii=False).encode("utf-8")
+    ext_gold_path.write_bytes(ext_bytes)
+    ext_sha = hashlib.sha256(ext_bytes).hexdigest()
+
+    # Existing split_path carries repo gold sha -> loading external file must fail SHA check.
+    with pytest.raises(ValueError, match="SHA-256 mismatch"):
+        load_f9_dataset(gold_dir, split_path, split="dev", gold_json_path=ext_gold_path)
+
+    ext_split_path = tmp_path / "split_frozen.json"
+    ext_split_path.write_text(
+        json.dumps(
+            {
+                "split_version": "frozen_test_v1",
+                "gold_json_sha256": ext_sha,
+                "dev": {"work_ids": ["w1"]},
+                "holdout": {"sealed": True, "work_ids": []},
+            }
+        ),
+        encoding="utf-8",
+    )
+    ds = load_f9_dataset(gold_dir, ext_split_path, split="dev", gold_json_path=ext_gold_path)
+    assert ds.gold_json_sha256 == ext_sha
+    assert [u.gold_politeness for u in ds.works[0].utterances] == ["plain", "polite"]
+    assert repo_gold_path.read_bytes() == orig_bytes
+
+
+def test_metrics_politeness_3way_decided_and_all_four_views() -> None:
+    work = F9Work(
+        work_id="w_pol3",
+        author="a",
+        title="t",
+        narration="third",
+        narrator=None,
+        pov=None,
+        characters=[
+            F9Character(id="otoko", aliases=["男"], gender="Male"),
+            F9Character(id="onna", aliases=["女"], gender="Female"),
+        ],
+        text="x",
+        numbered_text="x",
+        scene_hash="e" * 64,
+        utterances=[
+            # 0: polite -> polite (mapped OK, exact OK)
+            F9UtteranceGold(0, 0, 1, "u0", "attributed", "onna", "「u0」", "polite"),
+            # 1: polite -> honorific (mapped OK, exact FAIL)
+            F9UtteranceGold(1, 2, 3, "u1", "attributed", "onna", "「u1」", "polite"),
+            # 2: plain -> plain (mapped OK, exact OK)
+            F9UtteranceGold(2, 4, 5, "u2", "attributed", "otoko", "「u2」", "plain"),
+            # 3: plain -> rough (mapped OK, exact FAIL)
+            F9UtteranceGold(3, 6, 7, "u3", "attributed", "otoko", "「u3」", "plain"),
+            # 4: plain -> unknown (mapped FAIL, exact FAIL)
+            F9UtteranceGold(4, 8, 9, "u4", "attributed", "otoko", "「u4」", "plain"),
+            # 5: ambiguous -> unknown (mapped OK, exact FAIL)
+            F9UtteranceGold(5, 10, 11, "u5", "attributed", "onna", "「u5」", "ambiguous"),
+            # 6: ambiguous -> plain (mapped FAIL, exact FAIL)
+            F9UtteranceGold(6, 12, 13, "u6", "attributed", "otoko", "「u6」", "ambiguous"),
+            # 7: not_speech (excluded from politeness denominator)
+            F9UtteranceGold(7, 14, 15, "u7", "not_speech", None, "「u7」", None),
+        ],
+    )
+    preds = {
+        "w_pol3": [
+            {"utterance_index": 0, "speaker_id": "onna", "addressee_id": None, "evidence": "explicit", "register": {"politeness": "polite", "first_person": None}},
+            {"utterance_index": 1, "speaker_id": "onna", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "honorific", "first_person": None}},
+            {"utterance_index": 2, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+            {"utterance_index": 3, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "rough", "first_person": None}},
+            {"utterance_index": 4, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "unknown", "first_person": None}},
+            {"utterance_index": 5, "speaker_id": "onna", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "unknown", "first_person": None}},
+            {"utterance_index": 6, "speaker_id": "otoko", "addressee_id": None, "evidence": "inferred", "register": {"politeness": "plain", "first_person": None}},
+            {"utterance_index": 7, "speaker_id": None, "addressee_id": None, "evidence": "ambiguous", "register": {"politeness": "unknown", "first_person": None}},
+        ]
+    }
+    res_3way = evaluate_model_predictions(
+        [work], preds, "m1", compute_prompt_hash(), politeness_mode="3way_decided"
+    )
+    ov3 = res_3way["overall"]
+    assert ov3["politeness_gold_available"] is True
+    assert ov3["politeness_gold_total"] == 5
+    assert ov3["politeness_correct"] == 4
+    assert ov3["politeness_agreement_rate"] == pytest.approx(0.8)
+
+    pe = ov3["politeness_evaluation"]
+    assert pe["mode"] == "3way_decided"
+    assert pe["decided_mapped_5to3"] == {
+        "correct": 4,
+        "total": 5,
+        "rate": pytest.approx(0.8),
+        "passed_ge_90": False,
+    }
+    assert pe["decided_strict_exact"] == {
+        "correct": 2,
+        "total": 5,
+        "rate": pytest.approx(0.4),
+        "passed_ge_90": False,
+    }
+    assert pe["all_attributed_mapped_5to3"] == {
+        "correct": 5,
+        "total": 7,
+        "rate": pytest.approx(5 / 7),
+        "passed_ge_90": False,
+    }
+    assert pe["all_attributed_raw_exact"] == {
+        "correct": 2,
+        "total": 7,
+        "rate": pytest.approx(2 / 7),
+        "passed_ge_90": False,
+    }
+    assert pe["gold_distribution_attributed"] == {"polite": 2, "plain": 3, "ambiguous": 2}
+    assert pe["confusion_matrix_3x5"]["polite"]["honorific"] == 1
+    assert pe["confusion_matrix_3x5"]["plain"]["rough"] == 1
+    assert pe["confusion_matrix_3x5"]["ambiguous"]["unknown"] == 1
+
+    gate_3way = evaluate_step1_gate(res_3way)
+    assert gate_3way["politeness_passed"] is False
+
+    # Legacy exact mode preserves exact literal comparison across all non-null gold items.
+    res_exact = evaluate_model_predictions(
+        [work], preds, "m1", compute_prompt_hash(), politeness_mode="exact"
+    )
+    ov_ex = res_exact["overall"]
+    assert ov_ex["politeness_gold_total"] == 7
+    assert ov_ex["politeness_correct"] == 2
+    assert ov_ex["politeness_agreement_rate"] == pytest.approx(2 / 7)
+    assert ov_ex["politeness_evaluation"]["decided_mapped_5to3"]["correct"] == 4
+
+
+
 
 
 
