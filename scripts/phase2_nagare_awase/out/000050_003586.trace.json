@@ -1,0 +1,302 @@
+[
+  {
+    "scene_id": "000050_003586:s0",
+    "elapsed_sec": 6.065,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"鎌倉まで行きましょうよ。\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"通越して\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"浪打際に子産石と云うのがござんす\",\n      \"code\": \"E07\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"仏の御名を唱えるのにも遠ざかって\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"優しく教えて\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"天狗わらいに冴えて来ました\",\n      \"code\": \"M05\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 0,\n    \"F_basis\": \"仏の御名を唱えるのにも遠ざかって\",\n    \"f_basis\": \"仏の御名を唱えるのにも遠ざかって\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1676,
+    "eval_count": 271,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "鎌倉まで行きましょうよ。"
+        },
+        {
+          "code": "E02",
+          "basis": "通越して"
+        },
+        {
+          "code": "E07",
+          "basis": "浪打際に子産石と云うのがござんす"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "仏の御名を唱えるのにも遠ざかって"
+        },
+        {
+          "code": "M10",
+          "basis": "優しく教えて"
+        },
+        {
+          "code": "M05",
+          "basis": "天狗わらいに冴えて来ました"
+        }
+      ],
+      "awase": {
+        "F_basis": "仏の御名を唱えるのにも遠ざかって",
+        "f_basis": "仏の御名を唱えるのにも遠ざかって"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000050_003586:s1",
+    "elapsed_sec": 5.851,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"話を聞くと引入れられて\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"邪魔になっては\",\n      \"code\": \"E04\"\n    },\n    {\n      \"basis\": \"黒門の別宅で、近々として進ぜて下さりませぬか\",\n      \"code\": \"E13\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"気が沈んで\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"しんみりと真心から\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"浅からず渇仰して\",\n      \"code\": \"M07\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"気が沈んで\",\n    \"f_basis\": \"気が沈んで、しんみりと真心から念仏の声が出ました。\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1660,
+    "eval_count": 261,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "話を聞くと引入れられて"
+        },
+        {
+          "code": "E04",
+          "basis": "邪魔になっては"
+        },
+        {
+          "code": "E13",
+          "basis": "黒門の別宅で、近々として進ぜて下さりませぬか"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "気が沈んで"
+        },
+        {
+          "code": "M10",
+          "basis": "しんみりと真心から"
+        },
+        {
+          "code": "M07",
+          "basis": "浅からず渇仰して"
+        }
+      ],
+      "awase": {
+        "F_basis": "気が沈んで",
+        "f_basis": "気が沈んで、しんみりと真心から念仏の声が出ました。"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000050_003586:s2",
+    "elapsed_sec": 5.033,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"宰八、\",\n      \"code\": \"E01\"\n    },\n    {\n      \"basis\": \"小川べりの草の上\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"手鞠を拾った\",\n      \"code\": \"E07\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"冷飯草履\",\n      \"code\": \"M08\"\n    },\n    {\n      \"basis\": \"どんよりと\",\n      \"code\": \"M01\"\n    },\n    {\n      \"basis\": \"山際薄く\",\n      \"code\": \"M02\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"手鞠を拾った\",\n    \"f_basis\": \"冷飯草履\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 2363,
+    "eval_count": 229,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E01",
+          "basis": "宰八、"
+        },
+        {
+          "code": "E02",
+          "basis": "小川べりの草の上"
+        },
+        {
+          "code": "E07",
+          "basis": "手鞠を拾った"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M08",
+          "basis": "冷飯草履"
+        },
+        {
+          "code": "M01",
+          "basis": "どんよりと"
+        },
+        {
+          "code": "M02",
+          "basis": "山際薄く"
+        }
+      ],
+      "awase": {
+        "F_basis": "手鞠を拾った",
+        "f_basis": "冷飯草履"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": false,
+        "awase": true,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "宰八、手鞠",
+              "code": "E01"
+            }
+          }
+        ]
+      },
+      {
+        "attempt": 1,
+        "nagare": false,
+        "awase": false,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "宰八、手鞠",
+              "code": "E01"
+            }
+          },
+          {
+            "kind": "awase",
+            "reason": "F_basis_not_in_text",
+            "value": "宰八、手鞠"
+          }
+        ]
+      },
+      {
+        "attempt": 2,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000050_003586:s3",
+    "elapsed_sec": 6.979,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"飛込んだっけ\",\n      \"code\": \"E05\"\n    },\n    {\n      \"basis\": \"拾おう、と私、えいやっと蹲んだが\",\n      \"code\": \"E07\"\n    },\n    {\n      \"basis\": \"旅の空で、召ものがびしょ濡れだ\",\n      \"code\": \"E02\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"手毬が、手毬が流れる、流れてくる、拾ってくれ、礼をする。\",\n      \"code\": \"M12\"\n    },\n    {\n      \"basis\": \"厭な事は\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"水が動いて、手毬は一つくるりと廻った\",\n      \"code\": \"M07\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 2,\n    \"f_valence\": 0,\n    \"f_arousal\": 1,\n    \"F_basis\": \"手毬を拾うと、その下に、猫が一匹居たではねえかね。\",\n    \"f_basis\": \"手毬が、手毬が流れる、流れてくる、拾ってくれ、礼をする。\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1668,
+    "eval_count": 308,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E05",
+          "basis": "飛込んだっけ"
+        },
+        {
+          "code": "E07",
+          "basis": "拾おう、と私、えいやっと蹲んだが"
+        },
+        {
+          "code": "E02",
+          "basis": "旅の空で、召ものがびしょ濡れだ"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M12",
+          "basis": "手毬が、手毬が流れる、流れてくる、拾ってくれ、礼をする。"
+        },
+        {
+          "code": "M04",
+          "basis": "厭な事は"
+        },
+        {
+          "code": "M07",
+          "basis": "水が動いて、手毬は一つくるりと廻った"
+        }
+      ],
+      "awase": {
+        "F_basis": "手毬を拾うと、その下に、猫が一匹居たではねえかね。",
+        "f_basis": "手毬が、手毬が流れる、流れてくる、拾ってくれ、礼をする。"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000050_003586:s4",
+    "elapsed_sec": 4.794,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"話をする\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"打棄るように\",\n      \"code\": \"E15\"\n    },\n    {\n      \"basis\": \"狂気\",\n      \"code\": \"E12\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"苦笑い\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"猫化けの怪談\",\n      \"code\": \"M07\"\n    },\n    {\n      \"basis\": \"げっそり骨の出た死骸\",\n      \"code\": \"M04\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"話をする\",\n    \"f_basis\": \"苦笑い\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1258,
+    "eval_count": 221,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "話をする"
+        },
+        {
+          "code": "E15",
+          "basis": "打棄るように"
+        },
+        {
+          "code": "E12",
+          "basis": "狂気"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M10",
+          "basis": "苦笑い"
+        },
+        {
+          "code": "M07",
+          "basis": "猫化けの怪談"
+        },
+        {
+          "code": "M04",
+          "basis": "げっそり骨の出た死骸"
+        }
+      ],
+      "awase": {
+        "F_basis": "話をする",
+        "f_basis": "苦笑い"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  }
+]

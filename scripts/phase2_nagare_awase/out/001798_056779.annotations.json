@@ -1,0 +1,741 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001798_056779:s0",
+      "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+      "ledger_hash": "gold-roster:a40477af3df55ca8",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "001798_056779",
+      "scene_index": 0,
+      "scene_count": 4,
+      "char_len": 272,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "explicit"
+      },
+      "location_id": "代田橋",
+      "present_character_ids": [
+        "boku",
+        "fuwa"
+      ],
+      "pov_character": "boku",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E02",
+            "rank_weight": 3
+          },
+          {
+            "code": "E13",
+            "rank_weight": 2
+          },
+          {
+            "code": "E10",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M14",
+            "rank_weight": 3
+          },
+          {
+            "code": "M10",
+            "rank_weight": 2
+          },
+          {
+            "code": "M05",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 1,
+        "f_style_valence": 0,
+        "f_style_arousal": 1
+      }
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      },
+      {
+        "character_id": "fuwa",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 0,
+        "subject": "boku",
+        "predicate": "MOVED_TO",
+        "object": "代田橋",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 0,
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "世帯道具や画の道具一式",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "契約",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "四万円",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "祝宴",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "fuwa",
+        "predicate": "ACQUIRED",
+        "object": "四万円",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "fuwa",
+        "predicate": "ACQUIRED",
+        "object": "祝宴",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 3,
+        "subject": "fuwa",
+        "predicate": "ACQUIRED",
+        "object": "夫人",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 3,
+        "subject": "fuwa",
+        "predicate": "STATE_CHANGED",
+        "object": "酒豪",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001798_056779:s1",
+      "scene_hash": "fcdf50e4188c3a30bd0d38145bf6b4feadbadc9d825b296fdbb6264ec1b3310e",
+      "ledger_hash": "gold-roster:a40477af3df55ca8",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "001798_056779",
+      "scene_index": 1,
+      "scene_count": 4,
+      "char_len": 725,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred",
+        "elapsed_hint": "一週間"
+      },
+      "location_id": "僕の部屋",
+      "present_character_ids": [
+        "boku",
+        "fuwa"
+      ],
+      "pov_character": "boku",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E06",
+            "rank_weight": 3
+          },
+          {
+            "code": "E03",
+            "rank_weight": 2
+          },
+          {
+            "code": "E13",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M04",
+            "rank_weight": 3
+          },
+          {
+            "code": "M10",
+            "rank_weight": 2
+          },
+          {
+            "code": "M08",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": -1,
+        "f_style_valence": -1,
+        "f_style_arousal": -1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "boku",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "fuwa",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      },
+      {
+        "character_id": "fuwa",
+        "values_6d": [
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 3,
+        "subject": "fuwa",
+        "predicate": "STATE_CHANGED",
+        "object": "酔っている",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 8,
+        "subject": "fuwa",
+        "predicate": "ACQUIRED",
+        "object": "二千円",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 9,
+        "subject": "fuwa",
+        "predicate": "HOOK_OPENED",
+        "object": "赤穂行",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 10,
+        "subject": "fuwa",
+        "predicate": "HOOK_OPENED",
+        "object": "野呂",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001798_056779:s2",
+      "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+      "ledger_hash": "gold-roster:a40477af3df55ca8",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "001798_056779",
+      "scene_index": 2,
+      "scene_count": 4,
+      "char_len": 783,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "翌朝、十一時頃まで朝寝して、起き出した時には",
+        "elapsed_hint": "それから二三日経った正午頃"
+      },
+      "location_id": "板の間",
+      "present_character_ids": [
+        "boku",
+        "noro"
+      ],
+      "pov_character": "boku",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E02",
+            "rank_weight": 3
+          },
+          {
+            "code": "E01",
+            "rank_weight": 2
+          },
+          {
+            "code": "E06",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M09",
+            "rank_weight": 3
+          },
+          {
+            "code": "M11",
+            "rank_weight": 2
+          },
+          {
+            "code": "M03",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 0,
+        "f_style_valence": -1,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "fuwa",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": null,
+        "addressee_id": "boku",
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 8,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 9,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 10,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 11,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 12,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 13,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 14,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          -1,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "noro",
+        "values_6d": [
+          0,
+          0,
+          0,
+          -1,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 7,
+        "subject": "boku",
+        "predicate": "LEARNED",
+        "object": "野呂がやって来た",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 18,
+        "subject": "boku",
+        "predicate": "STATE_CHANGED",
+        "object": "不快",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 17,
+        "subject": "noro",
+        "predicate": "STATE_CHANGED",
+        "object": "挑発的",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001798_056779:s3",
+      "scene_hash": "47832cad7d2ad96e5bcee822e7b1eadb98f04519e8ef15c1c64a6ba6f1e3dc10",
+      "ledger_hash": "gold-roster:a40477af3df55ca8",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "001798_056779",
+      "scene_index": 3,
+      "scene_count": 4,
+      "char_len": 355,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "boku",
+        "noro"
+      ],
+      "pov_character": "boku",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E13",
+            "rank_weight": 2
+          },
+          {
+            "code": "E08",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M04",
+            "rank_weight": 3
+          },
+          {
+            "code": "M08",
+            "rank_weight": 2
+          },
+          {
+            "code": "M11",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 0,
+        "f_style_valence": -1,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          -1,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "noro",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          -1,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": []
+  }
+]

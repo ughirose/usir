@@ -1,0 +1,318 @@
+[
+  {
+    "scene_id": "001875_059897:s0",
+    "elapsed_sec": 5.313,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"赤ん坊を連れて帰宅\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"兵六さんが現れる\",\n      \"code\": \"E01\"\n    },\n    {\n      \"basis\": \"話を聞く\",\n      \"code\": \"E03\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"待ちくたびれて\",\n      \"code\": \"M03\"\n    },\n    {\n      \"basis\": \"むっとしている\",\n      \"code\": \"M09\"\n    },\n    {\n      \"basis\": \"妙ないんねんにおどろいとる\",\n      \"code\": \"M07\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"待ちくたびれて\",\n    \"f_basis\": \"待ちくたびれて\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1659,
+    "eval_count": 236,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "basis": "赤ん坊を連れて帰宅",
+          "code": "E02"
+        }
+      },
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "basis": "兵六さんが現れる",
+          "code": "E01"
+        }
+      },
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "basis": "話を聞く",
+          "code": "E03"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "赤ん坊を連れて帰宅"
+        },
+        {
+          "code": "E01",
+          "basis": "兵六さんが現れる"
+        },
+        {
+          "code": "E03",
+          "basis": "話を聞く"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M03",
+          "basis": "待ちくたびれて"
+        },
+        {
+          "code": "M09",
+          "basis": "むっとしている"
+        },
+        {
+          "code": "M07",
+          "basis": "妙ないんねんにおどろいとる"
+        }
+      ],
+      "awase": {
+        "F_basis": "待ちくたびれて",
+        "f_basis": "待ちくたびれて"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": false,
+        "awase": true,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "赤ん坊を連れて帰宅",
+              "code": "E02"
+            }
+          },
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "兵六さんが現れる",
+              "code": "E01"
+            }
+          },
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "話を聞く",
+              "code": "E03"
+            }
+          }
+        ]
+      },
+      {
+        "attempt": 1,
+        "nagare": false,
+        "awase": true,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "赤ん坊を連れて帰宅",
+              "code": "E02"
+            }
+          },
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "兵六さんが現れる",
+              "code": "E01"
+            }
+          },
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "話を聞く",
+              "code": "E03"
+            }
+          }
+        ]
+      },
+      {
+        "attempt": 2,
+        "nagare": false,
+        "awase": true,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "兵六さんが現れる",
+              "code": "E01"
+            }
+          },
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "話を聞く",
+              "code": "E03"
+            }
+          }
+        ]
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001875_059897:s1",
+    "elapsed_sec": 6.189,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"許す気になり\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"ミルクを運んできてくれた\",\n      \"code\": \"E09\"\n    },\n    {\n      \"basis\": \"足はだんだん遠のき、やがてぱったり来なくなってしまった\",\n      \"code\": \"E14\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"恨みがましさも忘れて\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"警察につかまったりして、はずかしいのかしら\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"いやだわ。男のくせにへそくりなんて\",\n      \"code\": \"M09\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 0,\n    \"F_basis\": \"許す気になり\",\n    \"f_basis\": \"恨みがましさも忘れて\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1763,
+    "eval_count": 267,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "許す気になり"
+        },
+        {
+          "code": "E09",
+          "basis": "ミルクを運んできてくれた"
+        },
+        {
+          "code": "E14",
+          "basis": "足はだんだん遠のき、やがてぱったり来なくなってしまった"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M10",
+          "basis": "恨みがましさも忘れて"
+        },
+        {
+          "code": "M04",
+          "basis": "警察につかまったりして、はずかしいのかしら"
+        },
+        {
+          "code": "M09",
+          "basis": "いやだわ。男のくせにへそくりなんて"
+        }
+      ],
+      "awase": {
+        "F_basis": "許す気になり",
+        "f_basis": "恨みがましさも忘れて"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001875_059897:s2",
+    "elapsed_sec": 7.336,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"五百円をわたしながら\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。\",\n      \"code\": \"E13\"\n    },\n    {\n      \"basis\": \"進君のうちね、ずい分たくさん兵六おじさんにお金預けたんだってよ。\",\n      \"code\": \"E08\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"五百円をわたしながら\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"音枝にはぽんぽんいうくせに、当の進君が頭を下げると\",\n      \"code\": \"M08\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。\",\n    \"f_basis\": \"権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1604,
+    "eval_count": 331,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "五百円をわたしながら"
+        },
+        {
+          "code": "E13",
+          "basis": "権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。"
+        },
+        {
+          "code": "E08",
+          "basis": "進君のうちね、ずい分たくさん兵六おじさんにお金預けたんだってよ。"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。"
+        },
+        {
+          "code": "M10",
+          "basis": "五百円をわたしながら"
+        },
+        {
+          "code": "M08",
+          "basis": "音枝にはぽんぽんいうくせに、当の進君が頭を下げると"
+        }
+      ],
+      "awase": {
+        "F_basis": "権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。",
+        "f_basis": "権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001875_059897:s3",
+    "elapsed_sec": 4.946,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"相談して、さがしてくださいね\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"毎日のように行ってる\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"慰めずにいられなくなり\",\n      \"code\": \"E15\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"困って\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"慰めずにいられなくなり\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"切口上\",\n      \"code\": \"M07\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 0,\n    \"F_basis\": \"困って\",\n    \"f_basis\": \"切口上\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1250,
+    "eval_count": 230,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "相談して、さがしてくださいね"
+        },
+        {
+          "code": "E02",
+          "basis": "毎日のように行ってる"
+        },
+        {
+          "code": "E15",
+          "basis": "慰めずにいられなくなり"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "困って"
+        },
+        {
+          "code": "M10",
+          "basis": "慰めずにいられなくなり"
+        },
+        {
+          "code": "M07",
+          "basis": "切口上"
+        }
+      ],
+      "awase": {
+        "F_basis": "困って",
+        "f_basis": "切口上"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  }
+]

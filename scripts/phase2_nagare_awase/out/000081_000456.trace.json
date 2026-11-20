@@ -1,0 +1,396 @@
+[
+  {
+    "scene_id": "000081_000456:s0",
+    "elapsed_sec": 6.648,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"祈っている\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"車のなかが、ぱっと白く明るくなりました\",\n      \"code\": \"E07\"\n    },\n    {\n      \"basis\": \"二人も胸いっぱいのかなしみに似た新らしい気持ちを、何気なくちがった語で、そっと談し合った\",\n      \"code\": \"E15\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"青白く後光の射した一つの島\",\n      \"code\": \"M07\"\n    },\n    {\n      \"basis\": \"黒いバイブルを胸にあてたり、水晶の珠数をかけたり\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"二人も胸いっぱいのかなしみに似た新らしい気持ち\",\n      \"code\": \"M04\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": -1,\n    \"f_arousal\": 1,\n    \"F_basis\": \"祈っている\",\n    \"f_basis\": \"車のなかが、ぱっと白く明るくなりました\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1790,
+    "eval_count": 295,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "祈っている"
+        },
+        {
+          "code": "E07",
+          "basis": "車のなかが、ぱっと白く明るくなりました"
+        },
+        {
+          "code": "E15",
+          "basis": "二人も胸いっぱいのかなしみに似た新らしい気持ちを、何気なくちがった語で、そっと談し合った"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M07",
+          "basis": "青白く後光の射した一つの島"
+        },
+        {
+          "code": "M10",
+          "basis": "黒いバイブルを胸にあてたり、水晶の珠数をかけたり"
+        },
+        {
+          "code": "M04",
+          "basis": "二人も胸いっぱいのかなしみに似た新らしい気持ち"
+        }
+      ],
+      "awase": {
+        "F_basis": "祈っている",
+        "f_basis": "車のなかが、ぱっと白く明るくなりました"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000081_000456:s1",
+    "elapsed_sec": 7.616,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"降りよう。\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"停車場の前の、水晶細工のように見える銀杏の木に囲まれた、小さな広場\",\n      \"code\": \"E07\"\n    },\n    {\n      \"basis\": \"二人の影は、ちょうど四方に窓のある室の中の、二本の柱の影のように、また二つの車輪の輻のように幾本も幾本も四方へ出\",\n      \"code\": \"E16\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"さわやかな秋\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"水晶細工のように見える銀杏の木\",\n      \"code\": \"M01\"\n    },\n    {\n      \"basis\": \"二人の影は、ちょうど四方に窓のある室の中の、二本の柱の影のように、また二つの車輪の輻のように幾本も幾本も四方へ出\",\n      \"code\": \"M11\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 0,\n    \"F_basis\": \"二人は丁度白鳥停車場の、大きな時計の前に来てとまりました。\",\n    \"f_basis\": \"水晶細工のように見える銀杏の木\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1618,
+    "eval_count": 345,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "降りよう。"
+        },
+        {
+          "code": "E07",
+          "basis": "停車場の前の、水晶細工のように見える銀杏の木に囲まれた、小さな広場"
+        },
+        {
+          "code": "E16",
+          "basis": "二人の影は、ちょうど四方に窓のある室の中の、二本の柱の影のように、また二つの車輪の輻のように幾本も幾本も四方へ出"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M10",
+          "basis": "さわやかな秋"
+        },
+        {
+          "code": "M01",
+          "basis": "水晶細工のように見える銀杏の木"
+        },
+        {
+          "code": "M11",
+          "basis": "二人の影は、ちょうど四方に窓のある室の中の、二本の柱の影のように、また二つの車輪の輻のように幾本も幾本も四方へ出"
+        }
+      ],
+      "awase": {
+        "F_basis": "二人は丁度白鳥停車場の、大きな時計の前に来てとまりました。",
+        "f_basis": "水晶細工のように見える銀杏の木"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000081_000456:s2",
+    "elapsed_sec": 10.721,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"行ってみよう。\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"カムパネルラが、不思議そうに立ちどまって、岩から黒い細長いさきの尖ったくるみの実のようなものをひろいました。\",\n      \"code\": \"E07\"\n    },\n    {\n      \"basis\": \"二人は、ぎざぎざの黒いくるみの実を持ちながら、またさっきの方へ近よって行きました。\",\n      \"code\": \"E02\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"河原の礫は、みんなすきとおって、たしかに水晶や黄玉や、またくしゃくしゃの皺曲をあらわしたのや、また稜から霧のような青白い光を出す鋼玉やらでした。\",\n      \"code\": \"M02\"\n    },\n    {\n      \"basis\": \"川上の方を見ると、すすきのいっぱいに生えている崖の下に、白い岩が、まるで運動場のように平らに川に沿って出ているのでした。\",\n      \"code\": \"M01\"\n    },\n    {\n      \"basis\": \"波がやさしい稲妻のように燃えて寄せ、右手の崖には、いちめん銀や貝殻でこさえたようなすすきの穂がゆれたのです。\",\n      \"code\": \"M06\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": 0,\n    \"f_arousal\": 1,\n    \"F_basis\": \"二人は、ぎざぎざの黒いくるみの実を持ちながら、またさっきの方へ近よって行きました。\",\n    \"f_basis\": \"河原の礫は、みんなすきとおって、たしかに水晶や黄玉や、またくしゃくしゃの皺曲をあらわしたのや、また稜から霧のような青白い光を出す鋼玉やらでした。\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1654,
+    "eval_count": 488,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "duplicate_codes",
+        "codes": [
+          "E02",
+          "E07",
+          "E02"
+        ]
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "行ってみよう。"
+        },
+        {
+          "code": "E07",
+          "basis": "カムパネルラが、不思議そうに立ちどまって、岩から黒い細長いさきの尖ったくるみの実のようなものをひろいました。"
+        },
+        {
+          "code": "E02",
+          "basis": "二人は、ぎざぎざの黒いくるみの実を持ちながら、またさっきの方へ近よって行きました。"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M02",
+          "basis": "河原の礫は、みんなすきとおって、たしかに水晶や黄玉や、またくしゃくしゃの皺曲をあらわしたのや、また稜から霧のような青白い光を出す鋼玉やらでした。"
+        },
+        {
+          "code": "M01",
+          "basis": "川上の方を見ると、すすきのいっぱいに生えている崖の下に、白い岩が、まるで運動場のように平らに川に沿って出ているのでした。"
+        },
+        {
+          "code": "M06",
+          "basis": "波がやさしい稲妻のように燃えて寄せ、右手の崖には、いちめん銀や貝殻でこさえたようなすすきの穂がゆれたのです。"
+        }
+      ],
+      "awase": {
+        "F_basis": "二人は、ぎざぎざの黒いくるみの実を持ちながら、またさっきの方へ近よって行きました。",
+        "f_basis": "河原の礫は、みんなすきとおって、たしかに水晶や黄玉や、またくしゃくしゃの皺曲をあらわしたのや、また稜から霧のような青白い光を出す鋼玉やらでした。"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": false,
+        "awase": true,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "duplicate_codes",
+            "codes": [
+              "E02",
+              "E07",
+              "E02"
+            ]
+          }
+        ]
+      },
+      {
+        "attempt": 1,
+        "nagare": false,
+        "awase": false,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "二人は、またさっきの方へ近よって行きました。",
+              "code": "E09"
+            }
+          },
+          {
+            "kind": "awase",
+            "reason": "F_basis_not_in_text",
+            "value": "二人は、またさっきの方へ近よって行きました。"
+          }
+        ]
+      },
+      {
+        "attempt": 2,
+        "nagare": false,
+        "awase": false,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "二人は、またさっきの方へ近よって行きました。",
+              "code": "E09"
+            }
+          },
+          {
+            "kind": "awase",
+            "reason": "F_basis_not_in_text",
+            "value": "二人は、またさっきの方へ近よって行きました。"
+          }
+        ]
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000081_000456:s3",
+    "elapsed_sec": 5.436,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"指図\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"青じろい獣の骨\",\n      \"code\": \"E07\"\n    },\n    {\n      \"basis\": \"近付いて\",\n      \"code\": \"E02\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"せわしそうに\",\n      \"code\": \"M03\"\n    },\n    {\n      \"basis\": \"白い柔らかな岩\",\n      \"code\": \"M01\"\n    },\n    {\n      \"basis\": \"眼鏡をきらっとさせて\",\n      \"code\": \"M07\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": 0,\n    \"f_arousal\": 1,\n    \"F_basis\": \"指図\",\n    \"f_basis\": \"せわしそうに\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1626,
+    "eval_count": 234,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "指図"
+        },
+        {
+          "code": "E07",
+          "basis": "青じろい獣の骨"
+        },
+        {
+          "code": "E02",
+          "basis": "近付いて"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M03",
+          "basis": "せわしそうに"
+        },
+        {
+          "code": "M01",
+          "basis": "白い柔らかな岩"
+        },
+        {
+          "code": "M07",
+          "basis": "眼鏡をきらっとさせて"
+        }
+      ],
+      "awase": {
+        "F_basis": "指図",
+        "f_basis": "せわしそうに"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000081_000456:s4",
+    "elapsed_sec": 5.313,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"行こう。\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"一生けん命汽車におくれないように走りました。\",\n      \"code\": \"E14\"\n    },\n    {\n      \"basis\": \"窓から見ていました。\",\n      \"code\": \"E03\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"忙がしそうに、あちこち歩きまわって監督をはじめました。\",\n      \"code\": \"M14\"\n    },\n    {\n      \"basis\": \"風のように走れたのです。\",\n      \"code\": \"M12\"\n    },\n    {\n      \"basis\": \"窓から見ていました。\",\n      \"code\": \"M01\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": 0,\n    \"f_arousal\": 1,\n    \"F_basis\": \"行こう。\",\n    \"f_basis\": \"風のように走れたのです。\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1630,
+    "eval_count": 248,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "行こう。"
+        },
+        {
+          "code": "E14",
+          "basis": "一生けん命汽車におくれないように走りました。"
+        },
+        {
+          "code": "E03",
+          "basis": "窓から見ていました。"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M14",
+          "basis": "忙がしそうに、あちこち歩きまわって監督をはじめました。"
+        },
+        {
+          "code": "M12",
+          "basis": "風のように走れたのです。"
+        },
+        {
+          "code": "M01",
+          "basis": "窓から見ていました。"
+        }
+      ],
+      "awase": {
+        "F_basis": "行こう。",
+        "f_basis": "風のように走れたのです。"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": false,
+        "awase": true,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "duplicate_codes",
+            "codes": [
+              "E02",
+              "E02",
+              "E02"
+            ]
+          }
+        ]
+      },
+      {
+        "attempt": 1,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000081_000456:s5",
+    "elapsed_sec": 5.958,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"二人に訊きました\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"汽車はもう、しずかにうごいていた\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"なにかなつかしそうにわらいながら\",\n      \"code\": \"E15\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"なにか大へんさびしいようなかなしいような\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"かすかに微笑いながら\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"汽車はもうだんだん早くなって\",\n      \"code\": \"M14\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 0,\n    \"F_basis\": \"なにか大へんさびしいようなかなしいような\",\n    \"f_basis\": \"茶いろの少しぼろぼろの外套\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1474,
+    "eval_count": 271,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "二人に訊きました"
+        },
+        {
+          "code": "E02",
+          "basis": "汽車はもう、しずかにうごいていた"
+        },
+        {
+          "code": "E15",
+          "basis": "なにかなつかしそうにわらいながら"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "なにか大へんさびしいようなかなしいような"
+        },
+        {
+          "code": "M10",
+          "basis": "かすかに微笑いながら"
+        },
+        {
+          "code": "M14",
+          "basis": "汽車はもうだんだん早くなって"
+        }
+      ],
+      "awase": {
+        "F_basis": "なにか大へんさびしいようなかなしいような",
+        "f_basis": "茶いろの少しぼろぼろの外套"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  }
+]

@@ -1,0 +1,519 @@
+{
+  "n_scenes": 35,
+  "n_filled": 20,
+  "mean_overlap_filled": 0.5333,
+  "mean_overlap_all35_null_as_0": 0.3048,
+  "distribution_filled": {
+    "0": 1,
+    "1": 7,
+    "2": 11,
+    "3": 1
+  },
+  "top1_match_filled": 9,
+  "per_work_mean_filled": {
+    "000035_000301": 0.5556,
+    "000050_003586": 0.5,
+    "000081_000456": 0.6667,
+    "001383_056643": 0.4,
+    "001801_001786": 0.6667,
+    "001875_059897": 0.4444
+  },
+  "baseline_random_expected": 0.1875,
+  "baseline_constant_top3": {
+    "codes": [
+      "E03",
+      "E02",
+      "E10"
+    ],
+    "mean_overlap_all35_in_sample": 0.4667
+  },
+  "mood_gold": "unmeasured (no gold)",
+  "awase_gold": "unmeasured (no gold)",
+  "scenes": [
+    {
+      "scene_id": "000035_000301:s0",
+      "pred": null,
+      "gold": [
+        "E14",
+        "E06",
+        "E09"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "000035_000301:s1",
+      "pred": [
+        "E03",
+        "E09",
+        "E11"
+      ],
+      "gold": [
+        "E03",
+        "E11",
+        "E08"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": true
+    },
+    {
+      "scene_id": "000035_000301:s2",
+      "pred": null,
+      "gold": [
+        "E11",
+        "E08",
+        "E03"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "000035_000301:s3",
+      "pred": [
+        "E03",
+        "E09",
+        "E10"
+      ],
+      "gold": [
+        "E10",
+        "E03",
+        "E01"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": false
+    },
+    {
+      "scene_id": "000035_000301:s4",
+      "pred": [
+        "E09",
+        "E11",
+        "E04"
+      ],
+      "gold": [
+        "E11",
+        "E03",
+        "E16"
+      ],
+      "overlap_codes": 1,
+      "overlap": 0.3333333333333333,
+      "top1_match": false
+    },
+    {
+      "scene_id": "000035_000301:s5",
+      "pred": null,
+      "gold": [
+        "E08",
+        "E11",
+        "E03"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "000035_000301:s6",
+      "pred": null,
+      "gold": [
+        "E10",
+        "E03",
+        "E02"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "000050_003586:s0",
+      "pred": [
+        "E02",
+        "E03",
+        "E15"
+      ],
+      "gold": [
+        "E03",
+        "E02",
+        "E01"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": false
+    },
+    {
+      "scene_id": "000050_003586:s1",
+      "pred": null,
+      "gold": [
+        "E03",
+        "E15",
+        "E02"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "000050_003586:s2",
+      "pred": [
+        "E01",
+        "E03",
+        "E09"
+      ],
+      "gold": [
+        "E03",
+        "E02",
+        "E07"
+      ],
+      "overlap_codes": 1,
+      "overlap": 0.3333333333333333,
+      "top1_match": false
+    },
+    {
+      "scene_id": "000050_003586:s3",
+      "pred": null,
+      "gold": [
+        "E07",
+        "E03",
+        "E06"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "000050_003586:s4",
+      "pred": null,
+      "gold": [
+        "E03",
+        "E06",
+        "E04"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "000081_000456:s0",
+      "pred": [
+        "E03",
+        "E16",
+        "E10"
+      ],
+      "gold": [
+        "E07",
+        "E15",
+        "E03"
+      ],
+      "overlap_codes": 1,
+      "overlap": 0.3333333333333333,
+      "top1_match": false
+    },
+    {
+      "scene_id": "000081_000456:s1",
+      "pred": [
+        "E02",
+        "E10",
+        "E03"
+      ],
+      "gold": [
+        "E02",
+        "E07",
+        "E03"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": true
+    },
+    {
+      "scene_id": "000081_000456:s2",
+      "pred": [
+        "E02",
+        "E07",
+        "E10"
+      ],
+      "gold": [
+        "E07",
+        "E03",
+        "E02"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": false
+    },
+    {
+      "scene_id": "000081_000456:s3",
+      "pred": [
+        "E03",
+        "E09",
+        "E07"
+      ],
+      "gold": [
+        "E09",
+        "E03",
+        "E01"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": false
+    },
+    {
+      "scene_id": "000081_000456:s4",
+      "pred": [
+        "E02",
+        "E09",
+        "E10"
+      ],
+      "gold": [
+        "E02",
+        "E03",
+        "E09"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": true
+    },
+    {
+      "scene_id": "000081_000456:s5",
+      "pred": [
+        "E02",
+        "E03",
+        "E01"
+      ],
+      "gold": [
+        "E01",
+        "E03",
+        "E02"
+      ],
+      "overlap_codes": 3,
+      "overlap": 1.0,
+      "top1_match": false
+    },
+    {
+      "scene_id": "001383_056643:s0",
+      "pred": [
+        "E05",
+        "E04",
+        "E14"
+      ],
+      "gold": [
+        "E05",
+        "E04",
+        "E10"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": true
+    },
+    {
+      "scene_id": "001383_056643:s1",
+      "pred": null,
+      "gold": [
+        "E14",
+        "E10",
+        "E05"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "001383_056643:s2",
+      "pred": [
+        "E05",
+        "E06",
+        "E11"
+      ],
+      "gold": [
+        "E14",
+        "E05",
+        "E10"
+      ],
+      "overlap_codes": 1,
+      "overlap": 0.3333333333333333,
+      "top1_match": false
+    },
+    {
+      "scene_id": "001383_056643:s3",
+      "pred": [
+        "E11",
+        "E09",
+        "E16"
+      ],
+      "gold": [
+        "E11",
+        "E05",
+        "E10"
+      ],
+      "overlap_codes": 1,
+      "overlap": 0.3333333333333333,
+      "top1_match": true
+    },
+    {
+      "scene_id": "001383_056643:s4",
+      "pred": [
+        "E05",
+        "E06",
+        "E10"
+      ],
+      "gold": [
+        "E01",
+        "E02",
+        "E11"
+      ],
+      "overlap_codes": 0,
+      "overlap": 0.0,
+      "top1_match": false
+    },
+    {
+      "scene_id": "001383_056643:s5",
+      "pred": [
+        "E03",
+        "E10",
+        "E04"
+      ],
+      "gold": [
+        "E10",
+        "E08",
+        "E03"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": false
+    },
+    {
+      "scene_id": "001798_056779:s0",
+      "pred": null,
+      "gold": [
+        "E02",
+        "E13",
+        "E10"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "001798_056779:s1",
+      "pred": null,
+      "gold": [
+        "E08",
+        "E03",
+        "E14"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "001798_056779:s2",
+      "pred": null,
+      "gold": [
+        "E01",
+        "E04",
+        "E03"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "001798_056779:s3",
+      "pred": null,
+      "gold": [
+        "E07",
+        "E04",
+        "E13"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "001801_001786:s0",
+      "pred": null,
+      "gold": [
+        "E01",
+        "E03",
+        "E02"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "001801_001786:s1",
+      "pred": [
+        "E03",
+        "E15",
+        "E06"
+      ],
+      "gold": [
+        "E03",
+        "E06",
+        "E04"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": true
+    },
+    {
+      "scene_id": "001801_001786:s2",
+      "pred": null,
+      "gold": [
+        "E06",
+        "E03",
+        "E02"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "001875_059897:s0",
+      "pred": [
+        "E01",
+        "E03",
+        "E16"
+      ],
+      "gold": [
+        "E01",
+        "E03",
+        "E02"
+      ],
+      "overlap_codes": 2,
+      "overlap": 0.6666666666666666,
+      "top1_match": true
+    },
+    {
+      "scene_id": "001875_059897:s1",
+      "pred": null,
+      "gold": [
+        "E03",
+        "E13",
+        "E08"
+      ],
+      "overlap_codes": null,
+      "overlap": null
+    },
+    {
+      "scene_id": "001875_059897:s2",
+      "pred": [
+        "E03",
+        "E09",
+        "E16"
+      ],
+      "gold": [
+        "E03",
+        "E13",
+        "E08"
+      ],
+      "overlap_codes": 1,
+      "overlap": 0.3333333333333333,
+      "top1_match": true
+    },
+    {
+      "scene_id": "001875_059897:s3",
+      "pred": [
+        "E03",
+        "E15",
+        "E06"
+      ],
+      "gold": [
+        "E03",
+        "E02",
+        "E16"
+      ],
+      "overlap_codes": 1,
+      "overlap": 0.3333333333333333,
+      "top1_match": true
+    }
+  ]
+}

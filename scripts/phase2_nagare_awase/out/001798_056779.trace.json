@@ -1,0 +1,234 @@
+[
+  {
+    "scene_id": "001798_056779:s0",
+    "elapsed_sec": 5.369,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"引越して来ました\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"かんたんな契約書を作成し\",\n      \"code\": \"E13\"\n    },\n    {\n      \"basis\": \"ソバを肴にして簡略な祝宴を開きました\",\n      \"code\": \"E10\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"バタバタバタ\",\n      \"code\": \"M14\"\n    },\n    {\n      \"basis\": \"簡略な祝宴\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"典型的なウワバミ夫婦\",\n      \"code\": \"M05\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": 0,\n    \"f_arousal\": 1,\n    \"F_basis\": \"引越して来ました\",\n    \"f_basis\": \"バタバタバタ\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1288,
+    "eval_count": 249,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "引越して来ました"
+        },
+        {
+          "code": "E13",
+          "basis": "かんたんな契約書を作成し"
+        },
+        {
+          "code": "E10",
+          "basis": "ソバを肴にして簡略な祝宴を開きました"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M14",
+          "basis": "バタバタバタ"
+        },
+        {
+          "code": "M10",
+          "basis": "簡略な祝宴"
+        },
+        {
+          "code": "M05",
+          "basis": "典型的なウワバミ夫婦"
+        }
+      ],
+      "awase": {
+        "F_basis": "引越して来ました",
+        "f_basis": "バタバタバタ"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001798_056779:s1",
+    "elapsed_sec": 5.718,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"失踪\",\n      \"code\": \"E06\"\n    },\n    {\n      \"basis\": \"批評したり、あやしげな画論をはいたり\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"間代前納の形式ならそれでもいいと思った\",\n      \"code\": \"E13\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"予想外な出来ごと\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"憐れむような笑い方\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"僕だって留守番の全責任を持たせられるのは重荷\",\n      \"code\": \"M08\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"失踪\",\n    \"f_basis\": \"予想外な出来ごと\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1589,
+    "eval_count": 256,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E06",
+          "basis": "失踪"
+        },
+        {
+          "code": "E03",
+          "basis": "批評したり、あやしげな画論をはいたり"
+        },
+        {
+          "code": "E13",
+          "basis": "間代前納の形式ならそれでもいいと思った"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "予想外な出来ごと"
+        },
+        {
+          "code": "M10",
+          "basis": "憐れむような笑い方"
+        },
+        {
+          "code": "M08",
+          "basis": "僕だって留守番の全責任を持たせられるのは重荷"
+        }
+      ],
+      "awase": {
+        "F_basis": "失踪",
+        "f_basis": "予想外な出来ごと"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001798_056779:s2",
+    "elapsed_sec": 5.979,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"不破夫妻の姿は見えませんでした\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"野呂がやって来た\",\n      \"code\": \"E01\"\n    },\n    {\n      \"basis\": \"君は早々に出て行って呉れ\",\n      \"code\": \"E06\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"汗だらけのその顔にはあちこち疣がくっついていて\",\n      \"code\": \"M09\"\n    },\n    {\n      \"basis\": \"不破夫妻の姿は見えませんでした\",\n      \"code\": \"M11\"\n    },\n    {\n      \"basis\": \"バカじゃなかろうかというような眼付で\",\n      \"code\": \"M03\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"君は早々に出て行って呉れ\",\n    \"f_basis\": \"バカじゃなかろうかというような眼付で\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 2003,
+    "eval_count": 276,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "不破夫妻の姿は見えませんでした"
+        },
+        {
+          "code": "E01",
+          "basis": "野呂がやって来た"
+        },
+        {
+          "code": "E06",
+          "basis": "君は早々に出て行って呉れ"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M09",
+          "basis": "汗だらけのその顔にはあちこち疣がくっついていて"
+        },
+        {
+          "code": "M11",
+          "basis": "不破夫妻の姿は見えませんでした"
+        },
+        {
+          "code": "M03",
+          "basis": "バカじゃなかろうかというような眼付で"
+        }
+      ],
+      "awase": {
+        "F_basis": "君は早々に出て行って呉れ",
+        "f_basis": "バカじゃなかろうかというような眼付で"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": false,
+        "awase": false,
+        "rejected": [
+          {
+            "kind": "event",
+            "reason": "basis_not_in_text",
+            "item": {
+              "basis": "僕は不審に思った",
+              "code": "E08"
+            }
+          },
+          {
+            "kind": "awase",
+            "reason": "F_basis_not_in_text",
+            "value": "僕は不審に思った"
+          }
+        ]
+      },
+      {
+        "attempt": 1,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001798_056779:s3",
+    "elapsed_sec": 5.649,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"買い受けただって？\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"僕だってちゃんと権利金を払い、きちんと賃貸借の契約をしたんだぞ\",\n      \"code\": \"E13\"\n    },\n    {\n      \"basis\": \"何か誤解がある\",\n      \"code\": \"E08\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"不安と困惑の色\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"がっくりと板の間に腰をおろし\",\n      \"code\": \"M08\"\n    },\n    {\n      \"basis\": \"何か誤解がある\",\n      \"code\": \"M11\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"買い受けただって？\",\n    \"f_basis\": \"不安と困惑の色\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1348,
+    "eval_count": 253,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "買い受けただって？"
+        },
+        {
+          "code": "E13",
+          "basis": "僕だってちゃんと権利金を払い、きちんと賃貸借の契約をしたんだぞ"
+        },
+        {
+          "code": "E08",
+          "basis": "何か誤解がある"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "不安と困惑の色"
+        },
+        {
+          "code": "M08",
+          "basis": "がっくりと板の間に腰をおろし"
+        },
+        {
+          "code": "M11",
+          "basis": "何か誤解がある"
+        }
+      ],
+      "awase": {
+        "F_basis": "買い受けただって？",
+        "f_basis": "不安と困惑の色"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "nagare": true,
+        "awase": true,
+        "rejected": []
+      }
+    ],
+    "schema_errors": []
+  }
+]
