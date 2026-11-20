@@ -1,0 +1,327 @@
+[
+  {
+    "scene_id": "000035_000301:s0",
+    "elapsed_sec": 6.458,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"逃げました\",\n      \"code\": \"E14\"\n    },\n    {\n      \"basis\": \"情死事件などを起し\",\n      \"code\": \"E06\"\n    },\n    {\n      \"basis\": \"自分は、下宿のその部屋に、ひとりでじっとしているのが、おそろしく\",\n      \"code\": \"E08\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"死ぬ事にしました\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"おそろしく\",\n      \"code\": \"M09\"\n    },\n    {\n      \"basis\": \"妙に試験の答案に要領のいいところがあるようで\",\n      \"code\": \"M16\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -2,\n    \"F_arousal\": 2,\n    \"f_valence\": -1,\n    \"f_arousal\": 1,\n    \"F_basis\": \"情死事件などを起し\",\n    \"f_basis\": \"妙に試験の答案に要領のいいところがあるようで\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1770,
+    "eval_count": 266,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E14",
+          "basis": "逃げました"
+        },
+        {
+          "code": "E06",
+          "basis": "情死事件などを起し"
+        },
+        {
+          "code": "E08",
+          "basis": "自分は、下宿のその部屋に、ひとりでじっとしているのが、おそろしく"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "死ぬ事にしました"
+        },
+        {
+          "code": "M09",
+          "basis": "おそろしく"
+        },
+        {
+          "code": "M16",
+          "basis": "妙に試験の答案に要領のいいところがあるようで"
+        }
+      ],
+      "awase": {
+        "F_basis": "情死事件などを起し",
+        "f_basis": "妙に試験の答案に要領のいいところがあるようで"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s1",
+    "elapsed_sec": 6.042,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"女から来たラヴ・レター\",\n      \"code\": \"E11\"\n    },\n    {\n      \"basis\": \"用事をたのまれると喜ぶ\",\n      \"code\": \"E15\"\n    },\n    {\n      \"basis\": \"電車通りの薬屋に行って、カルモチンを買って来てくれない？\",\n      \"code\": \"E02\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"へへののもへじでも書いているのに違いない\",\n      \"code\": \"M11\"\n    },\n    {\n      \"basis\": \"あら、いやよ、あら、いやよ\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"興が覚めるばかり\",\n      \"code\": \"M06\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"女から来たラヴ・レター\",\n    \"f_basis\": \"へへののもへじでも書いているのに違いない\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1591,
+    "eval_count": 272,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E11",
+          "basis": "女から来たラヴ・レター"
+        },
+        {
+          "code": "E15",
+          "basis": "用事をたのまれると喜ぶ"
+        },
+        {
+          "code": "E02",
+          "basis": "電車通りの薬屋に行って、カルモチンを買って来てくれない？"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M11",
+          "basis": "へへののもへじでも書いているのに違いない"
+        },
+        {
+          "code": "M04",
+          "basis": "あら、いやよ、あら、いやよ"
+        },
+        {
+          "code": "M06",
+          "basis": "興が覚めるばかり"
+        }
+      ],
+      "awase": {
+        "F_basis": "女から来たラヴ・レター",
+        "f_basis": "へへののもへじでも書いているのに違いない"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s2",
+    "elapsed_sec": 6.101,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"キスをしてやりましたら\",\n      \"code\": \"E01\"\n    },\n    {\n      \"basis\": \"うまく避けられず\",\n      \"code\": \"E14\"\n    },\n    {\n      \"basis\": \"真顔の挨拶\",\n      \"code\": \"E03\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"あさましく狂乱の如く興奮し\",\n      \"code\": \"M09\"\n    },\n    {\n      \"basis\": \"心では、相変らず、人間の自信と暴力とを怪し\",\n      \"code\": \"M08\"\n    },\n    {\n      \"basis\": \"笑いながら相手の女給に\",\n      \"code\": \"M10\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 1,\n    \"f_valence\": 0,\n    \"f_arousal\": 1,\n    \"F_basis\": \"あさましく狂乱の如く興奮し\",\n    \"f_basis\": \"笑いながら相手の女給に\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1909,
+    "eval_count": 265,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E01",
+          "basis": "キスをしてやりましたら"
+        },
+        {
+          "code": "E14",
+          "basis": "うまく避けられず"
+        },
+        {
+          "code": "E03",
+          "basis": "真顔の挨拶"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M09",
+          "basis": "あさましく狂乱の如く興奮し"
+        },
+        {
+          "code": "M08",
+          "basis": "心では、相変らず、人間の自信と暴力とを怪し"
+        },
+        {
+          "code": "M10",
+          "basis": "笑いながら相手の女給に"
+        }
+      ],
+      "awase": {
+        "F_basis": "あさましく狂乱の如く興奮し",
+        "f_basis": "笑いながら相手の女給に"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s3",
+    "elapsed_sec": 5.363,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"心配要りません\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"お酒を飲みました\",\n      \"code\": \"E09\"\n    },\n    {\n      \"basis\": \"秋の、寒い夜\",\n      \"code\": \"E16\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"震えおののいている心\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"陰惨な\",\n      \"code\": \"M07\"\n    },\n    {\n      \"basis\": \"寒い夜\",\n      \"code\": \"M01\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"震えおののいている心\",\n    \"f_basis\": \"秋の、寒い夜\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1646,
+    "eval_count": 234,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "心配要りません"
+        },
+        {
+          "code": "E09",
+          "basis": "お酒を飲みました"
+        },
+        {
+          "code": "E16",
+          "basis": "秋の、寒い夜"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "震えおののいている心"
+        },
+        {
+          "code": "M07",
+          "basis": "陰惨な"
+        },
+        {
+          "code": "M01",
+          "basis": "寒い夜"
+        }
+      ],
+      "awase": {
+        "F_basis": "震えおののいている心",
+        "f_basis": "秋の、寒い夜"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s4",
+    "elapsed_sec": 5.226,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"歯痛に襲われて\",\n      \"code\": \"E09\"\n    },\n    {\n      \"basis\": \"身の上噺\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"侘びしい\",\n      \"code\": \"E06\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"陰鬱な心\",\n      \"code\": \"M08\"\n    },\n    {\n      \"basis\": \"冷たい木枯し\",\n      \"code\": \"M01\"\n    },\n    {\n      \"basis\": \"侘びしい\",\n      \"code\": \"M11\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"歯痛に襲われて\",\n    \"f_basis\": \"陰鬱な心\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1624,
+    "eval_count": 232,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E09",
+          "basis": "歯痛に襲われて"
+        },
+        {
+          "code": "E03",
+          "basis": "身の上噺"
+        },
+        {
+          "code": "E06",
+          "basis": "侘びしい"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M08",
+          "basis": "陰鬱な心"
+        },
+        {
+          "code": "M01",
+          "basis": "冷たい木枯し"
+        },
+        {
+          "code": "M11",
+          "basis": "侘びしい"
+        }
+      ],
+      "awase": {
+        "F_basis": "歯痛に襲われて",
+        "f_basis": "陰鬱な心"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s5",
+    "elapsed_sec": 5.554,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"一夜\",\n      \"code\": \"E06\"\n    },\n    {\n      \"basis\": \"金の切れめが縁の切れめ\",\n      \"code\": \"E14\"\n    },\n    {\n      \"basis\": \"笑う声にも力が無く\",\n      \"code\": \"E12\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"解放せられた夜\",\n      \"code\": \"M10\"\n    },\n    {\n      \"basis\": \"弱虫は、幸福をさえおそれる\",\n      \"code\": \"M08\"\n    },\n    {\n      \"basis\": \"半狂乱になって振って振って振り抜く\",\n      \"code\": \"M09\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"解放せられた夜\",\n    \"f_basis\": \"弱虫は、幸福をさえおそれる\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1549,
+    "eval_count": 250,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E06",
+          "basis": "一夜"
+        },
+        {
+          "code": "E14",
+          "basis": "金の切れめが縁の切れめ"
+        },
+        {
+          "code": "E12",
+          "basis": "笑う声にも力が無く"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M10",
+          "basis": "解放せられた夜"
+        },
+        {
+          "code": "M08",
+          "basis": "弱虫は、幸福をさえおそれる"
+        },
+        {
+          "code": "M09",
+          "basis": "半狂乱になって振って振って振り抜く"
+        }
+      ],
+      "awase": {
+        "F_basis": "解放せられた夜",
+        "f_basis": "弱虫は、幸福をさえおそれる"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s6",
+    "elapsed_sec": 5.011,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"逢うのに頗るおっくうがる\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"行こう！\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"酔って大胆\",\n      \"code\": \"E10\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"おびえて\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"敬遠\",\n      \"code\": \"M11\"\n    },\n    {\n      \"basis\": \"安酒\",\n      \"code\": \"M10\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 1,\n    \"F_basis\": \"おびえて\",\n    \"f_basis\": \"安酒\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1540,
+    "eval_count": 223,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "duplicate_codes",
+        "codes": [
+          "E02",
+          "E02",
+          "E10"
+        ]
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "逢うのに頗るおっくうがる"
+        },
+        {
+          "code": "E02",
+          "basis": "行こう！"
+        },
+        {
+          "code": "E10",
+          "basis": "酔って大胆"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "おびえて"
+        },
+        {
+          "code": "M11",
+          "basis": "敬遠"
+        },
+        {
+          "code": "M10",
+          "basis": "安酒"
+        }
+      ],
+      "awase": {
+        "F_basis": "おびえて",
+        "f_basis": "安酒"
+      }
+    },
+    "schema_errors": []
+  }
+]

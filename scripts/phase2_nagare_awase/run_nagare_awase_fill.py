@@ -28,6 +28,7 @@ SRC = REPO / "scripts/phase2_stage4/annotations"
 TEXT_DIRS = [REPO / "scripts/step1/modern_gold", Path("C:/dev/nishiki/crates/nishiki-discourse/tests/data/f9_gold")]
 WORKS = ["000035_000301", "000050_003586", "000081_000456", "001383_056643", "001798_056779", "001801_001786", "001875_059897"]
 MODEL = "qwen2.5:14b"
+MAX_RETRY = 2
 
 
 def main() -> int:
@@ -52,9 +53,23 @@ def main() -> int:
         trace, nag, awa, t0 = [], 0, 0, time.perf_counter()
         for si, (sc, ann) in enumerate(zip(scenes, anns)):
             assert sc["scene_hash"] == ann["contract"]["scene_hash"], (wid, si)
-            resp = call_ollama_chat(MODEL, P.build_messages(sc["scene_text"], si, len(scenes)), P.format_schema(),
-                                    num_ctx=9216, num_predict=2048, seed=42, temperature=0.0, timeout_sec=300.0)
-            nslot, aslot, audit = P.validate(resp.parsed_json, sc["scene_text"])
+            msgs = P.build_messages(sc["scene_text"], si, len(scenes))
+            attempts, best = [], None
+            for attempt in range(1 + MAX_RETRY):
+                resp = call_ollama_chat(MODEL, msgs, P.format_schema(), num_ctx=9216, num_predict=2048, seed=42,
+                                        temperature=0.0, timeout_sec=300.0)
+                nslot, aslot, audit = P.validate(resp.parsed_json, sc["scene_text"])
+                filled = (nslot is not None) + (aslot is not None)
+                attempts.append({"attempt": attempt, "nagare": nslot is not None, "awase": aslot is not None, "rejected": audit["rejected"]})
+                if best is None or filled > best[0]:
+                    best = (filled, resp, nslot, aslot, audit)
+                if filled == 2:
+                    break
+                fb = "; ".join(sorted({f"{r['kind']}:{r['reason']}" for r in audit["rejected"]})) or "parse_failure"
+                msgs = msgs + [{"role": "assistant", "content": resp.raw_content},
+                               {"role": "user", "content": f"前回の出力は検証で却下されました（{fb}）。コードは重複させず3つ異なるものにし、basis は本文からそのままコピーした語句にして、全体を出力し直してください。"}]
+            _, resp, nslot, aslot, audit = best
+            audit["attempts"] = attempts
             ann["scene_meta"]["nagare"] = nslot
             ann["scene_meta"]["awase"] = aslot
             ann["contract"]["prompt_hash"] += f"+nagare_awase:{P.prompt_hash()[:16]}"

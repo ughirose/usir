@@ -1,0 +1,143 @@
+[
+  {
+    "scene_id": "001801_001786:s0",
+    "elapsed_sec": 5.893,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"だあれ？　あなた\",\n      \"code\": \"E01\"\n    },\n    {\n      \"basis\": \"慎一はその方向に泳ぎ寄った\",\n      \"code\": \"E02\"\n    },\n    {\n      \"basis\": \"漁師さんなの？\",\n      \"code\": \"E09\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"黒い海\",\n      \"code\": \"M01\"\n    },\n    {\n      \"basis\": \"ひどく疲れ、喘いでいた\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"睨むような目\",\n      \"code\": \"M09\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"慎一は、その顔をおぼえていた\",\n    \"f_basis\": \"黒い海にはきらきらと夜光虫が淡い緑いろの光の呼吸をしている\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1627,
+    "eval_count": 264,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "awase",
+        "reason": "F_basis_not_in_text",
+        "value": "慎一は、その顔をおぼえていた"
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E01",
+          "basis": "だあれ？　あなた"
+        },
+        {
+          "code": "E02",
+          "basis": "慎一はその方向に泳ぎ寄った"
+        },
+        {
+          "code": "E09",
+          "basis": "漁師さんなの？"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M01",
+          "basis": "黒い海"
+        },
+        {
+          "code": "M04",
+          "basis": "ひどく疲れ、喘いでいた"
+        },
+        {
+          "code": "M09",
+          "basis": "睨むような目"
+        }
+      ],
+      "awase": {
+        "F_basis": "慎一は、その顔をおぼえていた",
+        "f_basis": "黒い海にはきらきらと夜光虫が淡い緑いろの光の呼吸をしている"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001801_001786:s1",
+    "elapsed_sec": 5.356,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"あなたは、自殺するつもりですか？\",\n      \"code\": \"E03\"\n    },\n    {\n      \"basis\": \"死にました。去年\",\n      \"code\": \"E06\"\n    },\n    {\n      \"basis\": \"銛で打ったの？\",\n      \"code\": \"E05\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"喘ぐ呼吸\",\n      \"code\": \"M04\"\n    },\n    {\n      \"basis\": \"ヒステリック\",\n      \"code\": \"M09\"\n    },\n    {\n      \"basis\": \"波打ち際で砕ける波の音\",\n      \"code\": \"M02\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"死にました。去年\",\n    \"f_basis\": \"喘ぐ呼吸\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1628,
+    "eval_count": 238,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "あなたは、自殺するつもりですか？"
+        },
+        {
+          "code": "E06",
+          "basis": "死にました。去年"
+        },
+        {
+          "code": "E05",
+          "basis": "銛で打ったの？"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "喘ぐ呼吸"
+        },
+        {
+          "code": "M09",
+          "basis": "ヒステリック"
+        },
+        {
+          "code": "M02",
+          "basis": "波打ち際で砕ける波の音"
+        }
+      ],
+      "awase": {
+        "F_basis": "死にました。去年",
+        "f_basis": "喘ぐ呼吸"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001801_001786:s2",
+    "elapsed_sec": 5.46,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"basis\": \"女は怒ったような目つきで、海をみつめていた\",\n      \"code\": \"E04\"\n    },\n    {\n      \"basis\": \"ぼくの親父も、自殺したんです\",\n      \"code\": \"E06\"\n    },\n    {\n      \"basis\": \"引きかえした\",\n      \"code\": \"E02\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"basis\": \"夜光虫の緑の燐光\",\n      \"code\": \"M02\"\n    },\n    {\n      \"basis\": \"怒ったような目つき\",\n      \"code\": \"M09\"\n    },\n    {\n      \"basis\": \"真暗な夜\",\n      \"code\": \"M01\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -2,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"自殺したんです\",\n    \"f_basis\": \"夜光虫の緑の燐光\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1243,
+    "eval_count": 255,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E04",
+          "basis": "女は怒ったような目つきで、海をみつめていた"
+        },
+        {
+          "code": "E06",
+          "basis": "ぼくの親父も、自殺したんです"
+        },
+        {
+          "code": "E02",
+          "basis": "引きかえした"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M02",
+          "basis": "夜光虫の緑の燐光"
+        },
+        {
+          "code": "M09",
+          "basis": "怒ったような目つき"
+        },
+        {
+          "code": "M01",
+          "basis": "真暗な夜"
+        }
+      ],
+      "awase": {
+        "F_basis": "自殺したんです",
+        "f_basis": "夜光虫の緑の燐光"
+      }
+    },
+    "schema_errors": []
+  }
+]

@@ -1,0 +1,851 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000081_000456:s0",
+      "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "000081_000456",
+      "scene_index": 0,
+      "scene_count": 6,
+      "char_len": 1005,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "inferred"
+      },
+      "location_id": "車のなか",
+      "present_character_ids": [
+        "giovanni",
+        "campanella",
+        "tabibito"
+      ],
+      "pov_character": "giovanni",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E07",
+            "rank_weight": 2
+          },
+          {
+            "code": "E15",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M07",
+            "rank_weight": 3
+          },
+          {
+            "code": "M10",
+            "rank_weight": 2
+          },
+          {
+            "code": "M04",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 1,
+        "f_style_valence": -1,
+        "f_style_arousal": 1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "giovanni",
+        "addressee_id": "campanella",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "campanella",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "ぼく"
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "tabibito",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 4,
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "白い十字架",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000081_000456:s1",
+      "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "000081_000456",
+      "scene_index": 1,
+      "scene_count": 6,
+      "char_len": 760,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "十一時かっきり"
+      },
+      "location_id": "白鳥停車場",
+      "present_character_ids": [
+        "giovanni",
+        "campanella"
+      ],
+      "pov_character": "giovanni",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E02",
+            "rank_weight": 3
+          },
+          {
+            "code": "E07",
+            "rank_weight": 2
+          },
+          {
+            "code": "E16",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M10",
+            "rank_weight": 3
+          },
+          {
+            "code": "M01",
+            "rank_weight": 2
+          },
+          {
+            "code": "M11",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 0,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "giovanni",
+        "addressee_id": "campanella",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "giovanni",
+        "addressee_id": "campanella",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "giovanni",
+        "addressee_id": "campanella",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "campanella",
+        "addressee_id": "giovanni",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "campanella",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 0,
+        "subject": null,
+        "predicate": "MOVED_TO",
+        "object": "白鳥停車場",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 8,
+        "subject": null,
+        "predicate": "STATE_CHANGED",
+        "object": "停車場の前の広場",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 12,
+        "subject": null,
+        "predicate": "STATE_CHANGED",
+        "object": "きれいな河原",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000081_000456:s2",
+      "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "000081_000456",
+      "scene_index": 2,
+      "scene_count": 6,
+      "char_len": 817,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "giovanni"
+      ],
+      "pov_character": "giovanni",
+      "nagare": null,
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 1,
+        "f_style_valence": 0,
+        "f_style_arousal": 1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "giovanni",
+        "addressee_id": "campanella",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "giovanni",
+        "addressee_id": "campanella",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "campanella",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "campanella",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "giovanni",
+        "addressee_id": "campanella",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "giovanni",
+        "addressee_id": "campanella",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 7,
+        "subject": "giovanni",
+        "predicate": "MOVED_TO",
+        "object": "白い岩",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 10,
+        "subject": "campanella",
+        "predicate": "ACQUIRED",
+        "object": "くるみの実",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000081_000456:s3",
+      "scene_hash": "54ab8765b144cc2f27cd2855a1f3478a7872e6d5c7657d1a4ab1ba905183871e",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "000081_000456",
+      "scene_index": 3,
+      "scene_count": 6,
+      "char_len": 790,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "ambiguous"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "daigakushi",
+        "toritori"
+      ],
+      "pov_character": "giovanni",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E07",
+            "rank_weight": 2
+          },
+          {
+            "code": "E02",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M03",
+            "rank_weight": 3
+          },
+          {
+            "code": "M01",
+            "rank_weight": 2
+          },
+          {
+            "code": "M07",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 1,
+        "f_style_valence": 0,
+        "f_style_arousal": 1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "daigakushi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "daigakushi",
+        "addressee_id": null,
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "daigakushi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "giovanni",
+        "addressee_id": "daigakushi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "daigakushi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "daigakushi",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 1,
+        "subject": "daigakushi",
+        "predicate": "STATE_CHANGED",
+        "object": "白い柔らかな岩の中から大きな大きな青じろい獣の骨が掘り出される",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "daigakushi",
+        "predicate": "STATE_CHANGED",
+        "object": "蹄の二つある足跡のついた岩がきれいに切り取られて番号がつけられる",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000081_000456:s4",
+      "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "000081_000456",
+      "scene_index": 4,
+      "scene_count": 6,
+      "char_len": 328,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "もう時間だよ"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "campanella",
+        "giovanni",
+        "daigakushi"
+      ],
+      "pov_character": "giovanni",
+      "nagare": null,
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 1,
+        "f_style_valence": 0,
+        "f_style_arousal": 1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "campanella",
+        "addressee_id": "giovanni",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "ぼく"
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "giovanni",
+        "addressee_id": "daigakushi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "daigakushi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "daigakushi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 0,
+        "subject": "campanella",
+        "predicate": "ACQUIRED",
+        "object": "地図と腕時計",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 6,
+        "subject": "giovanni",
+        "predicate": "STATE_CHANGED",
+        "object": "思いました",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000081_000456:s5",
+      "scene_hash": "468c60bf74491a5707ad56540127e17286b890c533a3a6f451e8bd8e2ed5578a",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:e8c5277015dd69b1",
+      "work_id": "000081_000456",
+      "scene_index": 5,
+      "scene_count": 6,
+      "char_len": 563,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "車室",
+      "present_character_ids": [
+        "giovanni",
+        "campanella",
+        "toritori"
+      ],
+      "pov_character": "giovanni",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E02",
+            "rank_weight": 2
+          },
+          {
+            "code": "E15",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M04",
+            "rank_weight": 3
+          },
+          {
+            "code": "M10",
+            "rank_weight": 2
+          },
+          {
+            "code": "M14",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 0,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "toritori",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "giovanni",
+        "addressee_id": "toritori",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "toritori",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "giovanni",
+        "addressee_id": "toritori",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "toritori",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      },
+      {
+        "character_id": "toritori",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": []
+  }
+]
