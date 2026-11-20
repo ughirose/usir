@@ -1,0 +1,2023 @@
+{
+ "annotations_dir": "scripts\\phase2_hybrid\\annotations",
+ "missing_scenes": [],
+ "modern_11": {
+  "scenes": 11,
+  "present": {
+   "tp": 27,
+   "fp": 0,
+   "fn": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0
+  },
+  "present_mechanical_baseline": {
+   "tp": 23,
+   "fp": 1,
+   "fn": 4,
+   "precision": 0.9583333333333334,
+   "recall": 0.8518518518518519,
+   "f1": 0.9019607843137256
+  },
+  "time_relative_order": {
+   "match": 11,
+   "n": 11,
+   "rate": 1.0
+  },
+  "time_explicit": {
+   "match": 10,
+   "n": 11,
+   "rate": 0.9090909090909091
+  },
+  "location": {
+   "match": 11,
+   "n": 11,
+   "rate": 1.0
+  },
+  "fact_updates_pred_obj": {
+   "tp": 17,
+   "fp": 25,
+   "fn": 9,
+   "precision": 0.40476190476190477,
+   "recall": 0.6538461538461539,
+   "f1": 0.5
+  },
+  "fact_updates_strict_subject": {
+   "tp": 17,
+   "fp": 25,
+   "fn": 9,
+   "precision": 0.40476190476190477,
+   "recall": 0.6538461538461539,
+   "f1": 0.5
+  },
+  "fact_pred_predicate_counts": {
+   "MOVED_TO": 9,
+   "ACQUIRED": 4,
+   "LOST": 6,
+   "LEARNED": 11,
+   "STATE_CHANGED": 4,
+   "HOOK_OPENED": 8
+  },
+  "states_character_set": {
+   "tp": 24,
+   "fp": 4,
+   "fn": 0,
+   "precision": 0.8571428571428571,
+   "recall": 1.0,
+   "f1": 0.923076923076923
+  },
+  "values_6d": {
+   "matched_character_scenes": 24,
+   "vector_exact": {
+    "match": 5,
+    "n": 24,
+    "rate": 0.20833333333333334
+   },
+   "axis_exact": {
+    "match": 123,
+    "n": 144,
+    "rate": 0.8541666666666666
+   },
+   "polarity_both_nonzero": {
+    "match": 12,
+    "n": 12,
+    "rate": 1.0
+   },
+   "gold_nonzero_axes_same_sign": {
+    "match": 12,
+    "n": 29,
+    "rate": 0.41379310344827586
+   },
+   "all_zero_baseline": {
+    "gold_characters": 24,
+    "vector_exact_rate": 0.0,
+    "axis_exact_rate": 0.7986111111111112
+   }
+  },
+  "per_scene": [
+   {
+    "scene_id": "001798_056779:s0",
+    "present_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "present_pred": [
+     "boku",
+     "fuwa"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 1,
+    "facts_pred": 4,
+    "states_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "states_pred": [
+     "boku",
+     "fuwa"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s1",
+    "present_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "present_pred": [
+     "boku",
+     "fuwa"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 5,
+    "states_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "states_pred": [
+     "boku",
+     "fuwa"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s2",
+    "present_gold": [
+     "boku",
+     "noro"
+    ],
+    "present_pred": [
+     "boku",
+     "noro"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "boku",
+     "noro"
+    ],
+    "states_pred": [
+     "boku",
+     "noro"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s3",
+    "present_gold": [
+     "boku",
+     "noro"
+    ],
+    "present_pred": [
+     "boku",
+     "noro"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "boku",
+     "noro"
+    ],
+    "states_pred": [
+     "boku",
+     "noro"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s0",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 4,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "onna",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s1",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "onna",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s2",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "onna",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s0",
+    "present_gold": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "heiroku",
+     "yasue"
+    ],
+    "states_pred": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s1",
+    "present_gold": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ],
+    "present_pred": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 6,
+    "states_gold": [
+     "bunkichi",
+     "heiroku",
+     "yasue"
+    ],
+    "states_pred": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s2",
+    "present_gold": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 5,
+    "states_gold": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "states_pred": [
+     "bunkichi",
+     "otoe",
+     "susumu",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s3",
+    "present_gold": [
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "susumu",
+     "yasue"
+    ],
+    "states_pred": [
+     "susumu",
+     "yasue"
+    ]
+   }
+  ]
+ },
+ "f9dev_24": {
+  "scenes": 24,
+  "present": {
+   "tp": 63,
+   "fp": 0,
+   "fn": 1,
+   "precision": 1.0,
+   "recall": 0.984375,
+   "f1": 0.9921259842519685
+  },
+  "present_mechanical_baseline": {
+   "tp": 54,
+   "fp": 0,
+   "fn": 10,
+   "precision": 1.0,
+   "recall": 0.84375,
+   "f1": 0.9152542372881356
+  },
+  "time_relative_order": {
+   "match": 23,
+   "n": 24,
+   "rate": 0.9583333333333334
+  },
+  "time_explicit": {
+   "match": 23,
+   "n": 24,
+   "rate": 0.9583333333333334
+  },
+  "location": {
+   "match": 21,
+   "n": 24,
+   "rate": 0.875
+  },
+  "fact_updates_pred_obj": {
+   "tp": 40,
+   "fp": 27,
+   "fn": 8,
+   "precision": 0.5970149253731343,
+   "recall": 0.8333333333333334,
+   "f1": 0.6956521739130433
+  },
+  "fact_updates_strict_subject": {
+   "tp": 40,
+   "fp": 27,
+   "fn": 8,
+   "precision": 0.5970149253731343,
+   "recall": 0.8333333333333334,
+   "f1": 0.6956521739130433
+  },
+  "fact_pred_predicate_counts": {
+   "ACQUIRED": 9,
+   "STATE_CHANGED": 24,
+   "MOVED_TO": 21,
+   "LEARNED": 7,
+   "HOOK_OPENED": 6
+  },
+  "states_character_set": {
+   "tp": 47,
+   "fp": 14,
+   "fn": 0,
+   "precision": 0.7704918032786885,
+   "recall": 1.0,
+   "f1": 0.8703703703703703
+  },
+  "values_6d": {
+   "matched_character_scenes": 47,
+   "vector_exact": {
+    "match": 15,
+    "n": 47,
+    "rate": 0.3191489361702128
+   },
+   "axis_exact": {
+    "match": 244,
+    "n": 282,
+    "rate": 0.8652482269503546
+   },
+   "polarity_both_nonzero": {
+    "match": 36,
+    "n": 36,
+    "rate": 1.0
+   },
+   "gold_nonzero_axes_same_sign": {
+    "match": 36,
+    "n": 68,
+    "rate": 0.5294117647058824
+   },
+   "all_zero_baseline": {
+    "gold_characters": 47,
+    "vector_exact_rate": 0.0425531914893617,
+    "axis_exact_rate": 0.7588652482269503
+   }
+  },
+  "per_scene": [
+   {
+    "scene_id": "000035_000301:s0",
+    "present_gold": [
+     "yozo"
+    ],
+    "present_pred": [
+     "yozo"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "yozo"
+    ],
+    "states_pred": [
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s1",
+    "present_gold": [
+     "musume",
+     "yozo"
+    ],
+    "present_pred": [
+     "musume",
+     "yozo"
+    ],
+    "order_gold": "parallel",
+    "order_pred": "parallel",
+    "facts_gold": 0,
+    "facts_pred": 2,
+    "states_gold": [
+     "musume",
+     "yozo"
+    ],
+    "states_pred": [
+     "musume",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s2",
+    "present_gold": [
+     "doshi",
+     "tsuneko",
+     "yozo"
+    ],
+    "present_pred": [
+     "doshi",
+     "yozo"
+    ],
+    "order_gold": "parallel",
+    "order_pred": "parallel",
+    "facts_gold": 3,
+    "facts_pred": 6,
+    "states_gold": [
+     "doshi",
+     "yozo"
+    ],
+    "states_pred": [
+     "doshi",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s3",
+    "present_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "present_pred": [
+     "tsuneko",
+     "yozo"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "states_pred": [
+     "tsuneko",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s4",
+    "present_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "present_pred": [
+     "tsuneko",
+     "yozo"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "states_pred": [
+     "tsuneko",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s5",
+    "present_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "present_pred": [
+     "tsuneko",
+     "yozo"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "yozo"
+    ],
+    "states_pred": [
+     "tsuneko",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s6",
+    "present_gold": [
+     "horiki",
+     "yozo"
+    ],
+    "present_pred": [
+     "horiki",
+     "yozo"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "horiki",
+     "yozo"
+    ],
+    "states_pred": [
+     "horiki",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s0",
+    "present_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s1",
+    "present_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 1,
+    "facts_pred": 2,
+    "states_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s2",
+    "present_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s3",
+    "present_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 1,
+    "facts_pred": 1,
+    "states_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s4",
+    "present_gold": [
+     "hagiwara",
+     "jochu",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "jochu",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "hagiwara",
+     "jochu",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "jochu",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s5",
+    "present_gold": [
+     "hagiwara",
+     "jochu",
+     "mitsuko",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "jochu",
+     "mitsuko",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "mitsuko",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "mitsuko",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s0",
+    "present_gold": [
+     "tabiso",
+     "uba"
+    ],
+    "present_pred": [
+     "tabiso",
+     "uba"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "tabiso",
+     "uba"
+    ],
+    "states_pred": [
+     "tabiso",
+     "uba"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s1",
+    "present_gold": [
+     "tabiso",
+     "uba"
+    ],
+    "present_pred": [
+     "tabiso",
+     "uba"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "tabiso",
+     "uba"
+    ],
+    "states_pred": [
+     "tabiso",
+     "uba"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s2",
+    "present_gold": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "present_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "parallel",
+    "facts_gold": 1,
+    "facts_pred": 2,
+    "states_gold": [
+     "kundo",
+     "saihachi"
+    ],
+    "states_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s3",
+    "present_gold": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "present_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 1,
+    "facts_pred": 2,
+    "states_gold": [
+     "saihachi"
+    ],
+    "states_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s4",
+    "present_gold": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "present_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 1,
+    "states_gold": [
+     "kundo"
+    ],
+    "states_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s0",
+    "present_gold": [
+     "campanella",
+     "giovanni",
+     "tabibito"
+    ],
+    "present_pred": [
+     "campanella",
+     "giovanni",
+     "tabibito"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 1,
+    "facts_pred": 3,
+    "states_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "states_pred": [
+     "campanella",
+     "giovanni",
+     "tabibito"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s1",
+    "present_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "present_pred": [
+     "campanella",
+     "giovanni"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "states_pred": [
+     "campanella",
+     "giovanni"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s2",
+    "present_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "present_pred": [
+     "campanella",
+     "giovanni"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 4,
+    "states_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "states_pred": [
+     "campanella",
+     "giovanni"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s3",
+    "present_gold": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ],
+    "present_pred": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "daigakushi"
+    ],
+    "states_pred": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s4",
+    "present_gold": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ],
+    "present_pred": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "giovanni"
+    ],
+    "states_pred": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s5",
+    "present_gold": [
+     "campanella",
+     "giovanni",
+     "toritori"
+    ],
+    "present_pred": [
+     "campanella",
+     "giovanni",
+     "toritori"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "giovanni",
+     "toritori"
+    ],
+    "states_pred": [
+     "campanella",
+     "giovanni",
+     "toritori"
+    ]
+   }
+  ]
+ },
+ "all": {
+  "scenes": 35,
+  "present": {
+   "tp": 90,
+   "fp": 0,
+   "fn": 1,
+   "precision": 1.0,
+   "recall": 0.989010989010989,
+   "f1": 0.994475138121547
+  },
+  "present_mechanical_baseline": {
+   "tp": 77,
+   "fp": 1,
+   "fn": 14,
+   "precision": 0.9871794871794872,
+   "recall": 0.8461538461538461,
+   "f1": 0.9112426035502958
+  },
+  "time_relative_order": {
+   "match": 34,
+   "n": 35,
+   "rate": 0.9714285714285714
+  },
+  "time_explicit": {
+   "match": 33,
+   "n": 35,
+   "rate": 0.9428571428571428
+  },
+  "location": {
+   "match": 32,
+   "n": 35,
+   "rate": 0.9142857142857143
+  },
+  "fact_updates_pred_obj": {
+   "tp": 57,
+   "fp": 52,
+   "fn": 17,
+   "precision": 0.5229357798165137,
+   "recall": 0.7702702702702703,
+   "f1": 0.6229508196721311
+  },
+  "fact_updates_strict_subject": {
+   "tp": 57,
+   "fp": 52,
+   "fn": 17,
+   "precision": 0.5229357798165137,
+   "recall": 0.7702702702702703,
+   "f1": 0.6229508196721311
+  },
+  "fact_pred_predicate_counts": {
+   "MOVED_TO": 30,
+   "ACQUIRED": 13,
+   "LOST": 6,
+   "LEARNED": 18,
+   "STATE_CHANGED": 28,
+   "HOOK_OPENED": 14
+  },
+  "states_character_set": {
+   "tp": 71,
+   "fp": 18,
+   "fn": 0,
+   "precision": 0.797752808988764,
+   "recall": 1.0,
+   "f1": 0.8875
+  },
+  "values_6d": {
+   "matched_character_scenes": 71,
+   "vector_exact": {
+    "match": 20,
+    "n": 71,
+    "rate": 0.28169014084507044
+   },
+   "axis_exact": {
+    "match": 367,
+    "n": 426,
+    "rate": 0.8615023474178404
+   },
+   "polarity_both_nonzero": {
+    "match": 48,
+    "n": 48,
+    "rate": 1.0
+   },
+   "gold_nonzero_axes_same_sign": {
+    "match": 48,
+    "n": 97,
+    "rate": 0.4948453608247423
+   },
+   "all_zero_baseline": {
+    "gold_characters": 71,
+    "vector_exact_rate": 0.028169014084507043,
+    "axis_exact_rate": 0.7723004694835681
+   }
+  },
+  "per_scene": [
+   {
+    "scene_id": "001798_056779:s0",
+    "present_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "present_pred": [
+     "boku",
+     "fuwa"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 1,
+    "facts_pred": 4,
+    "states_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "states_pred": [
+     "boku",
+     "fuwa"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s1",
+    "present_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "present_pred": [
+     "boku",
+     "fuwa"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 5,
+    "states_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "states_pred": [
+     "boku",
+     "fuwa"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s2",
+    "present_gold": [
+     "boku",
+     "noro"
+    ],
+    "present_pred": [
+     "boku",
+     "noro"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "boku",
+     "noro"
+    ],
+    "states_pred": [
+     "boku",
+     "noro"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s3",
+    "present_gold": [
+     "boku",
+     "noro"
+    ],
+    "present_pred": [
+     "boku",
+     "noro"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "boku",
+     "noro"
+    ],
+    "states_pred": [
+     "boku",
+     "noro"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s0",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 4,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "onna",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s1",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "onna",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s2",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "onna",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s0",
+    "present_gold": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "heiroku",
+     "yasue"
+    ],
+    "states_pred": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s1",
+    "present_gold": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ],
+    "present_pred": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 6,
+    "states_gold": [
+     "bunkichi",
+     "heiroku",
+     "yasue"
+    ],
+    "states_pred": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s2",
+    "present_gold": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 5,
+    "states_gold": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "states_pred": [
+     "bunkichi",
+     "otoe",
+     "susumu",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s3",
+    "present_gold": [
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "susumu",
+     "yasue"
+    ],
+    "states_pred": [
+     "susumu",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s0",
+    "present_gold": [
+     "yozo"
+    ],
+    "present_pred": [
+     "yozo"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "yozo"
+    ],
+    "states_pred": [
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s1",
+    "present_gold": [
+     "musume",
+     "yozo"
+    ],
+    "present_pred": [
+     "musume",
+     "yozo"
+    ],
+    "order_gold": "parallel",
+    "order_pred": "parallel",
+    "facts_gold": 0,
+    "facts_pred": 2,
+    "states_gold": [
+     "musume",
+     "yozo"
+    ],
+    "states_pred": [
+     "musume",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s2",
+    "present_gold": [
+     "doshi",
+     "tsuneko",
+     "yozo"
+    ],
+    "present_pred": [
+     "doshi",
+     "yozo"
+    ],
+    "order_gold": "parallel",
+    "order_pred": "parallel",
+    "facts_gold": 3,
+    "facts_pred": 6,
+    "states_gold": [
+     "doshi",
+     "yozo"
+    ],
+    "states_pred": [
+     "doshi",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s3",
+    "present_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "present_pred": [
+     "tsuneko",
+     "yozo"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "states_pred": [
+     "tsuneko",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s4",
+    "present_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "present_pred": [
+     "tsuneko",
+     "yozo"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "states_pred": [
+     "tsuneko",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s5",
+    "present_gold": [
+     "tsuneko",
+     "yozo"
+    ],
+    "present_pred": [
+     "tsuneko",
+     "yozo"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "yozo"
+    ],
+    "states_pred": [
+     "tsuneko",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "000035_000301:s6",
+    "present_gold": [
+     "horiki",
+     "yozo"
+    ],
+    "present_pred": [
+     "horiki",
+     "yozo"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "horiki",
+     "yozo"
+    ],
+    "states_pred": [
+     "horiki",
+     "yozo"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s0",
+    "present_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s1",
+    "present_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 1,
+    "facts_pred": 2,
+    "states_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s2",
+    "present_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s3",
+    "present_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 1,
+    "facts_pred": 1,
+    "states_gold": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s4",
+    "present_gold": [
+     "hagiwara",
+     "jochu",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "jochu",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "hagiwara",
+     "jochu",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "jochu",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001383_056643:s5",
+    "present_gold": [
+     "hagiwara",
+     "jochu",
+     "mitsuko",
+     "senkichi",
+     "shinichi"
+    ],
+    "present_pred": [
+     "hagiwara",
+     "jochu",
+     "mitsuko",
+     "senkichi",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "mitsuko",
+     "shinichi"
+    ],
+    "states_pred": [
+     "hagiwara",
+     "mitsuko",
+     "senkichi",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s0",
+    "present_gold": [
+     "tabiso",
+     "uba"
+    ],
+    "present_pred": [
+     "tabiso",
+     "uba"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "tabiso",
+     "uba"
+    ],
+    "states_pred": [
+     "tabiso",
+     "uba"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s1",
+    "present_gold": [
+     "tabiso",
+     "uba"
+    ],
+    "present_pred": [
+     "tabiso",
+     "uba"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "tabiso",
+     "uba"
+    ],
+    "states_pred": [
+     "tabiso",
+     "uba"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s2",
+    "present_gold": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "present_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "parallel",
+    "facts_gold": 1,
+    "facts_pred": 2,
+    "states_gold": [
+     "kundo",
+     "saihachi"
+    ],
+    "states_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s3",
+    "present_gold": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "present_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 1,
+    "facts_pred": 2,
+    "states_gold": [
+     "saihachi"
+    ],
+    "states_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ]
+   },
+   {
+    "scene_id": "000050_003586:s4",
+    "present_gold": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "present_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 1,
+    "states_gold": [
+     "kundo"
+    ],
+    "states_pred": [
+     "kundo",
+     "niemon",
+     "saihachi"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s0",
+    "present_gold": [
+     "campanella",
+     "giovanni",
+     "tabibito"
+    ],
+    "present_pred": [
+     "campanella",
+     "giovanni",
+     "tabibito"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 1,
+    "facts_pred": 3,
+    "states_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "states_pred": [
+     "campanella",
+     "giovanni",
+     "tabibito"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s1",
+    "present_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "present_pred": [
+     "campanella",
+     "giovanni"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 4,
+    "states_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "states_pred": [
+     "campanella",
+     "giovanni"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s2",
+    "present_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "present_pred": [
+     "campanella",
+     "giovanni"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 4,
+    "states_gold": [
+     "campanella",
+     "giovanni"
+    ],
+    "states_pred": [
+     "campanella",
+     "giovanni"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s3",
+    "present_gold": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ],
+    "present_pred": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "daigakushi"
+    ],
+    "states_pred": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s4",
+    "present_gold": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ],
+    "present_pred": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "giovanni"
+    ],
+    "states_pred": [
+     "campanella",
+     "daigakushi",
+     "giovanni"
+    ]
+   },
+   {
+    "scene_id": "000081_000456:s5",
+    "present_gold": [
+     "campanella",
+     "giovanni",
+     "toritori"
+    ],
+    "present_pred": [
+     "campanella",
+     "giovanni",
+     "toritori"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "giovanni",
+     "toritori"
+    ],
+    "states_pred": [
+     "campanella",
+     "giovanni",
+     "toritori"
+    ]
+   }
+  ]
+ }
+}

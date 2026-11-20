@@ -1,0 +1,79 @@
+{
+ "all": {
+  "attr_n": 166,
+  "attr_ok": 157,
+  "attr_null": 2,
+  "not_speech_n": 9,
+  "not_speech_abstain": 8,
+  "attr_pred_ambiguous": 2,
+  "undetermined_n": 9,
+  "undetermined_abstain": 0
+ },
+ "groups": {
+  "modern": {
+   "attr_n": 76,
+   "attr_ok": 73,
+   "attr_null": 2,
+   "not_speech_n": 1,
+   "not_speech_abstain": 0,
+   "attr_pred_ambiguous": 2
+  },
+  "f9dev": {
+   "not_speech_n": 8,
+   "not_speech_abstain": 8,
+   "attr_n": 90,
+   "attr_ok": 84,
+   "attr_null": 0,
+   "undetermined_n": 9,
+   "undetermined_abstain": 0
+  }
+ },
+ "per_work": {
+  "001798_056779": {
+   "attr_n": 24,
+   "attr_ok": 23,
+   "attr_null": 1,
+   "not_speech_n": 1,
+   "not_speech_abstain": 0,
+   "attr_pred_ambiguous": 1
+  },
+  "001801_001786": {
+   "attr_n": 24,
+   "attr_ok": 22,
+   "attr_null": 1,
+   "attr_pred_ambiguous": 1
+  },
+  "001875_059897": {
+   "attr_n": 28,
+   "attr_ok": 28,
+   "attr_null": 0
+  },
+  "000035_000301": {
+   "not_speech_n": 8,
+   "not_speech_abstain": 8,
+   "attr_n": 19,
+   "attr_ok": 19,
+   "attr_null": 0
+  },
+  "001383_056643": {
+   "attr_n": 24,
+   "attr_ok": 23,
+   "attr_null": 0,
+   "undetermined_n": 3,
+   "undetermined_abstain": 0
+  },
+  "000050_003586": {
+   "attr_n": 26,
+   "attr_ok": 22,
+   "attr_null": 0
+  },
+  "000081_000456": {
+   "attr_n": 21,
+   "attr_ok": 20,
+   "attr_null": 0,
+   "undetermined_n": 6,
+   "undetermined_abstain": 0
+  }
+ },
+ "attributed_accuracy": 0.9458
+}
