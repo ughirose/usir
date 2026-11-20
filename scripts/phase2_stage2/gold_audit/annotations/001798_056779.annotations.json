@@ -1,0 +1,325 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001798_056779:s0",
+      "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001798_056779",
+      "scene_index": 0,
+      "scene_count": 4,
+      "char_len": 272,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "explicit",
+        "explicit_time": "不破と知合いになって三日目"
+      },
+      "location_id": "代田橋",
+      "present_character_ids": [
+        "boku",
+        "fuwa"
+      ],
+      "pov_character": "boku"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "fuwa",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "boku",
+        "predicate": "MOVED_TO",
+        "object": "代田橋",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "契約書",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "fuwa",
+        "predicate": "ACQUIRED",
+        "object": "四万円",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001798_056779:s1",
+      "scene_hash": "fcdf50e4188c3a30bd0d38145bf6b4feadbadc9d825b296fdbb6264ec1b3310e",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001798_056779",
+      "scene_index": 1,
+      "scene_count": 4,
+      "char_len": 725,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "失踪の前の晩",
+        "elapsed_hint": "一週間目に"
+      },
+      "location_id": "僕の部屋",
+      "present_character_ids": [
+        "boku",
+        "fuwa"
+      ],
+      "pov_character": "boku"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "fuwa",
+        "values_6d": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "fuwa",
+        "predicate": "STATE_CHANGED",
+        "object": "夫妻で失踪した",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "fuwa",
+        "predicate": "ACQUIRED",
+        "object": "二千円",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "fuwa",
+        "predicate": "HOOK_OPENED",
+        "object": "野呂が留守番として来る約束",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001798_056779:s2",
+      "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001798_056779",
+      "scene_index": 2,
+      "scene_count": 4,
+      "char_len": 783,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "翌朝、十一時頃",
+        "elapsed_hint": "翌朝"
+      },
+      "location_id": "板の間",
+      "present_character_ids": [
+        "boku",
+        "noro"
+      ],
+      "pov_character": "boku"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "noro",
+        "values_6d": [
+          0,
+          0,
+          -1,
+          -1,
+          0,
+          0
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "不破の便箋",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "noro",
+        "predicate": "MOVED_TO",
+        "object": "この家",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "noro",
+        "predicate": "LEARNED",
+        "object": "不破が兵庫県に立ったこと",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "boku",
+        "predicate": "LEARNED",
+        "object": "野呂が不破からこの家を買い受けたこと",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "noro",
+        "predicate": "STATE_CHANGED",
+        "object": "急に言葉がぞんざいになった",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "家の居住権と所有権の食い違い",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001798_056779:s3",
+      "scene_hash": "47832cad7d2ad96e5bcee822e7b1eadb98f04519e8ef15c1c64a6ba6f1e3dc10",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001798_056779",
+      "scene_index": 3,
+      "scene_count": 4,
+      "char_len": 355,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit"
+      },
+      "location_id": "板の間",
+      "present_character_ids": [
+        "boku",
+        "noro"
+      ],
+      "pov_character": "boku"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "noro",
+        "values_6d": [
+          0,
+          0,
+          -1,
+          0,
+          0,
+          -1
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "noro",
+        "predicate": "LEARNED",
+        "object": "僕が権利金を払い賃貸借契約をしたこと",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "noro",
+        "predicate": "STATE_CHANGED",
+        "object": "不安と困惑の色が拡がり腰をおろした",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "野呂が家を買い受けた事情と誤解の真相",
+        "evidence": "explicit"
+      }
+    ]
+  }
+]
