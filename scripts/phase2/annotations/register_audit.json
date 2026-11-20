@@ -1,0 +1,810 @@
+{
+  "works": {
+    "001798_056779": {
+      "scene_count": 4,
+      "scene_utterance_counts": [
+        0,
+        2,
+        15,
+        8
+      ],
+      "pov_character": "boku",
+      "register_rows": [
+        {
+          "work_id": "001798_056779",
+          "scene_index": 1,
+          "global_utterance": 0,
+          "scene_utterance": 0,
+          "quote_text": "「先祖のお墓って、なにも赤穂まで帰らずとも、泉岳寺にあるじゃありませんか」",
+          "model_politeness": "polite",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 1,
+          "global_utterance": 1,
+          "scene_utterance": 1,
+          "quote_text": "「僕の先祖というのは、なにも数右衛門だけじゃありませんよ。数右衛門の息子だってそうだし、そのまた息子だってそうだし、代々が僕の先祖様なんだ」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "mixed_polite_and_plain"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 2,
+          "scene_utterance": 0,
+          "quote_text": "『野呂君と仲良くしてやって呉れ給え。彼はしんからの好人物であります』",
+          "model_politeness": "polite",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "mixed_polite_and_plain"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 3,
+          "scene_utterance": 1,
+          "quote_text": "「野呂君ですか？」",
+          "model_politeness": "polite",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 4,
+          "scene_utterance": 2,
+          "quote_text": "「いかにも僕は野呂ですが――」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "ellipsis_or_dash_cutoff"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 5,
+          "scene_utterance": 3,
+          "quote_text": "「不破さんは居ないんですか」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 6,
+          "scene_utterance": 4,
+          "quote_text": "「不破さんは昨日兵庫県に立ちましたよ」",
+          "model_politeness": "polite",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 7,
+          "scene_utterance": 5,
+          "quote_text": "「十日ぐらいかかるって言ってましたよ」",
+          "model_politeness": "polite",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 8,
+          "scene_utterance": 6,
+          "quote_text": "「十日？」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_名詞_接尾"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 9,
+          "scene_utterance": 7,
+          "quote_text": "「そりゃ困るなあ」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_verb_基本形"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 10,
+          "scene_utterance": 8,
+          "quote_text": "「困ることなんかないでしょ」",
+          "model_politeness": "polite",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "contracted_desho"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 11,
+          "scene_utterance": 9,
+          "quote_text": "「困るよ」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_verb_基本形"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 12,
+          "scene_utterance": 10,
+          "quote_text": "「一体君は何だね。留守番かね？」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_plain"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 13,
+          "scene_utterance": 11,
+          "quote_text": "「留守番じゃないよ」",
+          "model_politeness": "polite",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_ない"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 14,
+          "scene_utterance": 12,
+          "quote_text": "「留守番は君じゃないか。僕はここの居住者だ」",
+          "model_politeness": "polite",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 15,
+          "scene_utterance": 13,
+          "quote_text": "「居住者？」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_名詞_接尾"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 2,
+          "global_utterance": 16,
+          "scene_utterance": 14,
+          "quote_text": "「何を君は言ってるんだね。この家は僕のものだよ。不破氏から僕が買い受けたんだ。君は早々に出て行って呉れ」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_colloquial_imp"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 3,
+          "global_utterance": 17,
+          "scene_utterance": 0,
+          "quote_text": "「買い受けただって？」",
+          "model_politeness": "polite",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "quotative_datte"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 3,
+          "global_utterance": 18,
+          "scene_utterance": 1,
+          "quote_text": "「そうだよ。早く荷物をまとめて出て行って呉れ。僕は僕の荷物を大八車でエンヤコラ運んで来たんだ」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 3,
+          "global_utterance": 19,
+          "scene_utterance": 2,
+          "quote_text": "「そ、そんな無茶な。僕だってちゃんと権利金を払い、きちんと賃貸借の契約をしたんだぞ」",
+          "model_politeness": "polite",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 3,
+          "global_utterance": 20,
+          "scene_utterance": 3,
+          "quote_text": "「不思議だねえ」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 3,
+          "global_utterance": 21,
+          "scene_utterance": 4,
+          "quote_text": "「何か誤解がある。まるでこの世には誤解が充ち満ちているようだ」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 3,
+          "global_utterance": 22,
+          "scene_utterance": 5,
+          "quote_text": "「君が買い受けたってのは、どんな事情だね」",
+          "model_politeness": "polite",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 3,
+          "global_utterance": 23,
+          "scene_utterance": 6,
+          "quote_text": "「不破数馬氏からちゃんと買い受けたのかい？」",
+          "model_politeness": "polite",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_た"
+        },
+        {
+          "work_id": "001798_056779",
+          "scene_index": 3,
+          "global_utterance": 24,
+          "scene_utterance": 7,
+          "quote_text": "「そうだよ」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        }
+      ]
+    },
+    "001875_059897": {
+      "scene_count": 4,
+      "scene_utterance_counts": [
+        4,
+        12,
+        9,
+        3
+      ],
+      "pov_character": null,
+      "register_rows": [
+        {
+          "work_id": "001875_059897",
+          "scene_index": 0,
+          "global_utterance": 0,
+          "scene_utterance": 0,
+          "quote_text": "「どうもどうも。つい心やすだてにご無礼いたしました。」",
+          "model_politeness": "polite",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 0,
+          "global_utterance": 1,
+          "scene_utterance": 1,
+          "quote_text": "「進君から話を聞きましてな、今、あんたの物語を一席していたとこですよ。お安さんという人は、昔から実にできた人だといってね。」",
+          "model_politeness": "polite",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_polite"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 0,
+          "global_utterance": 2,
+          "scene_utterance": 2,
+          "quote_text": "「おだてるのね、相変らず。」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_助動詞_*"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 0,
+          "global_utterance": 3,
+          "scene_utterance": 3,
+          "quote_text": "「いやあ、ほんとですよ。わしは、実に何というか、ここの家との妙ないんねんにおどろいとるところですよ。音枝ちゃんはこりゃ、当り前だけどもさ、冬太郎くんでしょう、そしてきょうでしょう。ここの家へ赤ん坊が来た日には、必ずわしが、まるで立会人かなんぞのように三度が三度、ここへ来る回りあわせになる――」",
+          "model_politeness": "polite",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_polite"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 4,
+          "scene_utterance": 0,
+          "quote_text": "「そういえば、そうだわ。あら、変ね。ふしぎね。三度が三度なんて、なんでしょう。奇縁ていうのかしら。」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "mixed_polite_and_plain"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 5,
+          "scene_utterance": 1,
+          "quote_text": "「でも、進君のはひどいわよ鷲さん、進君には悪いけどさ、困るのよ。文吉、おこってるわよ。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_verb_基本形"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 6,
+          "scene_utterance": 2,
+          "quote_text": "「そういわれるとどうも。しかし、これも同郷のよしみに、かんべんしてくださいよ。その代り、赤ん坊のミルクでもなんでも、これからもってきますよ。文吉さんに一つとりなしてくださいよ。」",
+          "model_politeness": "polite",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_kudasai"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 7,
+          "scene_utterance": 3,
+          "quote_text": "「警察につかまったりして、はずかしいのかしら。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_adj_基本形"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 8,
+          "scene_utterance": 4,
+          "quote_text": "「警察にあげられるったって、それほどのやみ屋じゃあるまい。おれはそう見てる。大きそうなこといっても兵六さん、せいぜいかつぎやぐらいのやみ屋だよ。だって、二千円ぐらいの金を、かしてくれっていったもんな。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_た"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 9,
+          "scene_utterance": 5,
+          "quote_text": "「それ、かしたの？」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_た"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 10,
+          "scene_utterance": 6,
+          "quote_text": "「かしたさ。お前の姉婿だった人だと思ったからさ。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_conj_end"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 11,
+          "scene_utterance": 7,
+          "quote_text": "「かえしてくれた？」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_た"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 12,
+          "scene_utterance": 8,
+          "quote_text": "「二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_た"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 13,
+          "scene_utterance": 9,
+          "quote_text": "「あきれた。あんたそんなお金、どこにあったの。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_た"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 14,
+          "scene_utterance": 10,
+          "quote_text": "「たもとの底にあったよ。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_た"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 1,
+          "global_utterance": 15,
+          "scene_utterance": 11,
+          "quote_text": "「いやだわ。男のくせにへそくりなんて。――そのお金、もうもどってなんかこないわよ。わたしに相談もしないでさ……」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_plain"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 16,
+          "scene_utterance": 0,
+          "quote_text": "「おかあさん、進君のうちね、ずい分たくさん兵六おじさんにお金預けたんだってよ。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_hearsay_ndatte_yo"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 17,
+          "scene_utterance": 1,
+          "quote_text": "「へえ、でもそんなこと、わたしの知ったこっちゃないよ。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_adj_基本形"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 18,
+          "scene_utterance": 2,
+          "quote_text": "「そりゃそうよ。でも、かわいそうみたいよ。それ、進君の何年間かの生活費なんですって。月々わたしてもらう約束なのにさ、兵六おじさん、なかなかくれないらしいわ。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_らしい"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 19,
+          "scene_utterance": 3,
+          "quote_text": "「そんなこと、わたしが聞いてもしようがないじゃないか。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_ない"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 20,
+          "scene_utterance": 4,
+          "quote_text": "「ごめん。」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_感動詞_*"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 21,
+          "scene_utterance": 5,
+          "quote_text": "「ね、おかあさん、進君が五百円かしてくれっていってんだけど。兵六おじさん、何べん行ってもあえないんですって。」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_plain"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 22,
+          "scene_utterance": 6,
+          "quote_text": "「そのしりぬぐいまでわたしがするの？」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_verb_基本形"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 23,
+          "scene_utterance": 7,
+          "quote_text": "「…………」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "silence_or_punct_only"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 2,
+          "global_utterance": 24,
+          "scene_utterance": 8,
+          "quote_text": "「あんまり、甘く見られなさんな。権利金なんてどうでもいいけどさ、部屋代だって一度ももらってないんだよ。」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 3,
+          "global_utterance": 25,
+          "scene_utterance": 0,
+          "quote_text": "「あんたも困ってでしょうけどね、わたしんとこも困るのよ。お金のことより、部屋のことよ。早く鷲さんに相談して、さがしてくださいね。」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "mixed_polite_and_plain"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 3,
+          "global_utterance": 26,
+          "scene_utterance": 1,
+          "quote_text": "「そう思うていますけど、鷲さんになかなかあえんのです。ぼく、ここのところ、毎日のように行ってるんです。きょうもこれから出かけるところです。きょうは泊りこんででもあってくるつもりです。」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001875_059897",
+          "scene_index": 3,
+          "global_utterance": 27,
+          "scene_utterance": 2,
+          "quote_text": "「ま、ここまできて日ぎりはしませんけどね、ことしうちぐらいには、さがしてくださいね。」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_kudasai"
+        }
+      ]
+    },
+    "001801_001786": {
+      "scene_count": 3,
+      "scene_utterance_counts": [
+        11,
+        12,
+        1
+      ],
+      "pov_character": "shinichi",
+      "register_rows": [
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 0,
+          "scene_utterance": 0,
+          "quote_text": "「……だあれ？　あなた」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_名詞_代名詞"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 1,
+          "scene_utterance": 1,
+          "quote_text": "「知らない人ね、きっと。……」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_副詞_一般"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 2,
+          "scene_utterance": 2,
+          "quote_text": "「大丈夫ですか？」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 3,
+          "scene_utterance": 3,
+          "quote_text": "「いいの。ほっといてよ」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_plain"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 4,
+          "scene_utterance": 4,
+          "quote_text": "「……あぶないですよ、この海は。すぐうねりが変わるんです。もっと岸の近くで……」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_polite"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 5,
+          "scene_utterance": 5,
+          "quote_text": "「かまわないで」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "conj_particle_ellipsis"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 6,
+          "scene_utterance": 6,
+          "quote_text": "「……あなた、この町の人ね？」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_名詞_一般"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 7,
+          "scene_utterance": 7,
+          "quote_text": "「そうです。だからこの海にはくわしいんです」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 8,
+          "scene_utterance": 8,
+          "quote_text": "「漁師さんなの？」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 9,
+          "scene_utterance": 9,
+          "quote_text": "「……親父が漁師でした」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 0,
+          "global_utterance": 10,
+          "scene_utterance": 10,
+          "quote_text": "「親父は、沖で一人底引き網をやってたんです。銛も打ったんです。二十八貫もあるカジキを、三日がかりでつかまえたこともあります」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 11,
+          "scene_utterance": 0,
+          "quote_text": "「そのときは、親父も生命からがらだったんです。牛みたいな大きなカジキを、ふらふらになって担ぎながら、親父は精も魂もつき果てたっていう感じでした。……でもその夜、親父はそのカジキの背をたたきながらぼくにいったんです。おい、よく見ろ、おれは、こいつに勝ったんだぞ。生きるってことは、こういう、この手ごたえのことなんだよ。……あのとき、親父は泣いていました」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "mixed_polite_and_plain"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 12,
+          "scene_utterance": 1,
+          "quote_text": "「銛で打ったの？」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_た"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 13,
+          "scene_utterance": 2,
+          "quote_text": "「そうです。とても重い銛なんです」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 14,
+          "scene_utterance": 3,
+          "quote_text": "「ずいぶん、原始的ね」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_名詞_接尾"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 15,
+          "scene_utterance": 4,
+          "quote_text": "「で、お父さんは？」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "non_predicate_助詞_係助詞"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 16,
+          "scene_utterance": 5,
+          "quote_text": "「死にました。去年」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_polite"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 17,
+          "scene_utterance": 6,
+          "quote_text": "「……あなたは、自殺するつもりですか？」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 18,
+          "scene_utterance": 7,
+          "quote_text": "「ほっといてよ。……あなたには、関係ないことだわ」",
+          "model_politeness": "plain",
+          "policy_x": "plain",
+          "policy_x_rule": "plain_aux_だ"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 19,
+          "scene_utterance": 8,
+          "quote_text": "「べつに、やめなさい、っていうつもりじゃないんですよ」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 20,
+          "scene_utterance": 9,
+          "quote_text": "「からかうの？　軽蔑しているのね、私を。子どものくせに」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_plain"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 21,
+          "scene_utterance": 10,
+          "quote_text": "「ちがいます。親父がぼくにいったんです。死のうとしている人間を、軽蔑しちゃいけない。どんな人間にも、その人なりの苦労や、正義がある。その人だけの生き甲斐ってやつがある。そいつは、他の人間には、絶対にわかりっこないんだ、って」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "mixed_polite_and_plain"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 1,
+          "global_utterance": 22,
+          "scene_utterance": 11,
+          "quote_text": "「人間には、他の人間のこと、ことにその生きるか死ぬかっていう肝心のことなんかは、決してわかりっこないんだ、人間は、だれでもそのことに耐えなくちゃいけないんだ、って。……だから、目の前で人間が死のうとしても、それをとめちゃいけない。その人を好きなように死なしてやるほうが、ずっと親切だし、ほんとうは、ずっと勇気のいることなんだ、って……」",
+          "model_politeness": "plain",
+          "policy_x": "ambiguous",
+          "policy_x_rule": "final_ambiguous_earlier_plain"
+        },
+        {
+          "work_id": "001801_001786",
+          "scene_index": 2,
+          "global_utterance": 23,
+          "scene_utterance": 0,
+          "quote_text": "「ぼくの親父も、自殺したんです。背骨を打ってもう漁ができなくなって、この沖で銛をからだに結えつけてとびこんじゃったんです。……あなたも、ぼくはとめはしません」",
+          "model_politeness": "plain",
+          "policy_x": "polite",
+          "policy_x_rule": "polite_aux"
+        }
+      ]
+    }
+  },
+  "gold_json_sha256": "a40477af3df55ca844546fb7aeb2d35836eae2b3d4cea2588a27d553a7b4e3d4"
+}

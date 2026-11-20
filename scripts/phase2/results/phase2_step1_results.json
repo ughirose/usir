@@ -1,0 +1,367 @@
+{
+  "schema": "phase2.step1.results/1",
+  "works": {
+    "001798_056779": {
+      "schema": "nishiki.diagnose/3",
+      "input": {
+        "chars": 2140,
+        "scenes": 4,
+        "scene_split": "usir_v5_splitter@1"
+      },
+      "warnings": [],
+      "annotated_utterances": 25,
+      "lenses": {
+        "kasane": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "ac_coupling": -0.195041955,
+            "ac_max_sis": 0.173214138,
+            "ac_mean_crest_factor": 2.20332408,
+            "ac_mean_velocity": 188.701583862,
+            "dc_cadence": 85.432220459,
+            "dc_confession": 48.598129272,
+            "dc_polyphony": 197.663543701,
+            "dc_showing": 145.794387817,
+            "dc_speculation": 119.672889709,
+            "dc_staccato": 248.598129272,
+            "deadzone_count": 0,
+            "semantic_tension": 3.271028042
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        },
+        "sasae": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "fid_pov_contamination_count": 2,
+            "fid_sentence_count": 2,
+            "off_stage_utterance_count": 0,
+            "quote_diagnostic_count": 0,
+            "sentence_count": 44,
+            "speaker_mismatch_count": 9,
+            "syntactic_ambiguity_count": 1,
+            "syntactic_ambiguity_modifier_scope_collision_count": 0,
+            "syntactic_ambiguity_unpunctuated_declinable_chain_count": 1,
+            "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+            "tense_shift_count": 14,
+            "utterance_count": 25,
+            "zero_anaphora_resolved_count": 24
+          },
+          "span_count": 2,
+          "span_by_rule": {
+            "pov_contamination": 2
+          },
+          "notes": [
+            "character registry: 3 characters",
+            "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+            "first stage only: setting/timeline/fact_updates/register checks are not implemented"
+          ]
+        },
+        "kamae": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "sycophancy_hit_count": 0,
+            "sycophancy_index": 0.0,
+            "total_sycophancy_penalty": 0.0
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": [
+            "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+            "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+          ]
+        },
+        "sadame": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "ambiguous_excluded_count": 1,
+            "e_inter": 0.0,
+            "e_intra": 0.0,
+            "edges_eff": 0,
+            "intra_characters": 0,
+            "total": 0.0
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": [
+            "annotated scenes used: 4; skipped (stale or without annotation): 0",
+            "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+            "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+            "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+          ]
+        },
+        "nagare": {
+          "status": "unavailable",
+          "reason": "annotation generation not ported (J4 decision 3)",
+          "scores": {},
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        },
+        "awase": {
+          "status": "unavailable",
+          "reason": "annotation generation not ported (J4 decision 3)",
+          "scores": {},
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        }
+      }
+    },
+    "001801_001786": {
+      "schema": "nishiki.diagnose/3",
+      "input": {
+        "chars": 1802,
+        "scenes": 3,
+        "scene_split": "usir_v5_splitter@1"
+      },
+      "warnings": [],
+      "annotated_utterances": 24,
+      "lenses": {
+        "kasane": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "ac_coupling": 0.651055694,
+            "ac_max_sis": 0.324524701,
+            "ac_mean_crest_factor": 2.638711691,
+            "ac_mean_velocity": 194.238708496,
+            "dc_cadence": 220.850952148,
+            "dc_confession": 44.395114899,
+            "dc_polyphony": 73.806884766,
+            "dc_showing": 85.460594177,
+            "dc_speculation": 85.460594177,
+            "dc_staccato": 146.503875732,
+            "deadzone_count": 0,
+            "semantic_tension": 26.637069702
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        },
+        "sasae": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "fid_pov_contamination_count": 0,
+            "fid_sentence_count": 1,
+            "off_stage_utterance_count": 0,
+            "quote_diagnostic_count": 0,
+            "sentence_count": 39,
+            "speaker_mismatch_count": 5,
+            "syntactic_ambiguity_count": 0,
+            "syntactic_ambiguity_modifier_scope_collision_count": 0,
+            "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+            "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+            "tense_shift_count": 4,
+            "utterance_count": 24,
+            "zero_anaphora_resolved_count": 10
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": [
+            "character registry: 2 characters",
+            "annotations applied to 3 of 3 scenes (matched by scene_hash)",
+            "first stage only: setting/timeline/fact_updates/register checks are not implemented"
+          ]
+        },
+        "kamae": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "sycophancy_hit_count": 0,
+            "sycophancy_index": 0.0,
+            "total_sycophancy_penalty": 0.0
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": [
+            "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+            "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+          ]
+        },
+        "sadame": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "ambiguous_excluded_count": 1,
+            "e_inter": 0.0,
+            "e_intra": 0.0,
+            "edges_eff": 0,
+            "intra_characters": 0,
+            "total": 0.0
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": [
+            "annotated scenes used: 3; skipped (stale or without annotation): 0",
+            "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+            "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+            "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+          ]
+        },
+        "nagare": {
+          "status": "unavailable",
+          "reason": "annotation generation not ported (J4 decision 3)",
+          "scores": {},
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        },
+        "awase": {
+          "status": "unavailable",
+          "reason": "annotation generation not ported (J4 decision 3)",
+          "scores": {},
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        }
+      }
+    },
+    "001875_059897": {
+      "schema": "nishiki.diagnose/3",
+      "input": {
+        "chars": 2800,
+        "scenes": 4,
+        "scene_split": "usir_v5_splitter@1"
+      },
+      "warnings": [],
+      "annotated_utterances": 28,
+      "lenses": {
+        "kasane": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "ac_coupling": 0.329945475,
+            "ac_max_sis": 0.699495912,
+            "ac_mean_crest_factor": 2.593688965,
+            "ac_mean_velocity": 187.565032959,
+            "dc_cadence": 90.323181152,
+            "dc_confession": 54.285713196,
+            "dc_polyphony": 157.5,
+            "dc_showing": 85.0,
+            "dc_speculation": 46.714286804,
+            "dc_staccato": 102.857139587,
+            "deadzone_count": 0,
+            "semantic_tension": 8.571428299
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        },
+        "sasae": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "fid_pov_contamination_count": 0,
+            "fid_sentence_count": 5,
+            "off_stage_utterance_count": 0,
+            "quote_diagnostic_count": 0,
+            "sentence_count": 36,
+            "speaker_mismatch_count": 9,
+            "syntactic_ambiguity_count": 2,
+            "syntactic_ambiguity_modifier_scope_collision_count": 0,
+            "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+            "syntactic_ambiguity_unpunctuated_genitive_chain_count": 2,
+            "tense_shift_count": 7,
+            "utterance_count": 28,
+            "zero_anaphora_resolved_count": 12
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": [
+            "character registry: 5 characters",
+            "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+            "first stage only: setting/timeline/fact_updates/register checks are not implemented"
+          ]
+        },
+        "kamae": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "sycophancy_hit_count": 0,
+            "sycophancy_index": 0.0,
+            "total_sycophancy_penalty": 0.0
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": [
+            "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+            "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+          ]
+        },
+        "sadame": {
+          "status": "ok",
+          "reason": null,
+          "scores": {
+            "ambiguous_excluded_count": 0,
+            "e_inter": 0.0,
+            "e_intra": 0.0,
+            "edges_eff": 0,
+            "intra_characters": 0,
+            "total": 0.0
+          },
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": [
+            "annotated scenes used: 4; skipped (stale or without annotation): 0",
+            "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+            "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+            "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+          ]
+        },
+        "nagare": {
+          "status": "unavailable",
+          "reason": "annotation generation not ported (J4 decision 3)",
+          "scores": {},
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        },
+        "awase": {
+          "status": "unavailable",
+          "reason": "annotation generation not ported (J4 decision 3)",
+          "scores": {},
+          "span_count": 0,
+          "span_by_rule": {},
+          "notes": []
+        }
+      }
+    }
+  },
+  "findings": [
+    {
+      "work_id": "001798_056779",
+      "lens": "sasae",
+      "rule": "pov_contamination",
+      "scene": 1,
+      "score": 0.9,
+      "start": 819,
+      "end": 883,
+      "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+      },
+      "text": "不破の言によると、赤穂行は墓参のためだけでなく、あちらにある山林を処分する用も兼ねているから、一週間や十日はかかるかも知れない。"
+    },
+    {
+      "work_id": "001798_056779",
+      "lens": "sasae",
+      "rule": "pov_contamination",
+      "scene": 2,
+      "score": 0.9,
+      "start": 1299,
+      "end": 1330,
+      "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+      },
+      "text": "庭に入って来た男は僕を見て、少しおどろいたらしく立ちすくんだ。"
+    }
+  ]
+}

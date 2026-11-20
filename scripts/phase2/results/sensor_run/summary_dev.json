@@ -1,0 +1,215 @@
+{
+  "run_timestamp": "2026-11-20T08:09:59.768080+00:00",
+  "split": "dev",
+  "split_version": "modern_gold_frozen_v1",
+  "gold_json_sha256": "a40477af3df55ca844546fb7aeb2d35836eae2b3d4cea2588a27d553a7b4e3d4",
+  "work_ids_evaluated": [
+    "001798_056779",
+    "001875_059897",
+    "001801_001786"
+  ],
+  "prompt_version": "step1_utterances_v5",
+  "prompt_hash": "dfeb6de4ec57c881ef1650afcfee9d173cab681b2453f00ecb5c277b1f7c553a",
+  "step1_pass_thresholds": {
+    "explicit_error_rate_lt": 0.05,
+    "overall_error_rate_lt": 0.1,
+    "politeness_agreement_rate_ge": 0.9
+  },
+  "models": [
+    {
+      "model_spec": "qwen2.5:14b",
+      "model_name": "qwen2.5:14b",
+      "think": null,
+      "prompt_version": "step1_utterances_v5",
+      "prompt_hash": "dfeb6de4ec57c881ef1650afcfee9d173cab681b2453f00ecb5c277b1f7c553a",
+      "result_file": "qwen2.5_14b_dev.json",
+      "elapsed_sec": 270.668,
+      "prompt_eval_count": 225444,
+      "eval_count": 7939,
+      "context_window_warning": false,
+      "schema_valid_works": 3,
+      "total_works": 3,
+      "non_roster_speaker_count": 0,
+      "null_string_speaker_count": 0,
+      "explicit_error_rate": 0.0,
+      "explicit_errors": 0,
+      "explicit_denominator": 2,
+      "overall_error_rate": 0.039473684210526314,
+      "overall_errors": 3,
+      "overall_error_rate_raw_speaker": 0.039473684210526314,
+      "overall_errors_raw_speaker": 3,
+      "attributed_total": 76,
+      "politeness_agreement_rate": 0.6521739130434783,
+      "politeness_gold_available": true,
+      "ambiguous_rate": 0.02631578947368421,
+      "ambiguous_attributed_count": 2,
+      "ambiguous_rate_all_quotes": 0.025974025974025976,
+      "excluded_abstention_rate": 0.0,
+      "not_speech_abstention_rate": 0.0,
+      "not_speech_abstained": 0,
+      "not_speech_total": 1,
+      "undetermined_abstention_rate": null,
+      "undetermined_abstained": 0,
+      "undetermined_total": 0,
+      "gate": {
+        "passed": true,
+        "speaker_gate_passed": true,
+        "explicit_passed": true,
+        "overall_passed": true,
+        "validation_passed": true,
+        "politeness_passed": false,
+        "thresholds": {
+          "explicit_error_rate_lt": 0.05,
+          "overall_error_rate_lt": 0.1,
+          "politeness_agreement_rate_ge": 0.9
+        }
+      },
+      "by_evidence": {
+        "explicit": {
+          "count": 2,
+          "correct": 2,
+          "errors": 0,
+          "error_rate": 0.0,
+          "accuracy": 1.0
+        },
+        "inferred": {
+          "count": 72,
+          "correct": 71,
+          "errors": 1,
+          "error_rate": 0.013888888888888888,
+          "accuracy": 0.9861111111111112
+        },
+        "ambiguous": {
+          "count": 2,
+          "correct_raw_speaker": 0
+        },
+        "missing": {
+          "count": 0
+        }
+      },
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": null,
+          "overall_error_rate": 0.041666666666666664,
+          "overall_error_rate_raw_speaker": 0.041666666666666664,
+          "ambiguous_rate": 0.041666666666666664,
+          "attributed_total": 24
+        },
+        "third": {
+          "explicit_error_rate": 0.0,
+          "overall_error_rate": 0.038461538461538464,
+          "overall_error_rate_raw_speaker": 0.038461538461538464,
+          "ambiguous_rate": 0.019230769230769232,
+          "attributed_total": 52
+        }
+      },
+      "politeness_evaluation": {
+        "mode": "3way_decided",
+        "mapping_5to3": {
+          "polite": "polite",
+          "honorific": "polite",
+          "plain": "plain",
+          "rough": "plain",
+          "unknown": "ambiguous"
+        },
+        "decided_mapped_5to3": {
+          "correct": 30,
+          "total": 46,
+          "rate": 0.6521739130434783,
+          "passed_ge_90": false
+        },
+        "decided_strict_exact": {
+          "correct": 30,
+          "total": 46,
+          "rate": 0.6521739130434783,
+          "passed_ge_90": false
+        },
+        "all_attributed_mapped_5to3": {
+          "correct": 30,
+          "total": 76,
+          "rate": 0.39473684210526316,
+          "passed_ge_90": false
+        },
+        "all_attributed_raw_exact": {
+          "correct": 30,
+          "total": 76,
+          "rate": 0.39473684210526316,
+          "passed_ge_90": false
+        },
+        "gold_distribution_attributed": {
+          "polite": 17,
+          "plain": 29,
+          "ambiguous": 30
+        },
+        "confusion_matrix_3x5": {
+          "polite": {
+            "plain": 11,
+            "polite": 6,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          },
+          "plain": {
+            "plain": 24,
+            "polite": 5,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          },
+          "ambiguous": {
+            "plain": 26,
+            "polite": 4,
+            "honorific": 0,
+            "rough": 0,
+            "unknown": 0,
+            "missing_or_invalid": 0
+          }
+        }
+      },
+      "postprocess": {
+        "explicit_evidence_gate": true,
+        "inline_non_speech_filter": true,
+        "inline_non_speech_max_chars": 11
+      },
+      "postprocess_summary": {
+        "inline_non_speech_forced_count": 2,
+        "inline_non_speech_changed_count": 2,
+        "explicit_downgraded_count": 12
+      },
+      "speaker_recheck": {
+        "enabled": true,
+        "mode": "per_utterance",
+        "model": "qwen2.5:14b",
+        "prompt_version": "recheck_v2",
+        "flow_window_before": 4,
+        "flow_window_after": 3,
+        "context_chars_before": 700,
+        "context_chars_after": 500,
+        "sequential": false,
+        "num_ctx": 9216,
+        "num_predict": 384,
+        "seed": 42,
+        "timeout": 120.0
+      },
+      "speaker_recheck_summary": {
+        "recheck_prompt_version": "step1_speaker_recheck_v2",
+        "recheck_prompt_hash": "c8a85d1b3a2d34f55d17980925ad67c2ab560c8ea4238e7ba73cad668d0e83b7",
+        "target_count": 73,
+        "rechecked_count": 73,
+        "changed_count": 0,
+        "rejected_count": 0,
+        "elapsed_sec": 156.283,
+        "prompt_eval_count": 212793,
+        "eval_count": 3514,
+        "any_context_window_warning": false
+      }
+    }
+  ],
+  "politeness_pairwise_agreement": {
+    "scope": "attributed_only",
+    "total_items": 76,
+    "pairs": []
+  }
+}
