@@ -5,3 +5,5 @@
 - 対象: 公開テキストのみ（妻の原稿は使わない）
 - 計画: 作業1 FP/FN 5分類 + values_6d ズレ分析 → 作業2 fact_updates プロンプト1版再測定 / values_6d 既知情報付き1回再測定 → JSON と報告
 - 進捗: [x] ワークツリー作成  [ ] 現状ファイル調査  [ ] 作業1  [ ] 作業2  [ ] 報告
+- [x] 作業1-a: fact_updates FP78/FN60 全件手分類 → scripts/phase2_fv/results/fact_error_classification.json（FP: A5 B23 C28 D14 E8 / FN: M45 B5 C7 D3）。ベースラインの件数は stageB_metrics.json(all) と一致（FP78/FN60）。
+- 次: 作業1-b values_6d ズレ分析、作業2
