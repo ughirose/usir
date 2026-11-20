@@ -1,0 +1,91 @@
+000035_000301 0 NAGARE-NULL awase schema_err 0 7.655s
+000035_000301 1 nagare awase schema_err 0 6.308s
+000035_000301 2 NAGARE-NULL awase schema_err 0 6.405s
+000035_000301 3 nagare awase schema_err 0 5.686s
+000035_000301 4 nagare awase schema_err 0 9.413s
+000035_000301 5 NAGARE-NULL awase schema_err 0 7.287s
+000035_000301 6 NAGARE-NULL awase schema_err 0 4.209s
+000050_003586 0 nagare awase schema_err 0 7.202s
+000050_003586 1 NAGARE-NULL awase schema_err 0 5.185s
+000050_003586 2 nagare awase schema_err 0 7.117s
+000050_003586 3 NAGARE-NULL awase schema_err 0 5.117s
+000050_003586 4 NAGARE-NULL awase schema_err 0 5.443s
+000081_000456 0 nagare awase schema_err 0 9.76s
+000081_000456 1 nagare awase schema_err 0 9.486s
+000081_000456 2 nagare awase schema_err 0 6.117s
+000081_000456 3 nagare AWASE-NULL schema_err 0 8.545s
+000081_000456 4 nagare awase schema_err 0 4.647s
+000081_000456 5 nagare awase schema_err 0 6.373s
+001383_056643 0 nagare awase schema_err 0 8.575s
+001383_056643 1 NAGARE-NULL awase schema_err 0 7.387s
+001383_056643 2 nagare awase schema_err 0 7.937s
+001383_056643 3 nagare awase schema_err 0 7.825s
+001383_056643 4 nagare awase schema_err 0 6.123s
+001383_056643 5 nagare awase schema_err 0 5.644s
+001798_056779 0 NAGARE-NULL awase schema_err 0 5.79s
+001798_056779 1 NAGARE-NULL awase schema_err 0 5.154s
+001798_056779 2 NAGARE-NULL awase schema_err 0 5.363s
+001798_056779 3 NAGARE-NULL awase schema_err 0 4.5s
+001801_001786 0 NAGARE-NULL awase schema_err 0 5.734s
+001801_001786 1 nagare awase schema_err 0 5.277s
+001801_001786 2 NAGARE-NULL awase schema_err 0 5.932s
+001875_059897 0 nagare awase schema_err 0 6.621s
+001875_059897 1 NAGARE-NULL awase schema_err 0 9.647s
+001875_059897 2 nagare awase schema_err 0 6.993s
+001875_059897 3 nagare awase schema_err 0 5.077s
+{
+ "model": "qwen2.5:14b",
+ "prompt_hash": "f9b788bdf9ad365dba55df98d6f188f61b683a87269654aa1e4d1f1b91b605ee",
+ "works": {
+  "000035_000301": {
+   "scenes": 7,
+   "nagare_filled": 3,
+   "awase_filled": 7,
+   "elapsed_sec": 47.0,
+   "schema_errors": 0
+  },
+  "000050_003586": {
+   "scenes": 5,
+   "nagare_filled": 2,
+   "awase_filled": 5,
+   "elapsed_sec": 30.1,
+   "schema_errors": 0
+  },
+  "000081_000456": {
+   "scenes": 6,
+   "nagare_filled": 6,
+   "awase_filled": 5,
+   "elapsed_sec": 45.0,
+   "schema_errors": 0
+  },
+  "001383_056643": {
+   "scenes": 6,
+   "nagare_filled": 5,
+   "awase_filled": 6,
+   "elapsed_sec": 43.5,
+   "schema_errors": 0
+  },
+  "001798_056779": {
+   "scenes": 4,
+   "nagare_filled": 0,
+   "awase_filled": 4,
+   "elapsed_sec": 20.8,
+   "schema_errors": 0
+  },
+  "001801_001786": {
+   "scenes": 3,
+   "nagare_filled": 1,
+   "awase_filled": 3,
+   "elapsed_sec": 17.0,
+   "schema_errors": 0
+  },
+  "001875_059897": {
+   "scenes": 4,
+   "nagare_filled": 3,
+   "awase_filled": 4,
+   "elapsed_sec": 28.4,
+   "schema_errors": 0
+  }
+ },
+ "total_elapsed_sec": 231.9
+}

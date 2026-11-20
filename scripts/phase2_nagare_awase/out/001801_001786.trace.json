@@ -1,0 +1,155 @@
+[
+  {
+    "scene_id": "001801_001786:s0",
+    "elapsed_sec": 5.734,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E01\",\n      \"basis\": \"だあれ？　あなた\"\n    },\n    {\n      \"code\": \"E03\",\n      \"basis\": \"大丈夫ですか？\"\n    },\n    {\n      \"code\": \"E14\",\n      \"basis\": \"慎一は、知らぬまにかなり沖にきていた\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M02\",\n      \"basis\": \"月はなかった\"\n    },\n    {\n      \"code\": \"M04\",\n      \"basis\": \"女の声はひどく疲れ、喘いでいた\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"慎一は、その顔をおぼえていた\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"慎一は、知らぬまにかなり沖にきていた\",\n    \"f_basis\": \"月はなかった\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1581,
+    "eval_count": 257,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "慎一は、その顔をおぼえていた"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E01",
+          "basis": "だあれ？　あなた"
+        },
+        {
+          "code": "E03",
+          "basis": "大丈夫ですか？"
+        },
+        {
+          "code": "E14",
+          "basis": "慎一は、知らぬまにかなり沖にきていた"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M02",
+          "basis": "月はなかった"
+        },
+        {
+          "code": "M04",
+          "basis": "女の声はひどく疲れ、喘いでいた"
+        },
+        {
+          "code": "M11",
+          "basis": "慎一は、その顔をおぼえていた"
+        }
+      ],
+      "awase": {
+        "F_basis": "慎一は、知らぬまにかなり沖にきていた",
+        "f_basis": "月はなかった"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001801_001786:s1",
+    "elapsed_sec": 5.277,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E03\", \"basis\": \"あなたは、自殺するつもりですか？\"},\n    {\"code\": \"E15\", \"basis\": \"ちがいます。親父がぼくにいったんです。\"},\n    {\"code\": \"E06\", \"basis\": \"死にました。去年\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M04\", \"basis\": \"死にました。去年\"},\n    {\"code\": \"M11\", \"basis\": \"あなたは、自殺するつもりですか？\"},\n    {\"code\": \"M14\", \"basis\": \"親父がぼくにいったんです。\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"死にました。去年\",\n    \"f_basis\": \"ただ、なんとなく女を自分とつなぎとめておきたかったのかもしれない。\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1582,
+    "eval_count": 235,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "あなたは、自殺するつもりですか？"
+        },
+        {
+          "code": "E15",
+          "basis": "ちがいます。親父がぼくにいったんです。"
+        },
+        {
+          "code": "E06",
+          "basis": "死にました。去年"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "死にました。去年"
+        },
+        {
+          "code": "M11",
+          "basis": "あなたは、自殺するつもりですか？"
+        },
+        {
+          "code": "M14",
+          "basis": "親父がぼくにいったんです。"
+        }
+      ],
+      "awase": {
+        "F_basis": "死にました。去年",
+        "f_basis": "ただ、なんとなく女を自分とつなぎとめておきたかったのかもしれない。"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001801_001786:s2",
+    "elapsed_sec": 5.932,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E04\",\n      \"basis\": \"怒ったような目つき\"\n    },\n    {\n      \"code\": \"E01\",\n      \"basis\": \"女の顔に夜光虫の緑の燐光が照って\"\n    },\n    {\n      \"code\": \"E16\",\n      \"basis\": \"そのままゆっくりと引きかえした\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M04\",\n      \"basis\": \"哀愁・無常・喪失感\"\n    },\n    {\n      \"code\": \"M02\",\n      \"basis\": \"真暗な夜\"\n    },\n    {\n      \"code\": \"M09\",\n      \"basis\": \"怒ったような目つき\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"自殺したんです\",\n    \"f_basis\": \"真暗な夜の中で、ただ夜光虫だけが彼につづき、波間にあざやかに濡れた色の燐光を散らしていた\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1197,
+    "eval_count": 278,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M04",
+          "basis": "哀愁・無常・喪失感"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E04",
+          "basis": "怒ったような目つき"
+        },
+        {
+          "code": "E01",
+          "basis": "女の顔に夜光虫の緑の燐光が照って"
+        },
+        {
+          "code": "E16",
+          "basis": "そのままゆっくりと引きかえした"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "哀愁・無常・喪失感"
+        },
+        {
+          "code": "M02",
+          "basis": "真暗な夜"
+        },
+        {
+          "code": "M09",
+          "basis": "怒ったような目つき"
+        }
+      ],
+      "awase": {
+        "F_basis": "自殺したんです",
+        "f_basis": "真暗な夜の中で、ただ夜光虫だけが彼につづき、波間にあざやかに濡れた色の燐光を散らしていた"
+      }
+    },
+    "schema_errors": []
+  }
+]

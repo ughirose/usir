@@ -1,0 +1,409 @@
+[
+  {
+    "scene_id": "000035_000301:s0",
+    "elapsed_sec": 7.655,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E06\",\n      \"basis\": \"死ぬ事にしました\"\n    },\n    {\n      \"code\": \"E14\",\n      \"basis\": \"逃げました\"\n    },\n    {\n      \"code\": \"E09\",\n      \"basis\": \"運動の用事が、とても遊び半分の気持では出来ないくらい、はげしく、いそがしくなって来た\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M04\",\n      \"basis\": \"自分は、下宿のその部屋に、ひとりでじっとしているのが、おそろしく、いまにも誰かに襲われ、一撃せられるような気がして来て\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"孤独\"\n    },\n    {\n      \"code\": \"M09\",\n      \"basis\": \"憎悪\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -2,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"死ぬ事にしました\",\n    \"f_basis\": \"自分は、下宿のその部屋に、ひとりでじっとしているのが、おそろしく、いまにも誰かに襲われ、一撃せられるような気がして来て\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1724,
+    "eval_count": 314,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "孤独"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M09",
+          "basis": "憎悪"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E06",
+          "basis": "死ぬ事にしました"
+        },
+        {
+          "code": "E14",
+          "basis": "逃げました"
+        },
+        {
+          "code": "E09",
+          "basis": "運動の用事が、とても遊び半分の気持では出来ないくらい、はげしく、いそがしくなって来た"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "自分は、下宿のその部屋に、ひとりでじっとしているのが、おそろしく、いまにも誰かに襲われ、一撃せられるような気がして来て"
+        },
+        {
+          "code": "M11",
+          "basis": "孤独"
+        },
+        {
+          "code": "M09",
+          "basis": "憎悪"
+        }
+      ],
+      "awase": {
+        "F_basis": "死ぬ事にしました",
+        "f_basis": "自分は、下宿のその部屋に、ひとりでじっとしているのが、おそろしく、いまにも誰かに襲われ、一撃せられるような気がして来て"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s1",
+    "elapsed_sec": 6.308,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E03\",\n      \"basis\": \"「あら、いやだ。あなたでしょう？」\"\n    },\n    {\n      \"code\": \"E09\",\n      \"basis\": \"用箋と万年筆を持って自分の部屋にやって来て、\"\n    },\n    {\n      \"code\": \"E11\",\n      \"basis\": \"女から来たラヴ・レター\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M11\",\n      \"basis\": \"へへののもへじでも書いているのに違いないんです\"\n    },\n    {\n      \"code\": \"M08\",\n      \"basis\": \"くたくたに疲れ切っているからだに\"\n    },\n    {\n      \"code\": \"M03\",\n      \"basis\": \"早くこのひと、帰らねえかなあ\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"女から来たラヴ・レター\",\n    \"f_basis\": \"へへののもへじでも書いているのに違いないんです\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1545,
+    "eval_count": 277,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "「あら、いやだ。あなたでしょう？」"
+        },
+        {
+          "code": "E09",
+          "basis": "用箋と万年筆を持って自分の部屋にやって来て、"
+        },
+        {
+          "code": "E11",
+          "basis": "女から来たラヴ・レター"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M11",
+          "basis": "へへののもへじでも書いているのに違いないんです"
+        },
+        {
+          "code": "M08",
+          "basis": "くたくたに疲れ切っているからだに"
+        },
+        {
+          "code": "M03",
+          "basis": "早くこのひと、帰らねえかなあ"
+        }
+      ],
+      "awase": {
+        "F_basis": "女から来たラヴ・レター",
+        "f_basis": "へへののもへじでも書いているのに違いないんです"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s2",
+    "elapsed_sec": 6.405,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E03\",\n      \"basis\": \"ものを買ってくれのでした\"\n    },\n    {\n      \"code\": \"E14\",\n      \"basis\": \"ずるずるに、れいの不安の心から、この二人のご機嫌をただ懸命に取り結び\"\n    },\n    {\n      \"code\": \"E11\",\n      \"basis\": \"そのひとに帰ってもらいたいばかりに、キスをしてやりましたら\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M04\",\n      \"basis\": \"愁えを含んだ微笑の表情\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"孤独・疎外・寂寥\"\n    },\n    {\n      \"code\": \"M09\",\n      \"basis\": \"憎悪・殺気\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"愁えを含んだ微笑の表情\",\n    \"f_basis\": \"愁えを含んだ微笑の表情\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1863,
+    "eval_count": 279,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E03",
+          "basis": "ものを買ってくれのでした"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "孤独・疎外・寂寥"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M09",
+          "basis": "憎悪・殺気"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "ものを買ってくれのでした"
+        },
+        {
+          "code": "E14",
+          "basis": "ずるずるに、れいの不安の心から、この二人のご機嫌をただ懸命に取り結び"
+        },
+        {
+          "code": "E11",
+          "basis": "そのひとに帰ってもらいたいばかりに、キスをしてやりましたら"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "愁えを含んだ微笑の表情"
+        },
+        {
+          "code": "M11",
+          "basis": "孤独・疎外・寂寥"
+        },
+        {
+          "code": "M09",
+          "basis": "憎悪・殺気"
+        }
+      ],
+      "awase": {
+        "F_basis": "愁えを含んだ微笑の表情",
+        "f_basis": "愁えを含んだ微笑の表情"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s3",
+    "elapsed_sec": 5.686,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E03\",\n      \"basis\": \"心配要りません\"\n    },\n    {\n      \"code\": \"E09\",\n      \"basis\": \"お酒を飲みました\"\n    },\n    {\n      \"code\": \"E10\",\n      \"basis\": \"さまざまの料理を自分の前に並べました\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M02\",\n      \"basis\": \"どこかに関西の訛り\"\n    },\n    {\n      \"code\": \"M08\",\n      \"basis\": \"無口で陰惨なところ\"\n    },\n    {\n      \"code\": \"M04\",\n      \"basis\": \"情死の相手の名前をさえ忘れている\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"心配要りません\",\n    \"f_basis\": \"無口で陰惨なところ\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1600,
+    "eval_count": 250,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "心配要りません"
+        },
+        {
+          "code": "E09",
+          "basis": "お酒を飲みました"
+        },
+        {
+          "code": "E10",
+          "basis": "さまざまの料理を自分の前に並べました"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M02",
+          "basis": "どこかに関西の訛り"
+        },
+        {
+          "code": "M08",
+          "basis": "無口で陰惨なところ"
+        },
+        {
+          "code": "M04",
+          "basis": "情死の相手の名前をさえ忘れている"
+        }
+      ],
+      "awase": {
+        "F_basis": "心配要りません",
+        "f_basis": "無口で陰惨なところ"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s4",
+    "elapsed_sec": 9.413,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E09\",\n      \"basis\": \"日頃の自分の陰鬱な心を少しもかくさず、ひどい歯痛に襲われてでもいるように、片手で頬をおさえながら、お茶を飲みました\"\n    },\n    {\n      \"code\": \"E11\",\n      \"basis\": \"一緒にやすみながらそのひとは、自分より二つ年上であること、故郷は広島、あたしには主人があるのよ\"\n    },\n    {\n      \"code\": \"E04\",\n      \"basis\": \"女の身の上噺というものには、少しも興味を持てないたちで、それは女の語り方の下手なせいか、つまり、話の重点の置き方を間違っているせいなのか、とにかく、自分には、つねに、馬耳東風\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M08\",\n      \"basis\": \"侘びしい\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"完全に孤立している感じの女\"\n    },\n    {\n      \"code\": \"M04\",\n      \"basis\": \"無言のひどい侘びしさを、からだの外郭に、一寸くらいの幅の気流みたいに持っていて\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"女の身の上噺というものには、少しも興味を持てないたちで、それは女の語り方の下手なせいか、つまり、話の重点の置き方を間違っているせいなのか、とにかく、自分には、つねに、馬耳東風\",\n    \"f_basis\": \"侘びしい\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1578,
+    "eval_count": 431,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E09",
+          "basis": "日頃の自分の陰鬱な心を少しもかくさず、ひどい歯痛に襲われてでもいるように、片手で頬をおさえながら、お茶を飲みました"
+        },
+        {
+          "code": "E11",
+          "basis": "一緒にやすみながらそのひとは、自分より二つ年上であること、故郷は広島、あたしには主人があるのよ"
+        },
+        {
+          "code": "E04",
+          "basis": "女の身の上噺というものには、少しも興味を持てないたちで、それは女の語り方の下手なせいか、つまり、話の重点の置き方を間違っているせいなのか、とにかく、自分には、つねに、馬耳東風"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M08",
+          "basis": "侘びしい"
+        },
+        {
+          "code": "M11",
+          "basis": "完全に孤立している感じの女"
+        },
+        {
+          "code": "M04",
+          "basis": "無言のひどい侘びしさを、からだの外郭に、一寸くらいの幅の気流みたいに持っていて"
+        }
+      ],
+      "awase": {
+        "F_basis": "女の身の上噺というものには、少しも興味を持てないたちで、それは女の語り方の下手なせいか、つまり、話の重点の置き方を間違っているせいなのか、とにかく、自分には、つねに、馬耳東風",
+        "f_basis": "侘びしい"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s5",
+    "elapsed_sec": 7.287,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E03\",\n      \"basis\": \"「金の切れめが縁の切れめ、ってのはね、あれはね、解釈が逆なんだ。」\"\n    },\n    {\n      \"code\": \"E16\",\n      \"basis\": \"朝、眼が覚めて、はね起き、自分はもとの軽薄な、装えるお道化者になっていました。\"\n    },\n    {\n      \"code\": \"E14\",\n      \"basis\": \"長居は無用、おそれありと、顔も洗わずに素早く引上げた\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M08\",\n      \"basis\": \"弱虫は、幸福をさえおそれるものです。\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"孤独・疎外・寂寥\"\n    },\n    {\n      \"code\": \"M14\",\n      \"basis\": \"決意・凛然・緊張\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"幸福に傷つけられる事もあるんです。\",\n    \"f_basis\": \"金の切れめが縁の切れめ、ってのはね、あれはね、解釈が逆なんだ。\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1503,
+    "eval_count": 333,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E03",
+          "basis": "「金の切れめが縁の切れめ、ってのはね、あれはね、解釈が逆なんだ。」"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "孤独・疎外・寂寥"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M14",
+          "basis": "決意・凛然・緊張"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "「金の切れめが縁の切れめ、ってのはね、あれはね、解釈が逆なんだ。」"
+        },
+        {
+          "code": "E16",
+          "basis": "朝、眼が覚めて、はね起き、自分はもとの軽薄な、装えるお道化者になっていました。"
+        },
+        {
+          "code": "E14",
+          "basis": "長居は無用、おそれありと、顔も洗わずに素早く引上げた"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M08",
+          "basis": "弱虫は、幸福をさえおそれるものです。"
+        },
+        {
+          "code": "M11",
+          "basis": "孤独・疎外・寂寥"
+        },
+        {
+          "code": "M14",
+          "basis": "決意・凛然・緊張"
+        }
+      ],
+      "awase": {
+        "F_basis": "幸福に傷つけられる事もあるんです。",
+        "f_basis": "金の切れめが縁の切れめ、ってのはね、あれはね、解釈が逆なんだ。"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000035_000301:s6",
+    "elapsed_sec": 4.209,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E02\", \"basis\": \"逢いませんでした\"},\n    {\"code\": \"E14\", \"basis\": \"敬遠の形\"},\n    {\"code\": \"E16\", \"basis\": \"おっくうがる\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M11\", \"basis\": \"孤独\"},\n    {\"code\": \"M08\", \"basis\": \"倦怠\"},\n    {\"code\": \"M14\", \"basis\": \"決意\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"おびえていて\",\n    \"f_basis\": \"敬遠の形\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1494,
+    "eval_count": 188,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "孤独"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M08",
+          "basis": "倦怠"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M14",
+          "basis": "決意"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "逢いませんでした"
+        },
+        {
+          "code": "E14",
+          "basis": "敬遠の形"
+        },
+        {
+          "code": "E16",
+          "basis": "おっくうがる"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M11",
+          "basis": "孤独"
+        },
+        {
+          "code": "M08",
+          "basis": "倦怠"
+        },
+        {
+          "code": "M14",
+          "basis": "決意"
+        }
+      ],
+      "awase": {
+        "F_basis": "おびえていて",
+        "f_basis": "敬遠の形"
+      }
+    },
+    "schema_errors": []
+  }
+]

@@ -1,0 +1,302 @@
+[
+  {
+    "scene_id": "000050_003586:s0",
+    "elapsed_sec": 7.202,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E02\",\n      \"basis\": \"鎌倉は通越して、藤沢まで今日の内に出よう\"\n    },\n    {\n      \"code\": \"E03\",\n      \"basis\": \"「よう御存じでござりますの。」\"\n    },\n    {\n      \"code\": \"E15\",\n      \"basis\": \"いや、どういたして、忝い。私は尊いお説教を聴問したような心持じゃ\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M14\",\n      \"basis\": \"修業が足りんで、樹下、石上、野宿も辛し\"\n    },\n    {\n      \"code\": \"M10\",\n      \"basis\": \"私は尊いお説教を聴問したような心持じゃ\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"いつとなく、仏の御名を唱えるのにも遠ざかって\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 0,\n    \"F_basis\": \"鎌倉まで行きましょうよ。\",\n    \"f_basis\": \"修業が足りんで、樹下、石上、野宿も辛し\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1630,
+    "eval_count": 324,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "鎌倉は通越して、藤沢まで今日の内に出よう"
+        },
+        {
+          "code": "E03",
+          "basis": "「よう御存じでござりますの。」"
+        },
+        {
+          "code": "E15",
+          "basis": "いや、どういたして、忝い。私は尊いお説教を聴問したような心持じゃ"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M14",
+          "basis": "修業が足りんで、樹下、石上、野宿も辛し"
+        },
+        {
+          "code": "M10",
+          "basis": "私は尊いお説教を聴問したような心持じゃ"
+        },
+        {
+          "code": "M11",
+          "basis": "いつとなく、仏の御名を唱えるのにも遠ざかって"
+        }
+      ],
+      "awase": {
+        "F_basis": "鎌倉まで行きましょうよ。",
+        "f_basis": "修業が足りんで、樹下、石上、野宿も辛し"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000050_003586:s1",
+    "elapsed_sec": 5.185,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E03\",\n      \"basis\": \"話を聞く\"\n    },\n    {\n      \"code\": \"E16\",\n      \"basis\": \"待ち\"\n    },\n    {\n      \"code\": \"E08\",\n      \"basis\": \"邪魔になっては、という遠慮か\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M04\",\n      \"basis\": \"気が沈んで\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"孤独\"\n    },\n    {\n      \"code\": \"M02\",\n      \"basis\": \"薄暮\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"気が沈んで\",\n    \"f_basis\": \"黒門の別荘とやらの、話を聞くと引入れられて\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1614,
+    "eval_count": 230,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E16",
+          "basis": "待ち"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "孤独"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M02",
+          "basis": "薄暮"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "話を聞く"
+        },
+        {
+          "code": "E16",
+          "basis": "待ち"
+        },
+        {
+          "code": "E08",
+          "basis": "邪魔になっては、という遠慮か"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "気が沈んで"
+        },
+        {
+          "code": "M11",
+          "basis": "孤独"
+        },
+        {
+          "code": "M02",
+          "basis": "薄暮"
+        }
+      ],
+      "awase": {
+        "F_basis": "気が沈んで",
+        "f_basis": "黒門の別荘とやらの、話を聞くと引入れられて"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000050_003586:s2",
+    "elapsed_sec": 7.117,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E01\",\n      \"basis\": \"鶴谷が下男、苦虫の仁右衛門親仁\"\n    },\n    {\n      \"code\": \"E03\",\n      \"basis\": \"「なあよ、宰八、」\\n「やあ、」\"\n    },\n    {\n      \"code\": \"E09\",\n      \"basis\": \"手ぼう蟹は、夥間の穴の上を冷飯草履、両足をしゃちこばらせて\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M02\",\n      \"basis\": \"山際薄く、流が白い\"\n    },\n    {\n      \"code\": \"M08\",\n      \"basis\": \"一人が留まれば皆留まった\"\n    },\n    {\n      \"code\": \"M14\",\n      \"basis\": \"見馴れねえ旅の書生さんじゃ\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": -1,\n    \"F_basis\": \"黒門に逗留してござらしゃる少え人\",\n    \"f_basis\": \"この川は音もなく、霞のように、どんよりと青田の村を這うのである\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1726,
+    "eval_count": 318,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E01",
+          "basis": "鶴谷が下男、苦虫の仁右衛門親仁"
+        },
+        {
+          "code": "E03",
+          "basis": "「なあよ、宰八、」\n「やあ、」"
+        },
+        {
+          "code": "E09",
+          "basis": "手ぼう蟹は、夥間の穴の上を冷飯草履、両足をしゃちこばらせて"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M02",
+          "basis": "山際薄く、流が白い"
+        },
+        {
+          "code": "M08",
+          "basis": "一人が留まれば皆留まった"
+        },
+        {
+          "code": "M14",
+          "basis": "見馴れねえ旅の書生さんじゃ"
+        }
+      ],
+      "awase": {
+        "F_basis": "黒門に逗留してござらしゃる少え人",
+        "f_basis": "この川は音もなく、霞のように、どんよりと青田の村を這うのである"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000050_003586:s3",
+    "elapsed_sec": 5.117,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E05\", \"basis\": \"川の中へ飛込んだっけ\"},\n    {\"code\": \"E14\", \"basis\": \"追chandle\"},\n    {\"code\": \"E10\", \"basis\": \"茶漬え掻食う\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M09\", \"basis\": \"殺気\"},\n    {\"code\": \"M12\", \"basis\": \"熱狂\"},\n    {\"code\": \"M02\", \"basis\": \"薄暮\"}\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 2,\n    \"f_valence\": -1,\n    \"f_arousal\": 1,\n    \"F_basis\": \"手毬を拾うと、その下に、猫が一匹居たではねえかね\",\n    \"f_basis\": \"草鞋がけじゃで、近辺の人ではねえ\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1622,
+    "eval_count": 222,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E14",
+          "basis": "追chandle"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M09",
+          "basis": "殺気"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M12",
+          "basis": "熱狂"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M02",
+          "basis": "薄暮"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E05",
+          "basis": "川の中へ飛込んだっけ"
+        },
+        {
+          "code": "E14",
+          "basis": "追chandle"
+        },
+        {
+          "code": "E10",
+          "basis": "茶漬え掻食う"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M09",
+          "basis": "殺気"
+        },
+        {
+          "code": "M12",
+          "basis": "熱狂"
+        },
+        {
+          "code": "M02",
+          "basis": "薄暮"
+        }
+      ],
+      "awase": {
+        "F_basis": "手毬を拾うと、その下に、猫が一匹居たではねえかね",
+        "f_basis": "草鞋がけじゃで、近辺の人ではねえ"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "000050_003586:s4",
+    "elapsed_sec": 5.443,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E03\", \"basis\": \"「可い加減な事を云う、狂気の嘉吉以来だ。お前は悪く変なものに知己のように話をするが、水潜りをするなんて、猫化けの怪談にも、ついに聞いた事はないじゃないか。」\"},\n    {\"code\": \"E16\", \"basis\": \"訓導は打棄るように、\"},\n    {\"code\": \"E11\", \"basis\": \"活きた猫なら秋谷中私ら知己だ\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M04\", \"basis\": \"狂気の嘉吉以来\"},\n    {\"code\": \"M11\", \"basis\": \"孤独\"},\n    {\"code\": \"M09\", \"basis\": \"憎悪\"}\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"狂気の嘉吉以来\",\n    \"f_basis\": \"苦笑いして\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1212,
+    "eval_count": 253,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "孤独"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M09",
+          "basis": "憎悪"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "「可い加減な事を云う、狂気の嘉吉以来だ。お前は悪く変なものに知己のように話をするが、水潜りをするなんて、猫化けの怪談にも、ついに聞いた事はないじゃないか。」"
+        },
+        {
+          "code": "E16",
+          "basis": "訓導は打棄るように、"
+        },
+        {
+          "code": "E11",
+          "basis": "活きた猫なら秋谷中私ら知己だ"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "狂気の嘉吉以来"
+        },
+        {
+          "code": "M11",
+          "basis": "孤独"
+        },
+        {
+          "code": "M09",
+          "basis": "憎悪"
+        }
+      ],
+      "awase": {
+        "F_basis": "狂気の嘉吉以来",
+        "f_basis": "苦笑いして"
+      }
+    },
+    "schema_errors": []
+  }
+]
