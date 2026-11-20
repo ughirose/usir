@@ -1,0 +1,576 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001801_001786:s0",
+      "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+      "work_id": "001801_001786",
+      "scene_index": 0,
+      "scene_count": 3,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 766,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "explicit",
+        "explicit_time": "深夜"
+      },
+      "location_id": "海",
+      "present_character_ids": [
+        "shinichi",
+        "onna"
+      ],
+      "pov_character": "shinichi",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E01",
+            "rank_weight": 3
+          },
+          {
+            "code": "E03",
+            "rank_weight": 2
+          },
+          {
+            "code": "E07",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M01",
+            "rank_weight": 3
+          },
+          {
+            "code": "M07",
+            "rank_weight": 2
+          },
+          {
+            "code": "M11",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 1,
+        "f_style_valence": 1,
+        "f_style_arousal": -1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "onna",
+        "addressee_id": null,
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 8,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 9,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 10,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "onna",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "shinichi",
+        "predicate": "MOVED_TO",
+        "object": "沖",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "泳いでいる女は昼にスポーツ・カーで来た女",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "shinichi",
+        "predicate": "MOVED_TO",
+        "object": "女のそば",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "女が深夜の海を泳ぐ理由",
+        "evidence": "inferred"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001801_001786:s1",
+      "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+      "work_id": "001801_001786",
+      "scene_index": 1,
+      "scene_count": 3,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 818,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "shinichi",
+        "onna"
+      ],
+      "pov_character": "shinichi",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E06",
+            "rank_weight": 2
+          },
+          {
+            "code": "E04",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M04",
+            "rank_weight": 3
+          },
+          {
+            "code": "M11",
+            "rank_weight": 2
+          },
+          {
+            "code": "M01",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -2,
+        "f_event_arousal": 1,
+        "f_style_valence": -1,
+        "f_style_arousal": -1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "ぼく"
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 8,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 9,
+        "speaker_id": "onna",
+        "addressee_id": "shinichi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "私"
+        }
+      },
+      {
+        "utterance_index": 10,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "ぼく"
+        }
+      },
+      {
+        "utterance_index": 11,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "onna",
+        "values_6d": [
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "女は自殺するつもりらしい",
+        "evidence": "inferred"
+      },
+      {
+        "subject": "onna",
+        "predicate": "LEARNED",
+        "object": "慎一の父は去年死んだ",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "女は死ぬのか",
+        "evidence": "inferred"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001801_001786:s2",
+      "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+      "work_id": "001801_001786",
+      "scene_index": 2,
+      "scene_count": 3,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 215,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "沖",
+      "present_character_ids": [
+        "shinichi",
+        "onna"
+      ],
+      "pov_character": "shinichi",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E06",
+            "rank_weight": 3
+          },
+          {
+            "code": "E02",
+            "rank_weight": 2
+          },
+          {
+            "code": "E03",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M04",
+            "rank_weight": 3
+          },
+          {
+            "code": "M01",
+            "rank_weight": 2
+          },
+          {
+            "code": "M07",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -2,
+        "f_event_arousal": 0,
+        "f_style_valence": -1,
+        "f_style_arousal": -1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "shinichi",
+        "addressee_id": "onna",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": "ぼく"
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "onna",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "onna",
+        "predicate": "LEARNED",
+        "object": "慎一の父も自殺した",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "shinichi",
+        "predicate": "MOVED_TO",
+        "object": "岸",
+        "evidence": "explicit"
+      }
+    ]
+  }
+]

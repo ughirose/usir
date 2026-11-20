@@ -1,0 +1,834 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000050_003586:s0",
+      "scene_hash": "eedea534018521db6c65558ec55160682ae1f2286dbe8a53b8d1e20395ac34f1",
+      "work_id": "000050_003586",
+      "scene_index": 0,
+      "scene_count": 5,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 753,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "explicit",
+        "explicit_time": "今日の内"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "tabiso",
+        "uba"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E02",
+            "rank_weight": 2
+          },
+          {
+            "code": "E07",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M05",
+            "rank_weight": 3
+          },
+          {
+            "code": "M02",
+            "rank_weight": 2
+          },
+          {
+            "code": "M10",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 1,
+        "f_event_arousal": 0,
+        "f_style_valence": 1,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "tabiso",
+        "addressee_id": "uba",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "uba",
+        "addressee_id": "tabiso",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "tabiso",
+        "addressee_id": "uba",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "tabiso",
+        "addressee_id": "uba",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "uba",
+        "addressee_id": "tabiso",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "tabiso",
+        "addressee_id": "uba",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "私"
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "tabiso",
+        "values_6d": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "uba",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "tabiso",
+        "predicate": "MOVED_TO",
+        "object": "鎌倉",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "tabiso",
+        "predicate": "LEARNED",
+        "object": "浪打際に子産石という名所がある",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "tabiso",
+        "predicate": "STATE_CHANGED",
+        "object": "嘉吉の話を聞いて悚気とした",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000050_003586:s1",
+      "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+      "work_id": "000050_003586",
+      "scene_index": 1,
+      "scene_count": 5,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 747,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "tabiso",
+        "uba"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E15",
+            "rank_weight": 2
+          },
+          {
+            "code": "E13",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M04",
+            "rank_weight": 3
+          },
+          {
+            "code": "M10",
+            "rank_weight": 2
+          },
+          {
+            "code": "M05",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 1,
+        "f_event_arousal": 0,
+        "f_style_valence": 0,
+        "f_style_arousal": -1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "uba",
+        "addressee_id": "tabiso",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "uba",
+        "addressee_id": "tabiso",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "uba",
+        "addressee_id": "tabiso",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "tabiso",
+        "values_6d": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "uba",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "tabiso",
+        "predicate": "STATE_CHANGED",
+        "object": "しんみりと真心から念仏の声が出た",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "tabiso",
+        "predicate": "LEARNED",
+        "object": "黒門の別荘の若い人たちの話",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "黒門の別宅での回向の依頼",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000050_003586:s2",
+      "scene_hash": "a916f16cb460d86cd421690fc1a2d194efd17051e0701c821a7a4237ac3e432e",
+      "work_id": "000050_003586",
+      "scene_index": 2,
+      "scene_count": 5,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 812,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "parallel",
+        "evidence": "explicit",
+        "explicit_time": "秋谷の夜"
+      },
+      "location_id": "小川べり",
+      "present_character_ids": [
+        "niemon",
+        "saihachi",
+        "kundo"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E02",
+            "rank_weight": 2
+          },
+          {
+            "code": "E07",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M02",
+            "rank_weight": 3
+          },
+          {
+            "code": "M07",
+            "rank_weight": 2
+          },
+          {
+            "code": "M05",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 0,
+        "f_style_valence": -1,
+        "f_style_arousal": -1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "niemon",
+        "addressee_id": "saihachi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "saihachi",
+        "addressee_id": "niemon",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "niemon",
+        "addressee_id": "saihachi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "saihachi",
+        "addressee_id": "niemon",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "niemon",
+        "addressee_id": "saihachi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "saihachi",
+        "addressee_id": "niemon",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "saihachi",
+        "addressee_id": "niemon",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "saihachi",
+        "addressee_id": "niemon",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 8,
+        "speaker_id": "niemon",
+        "addressee_id": "saihachi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 9,
+        "speaker_id": "kundo",
+        "addressee_id": "saihachi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 10,
+        "speaker_id": "kundo",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 11,
+        "speaker_id": "saihachi",
+        "addressee_id": "niemon",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "niemon",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "saihachi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "kundo",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "saihachi",
+        "predicate": "MOVED_TO",
+        "object": "手毬を拾った場所(猫柳の根際)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "旅の書生が川で手毬を拾った奇妙な出来事",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000050_003586:s3",
+      "scene_hash": "31b1e1a02b1cfa864ab8b0f347fcb29966ff5970d7095348608392adbb6b0bc5",
+      "work_id": "000050_003586",
+      "scene_index": 3,
+      "scene_count": 5,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 703,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "川面",
+      "present_character_ids": [
+        "saihachi",
+        "niemon",
+        "kundo"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E14",
+            "rank_weight": 3
+          },
+          {
+            "code": "E07",
+            "rank_weight": 2
+          },
+          {
+            "code": "E03",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M07",
+            "rank_weight": 3
+          },
+          {
+            "code": "M02",
+            "rank_weight": 2
+          },
+          {
+            "code": "M05",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 1,
+        "f_style_valence": -1,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "saihachi",
+        "addressee_id": "niemon",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "私"
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "saihachi",
+        "addressee_id": "niemon",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "saihachi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "niemon",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "kundo",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": null,
+        "predicate": "ACQUIRED",
+        "object": "手毬(旅の書生が川の中で取る)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "手毬の下に猫が居た",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000050_003586:s4",
+      "scene_hash": "b8af8bf58f45da2fcda80a54d0d1cba51a5008dc0841c1cd0b8bfe46ce4cfca9",
+      "work_id": "000050_003586",
+      "scene_index": 4,
+      "scene_count": 5,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 211,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "kundo",
+        "saihachi",
+        "niemon"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E07",
+            "rank_weight": 2
+          },
+          {
+            "code": "E04",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M07",
+            "rank_weight": 3
+          },
+          {
+            "code": "M05",
+            "rank_weight": 2
+          },
+          {
+            "code": "M16",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 0,
+        "f_style_valence": -1,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "kundo",
+        "addressee_id": "saihachi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "saihachi",
+        "addressee_id": "kundo",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "私"
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "kundo",
+        "addressee_id": "saihachi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "kundo",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "saihachi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "niemon",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "kundo",
+        "predicate": "LEARNED",
+        "object": "手毬の下の猫は水ひたしの死骸だった",
+        "evidence": "explicit"
+      }
+    ]
+  }
+]

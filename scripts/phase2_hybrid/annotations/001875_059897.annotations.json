@@ -1,0 +1,836 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001875_059897:s0",
+      "scene_hash": "f6d7af0927c2c4c128304e9f08826aaec7c1399e3ff3754abce2e13cbf18ddfb",
+      "work_id": "001875_059897",
+      "scene_index": 0,
+      "scene_count": 4,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 821,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "explicit",
+        "explicit_time": "一か月目ぐらい"
+      },
+      "location_id": "安江の家",
+      "present_character_ids": [
+        "yasue",
+        "otoe",
+        "heiroku",
+        "susumu"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E01",
+            "rank_weight": 3
+          },
+          {
+            "code": "E03",
+            "rank_weight": 2
+          },
+          {
+            "code": "E15",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M05",
+            "rank_weight": 3
+          },
+          {
+            "code": "M04",
+            "rank_weight": 2
+          },
+          {
+            "code": "M10",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 0,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "heiroku",
+        "addressee_id": "yasue",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "heiroku",
+        "addressee_id": "yasue",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "yasue",
+        "addressee_id": "heiroku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "heiroku",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "yasue",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "heiroku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "otoe",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "susumu",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "yasue",
+        "predicate": "ACQUIRED",
+        "object": "赤ん坊(夏樹)の預かり",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "yasue",
+        "predicate": "MOVED_TO",
+        "object": "安江の家(帰宅)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "MOVED_TO",
+        "object": "安江の家",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001875_059897:s1",
+      "scene_hash": "08ec58f6ba2228b78deb8873b08d5f4658cea9ebe819e80a3d5e0549da5a2174",
+      "work_id": "001875_059897",
+      "scene_index": 1,
+      "scene_count": 4,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 977,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred",
+        "elapsed_hint": "そのあとしばらく"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yasue",
+        "heiroku",
+        "otoe",
+        "bunkichi"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E08",
+            "rank_weight": 2
+          },
+          {
+            "code": "E15",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M05",
+            "rank_weight": 3
+          },
+          {
+            "code": "M10",
+            "rank_weight": 2
+          },
+          {
+            "code": "M03",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 1,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "yasue",
+        "addressee_id": "heiroku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "yasue",
+        "addressee_id": "heiroku",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "heiroku",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "otoe",
+        "addressee_id": "yasue",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "bunkichi",
+        "addressee_id": "yasue",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": "おれ"
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "yasue",
+        "addressee_id": "bunkichi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "bunkichi",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "yasue",
+        "addressee_id": "bunkichi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 8,
+        "speaker_id": "bunkichi",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 9,
+        "speaker_id": "yasue",
+        "addressee_id": "bunkichi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 10,
+        "speaker_id": "bunkichi",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 11,
+        "speaker_id": "yasue",
+        "addressee_id": "bunkichi",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "わたし"
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "heiroku",
+        "values_6d": [
+          0,
+          -1,
+          -1,
+          -1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "yasue",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "bunkichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "otoe",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "bunkichi",
+        "predicate": "LOST",
+        "object": "二千円(兵六への貸金)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "bunkichi",
+        "predicate": "ACQUIRED",
+        "object": "二百円(利子名目の返済)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "yasue",
+        "predicate": "LEARNED",
+        "object": "文吉が兵六に二千円を貸した",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "STATE_CHANGED",
+        "object": "食糧統制違反で新聞に出た",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "STATE_CHANGED",
+        "object": "家に来なくなった",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "進君の部屋の権利金を安江が夫に隠している",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001875_059897:s2",
+      "scene_hash": "f6bb4a8cd076d8932f313a5377a7aab0bd3939d5dcf72046e618a060e7107ad6",
+      "work_id": "001875_059897",
+      "scene_index": 2,
+      "scene_count": 4,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 751,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yasue",
+        "otoe",
+        "susumu"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E08",
+            "rank_weight": 3
+          },
+          {
+            "code": "E03",
+            "rank_weight": 2
+          },
+          {
+            "code": "E15",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M05",
+            "rank_weight": 3
+          },
+          {
+            "code": "M10",
+            "rank_weight": 2
+          },
+          {
+            "code": "M04",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 0,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "otoe",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "yasue",
+        "addressee_id": "otoe",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "わたし"
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "otoe",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "わたし"
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "yasue",
+        "addressee_id": "otoe",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "わたし"
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "otoe",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "otoe",
+        "addressee_id": "yasue",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "yasue",
+        "addressee_id": "otoe",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "わたし"
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "otoe",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 8,
+        "speaker_id": "yasue",
+        "addressee_id": "otoe",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "yasue",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          -1
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "otoe",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "susumu",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "bunkichi",
+        "values_6d": [
+          0,
+          0,
+          -1,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "bunkichi",
+        "predicate": "LOST",
+        "object": "三千円(兵六への貸金)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "yasue",
+        "predicate": "LEARNED",
+        "object": "進君の生活費が兵六に預けられたまま渡されていない",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "yasue",
+        "predicate": "LOST",
+        "object": "五百円(進君への貸し)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "susumu",
+        "predicate": "ACQUIRED",
+        "object": "五百円(借り)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "進君の預けた金が兵六から払われない",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001875_059897:s3",
+      "scene_hash": "7de1b26ff94b2389bbd6a6f211e27625359ea809b587b93a1595e3426c19953f",
+      "work_id": "001875_059897",
+      "scene_index": 3,
+      "scene_count": 4,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 247,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "きょう"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yasue",
+        "susumu"
+      ],
+      "pov_character": null,
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E15",
+            "rank_weight": 2
+          },
+          {
+            "code": "E16",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M10",
+            "rank_weight": 3
+          },
+          {
+            "code": "M14",
+            "rank_weight": 2
+          },
+          {
+            "code": "M04",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 0,
+        "f_style_valence": 1,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "yasue",
+        "addressee_id": "susumu",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "わたし"
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "susumu",
+        "addressee_id": "yasue",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": "ぼく"
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "yasue",
+        "addressee_id": "susumu",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "susumu",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "yasue",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "yasue",
+        "predicate": "LEARNED",
+        "object": "進君は兵六になかなか会えない",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "進君の新しい部屋を探す約束(ことしうち)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "susumu",
+        "predicate": "MOVED_TO",
+        "object": "兵六のところ",
+        "evidence": "inferred"
+      }
+    ]
+  }
+]

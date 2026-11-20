@@ -1,0 +1,724 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001798_056779:s0",
+      "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+      "work_id": "001798_056779",
+      "scene_index": 0,
+      "scene_count": 4,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 272,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "explicit",
+        "explicit_time": "三日目"
+      },
+      "location_id": "代田橋",
+      "present_character_ids": [
+        "boku",
+        "fuwa"
+      ],
+      "pov_character": "boku",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E10",
+            "rank_weight": 3
+          },
+          {
+            "code": "E13",
+            "rank_weight": 2
+          },
+          {
+            "code": "E02",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M05",
+            "rank_weight": 3
+          },
+          {
+            "code": "M12",
+            "rank_weight": 2
+          },
+          {
+            "code": "M10",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 1,
+        "f_event_arousal": 1,
+        "f_style_valence": 1,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "fuwa",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "boku",
+        "predicate": "MOVED_TO",
+        "object": "代田橋",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "不破宅の間借り(賃貸契約)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "boku",
+        "predicate": "LOST",
+        "object": "四万円",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "boku",
+        "predicate": "LEARNED",
+        "object": "不破夫人は亭主を上回る酒豪",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001798_056779:s1",
+      "scene_hash": "fcdf50e4188c3a30bd0d38145bf6b4feadbadc9d825b296fdbb6264ec1b3310e",
+      "work_id": "001798_056779",
+      "scene_index": 1,
+      "scene_count": 4,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 725,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "失踪の前の晩",
+        "elapsed_hint": "一週間目"
+      },
+      "location_id": "僕の部屋",
+      "present_character_ids": [
+        "boku",
+        "fuwa"
+      ],
+      "pov_character": "boku",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E14",
+            "rank_weight": 3
+          },
+          {
+            "code": "E03",
+            "rank_weight": 2
+          },
+          {
+            "code": "E08",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M05",
+            "rank_weight": 3
+          },
+          {
+            "code": "M04",
+            "rank_weight": 2
+          },
+          {
+            "code": "M16",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 0,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "boku",
+        "addressee_id": "fuwa",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "fuwa",
+        "addressee_id": "boku",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "僕"
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "fuwa",
+        "values_6d": [
+          0,
+          0,
+          -1,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "boku",
+        "predicate": "LOST",
+        "object": "二千円",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "boku",
+        "predicate": "LOST",
+        "object": "不破夫妻との同居生活",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "fuwa",
+        "predicate": "STATE_CHANGED",
+        "object": "失踪",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "fuwa",
+        "predicate": "MOVED_TO",
+        "object": "赤穂",
+        "evidence": "inferred"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "野呂が留守番に来る約束",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001798_056779:s2",
+      "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+      "work_id": "001798_056779",
+      "scene_index": 2,
+      "scene_count": 4,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 783,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "翌朝",
+        "elapsed_hint": "二三日経った正午頃"
+      },
+      "location_id": "板の間",
+      "present_character_ids": [
+        "boku",
+        "noro"
+      ],
+      "pov_character": "boku",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E04",
+            "rank_weight": 3
+          },
+          {
+            "code": "E01",
+            "rank_weight": 2
+          },
+          {
+            "code": "E07",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M05",
+            "rank_weight": 3
+          },
+          {
+            "code": "M03",
+            "rank_weight": 2
+          },
+          {
+            "code": "M09",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 1,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "fuwa",
+        "addressee_id": "boku",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 8,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 9,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 10,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 11,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 12,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 13,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 14,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "noro",
+        "values_6d": [
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "noro",
+        "predicate": "MOVED_TO",
+        "object": "不破の家(庭)",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "boku",
+        "predicate": "LEARNED",
+        "object": "野呂は家を買い受けたと主張している",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "noro",
+        "predicate": "LEARNED",
+        "object": "不破が兵庫に立った",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "家の所有権の食い違い",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "001798_056779:s3",
+      "scene_hash": "47832cad7d2ad96e5bcee822e7b1eadb98f04519e8ef15c1c64a6ba6f1e3dc10",
+      "work_id": "001798_056779",
+      "scene_index": 3,
+      "scene_count": 4,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 355,
+      "splitter_version": "usir_v5_splitter@1",
+      "ledger_hash": "gold-roster:hybrid-manual",
+      "prompt_hash": "manual:hybrid-full-run:v1"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "板の間",
+      "present_character_ids": [
+        "boku",
+        "noro"
+      ],
+      "pov_character": "boku",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E07",
+            "rank_weight": 3
+          },
+          {
+            "code": "E04",
+            "rank_weight": 2
+          },
+          {
+            "code": "E13",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M05",
+            "rank_weight": 3
+          },
+          {
+            "code": "M03",
+            "rank_weight": 2
+          },
+          {
+            "code": "M04",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 1,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": "僕"
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "boku",
+        "addressee_id": "noro",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "noro",
+        "addressee_id": "boku",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "boku",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "noro",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "boku",
+        "predicate": "LEARNED",
+        "object": "野呂も不破氏から家を買い受けた",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "noro",
+        "predicate": "STATE_CHANGED",
+        "object": "不安と困惑",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "不破数馬との売買をめぐる誤解",
+        "evidence": "explicit"
+      }
+    ]
+  }
+]
