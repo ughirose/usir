@@ -39,6 +39,7 @@ SYSTEM_PROMPT_NAGARE_AWASE_V1 = f"""あなたは小説の場面注釈器です�
    - arousal（覚醒度）: -2=極めて静か・沈静／-1=やや静か／0=中庸／+1=やや高ぶり／+2=激しい・高揚。
    - F_basis: F の根拠となる本文中の語句。f_basis: f の根拠となる本文中の語句（本文からそのまま抜く）。
 
+出力の順序（event・mood の各項目）: 先に basis（本文からコピーした語句）を書き、その語句が示す内容に合うコードを次に選ぶ。
 basis の規則（全項目共通）: 本文中に実在する連続した文字列を、一字も変えずにコピーする。コードの名称や定義語（例:「孤独」「憤怒」）の言い換え・要約・複数箇所の連結は不可。本文にその語が無ければ、風情・出来事を最もよく示す本文中の別の語句（4〜20字程度）を選ぶ。
 
 本文に根拠が見つからないコードは選ばない。出力は指定の JSON スキーマに厳密に従うこと。"""
@@ -52,8 +53,8 @@ def format_schema() -> dict[str, Any]:
     def ranked(codes: list[str]) -> dict[str, Any]:
         return {
             "type": "array", "minItems": 3, "maxItems": 3,
-            "items": {"type": "object", "required": ["code", "basis"],
-                      "properties": {"code": {"type": "string", "enum": codes}, "basis": {"type": "string"}}},
+            "items": {"type": "object", "required": ["basis", "code"],
+                      "properties": {"basis": {"type": "string"}, "code": {"type": "string", "enum": codes}}},
         }
 
     r = {"type": "integer", "enum": [-2, -1, 0, 1, 2]}
