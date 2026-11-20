@@ -1,0 +1,277 @@
+{
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 4,
+        "facts": 3,
+        "events": 0
+      },
+      "scene_id": "001875_059897:s0",
+      "elapsed_sec": 7.998,
+      "trace": {
+        "present": [
+          {
+            "id": "yasue",
+            "basis": "安江"
+          },
+          {
+            "id": "otoe",
+            "basis": "音枝"
+          },
+          {
+            "id": "susumu",
+            "basis": "進君"
+          },
+          {
+            "id": "heiroku",
+            "basis": "兵六さん"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "安江の家に夏樹という赤ん坊がやってきた"
+          },
+          {
+            "basis": "三人になって帰宅すると"
+          },
+          {
+            "basis": "兵六さんがきて、待っていた"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "家"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "bunkichi",
+            "predicate": "ACQUIRED",
+            "object": "二百円",
+            "sentence_index": 6,
+            "evidence": "explicit",
+            "basis": "二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "bunkichi",
+            "predicate": "LEARNED",
+            "object": "二百円",
+            "sentence_index": 7,
+            "evidence": "explicit",
+            "basis": "二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "二百円",
+            "sentence_index": 7,
+            "evidence": "explicit",
+            "basis": "二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ"
+          }
+        }
+      ],
+      "kept": {
+        "present": 5,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "001875_059897:s1",
+      "elapsed_sec": 12.222,
+      "trace": {
+        "present": [
+          {
+            "id": "yasue",
+            "basis": "安江"
+          },
+          {
+            "id": "heiroku",
+            "basis": "兵六さん"
+          },
+          {
+            "id": "otoe",
+            "basis": "音枝"
+          },
+          {
+            "id": "bunkichi",
+            "basis": "文吉"
+          },
+          {
+            "id": "susumu",
+            "basis": "進君"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "兵六さんはせっせとミルクを運んできてくれた"
+          },
+          {
+            "basis": "兵六さんの足はだんだん遠のき、やがてぱったり来なくなってしまった"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "安江の家"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "進君が五百円を借りたいと兵六さんに頼んでいる",
+            "sentence_index": 11,
+            "evidence": "explicit",
+            "basis": "進君が五百円かしてくれっていってんだけど"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "001875_059897:s2",
+      "elapsed_sec": 7.645,
+      "trace": {
+        "present": [
+          {
+            "id": "yasue",
+            "basis": "安江"
+          },
+          {
+            "id": "otoe",
+            "basis": "音枝"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "進君をとおして毎日のように兵六さんのうわさを聞いていた"
+          },
+          {
+            "basis": "五百円をわたしながら"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "otoe",
+            "basis": "音枝"
+          }
+        },
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "susumu",
+            "basis": "当の進君"
+          }
+        }
+      ],
+      "kept": {
+        "present": 1,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "001875_059897:s3",
+      "elapsed_sec": 5.115,
+      "trace": {
+        "present": [
+          {
+            "id": "yasue",
+            "basis": "安江"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "今時の若い人に珍らしく、両手をついての切口上を聞くと、安江はつい慰めずにいられなくなり、"
+          }
+        ],
+        "events": []
+      }
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "001875_059897:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"安江の家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yasue\",\n      \"basis\": \"安江\"\n    },\n    {\n      \"id\": \"otoe\",\n      \"basis\": \"音枝\"\n    },\n    {\n      \"id\": \"susumu\",\n      \"basis\": \"進君\"\n    },\n    {\n      \"id\": \"heiroku\",\n      \"basis\": \"兵六さん\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"夏樹という赤ん坊\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"安江の家に夏樹という赤ん坊がやってきた\"\n    },\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"夏樹という赤ん坊\",\n      \"sentence_index\": 6,\n      \"evidence\": \"explicit\",\n      \"basis\": \"三人になって帰宅すると\"\n    },\n    {\n      \"subject\": \"heiroku\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"安江の家\",\n      \"sentence_index\": 6,\n      \"evidence\": \"explicit\",\n      \"basis\": \"兵六さんがきて、待っていた\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001875_059897:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yasue\",\n      \"basis\": \"安江\"\n    },\n    {\n      \"id\": \"heiroku\",\n      \"basis\": \"兵六さん\"\n    },\n    {\n      \"id\": \"otoe\",\n      \"basis\": \"音枝\"\n    },\n    {\n      \"id\": \"bunkichi\",\n      \"basis\": \"文吉\"\n    },\n    {\n      \"id\": \"susumu\",\n      \"basis\": \"進君\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"heiroku\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"家\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"兵六さんはせっせとミルクを運んできてくれた\"\n    },\n    {\n      \"subject\": \"heiroku\",\n      \"predicate\": \"LOST\",\n      \"object\": \"ミルク\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"兵六さんの足はだんだん遠のき、やがてぱったり来なくなってしまった\"\n    },\n    {\n      \"subject\": \"bunkichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"二百円\",\n      \"sentence_index\": 6,\n      \"evidence\": \"explicit\",\n      \"basis\": \"二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ\"\n    },\n    {\n      \"subject\": \"bunkichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"二百円\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ\"\n    },\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"二百円\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001875_059897:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"安江の家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yasue\",\n      \"basis\": \"安江\"\n    },\n    {\n      \"id\": \"otoe\",\n      \"basis\": \"音枝\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"進君が兵六さんに金を預けている\",\n      \"sentence_index\": 9,\n      \"evidence\": \"explicit\",\n      \"basis\": \"進君をとおして毎日のように兵六さんのうわさを聞いていた\"\n    },\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"進君が五百円を借りたいと兵六さんに頼んでいる\",\n      \"sentence_index\": 11,\n      \"evidence\": \"explicit\",\n      \"basis\": \"進君が五百円かしてくれっていってんだけど\"\n    },\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"五百円\",\n      \"sentence_index\": 12,\n      \"evidence\": \"explicit\",\n      \"basis\": \"五百円をわたしながら\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001875_059897:s3",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": null\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"otoe\",\n      \"basis\": \"音枝\"\n    },\n    {\n      \"id\": \"susumu\",\n      \"basis\": \"当の進君\"\n    },\n    {\n      \"id\": \"yasue\",\n      \"basis\": \"安江\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"otoe\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"進君が鷲さんに相談に行くこと\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"今時の若い人に珍らしく、両手をついての切口上を聞くと、安江はつい慰めずにいられなくなり、\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "yasue",
+      "excerpt_chars": 809,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"抜粋から安江の性格や行動を推測するが、明確な価値観の傾向が見られない。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "heiroku",
+      "excerpt_chars": 570,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, -1, -1, 0, -1\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"兵六さんは食糧統制違反で新聞にも出るなどやみ屋なりのはなやかさでうわさにのぼるようになり、恩きせがましいことをいった。また、兵六さんの足はだんだん遠のき、やがてぱたりと来なくなってしまった。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "otoe",
+      "excerpt_chars": 263,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"抜粋から音枝ちゃんの価値観を特定する十分な情報が得られなかった。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "bunkichi",
+      "excerpt_chars": 371,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, -1, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"文吉は、安江が斎木少年の部屋の権利金を隠していることを知っており、その情報を兵六さんに利用される場面がある。また、文吉自身も別の算用をしていたことから、利己的な行動を取ることが示唆される。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "susumu",
+      "excerpt_chars": 479,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"進君の権利金、安江との関係、音枝との関係\"\n}",
+      "parse_error": null
+    }
+  ]
+}

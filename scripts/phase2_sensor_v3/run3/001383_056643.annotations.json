@@ -1,0 +1,285 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001383_056643:s0",
+      "scene_hash": "a0bbcc20d32cbbcba949822da1ba3224fa42c4551aaa21acdf5071ca1194621b",
+      "work_id": "001383_056643",
+      "scene_index": 0,
+      "scene_count": 6,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "ambiguous"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "shinichi",
+        "senkichi"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 0,
+        "subject": "shinichi",
+        "predicate": "ACQUIRED",
+        "object": "仙吉の兵児帯",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 1,
+        "subject": "shinichi",
+        "predicate": "ACQUIRED",
+        "object": "仙吉の髪の毛",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 1,
+        "subject": "shinichi",
+        "predicate": "ACQUIRED",
+        "object": "仙吉の頬ぺた",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 1,
+        "subject": "shinichi",
+        "predicate": "ACQUIRED",
+        "object": "仙吉の眼瞼の裏",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 1,
+        "subject": "shinichi",
+        "predicate": "ACQUIRED",
+        "object": "仙吉の耳朶",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 3,
+        "subject": "shinichi",
+        "predicate": "ACQUIRED",
+        "object": "佐倉炭の塊",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 4,
+        "subject": "senkichi",
+        "predicate": "LOST",
+        "object": "自由",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001383_056643:s1",
+      "scene_hash": "f2945c3c2df8b85ea46a066a8ca2e3dbb01e208a3f703711c87d87746745f977",
+      "work_id": "001383_056643",
+      "scene_index": 1,
+      "scene_count": 6,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": "物置小屋",
+      "present_character_ids": [
+        "shinichi",
+        "senkichi"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 8,
+        "subject": "senkichi",
+        "predicate": "LEARNED",
+        "object": "信一の狼が襲って来る",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 11,
+        "subject": "senkichi",
+        "predicate": "LOST",
+        "object": "手足",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001383_056643:s2",
+      "scene_hash": "f166adabb8ee0745cc5fdfd5cdc7f9b51315660bc39458529ee919316c6ba017",
+      "work_id": "001383_056643",
+      "scene_index": 2,
+      "scene_count": 6,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": "土間",
+      "present_character_ids": [
+        "shinichi",
+        "senkichi"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 7,
+        "subject": "senkichi",
+        "predicate": "LOST",
+        "object": "生命",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001383_056643:s3",
+      "scene_hash": "7e92d79f924ff5ca9a5ffb98657dab6ca18a7dd787fe427457f438910eba5b1f",
+      "work_id": "001383_056643",
+      "scene_index": 3,
+      "scene_count": 6,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "senkichi",
+        "shinichi"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 0,
+        "subject": "senkichi",
+        "predicate": "MOVED_TO",
+        "object": "俯向きに臥した状態",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 4,
+        "subject": "shinichi",
+        "predicate": "MOVED_TO",
+        "object": "仙吉の胸の上",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": [
+      {
+        "character_id": "senkichi",
+        "axis": 4,
+        "to_sign": 1,
+        "sentence_index": 7
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001383_056643:s4",
+      "scene_hash": "4487f4344ae042ff09854ce6645c172d1db7df29be75067d864367eed3a07370",
+      "work_id": "001383_056643",
+      "scene_index": 4,
+      "scene_count": 6,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "shinichi",
+        "senkichi",
+        "jochu",
+        "hagiwara"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 8,
+        "subject": "hagiwara",
+        "predicate": "LEARNED",
+        "object": "信一の心を奪われた",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001383_056643:s5",
+      "scene_hash": "217aa33534a1c458fc089e995fa1b56aa435c7a1427d4227dcad6a9c819139f1",
+      "work_id": "001383_056643",
+      "scene_index": 5,
+      "scene_count": 6,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": "明くる日",
+        "evidence": "explicit"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "shinichi",
+        "senkichi",
+        "jochu",
+        "mitsuko"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 5,
+        "subject": "senkichi",
+        "predicate": "MOVED_TO",
+        "object": "中二階の十畳の間",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  }
+]

@@ -5,8 +5,8 @@
 ## 進捗
 - [x] ワークツリー作成
 - [x] 改訂注釈生成コード（python/usir_py/sensor_eval/scene_annotator_v3.py, scripts/phase2_sensor_v3/run_v3.py）
-- [ ] 3回実行（run3.sh をバックグラウンド実行中: run1..run3）
-- [ ] 測定（事実P/R、同席・時間・場所、時刻、特性符号一致）
-- [ ] レポート F:\マイドライブ\Claude-Sync\inbox\2026-11-20_sensor_v3_report.md
+- [x] 3回実行（run1..run3 完了）
+- [x] 測定（results_v3.json）
+- [x] レポート保存済み
 ## 次の1手
-既存 run_full_annotation.py / measure_stage_b.py / gold の構造を読み、v3 プロンプトを書く。
+完了。

@@ -1,0 +1,307 @@
+{
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "tabiso",
+            "predicate": "LEARNED",
+            "object": "鎌倉まで行きましょうよ。",
+            "sentence_index": 1,
+            "evidence": "explicit",
+            "basis": "鎌倉まで行きましょうよ。"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "tabiso",
+            "predicate": "LEARNED",
+            "object": "秋谷明神と云う、その森の中の石段の下を通って、日向の麦畠へ差懸ると、この辺には余り見懌ぬ、十八九の色白な娘が一人、めりんす友染の襷懸け、手拭を冠って畑に出ている。",
+            "sentence_index": 1,
+            "evidence": "explicit",
+            "basis": "十八九の色白な娘が一人、めりんす友染の襷懸け、手拭を冠って畑に出ている。"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "tabiso",
+            "predicate": "LEARNED",
+            "object": "浪打際に子産石と云うのがござんす。これこれでここの名所、と土地自慢も、優しく教えて、石段から真直ぐに、畑中を切って出て見なさんせ、と指さしをしてくれました。",
+            "sentence_index": 1,
+            "evidence": "explicit",
+            "basis": "浪打際に子産石と云うのがござんす。これこれでここの名所、と土地自慢も、優しく教えて、石段から真直ぐに、畑中を切って出て見なさんせ、と指さしをしてくれました。"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 0,
+        "events": 0
+      },
+      "scene_id": "000050_003586:s0",
+      "elapsed_sec": 11.304,
+      "trace": {
+        "present": [
+          {
+            "id": "tabiso",
+            "basis": "旅僧"
+          },
+          {
+            "id": "uba",
+            "basis": "姥"
+          }
+        ],
+        "facts": [],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 2,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "000050_003586:s1",
+      "elapsed_sec": 8.002,
+      "trace": {
+        "present": [
+          {
+            "id": "tabiso",
+            "basis": "黒門の別荘とやらの、話を聞くと引入れられて、気が沈んで、しんみりと真心から念仏の声が出ました。"
+          },
+          {
+            "id": "uba",
+            "basis": "白髪の婆さんの、お前さんとは知己と見えるのが、向うから声をかけたっけ。"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "白髪の婆さんの、お前さんとは知己と見えるのが、向うから声をかけたっけ。"
+          },
+          {
+            "basis": "聞かしておくれの、お婆さん、お前は善智識、と云うても可い、私は夜通しでも構わんが。"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 3,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "000050_003586:s2",
+      "elapsed_sec": 6.689,
+      "trace": {
+        "present": [
+          {
+            "id": "saihachi",
+            "basis": "手ぼう蟹"
+          },
+          {
+            "id": "niemon",
+            "basis": "苦虫の仁右衛門親仁"
+          },
+          {
+            "id": "kundo",
+            "basis": "村の学校の訓導"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "小川べりの草の上"
+          },
+          {
+            "basis": "宰八の背後から"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "saihachi",
+            "predicate": "ACQUIRED",
+            "object": "手毬",
+            "sentence_index": 4,
+            "evidence": "explicit",
+            "basis": "少え人は衣服の裾を掴んだなりで、川の中へ飛込んだっけ"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "saihachi",
+            "predicate": "ACQUIRED",
+            "object": "猫",
+            "sentence_index": 5,
+            "evidence": "explicit",
+            "basis": "手毬を拾うと、その下に、猫が一匹居たではねえかね"
+          }
+        }
+      ],
+      "kept": {
+        "present": 4,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "000050_003586:s3",
+      "elapsed_sec": 8.462,
+      "trace": {
+        "present": [
+          {
+            "id": "saihachi",
+            "basis": "少え人"
+          },
+          {
+            "id": "niemon",
+            "basis": "仁右衛門"
+          },
+          {
+            "id": "tabiso",
+            "basis": "爺様"
+          },
+          {
+            "id": "uba",
+            "basis": "婆様"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "宰八川面へ乗出して、母衣を倒に水に映した"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "niemon",
+            "basis": "仁右衛門"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "niemon",
+            "predicate": "LEARNED",
+            "object": "水潜りをするなんて、猫化けの怪談にも、ついに聞いた事はない",
+            "sentence_index": 1,
+            "evidence": "explicit",
+            "basis": "水潜りをするなんて、猫化けの怪談にも、ついに聞いた事はないじゃないか。"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "niemon",
+            "predicate": "LEARNED",
+            "object": "水ひたしの毛がよれよれ、前足のつけ根なぞは、あか膚よ。げっそり骨の出た死骸",
+            "sentence_index": 2,
+            "evidence": "explicit",
+            "basis": "水ひたしの毛がよれよれ、前足のつけ根なぞは、あか膚よ。げっそり骨の出た死骸でねえかね。"
+          }
+        }
+      ],
+      "kept": {
+        "present": 1,
+        "facts": 0,
+        "events": 0
+      },
+      "scene_id": "000050_003586:s4",
+      "elapsed_sec": 7.367,
+      "trace": {
+        "present": [
+          {
+            "id": "kundo",
+            "basis": "訓導"
+          }
+        ],
+        "facts": [],
+        "events": []
+      }
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "000050_003586:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"ambiguous\"\n  },\n  \"location\": {\n    \"surface\": \"葉山\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"tabiso\",\n      \"basis\": \"旅僧\"\n    },\n    {\n      \"id\": \"uba\",\n      \"basis\": \"姥\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"tabiso\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"鎌倉まで行きましょうよ。\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"鎌倉まで行きましょうよ。\"\n    },\n    {\n      \"subject\": \"tabiso\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"秋谷明神と云う、その森の中の石段の下を通って、日向の麦畠へ差懸ると、この辺には余り見懌ぬ、十八九の色白な娘が一人、めりんす友染の襷懸け、手拭を冠って畑に出ている。\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"十八九の色白な娘が一人、めりんす友染の襷懸け、手拭を冠って畑に出ている。\"\n    },\n    {\n      \"subject\": \"tabiso\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"浪打際に子産石と云うのがござんす。これこれでここの名所、と土地自慢も、優しく教えて、石段から真直ぐに、畑中を切って出て見なさんせ、と指さしをしてくれました。\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"浪打際に子産石と云うのがござんす。これこれでここの名所、と土地自慢も、優しく教えて、石段から真直ぐに、畑中を切って出て見なさんせ、と指さしをしてくれました。\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000050_003586:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"黒門の別荘\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"tabiso\",\n      \"basis\": \"黒門の別荘とやらの、話を聞くと引入れられて、気が沈んで、しんみりと真心から念仏の声が出ました。\"\n    },\n    {\n      \"id\": \"uba\",\n      \"basis\": \"白髪の婆さんの、お前さんとは知己と見えるのが、向うから声をかけたっけ。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"uba\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"tabiso\",\n      \"sentence_index\": 6,\n      \"evidence\": \"explicit\",\n      \"basis\": \"白髪の婆さんの、お前さんとは知己と見えるのが、向うから声をかけたっけ。\"\n    },\n    {\n      \"subject\": \"uba\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"tabiso が念仏を唱えていること\",\n      \"sentence_index\": 3,\n      \"evidence\": \"explicit\",\n      \"basis\": \"聞かしておくれの、お婆さん、お前は善智識、と云うても可い、私は夜通しでも構わんが。\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000050_003586:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"小川べりの草の上\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"saihachi\",\n      \"basis\": \"手ぼう蟹\"\n    },\n    {\n      \"id\": \"niemon\",\n      \"basis\": \"苦虫の仁右衛門親仁\"\n    },\n    {\n      \"id\": \"kundo\",\n      \"basis\": \"村の学校の訓導\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"saihachi\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"小川べりの草の上\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"小川べりの草の上\"\n    },\n    {\n      \"subject\": \"kundo\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"小川べりの草の上\",\n      \"sentence_index\": 10,\n      \"evidence\": \"explicit\",\n      \"basis\": \"宰八の背後から\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000050_003586:s3",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"川\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"saihachi\",\n      \"basis\": \"少え人\"\n    },\n    {\n      \"id\": \"niemon\",\n      \"basis\": \"仁右衛門\"\n    },\n    {\n      \"id\": \"tabiso\",\n      \"basis\": \"爺様\"\n    },\n    {\n      \"id\": \"uba\",\n      \"basis\": \"婆様\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"saihachi\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"川\",\n      \"sentence_index\": 4,\n      \"evidence\": \"explicit\",\n      \"basis\": \"宰八川面へ乗出して、母衣を倒に水に映した\"\n    },\n    {\n      \"subject\": \"saihachi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"手毬\",\n      \"sentence_index\": 4,\n      \"evidence\": \"explicit\",\n      \"basis\": \"少え人は衣服の裾を掴んだなりで、川の中へ飛込んだっけ\"\n    },\n    {\n      \"subject\": \"saihachi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"猫\",\n      \"sentence_index\": 5,\n      \"evidence\": \"explicit\",\n      \"basis\": \"手毬を拾うと、その下に、猫が一匹居たではねえかね\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000050_003586:s4",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": null\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"kundo\",\n      \"basis\": \"訓導\"\n    },\n    {\n      \"id\": \"niemon\",\n      \"basis\": \"仁右衛門\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"niemon\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"水潜りをするなんて、猫化けの怪談にも、ついに聞いた事はない\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"水潜りをするなんて、猫化けの怪談にも、ついに聞いた事はないじゃないか。\"\n    },\n    {\n      \"subject\": \"niemon\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"水ひたしの毛がよれよれ、前足のつけ根なぞは、あか膚よ。げっそり骨の出た死骸\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"水ひたしの毛がよれよれ、前足のつけ根なぞは、あか膚よ。げっそり骨の出た死骸でねえかね。\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "tabiso",
+      "excerpt_chars": 31,
+      "raw_content": "{\n  \"values_6d\": [\n    0,\n    0,\n    0,\n    0,\n    0,\n    0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"旅僧、包を引寄せる、姥も腰を上げて尋ねる\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "uba",
+      "excerpt_chars": 52,
+      "raw_content": "{\n  \"values_6d\": [\n    0,\n    0,\n    0,\n    0,\n    0,\n    0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"姥も腰を上げて尋ねる、右瞻左瞻たが\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "niemon",
+      "excerpt_chars": 22,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"苦虫の仁右衛門親仁\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "saihachi",
+      "excerpt_chars": 131,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"手ぼう蟹、宰八、冷飯草履、夥間の穴、舞鶴の紋、母衣\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "kundo",
+      "excerpt_chars": 98,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"紳士、訓導、苦笑い、打棄るように\"\n}",
+      "parse_error": null
+    }
+  ]
+}

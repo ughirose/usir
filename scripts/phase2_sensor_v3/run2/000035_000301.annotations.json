@@ -1,0 +1,336 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "000035_000301:s0",
+      "scene_hash": "3420dd57e26a637961222eae99844c0924870fca9e803638762a02a51b21383d",
+      "work_id": "000035_000301",
+      "scene_index": 0,
+      "scene_count": 7,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "ambiguous"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yozo"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 1,
+        "subject": "yozo",
+        "predicate": "ACQUIRED",
+        "object": "情死事件",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 4,
+        "subject": "yozo",
+        "predicate": "ACQUIRED",
+        "object": "マルクス学生の行動隊々長",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 5,
+        "subject": "yozo",
+        "predicate": "ACQUIRED",
+        "object": "小さいナイフ",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 1,
+        "subject": "yozo",
+        "predicate": "LOST",
+        "object": "学業",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 8,
+        "subject": "yozo",
+        "predicate": "LOST",
+        "object": "健康",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": [
+      {
+        "character_id": "yozo",
+        "axis": 0,
+        "to_sign": -1,
+        "sentence_index": 10
+      },
+      {
+        "character_id": "yozo",
+        "axis": 1,
+        "to_sign": -1,
+        "sentence_index": 9
+      },
+      {
+        "character_id": "yozo",
+        "axis": 3,
+        "to_sign": -1,
+        "sentence_index": 9
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "000035_000301:s1",
+      "scene_hash": "834c904d9ee2346e61880fcf1571746af4f8f58909c28206e2340634cf0e9143",
+      "work_id": "000035_000301",
+      "scene_index": 1,
+      "scene_count": 7,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "parallel",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": "仙遊館",
+      "present_character_ids": [
+        "yozo",
+        "musume"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 1,
+        "subject": "yozo",
+        "predicate": "LEARNED",
+        "object": "仙遊館の娘が自分に好意を寄せている",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "musume",
+        "predicate": "ACQUIRED",
+        "object": "用箋と万年筆",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "000035_000301:s2",
+      "scene_hash": "6822e1256e8520671e252c6d3983f503435baa42c42ec8edbfa4eac287657b91",
+      "work_id": "000035_000301",
+      "scene_index": 2,
+      "scene_count": 7,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": "その頃",
+        "evidence": "ambiguous"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yozo",
+        "doshi",
+        "horiki"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 13,
+        "subject": "yozo",
+        "predicate": "MOVED_TO",
+        "object": "銀座のカフエ",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 8,
+        "subject": "yozo",
+        "predicate": "ACQUIRED",
+        "object": "図々しさ",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 0,
+        "subject": "yozo",
+        "predicate": "LEARNED",
+        "object": "同志",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 7,
+        "subject": "yozo",
+        "predicate": "LEARNED",
+        "object": "ツネ子",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "000035_000301:s3",
+      "scene_hash": "246fc00a5a978076c8c9bb497bdbe0937a2d39e6ddbcfbd32896036571300257",
+      "work_id": "000035_000301",
+      "scene_index": 3,
+      "scene_count": 7,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yozo",
+        "tsuneko"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 3,
+        "subject": "yozo",
+        "predicate": "ACQUIRED",
+        "object": "安心感",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "000035_000301:s4",
+      "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+      "work_id": "000035_000301",
+      "scene_index": 4,
+      "scene_count": 7,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": "本所の大工さんの二階",
+      "present_character_ids": [
+        "yozo",
+        "doshi"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 4,
+        "subject": "yozo",
+        "predicate": "LEARNED",
+        "object": "そのひとの身の上",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": [
+      {
+        "character_id": "yozo",
+        "axis": 1,
+        "to_sign": -1,
+        "sentence_index": 6
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "000035_000301:s5",
+      "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+      "work_id": "000035_000301",
+      "scene_index": 5,
+      "scene_count": 7,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yozo",
+        "tsuneko"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 8,
+        "subject": "yozo",
+        "predicate": "LEARNED",
+        "object": "金の切れめが縁の切れめという出鱈目の放言が、のちにひっかかりを生じる",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "000035_000301:s6",
+      "scene_hash": "c29aa59163372bd54d3f7f0af925d04810330aadbd386bcb6df72ad3d000a806",
+      "work_id": "000035_000301",
+      "scene_index": 6,
+      "scene_count": 7,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": "十一月の末",
+        "evidence": "explicit"
+      },
+      "location_id": "神田の屋台",
+      "present_character_ids": [
+        "yozo",
+        "horiki"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 2,
+        "subject": "yozo",
+        "predicate": "MOVED_TO",
+        "object": "神田の屋台",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  }
+]

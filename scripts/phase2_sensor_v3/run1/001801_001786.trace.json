@@ -1,0 +1,276 @@
+{
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "若い女",
+            "sentence_index": 7,
+            "evidence": "explicit",
+            "basis": "若い女がひとり、深夜の海を泳いでいるのだった"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "親父は、沖で一人底引き網をやってたんです",
+            "sentence_index": 23,
+            "evidence": "explicit",
+            "basis": "親父は、沖で一人底引き網をやってたんです"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "二十八貫もあるカジキを、三日がかりでつかまえたこともあります",
+            "sentence_index": 23,
+            "evidence": "explicit",
+            "basis": "二十八貫もあるカジキを、三日がかりでつかまえたこともあります"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 5,
+        "events": 0
+      },
+      "scene_id": "001801_001786:s0",
+      "elapsed_sec": 16.394,
+      "trace": {
+        "present": [
+          {
+            "id": "shinichi",
+            "basis": "慎一"
+          },
+          {
+            "id": "onna",
+            "basis": "若い女"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "女の声はひどく疲れ、喘いでいた"
+          },
+          {
+            "basis": "今日、真赤なスポーツ・カーにひとりで乗ってきた女だった"
+          },
+          {
+            "basis": "目の大きな、呼吸をのむほど美しいまだ若い女で"
+          },
+          {
+            "basis": "同級生の兄は、あれは有名な映画女優にちがいないぞといった"
+          },
+          {
+            "basis": "親父が漁師でした"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "海辺"
+        },
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "onna",
+            "basis": "若い女"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "お父さんが去年死んだ",
+            "sentence_index": 5,
+            "evidence": "explicit",
+            "basis": "「死にました。去年」"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "onna",
+            "predicate": "LOST",
+            "object": "親",
+            "sentence_index": 5,
+            "evidence": "explicit",
+            "basis": "「死にました。去年」"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "onna",
+            "predicate": "HOOK_OPENED",
+            "object": "慎一が自殺を止めるつもりか",
+            "sentence_index": 6,
+            "evidence": "explicit",
+            "basis": "「……あなたは、自殺するつもりですか？」"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "onna",
+            "predicate": "HOOK_RESOLVED",
+            "object": "慎一が自殺を止めるつもりではない",
+            "sentence_index": 8,
+            "evidence": "explicit",
+            "basis": "「べつに、やめなさい、っていうつもりじゃないんですよ」"
+          }
+        },
+        {
+          "kind": "event",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "character_id": "onna",
+            "axis": 1,
+            "to_sign": -1,
+            "sentence_index": 7,
+            "basis": "「からかうの？　軽蔑しているのね、私を。子どものくせに」"
+          }
+        },
+        {
+          "kind": "event",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "character_id": "shinichi",
+            "axis": 1,
+            "to_sign": 1,
+            "sentence_index": 1,
+            "basis": "「ただ、なんとなく女を自分とつなぎとめておきたかったのかもしれない」"
+          }
+        },
+        {
+          "kind": "event",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "character_id": "onna",
+            "axis": 5,
+            "to_sign": -1,
+            "sentence_index": 6,
+            "basis": "「……あなたは、自殺するつもりですか？」"
+          }
+        },
+        {
+          "kind": "event",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "character_id": "onna",
+            "axis": 5,
+            "to_sign": 1,
+            "sentence_index": 8,
+            "basis": "「べつに、やめなさい、っていうつもりじゃないんですよ」"
+          }
+        }
+      ],
+      "kept": {
+        "present": 1,
+        "facts": 0,
+        "events": 0
+      },
+      "scene_id": "001801_001786:s1",
+      "elapsed_sec": 13.807,
+      "trace": {
+        "present": [
+          {
+            "id": "shinichi",
+            "basis": "慎一"
+          }
+        ],
+        "facts": [],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "ぼくの親父も、自殺したんです。",
+            "sentence_index": 1,
+            "evidence": "explicit",
+            "basis": "ぼくの親父も、自殺したんです。"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 0,
+        "events": 0
+      },
+      "scene_id": "001801_001786:s2",
+      "elapsed_sec": 4.332,
+      "trace": {
+        "present": [
+          {
+            "id": "shinichi",
+            "basis": "彼"
+          },
+          {
+            "id": "onna",
+            "basis": "女"
+          }
+        ],
+        "facts": [],
+        "events": []
+      }
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "001801_001786:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"ambiguous\"\n  },\n  \"location\": {\n    \"surface\": \"深夜の海\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"慎一\"\n    },\n    {\n      \"id\": \"onna\",\n      \"basis\": \"若い女\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"若い女\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"若い女がひとり、深夜の海を泳いでいるのだった\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"女の声はひどく疲れ、喘いでいた\",\n      \"sentence_index\": 11,\n      \"evidence\": \"explicit\",\n      \"basis\": \"女の声はひどく疲れ、喘いでいた\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"今日、真赤なスポーツ・カーにひとりで乗ってきた女\",\n      \"sentence_index\": 19,\n      \"evidence\": \"explicit\",\n      \"basis\": \"今日、真赤なスポーツ・カーにひとりで乗ってきた女だった\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"目の大きな、呼吸をのむほど美しいまだ若い女\",\n      \"sentence_index\": 20,\n      \"evidence\": \"explicit\",\n      \"basis\": \"目の大きな、呼吸をのむほど美しいまだ若い女で\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"同級生の兄は、あれは有名な映画女優にちがいないぞといった\",\n      \"sentence_index\": 20,\n      \"evidence\": \"explicit\",\n      \"basis\": \"同級生の兄は、あれは有名な映画女優にちがいないぞといった\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"親父が漁師でした\",\n      \"sentence_index\": 23,\n      \"evidence\": \"explicit\",\n      \"basis\": \"親父が漁師でした\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"親父は、沖で一人底引き網をやってたんです\",\n      \"sentence_index\": 23,\n      \"evidence\": \"explicit\",\n      \"basis\": \"親父は、沖で一人底引き網をやってたんです\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"二十八貫もあるカジキを、三日がかりでつかまえたこともあります\",\n      \"sentence_index\": 23,\n      \"evidence\": \"explicit\",\n      \"basis\": \"二十八貫もあるカジキを、三日がかりでつかまえたこともあります\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001801_001786:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"海辺\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"慎一\"\n    },\n    {\n      \"id\": \"onna\",\n      \"basis\": \"若い女\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"お父さんが去年死んだ\",\n      \"sentence_index\": 5,\n      \"evidence\": \"explicit\",\n      \"basis\": \"「死にました。去年」\"\n    },\n    {\n      \"subject\": \"onna\",\n      \"predicate\": \"LOST\",\n      \"object\": \"親\",\n      \"sentence_index\": 5,\n      \"evidence\": \"explicit\",\n      \"basis\": \"「死にました。去年」\"\n    },\n    {\n      \"subject\": \"onna\",\n      \"predicate\": \"HOOK_OPENED\",\n      \"object\": \"慎一が自殺を止めるつもりか\",\n      \"sentence_index\": 6,\n      \"evidence\": \"explicit\",\n      \"basis\": \"「……あなたは、自殺するつもりですか？」\"\n    },\n    {\n      \"subject\": \"onna\",\n      \"predicate\": \"HOOK_RESOLVED\",\n      \"object\": \"慎一が自殺を止めるつもりではない\",\n      \"sentence_index\": 8,\n      \"evidence\": \"explicit\",\n      \"basis\": \"「べつに、やめなさい、っていうつもりじゃないんですよ」\"\n    }\n  ],\n  \"value_events\": [\n    {\n      \"character_id\": \"onna\",\n      \"axis\": 1,\n      \"to_sign\": -1,\n      \"sentence_index\": 7,\n      \"basis\": \"「からかうの？　軽蔑しているのね、私を。子どものくせに」\"\n    },\n    {\n      \"character_id\": \"shinichi\",\n      \"axis\": 1,\n      \"to_sign\": 1,\n      \"sentence_index\": 1,\n      \"basis\": \"「ただ、なんとなく女を自分とつなぎとめておきたかったのかもしれない」\"\n    },\n    {\n      \"character_id\": \"onna\",\n      \"axis\": 5,\n      \"to_sign\": -1,\n      \"sentence_index\": 6,\n      \"basis\": \"「……あなたは、自殺するつもりですか？」\"\n    },\n    {\n      \"character_id\": \"onna\",\n      \"axis\": 5,\n      \"to_sign\": 1,\n      \"sentence_index\": 8,\n      \"basis\": \"「べつに、やめなさい、っていうつもりじゃないんですよ」\"\n    }\n  ]\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001801_001786:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"海\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"彼\"\n    },\n    {\n      \"id\": \"onna\",\n      \"basis\": \"女\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"ぼくの親父も、自殺したんです。\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"ぼくの親父も、自殺したんです。\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "shinichi",
+      "excerpt_chars": 128,
+      "raw_content": "{\n  \"values_6d\": [\n    0,\n    0,\n    0,\n    0,\n    0,\n    0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"抜粋から、慎一の行動や思考は具体的な価値観を反映していない。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "onna",
+      "excerpt_chars": 549,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, -1, 1, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"女は、ひとりごとのようにいった。女は答え、笑った。女の顔は見えなかった。女は反抗的に答えた。女はヒステリックにいった。女は怒ったような目つきで、海をみつめていた。\"\n}",
+      "parse_error": null
+    }
+  ]
+}

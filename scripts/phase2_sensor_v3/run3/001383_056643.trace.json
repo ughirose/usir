@@ -1,0 +1,376 @@
+{
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "不明"
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 7,
+        "events": 0
+      },
+      "scene_id": "001383_056643:s0",
+      "elapsed_sec": 13.778,
+      "trace": {
+        "present": [
+          {
+            "id": "shinichi",
+            "basis": "信一"
+          },
+          {
+            "id": "senkichi",
+            "basis": "仙吉"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "素早く仙吉の締めて居る薄穢い浅黄の唐縮緬の兵児帯を解いて後手に縛り上げた"
+          },
+          {
+            "basis": "髪の毛を引っ張ったり"
+          },
+          {
+            "basis": "頬ぺたを摘まみ上げたり"
+          },
+          {
+            "basis": "眼瞼の裏の紅い処をひっくりかえして白眼を出させたり"
+          },
+          {
+            "basis": "耳朶や唇の端を掴んで振って見たり"
+          },
+          {
+            "basis": "炭俵の中から佐倉炭の塊を取り出し"
+          },
+          {
+            "basis": "相手の為すがまゝに委せた"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "senkichi",
+            "predicate": "LEARNED",
+            "object": "信一が狼になる",
+            "sentence_index": 6,
+            "evidence": "explicit",
+            "basis": "狼になる"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "001383_056643:s1",
+      "elapsed_sec": 6.837,
+      "trace": {
+        "present": [
+          {
+            "id": "shinichi",
+            "basis": "信一"
+          },
+          {
+            "id": "senkichi",
+            "basis": "仙吉"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "狼が襲って来て"
+          },
+          {
+            "basis": "倒れてしまった"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "ACQUIRED",
+            "object": "人を殺す",
+            "sentence_index": 3,
+            "evidence": "explicit",
+            "basis": "此れから骨までしゃぶってやるぞ"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "001383_056643:s2",
+      "elapsed_sec": 5.642,
+      "trace": {
+        "present": [
+          {
+            "id": "shinichi",
+            "basis": "信一"
+          },
+          {
+            "id": "senkichi",
+            "basis": "仙吉"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "又しても仙吉は体中泥だらけになった"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "本文中の場所は明示されていない"
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 2,
+        "events": 1
+      },
+      "scene_id": "001383_056643:s3",
+      "elapsed_sec": 8.456,
+      "trace": {
+        "present": [
+          {
+            "id": "senkichi",
+            "basis": "仙吉は俯向きに臥かされ、臀を捲くられた"
+          },
+          {
+            "id": "shinichi",
+            "basis": "信一は私の胸の上へ跨がって、先ず鼻の頭から喰い始めた"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "仙吉は俯向きに臥かされ、臀を捲くられた"
+          },
+          {
+            "basis": "信一は私の胸の上へ跨がって、先ず鼻の頭から喰い始めた"
+          }
+        ],
+        "events": [
+          {
+            "basis": "いつの間にか心も体も全く信一の傀儡となるのを喜ぶようになってしまった"
+          }
+        ]
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "小屋、家"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "hagiwara",
+            "predicate": "MOVED_TO",
+            "object": "家",
+            "sentence_index": 7,
+            "evidence": "explicit",
+            "basis": "家へ帰って行った"
+          }
+        }
+      ],
+      "kept": {
+        "present": 4,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "001383_056643:s4",
+      "elapsed_sec": 7.181,
+      "trace": {
+        "present": [
+          {
+            "id": "shinichi",
+            "basis": "信一"
+          },
+          {
+            "id": "senkichi",
+            "basis": "仙ちゃん"
+          },
+          {
+            "id": "jochu",
+            "basis": "女中"
+          },
+          {
+            "id": "hagiwara",
+            "basis": "萩原の坊ちゃん"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "信一の気高く美しい器量や人を人とも思わぬ我が儘な仕打ちは、一日の中にすっかり私の心を奪って了った"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "学校、家"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "MOVED_TO",
+            "object": "学校の運動場の隅の方",
+            "sentence_index": 2,
+            "evidence": "explicit",
+            "basis": "小さくなって運動場の隅の方にいじけて居る"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "jochu",
+            "predicate": "ACQUIRED",
+            "object": "誘う",
+            "sentence_index": 3,
+            "evidence": "explicit",
+            "basis": "誘ってくれた"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "ACQUIRED",
+            "object": "白酒",
+            "sentence_index": 11,
+            "evidence": "explicit",
+            "basis": "今ね、仙吉を白酒で酔っ拂わしてやるんだよ"
+          }
+        }
+      ],
+      "kept": {
+        "present": 4,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "001383_056643:s5",
+      "elapsed_sec": 9.474,
+      "trace": {
+        "present": [
+          {
+            "id": "shinichi",
+            "basis": "信一"
+          },
+          {
+            "id": "senkichi",
+            "basis": "仙吉"
+          },
+          {
+            "id": "jochu",
+            "basis": "女中"
+          },
+          {
+            "id": "mitsuko",
+            "basis": "光子"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "連れて行った"
+          }
+        ],
+        "events": []
+      }
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "001383_056643:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"ambiguous\"\n  },\n  \"location\": {\n    \"surface\": \"不明\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"信一\"\n    },\n    {\n      \"id\": \"senkichi\",\n      \"basis\": \"仙吉\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"仙吉の兵児帯\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"素早く仙吉の締めて居る薄穢い浅黄の唐縮緬の兵児帯を解いて後手に縛り上げた\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"仙吉の髪の毛\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"髪の毛を引っ張ったり\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"仙吉の頬ぺた\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"頬ぺたを摘まみ上げたり\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"仙吉の眼瞼の裏\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"眼瞼の裏の紅い処をひっくりかえして白眼を出させたり\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"仙吉の耳朶\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"耳朶や唇の端を掴んで振って見たり\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"佐倉炭の塊\",\n      \"sentence_index\": 3,\n      \"evidence\": \"explicit\",\n      \"basis\": \"炭俵の中から佐倉炭の塊を取り出し\"\n    },\n    {\n      \"subject\": \"senkichi\",\n      \"predicate\": \"LOST\",\n      \"object\": \"自由\",\n      \"sentence_index\": 4,\n      \"evidence\": \"explicit\",\n      \"basis\": \"相手の為すがまゝに委せた\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001383_056643:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"物置小屋\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"信一\"\n    },\n    {\n      \"id\": \"senkichi\",\n      \"basis\": \"仙吉\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"senkichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"信一が狼になる\",\n      \"sentence_index\": 6,\n      \"evidence\": \"explicit\",\n      \"basis\": \"狼になる\"\n    },\n    {\n      \"subject\": \"senkichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"信一の狼が襲って来る\",\n      \"sentence_index\": 8,\n      \"evidence\": \"explicit\",\n      \"basis\": \"狼が襲って来て\"\n    },\n    {\n      \"subject\": \"senkichi\",\n      \"predicate\": \"LOST\",\n      \"object\": \"手足\",\n      \"sentence_index\": 11,\n      \"evidence\": \"explicit\",\n      \"basis\": \"倒れてしまった\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001383_056643:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"土間\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"信一\"\n    },\n    {\n      \"id\": \"senkichi\",\n      \"basis\": \"仙吉\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"人を殺す\",\n      \"sentence_index\": 3,\n      \"evidence\": \"explicit\",\n      \"basis\": \"此れから骨までしゃぶってやるぞ\"\n    },\n    {\n      \"subject\": \"senkichi\",\n      \"predicate\": \"LOST\",\n      \"object\": \"生命\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"又しても仙吉は体中泥だらけになった\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001383_056643:s3",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"本文中の場所は明示されていない\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"senkichi\",\n      \"basis\": \"仙吉は俯向きに臥かされ、臀を捲くられた\"\n    },\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"信一は私の胸の上へ跨がって、先ず鼻の頭から喰い始めた\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"senkichi\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"俯向きに臥した状態\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"仙吉は俯向きに臥かされ、臀を捲くられた\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"仙吉の胸の上\",\n      \"sentence_index\": 4,\n      \"evidence\": \"explicit\",\n      \"basis\": \"信一は私の胸の上へ跨がって、先ず鼻の頭から喰い始めた\"\n    }\n  ],\n  \"value_events\": [\n    {\n      \"character_id\": \"senkichi\",\n      \"axis\": 4,\n      \"to_sign\": 1,\n      \"sentence_index\": 7,\n      \"basis\": \"いつの間にか心も体も全く信一の傀儡となるのを喜ぶようになってしまった\"\n    }\n  ]\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001383_056643:s4",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"小屋、家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"信一\"\n    },\n    {\n      \"id\": \"senkichi\",\n      \"basis\": \"仙ちゃん\"\n    },\n    {\n      \"id\": \"jochu\",\n      \"basis\": \"女中\"\n    },\n    {\n      \"id\": \"hagiwara\",\n      \"basis\": \"萩原の坊ちゃん\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"hagiwara\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"家\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"家へ帰って行った\"\n    },\n    {\n      \"subject\": \"hagiwara\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"信一の心を奪われた\",\n      \"sentence_index\": 8,\n      \"evidence\": \"explicit\",\n      \"basis\": \"信一の気高く美しい器量や人を人とも思わぬ我が儘な仕打ちは、一日の中にすっかり私の心を奪って了った\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001383_056643:s5",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": \"明くる日\",\n    \"explicit_time\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"学校、家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"信一\"\n    },\n    {\n      \"id\": \"senkichi\",\n      \"basis\": \"仙吉\"\n    },\n    {\n      \"id\": \"jochu\",\n      \"basis\": \"女中\"\n    },\n    {\n      \"id\": \"mitsuko\",\n      \"basis\": \"光子\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"学校の運動場の隅の方\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"小さくなって運動場の隅の方にいじけて居る\"\n    },\n    {\n      \"subject\": \"jochu\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"誘う\",\n      \"sentence_index\": 3,\n      \"evidence\": \"explicit\",\n      \"basis\": \"誘ってくれた\"\n    },\n    {\n      \"subject\": \"senkichi\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"中二階の十畳の間\",\n      \"sentence_index\": 5,\n      \"evidence\": \"explicit\",\n      \"basis\": \"連れて行った\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"白酒\",\n      \"sentence_index\": 11,\n      \"evidence\": \"explicit\",\n      \"basis\": \"今ね、仙吉を白酒で酔っ拂わしてやるんだよ\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "shinichi",
+      "excerpt_chars": 1666,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, -1, -1, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"信一は、他人を支配し、自己の欲望を優先する様子が見られる。また、世俗的な利益や快楽を追求している。しかし、生死観や秩序・規範、理性・情念、宿命・自由意志については、明確な傾向が見られず、中立的である。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "senkichi",
+      "excerpt_chars": 1739,
+      "raw_content": "{\n  \"values_6d\": [\n    0,\n    -1,\n    0,\n    -1,\n    -1,\n    0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"仙吉は、信一によって繰り返し屈辱的な扱いを受けている。信一は仙吉を支配し、その意志を無視して行動する。仙吉は、信一の行為に対して抵抗する力がなく、屈服するしかなかった。信一の行動は、世俗的な力や金銭的な要素とは無関係であり、むしろ非道徳的で破壊的なものである。仙吉は、信一の行為に対して感情的な反応を示すが、その感情は抑圧され、自己犠牲の形で表れる。仙吉の価値観は、信一の行動によって形成され、自由意志よりも宿命的な状況に置かれている。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "jochu",
+      "excerpt_chars": 340,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, -1, -1, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"女中は恐ろしい眼つきをして叱りながら、泥の足型が印せられて居る仙吉の目鼻を、様子ありげに眺めて居る。女中も私にだけは優しくしたが、それから四五日立った或る日のこと、学校の帰りがけに信一の女中は又私を呼び止めて、\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "mitsuko",
+      "excerpt_chars": 85,
+      "raw_content": "{\n  \"values_6d\": [\n    0,\n    0,\n    0,\n    0,\n    0,\n    0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"抜粋から光子の性格や価値観を特定する十分な情報が得られなかったため、各軸は0と評価。\"\n}",
+      "parse_error": null
+    }
+  ]
+}

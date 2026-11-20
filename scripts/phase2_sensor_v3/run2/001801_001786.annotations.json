@@ -1,0 +1,121 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001801_001786:s0",
+      "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+      "work_id": "001801_001786",
+      "scene_index": 0,
+      "scene_count": 3,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "ambiguous"
+      },
+      "location_id": "深夜の海",
+      "present_character_ids": [
+        "shinichi",
+        "onna"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 11,
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "女の声はひどく疲れ、喘いでいた",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 19,
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "今日、真赤なスポーツ・カーにひとりで乗ってきた女",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 20,
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "目の大きな、呼吸をのむほど美しいまだ若い女",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 20,
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "同級生の兄は、あれは有名な映画女優にちがいないぞといった",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 23,
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "親父が漁師でした",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001801_001786:s1",
+      "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+      "work_id": "001801_001786",
+      "scene_index": 1,
+      "scene_count": 3,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "shinichi"
+      ]
+    },
+    "fact_updates": [],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001801_001786:s2",
+      "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+      "work_id": "001801_001786",
+      "scene_index": 2,
+      "scene_count": 3,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "explicit"
+      },
+      "location_id": "海",
+      "present_character_ids": [
+        "shinichi",
+        "onna"
+      ]
+    },
+    "fact_updates": [],
+    "value_events": []
+  }
+]

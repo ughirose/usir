@@ -1,0 +1,365 @@
+{
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 3,
+        "facts": 5,
+        "events": 0
+      },
+      "scene_id": "000081_000456:s0",
+      "elapsed_sec": 13.661,
+      "trace": {
+        "present": [
+          {
+            "id": "giovanni",
+            "basis": "ジョバンニ"
+          },
+          {
+            "id": "campanella",
+            "basis": "カムパネルラ"
+          },
+          {
+            "id": "tabibito",
+            "basis": "旅人"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "誰だって、ほんとうにいいことをしたら、いちばん幸なんだねえ。だから、おっかさんは、ぼくをゆるして下さると思う。"
+          },
+          {
+            "basis": "車室の中の旅人たちは、みなまっすぐにきもののひだを垂れ、黒いバイブルを胸にあてたり、水晶の珠数をかけたり、どの人もつつましく指を組み合せて、そっちに祈っているのでした。"
+          },
+          {
+            "basis": "思わず二人もまっすぐに立ちあがりました。"
+          },
+          {
+            "basis": "思わず二人もまっすぐに立ちあがりました。"
+          },
+          {
+            "basis": "旅人たちはしずかに席に戻り、二人も胸いっぱいのかなしみに似た新らしい気持ちを、何気なくちがった語で、そっと談し合ったのです。"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "time",
+          "reason": "iso_bad_format",
+          "item": "null"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "giovanni",
+            "predicate": "LEARNED",
+            "object": "白鳥の停車場",
+            "sentence_index": 0,
+            "evidence": "explicit",
+            "basis": "もうじき白鳥の停車場だねえ"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "giovanni",
+            "predicate": "LEARNED",
+            "object": "十一時かっきりには着く",
+            "sentence_index": 1,
+            "evidence": "explicit",
+            "basis": "十一時かっきりには着くんだよ"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 4,
+        "events": 0
+      },
+      "scene_id": "000081_000456:s1",
+      "elapsed_sec": 12.506,
+      "trace": {
+        "present": [
+          {
+            "id": "giovanni",
+            "basis": "ジョバンニ"
+          },
+          {
+            "id": "campanella",
+            "basis": "カムパネルラ"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "ぼくたちも降りて見ようか"
+          },
+          {
+            "basis": "二人は一度にはねあがってドアを飛び出して改札口へかけて行きました"
+          },
+          {
+            "basis": "二人は、停車場の前の、水晶細工のように見える銀杏の木に囲まれた、小さな広場に出ました"
+          },
+          {
+            "basis": "間もなく、あの汽車から見えたきれいな河原に来ました"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "きれいな河原"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "campanella",
+            "predicate": "LEARNED",
+            "object": "岩の中に入ってるくるみの実は大きい",
+            "sentence_index": 11,
+            "evidence": "explicit",
+            "basis": "「大きいね、このくるみ、倍あるね。こいつはすこしもいたんでない。」"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "campanella",
+            "predicate": "LEARNED",
+            "object": "何か掘ってる",
+            "sentence_index": 11,
+            "evidence": "explicit",
+            "basis": "「早くあすこへ行って見よう。きっと何か掘ってるから。」"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "000081_000456:s2",
+      "elapsed_sec": 8.932,
+      "trace": {
+        "present": [
+          {
+            "id": "campanella",
+            "basis": "カムパネルラ"
+          },
+          {
+            "id": "giovanni",
+            "basis": "ジョバンニ"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "「おや、変なものがあるよ。」カムパネルラが、不思議そうに立ちどまって、岩から黒い細長いさきの尖ったくるみの実のようなものをひろいました。"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "ぎざぎざの黒いくるみの実があった方へ近よった場所"
+        }
+      ],
+      "kept": {
+        "present": 1,
+        "facts": 3,
+        "events": 0
+      },
+      "scene_id": "000081_000456:s3",
+      "elapsed_sec": 8.821,
+      "trace": {
+        "present": [
+          {
+            "id": "daigakushi",
+            "basis": "一人のせいの高い、ひどい近眼鏡をかけ、長靴をはいた学者らしい人が"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "君たちは参観かね。"
+          },
+          {
+            "basis": "大きな大きな青じろい獣の骨が、横に倒れて潰れたという風になって、半分以上掘り出されていました。"
+          },
+          {
+            "basis": "そこらには、蹄の二つある足跡のついた岩が、四角に十ばかり、きれいに切り取られて番号がつけられてありました。"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "白い岩の上、河原、改札口、車室"
+        },
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "campanella",
+            "basis": "カムパネラ"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 3,
+        "events": 0
+      },
+      "scene_id": "000081_000456:s4",
+      "elapsed_sec": 8.39,
+      "trace": {
+        "present": [
+          {
+            "id": "giovanni",
+            "basis": "ジョバンニ"
+          },
+          {
+            "id": "daigakushi",
+            "basis": "大学士"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "もう時間だよ。行こう。"
+          },
+          {
+            "basis": "ていねいに大学士におじぎしました。"
+          },
+          {
+            "basis": "二人は、前のあの河原を通り、改札口の電燈がだんだん大きくなって、間もなく二人は、もとの車室の席に座って、いま行って来た方を、窓から見ていました。"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "toritori",
+            "basis": "赤ひげ、赤髯"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "000081_000456:s5",
+      "elapsed_sec": 5.99,
+      "trace": {
+        "present": [
+          {
+            "id": "giovanni",
+            "basis": "ジョバンニ"
+          },
+          {
+            "id": "campanella",
+            "basis": "カムパネルラ"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "赤髯のせなかのかがんだ人"
+          },
+          {
+            "basis": "網棚にのせました"
+          }
+        ],
+        "events": []
+      }
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "000081_000456:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"ambiguous\"\n  },\n  \"location\": {\n    \"surface\": \"車のなか\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニ\"\n    },\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネルラ\"\n    },\n    {\n      \"id\": \"tabibito\",\n      \"basis\": \"旅人\"\n    },\n    {\n      \"id\": \"tabibito\",\n      \"basis\": \"尼さん\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"campanella\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"おっかさんは、ぼくをゆるして下さると思う。\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"誰だって、ほんとうにいいことをしたら、いちばん幸なんだねえ。だから、おっかさんは、ぼくをゆるして下さると思う。\"\n    },\n    {\n      \"subject\": \"tabibito\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"車室の中\",\n      \"sentence_index\": 6,\n      \"evidence\": \"explicit\",\n      \"basis\": \"車室の中の旅人たちは、みなまっすぐにきもののひだを垂れ、黒いバイブルを胸にあてたり、水晶の珠数をかけたり、どの人もつつましく指を組み合せて、そっちに祈っているのでした。\"\n    },\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"車室の中\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"思わず二人もまっすぐに立ちあがりました。\"\n    },\n    {\n      \"subject\": \"campanella\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"車室の中\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"思わず二人もまっすぐに立ちあがりました。\"\n    },\n    {\n      \"subject\": \"tabibito\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"車室の中\",\n      \"sentence_index\": 13,\n      \"evidence\": \"explicit\",\n      \"basis\": \"旅人たちはしずかに席に戻り、二人も胸いっぱいのかなしみに似た新らしい気持ちを、何気なくちがった語で、そっと談し合ったのです。\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000081_000456:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": \"十一時\",\n    \"explicit_time\": \"null\",\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"白鳥停車場\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニ\"\n    },\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネルラ\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"白鳥の停車場\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"もうじき白鳥の停車場だねえ\"\n    },\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"十一時かっきりには着く\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"十一時かっきりには着くんだよ\"\n    },\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"停車場\",\n      \"sentence_index\": 4,\n      \"evidence\": \"explicit\",\n      \"basis\": \"ぼくたちも降りて見ようか\"\n    },\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"改札口\",\n      \"sentence_index\": 5,\n      \"evidence\": \"explicit\",\n      \"basis\": \"二人は一度にはねあがってドアを飛び出して改札口へかけて行きました\"\n    },\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"停車場の前の広場\",\n      \"sentence_index\": 8,\n      \"evidence\": \"explicit\",\n      \"basis\": \"二人は、停車場の前の、水晶細工のように見える銀杏の木に囲まれた、小さな広場に出ました\"\n    },\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"きれいな河原\",\n      \"sentence_index\": 12,\n      \"evidence\": \"explicit\",\n      \"basis\": \"間もなく、あの汽車から見えたきれいな河原に来ました\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000081_000456:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"きれいな河原\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネルラ\"\n    },\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニ\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"campanella\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"岩の中に入ってるくるみの実\",\n      \"sentence_index\": 10,\n      \"evidence\": \"explicit\",\n      \"basis\": \"「おや、変なものがあるよ。」カムパネルラが、不思議そうに立ちどまって、岩から黒い細長いさきの尖ったくるみの実のようなものをひろいました。\"\n    },\n    {\n      \"subject\": \"campanella\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"岩の中に入ってるくるみの実は大きい\",\n      \"sentence_index\": 11,\n      \"evidence\": \"explicit\",\n      \"basis\": \"「大きいね、このくるみ、倍あるね。こいつはすこしもいたんでない。」\"\n    },\n    {\n      \"subject\": \"campanella\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"何か掘ってる\",\n      \"sentence_index\": 11,\n      \"evidence\": \"explicit\",\n      \"basis\": \"「早くあすこへ行って見よう。きっと何か掘ってるから。」\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000081_000456:s3",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"ぎざぎざの黒いくるみの実があった方へ近よった場所\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"daigakushi\",\n      \"basis\": \"一人のせいの高い、ひどい近眼鏡をかけ、長靴をはいた学者らしい人が\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"daigakushi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"tabibito\",\n      \"sentence_index\": 3,\n      \"evidence\": \"explicit\",\n      \"basis\": \"君たちは参観かね。\"\n    },\n    {\n      \"subject\": \"daigakushi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"大きな大きな青じろい獣の骨\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"大きな大きな青じろい獣の骨が、横に倒れて潰れたという風になって、半分以上掘り出されていました。\"\n    },\n    {\n      \"subject\": \"daigakushi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"蹄の二つある足跡のついた岩\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"そこらには、蹄の二つある足跡のついた岩が、四角に十ばかり、きれいに切り取られて番号がつけられてありました。\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000081_000456:s4",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"白い岩の上、河原、改札口、車室\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネラ\"\n    },\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニ\"\n    },\n    {\n      \"id\": \"daigakushi\",\n      \"basis\": \"大学士\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"campanella\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"時間\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"もう時間だよ。行こう。\"\n    },\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"おじぎ\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"ていねいに大学士におじぎしました。\"\n    },\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"車室の席\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"二人は、前のあの河原を通り、改札口の電燈がだんだん大きくなって、間もなく二人は、もとの車室の席に座って、いま行って来た方を、窓から見ていました。\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000081_000456:s5",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"車室\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニ\"\n    },\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネルラ\"\n    },\n    {\n      \"id\": \"toritori\",\n      \"basis\": \"赤ひげ、赤髯\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"toritori\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"車室\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"赤髯のせなかのかがんだ人\"\n    },\n    {\n      \"subject\": \"toritori\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"車室の席\",\n      \"sentence_index\": 4,\n      \"evidence\": \"explicit\",\n      \"basis\": \"網棚にのせました\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "giovanni",
+      "excerpt_chars": 620,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"抜粋からジョバンニの行動や言動は多岐にわたるが、特定の価値観軸に一貫性が見られない。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "campanella",
+      "excerpt_chars": 427,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"カムパネルラの言動や行動は、特定の価値観軸に強く偏る描写が見受けられない。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "daigakushi",
+      "excerpt_chars": 497,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"大学士は研究や調査に熱心に取り組んでおり、他人に対しては丁寧な態度を取るが、自分の仕事には忙しくて他のことに気を取られない。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "toritori",
+      "excerpt_chars": 156,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"赤ひげの人の行動や言動から、特定の価値観の傾向を明確に読み取ることは難しい。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "tabibito",
+      "excerpt_chars": 169,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"ambiguous\",\n  \"basis\": \"「つつましく指を組み合せて、そっちに祈っている」「胸いっぱいのかなしみに似た新らしい気持ち」\"\n}",
+      "parse_error": null
+    }
+  ]
+}

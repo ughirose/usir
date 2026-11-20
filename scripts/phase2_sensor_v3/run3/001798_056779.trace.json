@@ -1,0 +1,257 @@
+{
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 2,
+        "facts": 5,
+        "events": 0
+      },
+      "scene_id": "001798_056779:s0",
+      "elapsed_sec": 9.348,
+      "trace": {
+        "present": [
+          {
+            "id": "boku",
+            "basis": "僕"
+          },
+          {
+            "id": "fuwa",
+            "basis": "不破"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "引越して来ました"
+          },
+          {
+            "basis": "積みこんで"
+          },
+          {
+            "basis": "不破夫人もその祝宴に参加して来ましたが"
+          },
+          {
+            "basis": "手交し"
+          },
+          {
+            "basis": "ソバを肴にして"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 2,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "001798_056779:s1",
+      "elapsed_sec": 6.103,
+      "trace": {
+        "present": [
+          {
+            "id": "boku",
+            "basis": "僕"
+          },
+          {
+            "id": "fuwa",
+            "basis": "不破数馬"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "どこかに失踪してしまった"
+          },
+          {
+            "basis": "遠縁の野呂という男をここに寝泊りさせる"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "boku",
+            "predicate": "LEARNED",
+            "object": "野呂君と仲良くしてやって呉れ給え。彼はしんからの好人物であります",
+            "sentence_index": 3,
+            "evidence": "explicit",
+            "basis": "『野呂君と仲良くしてやって呉れ給え。彼はしんからの好人物であります』"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "noro",
+            "predicate": "MOVED_TO",
+            "object": "板の間",
+            "sentence_index": 7,
+            "evidence": "explicit",
+            "basis": "庭に入って来た男は僕を見て、少しおどろいたらしく立ちすくんだ"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "noro",
+            "predicate": "LEARNED",
+            "object": "この家は僕のものだよ。不破氏から僕が買い受けたんだ",
+            "sentence_index": 19,
+            "evidence": "explicit",
+            "basis": "この家は僕のものだよ。不破氏から僕が買い受けたんだ"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "001798_056779:s2",
+      "elapsed_sec": 10.381,
+      "trace": {
+        "present": [
+          {
+            "id": "boku",
+            "basis": "僕"
+          },
+          {
+            "id": "noro",
+            "basis": "野呂君"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "不破さんは昨日兵庫県に立ちましたよ"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "この家"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "boku",
+            "predicate": "LEARNED",
+            "object": "野呂が家を買い受けた",
+            "sentence_index": 0,
+            "evidence": "explicit",
+            "basis": "「買い受けただって？」"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "noro",
+            "predicate": "ACQUIRED",
+            "object": "家",
+            "sentence_index": 1,
+            "evidence": "explicit",
+            "basis": "この家は僕のものだよ"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "noro",
+            "predicate": "LEARNED",
+            "object": "誤解がある",
+            "sentence_index": 4,
+            "evidence": "explicit",
+            "basis": "何か誤解がある"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "001798_056779:s3",
+      "elapsed_sec": 10.42,
+      "trace": {
+        "present": [
+          {
+            "id": "boku",
+            "basis": "僕"
+          },
+          {
+            "id": "noro",
+            "basis": "野呂"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "領収証と契約書を急いで取出し"
+          },
+          {
+            "basis": "僕は僕の部屋にかけこんで、領収証と契約書を急いで取出し、引返して野呂の前につきつけてやりました"
+          }
+        ],
+        "events": []
+      }
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "001798_056779:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"time_surface\": \"不破と知合いになって三日目に\",\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"代田橋\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"fuwa\",\n      \"basis\": \"不破\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"代田橋\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"引越して来ました\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"世帯道具や画の道具一式\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"積みこんで\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"不破夫人\",\n      \"sentence_index\": 3,\n      \"evidence\": \"explicit\",\n      \"basis\": \"不破夫人もその祝宴に参加して来ましたが\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"四万円\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"手交し\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"ソバ\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"ソバを肴にして\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001798_056779:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": \"わずか一週間をもって\",\n    \"explicit_time\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"僕の部屋\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"fuwa\",\n      \"basis\": \"不破数馬\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"どこかに失踪\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"どこかに失踪してしまった\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"野呂という男を留守番として迎えること\",\n      \"sentence_index\": 10,\n      \"evidence\": \"explicit\",\n      \"basis\": \"遠縁の野呂という男をここに寝泊りさせる\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001798_056779:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": \"翌朝、十一時頃\",\n    \"explicit_time\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"板の間\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"noro\",\n      \"basis\": \"野呂君\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"野呂君と仲良くしてやって呉れ給え。彼はしんからの好人物であります\",\n      \"sentence_index\": 3,\n      \"evidence\": \"explicit\",\n      \"basis\": \"『野呂君と仲良くしてやって呉れ給え。彼はしんからの好人物であります』\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"板の間\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"庭に入って来た男は僕を見て、少しおどろいたらしく立ちすくんだ\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"不破さんは昨日兵庫県に立ちましたよ\",\n      \"sentence_index\": 14,\n      \"evidence\": \"explicit\",\n      \"basis\": \"不破さんは昨日兵庫県に立ちましたよ\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"この家は僕のものだよ。不破氏から僕が買い受けたんだ\",\n      \"sentence_index\": 19,\n      \"evidence\": \"explicit\",\n      \"basis\": \"この家は僕のものだよ。不破氏から僕が買い受けたんだ\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "001798_056779:s3",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"この家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"noro\",\n      \"basis\": \"野呂\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"野呂が家を買い受けた\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"「買い受けただって？」\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"家\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"この家は僕のものだよ\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"領収証と契約書\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"領収証と契約書を急いで取出し\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"僕が賃貸借の契約をした\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"僕は僕の部屋にかけこんで、領収証と契約書を急いで取出し、引返して野呂の前につきつけてやりました\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"誤解がある\",\n      \"sentence_index\": 4,\n      \"evidence\": \"explicit\",\n      \"basis\": \"何か誤解がある\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "boku",
+      "excerpt_chars": 989,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"抜粋から僕の行動や反応は生死観、秩序・規範、世俗・神秘、利己・献身、理性・情念、宿命・自由意志のいずれの軸においても明確な傾向を示していない。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "fuwa",
+      "excerpt_chars": 598,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, -1, 0, -1\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"不破は部屋代の前納という形でもいいから、二千円ばかり貸して欲しいと切り出した。, 不破は酒豪で、二升用意したのが足りなくて、もう一升買い足したほどでした。, 不破夫妻の姿は見えませんでした。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "noro",
+      "excerpt_chars": 386,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, 0, -1, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"抜粋から、野呂の言動は特定の価値観に基づくものではなく、状況や相手に対する適応的な反応であることが示唆される。特に、冷徹な態度や物事を客観的に判断する様子が見られる。\"\n}",
+      "parse_error": null
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "model": "qwen2.5:14b",
+  "prompt_hash": "69e59899e2e052dbe7a44c8596baf97c1fb0384635ec22630e20c1647663cca1",
+  "works": {
+    "001798_056779": {
+      "group": "modern",
+      "scenes": 4,
+      "elapsed_sec": 44.2,
+      "parse_failures": 0,
+      "rejected_reasons": {
+        "fact:basis_not_in_sentence": 6,
+        "location:surface_not_in_text": 1
+      },
+      "traits_ok": 3,
+      "trait_audit": {
+        "boku": "ok",
+        "fuwa": "ok",
+        "noro": "ok"
+      }
+    },
+    "001801_001786": {
+      "group": "modern",
+      "scenes": 3,
+      "elapsed_sec": 38.8,
+      "parse_failures": 0,
+      "rejected_reasons": {
+        "fact:basis_not_in_sentence": 8,
+        "location:surface_not_in_text": 1,
+        "present:basis_not_in_text": 1,
+        "event:basis_not_in_sentence": 4
+      },
+      "traits_ok": 2,
+      "trait_audit": {
+        "shinichi": "ok",
+        "onna": "ok"
+      }
+    },
+    "001875_059897": {
+      "group": "modern",
+      "scenes": 4,
+      "elapsed_sec": 44.1,
+      "parse_failures": 0,
+      "rejected_reasons": {
+        "location:surface_not_in_text": 2,
+        "fact:basis_not_in_sentence": 4,
+        "present:basis_not_in_text": 2
+      },
+      "traits_ok": 5,
+      "trait_audit": {
+        "yasue": "ok",
+        "heiroku": "ok",
+        "otoe": "ok",
+        "bunkichi": "ok",
+        "susumu": "ok"
+      }
+    },
+    "000035_000301": {
+      "group": "f9dev",
+      "scenes": 7,
+      "elapsed_sec": 60.2,
+      "parse_failures": 0,
+      "rejected_reasons": {
+        "fact:basis_not_in_sentence": 2,
+        "location:surface_not_in_text": 3
+      },
+      "traits_ok": 4,
+      "trait_audit": {
+        "yozo": "no_mentions",
+        "musume": "ok",
+        "doshi": "ok",
+        "tsuneko": "ok",
+        "horiki": "ok"
+      }
+    },
+    "001383_056643": {
+      "group": "f9dev",
+      "scenes": 6,
+      "elapsed_sec": 65.4,
+      "parse_failures": 0,
+      "rejected_reasons": {
+        "location:surface_not_in_text": 4,
+        "fact:basis_not_in_sentence": 6
+      },
+      "traits_ok": 4,
+      "trait_audit": {
+        "hagiwara": "no_mentions",
+        "shinichi": "ok",
+        "senkichi": "ok",
+        "jochu": "ok",
+        "mitsuko": "ok"
+      }
+    },
+    "000050_003586": {
+      "group": "f9dev",
+      "scenes": 5,
+      "elapsed_sec": 49.5,
+      "parse_failures": 0,
+      "rejected_reasons": {
+        "fact:basis_not_in_sentence": 7,
+        "present:basis_not_in_text": 1
+      },
+      "traits_ok": 5,
+      "trait_audit": {
+        "tabiso": "ok",
+        "uba": "ok",
+        "niemon": "ok",
+        "saihachi": "ok",
+        "kundo": "ok"
+      }
+    },
+    "000081_000456": {
+      "group": "f9dev",
+      "scenes": 6,
+      "elapsed_sec": 68.3,
+      "parse_failures": 0,
+      "rejected_reasons": {
+        "time:iso_bad_format": 1,
+        "fact:basis_not_in_sentence": 4,
+        "location:surface_not_in_text": 3,
+        "present:basis_not_in_text": 2
+      },
+      "traits_ok": 5,
+      "trait_audit": {
+        "giovanni": "ok",
+        "campanella": "ok",
+        "daigakushi": "ok",
+        "toritori": "ok",
+        "tabibito": "ok"
+      }
+    }
+  },
+  "total_elapsed_sec": 370.7
+}

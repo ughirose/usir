@@ -1,0 +1,45 @@
+{
+  "traits": {
+    "boku": {
+      "values_6d": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "evidence": "inferred",
+      "basis_verbatim": false
+    },
+    "fuwa": {
+      "values_6d": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        -1
+      ],
+      "evidence": "inferred",
+      "basis_verbatim": false
+    },
+    "noro": {
+      "values_6d": [
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "evidence": "inferred",
+      "basis_verbatim": false
+    }
+  },
+  "audit": {
+    "boku": "ok",
+    "fuwa": "ok",
+    "noro": "ok"
+  }
+}

@@ -1,0 +1,188 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001798_056779:s0",
+      "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+      "work_id": "001798_056779",
+      "scene_index": 0,
+      "scene_count": 4,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "explicit_time": null,
+        "explicit_time_surface": "不破と知合いになって三日目に",
+        "evidence": "explicit"
+      },
+      "location_id": "代田橋",
+      "present_character_ids": [
+        "boku",
+        "fuwa"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 0,
+        "subject": "boku",
+        "predicate": "MOVED_TO",
+        "object": "代田橋",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 0,
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "世帯道具や画の道具一式",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 3,
+        "subject": "boku",
+        "predicate": "LEARNED",
+        "object": "不破夫人",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "四万円",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 2,
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "ソバ",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001798_056779:s1",
+      "scene_hash": "fcdf50e4188c3a30bd0d38145bf6b4feadbadc9d825b296fdbb6264ec1b3310e",
+      "work_id": "001798_056779",
+      "scene_index": 1,
+      "scene_count": 4,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": "わずか一週間をもって",
+        "evidence": "explicit"
+      },
+      "location_id": "僕の部屋",
+      "present_character_ids": [
+        "boku",
+        "fuwa"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 1,
+        "subject": "fuwa",
+        "predicate": "MOVED_TO",
+        "object": "どこかに失踪",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 10,
+        "subject": "boku",
+        "predicate": "LEARNED",
+        "object": "野呂という男を留守番として迎えること",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001798_056779:s2",
+      "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+      "work_id": "001798_056779",
+      "scene_index": 2,
+      "scene_count": 4,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": "翌朝、十一時頃",
+        "evidence": "explicit"
+      },
+      "location_id": "板の間",
+      "present_character_ids": [
+        "boku",
+        "noro"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 14,
+        "subject": "boku",
+        "predicate": "LEARNED",
+        "object": "不破さんは昨日兵庫県に立ちましたよ",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v3-draft",
+      "scene_id": "001798_056779:s3",
+      "scene_hash": "47832cad7d2ad96e5bcee822e7b1eadb98f04519e8ef15c1c64a6ba6f1e3dc10",
+      "work_id": "001798_056779",
+      "scene_index": 3,
+      "scene_count": 4,
+      "model_id": "qwen2.5:14b",
+      "seed": 42,
+      "prompt_hash": "69e59899e2e052db"
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "explicit_time": null,
+        "explicit_time_surface": null,
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "boku",
+        "noro"
+      ]
+    },
+    "fact_updates": [
+      {
+        "sentence_index": 1,
+        "subject": "boku",
+        "predicate": "ACQUIRED",
+        "object": "領収証と契約書",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 1,
+        "subject": "noro",
+        "predicate": "LEARNED",
+        "object": "僕が賃貸借の契約をした",
+        "evidence": "explicit"
+      }
+    ],
+    "value_events": []
+  }
+]

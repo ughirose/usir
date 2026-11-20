@@ -1,0 +1,59 @@
+{
+  "traits": {
+    "shinichi": {
+      "values_6d": [
+        0,
+        0,
+        -1,
+        -1,
+        0,
+        0
+      ],
+      "evidence": "inferred",
+      "basis_verbatim": false
+    },
+    "senkichi": {
+      "values_6d": [
+        0,
+        -1,
+        0,
+        -1,
+        -1,
+        0
+      ],
+      "evidence": "inferred",
+      "basis_verbatim": false
+    },
+    "jochu": {
+      "values_6d": [
+        0,
+        0,
+        -1,
+        -1,
+        0,
+        0
+      ],
+      "evidence": "inferred",
+      "basis_verbatim": false
+    },
+    "mitsuko": {
+      "values_6d": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "evidence": "inferred",
+      "basis_verbatim": false
+    }
+  },
+  "audit": {
+    "hagiwara": "no_mentions",
+    "shinichi": "ok",
+    "senkichi": "ok",
+    "jochu": "ok",
+    "mitsuko": "ok"
+  }
+}

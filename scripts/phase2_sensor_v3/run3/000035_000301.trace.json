@@ -1,0 +1,333 @@
+{
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 1,
+        "facts": 3,
+        "events": 0
+      },
+      "scene_id": "000035_000301:s0",
+      "elapsed_sec": 7.218,
+      "trace": {
+        "present": [
+          {
+            "id": "yozo",
+            "basis": "自分"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "情死事件などを起し"
+          },
+          {
+            "basis": "死ぬ事にしました"
+          },
+          {
+            "basis": "父の代理として長兄が、いかめしい文章の長い手紙を、自分に寄こすようになっていた"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "yozo",
+            "predicate": "ACQUIRED",
+            "object": "カルモチン",
+            "sentence_index": 8,
+            "evidence": "explicit",
+            "basis": "カルモチンを買って来てくれない？"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 2,
+        "events": 0
+      },
+      "scene_id": "000035_000301:s1",
+      "elapsed_sec": 8.081,
+      "trace": {
+        "present": [
+          {
+            "id": "yozo",
+            "basis": "自分"
+          },
+          {
+            "id": "musume",
+            "basis": "仙遊館の娘"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "ひとりは、自分の下宿している仙遊館の娘でした。"
+          },
+          {
+            "basis": "この娘は、自分がれいの運動の手伝いでへとへとになって帰り、ごはんも食べずに寝てしまってから、必ず用箋と万年筆を持って自分の部屋にやって来て、"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "下宿屋、銀座のカフエ"
+        }
+      ],
+      "kept": {
+        "present": 3,
+        "facts": 4,
+        "events": 0
+      },
+      "scene_id": "000035_000301:s2",
+      "elapsed_sec": 10.687,
+      "trace": {
+        "present": [
+          {
+            "id": "yozo",
+            "basis": "自分"
+          },
+          {
+            "id": "doshi",
+            "basis": "同志"
+          },
+          {
+            "id": "horiki",
+            "basis": "堀木"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "十円持って、銀座のその大カフエに、ひとりではいって、笑いながら相手の女給に"
+          },
+          {
+            "basis": "ひとりで電車にも乗れるし、また、歌舞伎座にも行けるし、または、絣の着物を着て、カフエにだってはいれるくらいの、多少の図々しさを装えるようになっていた"
+          },
+          {
+            "basis": "女子高等師範の文科生の所謂「同志」"
+          },
+          {
+            "basis": "銀座の或る大カフエの女給から、思いがけぬ恩を受け"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "銀座のその大カフエ"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_sentence",
+          "item": {
+            "subject": "yozo",
+            "predicate": "LEARNED",
+            "object": "安心感",
+            "sentence_index": 2,
+            "evidence": "explicit",
+            "basis": "そのひとの傍にいる事に心配が要らないような気がした"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "000035_000301:s3",
+      "elapsed_sec": 5.854,
+      "trace": {
+        "present": [
+          {
+            "id": "yozo",
+            "basis": "自分"
+          },
+          {
+            "id": "tsuneko",
+            "basis": "ツネ子"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "心配が要らなくなった"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 2,
+        "facts": 1,
+        "events": 1
+      },
+      "scene_id": "000035_000301:s4",
+      "elapsed_sec": 8.582,
+      "trace": {
+        "present": [
+          {
+            "id": "yozo",
+            "basis": "自分"
+          },
+          {
+            "id": "doshi",
+            "basis": "そのひと"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "そのひとは、自分より二つ年上であること、故郷は広島、あたしには主人があるのよ、広島で床屋さんをしていたの、昨年の春、一緒に東京へ家出して逃げて来たのだけれども、主人は、東京で、まともな仕事をせずそのうちに詐欺罪に問われ、刑務所にいるのよ、あたしは毎日、何やらかやら差し入れしに、刑務所へかよっていたのだけれども、あすから、やめます"
+          }
+        ],
+        "events": [
+          {
+            "basis": "この世の中の女から、ついにいちども自分は、その言葉を聞いた事がないのを、奇怪とも不思議とも感じております"
+          }
+        ]
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "未明の部屋"
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "000035_000301:s5",
+      "elapsed_sec": 5.508,
+      "trace": {
+        "present": [
+          {
+            "id": "yozo",
+            "basis": "自分"
+          },
+          {
+            "id": "tsuneko",
+            "basis": "ツネ子"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "その時の自分の、「金の切れめが縁の切れめ」という出鱈目の放言が、のちに到って、意外のひっかかりを生じたのです"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 2,
+        "facts": 1,
+        "events": 0
+      },
+      "scene_id": "000035_000301:s6",
+      "elapsed_sec": 4.506,
+      "trace": {
+        "present": [
+          {
+            "id": "yozo",
+            "basis": "自分"
+          },
+          {
+            "id": "horiki",
+            "basis": "堀木"
+          }
+        ],
+        "facts": [
+          {
+            "basis": "自分は、堀木と神田の屋台で安酒を飲み"
+          }
+        ],
+        "events": []
+      }
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "000035_000301:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"ambiguous\"\n  },\n  \"location\": {\n    \"surface\": \"下宿\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"情死事件\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"情死事件などを起し\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"生死=死亡\",\n      \"sentence_index\": 10,\n      \"evidence\": \"explicit\",\n      \"basis\": \"死ぬ事にしました\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"父の代理として長兄が、いかめしい文章の長い手紙を、自分に寄こすようになっていた\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"父の代理として長兄が、いかめしい文章の長い手紙を、自分に寄こすようになっていた\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000035_000301:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"parallel\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"仙遊館\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"musume\",\n      \"basis\": \"仙遊館の娘\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"仙遊館の娘が自分に好意を寄せている\",\n      \"sentence_index\": 1,\n      \"evidence\": \"explicit\",\n      \"basis\": \"ひとりは、自分の下宿している仙遊館の娘でした。\"\n    },\n    {\n      \"subject\": \"musume\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"用箋と万年筆\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"この娘は、自分がれいの運動の手伝いでへとへとになって帰り、ごはんも食べずに寝てしまってから、必ず用箋と万年筆を持って自分の部屋にやって来て、\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"カルモチン\",\n      \"sentence_index\": 8,\n      \"evidence\": \"explicit\",\n      \"basis\": \"カルモチンを買って来てくれない？\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000035_000301:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": \"その頃\",\n    \"explicit_time\": null,\n    \"evidence\": \"ambiguous\"\n  },\n  \"location\": {\n    \"surface\": \"下宿屋、銀座のカフエ\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"doshi\",\n      \"basis\": \"同志\"\n    },\n    {\n      \"id\": \"horiki\",\n      \"basis\": \"堀木\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"銀座のカフエ\",\n      \"sentence_index\": 13,\n      \"evidence\": \"explicit\",\n      \"basis\": \"十円持って、銀座のその大カフエに、ひとりではいって、笑いながら相手の女給に\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"図々しさ\",\n      \"sentence_index\": 8,\n      \"evidence\": \"explicit\",\n      \"basis\": \"ひとりで電車にも乗れるし、また、歌舞伎座にも行けるし、または、絣の着物を着て、カフエにだってはいれるくらいの、多少の図々しさを装えるようになっていた\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"同志\",\n      \"sentence_index\": 0,\n      \"evidence\": \"explicit\",\n      \"basis\": \"女子高等師範の文科生の所謂「同志」\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"ツネ子\",\n      \"sentence_index\": 7,\n      \"evidence\": \"explicit\",\n      \"basis\": \"銀座の或る大カフエの女給から、思いがけぬ恩を受け\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000035_000301:s3",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"銀座のその大カフエ\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"tsuneko\",\n      \"basis\": \"ツネ子\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"安心感\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"そのひとの傍にいる事に心配が要らないような気がした\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"安心感\",\n      \"sentence_index\": 3,\n      \"evidence\": \"explicit\",\n      \"basis\": \"心配が要らなくなった\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000035_000301:s4",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"本所の大工さんの二階\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"doshi\",\n      \"basis\": \"そのひと\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"そのひとの身の上\",\n      \"sentence_index\": 4,\n      \"evidence\": \"explicit\",\n      \"basis\": \"そのひとは、自分より二つ年上であること、故郷は広島、あたしには主人があるのよ、広島で床屋さんをしていたの、昨年の春、一緒に東京へ家出して逃げて来たのだけれども、主人は、東京で、まともな仕事をせずそのうちに詐欺罪に問われ、刑務所にいるのよ、あたしは毎日、何やらかやら差し入れしに、刑務所へかよっていたのだけれども、あすから、やめます\"\n    }\n  ],\n  \"value_events\": [\n    {\n      \"character_id\": \"yozo\",\n      \"axis\": 1,\n      \"to_sign\": -1,\n      \"sentence_index\": 6,\n      \"basis\": \"この世の中の女から、ついにいちども自分は、その言葉を聞いた事がないのを、奇怪とも不思議とも感じております\"\n    }\n  ]\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000035_000301:s5",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": null,\n    \"explicit_time\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"未明の部屋\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"tsuneko\",\n      \"basis\": \"ツネ子\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"金の切れめが縁の切れめという出鱈目の放言が、のちにひっかかりを生じる\",\n      \"sentence_index\": 8,\n      \"evidence\": \"explicit\",\n      \"basis\": \"その時の自分の、「金の切れめが縁の切れめ」という出鱈目の放言が、のちに到って、意外のひっかかりを生じたのです\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "scene_id": "000035_000301:s6",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"time_surface\": \"十一月の末\",\n    \"explicit_time\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"神田の屋台\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"horiki\",\n      \"basis\": \"堀木\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"神田の屋台\",\n      \"sentence_index\": 2,\n      \"evidence\": \"explicit\",\n      \"basis\": \"自分は、堀木と神田の屋台で安酒を飲み\"\n    }\n  ],\n  \"value_events\": []\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "musume",
+      "excerpt_chars": 827,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, -1, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"用箋と万年筆を持って自分の部屋にやって来て、...自分勝手にひどい束縛を感じて来て、...女性というものは、休んでからの事と、朝、起きてからの事との間に、一つの、つながりをも持たせず\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "doshi",
+      "excerpt_chars": 184,
+      "raw_content": "{\n  \"values_6d\": [\n    0,\n    0,\n    0,\n    -1,\n    0,\n    0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"同志との関係を維持するために懸命に努力し、自分を金縛り状態にしている描写から、利己的な行動をとっていると推測される。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "tsuneko",
+      "excerpt_chars": 764,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, -1, -1, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"ツネ子との出会いは恩として受け止めつつも、その後の関係が束縛や恐怖を生む。世俗的な事象（お勘定の負担）に気を取られる。\"\n}",
+      "parse_error": null
+    },
+    {
+      "trait_id": "horiki",
+      "excerpt_chars": 400,
+      "raw_content": "{\n  \"values_6d\": [\n    0, 0, 0, -1, 0, 0\n  ],\n  \"evidence\": \"inferred\",\n  \"basis\": \"horiki は主人公の悪友として、主人公が学業や画の勉強を放棄し、酒を飲み回るような生活を送るのを助長している。また、主人公がお金がない状況でも飲もうとねばる。\"\n}",
+      "parse_error": null
+    }
+  ]
+}

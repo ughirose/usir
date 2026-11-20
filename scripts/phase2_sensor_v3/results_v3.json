@@ -1,0 +1,4639 @@
+{
+ "runs": [
+  "scripts\\phase2_sensor_v3\\run1",
+  "scripts\\phase2_sensor_v3\\run2",
+  "scripts\\phase2_sensor_v3\\run3"
+ ],
+ "per_run": {
+  "all": [
+   {
+    "scenes": 35,
+    "present": {
+     "tp": 74,
+     "fp": 5,
+     "fn": 17,
+     "precision": 0.9367088607594937,
+     "recall": 0.8131868131868132,
+     "f1": 0.8705882352941177
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 8,
+      "fp": 65,
+      "fn": 66,
+      "precision": 0.1095890410958904,
+      "recall": 0.10810810810810811,
+      "f1": 0.108843537414966
+     },
+     "all_strict": {
+      "tp": 7,
+      "fp": 66,
+      "fn": 67,
+      "precision": 0.0958904109589041,
+      "recall": 0.0945945945945946,
+      "f1": 0.09523809523809525
+     },
+     "core6_pred_obj": {
+      "tp": 8,
+      "fp": 64,
+      "fn": 45,
+      "precision": 0.1111111111111111,
+      "recall": 0.1509433962264151,
+      "f1": 0.12799999999999997
+     },
+     "core6_strict": {
+      "tp": 7,
+      "fp": 65,
+      "fn": 46,
+      "precision": 0.09722222222222222,
+      "recall": 0.1320754716981132,
+      "f1": 0.11199999999999999
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 2,
+      "fp": 19,
+      "fn": 4,
+      "precision": 0.09523809523809523,
+      "recall": 0.3333333333333333,
+      "f1": 0.14814814814814814
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 13,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "HOOK_RESOLVED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 26,
+      "fn": 10,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 4,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "MOVED_TO": {
+      "tp": 6,
+      "fp": 15,
+      "fn": 15,
+      "precision": 0.2857142857142857,
+      "recall": 0.2857142857142857,
+      "f1": 0.2857142857142857
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 21,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     }
+    },
+    "time_relative_order": {
+     "match": 33,
+     "n": 35,
+     "rate": 0.9428571428571428
+    },
+    "time_parallel": {
+     "gold": 2,
+     "pred": 1,
+     "hit": 1
+    },
+    "time_explicit_surface_rule": {
+     "match": 23,
+     "n": 35,
+     "rate": 0.6571428571428571
+    },
+    "time_surface_extracted": {
+     "scenes": 7,
+     "n": 35,
+     "rate": 0.2
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 35,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 24,
+     "n": 35,
+     "rate": 0.6857142857142857
+    },
+    "value_events_total": 2,
+    "traits": {
+     "gold_characters": 28,
+     "gold_characters_with_prediction": 26,
+     "gold_trait_nonzero_axes_total": 54,
+     "gold_nonzero_axes_evaluated": 47,
+     "gold_nonzero_axes_same_sign": {
+      "match": 5,
+      "n": 47,
+      "rate": 0.10638297872340426
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 4,
+      "n": 37,
+      "rate": 0.10810810810810811
+     },
+     "polarity_both_nonzero": {
+      "match": 5,
+      "n": 6,
+      "rate": 0.8333333333333334
+     },
+     "pred_nonzero_axes": 21,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 6,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   },
+   {
+    "scenes": 35,
+    "present": {
+     "tp": 74,
+     "fp": 5,
+     "fn": 17,
+     "precision": 0.9367088607594937,
+     "recall": 0.8131868131868132,
+     "f1": 0.8705882352941177
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 8,
+      "fp": 67,
+      "fn": 66,
+      "precision": 0.10666666666666667,
+      "recall": 0.10810810810810811,
+      "f1": 0.10738255033557047
+     },
+     "all_strict": {
+      "tp": 7,
+      "fp": 68,
+      "fn": 67,
+      "precision": 0.09333333333333334,
+      "recall": 0.0945945945945946,
+      "f1": 0.09395973154362415
+     },
+     "core6_pred_obj": {
+      "tp": 8,
+      "fp": 67,
+      "fn": 45,
+      "precision": 0.10666666666666667,
+      "recall": 0.1509433962264151,
+      "f1": 0.125
+     },
+     "core6_strict": {
+      "tp": 7,
+      "fp": 68,
+      "fn": 46,
+      "precision": 0.09333333333333334,
+      "recall": 0.1320754716981132,
+      "f1": 0.10937499999999999
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 2,
+      "fp": 21,
+      "fn": 4,
+      "precision": 0.08695652173913043,
+      "recall": 0.3333333333333333,
+      "f1": 0.13793103448275862
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 13,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "HOOK_RESOLVED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 25,
+      "fn": 10,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 6,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "MOVED_TO": {
+      "tp": 6,
+      "fp": 15,
+      "fn": 15,
+      "precision": 0.2857142857142857,
+      "recall": 0.2857142857142857,
+      "f1": 0.2857142857142857
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 21,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     }
+    },
+    "time_relative_order": {
+     "match": 33,
+     "n": 35,
+     "rate": 0.9428571428571428
+    },
+    "time_parallel": {
+     "gold": 2,
+     "pred": 1,
+     "hit": 1
+    },
+    "time_explicit_surface_rule": {
+     "match": 23,
+     "n": 35,
+     "rate": 0.6571428571428571
+    },
+    "time_surface_extracted": {
+     "scenes": 7,
+     "n": 35,
+     "rate": 0.2
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 35,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 23,
+     "n": 35,
+     "rate": 0.6571428571428571
+    },
+    "value_events_total": 5,
+    "traits": {
+     "gold_characters": 28,
+     "gold_characters_with_prediction": 26,
+     "gold_trait_nonzero_axes_total": 54,
+     "gold_nonzero_axes_evaluated": 47,
+     "gold_nonzero_axes_same_sign": {
+      "match": 5,
+      "n": 47,
+      "rate": 0.10638297872340426
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 4,
+      "n": 37,
+      "rate": 0.10810810810810811
+     },
+     "polarity_both_nonzero": {
+      "match": 5,
+      "n": 7,
+      "rate": 0.7142857142857143
+     },
+     "pred_nonzero_axes": 22,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 7,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   },
+   {
+    "scenes": 35,
+    "present": {
+     "tp": 74,
+     "fp": 5,
+     "fn": 17,
+     "precision": 0.9367088607594937,
+     "recall": 0.8131868131868132,
+     "f1": 0.8705882352941177
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 8,
+      "fp": 65,
+      "fn": 66,
+      "precision": 0.1095890410958904,
+      "recall": 0.10810810810810811,
+      "f1": 0.108843537414966
+     },
+     "all_strict": {
+      "tp": 7,
+      "fp": 66,
+      "fn": 67,
+      "precision": 0.0958904109589041,
+      "recall": 0.0945945945945946,
+      "f1": 0.09523809523809525
+     },
+     "core6_pred_obj": {
+      "tp": 8,
+      "fp": 64,
+      "fn": 45,
+      "precision": 0.1111111111111111,
+      "recall": 0.1509433962264151,
+      "f1": 0.12799999999999997
+     },
+     "core6_strict": {
+      "tp": 7,
+      "fp": 65,
+      "fn": 46,
+      "precision": 0.09722222222222222,
+      "recall": 0.1320754716981132,
+      "f1": 0.11199999999999999
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 2,
+      "fp": 19,
+      "fn": 4,
+      "precision": 0.09523809523809523,
+      "recall": 0.3333333333333333,
+      "f1": 0.14814814814814814
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 13,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "HOOK_RESOLVED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 26,
+      "fn": 10,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 4,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "MOVED_TO": {
+      "tp": 6,
+      "fp": 15,
+      "fn": 15,
+      "precision": 0.2857142857142857,
+      "recall": 0.2857142857142857,
+      "f1": 0.2857142857142857
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 21,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     }
+    },
+    "time_relative_order": {
+     "match": 33,
+     "n": 35,
+     "rate": 0.9428571428571428
+    },
+    "time_parallel": {
+     "gold": 2,
+     "pred": 1,
+     "hit": 1
+    },
+    "time_explicit_surface_rule": {
+     "match": 23,
+     "n": 35,
+     "rate": 0.6571428571428571
+    },
+    "time_surface_extracted": {
+     "scenes": 7,
+     "n": 35,
+     "rate": 0.2
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 35,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 24,
+     "n": 35,
+     "rate": 0.6857142857142857
+    },
+    "value_events_total": 2,
+    "traits": {
+     "gold_characters": 28,
+     "gold_characters_with_prediction": 26,
+     "gold_trait_nonzero_axes_total": 54,
+     "gold_nonzero_axes_evaluated": 47,
+     "gold_nonzero_axes_same_sign": {
+      "match": 5,
+      "n": 47,
+      "rate": 0.10638297872340426
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 4,
+      "n": 37,
+      "rate": 0.10810810810810811
+     },
+     "polarity_both_nonzero": {
+      "match": 5,
+      "n": 6,
+      "rate": 0.8333333333333334
+     },
+     "pred_nonzero_axes": 21,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 6,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   }
+  ],
+  "modern_11": [
+   {
+    "scenes": 11,
+    "present": {
+     "tp": 24,
+     "fp": 1,
+     "fn": 3,
+     "precision": 0.96,
+     "recall": 0.8888888888888888,
+     "f1": 0.923076923076923
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 4,
+      "fp": 19,
+      "fn": 22,
+      "precision": 0.17391304347826086,
+      "recall": 0.15384615384615385,
+      "f1": 0.16326530612244897
+     },
+     "all_strict": {
+      "tp": 3,
+      "fp": 20,
+      "fn": 23,
+      "precision": 0.13043478260869565,
+      "recall": 0.11538461538461539,
+      "f1": 0.12244897959183673
+     },
+     "core6_pred_obj": {
+      "tp": 4,
+      "fp": 19,
+      "fn": 19,
+      "precision": 0.17391304347826086,
+      "recall": 0.17391304347826086,
+      "f1": 0.17391304347826086
+     },
+     "core6_strict": {
+      "tp": 3,
+      "fp": 20,
+      "fn": 20,
+      "precision": 0.13043478260869565,
+      "recall": 0.13043478260869565,
+      "f1": 0.13043478260869565
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 2,
+      "fp": 4,
+      "fn": 1,
+      "precision": 0.3333333333333333,
+      "recall": 0.6666666666666666,
+      "f1": 0.4444444444444444
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 7,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 12,
+      "fn": 5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "MOVED_TO": {
+      "tp": 2,
+      "fp": 2,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "f1": 0.4
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     }
+    },
+    "time_relative_order": {
+     "match": 11,
+     "n": 11,
+     "rate": 1.0
+    },
+    "time_parallel": {
+     "gold": 0,
+     "pred": 0,
+     "hit": 0
+    },
+    "time_explicit_surface_rule": {
+     "match": 8,
+     "n": 11,
+     "rate": 0.7272727272727273
+    },
+    "time_surface_extracted": {
+     "scenes": 3,
+     "n": 11,
+     "rate": 0.2727272727272727
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 11,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 10,
+     "n": 11,
+     "rate": 0.9090909090909091
+    },
+    "value_events_total": 0,
+    "traits": {
+     "gold_characters": 10,
+     "gold_characters_with_prediction": 10,
+     "gold_trait_nonzero_axes_total": 19,
+     "gold_nonzero_axes_evaluated": 19,
+     "gold_nonzero_axes_same_sign": {
+      "match": 4,
+      "n": 19,
+      "rate": 0.21052631578947367
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 3,
+      "n": 17,
+      "rate": 0.17647058823529413
+     },
+     "polarity_both_nonzero": {
+      "match": 4,
+      "n": 4,
+      "rate": 1.0
+     },
+     "pred_nonzero_axes": 9,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 4,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   },
+   {
+    "scenes": 11,
+    "present": {
+     "tp": 24,
+     "fp": 1,
+     "fn": 3,
+     "precision": 0.96,
+     "recall": 0.8888888888888888,
+     "f1": 0.923076923076923
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 4,
+      "fp": 19,
+      "fn": 22,
+      "precision": 0.17391304347826086,
+      "recall": 0.15384615384615385,
+      "f1": 0.16326530612244897
+     },
+     "all_strict": {
+      "tp": 3,
+      "fp": 20,
+      "fn": 23,
+      "precision": 0.13043478260869565,
+      "recall": 0.11538461538461539,
+      "f1": 0.12244897959183673
+     },
+     "core6_pred_obj": {
+      "tp": 4,
+      "fp": 19,
+      "fn": 19,
+      "precision": 0.17391304347826086,
+      "recall": 0.17391304347826086,
+      "f1": 0.17391304347826086
+     },
+     "core6_strict": {
+      "tp": 3,
+      "fp": 20,
+      "fn": 20,
+      "precision": 0.13043478260869565,
+      "recall": 0.13043478260869565,
+      "f1": 0.13043478260869565
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 2,
+      "fp": 4,
+      "fn": 1,
+      "precision": 0.3333333333333333,
+      "recall": 0.6666666666666666,
+      "f1": 0.4444444444444444
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 7,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 12,
+      "fn": 5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "MOVED_TO": {
+      "tp": 2,
+      "fp": 2,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "f1": 0.4
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     }
+    },
+    "time_relative_order": {
+     "match": 11,
+     "n": 11,
+     "rate": 1.0
+    },
+    "time_parallel": {
+     "gold": 0,
+     "pred": 0,
+     "hit": 0
+    },
+    "time_explicit_surface_rule": {
+     "match": 8,
+     "n": 11,
+     "rate": 0.7272727272727273
+    },
+    "time_surface_extracted": {
+     "scenes": 3,
+     "n": 11,
+     "rate": 0.2727272727272727
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 11,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 10,
+     "n": 11,
+     "rate": 0.9090909090909091
+    },
+    "value_events_total": 0,
+    "traits": {
+     "gold_characters": 10,
+     "gold_characters_with_prediction": 10,
+     "gold_trait_nonzero_axes_total": 19,
+     "gold_nonzero_axes_evaluated": 19,
+     "gold_nonzero_axes_same_sign": {
+      "match": 4,
+      "n": 19,
+      "rate": 0.21052631578947367
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 3,
+      "n": 17,
+      "rate": 0.17647058823529413
+     },
+     "polarity_both_nonzero": {
+      "match": 4,
+      "n": 4,
+      "rate": 1.0
+     },
+     "pred_nonzero_axes": 9,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 4,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   },
+   {
+    "scenes": 11,
+    "present": {
+     "tp": 24,
+     "fp": 1,
+     "fn": 3,
+     "precision": 0.96,
+     "recall": 0.8888888888888888,
+     "f1": 0.923076923076923
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 4,
+      "fp": 19,
+      "fn": 22,
+      "precision": 0.17391304347826086,
+      "recall": 0.15384615384615385,
+      "f1": 0.16326530612244897
+     },
+     "all_strict": {
+      "tp": 3,
+      "fp": 20,
+      "fn": 23,
+      "precision": 0.13043478260869565,
+      "recall": 0.11538461538461539,
+      "f1": 0.12244897959183673
+     },
+     "core6_pred_obj": {
+      "tp": 4,
+      "fp": 19,
+      "fn": 19,
+      "precision": 0.17391304347826086,
+      "recall": 0.17391304347826086,
+      "f1": 0.17391304347826086
+     },
+     "core6_strict": {
+      "tp": 3,
+      "fp": 20,
+      "fn": 20,
+      "precision": 0.13043478260869565,
+      "recall": 0.13043478260869565,
+      "f1": 0.13043478260869565
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 2,
+      "fp": 4,
+      "fn": 1,
+      "precision": 0.3333333333333333,
+      "recall": 0.6666666666666666,
+      "f1": 0.4444444444444444
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 7,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 12,
+      "fn": 5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "MOVED_TO": {
+      "tp": 2,
+      "fp": 2,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "f1": 0.4
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     }
+    },
+    "time_relative_order": {
+     "match": 11,
+     "n": 11,
+     "rate": 1.0
+    },
+    "time_parallel": {
+     "gold": 0,
+     "pred": 0,
+     "hit": 0
+    },
+    "time_explicit_surface_rule": {
+     "match": 8,
+     "n": 11,
+     "rate": 0.7272727272727273
+    },
+    "time_surface_extracted": {
+     "scenes": 3,
+     "n": 11,
+     "rate": 0.2727272727272727
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 11,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 10,
+     "n": 11,
+     "rate": 0.9090909090909091
+    },
+    "value_events_total": 0,
+    "traits": {
+     "gold_characters": 10,
+     "gold_characters_with_prediction": 10,
+     "gold_trait_nonzero_axes_total": 19,
+     "gold_nonzero_axes_evaluated": 19,
+     "gold_nonzero_axes_same_sign": {
+      "match": 4,
+      "n": 19,
+      "rate": 0.21052631578947367
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 3,
+      "n": 17,
+      "rate": 0.17647058823529413
+     },
+     "polarity_both_nonzero": {
+      "match": 4,
+      "n": 4,
+      "rate": 1.0
+     },
+     "pred_nonzero_axes": 9,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 4,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   }
+  ],
+  "f9dev_24": [
+   {
+    "scenes": 24,
+    "present": {
+     "tp": 50,
+     "fp": 4,
+     "fn": 14,
+     "precision": 0.9259259259259259,
+     "recall": 0.78125,
+     "f1": 0.847457627118644
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 4,
+      "fp": 46,
+      "fn": 44,
+      "precision": 0.08,
+      "recall": 0.08333333333333333,
+      "f1": 0.08163265306122448
+     },
+     "all_strict": {
+      "tp": 4,
+      "fp": 46,
+      "fn": 44,
+      "precision": 0.08,
+      "recall": 0.08333333333333333,
+      "f1": 0.08163265306122448
+     },
+     "core6_pred_obj": {
+      "tp": 4,
+      "fp": 45,
+      "fn": 26,
+      "precision": 0.08163265306122448,
+      "recall": 0.13333333333333333,
+      "f1": 0.10126582278481011
+     },
+     "core6_strict": {
+      "tp": 4,
+      "fp": 45,
+      "fn": 26,
+      "precision": 0.08163265306122448,
+      "recall": 0.13333333333333333,
+      "f1": 0.10126582278481011
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 0,
+      "fp": 15,
+      "fn": 3,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 6,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "HOOK_RESOLVED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 14,
+      "fn": 5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 3,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": null,
+      "f1": null
+     },
+     "MOVED_TO": {
+      "tp": 4,
+      "fp": 13,
+      "fn": 11,
+      "precision": 0.23529411764705882,
+      "recall": 0.26666666666666666,
+      "f1": 0.25
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 18,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     }
+    },
+    "time_relative_order": {
+     "match": 22,
+     "n": 24,
+     "rate": 0.9166666666666666
+    },
+    "time_parallel": {
+     "gold": 2,
+     "pred": 1,
+     "hit": 1
+    },
+    "time_explicit_surface_rule": {
+     "match": 15,
+     "n": 24,
+     "rate": 0.625
+    },
+    "time_surface_extracted": {
+     "scenes": 4,
+     "n": 24,
+     "rate": 0.16666666666666666
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 24,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 14,
+     "n": 24,
+     "rate": 0.5833333333333334
+    },
+    "value_events_total": 2,
+    "traits": {
+     "gold_characters": 18,
+     "gold_characters_with_prediction": 16,
+     "gold_trait_nonzero_axes_total": 35,
+     "gold_nonzero_axes_evaluated": 28,
+     "gold_nonzero_axes_same_sign": {
+      "match": 1,
+      "n": 28,
+      "rate": 0.03571428571428571
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 1,
+      "n": 20,
+      "rate": 0.05
+     },
+     "polarity_both_nonzero": {
+      "match": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "pred_nonzero_axes": 12,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 2,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   },
+   {
+    "scenes": 24,
+    "present": {
+     "tp": 50,
+     "fp": 4,
+     "fn": 14,
+     "precision": 0.9259259259259259,
+     "recall": 0.78125,
+     "f1": 0.847457627118644
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 4,
+      "fp": 48,
+      "fn": 44,
+      "precision": 0.07692307692307693,
+      "recall": 0.08333333333333333,
+      "f1": 0.08
+     },
+     "all_strict": {
+      "tp": 4,
+      "fp": 48,
+      "fn": 44,
+      "precision": 0.07692307692307693,
+      "recall": 0.08333333333333333,
+      "f1": 0.08
+     },
+     "core6_pred_obj": {
+      "tp": 4,
+      "fp": 48,
+      "fn": 26,
+      "precision": 0.07692307692307693,
+      "recall": 0.13333333333333333,
+      "f1": 0.0975609756097561
+     },
+     "core6_strict": {
+      "tp": 4,
+      "fp": 48,
+      "fn": 26,
+      "precision": 0.07692307692307693,
+      "recall": 0.13333333333333333,
+      "f1": 0.0975609756097561
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 0,
+      "fp": 17,
+      "fn": 3,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 6,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "HOOK_RESOLVED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 13,
+      "fn": 5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 5,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": null,
+      "f1": null
+     },
+     "MOVED_TO": {
+      "tp": 4,
+      "fp": 13,
+      "fn": 11,
+      "precision": 0.23529411764705882,
+      "recall": 0.26666666666666666,
+      "f1": 0.25
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 18,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     }
+    },
+    "time_relative_order": {
+     "match": 22,
+     "n": 24,
+     "rate": 0.9166666666666666
+    },
+    "time_parallel": {
+     "gold": 2,
+     "pred": 1,
+     "hit": 1
+    },
+    "time_explicit_surface_rule": {
+     "match": 15,
+     "n": 24,
+     "rate": 0.625
+    },
+    "time_surface_extracted": {
+     "scenes": 4,
+     "n": 24,
+     "rate": 0.16666666666666666
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 24,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 13,
+     "n": 24,
+     "rate": 0.5416666666666666
+    },
+    "value_events_total": 5,
+    "traits": {
+     "gold_characters": 18,
+     "gold_characters_with_prediction": 16,
+     "gold_trait_nonzero_axes_total": 35,
+     "gold_nonzero_axes_evaluated": 28,
+     "gold_nonzero_axes_same_sign": {
+      "match": 1,
+      "n": 28,
+      "rate": 0.03571428571428571
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 1,
+      "n": 20,
+      "rate": 0.05
+     },
+     "polarity_both_nonzero": {
+      "match": 1,
+      "n": 3,
+      "rate": 0.3333333333333333
+     },
+     "pred_nonzero_axes": 13,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 3,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   },
+   {
+    "scenes": 24,
+    "present": {
+     "tp": 50,
+     "fp": 4,
+     "fn": 14,
+     "precision": 0.9259259259259259,
+     "recall": 0.78125,
+     "f1": 0.847457627118644
+    },
+    "facts": {
+     "all_pred_obj": {
+      "tp": 4,
+      "fp": 46,
+      "fn": 44,
+      "precision": 0.08,
+      "recall": 0.08333333333333333,
+      "f1": 0.08163265306122448
+     },
+     "all_strict": {
+      "tp": 4,
+      "fp": 46,
+      "fn": 44,
+      "precision": 0.08,
+      "recall": 0.08333333333333333,
+      "f1": 0.08163265306122448
+     },
+     "core6_pred_obj": {
+      "tp": 4,
+      "fp": 45,
+      "fn": 26,
+      "precision": 0.08163265306122448,
+      "recall": 0.13333333333333333,
+      "f1": 0.10126582278481011
+     },
+     "core6_strict": {
+      "tp": 4,
+      "fp": 45,
+      "fn": 26,
+      "precision": 0.08163265306122448,
+      "recall": 0.13333333333333333,
+      "f1": 0.10126582278481011
+     }
+    },
+    "fact_per_predicate_pred_obj": {
+     "ACQUIRED": {
+      "tp": 0,
+      "fp": 15,
+      "fn": 3,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "HOOK_OPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 6,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "HOOK_RESOLVED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "LEARNED": {
+      "tp": 0,
+      "fp": 14,
+      "fn": 5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "LOST": {
+      "tp": 0,
+      "fp": 3,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": null,
+      "f1": null
+     },
+     "MOVED_TO": {
+      "tp": 4,
+      "fp": 13,
+      "fn": 11,
+      "precision": 0.23529411764705882,
+      "recall": 0.26666666666666666,
+      "f1": 0.25
+     },
+     "STATE_CHANGED": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 18,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     }
+    },
+    "time_relative_order": {
+     "match": 22,
+     "n": 24,
+     "rate": 0.9166666666666666
+    },
+    "time_parallel": {
+     "gold": 2,
+     "pred": 1,
+     "hit": 1
+    },
+    "time_explicit_surface_rule": {
+     "match": 15,
+     "n": 24,
+     "rate": 0.625
+    },
+    "time_surface_extracted": {
+     "scenes": 4,
+     "n": 24,
+     "rate": 0.16666666666666666
+    },
+    "time_iso": {
+     "scenes_with_iso": 0,
+     "rate": 0.0,
+     "gold_resolvable_scenes": 0,
+     "match_with_gold_iso": 24,
+     "match_rate": 1.0
+    },
+    "location": {
+     "match": 14,
+     "n": 24,
+     "rate": 0.5833333333333334
+    },
+    "value_events_total": 2,
+    "traits": {
+     "gold_characters": 18,
+     "gold_characters_with_prediction": 16,
+     "gold_trait_nonzero_axes_total": 35,
+     "gold_nonzero_axes_evaluated": 28,
+     "gold_nonzero_axes_same_sign": {
+      "match": 1,
+      "n": 28,
+      "rate": 0.03571428571428571
+     },
+     "gold_nonzero_axes_same_sign_chars_ge2_scenes": {
+      "match": 1,
+      "n": 20,
+      "rate": 0.05
+     },
+     "polarity_both_nonzero": {
+      "match": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "pred_nonzero_axes": 12,
+     "pred_nonzero_axes_where_gold_trait_nonzero": 2,
+     "all_zero_baseline_same_sign_rate": 0.0
+    }
+   }
+  ]
+ },
+ "range": {
+  "all": {
+   "scenes": {
+    "values": [
+     35,
+     35,
+     35
+    ],
+    "min": 35,
+    "max": 35,
+    "mean": 35.0
+   },
+   "present.tp": {
+    "values": [
+     74,
+     74,
+     74
+    ],
+    "min": 74,
+    "max": 74,
+    "mean": 74.0
+   },
+   "present.fp": {
+    "values": [
+     5,
+     5,
+     5
+    ],
+    "min": 5,
+    "max": 5,
+    "mean": 5.0
+   },
+   "present.fn": {
+    "values": [
+     17,
+     17,
+     17
+    ],
+    "min": 17,
+    "max": 17,
+    "mean": 17.0
+   },
+   "present.precision": {
+    "values": [
+     0.9367088607594937,
+     0.9367088607594937,
+     0.9367088607594937
+    ],
+    "min": 0.9367088607594937,
+    "max": 0.9367088607594937,
+    "mean": 0.9367088607594937
+   },
+   "present.recall": {
+    "values": [
+     0.8131868131868132,
+     0.8131868131868132,
+     0.8131868131868132
+    ],
+    "min": 0.8131868131868132,
+    "max": 0.8131868131868132,
+    "mean": 0.8131868131868133
+   },
+   "present.f1": {
+    "values": [
+     0.8705882352941177,
+     0.8705882352941177,
+     0.8705882352941177
+    ],
+    "min": 0.8705882352941177,
+    "max": 0.8705882352941177,
+    "mean": 0.8705882352941177
+   },
+   "facts.all_pred_obj.tp": {
+    "values": [
+     8,
+     8,
+     8
+    ],
+    "min": 8,
+    "max": 8,
+    "mean": 8.0
+   },
+   "facts.all_pred_obj.fp": {
+    "values": [
+     65,
+     67,
+     65
+    ],
+    "min": 65,
+    "max": 67,
+    "mean": 65.66666666666667
+   },
+   "facts.all_pred_obj.fn": {
+    "values": [
+     66,
+     66,
+     66
+    ],
+    "min": 66,
+    "max": 66,
+    "mean": 66.0
+   },
+   "facts.all_pred_obj.precision": {
+    "values": [
+     0.1095890410958904,
+     0.10666666666666667,
+     0.1095890410958904
+    ],
+    "min": 0.10666666666666667,
+    "max": 0.1095890410958904,
+    "mean": 0.10861491628614917
+   },
+   "facts.all_pred_obj.recall": {
+    "values": [
+     0.10810810810810811,
+     0.10810810810810811,
+     0.10810810810810811
+    ],
+    "min": 0.10810810810810811,
+    "max": 0.10810810810810811,
+    "mean": 0.10810810810810811
+   },
+   "facts.all_pred_obj.f1": {
+    "values": [
+     0.108843537414966,
+     0.10738255033557047,
+     0.108843537414966
+    ],
+    "min": 0.10738255033557047,
+    "max": 0.108843537414966,
+    "mean": 0.10835654172183416
+   },
+   "facts.all_strict.tp": {
+    "values": [
+     7,
+     7,
+     7
+    ],
+    "min": 7,
+    "max": 7,
+    "mean": 7.0
+   },
+   "facts.all_strict.fp": {
+    "values": [
+     66,
+     68,
+     66
+    ],
+    "min": 66,
+    "max": 68,
+    "mean": 66.66666666666667
+   },
+   "facts.all_strict.fn": {
+    "values": [
+     67,
+     67,
+     67
+    ],
+    "min": 67,
+    "max": 67,
+    "mean": 67.0
+   },
+   "facts.all_strict.precision": {
+    "values": [
+     0.0958904109589041,
+     0.09333333333333334,
+     0.0958904109589041
+    ],
+    "min": 0.09333333333333334,
+    "max": 0.0958904109589041,
+    "mean": 0.0950380517503805
+   },
+   "facts.all_strict.recall": {
+    "values": [
+     0.0945945945945946,
+     0.0945945945945946,
+     0.0945945945945946
+    ],
+    "min": 0.0945945945945946,
+    "max": 0.0945945945945946,
+    "mean": 0.09459459459459459
+   },
+   "facts.all_strict.f1": {
+    "values": [
+     0.09523809523809525,
+     0.09395973154362415,
+     0.09523809523809525
+    ],
+    "min": 0.09395973154362415,
+    "max": 0.09523809523809525,
+    "mean": 0.09481197400660489
+   },
+   "facts.core6_pred_obj.tp": {
+    "values": [
+     8,
+     8,
+     8
+    ],
+    "min": 8,
+    "max": 8,
+    "mean": 8.0
+   },
+   "facts.core6_pred_obj.fp": {
+    "values": [
+     64,
+     67,
+     64
+    ],
+    "min": 64,
+    "max": 67,
+    "mean": 65.0
+   },
+   "facts.core6_pred_obj.fn": {
+    "values": [
+     45,
+     45,
+     45
+    ],
+    "min": 45,
+    "max": 45,
+    "mean": 45.0
+   },
+   "facts.core6_pred_obj.precision": {
+    "values": [
+     0.1111111111111111,
+     0.10666666666666667,
+     0.1111111111111111
+    ],
+    "min": 0.10666666666666667,
+    "max": 0.1111111111111111,
+    "mean": 0.10962962962962963
+   },
+   "facts.core6_pred_obj.recall": {
+    "values": [
+     0.1509433962264151,
+     0.1509433962264151,
+     0.1509433962264151
+    ],
+    "min": 0.1509433962264151,
+    "max": 0.1509433962264151,
+    "mean": 0.1509433962264151
+   },
+   "facts.core6_pred_obj.f1": {
+    "values": [
+     0.12799999999999997,
+     0.125,
+     0.12799999999999997
+    ],
+    "min": 0.125,
+    "max": 0.12799999999999997,
+    "mean": 0.12699999999999997
+   },
+   "facts.core6_strict.tp": {
+    "values": [
+     7,
+     7,
+     7
+    ],
+    "min": 7,
+    "max": 7,
+    "mean": 7.0
+   },
+   "facts.core6_strict.fp": {
+    "values": [
+     65,
+     68,
+     65
+    ],
+    "min": 65,
+    "max": 68,
+    "mean": 66.0
+   },
+   "facts.core6_strict.fn": {
+    "values": [
+     46,
+     46,
+     46
+    ],
+    "min": 46,
+    "max": 46,
+    "mean": 46.0
+   },
+   "facts.core6_strict.precision": {
+    "values": [
+     0.09722222222222222,
+     0.09333333333333334,
+     0.09722222222222222
+    ],
+    "min": 0.09333333333333334,
+    "max": 0.09722222222222222,
+    "mean": 0.09592592592592593
+   },
+   "facts.core6_strict.recall": {
+    "values": [
+     0.1320754716981132,
+     0.1320754716981132,
+     0.1320754716981132
+    ],
+    "min": 0.1320754716981132,
+    "max": 0.1320754716981132,
+    "mean": 0.1320754716981132
+   },
+   "facts.core6_strict.f1": {
+    "values": [
+     0.11199999999999999,
+     0.10937499999999999,
+     0.11199999999999999
+    ],
+    "min": 0.10937499999999999,
+    "max": 0.11199999999999999,
+    "mean": 0.11112499999999999
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.tp": {
+    "values": [
+     2,
+     2,
+     2
+    ],
+    "min": 2,
+    "max": 2,
+    "mean": 2.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.fp": {
+    "values": [
+     19,
+     21,
+     19
+    ],
+    "min": 19,
+    "max": 21,
+    "mean": 19.666666666666668
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.fn": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.precision": {
+    "values": [
+     0.09523809523809523,
+     0.08695652173913043,
+     0.09523809523809523
+    ],
+    "min": 0.08695652173913043,
+    "max": 0.09523809523809523,
+    "mean": 0.0924775707384403
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.recall": {
+    "values": [
+     0.3333333333333333,
+     0.3333333333333333,
+     0.3333333333333333
+    ],
+    "min": 0.3333333333333333,
+    "max": 0.3333333333333333,
+    "mean": 0.3333333333333333
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.f1": {
+    "values": [
+     0.14814814814814814,
+     0.13793103448275862,
+     0.14814814814814814
+    ],
+    "min": 0.13793103448275862,
+    "max": 0.14814814814814814,
+    "mean": 0.1447424435930183
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.fp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.fn": {
+    "values": [
+     13,
+     13,
+     13
+    ],
+    "min": 13,
+    "max": 13,
+    "mean": 13.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_RESOLVED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_RESOLVED.fp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_RESOLVED.fn": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_RESOLVED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.fp": {
+    "values": [
+     26,
+     25,
+     26
+    ],
+    "min": 25,
+    "max": 26,
+    "mean": 25.666666666666668
+   },
+   "fact_per_predicate_pred_obj.LEARNED.fn": {
+    "values": [
+     10,
+     10,
+     10
+    ],
+    "min": 10,
+    "max": 10,
+    "mean": 10.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.precision": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.f1": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.fp": {
+    "values": [
+     4,
+     6,
+     4
+    ],
+    "min": 4,
+    "max": 6,
+    "mean": 4.666666666666667
+   },
+   "fact_per_predicate_pred_obj.LOST.fn": {
+    "values": [
+     2,
+     2,
+     2
+    ],
+    "min": 2,
+    "max": 2,
+    "mean": 2.0
+   },
+   "fact_per_predicate_pred_obj.LOST.precision": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.f1": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.tp": {
+    "values": [
+     6,
+     6,
+     6
+    ],
+    "min": 6,
+    "max": 6,
+    "mean": 6.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.fp": {
+    "values": [
+     15,
+     15,
+     15
+    ],
+    "min": 15,
+    "max": 15,
+    "mean": 15.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.fn": {
+    "values": [
+     15,
+     15,
+     15
+    ],
+    "min": 15,
+    "max": 15,
+    "mean": 15.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.precision": {
+    "values": [
+     0.2857142857142857,
+     0.2857142857142857,
+     0.2857142857142857
+    ],
+    "min": 0.2857142857142857,
+    "max": 0.2857142857142857,
+    "mean": 0.2857142857142857
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.recall": {
+    "values": [
+     0.2857142857142857,
+     0.2857142857142857,
+     0.2857142857142857
+    ],
+    "min": 0.2857142857142857,
+    "max": 0.2857142857142857,
+    "mean": 0.2857142857142857
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.f1": {
+    "values": [
+     0.2857142857142857,
+     0.2857142857142857,
+     0.2857142857142857
+    ],
+    "min": 0.2857142857142857,
+    "max": 0.2857142857142857,
+    "mean": 0.2857142857142857
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.fp": {
+    "values": [
+     1,
+     0,
+     1
+    ],
+    "min": 0,
+    "max": 1,
+    "mean": 0.6666666666666666
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.fn": {
+    "values": [
+     21,
+     21,
+     21
+    ],
+    "min": 21,
+    "max": 21,
+    "mean": 21.0
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "time_relative_order.match": {
+    "values": [
+     33,
+     33,
+     33
+    ],
+    "min": 33,
+    "max": 33,
+    "mean": 33.0
+   },
+   "time_relative_order.n": {
+    "values": [
+     35,
+     35,
+     35
+    ],
+    "min": 35,
+    "max": 35,
+    "mean": 35.0
+   },
+   "time_relative_order.rate": {
+    "values": [
+     0.9428571428571428,
+     0.9428571428571428,
+     0.9428571428571428
+    ],
+    "min": 0.9428571428571428,
+    "max": 0.9428571428571428,
+    "mean": 0.9428571428571427
+   },
+   "time_parallel.gold": {
+    "values": [
+     2,
+     2,
+     2
+    ],
+    "min": 2,
+    "max": 2,
+    "mean": 2.0
+   },
+   "time_parallel.pred": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "time_parallel.hit": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "time_explicit_surface_rule.match": {
+    "values": [
+     23,
+     23,
+     23
+    ],
+    "min": 23,
+    "max": 23,
+    "mean": 23.0
+   },
+   "time_explicit_surface_rule.n": {
+    "values": [
+     35,
+     35,
+     35
+    ],
+    "min": 35,
+    "max": 35,
+    "mean": 35.0
+   },
+   "time_explicit_surface_rule.rate": {
+    "values": [
+     0.6571428571428571,
+     0.6571428571428571,
+     0.6571428571428571
+    ],
+    "min": 0.6571428571428571,
+    "max": 0.6571428571428571,
+    "mean": 0.6571428571428571
+   },
+   "time_surface_extracted.scenes": {
+    "values": [
+     7,
+     7,
+     7
+    ],
+    "min": 7,
+    "max": 7,
+    "mean": 7.0
+   },
+   "time_surface_extracted.n": {
+    "values": [
+     35,
+     35,
+     35
+    ],
+    "min": 35,
+    "max": 35,
+    "mean": 35.0
+   },
+   "time_surface_extracted.rate": {
+    "values": [
+     0.2,
+     0.2,
+     0.2
+    ],
+    "min": 0.2,
+    "max": 0.2,
+    "mean": 0.20000000000000004
+   },
+   "time_iso.scenes_with_iso": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_iso.rate": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "time_iso.gold_resolvable_scenes": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_iso.match_with_gold_iso": {
+    "values": [
+     35,
+     35,
+     35
+    ],
+    "min": 35,
+    "max": 35,
+    "mean": 35.0
+   },
+   "time_iso.match_rate": {
+    "values": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "min": 1.0,
+    "max": 1.0,
+    "mean": 1.0
+   },
+   "location.match": {
+    "values": [
+     24,
+     23,
+     24
+    ],
+    "min": 23,
+    "max": 24,
+    "mean": 23.666666666666668
+   },
+   "location.n": {
+    "values": [
+     35,
+     35,
+     35
+    ],
+    "min": 35,
+    "max": 35,
+    "mean": 35.0
+   },
+   "location.rate": {
+    "values": [
+     0.6857142857142857,
+     0.6571428571428571,
+     0.6857142857142857
+    ],
+    "min": 0.6571428571428571,
+    "max": 0.6857142857142857,
+    "mean": 0.6761904761904761
+   },
+   "value_events_total": {
+    "values": [
+     2,
+     5,
+     2
+    ],
+    "min": 2,
+    "max": 5,
+    "mean": 3.0
+   },
+   "traits.gold_characters": {
+    "values": [
+     28,
+     28,
+     28
+    ],
+    "min": 28,
+    "max": 28,
+    "mean": 28.0
+   },
+   "traits.gold_characters_with_prediction": {
+    "values": [
+     26,
+     26,
+     26
+    ],
+    "min": 26,
+    "max": 26,
+    "mean": 26.0
+   },
+   "traits.gold_trait_nonzero_axes_total": {
+    "values": [
+     54,
+     54,
+     54
+    ],
+    "min": 54,
+    "max": 54,
+    "mean": 54.0
+   },
+   "traits.gold_nonzero_axes_evaluated": {
+    "values": [
+     47,
+     47,
+     47
+    ],
+    "min": 47,
+    "max": 47,
+    "mean": 47.0
+   },
+   "traits.gold_nonzero_axes_same_sign.match": {
+    "values": [
+     5,
+     5,
+     5
+    ],
+    "min": 5,
+    "max": 5,
+    "mean": 5.0
+   },
+   "traits.gold_nonzero_axes_same_sign.n": {
+    "values": [
+     47,
+     47,
+     47
+    ],
+    "min": 47,
+    "max": 47,
+    "mean": 47.0
+   },
+   "traits.gold_nonzero_axes_same_sign.rate": {
+    "values": [
+     0.10638297872340426,
+     0.10638297872340426,
+     0.10638297872340426
+    ],
+    "min": 0.10638297872340426,
+    "max": 0.10638297872340426,
+    "mean": 0.10638297872340426
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.match": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.n": {
+    "values": [
+     37,
+     37,
+     37
+    ],
+    "min": 37,
+    "max": 37,
+    "mean": 37.0
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.rate": {
+    "values": [
+     0.10810810810810811,
+     0.10810810810810811,
+     0.10810810810810811
+    ],
+    "min": 0.10810810810810811,
+    "max": 0.10810810810810811,
+    "mean": 0.10810810810810811
+   },
+   "traits.polarity_both_nonzero.match": {
+    "values": [
+     5,
+     5,
+     5
+    ],
+    "min": 5,
+    "max": 5,
+    "mean": 5.0
+   },
+   "traits.polarity_both_nonzero.n": {
+    "values": [
+     6,
+     7,
+     6
+    ],
+    "min": 6,
+    "max": 7,
+    "mean": 6.333333333333333
+   },
+   "traits.polarity_both_nonzero.rate": {
+    "values": [
+     0.8333333333333334,
+     0.7142857142857143,
+     0.8333333333333334
+    ],
+    "min": 0.7142857142857143,
+    "max": 0.8333333333333334,
+    "mean": 0.7936507936507936
+   },
+   "traits.pred_nonzero_axes": {
+    "values": [
+     21,
+     22,
+     21
+    ],
+    "min": 21,
+    "max": 22,
+    "mean": 21.333333333333332
+   },
+   "traits.pred_nonzero_axes_where_gold_trait_nonzero": {
+    "values": [
+     6,
+     7,
+     6
+    ],
+    "min": 6,
+    "max": 7,
+    "mean": 6.333333333333333
+   },
+   "traits.all_zero_baseline_same_sign_rate": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   }
+  },
+  "modern_11": {
+   "scenes": {
+    "values": [
+     11,
+     11,
+     11
+    ],
+    "min": 11,
+    "max": 11,
+    "mean": 11.0
+   },
+   "present.tp": {
+    "values": [
+     24,
+     24,
+     24
+    ],
+    "min": 24,
+    "max": 24,
+    "mean": 24.0
+   },
+   "present.fp": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "present.fn": {
+    "values": [
+     3,
+     3,
+     3
+    ],
+    "min": 3,
+    "max": 3,
+    "mean": 3.0
+   },
+   "present.precision": {
+    "values": [
+     0.96,
+     0.96,
+     0.96
+    ],
+    "min": 0.96,
+    "max": 0.96,
+    "mean": 0.96
+   },
+   "present.recall": {
+    "values": [
+     0.8888888888888888,
+     0.8888888888888888,
+     0.8888888888888888
+    ],
+    "min": 0.8888888888888888,
+    "max": 0.8888888888888888,
+    "mean": 0.8888888888888888
+   },
+   "present.f1": {
+    "values": [
+     0.923076923076923,
+     0.923076923076923,
+     0.923076923076923
+    ],
+    "min": 0.923076923076923,
+    "max": 0.923076923076923,
+    "mean": 0.923076923076923
+   },
+   "facts.all_pred_obj.tp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "facts.all_pred_obj.fp": {
+    "values": [
+     19,
+     19,
+     19
+    ],
+    "min": 19,
+    "max": 19,
+    "mean": 19.0
+   },
+   "facts.all_pred_obj.fn": {
+    "values": [
+     22,
+     22,
+     22
+    ],
+    "min": 22,
+    "max": 22,
+    "mean": 22.0
+   },
+   "facts.all_pred_obj.precision": {
+    "values": [
+     0.17391304347826086,
+     0.17391304347826086,
+     0.17391304347826086
+    ],
+    "min": 0.17391304347826086,
+    "max": 0.17391304347826086,
+    "mean": 0.17391304347826086
+   },
+   "facts.all_pred_obj.recall": {
+    "values": [
+     0.15384615384615385,
+     0.15384615384615385,
+     0.15384615384615385
+    ],
+    "min": 0.15384615384615385,
+    "max": 0.15384615384615385,
+    "mean": 0.15384615384615385
+   },
+   "facts.all_pred_obj.f1": {
+    "values": [
+     0.16326530612244897,
+     0.16326530612244897,
+     0.16326530612244897
+    ],
+    "min": 0.16326530612244897,
+    "max": 0.16326530612244897,
+    "mean": 0.16326530612244897
+   },
+   "facts.all_strict.tp": {
+    "values": [
+     3,
+     3,
+     3
+    ],
+    "min": 3,
+    "max": 3,
+    "mean": 3.0
+   },
+   "facts.all_strict.fp": {
+    "values": [
+     20,
+     20,
+     20
+    ],
+    "min": 20,
+    "max": 20,
+    "mean": 20.0
+   },
+   "facts.all_strict.fn": {
+    "values": [
+     23,
+     23,
+     23
+    ],
+    "min": 23,
+    "max": 23,
+    "mean": 23.0
+   },
+   "facts.all_strict.precision": {
+    "values": [
+     0.13043478260869565,
+     0.13043478260869565,
+     0.13043478260869565
+    ],
+    "min": 0.13043478260869565,
+    "max": 0.13043478260869565,
+    "mean": 0.13043478260869565
+   },
+   "facts.all_strict.recall": {
+    "values": [
+     0.11538461538461539,
+     0.11538461538461539,
+     0.11538461538461539
+    ],
+    "min": 0.11538461538461539,
+    "max": 0.11538461538461539,
+    "mean": 0.11538461538461538
+   },
+   "facts.all_strict.f1": {
+    "values": [
+     0.12244897959183673,
+     0.12244897959183673,
+     0.12244897959183673
+    ],
+    "min": 0.12244897959183673,
+    "max": 0.12244897959183673,
+    "mean": 0.12244897959183672
+   },
+   "facts.core6_pred_obj.tp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "facts.core6_pred_obj.fp": {
+    "values": [
+     19,
+     19,
+     19
+    ],
+    "min": 19,
+    "max": 19,
+    "mean": 19.0
+   },
+   "facts.core6_pred_obj.fn": {
+    "values": [
+     19,
+     19,
+     19
+    ],
+    "min": 19,
+    "max": 19,
+    "mean": 19.0
+   },
+   "facts.core6_pred_obj.precision": {
+    "values": [
+     0.17391304347826086,
+     0.17391304347826086,
+     0.17391304347826086
+    ],
+    "min": 0.17391304347826086,
+    "max": 0.17391304347826086,
+    "mean": 0.17391304347826086
+   },
+   "facts.core6_pred_obj.recall": {
+    "values": [
+     0.17391304347826086,
+     0.17391304347826086,
+     0.17391304347826086
+    ],
+    "min": 0.17391304347826086,
+    "max": 0.17391304347826086,
+    "mean": 0.17391304347826086
+   },
+   "facts.core6_pred_obj.f1": {
+    "values": [
+     0.17391304347826086,
+     0.17391304347826086,
+     0.17391304347826086
+    ],
+    "min": 0.17391304347826086,
+    "max": 0.17391304347826086,
+    "mean": 0.17391304347826086
+   },
+   "facts.core6_strict.tp": {
+    "values": [
+     3,
+     3,
+     3
+    ],
+    "min": 3,
+    "max": 3,
+    "mean": 3.0
+   },
+   "facts.core6_strict.fp": {
+    "values": [
+     20,
+     20,
+     20
+    ],
+    "min": 20,
+    "max": 20,
+    "mean": 20.0
+   },
+   "facts.core6_strict.fn": {
+    "values": [
+     20,
+     20,
+     20
+    ],
+    "min": 20,
+    "max": 20,
+    "mean": 20.0
+   },
+   "facts.core6_strict.precision": {
+    "values": [
+     0.13043478260869565,
+     0.13043478260869565,
+     0.13043478260869565
+    ],
+    "min": 0.13043478260869565,
+    "max": 0.13043478260869565,
+    "mean": 0.13043478260869565
+   },
+   "facts.core6_strict.recall": {
+    "values": [
+     0.13043478260869565,
+     0.13043478260869565,
+     0.13043478260869565
+    ],
+    "min": 0.13043478260869565,
+    "max": 0.13043478260869565,
+    "mean": 0.13043478260869565
+   },
+   "facts.core6_strict.f1": {
+    "values": [
+     0.13043478260869565,
+     0.13043478260869565,
+     0.13043478260869565
+    ],
+    "min": 0.13043478260869565,
+    "max": 0.13043478260869565,
+    "mean": 0.13043478260869565
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.tp": {
+    "values": [
+     2,
+     2,
+     2
+    ],
+    "min": 2,
+    "max": 2,
+    "mean": 2.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.fp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.fn": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.precision": {
+    "values": [
+     0.3333333333333333,
+     0.3333333333333333,
+     0.3333333333333333
+    ],
+    "min": 0.3333333333333333,
+    "max": 0.3333333333333333,
+    "mean": 0.3333333333333333
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.recall": {
+    "values": [
+     0.6666666666666666,
+     0.6666666666666666,
+     0.6666666666666666
+    ],
+    "min": 0.6666666666666666,
+    "max": 0.6666666666666666,
+    "mean": 0.6666666666666666
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.f1": {
+    "values": [
+     0.4444444444444444,
+     0.4444444444444444,
+     0.4444444444444444
+    ],
+    "min": 0.4444444444444444,
+    "max": 0.4444444444444444,
+    "mean": 0.4444444444444444
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.fp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.fn": {
+    "values": [
+     7,
+     7,
+     7
+    ],
+    "min": 7,
+    "max": 7,
+    "mean": 7.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.fp": {
+    "values": [
+     12,
+     12,
+     12
+    ],
+    "min": 12,
+    "max": 12,
+    "mean": 12.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.fn": {
+    "values": [
+     5,
+     5,
+     5
+    ],
+    "min": 5,
+    "max": 5,
+    "mean": 5.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.precision": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.f1": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.fp": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "fact_per_predicate_pred_obj.LOST.fn": {
+    "values": [
+     2,
+     2,
+     2
+    ],
+    "min": 2,
+    "max": 2,
+    "mean": 2.0
+   },
+   "fact_per_predicate_pred_obj.LOST.precision": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.f1": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.tp": {
+    "values": [
+     2,
+     2,
+     2
+    ],
+    "min": 2,
+    "max": 2,
+    "mean": 2.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.fp": {
+    "values": [
+     2,
+     2,
+     2
+    ],
+    "min": 2,
+    "max": 2,
+    "mean": 2.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.fn": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.precision": {
+    "values": [
+     0.5,
+     0.5,
+     0.5
+    ],
+    "min": 0.5,
+    "max": 0.5,
+    "mean": 0.5
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.recall": {
+    "values": [
+     0.3333333333333333,
+     0.3333333333333333,
+     0.3333333333333333
+    ],
+    "min": 0.3333333333333333,
+    "max": 0.3333333333333333,
+    "mean": 0.3333333333333333
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.f1": {
+    "values": [
+     0.4,
+     0.4,
+     0.4
+    ],
+    "min": 0.4,
+    "max": 0.4,
+    "mean": 0.4000000000000001
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.fp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.fn": {
+    "values": [
+     3,
+     3,
+     3
+    ],
+    "min": 3,
+    "max": 3,
+    "mean": 3.0
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "time_relative_order.match": {
+    "values": [
+     11,
+     11,
+     11
+    ],
+    "min": 11,
+    "max": 11,
+    "mean": 11.0
+   },
+   "time_relative_order.n": {
+    "values": [
+     11,
+     11,
+     11
+    ],
+    "min": 11,
+    "max": 11,
+    "mean": 11.0
+   },
+   "time_relative_order.rate": {
+    "values": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "min": 1.0,
+    "max": 1.0,
+    "mean": 1.0
+   },
+   "time_parallel.gold": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_parallel.pred": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_parallel.hit": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_explicit_surface_rule.match": {
+    "values": [
+     8,
+     8,
+     8
+    ],
+    "min": 8,
+    "max": 8,
+    "mean": 8.0
+   },
+   "time_explicit_surface_rule.n": {
+    "values": [
+     11,
+     11,
+     11
+    ],
+    "min": 11,
+    "max": 11,
+    "mean": 11.0
+   },
+   "time_explicit_surface_rule.rate": {
+    "values": [
+     0.7272727272727273,
+     0.7272727272727273,
+     0.7272727272727273
+    ],
+    "min": 0.7272727272727273,
+    "max": 0.7272727272727273,
+    "mean": 0.7272727272727272
+   },
+   "time_surface_extracted.scenes": {
+    "values": [
+     3,
+     3,
+     3
+    ],
+    "min": 3,
+    "max": 3,
+    "mean": 3.0
+   },
+   "time_surface_extracted.n": {
+    "values": [
+     11,
+     11,
+     11
+    ],
+    "min": 11,
+    "max": 11,
+    "mean": 11.0
+   },
+   "time_surface_extracted.rate": {
+    "values": [
+     0.2727272727272727,
+     0.2727272727272727,
+     0.2727272727272727
+    ],
+    "min": 0.2727272727272727,
+    "max": 0.2727272727272727,
+    "mean": 0.2727272727272727
+   },
+   "time_iso.scenes_with_iso": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_iso.rate": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "time_iso.gold_resolvable_scenes": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_iso.match_with_gold_iso": {
+    "values": [
+     11,
+     11,
+     11
+    ],
+    "min": 11,
+    "max": 11,
+    "mean": 11.0
+   },
+   "time_iso.match_rate": {
+    "values": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "min": 1.0,
+    "max": 1.0,
+    "mean": 1.0
+   },
+   "location.match": {
+    "values": [
+     10,
+     10,
+     10
+    ],
+    "min": 10,
+    "max": 10,
+    "mean": 10.0
+   },
+   "location.n": {
+    "values": [
+     11,
+     11,
+     11
+    ],
+    "min": 11,
+    "max": 11,
+    "mean": 11.0
+   },
+   "location.rate": {
+    "values": [
+     0.9090909090909091,
+     0.9090909090909091,
+     0.9090909090909091
+    ],
+    "min": 0.9090909090909091,
+    "max": 0.9090909090909091,
+    "mean": 0.9090909090909091
+   },
+   "value_events_total": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "traits.gold_characters": {
+    "values": [
+     10,
+     10,
+     10
+    ],
+    "min": 10,
+    "max": 10,
+    "mean": 10.0
+   },
+   "traits.gold_characters_with_prediction": {
+    "values": [
+     10,
+     10,
+     10
+    ],
+    "min": 10,
+    "max": 10,
+    "mean": 10.0
+   },
+   "traits.gold_trait_nonzero_axes_total": {
+    "values": [
+     19,
+     19,
+     19
+    ],
+    "min": 19,
+    "max": 19,
+    "mean": 19.0
+   },
+   "traits.gold_nonzero_axes_evaluated": {
+    "values": [
+     19,
+     19,
+     19
+    ],
+    "min": 19,
+    "max": 19,
+    "mean": 19.0
+   },
+   "traits.gold_nonzero_axes_same_sign.match": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "traits.gold_nonzero_axes_same_sign.n": {
+    "values": [
+     19,
+     19,
+     19
+    ],
+    "min": 19,
+    "max": 19,
+    "mean": 19.0
+   },
+   "traits.gold_nonzero_axes_same_sign.rate": {
+    "values": [
+     0.21052631578947367,
+     0.21052631578947367,
+     0.21052631578947367
+    ],
+    "min": 0.21052631578947367,
+    "max": 0.21052631578947367,
+    "mean": 0.21052631578947367
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.match": {
+    "values": [
+     3,
+     3,
+     3
+    ],
+    "min": 3,
+    "max": 3,
+    "mean": 3.0
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.n": {
+    "values": [
+     17,
+     17,
+     17
+    ],
+    "min": 17,
+    "max": 17,
+    "mean": 17.0
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.rate": {
+    "values": [
+     0.17647058823529413,
+     0.17647058823529413,
+     0.17647058823529413
+    ],
+    "min": 0.17647058823529413,
+    "max": 0.17647058823529413,
+    "mean": 0.17647058823529413
+   },
+   "traits.polarity_both_nonzero.match": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "traits.polarity_both_nonzero.n": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "traits.polarity_both_nonzero.rate": {
+    "values": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "min": 1.0,
+    "max": 1.0,
+    "mean": 1.0
+   },
+   "traits.pred_nonzero_axes": {
+    "values": [
+     9,
+     9,
+     9
+    ],
+    "min": 9,
+    "max": 9,
+    "mean": 9.0
+   },
+   "traits.pred_nonzero_axes_where_gold_trait_nonzero": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "traits.all_zero_baseline_same_sign_rate": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   }
+  },
+  "f9dev_24": {
+   "scenes": {
+    "values": [
+     24,
+     24,
+     24
+    ],
+    "min": 24,
+    "max": 24,
+    "mean": 24.0
+   },
+   "present.tp": {
+    "values": [
+     50,
+     50,
+     50
+    ],
+    "min": 50,
+    "max": 50,
+    "mean": 50.0
+   },
+   "present.fp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "present.fn": {
+    "values": [
+     14,
+     14,
+     14
+    ],
+    "min": 14,
+    "max": 14,
+    "mean": 14.0
+   },
+   "present.precision": {
+    "values": [
+     0.9259259259259259,
+     0.9259259259259259,
+     0.9259259259259259
+    ],
+    "min": 0.9259259259259259,
+    "max": 0.9259259259259259,
+    "mean": 0.9259259259259259
+   },
+   "present.recall": {
+    "values": [
+     0.78125,
+     0.78125,
+     0.78125
+    ],
+    "min": 0.78125,
+    "max": 0.78125,
+    "mean": 0.78125
+   },
+   "present.f1": {
+    "values": [
+     0.847457627118644,
+     0.847457627118644,
+     0.847457627118644
+    ],
+    "min": 0.847457627118644,
+    "max": 0.847457627118644,
+    "mean": 0.847457627118644
+   },
+   "facts.all_pred_obj.tp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "facts.all_pred_obj.fp": {
+    "values": [
+     46,
+     48,
+     46
+    ],
+    "min": 46,
+    "max": 48,
+    "mean": 46.666666666666664
+   },
+   "facts.all_pred_obj.fn": {
+    "values": [
+     44,
+     44,
+     44
+    ],
+    "min": 44,
+    "max": 44,
+    "mean": 44.0
+   },
+   "facts.all_pred_obj.precision": {
+    "values": [
+     0.08,
+     0.07692307692307693,
+     0.08
+    ],
+    "min": 0.07692307692307693,
+    "max": 0.08,
+    "mean": 0.07897435897435898
+   },
+   "facts.all_pred_obj.recall": {
+    "values": [
+     0.08333333333333333,
+     0.08333333333333333,
+     0.08333333333333333
+    ],
+    "min": 0.08333333333333333,
+    "max": 0.08333333333333333,
+    "mean": 0.08333333333333333
+   },
+   "facts.all_pred_obj.f1": {
+    "values": [
+     0.08163265306122448,
+     0.08,
+     0.08163265306122448
+    ],
+    "min": 0.08,
+    "max": 0.08163265306122448,
+    "mean": 0.08108843537414966
+   },
+   "facts.all_strict.tp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "facts.all_strict.fp": {
+    "values": [
+     46,
+     48,
+     46
+    ],
+    "min": 46,
+    "max": 48,
+    "mean": 46.666666666666664
+   },
+   "facts.all_strict.fn": {
+    "values": [
+     44,
+     44,
+     44
+    ],
+    "min": 44,
+    "max": 44,
+    "mean": 44.0
+   },
+   "facts.all_strict.precision": {
+    "values": [
+     0.08,
+     0.07692307692307693,
+     0.08
+    ],
+    "min": 0.07692307692307693,
+    "max": 0.08,
+    "mean": 0.07897435897435898
+   },
+   "facts.all_strict.recall": {
+    "values": [
+     0.08333333333333333,
+     0.08333333333333333,
+     0.08333333333333333
+    ],
+    "min": 0.08333333333333333,
+    "max": 0.08333333333333333,
+    "mean": 0.08333333333333333
+   },
+   "facts.all_strict.f1": {
+    "values": [
+     0.08163265306122448,
+     0.08,
+     0.08163265306122448
+    ],
+    "min": 0.08,
+    "max": 0.08163265306122448,
+    "mean": 0.08108843537414966
+   },
+   "facts.core6_pred_obj.tp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "facts.core6_pred_obj.fp": {
+    "values": [
+     45,
+     48,
+     45
+    ],
+    "min": 45,
+    "max": 48,
+    "mean": 46.0
+   },
+   "facts.core6_pred_obj.fn": {
+    "values": [
+     26,
+     26,
+     26
+    ],
+    "min": 26,
+    "max": 26,
+    "mean": 26.0
+   },
+   "facts.core6_pred_obj.precision": {
+    "values": [
+     0.08163265306122448,
+     0.07692307692307693,
+     0.08163265306122448
+    ],
+    "min": 0.07692307692307693,
+    "max": 0.08163265306122448,
+    "mean": 0.08006279434850863
+   },
+   "facts.core6_pred_obj.recall": {
+    "values": [
+     0.13333333333333333,
+     0.13333333333333333,
+     0.13333333333333333
+    ],
+    "min": 0.13333333333333333,
+    "max": 0.13333333333333333,
+    "mean": 0.13333333333333333
+   },
+   "facts.core6_pred_obj.f1": {
+    "values": [
+     0.10126582278481011,
+     0.0975609756097561,
+     0.10126582278481011
+    ],
+    "min": 0.0975609756097561,
+    "max": 0.10126582278481011,
+    "mean": 0.10003087372645876
+   },
+   "facts.core6_strict.tp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "facts.core6_strict.fp": {
+    "values": [
+     45,
+     48,
+     45
+    ],
+    "min": 45,
+    "max": 48,
+    "mean": 46.0
+   },
+   "facts.core6_strict.fn": {
+    "values": [
+     26,
+     26,
+     26
+    ],
+    "min": 26,
+    "max": 26,
+    "mean": 26.0
+   },
+   "facts.core6_strict.precision": {
+    "values": [
+     0.08163265306122448,
+     0.07692307692307693,
+     0.08163265306122448
+    ],
+    "min": 0.07692307692307693,
+    "max": 0.08163265306122448,
+    "mean": 0.08006279434850863
+   },
+   "facts.core6_strict.recall": {
+    "values": [
+     0.13333333333333333,
+     0.13333333333333333,
+     0.13333333333333333
+    ],
+    "min": 0.13333333333333333,
+    "max": 0.13333333333333333,
+    "mean": 0.13333333333333333
+   },
+   "facts.core6_strict.f1": {
+    "values": [
+     0.10126582278481011,
+     0.0975609756097561,
+     0.10126582278481011
+    ],
+    "min": 0.0975609756097561,
+    "max": 0.10126582278481011,
+    "mean": 0.10003087372645876
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.fp": {
+    "values": [
+     15,
+     17,
+     15
+    ],
+    "min": 15,
+    "max": 17,
+    "mean": 15.666666666666666
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.fn": {
+    "values": [
+     3,
+     3,
+     3
+    ],
+    "min": 3,
+    "max": 3,
+    "mean": 3.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.precision": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.ACQUIRED.f1": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.fp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.fn": {
+    "values": [
+     6,
+     6,
+     6
+    ],
+    "min": 6,
+    "max": 6,
+    "mean": 6.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_OPENED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_RESOLVED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_RESOLVED.fp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_RESOLVED.fn": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "fact_per_predicate_pred_obj.HOOK_RESOLVED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.fp": {
+    "values": [
+     14,
+     13,
+     14
+    ],
+    "min": 13,
+    "max": 14,
+    "mean": 13.666666666666666
+   },
+   "fact_per_predicate_pred_obj.LEARNED.fn": {
+    "values": [
+     5,
+     5,
+     5
+    ],
+    "min": 5,
+    "max": 5,
+    "mean": 5.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.precision": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LEARNED.f1": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.fp": {
+    "values": [
+     3,
+     5,
+     3
+    ],
+    "min": 3,
+    "max": 5,
+    "mean": 3.6666666666666665
+   },
+   "fact_per_predicate_pred_obj.LOST.fn": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.LOST.precision": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.tp": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.fp": {
+    "values": [
+     13,
+     13,
+     13
+    ],
+    "min": 13,
+    "max": 13,
+    "mean": 13.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.fn": {
+    "values": [
+     11,
+     11,
+     11
+    ],
+    "min": 11,
+    "max": 11,
+    "mean": 11.0
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.precision": {
+    "values": [
+     0.23529411764705882,
+     0.23529411764705882,
+     0.23529411764705882
+    ],
+    "min": 0.23529411764705882,
+    "max": 0.23529411764705882,
+    "mean": 0.2352941176470588
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.recall": {
+    "values": [
+     0.26666666666666666,
+     0.26666666666666666,
+     0.26666666666666666
+    ],
+    "min": 0.26666666666666666,
+    "max": 0.26666666666666666,
+    "mean": 0.26666666666666666
+   },
+   "fact_per_predicate_pred_obj.MOVED_TO.f1": {
+    "values": [
+     0.25,
+     0.25,
+     0.25
+    ],
+    "min": 0.25,
+    "max": 0.25,
+    "mean": 0.25
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.tp": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.fp": {
+    "values": [
+     1,
+     0,
+     1
+    ],
+    "min": 0,
+    "max": 1,
+    "mean": 0.6666666666666666
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.fn": {
+    "values": [
+     18,
+     18,
+     18
+    ],
+    "min": 18,
+    "max": 18,
+    "mean": 18.0
+   },
+   "fact_per_predicate_pred_obj.STATE_CHANGED.recall": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "time_relative_order.match": {
+    "values": [
+     22,
+     22,
+     22
+    ],
+    "min": 22,
+    "max": 22,
+    "mean": 22.0
+   },
+   "time_relative_order.n": {
+    "values": [
+     24,
+     24,
+     24
+    ],
+    "min": 24,
+    "max": 24,
+    "mean": 24.0
+   },
+   "time_relative_order.rate": {
+    "values": [
+     0.9166666666666666,
+     0.9166666666666666,
+     0.9166666666666666
+    ],
+    "min": 0.9166666666666666,
+    "max": 0.9166666666666666,
+    "mean": 0.9166666666666666
+   },
+   "time_parallel.gold": {
+    "values": [
+     2,
+     2,
+     2
+    ],
+    "min": 2,
+    "max": 2,
+    "mean": 2.0
+   },
+   "time_parallel.pred": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "time_parallel.hit": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "time_explicit_surface_rule.match": {
+    "values": [
+     15,
+     15,
+     15
+    ],
+    "min": 15,
+    "max": 15,
+    "mean": 15.0
+   },
+   "time_explicit_surface_rule.n": {
+    "values": [
+     24,
+     24,
+     24
+    ],
+    "min": 24,
+    "max": 24,
+    "mean": 24.0
+   },
+   "time_explicit_surface_rule.rate": {
+    "values": [
+     0.625,
+     0.625,
+     0.625
+    ],
+    "min": 0.625,
+    "max": 0.625,
+    "mean": 0.625
+   },
+   "time_surface_extracted.scenes": {
+    "values": [
+     4,
+     4,
+     4
+    ],
+    "min": 4,
+    "max": 4,
+    "mean": 4.0
+   },
+   "time_surface_extracted.n": {
+    "values": [
+     24,
+     24,
+     24
+    ],
+    "min": 24,
+    "max": 24,
+    "mean": 24.0
+   },
+   "time_surface_extracted.rate": {
+    "values": [
+     0.16666666666666666,
+     0.16666666666666666,
+     0.16666666666666666
+    ],
+    "min": 0.16666666666666666,
+    "max": 0.16666666666666666,
+    "mean": 0.16666666666666666
+   },
+   "time_iso.scenes_with_iso": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_iso.rate": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   },
+   "time_iso.gold_resolvable_scenes": {
+    "values": [
+     0,
+     0,
+     0
+    ],
+    "min": 0,
+    "max": 0,
+    "mean": 0.0
+   },
+   "time_iso.match_with_gold_iso": {
+    "values": [
+     24,
+     24,
+     24
+    ],
+    "min": 24,
+    "max": 24,
+    "mean": 24.0
+   },
+   "time_iso.match_rate": {
+    "values": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "min": 1.0,
+    "max": 1.0,
+    "mean": 1.0
+   },
+   "location.match": {
+    "values": [
+     14,
+     13,
+     14
+    ],
+    "min": 13,
+    "max": 14,
+    "mean": 13.666666666666666
+   },
+   "location.n": {
+    "values": [
+     24,
+     24,
+     24
+    ],
+    "min": 24,
+    "max": 24,
+    "mean": 24.0
+   },
+   "location.rate": {
+    "values": [
+     0.5833333333333334,
+     0.5416666666666666,
+     0.5833333333333334
+    ],
+    "min": 0.5416666666666666,
+    "max": 0.5833333333333334,
+    "mean": 0.5694444444444445
+   },
+   "value_events_total": {
+    "values": [
+     2,
+     5,
+     2
+    ],
+    "min": 2,
+    "max": 5,
+    "mean": 3.0
+   },
+   "traits.gold_characters": {
+    "values": [
+     18,
+     18,
+     18
+    ],
+    "min": 18,
+    "max": 18,
+    "mean": 18.0
+   },
+   "traits.gold_characters_with_prediction": {
+    "values": [
+     16,
+     16,
+     16
+    ],
+    "min": 16,
+    "max": 16,
+    "mean": 16.0
+   },
+   "traits.gold_trait_nonzero_axes_total": {
+    "values": [
+     35,
+     35,
+     35
+    ],
+    "min": 35,
+    "max": 35,
+    "mean": 35.0
+   },
+   "traits.gold_nonzero_axes_evaluated": {
+    "values": [
+     28,
+     28,
+     28
+    ],
+    "min": 28,
+    "max": 28,
+    "mean": 28.0
+   },
+   "traits.gold_nonzero_axes_same_sign.match": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "traits.gold_nonzero_axes_same_sign.n": {
+    "values": [
+     28,
+     28,
+     28
+    ],
+    "min": 28,
+    "max": 28,
+    "mean": 28.0
+   },
+   "traits.gold_nonzero_axes_same_sign.rate": {
+    "values": [
+     0.03571428571428571,
+     0.03571428571428571,
+     0.03571428571428571
+    ],
+    "min": 0.03571428571428571,
+    "max": 0.03571428571428571,
+    "mean": 0.03571428571428571
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.match": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.n": {
+    "values": [
+     20,
+     20,
+     20
+    ],
+    "min": 20,
+    "max": 20,
+    "mean": 20.0
+   },
+   "traits.gold_nonzero_axes_same_sign_chars_ge2_scenes.rate": {
+    "values": [
+     0.05,
+     0.05,
+     0.05
+    ],
+    "min": 0.05,
+    "max": 0.05,
+    "mean": 0.05000000000000001
+   },
+   "traits.polarity_both_nonzero.match": {
+    "values": [
+     1,
+     1,
+     1
+    ],
+    "min": 1,
+    "max": 1,
+    "mean": 1.0
+   },
+   "traits.polarity_both_nonzero.n": {
+    "values": [
+     2,
+     3,
+     2
+    ],
+    "min": 2,
+    "max": 3,
+    "mean": 2.3333333333333335
+   },
+   "traits.polarity_both_nonzero.rate": {
+    "values": [
+     0.5,
+     0.3333333333333333,
+     0.5
+    ],
+    "min": 0.3333333333333333,
+    "max": 0.5,
+    "mean": 0.4444444444444444
+   },
+   "traits.pred_nonzero_axes": {
+    "values": [
+     12,
+     13,
+     12
+    ],
+    "min": 12,
+    "max": 13,
+    "mean": 12.333333333333334
+   },
+   "traits.pred_nonzero_axes_where_gold_trait_nonzero": {
+    "values": [
+     2,
+     3,
+     2
+    ],
+    "min": 2,
+    "max": 3,
+    "mean": 2.3333333333333335
+   },
+   "traits.all_zero_baseline_same_sign_rate": {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "min": 0.0,
+    "max": 0.0,
+    "mean": 0.0
+   }
+  }
+ },
+ "prior_stage2_single_run": {
+  "all": {
+   "present": {
+    "tp": 75,
+    "fp": 3,
+    "fn": 16,
+    "precision": 0.9615384615384616,
+    "recall": 0.8241758241758241,
+    "f1": 0.8875739644970415
+   },
+   "facts": {
+    "tp": 14,
+    "fp": 78,
+    "fn": 60,
+    "precision": 0.15217391304347827,
+    "recall": 0.1891891891891892,
+    "f1": 0.16867469879518074
+   },
+   "facts_strict": {
+    "tp": 11,
+    "fp": 81,
+    "fn": 63,
+    "precision": 0.11956521739130435,
+    "recall": 0.14864864864864866,
+    "f1": 0.13253012048192772
+   },
+   "order": {
+    "match": 32,
+    "n": 35,
+    "rate": 0.9142857142857143
+   },
+   "explicit": {
+    "match": 22,
+    "n": 35,
+    "rate": 0.6285714285714286
+   },
+   "location": {
+    "match": 27,
+    "n": 35,
+    "rate": 0.7714285714285715
+   },
+   "values_6d_gold_nonzero_same_sign": {
+    "match": 17,
+    "n": 66,
+    "rate": 0.25757575757575757
+   }
+  },
+  "modern_11": {
+   "present": {
+    "tp": 24,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.8888888888888888,
+    "f1": 0.9411764705882353
+   },
+   "facts": {
+    "tp": 3,
+    "fp": 28,
+    "fn": 23,
+    "precision": 0.0967741935483871,
+    "recall": 0.11538461538461539,
+    "f1": 0.10526315789473684
+   },
+   "facts_strict": {
+    "tp": 3,
+    "fp": 28,
+    "fn": 23,
+    "precision": 0.0967741935483871,
+    "recall": 0.11538461538461539,
+    "f1": 0.10526315789473684
+   },
+   "order": {
+    "match": 11,
+    "n": 11,
+    "rate": 1.0
+   },
+   "explicit": {
+    "match": 8,
+    "n": 11,
+    "rate": 0.7272727272727273
+   },
+   "location": {
+    "match": 10,
+    "n": 11,
+    "rate": 0.9090909090909091
+   },
+   "values_6d_gold_nonzero_same_sign": {
+    "match": 3,
+    "n": 18,
+    "rate": 0.16666666666666666
+   }
+  },
+  "f9dev_24": {
+   "present": {
+    "tp": 51,
+    "fp": 3,
+    "fn": 13,
+    "precision": 0.9444444444444444,
+    "recall": 0.796875,
+    "f1": 0.8644067796610169
+   },
+   "facts": {
+    "tp": 11,
+    "fp": 50,
+    "fn": 37,
+    "precision": 0.18032786885245902,
+    "recall": 0.22916666666666666,
+    "f1": 0.20183486238532108
+   },
+   "facts_strict": {
+    "tp": 8,
+    "fp": 53,
+    "fn": 40,
+    "precision": 0.13114754098360656,
+    "recall": 0.16666666666666666,
+    "f1": 0.14678899082568808
+   },
+   "order": {
+    "match": 21,
+    "n": 24,
+    "rate": 0.875
+   },
+   "explicit": {
+    "match": 14,
+    "n": 24,
+    "rate": 0.5833333333333334
+   },
+   "location": {
+    "match": 17,
+    "n": 24,
+    "rate": 0.7083333333333334
+   },
+   "values_6d_gold_nonzero_same_sign": {
+    "match": 14,
+    "n": 48,
+    "rate": 0.2916666666666667
+   }
+  }
+ }
+}

@@ -1,0 +1,32 @@
+{
+  "traits": {
+    "shinichi": {
+      "values_6d": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "evidence": "ambiguous",
+      "basis_verbatim": false
+    },
+    "onna": {
+      "values_6d": [
+        0,
+        0,
+        0,
+        -1,
+        1,
+        0
+      ],
+      "evidence": "inferred",
+      "basis_verbatim": false
+    }
+  },
+  "audit": {
+    "shinichi": "ok",
+    "onna": "ok"
+  }
+}
