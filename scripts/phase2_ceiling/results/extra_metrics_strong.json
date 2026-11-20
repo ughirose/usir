@@ -1,0 +1,3317 @@
+{
+ "person_unit_all_gold_nonzero": {
+  "n": 54,
+  "same": 30,
+  "opposite": 1,
+  "zero_pred": 23
+ },
+ "chars_without_alias_in_local_roster": [],
+ "person_unit_comparable_subset": {
+  "n": 54,
+  "same": 30,
+  "opposite": 1
+ },
+ "rows": [
+  {
+   "work": "001798_056779",
+   "char": "boku",
+   "axis": 1,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001798_056779",
+   "char": "fuwa",
+   "axis": 1,
+   "gold": -1,
+   "pred": 0
+  },
+  {
+   "work": "001798_056779",
+   "char": "fuwa",
+   "axis": 3,
+   "gold": -1,
+   "pred": 0
+  },
+  {
+   "work": "001798_056779",
+   "char": "fuwa",
+   "axis": 4,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "001798_056779",
+   "char": "noro",
+   "axis": 3,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "001798_056779",
+   "char": "noro",
+   "axis": 5,
+   "gold": -1,
+   "pred": 0
+  },
+  {
+   "work": "001801_001786",
+   "char": "shinichi",
+   "axis": 0,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001801_001786",
+   "char": "shinichi",
+   "axis": 3,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001801_001786",
+   "char": "shinichi",
+   "axis": 5,
+   "gold": -1,
+   "pred": 0
+  },
+  {
+   "work": "001801_001786",
+   "char": "onna",
+   "axis": 0,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "001801_001786",
+   "char": "onna",
+   "axis": 4,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "001875_059897",
+   "char": "yasue",
+   "axis": 3,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001875_059897",
+   "char": "yasue",
+   "axis": 4,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "001875_059897",
+   "char": "heiroku",
+   "axis": 1,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "001875_059897",
+   "char": "heiroku",
+   "axis": 3,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "001875_059897",
+   "char": "bunkichi",
+   "axis": 3,
+   "gold": -1,
+   "pred": 0
+  },
+  {
+   "work": "001875_059897",
+   "char": "otoe",
+   "axis": 3,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001875_059897",
+   "char": "susumu",
+   "axis": 1,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001875_059897",
+   "char": "susumu",
+   "axis": 5,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000035_000301",
+   "char": "yozo",
+   "axis": 0,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "000035_000301",
+   "char": "yozo",
+   "axis": 1,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "000035_000301",
+   "char": "yozo",
+   "axis": 3,
+   "gold": -1,
+   "pred": 1
+  },
+  {
+   "work": "000035_000301",
+   "char": "yozo",
+   "axis": 4,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "000035_000301",
+   "char": "yozo",
+   "axis": 5,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "000035_000301",
+   "char": "musume",
+   "axis": 4,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000035_000301",
+   "char": "doshi",
+   "axis": 4,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "000035_000301",
+   "char": "tsuneko",
+   "axis": 3,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000035_000301",
+   "char": "tsuneko",
+   "axis": 5,
+   "gold": -1,
+   "pred": 0
+  },
+  {
+   "work": "000035_000301",
+   "char": "horiki",
+   "axis": 4,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001383_056643",
+   "char": "shinichi",
+   "axis": 1,
+   "gold": -1,
+   "pred": 0
+  },
+  {
+   "work": "001383_056643",
+   "char": "shinichi",
+   "axis": 3,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "001383_056643",
+   "char": "shinichi",
+   "axis": 4,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001383_056643",
+   "char": "senkichi",
+   "axis": 5,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "001383_056643",
+   "char": "hagiwara",
+   "axis": 4,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001383_056643",
+   "char": "hagiwara",
+   "axis": 5,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "001383_056643",
+   "char": "jochu",
+   "axis": 1,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "001383_056643",
+   "char": "mitsuko",
+   "axis": 1,
+   "gold": -1,
+   "pred": 0
+  },
+  {
+   "work": "000050_003586",
+   "char": "tabiso",
+   "axis": 2,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "000050_003586",
+   "char": "tabiso",
+   "axis": 3,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "000050_003586",
+   "char": "uba",
+   "axis": 1,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000050_003586",
+   "char": "uba",
+   "axis": 2,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000050_003586",
+   "char": "kundo",
+   "axis": 1,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000050_003586",
+   "char": "kundo",
+   "axis": 4,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "000050_003586",
+   "char": "saihachi",
+   "axis": 4,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000081_000456",
+   "char": "giovanni",
+   "axis": 0,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000081_000456",
+   "char": "giovanni",
+   "axis": 2,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "000081_000456",
+   "char": "giovanni",
+   "axis": 4,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000081_000456",
+   "char": "giovanni",
+   "axis": 5,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000081_000456",
+   "char": "campanella",
+   "axis": 2,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "000081_000456",
+   "char": "campanella",
+   "axis": 3,
+   "gold": 1,
+   "pred": 1
+  },
+  {
+   "work": "000081_000456",
+   "char": "campanella",
+   "axis": 5,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000081_000456",
+   "char": "daigakushi",
+   "axis": 1,
+   "gold": 1,
+   "pred": 0
+  },
+  {
+   "work": "000081_000456",
+   "char": "daigakushi",
+   "axis": 4,
+   "gold": -1,
+   "pred": -1
+  },
+  {
+   "work": "000081_000456",
+   "char": "toritori",
+   "axis": 3,
+   "gold": 1,
+   "pred": 1
+  }
+ ],
+ "scene_diff": [
+  {
+   "scene_id": "001798_056779:s0",
+   "tp": 1,
+   "fp": [
+    {
+     "subject": "boku",
+     "predicate": "ACQUIRED",
+     "object": "不破宅の間借り(賃貸契約)",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "boku",
+     "predicate": "LOST",
+     "object": "四万円",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "boku",
+     "predicate": "LEARNED",
+     "object": "不破夫人は亭主を上回る酒豪",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "boku",
+    "fuwa"
+   ],
+   "present_pred": [
+    "boku",
+    "fuwa"
+   ],
+   "order": [
+    "unknown",
+    "unknown"
+   ],
+   "explicit_time": [
+    [
+     "三日目"
+    ],
+    "三日目"
+   ],
+   "location": [
+    [
+     "代田橋"
+    ],
+    "代田橋"
+   ],
+   "states_gold": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "fuwa": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "states_pred": {
+    "boku": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "fuwa": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001798_056779:s1",
+   "tp": 1,
+   "fp": [
+    {
+     "subject": "boku",
+     "predicate": "LOST",
+     "object": "二千円",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "boku",
+     "predicate": "LOST",
+     "object": "不破夫妻との同居生活",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "fuwa",
+     "predicate": "MOVED_TO",
+     "object": "赤穂",
+     "evidence": "inferred"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "野呂が留守番に来る約束",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": "fuwa",
+     "predicate": "ACQUIRED",
+     "object": "二千円"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "不破の借金の事情"
+    }
+   ],
+   "present_gold": [
+    "boku",
+    "fuwa"
+   ],
+   "present_pred": [
+    "boku",
+    "fuwa"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "失踪の前の晩"
+    ],
+    "失踪の前の晩"
+   ],
+   "location": [
+    [
+     "僕の部屋"
+    ],
+    "僕の部屋"
+   ],
+   "states_gold": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "fuwa": [
+     0,
+     -1,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "boku": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "fuwa": [
+     0,
+     0,
+     -1,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001798_056779:s2",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "boku",
+     "predicate": "LEARNED",
+     "object": "野呂は家を買い受けたと主張している",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "noro",
+     "predicate": "LEARNED",
+     "object": "不破が兵庫に立った",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": "noro",
+     "predicate": "LEARNED",
+     "object": "不破が出発したこと"
+    }
+   ],
+   "present_gold": [
+    "boku",
+    "noro"
+   ],
+   "present_pred": [
+    "boku",
+    "noro"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "翌朝"
+    ],
+    "翌朝"
+   ],
+   "location": [
+    [
+     "板の間",
+     "台所",
+     "庭"
+    ],
+    "板の間"
+   ],
+   "states_gold": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "noro": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "boku": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "noro": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001798_056779:s3",
+   "tp": 1,
+   "fp": [
+    {
+     "subject": "boku",
+     "predicate": "LEARNED",
+     "object": "野呂も不破氏から家を買い受けた",
+     "evidence": "explicit"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "不破数馬との売買をめぐる誤解",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "家の二重契約の誤解"
+    }
+   ],
+   "present_gold": [
+    "boku",
+    "noro"
+   ],
+   "present_pred": [
+    "boku",
+    "noro"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "板の間"
+    ],
+    "板の間"
+   ],
+   "states_gold": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "noro": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "states_pred": {
+    "boku": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "noro": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001801_001786:s0",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "shinichi",
+     "predicate": "MOVED_TO",
+     "object": "沖",
+     "evidence": "explicit"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "女が深夜の海を泳ぐ理由",
+     "evidence": "inferred"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "shinichi",
+    "onna"
+   ],
+   "present_pred": [
+    "shinichi",
+    "onna"
+   ],
+   "order": [
+    "unknown",
+    "unknown"
+   ],
+   "explicit_time": [
+    [
+     "深夜"
+    ],
+    "深夜"
+   ],
+   "location": [
+    [
+     "海"
+    ],
+    "海"
+   ],
+   "states_gold": {
+    "shinichi": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "onna": [
+     -1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "onna": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001801_001786:s1",
+   "tp": 0,
+   "fp": [
+    {
+     "subject": "shinichi",
+     "predicate": "LEARNED",
+     "object": "女は自殺するつもりらしい",
+     "evidence": "inferred"
+    },
+    {
+     "subject": "onna",
+     "predicate": "LEARNED",
+     "object": "慎一の父は去年死んだ",
+     "evidence": "explicit"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "女は死ぬのか",
+     "evidence": "inferred"
+    }
+   ],
+   "fn": [
+    {
+     "subject": "shinichi",
+     "predicate": "LOST",
+     "object": "父"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "女の自殺の意図"
+    },
+    {
+     "subject": "onna",
+     "predicate": "LEARNED",
+     "object": "慎一の父の死生観"
+    }
+   ],
+   "present_gold": [
+    "shinichi",
+    "onna"
+   ],
+   "present_pred": [
+    "shinichi",
+    "onna"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "onna": [
+     -1,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "onna": [
+     -1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001801_001786:s2",
+   "tp": 2,
+   "fp": [],
+   "fn": [],
+   "present_gold": [
+    "shinichi",
+    "onna"
+   ],
+   "present_pred": [
+    "shinichi",
+    "onna"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "海",
+     "沖"
+    ],
+    "沖"
+   ],
+   "states_gold": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "onna": [
+     -1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "onna": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001875_059897:s0",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "heiroku",
+     "predicate": "MOVED_TO",
+     "object": "安江の家",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "yasue",
+    "otoe",
+    "heiroku",
+    "susumu"
+   ],
+   "present_pred": [
+    "yasue",
+    "otoe",
+    "heiroku",
+    "susumu"
+   ],
+   "order": [
+    "unknown",
+    "unknown"
+   ],
+   "explicit_time": [
+    [
+     "斎木少年がきて一か月目ぐらい"
+    ],
+    "一か月目ぐらい"
+   ],
+   "location": [
+    [
+     "安江の家"
+    ],
+    "安江の家"
+   ],
+   "states_gold": {
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "heiroku": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "heiroku": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "otoe": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "susumu": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001875_059897:s1",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "bunkichi",
+     "predicate": "ACQUIRED",
+     "object": "二百円(利子名目の返済)",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "yasue",
+     "predicate": "LEARNED",
+     "object": "文吉が兵六に二千円を貸した",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "heiroku",
+     "predicate": "STATE_CHANGED",
+     "object": "家に来なくなった",
+     "evidence": "explicit"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "進君の部屋の権利金を安江が夫に隠している",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "兵六への貸金の行方"
+    }
+   ],
+   "present_gold": [
+    "yasue",
+    "heiroku",
+    "otoe",
+    "bunkichi"
+   ],
+   "present_pred": [
+    "yasue",
+    "heiroku",
+    "otoe",
+    "bunkichi"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "yasue": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "bunkichi": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ],
+    "heiroku": [
+     0,
+     -1,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "heiroku": [
+     0,
+     -1,
+     -1,
+     -1,
+     0,
+     0
+    ],
+    "yasue": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "bunkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "otoe": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001875_059897:s2",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "bunkichi",
+     "predicate": "LOST",
+     "object": "三千円(兵六への貸金)",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "yasue",
+     "predicate": "LOST",
+     "object": "五百円(進君への貸し)",
+     "evidence": "explicit"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "進君の預けた金が兵六から払われない",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "兵六が進君の生活費を渡さない"
+    }
+   ],
+   "present_gold": [
+    "yasue",
+    "otoe",
+    "susumu"
+   ],
+   "present_pred": [
+    "yasue",
+    "otoe",
+    "susumu"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "otoe": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "susumu": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     -1
+    ],
+    "otoe": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "susumu": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "bunkichi": [
+     0,
+     0,
+     -1,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001875_059897:s3",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "yasue",
+     "predicate": "LEARNED",
+     "object": "進君は兵六になかなか会えない",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "yasue",
+    "susumu"
+   ],
+   "present_pred": [
+    "yasue",
+    "susumu"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    "きょう"
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "susumu": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "states_pred": {
+    "susumu": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "yasue": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000035_000301:s0",
+   "tp": 3,
+   "fp": [
+    {
+     "subject": "yozo",
+     "predicate": "ACQUIRED",
+     "object": "小さいナイフ",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "yozo"
+   ],
+   "present_pred": [
+    "yozo"
+   ],
+   "order": [
+    "unknown",
+    "unknown"
+   ],
+   "explicit_time": [
+    [
+     "二年目の十一月"
+    ],
+    "十一月"
+   ],
+   "location": [
+    [
+     "下宿"
+    ],
+    "下宿"
+   ],
+   "states_gold": {
+    "yozo": [
+     -1,
+     -1,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "states_pred": {
+    "yozo": [
+     -1,
+     -1,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000035_000301:s1",
+   "tp": 0,
+   "fp": [
+    {
+     "subject": "yozo",
+     "predicate": "ACQUIRED",
+     "object": "カルモチン",
+     "evidence": "inferred"
+    },
+    {
+     "subject": "musume",
+     "predicate": "MOVED_TO",
+     "object": "薬屋",
+     "evidence": "inferred"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "yozo",
+    "musume"
+   ],
+   "present_pred": [
+    "yozo",
+    "musume"
+   ],
+   "order": [
+    "parallel",
+    "parallel"
+   ],
+   "explicit_time": [
+    [
+     "その頃"
+    ],
+    "その頃"
+   ],
+   "location": [
+    [
+     "仙遊館",
+     "自分の部屋"
+    ],
+    "仙遊館"
+   ],
+   "states_gold": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ],
+    "musume": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "states_pred": {
+    "yozo": [
+     0,
+     0,
+     0,
+     1,
+     -1,
+     0
+    ],
+    "musume": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000035_000301:s2",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "yozo",
+     "predicate": "ACQUIRED",
+     "object": "同志に買ってもらった品々",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "MOVED_TO",
+     "object": "運動用に借りたビルの洋室",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "ACQUIRED",
+     "object": "大カフエの女給から受けた恩",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "ACQUIRED",
+     "object": "他人に挨拶できる伎倆",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": "yozo",
+     "predicate": "ACQUIRED",
+     "object": "女給の恩"
+    }
+   ],
+   "present_gold": [
+    "yozo",
+    "doshi",
+    "tsuneko"
+   ],
+   "present_pred": [
+    "yozo",
+    "doshi"
+   ],
+   "order": [
+    "parallel",
+    "parallel"
+   ],
+   "explicit_time": [
+    [
+     "或る夏の夜",
+     "同じ頃"
+    ],
+    "或る夏の夜"
+   ],
+   "location": [
+    [
+     "銀座",
+     "大カフエ",
+     "ビルの事務所"
+    ],
+    "銀座の或る大カフエ"
+   ],
+   "states_gold": {
+    "yozo": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     -1
+    ],
+    "doshi": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "states_pred": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     -1
+    ],
+    "doshi": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000035_000301:s3",
+   "tp": 2,
+   "fp": [],
+   "fn": [],
+   "present_gold": [
+    "yozo",
+    "tsuneko"
+   ],
+   "present_pred": [
+    "yozo",
+    "tsuneko"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "秋の、寒い夜"
+    ],
+    "秋の、寒い夜"
+   ],
+   "location": [
+    [
+     "銀座裏",
+     "屋台のお鮨や",
+     "屋台"
+    ],
+    "屋台のお鮨や"
+   ],
+   "states_gold": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tsuneko": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tsuneko": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000035_000301:s4",
+   "tp": 3,
+   "fp": [
+    {
+     "subject": "tsuneko",
+     "predicate": "STATE_CHANGED",
+     "object": "夫への差し入れをやめると決めた",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "yozo",
+    "tsuneko"
+   ],
+   "present_pred": [
+    "yozo",
+    "tsuneko"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "本所の大工さんの二階",
+     "二階"
+    ],
+    "本所の大工さんの二階"
+   ],
+   "states_gold": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tsuneko": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "states_pred": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tsuneko": [
+     -1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000035_000301:s5",
+   "tp": 3,
+   "fp": [],
+   "fn": [],
+   "present_gold": [
+    "yozo",
+    "tsuneko"
+   ],
+   "present_pred": [
+    "yozo",
+    "tsuneko"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "朝"
+    ],
+    "朝"
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ]
+   },
+   "states_pred": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ],
+    "tsuneko": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000035_000301:s6",
+   "tp": 0,
+   "fp": [
+    {
+     "subject": "yozo",
+     "predicate": "STATE_CHANGED",
+     "object": "ツネ子への恐れと束縛感",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "MOVED_TO",
+     "object": "カフエ",
+     "evidence": "inferred"
+    }
+   ],
+   "fn": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "カフエ行きの約束"
+    },
+    {
+     "subject": "yozo",
+     "predicate": "STATE_CHANGED",
+     "object": "酔って大胆になる"
+    }
+   ],
+   "present_gold": [
+    "yozo",
+    "horiki"
+   ],
+   "present_pred": [
+    "yozo",
+    "horiki"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "十一月の末",
+     "ひとつき"
+    ],
+    "十一月の末"
+   ],
+   "location": [
+    [
+     "神田",
+     "屋台"
+    ],
+    "神田の屋台"
+   ],
+   "states_gold": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "horiki": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "states_pred": {
+    "yozo": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "horiki": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001383_056643:s0",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "hagiwara",
+     "predicate": "STATE_CHANGED",
+     "object": "明日学校で意趣返しされる恐れ",
+     "evidence": "inferred"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "present_pred": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "order": [
+    "unknown",
+    "unknown"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001383_056643:s1",
+   "tp": 0,
+   "fp": [
+    {
+     "subject": "senkichi",
+     "predicate": "STATE_CHANGED",
+     "object": "縛られた痕が手首に赤く残る",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "shinichi",
+     "predicate": "LEARNED",
+     "object": "仙吉は泣く真似をしていた",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": "senkichi",
+     "predicate": "STATE_CHANGED",
+     "object": "遊戯で狼に喰い殺される"
+    }
+   ],
+   "present_gold": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "present_pred": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "暫くしてから"
+    ],
+    null
+   ],
+   "location": [
+    [
+     "物置小屋",
+     "お堂"
+    ],
+    "物置小屋"
+   ],
+   "states_gold": {
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001383_056643:s2",
+   "tp": 2,
+   "fp": [],
+   "fn": [],
+   "present_gold": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "present_pred": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "土間"
+    ],
+    "土間"
+   ],
+   "states_gold": {
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001383_056643:s3",
+   "tp": 1,
+   "fp": [],
+   "fn": [],
+   "present_gold": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "present_pred": [
+    "hagiwara",
+    "shinichi",
+    "senkichi"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     -1
+    ],
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1
+    ]
+   }
+  },
+  {
+   "scene_id": "001383_056643:s4",
+   "tp": 3,
+   "fp": [],
+   "fn": [],
+   "present_gold": [
+    "hagiwara",
+    "shinichi",
+    "senkichi",
+    "jochu"
+   ],
+   "present_pred": [
+    "hagiwara",
+    "shinichi",
+    "senkichi",
+    "jochu"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "夕靄"
+    ],
+    "夕靄"
+   ],
+   "location": [
+    [
+     "小屋",
+     "門"
+    ],
+    "小屋"
+   ],
+   "states_gold": {
+    "jochu": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     -1
+    ],
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "jochu": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "001383_056643:s5",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "senkichi",
+     "predicate": "STATE_CHANGED",
+     "object": "学校では餓鬼大将に戻っている",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "hagiwara",
+     "predicate": "MOVED_TO",
+     "object": "中二階の十畳の間",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": "hagiwara",
+     "predicate": "MOVED_TO",
+     "object": "信一の家"
+    }
+   ],
+   "present_gold": [
+    "hagiwara",
+    "shinichi",
+    "senkichi",
+    "jochu",
+    "mitsuko"
+   ],
+   "present_pred": [
+    "hagiwara",
+    "shinichi",
+    "senkichi",
+    "jochu",
+    "mitsuko"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "明くる日",
+     "四五日立った或る日"
+    ],
+    "明くる日"
+   ],
+   "location": [
+    [
+     "学校",
+     "運動場",
+     "中二階の十畳の間"
+    ],
+    "中二階の十畳の間"
+   ],
+   "states_gold": {
+    "shinichi": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "mitsuko": [
+     0,
+     -1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "shinichi": [
+     0,
+     0,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "senkichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "hagiwara": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mitsuko": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000050_003586:s0",
+   "tp": 1,
+   "fp": [
+    {
+     "subject": "tabiso",
+     "predicate": "LEARNED",
+     "object": "浪打際に子産石という名所がある",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "tabiso",
+     "predicate": "STATE_CHANGED",
+     "object": "嘉吉の話を聞いて悚気とした",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": "tabiso",
+     "predicate": "LEARNED",
+     "object": "嘉吉の話"
+    }
+   ],
+   "present_gold": [
+    "tabiso",
+    "uba"
+   ],
+   "present_pred": [
+    "tabiso",
+    "uba"
+   ],
+   "order": [
+    "unknown",
+    "unknown"
+   ],
+   "explicit_time": [
+    [
+     "今日"
+    ],
+    "今日の内"
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "tabiso": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "uba": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "tabiso": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "uba": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000050_003586:s1",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "tabiso",
+     "predicate": "LEARNED",
+     "object": "黒門の別荘の若い人たちの話",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "tabiso",
+    "uba"
+   ],
+   "present_pred": [
+    "tabiso",
+    "uba"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "お店"
+    ],
+    null
+   ],
+   "states_gold": {
+    "tabiso": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0
+    ],
+    "uba": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "tabiso": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0
+    ],
+    "uba": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000050_003586:s2",
+   "tp": 0,
+   "fp": [
+    {
+     "subject": "saihachi",
+     "predicate": "MOVED_TO",
+     "object": "手毬を拾った場所(猫柳の根際)",
+     "evidence": "explicit"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "旅の書生が川で手毬を拾った奇妙な出来事",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "手毬と旅の書生をめぐる出来事"
+    }
+   ],
+   "present_gold": [
+    "niemon",
+    "saihachi",
+    "kundo"
+   ],
+   "present_pred": [
+    "niemon",
+    "saihachi",
+    "kundo"
+   ],
+   "order": [
+    "unknown",
+    "parallel"
+   ],
+   "explicit_time": [
+    [
+     "夜"
+    ],
+    "秋谷の夜"
+   ],
+   "location": [
+    [
+     "小川べり",
+     "黒門",
+     "秋谷"
+    ],
+    "小川べり"
+   ],
+   "states_gold": {
+    "kundo": [
+     0,
+     1,
+     0,
+     0,
+     -1,
+     0
+    ],
+    "saihachi": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "states_pred": {
+    "niemon": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "saihachi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "kundo": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000050_003586:s3",
+   "tp": 1,
+   "fp": [
+    {
+     "subject": null,
+     "predicate": "ACQUIRED",
+     "object": "手毬(旅の書生が川の中で取る)",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "niemon",
+    "saihachi",
+    "kundo"
+   ],
+   "present_pred": [
+    "saihachi",
+    "niemon",
+    "kundo"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "川"
+    ],
+    "川面"
+   ],
+   "states_gold": {
+    "saihachi": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   "states_pred": {
+    "saihachi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "niemon": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "kundo": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000050_003586:s4",
+   "tp": 1,
+   "fp": [],
+   "fn": [
+    {
+     "subject": null,
+     "predicate": "HOOK_RESOLVED",
+     "object": "手毬の下の猫の正体"
+    }
+   ],
+   "present_gold": [
+    "niemon",
+    "saihachi",
+    "kundo"
+   ],
+   "present_pred": [
+    "kundo",
+    "saihachi",
+    "niemon"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [],
+    null
+   ],
+   "states_gold": {
+    "kundo": [
+     0,
+     1,
+     0,
+     0,
+     -1,
+     0
+    ]
+   },
+   "states_pred": {
+    "kundo": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ],
+    "saihachi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "niemon": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000081_000456:s0",
+   "tp": 1,
+   "fp": [
+    {
+     "subject": "giovanni",
+     "predicate": "STATE_CHANGED",
+     "object": "胸いっぱいのかなしみに似た新しい気持ち",
+     "evidence": "explicit"
+    },
+    {
+     "subject": null,
+     "predicate": "HOOK_OPENED",
+     "object": "カムパネルラの決心の中身",
+     "evidence": "inferred"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "giovanni",
+    "campanella",
+    "tabibito"
+   ],
+   "present_pred": [
+    "giovanni",
+    "campanella",
+    "tabibito"
+   ],
+   "order": [
+    "unknown",
+    "unknown"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "車のなか",
+     "車室",
+     "銀河"
+    ],
+    "車室"
+   ],
+   "states_gold": {
+    "giovanni": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "campanella": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     1
+    ]
+   },
+   "states_pred": {
+    "giovanni": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "campanella": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0
+    ],
+    "tabibito": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000081_000456:s1",
+   "tp": 3,
+   "fp": [
+    {
+     "subject": "campanella",
+     "predicate": "MOVED_TO",
+     "object": "白鳥停車場",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "giovanni",
+    "campanella"
+   ],
+   "present_pred": [
+    "giovanni",
+    "campanella"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [
+     "十一時"
+    ],
+    "十一時"
+   ],
+   "location": [
+    [
+     "白鳥停車場",
+     "停車場",
+     "河原"
+    ],
+    "白鳥停車場"
+   ],
+   "states_gold": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ],
+    "campanella": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "campanella": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000081_000456:s2",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "campanella",
+     "predicate": "MOVED_TO",
+     "object": "プリオシン海岸",
+     "evidence": "explicit"
+    },
+    {
+     "subject": "giovanni",
+     "predicate": "ACQUIRED",
+     "object": "くるみの実",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "giovanni",
+    "campanella"
+   ],
+   "present_pred": [
+    "giovanni",
+    "campanella"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "プリオシン海岸",
+     "河原",
+     "渚"
+    ],
+    "プリオシン海岸"
+   ],
+   "states_gold": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ],
+    "campanella": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "states_pred": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "campanella": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000081_000456:s3",
+   "tp": 2,
+   "fp": [],
+   "fn": [],
+   "present_gold": [
+    "giovanni",
+    "campanella",
+    "daigakushi"
+   ],
+   "present_pred": [
+    "giovanni",
+    "campanella",
+    "daigakushi"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "白い岩",
+     "岩"
+    ],
+    null
+   ],
+   "states_gold": {
+    "daigakushi": [
+     0,
+     1,
+     0,
+     0,
+     -1,
+     0
+    ]
+   },
+   "states_pred": {
+    "daigakushi": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ],
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "campanella": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000081_000456:s4",
+   "tp": 2,
+   "fp": [
+    {
+     "subject": "giovanni",
+     "predicate": "STATE_CHANGED",
+     "object": "世界中だって駆けれると思った",
+     "evidence": "explicit"
+    }
+   ],
+   "fn": [],
+   "present_gold": [
+    "giovanni",
+    "campanella",
+    "daigakushi"
+   ],
+   "present_pred": [
+    "giovanni",
+    "campanella",
+    "daigakushi"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "白い岩",
+     "河原",
+     "車室"
+    ],
+    "白い岩"
+   ],
+   "states_gold": {
+    "giovanni": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "states_pred": {
+    "giovanni": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "campanella": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "daigakushi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "scene_id": "000081_000456:s5",
+   "tp": 2,
+   "fp": [],
+   "fn": [],
+   "present_gold": [
+    "giovanni",
+    "campanella",
+    "toritori"
+   ],
+   "present_pred": [
+    "giovanni",
+    "campanella",
+    "toritori"
+   ],
+   "order": [
+    "continuous",
+    "continuous"
+   ],
+   "explicit_time": [
+    [],
+    null
+   ],
+   "location": [
+    [
+     "汽車"
+    ],
+    "車室"
+   ],
+   "states_gold": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "toritori": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   "states_pred": {
+    "giovanni": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "toritori": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "campanella": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  }
+ ]
+}

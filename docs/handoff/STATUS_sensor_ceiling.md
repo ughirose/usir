@@ -6,6 +6,6 @@
 
 ## 進捗
 - [x] worktree/ブランチ作成
-- [ ] 35場面の本文を読み、注釈を書く（ゴール未閲覧）
-- [ ] 採点（従来の measure_stage_b.py）
+- [x] 35場面の注釈（ゴール未閲覧、dccc026 でコミット）
+- [x] 採点（従来の measure_stage_b.py。結果は scripts/phase2_ceiling/results/）
 - [ ] レポート F:\マイドライブ\Claude-Sync\inbox\2026-11-20_sensor_ceiling_report.md
