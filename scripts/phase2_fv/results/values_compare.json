@@ -1,0 +1,47 @@
+{
+ "baseline": {
+  "gold_char_scenes": 71,
+  "matched": 46,
+  "gold_nz_matched": 66,
+  "same": 17,
+  "pred0": 44,
+  "opp": 5,
+  "gold_nz_all": 97,
+  "same_over_all_gold_nz": 17,
+  "pred_nz": 57,
+  "pred_nz_on_goldzero": 35,
+  "allzero_vectors": 25,
+  "same_rate_on_matched": 0.258,
+  "same_rate_over_all_gold_nz": 0.175
+ },
+ "control": {
+  "gold_char_scenes": 71,
+  "matched": 48,
+  "gold_nz_matched": 67,
+  "same": 20,
+  "pred0": 43,
+  "opp": 4,
+  "gold_nz_all": 97,
+  "same_over_all_gold_nz": 20,
+  "pred_nz": 65,
+  "pred_nz_on_goldzero": 41,
+  "allzero_vectors": 22,
+  "same_rate_on_matched": 0.299,
+  "same_rate_over_all_gold_nz": 0.206
+ },
+ "values_ctx": {
+  "gold_char_scenes": 71,
+  "matched": 41,
+  "gold_nz_matched": 53,
+  "same": 12,
+  "pred0": 38,
+  "opp": 3,
+  "gold_nz_all": 97,
+  "same_over_all_gold_nz": 12,
+  "pred_nz": 33,
+  "pred_nz_on_goldzero": 18,
+  "allzero_vectors": 25,
+  "same_rate_on_matched": 0.226,
+  "same_rate_over_all_gold_nz": 0.124
+ }
+}

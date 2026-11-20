@@ -1,0 +1,331 @@
+{
+ "traces": [
+  {
+   "scene_id": "001875_059897:s0",
+   "present": [
+    {
+     "id": "yasue",
+     "basis": "安江"
+    },
+    {
+     "id": "otoe",
+     "basis": "音枝ちゃん"
+    },
+    {
+     "id": "heiroku",
+     "basis": "兵六さん"
+    },
+    {
+     "id": "susumu",
+     "basis": "進君"
+    }
+   ],
+   "states": [
+    {
+     "id": "yasue",
+     "basis": "安江たちにしろ、そんなことよりも、目の前の、足下の、たった今の、その問題を解決するようなつもりで、連れて帰ったのである。"
+    },
+    {
+     "id": "heiroku",
+     "basis": "兵六さんはいんぎんに両手をつき、\n「どうもどうも。つい心やすだてにご無礼いたしました。」"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "安江が、三人になって帰宅すると"
+    },
+    {
+     "basis": "安江たちにしろ、そんなことよりも、目の前の、足下の、たった今の、その問題を解決するようなつもりで、連れて帰ったのである。"
+    },
+    {
+     "basis": "兵六さんがきて、待っていた"
+    }
+   ],
+   "location_surface": "安江の家"
+  },
+  {
+   "scene_id": "001875_059897:s1",
+   "present": [
+    {
+     "id": "yasue",
+     "basis": "安江"
+    },
+    {
+     "id": "heiroku",
+     "basis": "兵六さん"
+    },
+    {
+     "id": "otoe",
+     "basis": "音枝"
+    },
+    {
+     "id": "bunkichi",
+     "basis": "文吉"
+    }
+   ],
+   "states": [
+    {
+     "id": "yasue",
+     "basis": "安江はつい許す気になり、\n「でも、進君のはひどいわよ鷲さん、進君には悪いけどさ、困るのよ。文吉、おこってるわよ。」"
+    },
+    {
+     "id": "heiroku",
+     "basis": "兵六さんはせっせとミルクを運んできてくれた。\nしかし、まもなく食糧統制違反で新聞にも出るなどやみ屋なりのはなやかさでうわさにのぼるようになって以来、兵六さんの足はだんだん遠のき、やがてぱったり来なくなってしまった。"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "安江はつい許す気になり、\n「でも、進君のはひどいわよ鷲さん、進君には悪いけどさ、困るのよ。文吉、おこってるわよ。」"
+    },
+    {
+     "basis": "しかし、まもなく食糧統制違反で新聞にも出るなどやみ屋なりのはなやかさでうわさにのぼるようになって以来、兵六さんの足はだんだん遠のき、やがてぱったり来なくなってしまった。"
+    },
+    {
+     "basis": "二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。"
+    },
+    {
+     "basis": "二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。"
+    }
+   ],
+   "location_surface": null
+  },
+  {
+   "scene_id": "001875_059897:s2",
+   "present": [
+    {
+     "id": "yasue",
+     "basis": "安江"
+    },
+    {
+     "id": "otoe",
+     "basis": "音枝"
+    }
+   ],
+   "states": [
+    {
+     "id": "otoe",
+     "basis": "音枝は素直に引きさがるのだが、やがてまた安江の顔色をうかがうようにして、"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "進君のうちね、ずい分たくさん兵六おじさんにお金預けたんだってよ。"
+    },
+    {
+     "basis": "兵六おじさん、何べん行ってもあえないんですって。"
+    },
+    {
+     "basis": "進君が五百円かしてくれっていってんだけど。"
+    },
+    {
+     "basis": "安江は柔和な顔で五百円をわたしながら、"
+    }
+   ],
+   "location_surface": null
+  },
+  {
+   "scene_id": "001875_059897:s3",
+   "present": [
+    {
+     "id": "yasue",
+     "basis": "安江"
+    }
+   ],
+   "states": [],
+   "facts": [],
+   "location_surface": null
+  }
+ ],
+ "raw": [
+  {
+   "scene_id": "001875_059897:s0",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"安江の家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yasue\",\n      \"basis\": \"安江\"\n    },\n    {\n      \"id\": \"otoe\",\n      \"basis\": \"音枝ちゃん\"\n    },\n    {\n      \"id\": \"heiroku\",\n      \"basis\": \"兵六さん\"\n    },\n    {\n      \"id\": \"susumu\",\n      \"basis\": \"進君\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yasue\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"安江たちにしろ、そんなことよりも、目の前の、足下の、たった今の、その問題を解決するようなつもりで、連れて帰ったのである。\"\n    },\n    {\n      \"character_id\": \"heiroku\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"兵六さんはいんぎんに両手をつき、\\n「どうもどうも。つい心やすだてにご無礼いたしました。」\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"安江の家\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"安江が、三人になって帰宅すると\"\n    },\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"赤ん坊\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"安江たちにしろ、そんなことよりも、目の前の、足下の、たった今の、その問題を解決するようなつもりで、連れて帰ったのである。\"\n    },\n    {\n      \"subject\": \"heiroku\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"安江の家\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"兵六さんがきて、待っていた\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [],
+   "elapsed_sec": 11.613,
+   "prompt_eval_count": 1631
+  },
+  {
+   "scene_id": "001875_059897:s1",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yasue\",\n      \"basis\": \"安江\"\n    },\n    {\n      \"id\": \"heiroku\",\n      \"basis\": \"兵六さん\"\n    },\n    {\n      \"id\": \"otoe\",\n      \"basis\": \"音枝\"\n    },\n    {\n      \"id\": \"bunkichi\",\n      \"basis\": \"文吉\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yasue\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"安江はつい許す気になり、\\n「でも、進君のはひどいわよ鷲さん、進君には悪いけどさ、困るのよ。文吉、おこってるわよ。」\"\n    },\n    {\n      \"character_id\": \"heiroku\",\n      \"values_6d\": [0, 0, 0, 1, 0, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"兵六さんはせっせとミルクを運んできてくれた。\\nしかし、まもなく食糧統制違反で新聞にも出るなどやみ屋なりのはなやかさでうわさにのぼるようになって以来、兵六さんの足はだんだん遠のき、やがてぱったり来なくなってしまった。\"\n    },\n    {\n      \"character_id\": \"otoe\",\n      \"values_6d\": [0, 0, 0, 0, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"音枝がそういうと、文吉は文吉で、\\n「警察にあげられるったって、それほどのやみ屋じゃあるまい。おれはそう見てる。」\"\n    },\n    {\n      \"character_id\": \"bunkichi\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。\\n「二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。」\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"兵六さんがミルクを運んできた\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"安江はつい許す気になり、\\n「でも、進君のはひどいわよ鷲さん、進君には悪いけどさ、困るのよ。文吉、おこってるわよ。」\"\n    },\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"兵六さんが足が遠のいた\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"しかし、まもなく食糧統制違反で新聞にも出るなどやみ屋なりのはなやかさでうわさにのぼるようになって以来、兵六さんの足はだんだん遠のき、やがてぱったり来なくなってしまった。\"\n    },\n    {\n      \"subject\": \"bunkichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"二百円\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。\"\n    },\n    {\n      \"subject\": \"bunkichi\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"へそくり\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "location",
+     "reason": "surface_not_in_text",
+     "item": "家"
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "otoe",
+      "values_6d": [
+       0,
+       0,
+       0,
+       0,
+       1,
+       0
+      ],
+      "evidence": "inferred",
+      "basis": "音枝がそういうと、文吉は文吉で、\n「警察にあげられるったって、それほどのやみ屋じゃあるまい。おれはそう見てる。」"
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "bunkichi",
+      "values_6d": [
+       0,
+       0,
+       0,
+       -1,
+       1,
+       0
+      ],
+      "evidence": "inferred",
+      "basis": "二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。\n「二百円だけね。利子の前払いだっていってさ、その場で差し引いてくれたよ。」"
+     }
+    }
+   ],
+   "elapsed_sec": 20.774,
+   "prompt_eval_count": 1818
+  },
+  {
+   "scene_id": "001875_059897:s2",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"安江の家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yasue\",\n      \"basis\": \"安江\"\n    },\n    {\n      \"id\": \"otoe\",\n      \"basis\": \"音枝\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yasue\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"安江は進君をとおして毎日のように兵六さんのうわさを聞いていた。それをあんばいして安江に告げるのである。\"\n    },\n    {\n      \"character_id\": \"otoe\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"音枝は素直に引きさがるのだが、やがてまた安江の顔色をうかがうようにして、\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"otoe\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"進君の権利金\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"進君のうちね、ずい分たくさん兵六おじさんにお金預けたんだってよ。\"\n    },\n    {\n      \"subject\": \"otoe\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"兵六おじさん、何べん行ってもあえない\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"兵六おじさん、何べん行ってもあえないんですって。\"\n    },\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"五百円\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"進君が五百円かしてくれっていってんだけど。\"\n    },\n    {\n      \"subject\": \"yasue\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"五百円をわたす\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"安江は柔和な顔で五百円をわたしながら、\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "location",
+     "reason": "surface_not_in_text",
+     "item": "安江の家"
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "yasue",
+      "values_6d": [
+       0,
+       0,
+       0,
+       -1,
+       1,
+       0
+      ],
+      "evidence": "inferred",
+      "basis": "安江は進君をとおして毎日のように兵六さんのうわさを聞いていた。それをあんばいして安江に告げるのである。"
+     }
+    }
+   ],
+   "elapsed_sec": 12.254,
+   "prompt_eval_count": 1656
+  },
+  {
+   "scene_id": "001875_059897:s3",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"安江の家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"otoe\",\n      \"basis\": \"音枝\"\n    },\n    {\n      \"id\": \"susumu\",\n      \"basis\": \"当の進君\"\n    },\n    {\n      \"id\": \"yasue\",\n      \"basis\": \"安江\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"otoe\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"\"\n    },\n    {\n      \"character_id\": \"susumu\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"\"\n    },\n    {\n      \"character_id\": \"yasue\",\n      \"values_6d\": [0, 0, 0, 1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"柔和な顔で五百円をわたしながら、慰めずにいられなくなる\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"susumu\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"状況\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"「あんたも困ってでしょうけどね、わたしんとこも困るのよ。お金のことより、部屋のことよ。」\"\n    },\n    {\n      \"subject\": \"susumu\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"決意\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"「ことしうちぐらいには、さがしてくださいね。」\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "location",
+     "reason": "surface_not_in_text",
+     "item": "安江の家"
+    },
+    {
+     "kind": "present",
+     "reason": "basis_not_in_text",
+     "item": {
+      "id": "otoe",
+      "basis": "音枝"
+     }
+    },
+    {
+     "kind": "present",
+     "reason": "basis_not_in_text",
+     "item": {
+      "id": "susumu",
+      "basis": "当の進君"
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "otoe",
+      "values_6d": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "evidence": "ambiguous",
+      "basis": ""
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "susumu",
+      "values_6d": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "evidence": "ambiguous",
+      "basis": ""
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "yasue",
+      "values_6d": [
+       0,
+       0,
+       0,
+       1,
+       1,
+       0
+      ],
+      "evidence": "inferred",
+      "basis": "柔和な顔で五百円をわたしながら、慰めずにいられなくなる"
+     }
+    },
+    {
+     "kind": "fact",
+     "reason": "basis_not_in_text",
+     "item": {
+      "subject": "susumu",
+      "predicate": "STATE_CHANGED",
+      "object": "状況",
+      "evidence": "explicit",
+      "basis": "「あんたも困ってでしょうけどね、わたしんとこも困るのよ。お金のことより、部屋のことよ。」"
+     }
+    },
+    {
+     "kind": "fact",
+     "reason": "basis_not_in_text",
+     "item": {
+      "subject": "susumu",
+      "predicate": "STATE_CHANGED",
+      "object": "決意",
+      "evidence": "explicit",
+      "basis": "「ことしうちぐらいには、さがしてくださいね。」"
+     }
+    }
+   ],
+   "elapsed_sec": 9.711,
+   "prompt_eval_count": 1308
+  }
+ ]
+}

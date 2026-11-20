@@ -1,0 +1,278 @@
+{
+ "traces": [
+  {
+   "scene_id": "000081_000456:s0",
+   "present": [
+    {
+     "id": "giovanni",
+     "basis": "ジョバンニはびっくりして叫びました"
+    },
+    {
+     "id": "campanella",
+     "basis": "カムパネルラは、なにかほんとうに決心しているように見えました"
+    },
+    {
+     "id": "tabibito",
+     "basis": "車室の中の旅人たちは、みなまっすぐにきもののひだを垂れ、黒いバイブルを胸にあてたり、水晶の珠数をかけたり"
+    }
+   ],
+   "states": [
+    {
+     "id": "giovanni",
+     "basis": "びっくりして叫びました"
+    },
+    {
+     "id": "campanella",
+     "basis": "なにかほんとうに決心しているように見えました"
+    }
+   ],
+   "facts": [],
+   "location_surface": "車のなか"
+  },
+  {
+   "scene_id": "000081_000456:s1",
+   "present": [
+    {
+     "id": "giovanni",
+     "basis": "ジョバンニが云いました"
+    },
+    {
+     "id": "campanella",
+     "basis": "カムパネルラは"
+    }
+   ],
+   "states": [
+    {
+     "id": "giovanni",
+     "basis": "ジョバンニが云いました"
+    },
+    {
+     "id": "campanella",
+     "basis": "カムパネルラは"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "二人は一度にはねあがってドアを飛び出して改札口へかけて行きました"
+    },
+    {
+     "basis": "二人は一度にはねあがってドアを飛び出して改札口へかけて行きました"
+    }
+   ],
+   "location_surface": "白鳥停車場"
+  },
+  {
+   "scene_id": "000081_000456:s2",
+   "present": [
+    {
+     "id": "giovanni",
+     "basis": "ジョバンニもぼんやり答えていました"
+    }
+   ],
+   "states": [
+    {
+     "id": "giovanni",
+     "basis": "ジョバンニもぼんやり答えていました"
+    },
+    {
+     "id": "campanella",
+     "basis": "カムパネルラが、不思議そうに立ちどまって、岩から黒い細長いさきの尖ったくるみの実のようなものをひろいました"
+    }
+   ],
+   "facts": [],
+   "location_surface": null
+  },
+  {
+   "scene_id": "000081_000456:s3",
+   "present": [
+    {
+     "id": "daigakushi",
+     "basis": "一人のせいの高い、ひどい近眼鏡をかけ、長靴をはいた学者らしい人"
+    },
+    {
+     "id": "tabibito",
+     "basis": "三人の助手らしい人たち"
+    }
+   ],
+   "states": [
+    {
+     "id": "daigakushi",
+     "basis": "手帳に何かせわしそうに書きつけながら、鶴嘴をふりあげたり、スコープをつかったりしている"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "くるみが沢山あったろう。それはまあ、ざっと百二十万年ぐらい前のくるみだよ"
+    },
+    {
+     "basis": "ボスといってね、いまの牛の先祖で、昔はたくさん居たさ"
+    }
+   ],
+   "location_surface": null
+  },
+  {
+   "scene_id": "000081_000456:s4",
+   "present": [
+    {
+     "id": "giovanni",
+     "basis": "ジョバンニ"
+    },
+    {
+     "id": "daigakushi",
+     "basis": "大学士"
+    }
+   ],
+   "states": [
+    {
+     "id": "campanella",
+     "basis": "地図と腕時計とをくらべながら云いました"
+    },
+    {
+     "id": "giovanni",
+     "basis": "ていねいに大学士におじぎしました"
+    },
+    {
+     "id": "daigakushi",
+     "basis": "また忙がしそうに、あちこち歩きまわって監督をはじめました"
+    }
+   ],
+   "facts": [],
+   "location_surface": null
+  },
+  {
+   "scene_id": "000081_000456:s5",
+   "present": [
+    {
+     "id": "giovanni",
+     "basis": "ジョバンニは、少し肩をすぼめて挨拶しました。"
+    },
+    {
+     "id": "campanella",
+     "basis": "カムパネルラは、車室の天井を、あちこち見ていました。"
+    },
+    {
+     "id": "toritori",
+     "basis": "それは、茶いろの少しぼろぼろの外套を着て、白い巾でつつんだ荷物を、二つに分けて肩に掛けた、赤髯のせなかのかがんだ人でした。"
+    }
+   ],
+   "states": [
+    {
+     "id": "campanella",
+     "basis": "カムパネルラは、車室の天井を、あちこち見ていました。"
+    },
+    {
+     "id": "toritori",
+     "basis": "赤ひげの人は、なにかなつかしそうにわらいながら、ジョバンニやカムパネルラのようすを見ていました。"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "それは、茶いろの少しぼろぼろの外套を着て、白い巾でつつんだ荷物を、二つに分けて肩に掛けた、赤髯のせなかのかがんだ人でした。"
+    }
+   ],
+   "location_surface": "車室"
+  }
+ ],
+ "raw": [
+  {
+   "scene_id": "000081_000456:s0",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"車のなか\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニはびっくりして叫びました\"\n    },\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネルラは、なにかほんとうに決心しているように見えました\"\n    },\n    {\n      \"id\": \"tabibito\",\n      \"basis\": \"車室の中の旅人たちは、みなまっすぐにきもののひだを垂れ、黒いバイブルを胸にあてたり、水晶の珠数をかけたり\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"giovanni\",\n      \"values_6d\": [0, 0, 0, 0, 1, 0],\n      \"evidence\": \"explicit\",\n      \"basis\": \"びっくりして叫びました\"\n    },\n    {\n      \"character_id\": \"campanella\",\n      \"values_6d\": [0, 0, 0, 0, 1, 0],\n      \"evidence\": \"explicit\",\n      \"basis\": \"なにかほんとうに決心しているように見えました\"\n    }\n  ],\n  \"fact_updates\": []\n}",
+   "parse_error": null,
+   "rejected": [],
+   "elapsed_sec": 7.63,
+   "prompt_eval_count": 2123
+  },
+  {
+   "scene_id": "000081_000456:s1",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": \"十一時\",\n    \"elapsed_hint\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"白鳥停車場\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニが云いました\"\n    },\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネルラは\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"giovanni\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"ジョバンニが云いました\"\n    },\n    {\n      \"character_id\": \"campanella\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"カムパネルラは\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"giovanni\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"白鳥停車場\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"二人は一度にはねあがってドアを飛び出して改札口へかけて行きました\"\n    },\n    {\n      \"subject\": \"campanella\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"白鳥停車場\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"二人は一度にはねあがってドアを飛び出して改札口へかけて行きました\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [],
+   "elapsed_sec": 8.728,
+   "prompt_eval_count": 2030
+  },
+  {
+   "scene_id": "000081_000456:s2",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"きれいな河原\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニもぼんやり答えていました\"\n    },\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネルラは、そのきれいな砂を一つまみ、掌にひろげ、指できしきしさせながら、夢のように云っているのでした\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"giovanni\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"ジョバンニもぼんやり答えていました\"\n    },\n    {\n      \"character_id\": \"campanella\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"カムパネルラが、不思議そうに立ちどまって、岩から黒い細長いさきの尖ったくるみの実のようなものをひろいました\"\n    }\n  ],\n  \"fact_updates\": []\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "location",
+     "reason": "surface_not_in_text",
+     "item": "きれいな河原"
+    },
+    {
+     "kind": "present",
+     "reason": "basis_not_in_text",
+     "item": {
+      "id": "campanella",
+      "basis": "カムパネルラは、そのきれいな砂を一つまみ、掌にひろげ、指できしきしさせながら、夢のように云っているのでした"
+     }
+    }
+   ],
+   "elapsed_sec": 7.383,
+   "prompt_eval_count": 2064
+  },
+  {
+   "scene_id": "000081_000456:s3",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"ぎざぎざの黒いくるみの実\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"daigakushi\",\n      \"basis\": \"一人のせいの高い、ひどい近眼鏡をかけ、長靴をはいた学者らしい人\"\n    },\n    {\n      \"id\": \"tabibito\",\n      \"basis\": \"三人の助手らしい人たち\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"daigakushi\",\n      \"values_6d\": [0, 1, -1, 0, -1, 1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"手帳に何かせわしそうに書きつけながら、鶴嘴をふりあげたり、スコープをつかったりしている\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"tabibito\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"くるみが沢山あった\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"くるみが沢山あったろう。それはまあ、ざっと百二十万年ぐらい前のくるみだよ\"\n    },\n    {\n      \"subject\": \"tabibito\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"ボス\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"ボスといってね、いまの牛の先祖で、昔はたくさん居たさ\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "location",
+     "reason": "surface_not_in_text",
+     "item": "ぎざぎざの黒いくるみの実"
+    }
+   ],
+   "elapsed_sec": 8.68,
+   "prompt_eval_count": 2045
+  },
+  {
+   "scene_id": "000081_000456:s4",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"白い岩の上、改札口\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネラ\"\n    },\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニ\"\n    },\n    {\n      \"id\": \"daigakushi\",\n      \"basis\": \"大学士\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"campanella\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"地図と腕時計とをくらべながら云いました\"\n    },\n    {\n      \"character_id\": \"giovanni\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"ていねいに大学士におじぎしました\"\n    },\n    {\n      \"character_id\": \"daigakushi\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"また忙がしそうに、あちこち歩きまわって監督をはじめました\"\n    }\n  ],\n  \"fact_updates\": []\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "location",
+     "reason": "surface_not_in_text",
+     "item": "白い岩の上、改札口"
+    },
+    {
+     "kind": "present",
+     "reason": "basis_not_in_text",
+     "item": {
+      "id": "campanella",
+      "basis": "カムパネラ"
+     }
+    }
+   ],
+   "elapsed_sec": 7.923,
+   "prompt_eval_count": 1708
+  },
+  {
+   "scene_id": "000081_000456:s5",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"車室\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"giovanni\",\n      \"basis\": \"ジョバンニは、少し肩をすぼめて挨拶しました。\"\n    },\n    {\n      \"id\": \"campanella\",\n      \"basis\": \"カムパネルラは、車室の天井を、あちこち見ていました。\"\n    },\n    {\n      \"id\": \"toritori\",\n      \"basis\": \"それは、茶いろの少しぼろぼろの外套を着て、白い巾でつつんだ荷物を、二つに分けて肩に掛けた、赤髯のせなかのかがんだ人でした。\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"giovanni\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"explicit\",\n      \"basis\": \"ジョバンニは、なにか大へんさびしいようなかなしいような気がして、だまって正面の時計を見ていましたら。\"\n    },\n    {\n      \"character_id\": \"campanella\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"カムパネルラは、車室の天井を、あちこち見ていました。\"\n    },\n    {\n      \"character_id\": \"toritori\",\n      \"values_6d\": [0, 0, 0, 0, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"赤ひげの人は、なにかなつかしそうにわらいながら、ジョバンニやカムパネルラのようすを見ていました。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"toritori\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"車室\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"それは、茶いろの少しぼろぼろの外套を着て、白い巾でつつんだ荷物を、二つに分けて肩に掛けた、赤髯のせなかのかがんだ人でした。\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "giovanni",
+      "values_6d": [
+       0,
+       0,
+       0,
+       -1,
+       1,
+       0
+      ],
+      "evidence": "explicit",
+      "basis": "ジョバンニは、なにか大へんさびしいようなかなしいような気がして、だまって正面の時計を見ていましたら。"
+     }
+    }
+   ],
+   "elapsed_sec": 12.307,
+   "prompt_eval_count": 1879
+  }
+ ]
+}

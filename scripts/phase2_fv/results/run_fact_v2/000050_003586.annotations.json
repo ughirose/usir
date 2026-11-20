@@ -1,0 +1,557 @@
+[
+ {
+  "contract": {
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "scene_id": "000050_003586:s0",
+   "scene_hash": "eedea534018521db6c65558ec55160682ae1f2286dbe8a53b8d1e20395ac34f1",
+   "ledger_hash": "gold-roster:35e9364d63a60098",
+   "model_id": "qwen2.5:14b",
+   "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+   "work_id": "000050_003586",
+   "scene_index": 0,
+   "scene_count": 5,
+   "char_len": 753,
+   "seed": 42
+  },
+  "scene_meta": {
+   "time": {
+    "relative_order": "unknown",
+    "evidence": "inferred"
+   },
+   "location_id": "葉山",
+   "present_character_ids": [
+    "tabiso",
+    "uba"
+   ],
+   "pov_character": null
+  },
+  "utterances": [
+   {
+    "utterance_index": 0,
+    "speaker_id": "tabiso",
+    "addressee_id": "uba",
+    "evidence": "explicit",
+    "register": {
+     "politeness": "plain",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 1,
+    "speaker_id": "uba",
+    "addressee_id": null,
+    "evidence": "inferred",
+    "register": {
+     "politeness": "polite",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 2,
+    "speaker_id": "tabiso",
+    "addressee_id": null,
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 3,
+    "speaker_id": "tabiso",
+    "addressee_id": "uba",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "polite",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 4,
+    "speaker_id": "uba",
+    "addressee_id": "tabiso",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "polite",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 5,
+    "speaker_id": "tabiso",
+    "addressee_id": "uba",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": "私"
+    }
+   }
+  ],
+  "character_states": [
+   {
+    "character_id": "tabiso",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "evidence": "ambiguous"
+   },
+   {
+    "character_id": "uba",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "evidence": "ambiguous"
+   }
+  ],
+  "fact_updates": []
+ },
+ {
+  "contract": {
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "scene_id": "000050_003586:s1",
+   "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+   "ledger_hash": "gold-roster:35e9364d63a60098",
+   "model_id": "qwen2.5:14b",
+   "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+   "work_id": "000050_003586",
+   "scene_index": 1,
+   "scene_count": 5,
+   "char_len": 747,
+   "seed": 42
+  },
+  "scene_meta": {
+   "time": {
+    "relative_order": "continuous",
+    "evidence": "inferred"
+   },
+   "location_id": "黒門の別荘",
+   "present_character_ids": [
+    "tabiso",
+    "uba"
+   ],
+   "pov_character": null
+  },
+  "utterances": [
+   {
+    "utterance_index": 0,
+    "speaker_id": "uba",
+    "addressee_id": "tabiso",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 1,
+    "speaker_id": "uba",
+    "addressee_id": "tabiso",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 2,
+    "speaker_id": "tabiso",
+    "addressee_id": "uba",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "polite",
+     "first_person": null
+    }
+   }
+  ],
+  "character_states": [],
+  "fact_updates": [
+   {
+    "subject": "uba",
+    "predicate": "LEARNED",
+    "object": "黒門の別宅",
+    "evidence": "explicit"
+   }
+  ]
+ },
+ {
+  "contract": {
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "scene_id": "000050_003586:s2",
+   "scene_hash": "a916f16cb460d86cd421690fc1a2d194efd17051e0701c821a7a4237ac3e432e",
+   "ledger_hash": "gold-roster:35e9364d63a60098",
+   "model_id": "qwen2.5:14b",
+   "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+   "work_id": "000050_003586",
+   "scene_index": 2,
+   "scene_count": 5,
+   "char_len": 812,
+   "seed": 42
+  },
+  "scene_meta": {
+   "time": {
+    "relative_order": "continuous",
+    "evidence": "inferred"
+   },
+   "location_id": "小川べりの草の上",
+   "present_character_ids": [
+    "niemon",
+    "saihachi",
+    "kundo"
+   ],
+   "pov_character": null
+  },
+  "utterances": [
+   {
+    "utterance_index": 0,
+    "speaker_id": "niemon",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 1,
+    "speaker_id": "saihachi",
+    "addressee_id": "niemon",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 2,
+    "speaker_id": "niemon",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 3,
+    "speaker_id": "saihachi",
+    "addressee_id": "niemon",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 4,
+    "speaker_id": "niemon",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 5,
+    "speaker_id": "saihachi",
+    "addressee_id": "niemon",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 6,
+    "speaker_id": "saihachi",
+    "addressee_id": "niemon",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 7,
+    "speaker_id": "kundo",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 8,
+    "speaker_id": "saihachi",
+    "addressee_id": "kundo",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 9,
+    "speaker_id": "kundo",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "plain",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 10,
+    "speaker_id": "kundo",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "plain",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 11,
+    "speaker_id": "kundo",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "plain",
+     "first_person": null
+    }
+   }
+  ],
+  "character_states": [
+   {
+    "character_id": "niemon",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "evidence": "ambiguous"
+   },
+   {
+    "character_id": "saihachi",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "evidence": "ambiguous"
+   },
+   {
+    "character_id": "kundo",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "evidence": "ambiguous"
+   }
+  ],
+  "fact_updates": []
+ },
+ {
+  "contract": {
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "scene_id": "000050_003586:s3",
+   "scene_hash": "31b1e1a02b1cfa864ab8b0f347fcb29966ff5970d7095348608392adbb6b0bc5",
+   "ledger_hash": "gold-roster:35e9364d63a60098",
+   "model_id": "qwen2.5:14b",
+   "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+   "work_id": "000050_003586",
+   "scene_index": 3,
+   "scene_count": 5,
+   "char_len": 703,
+   "seed": 42
+  },
+  "scene_meta": {
+   "time": {
+    "relative_order": "continuous",
+    "evidence": "inferred",
+    "elapsed_hint": "しばらく経ってよ"
+   },
+   "location_id": "川",
+   "present_character_ids": [
+    "saihachi",
+    "uba",
+    "niemon"
+   ],
+   "pov_character": null
+  },
+  "utterances": [
+   {
+    "utterance_index": 0,
+    "speaker_id": "saihachi",
+    "addressee_id": null,
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 1,
+    "speaker_id": "saihachi",
+    "addressee_id": "niemon",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   }
+  ],
+  "character_states": [
+   {
+    "character_id": "uba",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "evidence": "ambiguous"
+   },
+   {
+    "character_id": "niemon",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "evidence": "ambiguous"
+   }
+  ],
+  "fact_updates": [
+   {
+    "subject": "saihachi",
+    "predicate": "MOVED_TO",
+    "object": "川",
+    "evidence": "explicit"
+   },
+   {
+    "subject": "saihachi",
+    "predicate": "STATE_CHANGED",
+    "object": "びしょ濡れ",
+    "evidence": "explicit"
+   },
+   {
+    "subject": "saihachi",
+    "predicate": "ACQUIRED",
+    "object": "猫",
+    "evidence": "explicit"
+   }
+  ]
+ },
+ {
+  "contract": {
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "scene_id": "000050_003586:s4",
+   "scene_hash": "b8af8bf58f45da2fcda80a54d0d1cba51a5008dc0841c1cd0b8bfe46ce4cfca9",
+   "ledger_hash": "gold-roster:35e9364d63a60098",
+   "model_id": "qwen2.5:14b",
+   "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+   "work_id": "000050_003586",
+   "scene_index": 4,
+   "scene_count": 5,
+   "char_len": 211,
+   "seed": 42
+  },
+  "scene_meta": {
+   "time": {
+    "relative_order": "continuous",
+    "evidence": "inferred"
+   },
+   "location_id": null,
+   "present_character_ids": [
+    "kundo"
+   ],
+   "pov_character": null
+  },
+  "utterances": [
+   {
+    "utterance_index": 0,
+    "speaker_id": "kundo",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "plain",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 1,
+    "speaker_id": "saihachi",
+    "addressee_id": "kundo",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   },
+   {
+    "utterance_index": 2,
+    "speaker_id": "kundo",
+    "addressee_id": "saihachi",
+    "evidence": "inferred",
+    "register": {
+     "politeness": "unknown",
+     "first_person": null
+    }
+   }
+  ],
+  "character_states": [
+   {
+    "character_id": "kundo",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0
+    ],
+    "evidence": "explicit"
+   }
+  ],
+  "fact_updates": [
+   {
+    "subject": "kundo",
+    "predicate": "STATE_CHANGED",
+    "object": "苦笑い",
+    "evidence": "explicit"
+   }
+  ]
+ }
+]

@@ -1,0 +1,160 @@
+{
+ "traces": [
+  {
+   "scene_id": "001801_001786:s0",
+   "present": [
+    {
+     "id": "shinichi",
+     "basis": "慎一は、知らぬまにかなり沖にきていた。"
+    },
+    {
+     "id": "onna",
+     "basis": "若い女の声が呼んだ。"
+    }
+   ],
+   "states": [
+    {
+     "id": "shinichi",
+     "basis": "慎一は、知らぬまにかなり沖にきていた。"
+    },
+    {
+     "id": "onna",
+     "basis": "女の声はひどく疲れ、喘いでいた。"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "若い女の声が呼んだ。"
+    },
+    {
+     "basis": "女の声はひどく疲れ、喘いでいた。"
+    }
+   ],
+   "location_surface": "海"
+  },
+  {
+   "scene_id": "001801_001786:s1",
+   "present": [
+    {
+     "id": "shinichi",
+     "basis": "彼"
+    }
+   ],
+   "states": [
+    {
+     "id": "onna",
+     "basis": "あなたは、自殺するつもりですか？"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "親父がぼくにいったんです。死のうとしている人間を、軽蔑しちゃいけない。"
+    },
+    {
+     "basis": "死にました。去年"
+    }
+   ],
+   "location_surface": null
+  },
+  {
+   "scene_id": "001801_001786:s2",
+   "present": [
+    {
+     "id": "shinichi",
+     "basis": "彼"
+    },
+    {
+     "id": "onna",
+     "basis": "女"
+    }
+   ],
+   "states": [
+    {
+     "id": "onna",
+     "basis": "女の顔に夜光虫の緑の燐光が照って、それが呼吸づくように明るくなり、また暗くなった。女は怒ったような目つきで、海をみつめていた"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "ぼくの親父も、自殺したんです"
+    }
+   ],
+   "location_surface": "海"
+  }
+ ],
+ "raw": [
+  {
+   "scene_id": "001801_001786:s0",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"explicit_time\": \"深夜\",\n    \"elapsed_hint\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"海\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"慎一は、知らぬまにかなり沖にきていた。\"\n    },\n    {\n      \"id\": \"onna\",\n      \"basis\": \"若い女の声が呼んだ。\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"shinichi\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"慎一は、知らぬまにかなり沖にきていた。\"\n    },\n    {\n      \"character_id\": \"onna\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"女の声はひどく疲れ、喘いでいた。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"若い女がひとり、深夜の海を泳いでいる\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"若い女の声が呼んだ。\"\n    },\n    {\n      \"subject\": \"onna\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"疲れている\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"女の声はひどく疲れ、喘いでいた。\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [],
+   "elapsed_sec": 8.542,
+   "prompt_eval_count": 1880
+  },
+  {
+   "scene_id": "001801_001786:s1",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"海\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"彼\"\n    },\n    {\n      \"id\": \"onna\",\n      \"basis\": \"若い女\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"shinichi\",\n      \"values_6d\": [1, 0, 0, 0, 1, 1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"親父は、こいつに勝ったんだぞ。生きるってことは、こういう、この手ごたえのことなんだよ。\"\n    },\n    {\n      \"character_id\": \"onna\",\n      \"values_6d\": [-1, 0, 0, 0, 1, 0],\n      \"evidence\": \"explicit\",\n      \"basis\": \"あなたは、自殺するつもりですか？\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"親父がぼくにいった\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"親父がぼくにいったんです。死のうとしている人間を、軽蔑しちゃいけない。\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"親父が死にました\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"死にました。去年\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "location",
+     "reason": "surface_not_in_text",
+     "item": "海"
+    },
+    {
+     "kind": "present",
+     "reason": "basis_not_in_text",
+     "item": {
+      "id": "onna",
+      "basis": "若い女"
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "shinichi",
+      "values_6d": [
+       1,
+       0,
+       0,
+       0,
+       1,
+       1
+      ],
+      "evidence": "explicit",
+      "basis": "親父は、こいつに勝ったんだぞ。生きるってことは、こういう、この手ごたえのことなんだよ。"
+     }
+    }
+   ],
+   "elapsed_sec": 8.745,
+   "prompt_eval_count": 1959
+  },
+  {
+   "scene_id": "001801_001786:s2",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"海\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"彼\"\n    },\n    {\n      \"id\": \"onna\",\n      \"basis\": \"女\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"shinichi\",\n      \"values_6d\": [0, -1, 0, 0, 1, 1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"ぼくの親父も、自殺したんです。……あなたも、ぼくはとめはしません\"\n    },\n    {\n      \"character_id\": \"onna\",\n      \"values_6d\": [0, 0, 0, 0, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"女の顔に夜光虫の緑の燐光が照って、それが呼吸づくように明るくなり、また暗くなった。女は怒ったような目つきで、海をみつめていた\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"親父の自殺\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"ぼくの親父も、自殺したんです\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "shinichi",
+      "values_6d": [
+       0,
+       -1,
+       0,
+       0,
+       1,
+       1
+      ],
+      "evidence": "explicit",
+      "basis": "ぼくの親父も、自殺したんです。……あなたも、ぼくはとめはしません"
+     }
+    }
+   ],
+   "elapsed_sec": 7.698,
+   "prompt_eval_count": 1570
+  }
+ ]
+}

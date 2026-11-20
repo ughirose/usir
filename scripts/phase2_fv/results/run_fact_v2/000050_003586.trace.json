@@ -1,0 +1,268 @@
+{
+ "traces": [
+  {
+   "scene_id": "000050_003586:s0",
+   "present": [
+    {
+     "id": "tabiso",
+     "basis": "包を引寄せる旅僧"
+    },
+    {
+     "id": "uba",
+     "basis": "姥"
+    }
+   ],
+   "states": [
+    {
+     "id": "tabiso",
+     "basis": "修業が足りんで、樹下、石上、野宿も辛し、"
+    },
+    {
+     "id": "uba",
+     "basis": "鎌倉は通越して、藤沢まで今日の内に出ようという考えだったが"
+    }
+   ],
+   "facts": [],
+   "location_surface": "葉山"
+  },
+  {
+   "scene_id": "000050_003586:s1",
+   "present": [
+    {
+     "id": "tabiso",
+     "basis": "お上人様"
+    },
+    {
+     "id": "uba",
+     "basis": "お婆さん"
+    }
+   ],
+   "states": [],
+   "facts": [
+    {
+     "basis": "黒門の別宅で、近々として進ぜて下さりませぬか"
+    }
+   ],
+   "location_surface": "黒門の別荘"
+  },
+  {
+   "scene_id": "000050_003586:s2",
+   "present": [
+    {
+     "id": "niemon",
+     "basis": "苦虫の仁右衛門親仁"
+    },
+    {
+     "id": "saihachi",
+     "basis": "手ぼう蟹"
+    },
+    {
+     "id": "kundo",
+     "basis": "村の学校の訓導"
+    }
+   ],
+   "states": [
+    {
+     "id": "niemon",
+     "basis": "苦虫の仁右衛門親仁"
+    },
+    {
+     "id": "saihachi",
+     "basis": "手ぼう蟹"
+    },
+    {
+     "id": "kundo",
+     "basis": "村の学校の訓導"
+    }
+   ],
+   "facts": [],
+   "location_surface": "小川べりの草の上"
+  },
+  {
+   "scene_id": "000050_003586:s3",
+   "present": [
+    {
+     "id": "saihachi",
+     "basis": "その人の背中へ立って見ている"
+    },
+    {
+     "id": "uba",
+     "basis": "私が手を伸すとの"
+    },
+    {
+     "id": "niemon",
+     "basis": "ここだあ仁右衛門"
+    }
+   ],
+   "states": [
+    {
+     "id": "uba",
+     "basis": "私が手を伸すとの"
+    },
+    {
+     "id": "niemon",
+     "basis": "ここだあ仁右衛門"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "川面へ乗出して"
+    },
+    {
+     "basis": "旅の空で、召ものがびしょ濡れだ"
+    },
+    {
+     "basis": "手毬を拾うと、その下に、猫が一匹居たではねえかね"
+    }
+   ],
+   "location_surface": "川"
+  },
+  {
+   "scene_id": "000050_003586:s4",
+   "present": [
+    {
+     "id": "kundo",
+     "basis": "訓導"
+    }
+   ],
+   "states": [
+    {
+     "id": "kundo",
+     "basis": "苦笑い"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "苦笑い"
+    }
+   ],
+   "location_surface": null
+  }
+ ],
+ "raw": [
+  {
+   "scene_id": "000050_003586:s0",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"葉山\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"tabiso\",\n      \"basis\": \"包を引寄せる旅僧\"\n    },\n    {\n      \"id\": \"uba\",\n      \"basis\": \"姥\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"tabiso\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"修業が足りんで、樹下、石上、野宿も辛し、\"\n    },\n    {\n      \"character_id\": \"uba\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"鎌倉は通越して、藤沢まで今日の内に出ようという考えだったが\"\n    }\n  ],\n  \"fact_updates\": []\n}",
+   "parse_error": null,
+   "rejected": [],
+   "elapsed_sec": 6.286,
+   "prompt_eval_count": 2000
+  },
+  {
+   "scene_id": "000050_003586:s1",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"黒門の別荘\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"tabiso\",\n      \"basis\": \"お上人様\"\n    },\n    {\n      \"id\": \"uba\",\n      \"basis\": \"お婆さん\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"tabiso\",\n      \"values_6d\": [1, 1, -1, -1, -1, 1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"念仏の声が出ました、仏名を唱えましょう\"\n    },\n    {\n      \"character_id\": \"uba\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"右瞻左瞻、丁寧に会釈する\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"uba\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"黒門の別宅\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"黒門の別宅で、近々として進ぜて下さりませぬか\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "tabiso",
+      "values_6d": [
+       1,
+       1,
+       -1,
+       -1,
+       -1,
+       1
+      ],
+      "evidence": "explicit",
+      "basis": "念仏の声が出ました、仏名を唱えましょう"
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "uba",
+      "values_6d": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "evidence": "ambiguous",
+      "basis": "右瞻左瞻、丁寧に会釈する"
+     }
+    }
+   ],
+   "elapsed_sec": 7.385,
+   "prompt_eval_count": 2072
+  },
+  {
+   "scene_id": "000050_003586:s2",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"小川べりの草の上\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"niemon\",\n      \"basis\": \"苦虫の仁右衛門親仁\"\n    },\n    {\n      \"id\": \"saihachi\",\n      \"basis\": \"手ぼう蟹\"\n    },\n    {\n      \"id\": \"kundo\",\n      \"basis\": \"村の学校の訓導\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"niemon\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"苦虫の仁右衛門親仁\"\n    },\n    {\n      \"character_id\": \"saihachi\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"手ぼう蟹\"\n    },\n    {\n      \"character_id\": \"kundo\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"村の学校の訓導\"\n    }\n  ],\n  \"fact_updates\": []\n}",
+   "parse_error": null,
+   "rejected": [],
+   "elapsed_sec": 7.707,
+   "prompt_eval_count": 2193
+  },
+  {
+   "scene_id": "000050_003586:s3",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": \"しばらく経ってよ\",\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"川\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"saihachi\",\n      \"basis\": \"その人の背中へ立って見ている\"\n    },\n    {\n      \"id\": \"uba\",\n      \"basis\": \"私が手を伸すとの\"\n    },\n    {\n      \"id\": \"niemon\",\n      \"basis\": \"ここだあ仁右衛門\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"saihachi\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"急に飛び込んだ\"\n    },\n    {\n      \"character_id\": \"uba\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"私が手を伸すとの\"\n    },\n    {\n      \"character_id\": \"niemon\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"ここだあ仁右衛門\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"saihachi\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"川\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"川面へ乗出して\"\n    },\n    {\n      \"subject\": \"saihachi\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"びしょ濡れ\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"旅の空で、召ものがびしょ濡れだ\"\n    },\n    {\n      \"subject\": \"saihachi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"猫\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"手毬を拾うと、その下に、猫が一匹居たではねえかね\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "saihachi",
+      "values_6d": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "evidence": "ambiguous",
+      "basis": "急に飛び込んだ"
+     }
+    }
+   ],
+   "elapsed_sec": 11.509,
+   "prompt_eval_count": 2083
+  },
+  {
+   "scene_id": "000050_003586:s4",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"夜具風呂敷の黄母衣越\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"kundo\",\n      \"basis\": \"訓導\"\n    },\n    {\n      \"id\": \"niemon\",\n      \"basis\": \"仁右衛門\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"kundo\",\n      \"values_6d\": [0, 0, 0, 0, -1, 0],\n      \"evidence\": \"explicit\",\n      \"basis\": \"苦笑い\"\n    },\n    {\n      \"character_id\": \"niemon\",\n      \"values_6d\": [0, 0, 0, 0, 1, 0],\n      \"evidence\": \"explicit\",\n      \"basis\": \"厭な事は、……手毬を拾うと、その下に、猫が一匹居たではねえかね。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"kundo\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"苦笑い\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"苦笑い\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "location",
+     "reason": "surface_not_in_text",
+     "item": "夜具風呂敷の黄母衣越"
+    },
+    {
+     "kind": "present",
+     "reason": "basis_not_in_text",
+     "item": {
+      "id": "niemon",
+      "basis": "仁右衛門"
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "niemon",
+      "values_6d": [
+       0,
+       0,
+       0,
+       0,
+       1,
+       0
+      ],
+      "evidence": "explicit",
+      "basis": "厭な事は、……手毬を拾うと、その下に、猫が一匹居たではねえかね。"
+     }
+    }
+   ],
+   "elapsed_sec": 6.84,
+   "prompt_eval_count": 1686
+  }
+ ]
+}

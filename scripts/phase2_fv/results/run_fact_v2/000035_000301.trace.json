@@ -1,0 +1,353 @@
+{
+ "traces": [
+  {
+   "scene_id": "000035_000301:s0",
+   "present": [
+    {
+     "id": "yozo",
+     "basis": "自分"
+    }
+   ],
+   "states": [],
+   "facts": [
+    {
+     "basis": "学業も、また画の勉強も放棄し"
+    },
+    {
+     "basis": "自分より年上の有夫の婦人と情死事件などを起し"
+    },
+    {
+     "basis": "自分はなっていたのでした"
+    }
+   ],
+   "location_surface": "下宿"
+  },
+  {
+   "scene_id": "000035_000301:s1",
+   "present": [
+    {
+     "id": "yozo",
+     "basis": "自分の部屋"
+    },
+    {
+     "id": "musume",
+     "basis": "用箋と万年筆を持って自分の部屋にやって来て"
+    }
+   ],
+   "states": [],
+   "facts": [
+    {
+     "basis": "電車通りの薬屋に行って、カルモチンを買って来てくれない？"
+    }
+   ],
+   "location_surface": "仙遊館"
+  },
+  {
+   "scene_id": "000035_000301:s2",
+   "present": [
+    {
+     "id": "yozo",
+     "basis": "自分"
+    },
+    {
+     "id": "doshi",
+     "basis": "そのひと"
+    },
+    {
+     "id": "tsuneko",
+     "basis": "女給"
+    }
+   ],
+   "states": [
+    {
+     "id": "yozo",
+     "basis": "自分は、金縛り同様の形になっていました。"
+    },
+    {
+     "id": "doshi",
+     "basis": "その女は、いつまでも自分について歩いて、そうして、やたらに自分に、ものを買ってくれるのでした。"
+    },
+    {
+     "id": "tsuneko",
+     "basis": "笑いながら相手の女給に"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "自分も、敢えて堀木の案内に頼らずとも、ひとりで電車にも乗れるし、また、歌舞伎座にも行けるし、または、絣の着物を着て、カフエにだってはいれるくらいの、多少の図々しさを装えるようになっていたのです。"
+    }
+   ],
+   "location_surface": "銀座の或る大カフエ"
+  },
+  {
+   "scene_id": "000035_000301:s3",
+   "present": [
+    {
+     "id": "tsuneko",
+     "basis": "女は"
+    }
+   ],
+   "states": [
+    {
+     "id": "yozo",
+     "basis": "震えおののいている心"
+    },
+    {
+     "id": "tsuneko",
+     "basis": "心配要りません"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "そのひとの傍にいる事に心配が要らないような気がした"
+    },
+    {
+     "basis": "お酒を飲みました"
+    }
+   ],
+   "location_surface": "銀座裏の、或る屋台のお鮨や"
+  },
+  {
+   "scene_id": "000035_000301:s4",
+   "present": [
+    {
+     "id": "yozo",
+     "basis": "自分"
+    },
+    {
+     "id": "doshi",
+     "basis": "そのひと"
+    }
+   ],
+   "states": [],
+   "facts": [],
+   "location_surface": "本所の大工さんの二階"
+  },
+  {
+   "scene_id": "000035_000301:s5",
+   "present": [
+    {
+     "id": "yozo",
+     "basis": "自分"
+    },
+    {
+     "id": "tsuneko",
+     "basis": "ツネ子"
+    }
+   ],
+   "states": [
+    {
+     "id": "yozo",
+     "basis": "男に金が無くなると、男は、ただおのずから意気銷沈して、ダメになり、笑う声にも力が無く、そうして、妙にひがんだりなんかしてね、ついには破れかぶれになり、男のほうから女を振る、半狂乱になって振って振って振り抜くという意味なんだね"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "男に金が無くなると、男は、ただおのずから意気銷沈して、ダメになり、笑う声にも力が無く、そうして、妙にひがんだりなんかしてね、ついには破れかぶれになり、男のほうから女を振る、半狂乱になって振って振って振り抜くという意味なんだね"
+    },
+    {
+     "basis": "その時の自分の、「金の切れめが縁の切れめ」という出鱈目の放言が、のちに到って、意外のひっかかりを生じたのです"
+    }
+   ],
+   "location_surface": null
+  },
+  {
+   "scene_id": "000035_000301:s6",
+   "present": [
+    {
+     "id": "yozo",
+     "basis": "自分"
+    },
+    {
+     "id": "horiki",
+     "basis": "この悪友"
+    }
+   ],
+   "states": [
+    {
+     "id": "horiki",
+     "basis": "ねばる"
+    }
+   ],
+   "facts": [
+    {
+     "basis": "夢の国に連れて行く"
+    }
+   ],
+   "location_surface": "神田の屋台"
+  }
+ ],
+ "raw": [
+  {
+   "scene_id": "000035_000301:s0",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"explicit_time\": \"高等学校へ入学して、二年目の十一月\",\n    \"elapsed_hint\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"下宿\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yozo\",\n      \"values_6d\": [1, -1, -1, -1, 1, 1],\n      \"evidence\": \"inferred\",\n      \"basis\": \"生活して行く能力が無かった、襲われ、一撃せられるような気がして来て、街に飛び出しては、運動の手伝いをしたり、堀木と一緒に安い酒を飲み廻ったり\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"学業と画の勉強を放棄\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"学業も、また画の勉強も放棄し\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"情死事件を起こす\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"自分より年上の有夫の婦人と情死事件などを起し\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"マルクス学生の行動隊々長\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"自分はなっていたのでした\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "yozo",
+      "values_6d": [
+       1,
+       -1,
+       -1,
+       -1,
+       1,
+       1
+      ],
+      "evidence": "inferred",
+      "basis": "生活して行く能力が無かった、襲われ、一撃せられるような気がして来て、街に飛び出しては、運動の手伝いをしたり、堀木と一緒に安い酒を飲み廻ったり"
+     }
+    }
+   ],
+   "elapsed_sec": 8.84,
+   "prompt_eval_count": 2088
+  },
+  {
+   "scene_id": "000035_000301:s1",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"仙遊館\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分の部屋\"\n    },\n    {\n      \"id\": \"musume\",\n      \"basis\": \"用箋と万年筆を持って自分の部屋にやって来て\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yozo\",\n      \"values_6d\": [0, -1, -1, -1, -1, -1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"一言も口をききたくない気持、へへののもへじでも書いているのに違いない、見せてよ、見たくない\"\n    },\n    {\n      \"character_id\": \"musume\",\n      \"values_6d\": [0, 0, 0, 1, 1, 0],\n      \"evidence\": \"explicit\",\n      \"basis\": \"用箋と万年筆を持って自分の部屋にやって来て、何やら自分の机に向って一時間以上も書いている、あら、いやよ、あら、いやよ、よろこんで立ちます\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"カルモチン\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"電車通りの薬屋に行って、カルモチンを買って来てくれない？\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "yozo",
+      "values_6d": [
+       0,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1
+      ],
+      "evidence": "explicit",
+      "basis": "一言も口をききたくない気持、へへののもへじでも書いているのに違いない、見せてよ、見たくない"
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "musume",
+      "values_6d": [
+       0,
+       0,
+       0,
+       1,
+       1,
+       0
+      ],
+      "evidence": "explicit",
+      "basis": "用箋と万年筆を持って自分の部屋にやって来て、何やら自分の机に向って一時間以上も書いている、あら、いやよ、あら、いやよ、よろこんで立ちます"
+     }
+    }
+   ],
+   "elapsed_sec": 8.473,
+   "prompt_eval_count": 1992
+  },
+  {
+   "scene_id": "000035_000301:s2",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"銀座の或る大カフエ\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"doshi\",\n      \"basis\": \"そのひと\"\n    },\n    {\n      \"id\": \"tsuneko\",\n      \"basis\": \"女給\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yozo\",\n      \"values_6d\": [0, -1, -1, -1, 1, -1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"自分は、金縛り同様の形になっていました。\"\n    },\n    {\n      \"character_id\": \"doshi\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"その女は、いつまでも自分について歩いて、そうして、やたらに自分に、ものを買ってくれるのでした。\"\n    },\n    {\n      \"character_id\": \"tsuneko\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"笑いながら相手の女給に\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"図々しさを装えるようになっていた\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"自分も、敢えて堀木の案内に頼らずとも、ひとりで電車にも乗れるし、また、歌舞伎座にも行けるし、または、絣の着物を着て、カフエにだってはいれるくらいの、多少の図々しさを装えるようになっていたのです。\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [],
+   "elapsed_sec": 10.907,
+   "prompt_eval_count": 2304
+  },
+  {
+   "scene_id": "000035_000301:s3",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": \"秋の、寒い夜\",\n    \"elapsed_hint\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"銀座裏の、或る屋台のお鮨や\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"ひとり\"\n    },\n    {\n      \"id\": \"tsuneko\",\n      \"basis\": \"女は\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yozo\",\n      \"values_6d\": [0, 0, 0, 0, -1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"震えおののいている心\"\n    },\n    {\n      \"character_id\": \"tsuneko\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"心配要りません\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"心配が要らない\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"そのひとの傍にいる事に心配が要らないような気がした\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"お酒\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"お酒を飲みました\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "present",
+     "reason": "basis_not_in_text",
+     "item": {
+      "id": "yozo",
+      "basis": "ひとり"
+     }
+    }
+   ],
+   "elapsed_sec": 8.395,
+   "prompt_eval_count": 2047
+  },
+  {
+   "scene_id": "000035_000301:s4",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"本所の大工さんの二階\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"doshi\",\n      \"basis\": \"そのひと\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yozo\",\n      \"values_6d\": [0, -1, 1, -1, -1, -1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"陰鬱な心、歯痛、侘びしい\"\n    },\n    {\n      \"character_id\": \"doshi\",\n      \"values_6d\": [0, -1, 1, -1, -1, -1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"完全に孤立している感じ、侘びしい\"\n    }\n  ],\n  \"fact_updates\": []\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "yozo",
+      "values_6d": [
+       0,
+       -1,
+       1,
+       -1,
+       -1,
+       -1
+      ],
+      "evidence": "explicit",
+      "basis": "陰鬱な心、歯痛、侘びしい"
+     }
+    },
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "doshi",
+      "values_6d": [
+       0,
+       -1,
+       1,
+       -1,
+       -1,
+       -1
+      ],
+      "evidence": "explicit",
+      "basis": "完全に孤立している感じ、侘びしい"
+     }
+    }
+   ],
+   "elapsed_sec": 5.724,
+   "prompt_eval_count": 2012
+  },
+  {
+   "scene_id": "000035_000301:s5",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": null\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"tsuneko\",\n      \"basis\": \"ツネ子\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yozo\",\n      \"values_6d\": [0, -1, -1, -1, 1, 1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"男に金が無くなると、男は、ただおのずから意気銷沈して、ダメになり、笑う声にも力が無く、そうして、妙にひがんだりなんかしてね、ついには破れかぶれになり、男のほうから女を振る、半狂乱になって振って振って振り抜くという意味なんだね\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"意気銷沈\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"男に金が無くなると、男は、ただおのずから意気銷沈して、ダメになり、笑う声にも力が無く、そうして、妙にひがんだりなんかしてね、ついには破れかぶれになり、男のほうから女を振る、半狂乱になって振って振って振り抜くという意味なんだね\"\n    },\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"HOOK_OPENED\",\n      \"object\": \"金の切れめが縁の切れめ\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"その時の自分の、「金の切れめが縁の切れめ」という出鱈目の放言が、のちに到って、意外のひっかかりを生じたのです\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [],
+   "elapsed_sec": 10.457,
+   "prompt_eval_count": 1950
+  },
+  {
+   "scene_id": "000035_000301:s6",
+   "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": \"十一月の末\",\n    \"elapsed_hint\": \"それから、ひとつき\",\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"神田の屋台\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"yozo\",\n      \"basis\": \"自分\"\n    },\n    {\n      \"id\": \"horiki\",\n      \"basis\": \"この悪友\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"yozo\",\n      \"values_6d\": [0, -1, 0, -1, 0, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"自分勝手にひどい束縛を感じて来て、…敬遠の形でしたが\"\n    },\n    {\n      \"character_id\": \"horiki\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"ねばる\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"yozo\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"夢の国\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"夢の国に連れて行く\"\n    }\n  ]\n}",
+   "parse_error": null,
+   "rejected": [
+    {
+     "kind": "state",
+     "reason": "basis_not_in_text",
+     "item": {
+      "character_id": "yozo",
+      "values_6d": [
+       0,
+       -1,
+       0,
+       -1,
+       0,
+       0
+      ],
+      "evidence": "inferred",
+      "basis": "自分勝手にひどい束縛を感じて来て、…敬遠の形でしたが"
+     }
+    }
+   ],
+   "elapsed_sec": 7.035,
+   "prompt_eval_count": 1945
+  }
+ ]
+}

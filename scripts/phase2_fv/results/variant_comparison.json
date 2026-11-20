@@ -1,0 +1,332 @@
+{
+ "control": {
+  "baseline_FP_still_emitted_by_class": {
+   "A": "0/5",
+   "B": "10/23",
+   "C": "14/28",
+   "D": "5/14",
+   "E": "5/8"
+  },
+  "total": "34/78",
+  "facts_per_scene": {
+   "mean": 2.83,
+   "max": 9,
+   "empty_scenes": 1,
+   "total": 99
+  },
+  "pred_by_predicate": {
+   "MOVED_TO": 14,
+   "ACQUIRED": 20,
+   "STATE_CHANGED": 35,
+   "LEARNED": 16,
+   "LOST": 2,
+   "HOOK_OPENED": 12
+  },
+  "null_subject": 9,
+  "gold_matched_any": 21
+ },
+ "fact_v2": {
+  "baseline_FP_still_emitted_by_class": {
+   "A": "0/5",
+   "B": "5/23",
+   "C": "3/28",
+   "D": "1/14",
+   "E": "2/8"
+  },
+  "total": "11/78",
+  "facts_per_scene": {
+   "mean": 1.51,
+   "max": 3,
+   "empty_scenes": 7,
+   "total": 53
+  },
+  "pred_by_predicate": {
+   "MOVED_TO": 12,
+   "ACQUIRED": 10,
+   "LEARNED": 11,
+   "STATE_CHANGED": 19,
+   "HOOK_OPENED": 1
+  },
+  "null_subject": 0,
+  "gold_matched_any": 11
+ },
+ "baseline": {
+  "facts_per_scene": {
+   "mean": 2.63,
+   "max": 9,
+   "empty_scenes": 2,
+   "total": 92
+  },
+  "pred_by_predicate": {
+   "MOVED_TO": 12,
+   "ACQUIRED": 20,
+   "STATE_CHANGED": 36,
+   "HOOK_OPENED": 13,
+   "LEARNED": 11
+  },
+  "null_subject": 13,
+  "gold_matched_any": 15
+ },
+ "gold_matched_overlap": {
+  "baseline&control": 12,
+  "baseline|control": 24,
+  "baseline&fact_v2": 7,
+  "control&fact_v2": 8,
+  "fact_v2_only_vs_baseline": 4,
+  "baseline_only_vs_fact_v2": 8
+ },
+ "fact_v2_FP_list": [
+  {
+   "scene_id": "001798_056779:s0",
+   "subject": "boku",
+   "predicate": "ACQUIRED",
+   "object": "世帯道具"
+  },
+  {
+   "scene_id": "001798_056779:s0",
+   "subject": "boku",
+   "predicate": "ACQUIRED",
+   "object": "画の道具"
+  },
+  {
+   "scene_id": "001798_056779:s1",
+   "subject": "fuwa",
+   "predicate": "LEARNED",
+   "object": "二千円"
+  },
+  {
+   "scene_id": "001798_056779:s1",
+   "subject": "noro",
+   "predicate": "MOVED_TO",
+   "object": "僕の部屋"
+  },
+  {
+   "scene_id": "001798_056779:s2",
+   "subject": "boku",
+   "predicate": "LEARNED",
+   "object": "野呂君と仲良くしてやって呉れ給え"
+  },
+  {
+   "scene_id": "001798_056779:s2",
+   "subject": "noro",
+   "predicate": "MOVED_TO",
+   "object": "僕の住んでいる家"
+  },
+  {
+   "scene_id": "001798_056779:s2",
+   "subject": "boku",
+   "predicate": "STATE_CHANGED",
+   "object": "むっとして"
+  },
+  {
+   "scene_id": "001798_056779:s3",
+   "subject": "boku",
+   "predicate": "LEARNED",
+   "object": "野呂が家を買い受けた"
+  },
+  {
+   "scene_id": "001801_001786:s0",
+   "subject": "shinichi",
+   "predicate": "LEARNED",
+   "object": "若い女がひとり、深夜の海を泳いでいる"
+  },
+  {
+   "scene_id": "001801_001786:s0",
+   "subject": "onna",
+   "predicate": "STATE_CHANGED",
+   "object": "疲れている"
+  },
+  {
+   "scene_id": "001801_001786:s1",
+   "subject": "shinichi",
+   "predicate": "LEARNED",
+   "object": "親父がぼくにいった"
+  },
+  {
+   "scene_id": "001801_001786:s1",
+   "subject": "shinichi",
+   "predicate": "STATE_CHANGED",
+   "object": "親父が死にました"
+  },
+  {
+   "scene_id": "001801_001786:s2",
+   "subject": "shinichi",
+   "predicate": "LEARNED",
+   "object": "親父の自殺"
+  },
+  {
+   "scene_id": "001875_059897:s0",
+   "subject": "heiroku",
+   "predicate": "MOVED_TO",
+   "object": "安江の家"
+  },
+  {
+   "scene_id": "001875_059897:s1",
+   "subject": "bunkichi",
+   "predicate": "ACQUIRED",
+   "object": "二百円"
+  },
+  {
+   "scene_id": "001875_059897:s1",
+   "subject": "heiroku",
+   "predicate": "MOVED_TO",
+   "object": "遠のき"
+  },
+  {
+   "scene_id": "001875_059897:s2",
+   "subject": "otoe",
+   "predicate": "LEARNED",
+   "object": "進君の権利金"
+  },
+  {
+   "scene_id": "001875_059897:s3",
+   "subject": "susumu",
+   "predicate": "LEARNED",
+   "object": "鷲さんと相談する"
+  },
+  {
+   "scene_id": "000035_000301:s0",
+   "subject": "yozo",
+   "predicate": "STATE_CHANGED",
+   "object": "学業と画の勉強を放棄"
+  },
+  {
+   "scene_id": "000035_000301:s0",
+   "subject": "yozo",
+   "predicate": "STATE_CHANGED",
+   "object": "情死事件を起こす"
+  },
+  {
+   "scene_id": "000035_000301:s0",
+   "subject": "yozo",
+   "predicate": "ACQUIRED",
+   "object": "マルクス学生の行動隊々長"
+  },
+  {
+   "scene_id": "000035_000301:s1",
+   "subject": "yozo",
+   "predicate": "ACQUIRED",
+   "object": "カルモチン"
+  },
+  {
+   "scene_id": "000035_000301:s2",
+   "subject": "yozo",
+   "predicate": "STATE_CHANGED",
+   "object": "図々しさを装えるようになっていた"
+  },
+  {
+   "scene_id": "000035_000301:s3",
+   "subject": "yozo",
+   "predicate": "STATE_CHANGED",
+   "object": "心配が要らない"
+  },
+  {
+   "scene_id": "000035_000301:s3",
+   "subject": "yozo",
+   "predicate": "ACQUIRED",
+   "object": "お酒"
+  },
+  {
+   "scene_id": "000035_000301:s5",
+   "subject": "yozo",
+   "predicate": "STATE_CHANGED",
+   "object": "意気銷沈"
+  },
+  {
+   "scene_id": "000035_000301:s6",
+   "subject": "yozo",
+   "predicate": "MOVED_TO",
+   "object": "夢の国"
+  },
+  {
+   "scene_id": "001383_056643:s1",
+   "subject": "senkichi",
+   "predicate": "STATE_CHANGED",
+   "object": "泣く"
+  },
+  {
+   "scene_id": "001383_056643:s2",
+   "subject": "senkichi",
+   "predicate": "STATE_CHANGED",
+   "object": "倒れた"
+  },
+  {
+   "scene_id": "001383_056643:s2",
+   "subject": "shinichi",
+   "predicate": "STATE_CHANGED",
+   "object": "狼に変身"
+  },
+  {
+   "scene_id": "001383_056643:s3",
+   "subject": "shinichi",
+   "predicate": "STATE_CHANGED",
+   "object": "私の胸の上へ跨がって"
+  },
+  {
+   "scene_id": "001383_056643:s4",
+   "subject": "shinichi",
+   "predicate": "STATE_CHANGED",
+   "object": "裸"
+  },
+  {
+   "scene_id": "001383_056643:s4",
+   "subject": "senkichi",
+   "predicate": "STATE_CHANGED",
+   "object": "泥の足型"
+  },
+  {
+   "scene_id": "001383_056643:s4",
+   "subject": "shinichi",
+   "predicate": "STATE_CHANGED",
+   "object": "顔の痕"
+  },
+  {
+   "scene_id": "000050_003586:s1",
+   "subject": "uba",
+   "predicate": "LEARNED",
+   "object": "黒門の別宅"
+  },
+  {
+   "scene_id": "000050_003586:s3",
+   "subject": "saihachi",
+   "predicate": "MOVED_TO",
+   "object": "川"
+  },
+  {
+   "scene_id": "000050_003586:s3",
+   "subject": "saihachi",
+   "predicate": "STATE_CHANGED",
+   "object": "びしょ濡れ"
+  },
+  {
+   "scene_id": "000050_003586:s3",
+   "subject": "saihachi",
+   "predicate": "ACQUIRED",
+   "object": "猫"
+  },
+  {
+   "scene_id": "000050_003586:s4",
+   "subject": "kundo",
+   "predicate": "STATE_CHANGED",
+   "object": "苦笑い"
+  },
+  {
+   "scene_id": "000081_000456:s1",
+   "subject": "campanella",
+   "predicate": "MOVED_TO",
+   "object": "白鳥停車場"
+  },
+  {
+   "scene_id": "000081_000456:s3",
+   "subject": "tabibito",
+   "predicate": "LEARNED",
+   "object": "くるみが沢山あった"
+  },
+  {
+   "scene_id": "000081_000456:s5",
+   "subject": "toritori",
+   "predicate": "MOVED_TO",
+   "object": "車室"
+  }
+ ]
+}
