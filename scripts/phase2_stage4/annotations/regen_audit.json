@@ -1,0 +1,220 @@
+{
+  "works": {
+    "000035_000301": {
+      "scenes": 7,
+      "facts_stage2": 17,
+      "facts_kept": 14,
+      "dropped": {
+        "sentence_unresolved:no_sentence_contains": 3
+      },
+      "scene_text_hash_ok": true,
+      "other_sections_identical": true,
+      "default_politeness": {
+        "yozo": "polite",
+        "musume": "polite",
+        "doshi": "plain",
+        "tsuneko": "polite",
+        "horiki": "plain"
+      },
+      "default_politeness_counts": {
+        "yozo": {
+          "polite": 3
+        },
+        "musume": {
+          "polite": 1
+        },
+        "doshi": {
+          "plain": 1
+        },
+        "tsuneko": {
+          "polite": 1,
+          "plain": 1
+        },
+        "horiki": {
+          "plain": 1
+        }
+      }
+    },
+    "000050_003586": {
+      "scenes": 5,
+      "facts_stage2": 14,
+      "facts_kept": 2,
+      "dropped": {
+        "sentence_unresolved:no_sentence_contains": 12
+      },
+      "scene_text_hash_ok": true,
+      "other_sections_identical": true,
+      "default_politeness": {
+        "tabiso": "polite",
+        "uba": "polite",
+        "kundo": "plain"
+      },
+      "default_politeness_counts": {
+        "tabiso": {
+          "plain": 1,
+          "polite": 2
+        },
+        "uba": {
+          "polite": 2
+        },
+        "niemon": {},
+        "saihachi": {},
+        "kundo": {
+          "plain": 4
+        }
+      }
+    },
+    "000081_000456": {
+      "scenes": 6,
+      "facts_stage2": 15,
+      "facts_kept": 10,
+      "dropped": {
+        "sentence_unresolved:no_sentence_contains": 5
+      },
+      "scene_text_hash_ok": true,
+      "other_sections_identical": true,
+      "default_politeness": {
+        "giovanni": "plain",
+        "campanella": "plain",
+        "daigakushi": "plain",
+        "toritori": "polite"
+      },
+      "default_politeness_counts": {
+        "giovanni": {
+          "plain": 8,
+          "polite": 4
+        },
+        "campanella": {
+          "plain": 6
+        },
+        "daigakushi": {
+          "plain": 3
+        },
+        "toritori": {
+          "polite": 2
+        },
+        "tabibito": {}
+      }
+    },
+    "001383_056643": {
+      "scenes": 6,
+      "facts_stage2": 15,
+      "facts_kept": 12,
+      "dropped": {
+        "sentence_unresolved:no_sentence_contains": 3
+      },
+      "scene_text_hash_ok": true,
+      "other_sections_identical": true,
+      "default_politeness": {
+        "hagiwara": "plain",
+        "shinichi": "plain",
+        "senkichi": "polite",
+        "jochu": "polite"
+      },
+      "default_politeness_counts": {
+        "hagiwara": {
+          "plain": 3
+        },
+        "shinichi": {
+          "plain": 11,
+          "polite": 1
+        },
+        "senkichi": {
+          "polite": 5
+        },
+        "jochu": {
+          "polite": 2
+        },
+        "mitsuko": {}
+      }
+    },
+    "001798_056779": {
+      "scenes": 4,
+      "facts_stage2": 18,
+      "facts_kept": 16,
+      "dropped": {
+        "sentence_unresolved:no_sentence_contains": 2
+      },
+      "scene_text_hash_ok": true,
+      "other_sections_identical": true,
+      "default_politeness": {
+        "boku": "plain",
+        "noro": "plain"
+      },
+      "default_politeness_counts": {
+        "boku": {
+          "polite": 4,
+          "plain": 5
+        },
+        "fuwa": {},
+        "noro": {
+          "polite": 1,
+          "plain": 6
+        }
+      }
+    },
+    "001801_001786": {
+      "scenes": 3,
+      "facts_stage2": 7,
+      "facts_kept": 4,
+      "dropped": {
+        "sentence_unresolved:no_sentence_contains": 3
+      },
+      "scene_text_hash_ok": true,
+      "other_sections_identical": true,
+      "default_politeness": {
+        "shinichi": "polite",
+        "onna": "plain"
+      },
+      "default_politeness_counts": {
+        "shinichi": {
+          "polite": 8
+        },
+        "onna": {
+          "plain": 3
+        }
+      }
+    },
+    "001875_059897": {
+      "scenes": 4,
+      "facts_stage2": 6,
+      "facts_kept": 4,
+      "dropped": {
+        "sentence_unresolved:no_sentence_contains": 2
+      },
+      "scene_text_hash_ok": true,
+      "other_sections_identical": true,
+      "default_politeness": {
+        "yasue": "plain",
+        "heiroku": "polite",
+        "otoe": "plain",
+        "bunkichi": "plain",
+        "susumu": "polite"
+      },
+      "default_politeness_counts": {
+        "yasue": {
+          "plain": 8,
+          "polite": 1
+        },
+        "heiroku": {
+          "polite": 2
+        },
+        "otoe": {
+          "plain": 3
+        },
+        "bunkichi": {
+          "plain": 4
+        },
+        "susumu": {
+          "polite": 1
+        }
+      }
+    }
+  },
+  "facts_total_stage2": 92,
+  "facts_kept": 62,
+  "facts_dropped": 30,
+  "drop_reasons": {
+    "sentence_unresolved:no_sentence_contains": 30
+  }
+}

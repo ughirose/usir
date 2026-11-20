@@ -148,7 +148,10 @@ def _in_text(snippet: str | None, norm_text: str) -> bool:
 
 
 def validate_scene_output(
-    parsed: dict[str, Any] | None, roster_ids: list[str], scene_text: str
+    parsed: dict[str, Any] | None,
+    roster_ids: list[str],
+    scene_text: str,
+    sentences: list[tuple[int, int, int]] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Return (clean_sections, audit). Never repairs; drops invalid items and counts why."""
     audit: dict[str, Any] = {"parse_ok": parsed is not None, "rejected": [], "kept": {}}
@@ -238,7 +241,14 @@ def validate_scene_output(
         elif not _in_text(basis, norm_text):
             rej("fact", "basis_not_in_text", f)
         else:
-            out["fact_updates"].append({"subject": sub, "predicate": pr, "object": ob.strip(), "evidence": ev})
+            item = {"subject": sub, "predicate": pr, "object": ob.strip(), "evidence": ev}
+            if sentences is not None:
+                si, why = resolve_sentence_index(basis, scene_text, sentences)
+                if si is None:
+                    rej("fact", f"sentence_unresolved:{why}", f)
+                    continue
+                item = {"sentence_index": si, **item}
+            out["fact_updates"].append(item)
             trace["facts"].append({"basis": basis})
 
     audit["kept"] = {
@@ -247,6 +257,46 @@ def validate_scene_output(
         "facts": len(out["fact_updates"]),
     }
     return {"sections": out, "trace": trace}, audit
+
+
+def resolve_sentence_index(basis: str, scene_text: str, sentences: list[tuple[int, int, int]]) -> tuple[int | None, str]:
+    """Deterministic [S#] of the sentence that contains `basis` (verbatim, whitespace-insensitive).
+
+    `sentences` = (index, start, end) in scene_text scalar offsets, half-open (`nishiki segment` sentences[].local).
+    Returns (index, "ok") only when every occurrence of the basis lies fully inside one sentence and all
+    occurrences fall in the same sentence. Otherwise (None, reason):
+      not_found | no_sentence_contains (spans a boundary, or lies in a quote-only line) | multiple_sentences.
+    """
+    nb = _norm(basis)
+    if not nb:
+        return None, "not_found"
+    orig_pos: list[int] = []
+    chars: list[str] = []
+    for i, ch in enumerate(scene_text):
+        if not ch.isspace():
+            orig_pos.append(i)
+            chars.append(ch)
+    norm_text = "".join(chars)
+    hits: set[int] = set()
+    found = False
+    uncontained = False
+    at = norm_text.find(nb)
+    while at != -1:
+        found = True
+        s, e = orig_pos[at], orig_pos[at + len(nb) - 1] + 1
+        owner = [idx for idx, a, b in sentences if a <= s and e <= b]
+        if owner:
+            hits.add(owner[0])
+        else:
+            uncontained = True
+        at = norm_text.find(nb, at + 1)
+    if not found:
+        return None, "not_found"
+    if len(hits) == 1 and not uncontained:
+        return next(iter(hits)), "ok"
+    if not hits:
+        return None, "no_sentence_contains"
+    return None, "multiple_sentences" if len(hits) > 1 else "no_sentence_contains"
 
 
 def validate_annotation_schema(ann: dict[str, Any], schema: dict[str, Any], roster_ids: list[str]) -> list[str]:

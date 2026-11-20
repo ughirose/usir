@@ -114,7 +114,8 @@ def main() -> int:
                     MODEL, msgs, build_scene_format_schema(ids), num_ctx=9216, num_predict=3072, seed=42,
                     temperature=0.0, timeout_sec=300.0,
                 )
-                cleaned, audit = validate_scene_output(resp.parsed_json, ids, scene_text)
+                sents = [(x["index"], x["local"]["start"], x["local"]["end"]) for x in sc["sentences"]]  # stage 4: fact sentence_index
+                cleaned, audit = validate_scene_output(resp.parsed_json, ids, scene_text, sentences=sents)
                 sec, trace = cleaned["sections"], cleaned["trace"]
                 utts = []
                 for k, (sj, u) in enumerate(flat):
