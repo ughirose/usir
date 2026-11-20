@@ -1,0 +1,1700 @@
+{
+  "audit_model": "google-gemini-independent-audit",
+  "gold_path": "scripts/phase2_stage2/gold/stage_b_gold.json",
+  "annotations_dir": "scripts/phase2_stage2/gold_audit/annotations",
+  "modern_11": {
+    "scenes": 11,
+    "present": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "present_mechanical_baseline": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 23,
+      "precision": 1.0,
+      "recall": 0.14814814814814814,
+      "f1": 0.25806451612903225
+    },
+    "time_relative_order": {
+      "match": 11,
+      "n": 11,
+      "rate": 1.0
+    },
+    "time_explicit": {
+      "match": 9,
+      "n": 11,
+      "rate": 0.8181818181818182
+    },
+    "location": {
+      "match": 11,
+      "n": 11,
+      "rate": 1.0
+    },
+    "fact_updates_pred_obj": {
+      "tp": 15,
+      "fp": 26,
+      "fn": 11,
+      "precision": 0.36585365853658536,
+      "recall": 0.5769230769230769,
+      "f1": 0.44776119402985076
+    },
+    "fact_updates_strict_subject": {
+      "tp": 14,
+      "fp": 27,
+      "fn": 12,
+      "precision": 0.34146341463414637,
+      "recall": 0.5384615384615384,
+      "f1": 0.41791044776119407
+    },
+    "fact_pred_predicate_counts": {
+      "MOVED_TO": 4,
+      "ACQUIRED": 7,
+      "STATE_CHANGED": 8,
+      "HOOK_OPENED": 7,
+      "LEARNED": 15
+    },
+    "states_character_set": {
+      "tp": 24,
+      "fp": 2,
+      "fn": 0,
+      "precision": 0.9230769230769231,
+      "recall": 1.0,
+      "f1": 0.9600000000000001
+    },
+    "values_6d": {
+      "matched_character_scenes": 24,
+      "vector_exact": {
+        "match": 7,
+        "n": 24,
+        "rate": 0.2916666666666667
+      },
+      "axis_exact": {
+        "match": 118,
+        "n": 144,
+        "rate": 0.8194444444444444
+      },
+      "polarity_both_nonzero": {
+        "match": 23,
+        "n": 23,
+        "rate": 1.0
+      },
+      "gold_nonzero_axes_same_sign": {
+        "match": 23,
+        "n": 29,
+        "rate": 0.7931034482758621
+      },
+      "all_zero_baseline": {
+        "gold_characters": 24,
+        "vector_exact_rate": 0.0,
+        "axis_exact_rate": 0.7986111111111112
+      }
+    },
+    "per_scene": [
+      {
+        "scene_id": "001798_056779:s0",
+        "present_gold": [
+          "boku",
+          "fuwa"
+        ],
+        "present_pred": [
+          "boku",
+          "fuwa"
+        ],
+        "order_gold": "unknown",
+        "order_pred": "unknown",
+        "facts_gold": 1,
+        "facts_pred": 3,
+        "states_gold": [
+          "boku",
+          "fuwa"
+        ],
+        "states_pred": [
+          "boku",
+          "fuwa"
+        ]
+      },
+      {
+        "scene_id": "001798_056779:s1",
+        "present_gold": [
+          "boku",
+          "fuwa"
+        ],
+        "present_pred": [
+          "boku",
+          "fuwa"
+        ],
+        "order_gold": "continuous",
+        "order_pred": "continuous",
+        "facts_gold": 3,
+        "facts_pred": 3,
+        "states_gold": [
+          "boku",
+          "fuwa"
+        ],
+        "states_pred": [
+          "boku",
+          "fuwa"
+        ]
+      },
+      {
+        "scene_id": "001798_056779:s2",
+        "present_gold": [
+          "boku",
+          "noro"
+        ],
+        "present_pred": [
+          "boku",
+          "noro"
+        ],
+        "order_gold": "continuous",
+        "order_pred": "continuous",
+        "facts_gold": 3,
+        "facts_pred": 6,
+        "states_gold": [
+          "boku",
+          "noro"
+        ],
+        "states_pred": [
+          "boku",
+          "noro"
+        ]
+      },
+      {
+        "scene_id": "001798_056779:s3",
+        "present_gold": [
+          "boku",
+          "noro"
+        ],
+        "present_pred": [
+          "boku",
+          "noro"
+        ],
+        "order_gold": "continuous",
+        "order_pred": "continuous",
+        "facts_gold": 2,
+        "facts_pred": 3,
+        "states_gold": [
+          "boku",
+          "noro"
+        ],
+        "states_pred": [
+          "boku",
+          "noro"
+        ]
+      },
+      {
+        "scene_id": "001801_001786:s0",
+        "present_gold": [
+          "onna",
+          "shinichi"
+        ],
+        "present_pred": [
+          "onna",
+          "shinichi"
+        ],
+        "order_gold": "unknown",
+        "order_pred": "unknown",
+        "facts_gold": 2,
+        "facts_pred": 4,
+        "states_gold": [
+          "onna",
+          "shinichi"
+        ],
+        "states_pred": [
+          "onna",
+          "shinichi"
+        ]
+      },
+      {
+        "scene_id": "001801_001786:s1",
+        "present_gold": [
+          "onna",
+          "shinichi"
+        ],
+        "present_pred": [
+          "onna",
+          "shinichi"
+        ],
+        "order_gold": "continuous",
+        "order_pred": "continuous",
+        "facts_gold": 3,
+        "facts_pred": 4,
+        "states_gold": [
+          "onna",
+          "shinichi"
+        ],
+        "states_pred": [
+          "onna",
+          "shinichi"
+        ]
+      },
+      {
+        "scene_id": "001801_001786:s2",
+        "present_gold": [
+          "onna",
+          "shinichi"
+        ],
+        "present_pred": [
+          "onna",
+          "shinichi"
+        ],
+        "order_gold": "continuous",
+        "order_pred": "continuous",
+        "facts_gold": 2,
+        "facts_pred": 2,
+        "states_gold": [
+          "onna",
+          "shinichi"
+        ],
+        "states_pred": [
+          "onna",
+          "shinichi"
+        ]
+      },
+      {
+        "scene_id": "001875_059897:s0",
+        "present_gold": [
+          "heiroku",
+          "otoe",
+          "susumu",
+          "yasue"
+        ],
+        "present_pred": [
+          "heiroku",
+          "otoe",
+          "susumu",
+          "yasue"
+        ],
+        "order_gold": "unknown",
+        "order_pred": "unknown",
+        "facts_gold": 2,
+        "facts_pred": 3,
+        "states_gold": [
+          "heiroku",
+          "yasue"
+        ],
+        "states_pred": [
+          "heiroku",
+          "yasue"
+        ]
+      },
+      {
+        "scene_id": "001875_059897:s1",
+        "present_gold": [
+          "bunkichi",
+          "heiroku",
+          "otoe",
+          "yasue"
+        ],
+        "present_pred": [
+          "bunkichi",
+          "heiroku",
+          "otoe",
+          "yasue"
+        ],
+        "order_gold": "continuous",
+        "order_pred": "continuous",
+        "facts_gold": 3,
+        "facts_pred": 6,
+        "states_gold": [
+          "bunkichi",
+          "heiroku",
+          "yasue"
+        ],
+        "states_pred": [
+          "bunkichi",
+          "heiroku",
+          "otoe",
+          "yasue"
+        ]
+      },
+      {
+        "scene_id": "001875_059897:s2",
+        "present_gold": [
+          "otoe",
+          "susumu",
+          "yasue"
+        ],
+        "present_pred": [
+          "otoe",
+          "susumu",
+          "yasue"
+        ],
+        "order_gold": "continuous",
+        "order_pred": "continuous",
+        "facts_gold": 3,
+        "facts_pred": 4,
+        "states_gold": [
+          "otoe",
+          "susumu",
+          "yasue"
+        ],
+        "states_pred": [
+          "bunkichi",
+          "otoe",
+          "susumu",
+          "yasue"
+        ]
+      },
+      {
+        "scene_id": "001875_059897:s3",
+        "present_gold": [
+          "susumu",
+          "yasue"
+        ],
+        "present_pred": [
+          "susumu",
+          "yasue"
+        ],
+        "order_gold": "continuous",
+        "order_pred": "continuous",
+        "facts_gold": 2,
+        "facts_pred": 3,
+        "states_gold": [
+          "susumu",
+          "yasue"
+        ],
+        "states_pred": [
+          "susumu",
+          "yasue"
+        ]
+      }
+    ]
+  },
+  "person_values_6d": {
+    "aggregation_rule": "sign(sum(scene_values)) across scenes where character appears in states",
+    "gold_axis_conflicts": {},
+    "pred_axis_conflicts": {},
+    "vs_explicit_person_values": {
+      "gold_persons": 10,
+      "pred_persons": 10,
+      "matched_persons": 10,
+      "vector_exact": {
+        "match": 4,
+        "n": 10,
+        "rate": 0.4
+      },
+      "axis_exact": {
+        "match": 46,
+        "n": 60,
+        "rate": 0.7666666666666667
+      },
+      "polarity_both_nonzero": {
+        "match": 14,
+        "n": 15,
+        "rate": 0.9333333333333333
+      },
+      "gold_nonzero_axes_same_sign": {
+        "match": 14,
+        "n": 19,
+        "rate": 0.7368421052631579
+      },
+      "all_zero_baseline": {
+        "gold_persons": 10,
+        "vector_exact_rate": 0.0,
+        "axis_exact_rate": 0.6833333333333333
+      },
+      "per_person": {
+        "001798_056779:boku": {
+          "gold": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "pred": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "vector_exact": true
+        },
+        "001798_056779:fuwa": {
+          "gold": [
+            0,
+            -1,
+            0,
+            -1,
+            1,
+            0
+          ],
+          "pred": [
+            0,
+            -1,
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001798_056779:noro": {
+          "gold": [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            -1
+          ],
+          "pred": [
+            0,
+            0,
+            -1,
+            -1,
+            0,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001801_001786:onna": {
+          "gold": [
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "pred": [
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "vector_exact": true
+        },
+        "001801_001786:shinichi": {
+          "gold": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            -1
+          ],
+          "pred": [
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001875_059897:bunkichi": {
+          "gold": [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0
+          ],
+          "pred": [
+            0,
+            1,
+            -1,
+            0,
+            -1,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001875_059897:heiroku": {
+          "gold": [
+            0,
+            -1,
+            0,
+            -1,
+            0,
+            0
+          ],
+          "pred": [
+            0,
+            -1,
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001875_059897:otoe": {
+          "gold": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "pred": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001875_059897:susumu": {
+          "gold": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "pred": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "vector_exact": true
+        },
+        "001875_059897:yasue": {
+          "gold": [
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "pred": [
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "vector_exact": true
+        }
+      }
+    },
+    "vs_scene_aggregated_values": {
+      "gold_persons": 10,
+      "pred_persons": 10,
+      "matched_persons": 10,
+      "vector_exact": {
+        "match": 3,
+        "n": 10,
+        "rate": 0.3
+      },
+      "axis_exact": {
+        "match": 46,
+        "n": 60,
+        "rate": 0.7666666666666667
+      },
+      "polarity_both_nonzero": {
+        "match": 15,
+        "n": 17,
+        "rate": 0.8823529411764706
+      },
+      "gold_nonzero_axes_same_sign": {
+        "match": 15,
+        "n": 19,
+        "rate": 0.7894736842105263
+      },
+      "all_zero_baseline": {
+        "gold_persons": 10,
+        "vector_exact_rate": 0.0,
+        "axis_exact_rate": 0.6833333333333333
+      },
+      "per_person": {
+        "001798_056779:boku": {
+          "gold": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "pred": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "vector_exact": true
+        },
+        "001798_056779:fuwa": {
+          "gold": [
+            0,
+            -1,
+            0,
+            -1,
+            1,
+            0
+          ],
+          "pred": [
+            0,
+            -1,
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001798_056779:noro": {
+          "gold": [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            -1
+          ],
+          "pred": [
+            0,
+            0,
+            -1,
+            -1,
+            0,
+            -1
+          ],
+          "vector_exact": false
+        },
+        "001801_001786:onna": {
+          "gold": [
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "pred": [
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "vector_exact": true
+        },
+        "001801_001786:shinichi": {
+          "gold": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            -1
+          ],
+          "pred": [
+            0,
+            0,
+            0,
+            1,
+            -1,
+            1
+          ],
+          "vector_exact": false
+        },
+        "001875_059897:bunkichi": {
+          "gold": [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0
+          ],
+          "pred": [
+            0,
+            1,
+            -1,
+            0,
+            -1,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001875_059897:heiroku": {
+          "gold": [
+            0,
+            -1,
+            0,
+            -1,
+            0,
+            0
+          ],
+          "pred": [
+            0,
+            -1,
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001875_059897:otoe": {
+          "gold": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "pred": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "vector_exact": false
+        },
+        "001875_059897:susumu": {
+          "gold": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "pred": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "vector_exact": true
+        },
+        "001875_059897:yasue": {
+          "gold": [
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "pred": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "vector_exact": false
+        }
+      }
+    },
+    "per_person_detail": {
+      "001798_056779:boku": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001798_056779:s0",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s1",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s2",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s3",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "gold_agg": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001798_056779:s0",
+            "values_6d": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s1",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s2",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s3",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "契約書・領収証・間代前納などの正規手続きを重視し、礼儀・規範意識に沿って行動する。"
+      },
+      "001798_056779:fuwa": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001798_056779:s0",
+            "values_6d": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s1",
+            "values_6d": [
+              0,
+              -1,
+              0,
+              -1,
+              0,
+              0
+            ]
+          }
+        ],
+        "gold_agg": [
+          0,
+          -1,
+          0,
+          -1,
+          1,
+          0
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001798_056779:s0",
+            "values_6d": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s1",
+            "values_6d": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1,
+              0
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "権利金4万円＋前納2千円を得て夜逃げ同然に失踪し、二重契約で利得を図る打算的・逸脱的人物。"
+      },
+      "001798_056779:noro": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001798_056779:s2",
+            "values_6d": [
+              0,
+              0,
+              0,
+              -1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s3",
+            "values_6d": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              -1
+            ]
+          }
+        ],
+        "gold_agg": [
+          0,
+          0,
+          0,
+          -1,
+          0,
+          -1
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          0,
+          -1,
+          -1,
+          0,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001798_056779:s2",
+            "values_6d": [
+              0,
+              0,
+              -1,
+              -1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001798_056779:s3",
+            "values_6d": [
+              0,
+              0,
+              -1,
+              0,
+              0,
+              -1
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          0,
+          -1,
+          -1,
+          0,
+          -1
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "家屋購入の所有権を前面に出し、当初は横柄に立ち退きを迫る世俗的・自己中心的振る舞い。"
+      },
+      "001801_001786:onna": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001801_001786:s0",
+            "values_6d": [
+              -1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001801_001786:s1",
+            "values_6d": [
+              -1,
+              0,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "scene_id": "001801_001786:s2",
+            "values_6d": [
+              -1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "gold_agg": [
+          -1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          -1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001801_001786:s0",
+            "values_6d": [
+              -1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001801_001786:s1",
+            "values_6d": [
+              -1,
+              0,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "scene_id": "001801_001786:s2",
+            "values_6d": [
+              -1,
+              0,
+              0,
+              0,
+              1,
+              0
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          -1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "深夜の沖で自殺を意図し助けを拒む死への傾斜と、ヒステリック・怒りに揺れる情念の強さ。"
+      },
+      "001801_001786:shinichi": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001801_001786:s0",
+            "values_6d": [
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001801_001786:s1",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001801_001786:s2",
+            "values_6d": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              -1
+            ]
+          }
+        ],
+        "gold_agg": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          -1
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          0,
+          0,
+          1,
+          -1,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001801_001786:s0",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001801_001786:s1",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              -1,
+              1
+            ]
+          },
+          {
+            "scene_id": "001801_001786:s2",
+            "values_6d": [
+              0,
+              0,
+              0,
+              0,
+              -1,
+              0
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          0,
+          0,
+          1,
+          -1,
+          1
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "見知らぬ女を気遣いつつも（親切・尊重）、感情的介入を抑えて静かに引き返す強い抑制を持つ。"
+      },
+      "001875_059897:bunkichi": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001875_059897:s1",
+            "values_6d": [
+              0,
+              0,
+              0,
+              -1,
+              0,
+              0
+            ]
+          }
+        ],
+        "gold_agg": [
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          1,
+          -1,
+          0,
+          -1,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001875_059897:s1",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              -1,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s2",
+            "values_6d": [
+              0,
+              0,
+              -1,
+              0,
+              -1,
+              0
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          1,
+          -1,
+          0,
+          -1,
+          0
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "義理で金を貸す一方、権利金と相殺するむな算用や冷静な人物評を示す世俗的・抑制的気質。"
+      },
+      "001875_059897:heiroku": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001875_059897:s0",
+            "values_6d": [
+              0,
+              0,
+              0,
+              -1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s1",
+            "values_6d": [
+              0,
+              -1,
+              0,
+              -1,
+              0,
+              0
+            ]
+          }
+        ],
+        "gold_agg": [
+          0,
+          -1,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001875_059897:s0",
+            "values_6d": [
+              0,
+              -1,
+              -1,
+              0,
+              -1,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s1",
+            "values_6d": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1,
+              0
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "食糧統制違反のやみ屋で、安江の弱みや進君の生活費を打算的に利用・不履行する利己的逸脱者。"
+      },
+      "001875_059897:otoe": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001875_059897:s2",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "gold_agg": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001875_059897:s1",
+            "values_6d": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s2",
+            "values_6d": [
+              0,
+              1,
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "主婦代りに赤ん坊の世話をし母に素直に従う規範性と、進君を哀れみ取り成す思いやり。"
+      },
+      "001875_059897:susumu": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001875_059897:s2",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s3",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "gold_agg": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001875_059897:s2",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s3",
+            "values_6d": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "両手をついての切口上という礼儀正しさと、毎日訪ね泊りこんででも会うとする主体的な行動力。"
+      },
+      "001875_059897:yasue": {
+        "gold_per_scene": [
+          {
+            "scene_id": "001875_059897:s0",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s1",
+            "values_6d": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s2",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s3",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "gold_agg": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "gold_axis_conflicts": [],
+        "pred_explicit_person": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "pred_per_scene": [
+          {
+            "scene_id": "001875_059897:s0",
+            "values_6d": [
+              0,
+              1,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s1",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s2",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "scene_id": "001875_059897:s3",
+            "values_6d": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              0
+            ]
+          }
+        ],
+        "pred_per_scene_agg": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          0
+        ],
+        "pred_axis_conflicts": [],
+        "rationale": "肺病の夫婦の赤ん坊を引き取り、進君にも五百円を貸し慰める献身・庇護と情に脆い性格。"
+      }
+    }
+  }
+}

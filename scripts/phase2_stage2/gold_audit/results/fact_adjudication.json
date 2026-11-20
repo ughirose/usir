@@ -1,0 +1,203 @@
+{
+  "audit_branch": "phase2/gold-audit",
+  "step1_blind_commit": "a8a7de7c826a5176777f2a49cd40f553e9621822",
+  "scope": "modern_11 (001798_056779, 001801_001786, 001875_059897)",
+  "adjudicator": "google-gemini-independent-audit",
+  "fn_11_full_breakdown": {
+    "total_gold_facts": 26,
+    "matched_pred_obj": 15,
+    "unmatched_gold_fn": 11,
+    "categories": {
+      "surface_paraphrase_missed_by_text_match": [
+        {
+          "scene_id": "001798_056779:s2",
+          "gold": {"subject": null, "predicate": "HOOK_OPENED", "object": "家の所有をめぐる食い違い"},
+          "pred": {"subject": null, "predicate": "HOOK_OPENED", "object": "家の居住権と所有権の食い違い"},
+          "note": "同一主語・同一述語・同義。文字バイグラム重複係数 5/11 = 0.4545 < 0.50 で不一致扱い。"
+        },
+        {
+          "scene_id": "001798_056779:s3",
+          "gold": {"subject": null, "predicate": "HOOK_OPENED", "object": "家の二重契約の誤解"},
+          "pred": {"subject": null, "predicate": "HOOK_OPENED", "object": "野呂が家を買い受けた事情と誤解の真相"},
+          "note": "同一主語・同一述語・同義。語彙差によりバイグラム重複 < 0.50。"
+        },
+        {
+          "scene_id": "001801_001786:s1",
+          "gold": {"subject": "onna", "predicate": "LEARNED", "object": "慎一の父の死生観"},
+          "pred": {"subject": "onna", "predicate": "LEARNED", "object": "慎一が自殺をとめないという考え"},
+          "note": "同一主語・同一述語・同一発話内容の要約差。"
+        },
+        {
+          "scene_id": "001875_059897:s3",
+          "gold": {"subject": null, "predicate": "HOOK_OPENED", "object": "進君の部屋探し"},
+          "pred": {"subject": "susumu", "predicate": "HOOK_OPENED", "object": "兵六に相談してことしうちぐらいに部屋をさがすこと"},
+          "note": "同一述語・同義。「部屋探し」（漢字）vs「部屋をさがす」（本文表記のかな）で表層不一致。"
+        }
+      ],
+      "same_event_different_predicate": [
+        {
+          "scene_id": "001801_001786:s1",
+          "gold": {"subject": "shinichi", "predicate": "LOST", "object": "父"},
+          "pred": {"subject": "onna", "predicate": "LEARNED", "object": "慎一の親父が去年死んだこと"}
+        },
+        {
+          "scene_id": "001801_001786:s1",
+          "gold": {"subject": null, "predicate": "HOOK_OPENED", "object": "女の自殺の意図"},
+          "pred": {"subject": "shinichi", "predicate": "LEARNED", "object": "女が自殺するつもりであること"}
+        },
+        {
+          "scene_id": "001875_059897:s1",
+          "gold": {"subject": "bunkichi", "predicate": "LOST", "object": "二千円"},
+          "pred": {"subject": "heiroku", "predicate": "ACQUIRED", "object": "文吉から二千円"}
+        }
+      ],
+      "gold_factual_error": [
+        {
+          "scene_id": "001875_059897:s3",
+          "gold": {"subject": "susumu", "predicate": "MOVED_TO", "object": "鷲さんのところ"},
+          "note": "本文は「きょうもこれから出かけるところです」であり、本場面内での移動は未発生。"
+        }
+      ],
+      "google_genuine_omission": [
+        {
+          "scene_id": "001798_056779:s1",
+          "gold": {"subject": null, "predicate": "HOOK_OPENED", "object": "不破の借金の事情"}
+        },
+        {
+          "scene_id": "001801_001786:s0",
+          "gold": {"subject": "shinichi", "predicate": "MOVED_TO", "object": "女の方"}
+        },
+        {
+          "scene_id": "001875_059897:s1",
+          "gold": {"subject": null, "predicate": "HOOK_OPENED", "object": "兵六への貸金の行方"}
+        }
+      ]
+    },
+    "diagnostic_if_4_paraphrases_counted_as_tp": {
+      "tp": 19,
+      "fp": 22,
+      "fn": 7,
+      "precision": 0.4634146341463415,
+      "recall": 0.7307692307692307,
+      "f1": 0.5671641791044776
+    }
+  },
+  "classified_cases": [
+    {
+      "case_id": 1,
+      "scene_id": "001875_059897:s3",
+      "mismatch_type": "gold_fn",
+      "gold_fact": {"subject": "susumu", "predicate": "MOVED_TO", "object": "鷲さんのところ"},
+      "google_fact": null,
+      "text_quote": "「きょうもこれから出かけるところです。きょうは泊りこんででもあってくるつもりです。」今時の若い人に珍らしく、両手をついての切口上を聞くと、安江はつい慰めずにいられなくなり、",
+      "verdict": "google_correct",
+      "verdict_ja": "Google注釈が正しい",
+      "reason": "進君は安江の前で両手をついたまま今後の予定・意図を述べているだけであり、本場面内での移動は実行されていない。未実行の意図を MOVED_TO として計上したゴールドの誤り。"
+    },
+    {
+      "case_id": 2,
+      "scene_id": "001801_001786:s1",
+      "mismatch_type": "gold_fn_vs_pred_fp",
+      "gold_fact": {"subject": "shinichi", "predicate": "LOST", "object": "父"},
+      "google_fact": {"subject": "onna", "predicate": "LEARNED", "object": "慎一の親父が去年死んだこと"},
+      "text_quote": "「で、お父さんは？」「死にました。去年」",
+      "verdict": "google_correct",
+      "verdict_ja": "Google注釈が正しい",
+      "reason": "父の死は「去年」の過去事実であり、本場面内の状態更新（LOST）ではない。本場面内で新たに発生した更新は、女がその事実を知ったこと（onna LEARNED）である。"
+    },
+    {
+      "case_id": 3,
+      "scene_id": "001798_056779:s0",
+      "mismatch_type": "pred_fp",
+      "gold_fact": null,
+      "google_fact": {"subject": "fuwa", "predicate": "ACQUIRED", "object": "四万円"},
+      "text_quote": "その夜不破とかんたんな契約書を作成し、四万円を手交し、",
+      "verdict": "google_correct",
+      "verdict_ja": "Google注釈が正しい",
+      "reason": "ゴールドは s1 で「二千円」を fuwa ACQUIRED と記録している一方、s0 の「四万円を手交し」（および契約書作成）を落としている。s1・s3 の展開の直接の前提となる台帳事実であり、ゴールド側の取りこぼし。"
+    },
+    {
+      "case_id": 4,
+      "scene_id": "001875_059897:s1",
+      "mismatch_type": "gold_fn",
+      "gold_fact": {"subject": null, "predicate": "HOOK_OPENED", "object": "兵六への貸金の行方"},
+      "google_fact": null,
+      "text_quote": "「そのお金、もうもどってなんかこないわよ。わたしに相談もしないでさ……」",
+      "verdict": "gold_correct",
+      "verdict_ja": "ゴールドが正しい",
+      "reason": "文吉が兵六に貸した金が回収できるかという未解決懸案が明示され、s2 の「むな算用」に直接つながる。Google注釈は権利金隠匿フックのみ抽出し本件を落とした。"
+    },
+    {
+      "case_id": 5,
+      "scene_id": "001798_056779:s2",
+      "mismatch_type": "pred_fp",
+      "gold_fact": null,
+      "google_fact": {"subject": "noro", "predicate": "STATE_CHANGED", "object": "急に言葉がぞんざいになった"},
+      "text_quote": "そして野呂はじろじろと僕を上から下まで眺め廻して、急に言葉がぞんざいになりました。",
+      "verdict": "gold_correct",
+      "verdict_ja": "ゴールドが正しい",
+      "reason": "会話中の一時的な口調・態度の変化であり、物語台帳で持続管理すべき状態遷移ではない。不採用としたゴールドが妥当。"
+    },
+    {
+      "case_id": 6,
+      "scene_id": "001875_059897:s2",
+      "mismatch_type": "pred_fp",
+      "gold_fact": null,
+      "google_fact": {"subject": "yasue", "predicate": "STATE_CHANGED", "object": "柔和な顔になり五百円を貸した"},
+      "text_quote": "音枝にはぽんぽんいうくせに、当の進君が頭を下げると、安江は柔和な顔で五百円をわたしながら、",
+      "verdict": "gold_correct",
+      "verdict_ja": "ゴールドが正しい",
+      "reason": "金銭授受は既に一致済みの (susumu, ACQUIRED, 五百円) で表現されており、一時的表情を STATE_CHANGED として重ねた重複・過抽出。ゴールドが妥当。"
+    },
+    {
+      "case_id": 7,
+      "scene_id": "001875_059897:s0",
+      "mismatch_type": "pred_fp",
+      "gold_fact": null,
+      "google_fact": {"subject": "heiroku", "predicate": "LEARNED", "object": "進君から赤ん坊の事情"},
+      "text_quote": "「進君から話を聞きましてな、今、あんたの物語を一席していたとこですよ。」",
+      "verdict": "gold_correct",
+      "verdict_ja": "ゴールドが正しい",
+      "reason": "帰宅前の世間話への言及にとどまり、後続の筋や整合性検査に影響する知識更新ではない。ゴールドの抑制的選定が妥当。"
+    },
+    {
+      "case_id": 8,
+      "scene_id": "001875_059897:s1",
+      "mismatch_type": "gold_fn_vs_pred_fp",
+      "gold_fact": {"subject": "bunkichi", "predicate": "LOST", "object": "二千円"},
+      "google_fact": {"subject": "heiroku", "predicate": "ACQUIRED", "object": "文吉から二千円"},
+      "text_quote": "「だって、二千円ぐらいの金を、かしてくれっていったもんな。」「それ、かしたの？」安江が顔色をかえる。「かしたさ。」",
+      "verdict": "ambiguous",
+      "verdict_ja": "どちらとも言えない",
+      "reason": "同一の貸借を貸し手側（LOST）で記すか借り手側（ACQUIRED）で記すかの視点差。なお貸借自体は過去出来事であり、本場面での出来事は安江が知ったこと（Googleが別途計上した yasue LEARNED）とも捉えられる。"
+    },
+    {
+      "case_id": 9,
+      "scene_id": "001801_001786:s1",
+      "mismatch_type": "gold_fn_vs_pred_fp",
+      "gold_fact": {"subject": null, "predicate": "HOOK_OPENED", "object": "女の自殺の意図"},
+      "google_fact": {"subject": "shinichi", "predicate": "LEARNED", "object": "女が自殺するつもりであること"},
+      "text_quote": "「……あなたは、自殺するつもりですか？」喘ぐ呼吸が聞こえ、女は反抗的に答えた。「ほっといてよ。……あなたには、関係ないことだわ」",
+      "verdict": "ambiguous",
+      "verdict_ja": "どちらとも言えない",
+      "reason": "女の自殺意図が表面化する同一箇所を、未解決の懸案提示（HOOK_OPENED）と見るか、慎一の認識（LEARNED）と見るかの述語選択差であり、いずれも本文と整合する。"
+    },
+    {
+      "case_id": 10,
+      "scene_id": "001798_056779:s2",
+      "mismatch_type": "text_match_surface_miss",
+      "gold_fact": {"subject": null, "predicate": "HOOK_OPENED", "object": "家の所有をめぐる食い違い"},
+      "google_fact": {"subject": null, "predicate": "HOOK_OPENED", "object": "家の居住権と所有権の食い違い"},
+      "text_quote": "「僕はここの居住者だ」...「この家は僕のものだよ。不破氏から僕が買い受けたんだ。」",
+      "verdict": "ambiguous",
+      "verdict_ja": "どちらとも言えない（実質一致・text_match表層不一致）",
+      "reason": "主語・述語・意味が同一だが、measure_stage_b.py の文字バイグラム重複係数が 5/11 = 0.4545 < 0.50 となり不一致判定された事例（同型が計4組存在）。"
+    }
+  ],
+  "classified_summary": {
+    "total_classified": 10,
+    "gold_correct": 4,
+    "google_correct": 3,
+    "ambiguous": 3
+  }
+}
