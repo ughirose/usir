@@ -1,0 +1,22 @@
+001798_056779 0 {'present': 2, 'states': 2, 'facts': 9} rej 2 schema_err 0 26.38s
+001798_056779 1 {'present': 2, 'states': 2, 'facts': 4} rej 0 schema_err 0 17.331s
+001798_056779 2 {'present': 2, 'states': 2, 'facts': 3} rej 1 schema_err 0 19.371s
+001798_056779 3 {'present': 2, 'states': 2, 'facts': 2} rej 3 schema_err 0 17.546s
+001801_001786 0 {'present': 2, 'states': 2, 'facts': 4} rej 0 schema_err 0 17.539s
+001801_001786 1 {'present': 0, 'states': 1, 'facts': 2} rej 4 schema_err 0 17.428s
+001801_001786 2 {'present': 2, 'states': 0, 'facts': 1} rej 2 schema_err 0 11.709s
+001875_059897 0 {'present': 4, 'states': 2, 'facts': 3} rej 0 schema_err 0 19.587s
+001875_059897 1 {'present': 4, 'states': 3, 'facts': 2} rej 4 schema_err 0 45.265s
+001875_059897 2 {'present': 3, 'states': 0, 'facts': 0} rej 6 schema_err 0 19.111s
+001875_059897 3 {'present': 1, 'states': 0, 'facts': 1} rej 5 schema_err 0 10.875s
+Traceback (most recent call last):
+  File "C:\dev\usir-sensor-full\scripts\phase2_stage2\run_full_annotation.py", line 183, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\dev\usir-sensor-full\scripts\phase2_stage2\run_full_annotation.py", line 89, in main
+    roster_out = roster_entries(w["characters"])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\dev\usir-sensor-full\scripts\phase2\build_annotations.py", line 46, in roster_entries
+    for a in set(c["aliases"]) | {c["name"]}:
+                                  ~^^^^^^^^
+KeyError: 'name'

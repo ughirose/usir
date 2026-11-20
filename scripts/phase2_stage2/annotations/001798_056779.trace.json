@@ -121,9 +121,6 @@
           "basis": "少々僕もむっとして言い返しました。"
         },
         {
-          "basis": "庭に入って来た男は僕を見て、少しおどろいたらしく立ちすくんだ。"
-        },
-        {
           "basis": "そして野呂はじろじろと僕を上から下まで眺め廻して、急に言葉がぞんざいになりました。"
         }
       ],
@@ -187,7 +184,7 @@
       },
       "schema_errors": [],
       "scene_id": "001798_056779:s0",
-      "elapsed_sec": 107.862
+      "elapsed_sec": 26.38
     },
     {
       "parse_ok": true,
@@ -199,19 +196,31 @@
       },
       "schema_errors": [],
       "scene_id": "001798_056779:s1",
-      "elapsed_sec": 46.332
+      "elapsed_sec": 17.331
     },
     {
       "parse_ok": true,
-      "rejected": [],
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_text",
+          "item": {
+            "subject": "noro",
+            "predicate": "STATE_CHANGED",
+            "object": "困惑",
+            "evidence": "explicit",
+            "basis": "野呂は眉をひそめました。「十日？」野呂は眉をひそめました。"
+          }
+        }
+      ],
       "kept": {
         "present": 2,
         "states": 2,
-        "facts": 4
+        "facts": 3
       },
       "schema_errors": [],
       "scene_id": "001798_056779:s2",
-      "elapsed_sec": 24.263
+      "elapsed_sec": 19.371
     },
     {
       "parse_ok": true,
@@ -251,7 +260,7 @@
       },
       "schema_errors": [],
       "scene_id": "001798_056779:s3",
-      "elapsed_sec": 19.618
+      "elapsed_sec": 17.546
     }
   ],
   "raw": [
@@ -273,10 +282,10 @@
     },
     {
       "scene_id": "001798_056779:s2",
-      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": \"翌朝、十一時頃まで朝寝して、起き出した時には\",\n    \"elapsed_hint\": \"それから二三日経った正午頃\",\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"板の間\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"noro\",\n      \"basis\": \"野呂君\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"boku\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"僕もむっとして言い返しました。\"\n    },\n    {\n      \"character_id\": \"noro\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"バカじゃなかろうかというような眼付で、野呂は僕を見た。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"野呂がやって来た\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"野呂がやって来たのは、それから二三日経った正午頃でした。\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"むっとした\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"少々僕もむっとして言い返しました。\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"驚いた\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"庭に入って来た男は僕を見て、少しおどろいたらしく立ちすくんだ。\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"ぞんざいになった\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"そして野呂はじろじろと僕を上から下まで眺め廻して、急に言葉がぞんざいになりました。\"\n    }\n  ]\n}",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": \"翌朝、十一時頃まで朝寝して、起き出した時には\",\n    \"elapsed_hint\": \"それから二三日経った正午頃\",\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"板の間\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"noro\",\n      \"basis\": \"野呂君\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"boku\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"僕もむっとして言い返しました。\"\n    },\n    {\n      \"character_id\": \"noro\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"バカじゃなかろうかというような眼付で、野呂は僕を見た。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"野呂がやって来た\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"野呂がやって来たのは、それから二三日経った正午頃でした。\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"不快\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"少々僕もむっとして言い返しました。\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"困惑\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"野呂は眉をひそめました。「十日？」野呂は眉をひそめました。\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"挑発的\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"そして野呂はじろじろと僕を上から下まで眺め廻して、急に言葉がぞんざいになりました。\"\n    }\n  ]\n}",
       "parse_error": null,
       "prompt_eval_count": 1653,
-      "eval_count": 553,
+      "eval_count": 554,
       "format_mode": "json_schema"
     },
     {
