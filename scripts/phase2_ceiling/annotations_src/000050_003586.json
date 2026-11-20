@@ -1,0 +1,17 @@
+{"scenes":[
+{"order":"unknown","explicit_time":"今日の内","elapsed_hint":null,"location":null,"present":["tabiso","uba"],
+ "states":{"tabiso":[0,0,1,0,0,0],"uba":[0,0,0,0,0,0]},
+ "facts":[["tabiso","MOVED_TO","鎌倉","explicit"],["tabiso","LEARNED","浪打際に子産石という名所がある","explicit"],["tabiso","STATE_CHANGED","嘉吉の話を聞いて悚気とした","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":null,"present":["tabiso","uba"],
+ "states":{"tabiso":[0,0,1,1,0,0],"uba":[0,0,0,0,0,0]},
+ "facts":[["tabiso","STATE_CHANGED","しんみりと真心から念仏の声が出た","explicit"],["tabiso","LEARNED","黒門の別荘の若い人たちの話","explicit"],[null,"HOOK_OPENED","黒門の別宅での回向の依頼","explicit"]]},
+{"order":"parallel","explicit_time":"秋谷の夜","elapsed_hint":null,"location":"小川べり","present":["niemon","saihachi","kundo"],
+ "states":{"niemon":[0,0,0,0,0,0],"saihachi":[0,0,0,0,0,0],"kundo":[0,0,0,0,-1,0]},
+ "facts":[["saihachi","MOVED_TO","手毬を拾った場所(猫柳の根際)","explicit"],[null,"HOOK_OPENED","旅の書生が川で手毬を拾った奇妙な出来事","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":"川面","present":["saihachi","niemon","kundo"],
+ "states":{"saihachi":[0,0,0,0,0,0],"niemon":[0,0,0,0,0,0],"kundo":[0,0,0,0,0,0]},
+ "facts":[[null,"ACQUIRED","手毬(旅の書生が川の中で取る)","explicit"],[null,"HOOK_OPENED","手毬の下に猫が居た","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":null,"present":["kundo","saihachi","niemon"],
+ "states":{"kundo":[0,0,0,0,-1,0],"saihachi":[0,0,0,0,0,0],"niemon":[0,0,0,0,0,0]},
+ "facts":[["kundo","LEARNED","手毬の下の猫は水ひたしの死骸だった","explicit"]]}
+]}

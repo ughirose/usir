@@ -1,0 +1,20 @@
+{"scenes":[
+{"order":"unknown","explicit_time":null,"elapsed_hint":null,"location":"車室","present":["giovanni","campanella","tabibito"],
+ "states":{"giovanni":[0,0,1,0,0,0],"campanella":[0,0,1,1,0,0],"tabibito":[0,0,1,0,0,0]},
+ "facts":[["campanella","STATE_CHANGED","何かを決心している","explicit"],["giovanni","STATE_CHANGED","胸いっぱいのかなしみに似た新しい気持ち","explicit"],[null,"HOOK_OPENED","カムパネルラの決心の中身","inferred"]]},
+{"order":"continuous","explicit_time":"十一時","elapsed_hint":null,"location":"白鳥停車場","present":["giovanni","campanella"],
+ "states":{"giovanni":[0,0,0,0,0,0],"campanella":[0,0,0,0,0,0]},
+ "facts":[["giovanni","MOVED_TO","白鳥停車場","explicit"],["campanella","MOVED_TO","白鳥停車場","explicit"],["giovanni","MOVED_TO","河原","explicit"],["campanella","MOVED_TO","河原","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":"プリオシン海岸","present":["giovanni","campanella"],
+ "states":{"giovanni":[0,0,0,0,0,0],"campanella":[0,0,0,0,0,0]},
+ "facts":[["giovanni","MOVED_TO","プリオシン海岸","explicit"],["campanella","MOVED_TO","プリオシン海岸","explicit"],["campanella","ACQUIRED","くるみの実","explicit"],["giovanni","ACQUIRED","くるみの実","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":null,"present":["giovanni","campanella","daigakushi"],
+ "states":{"daigakushi":[0,0,0,0,-1,0],"giovanni":[0,0,0,0,0,0],"campanella":[0,0,0,0,0,0]},
+ "facts":[["giovanni","LEARNED","くるみは百二十万年前のものである","explicit"],["giovanni","LEARNED","獣の骨はボスで今の牛の先祖である","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":"白い岩","present":["giovanni","campanella","daigakushi"],
+ "states":{"giovanni":[0,1,0,0,0,0],"campanella":[0,0,0,0,0,0],"daigakushi":[0,0,0,0,0,0]},
+ "facts":[["giovanni","MOVED_TO","車室の席","explicit"],["campanella","MOVED_TO","車室の席","explicit"],["giovanni","STATE_CHANGED","世界中だって駆けれると思った","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":"車室","present":["giovanni","campanella","toritori"],
+ "states":{"giovanni":[0,0,0,0,0,0],"toritori":[0,0,0,1,0,0],"campanella":[0,0,0,0,0,0]},
+ "facts":[["toritori","MOVED_TO","二人のうしろの席","explicit"],["giovanni","STATE_CHANGED","さびしいようなかなしい気持ち","explicit"]]}
+]}

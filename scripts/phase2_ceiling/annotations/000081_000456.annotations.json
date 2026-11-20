@@ -1,0 +1,481 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000081_000456:s0",
+      "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89",
+      "work_id": "000081_000456",
+      "scene_index": 0,
+      "scene_count": 6,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 1005
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "inferred"
+      },
+      "location_id": "車室",
+      "present_character_ids": [
+        "giovanni",
+        "campanella",
+        "tabibito"
+      ],
+      "pov_character": "giovanni"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "tabibito",
+        "values_6d": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "campanella",
+        "predicate": "STATE_CHANGED",
+        "object": "何かを決心している",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "giovanni",
+        "predicate": "STATE_CHANGED",
+        "object": "胸いっぱいのかなしみに似た新しい気持ち",
+        "evidence": "explicit"
+      },
+      {
+        "subject": null,
+        "predicate": "HOOK_OPENED",
+        "object": "カムパネルラの決心の中身",
+        "evidence": "inferred"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000081_000456:s1",
+      "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6",
+      "work_id": "000081_000456",
+      "scene_index": 1,
+      "scene_count": 6,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 760
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "十一時"
+      },
+      "location_id": "白鳥停車場",
+      "present_character_ids": [
+        "giovanni",
+        "campanella"
+      ],
+      "pov_character": "giovanni"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "giovanni",
+        "predicate": "MOVED_TO",
+        "object": "白鳥停車場",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "campanella",
+        "predicate": "MOVED_TO",
+        "object": "白鳥停車場",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "giovanni",
+        "predicate": "MOVED_TO",
+        "object": "河原",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "campanella",
+        "predicate": "MOVED_TO",
+        "object": "河原",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000081_000456:s2",
+      "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+      "work_id": "000081_000456",
+      "scene_index": 2,
+      "scene_count": 6,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 817
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "プリオシン海岸",
+      "present_character_ids": [
+        "giovanni",
+        "campanella"
+      ],
+      "pov_character": "giovanni"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "giovanni",
+        "predicate": "MOVED_TO",
+        "object": "プリオシン海岸",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "campanella",
+        "predicate": "MOVED_TO",
+        "object": "プリオシン海岸",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "campanella",
+        "predicate": "ACQUIRED",
+        "object": "くるみの実",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "giovanni",
+        "predicate": "ACQUIRED",
+        "object": "くるみの実",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000081_000456:s3",
+      "scene_hash": "54ab8765b144cc2f27cd2855a1f3478a7872e6d5c7657d1a4ab1ba905183871e",
+      "work_id": "000081_000456",
+      "scene_index": 3,
+      "scene_count": 6,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 790
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "giovanni",
+        "campanella",
+        "daigakushi"
+      ],
+      "pov_character": "giovanni"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "daigakushi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "giovanni",
+        "predicate": "LEARNED",
+        "object": "くるみは百二十万年前のものである",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "giovanni",
+        "predicate": "LEARNED",
+        "object": "獣の骨はボスで今の牛の先祖である",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000081_000456:s4",
+      "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+      "work_id": "000081_000456",
+      "scene_index": 4,
+      "scene_count": 6,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 328
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "白い岩",
+      "present_character_ids": [
+        "giovanni",
+        "campanella",
+        "daigakushi"
+      ],
+      "pov_character": "giovanni"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "daigakushi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "giovanni",
+        "predicate": "MOVED_TO",
+        "object": "車室の席",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "campanella",
+        "predicate": "MOVED_TO",
+        "object": "車室の席",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "giovanni",
+        "predicate": "STATE_CHANGED",
+        "object": "世界中だって駆けれると思った",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "scene_id": "000081_000456:s5",
+      "scene_hash": "468c60bf74491a5707ad56540127e17286b890c533a3a6f451e8bd8e2ed5578a",
+      "work_id": "000081_000456",
+      "scene_index": 5,
+      "scene_count": 6,
+      "model_id": "claude-sonnet-5-5 (session model, manual annotation)",
+      "char_len": 563
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "車室",
+      "present_character_ids": [
+        "giovanni",
+        "campanella",
+        "toritori"
+      ],
+      "pov_character": "giovanni"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "giovanni",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "toritori",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "campanella",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "toritori",
+        "predicate": "MOVED_TO",
+        "object": "二人のうしろの席",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "giovanni",
+        "predicate": "STATE_CHANGED",
+        "object": "さびしいようなかなしい気持ち",
+        "evidence": "explicit"
+      }
+    ]
+  }
+]
