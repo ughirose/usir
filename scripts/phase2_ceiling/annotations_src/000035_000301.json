@@ -1,0 +1,23 @@
+{"scenes":[
+{"order":"unknown","explicit_time":"十一月","elapsed_hint":null,"location":"下宿","present":["yozo"],
+ "states":{"yozo":[-1,-1,0,0,0,0]},
+ "facts":[["yozo","ACQUIRED","マルクス学生の行動隊長の立場","explicit"],["yozo","ACQUIRED","小さいナイフ","explicit"],["yozo","STATE_CHANGED","情死事件で身の上が一変した","explicit"],["yozo","STATE_CHANGED","運動から逃げて死ぬ決意をした","explicit"]]},
+{"order":"parallel","explicit_time":"その頃","elapsed_hint":null,"location":"仙遊館","present":["yozo","musume"],
+ "states":{"yozo":[0,0,0,1,-1,0],"musume":[0,0,0,1,0,0]},
+ "facts":[["yozo","ACQUIRED","カルモチン","inferred"],["musume","MOVED_TO","薬屋","inferred"]]},
+{"order":"parallel","explicit_time":"或る夏の夜","elapsed_hint":null,"location":"銀座の或る大カフエ","present":["yozo","doshi"],
+ "states":{"yozo":[0,0,0,0,-1,-1],"doshi":[0,0,0,0,1,0]},
+ "facts":[["yozo","ACQUIRED","同志に買ってもらった品々","explicit"],["doshi","STATE_CHANGED","キスされて狂乱の如く興奮した","explicit"],["yozo","MOVED_TO","運動用に借りたビルの洋室","explicit"],["yozo","ACQUIRED","大カフエの女給から受けた恩","explicit"],["yozo","ACQUIRED","他人に挨拶できる伎倆","explicit"],["yozo","MOVED_TO","銀座の大カフエ","explicit"]]},
+{"order":"continuous","explicit_time":"秋の、寒い夜","elapsed_hint":null,"location":"屋台のお鮨や","present":["yozo","tsuneko"],
+ "states":{"yozo":[0,0,0,0,0,0],"tsuneko":[0,0,0,0,0,0]},
+ "facts":[["yozo","STATE_CHANGED","震えおののく心がしずまった","explicit"],["yozo","MOVED_TO","屋台のお鮨や","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":"本所の大工さんの二階","present":["yozo","tsuneko"],
+ "states":{"yozo":[0,0,0,0,0,0],"tsuneko":[-1,0,0,0,0,0]},
+ "facts":[["yozo","MOVED_TO","本所の大工さんの二階","explicit"],["yozo","LEARNED","ツネ子の身の上(年上、広島、夫は詐欺罪で刑務所)","explicit"],["yozo","STATE_CHANGED","恐怖と不安から離れた","explicit"],["tsuneko","STATE_CHANGED","夫への差し入れをやめると決めた","explicit"]]},
+{"order":"continuous","explicit_time":"朝","elapsed_hint":null,"location":null,"present":["yozo","tsuneko"],
+ "states":{"yozo":[0,0,0,0,-1,0],"tsuneko":[0,0,0,0,0,0]},
+ "facts":[["yozo","STATE_CHANGED","解放された夜からもとのお道化者に戻った","explicit"],["yozo","MOVED_TO","ツネ子の部屋から引上げた","explicit"],[null,"HOOK_OPENED","『金の切れめが縁の切れめ』の放言が後でひっかかりを生じる","explicit"]]},
+{"order":"continuous","explicit_time":"十一月の末","elapsed_hint":"ひとつき","location":"神田の屋台","present":["yozo","horiki"],
+ "states":{"yozo":[0,0,0,0,1,0],"horiki":[0,0,0,0,1,0]},
+ "facts":[["yozo","STATE_CHANGED","ツネ子への恐れと束縛感","explicit"],["yozo","MOVED_TO","カフエ","inferred"]]}
+]}

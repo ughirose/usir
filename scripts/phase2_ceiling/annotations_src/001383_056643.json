@@ -1,0 +1,20 @@
+{"scenes":[
+{"order":"unknown","explicit_time":null,"elapsed_hint":null,"location":null,"present":["hagiwara","shinichi","senkichi"],
+ "states":{"shinichi":[0,0,0,-1,1,0],"senkichi":[0,0,0,0,0,-1],"hagiwara":[0,0,0,0,1,0]},
+ "facts":[["senkichi","STATE_CHANGED","縛られ額に炭をこすりつけられて顔が崩れる","explicit"],["hagiwara","STATE_CHANGED","不思議な快感に襲われた","explicit"],["hagiwara","STATE_CHANGED","明日学校で意趣返しされる恐れ","inferred"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":"暫くしてから","location":"物置小屋","present":["hagiwara","shinichi","senkichi"],
+ "states":{"shinichi":[0,0,0,-1,1,0],"senkichi":[0,0,0,0,0,0],"hagiwara":[0,0,0,0,0,0]},
+ "facts":[["senkichi","STATE_CHANGED","縛られた痕が手首に赤く残る","explicit"],["shinichi","LEARNED","仙吉は泣く真似をしていた","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":"土間","present":["hagiwara","shinichi","senkichi"],
+ "states":{"shinichi":[0,0,0,-1,1,0],"hagiwara":[0,0,0,0,0,-1],"senkichi":[0,0,0,0,0,0]},
+ "facts":[["hagiwara","STATE_CHANGED","狼に喰い殺される(ごっこ)","explicit"],["senkichi","STATE_CHANGED","体中泥だらけになる","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":null,"present":["hagiwara","shinichi","senkichi"],
+ "states":{"shinichi":[0,0,0,-1,1,0],"hagiwara":[0,0,0,0,1,0],"senkichi":[0,0,0,0,0,-1]},
+ "facts":[["hagiwara","STATE_CHANGED","恐怖が快感に変わり信一の傀儡となるのを喜ぶようになった","explicit"]]},
+{"order":"continuous","explicit_time":"夕靄","elapsed_hint":null,"location":"小屋","present":["hagiwara","shinichi","senkichi","jochu"],
+ "states":{"shinichi":[0,0,0,-1,1,0],"jochu":[0,1,0,0,0,0],"hagiwara":[0,0,0,0,1,0]},
+ "facts":[["jochu","MOVED_TO","小屋の戸口","explicit"],["hagiwara","MOVED_TO","家へ帰る","explicit"],["hagiwara","STATE_CHANGED","信一の器量と我が儘な仕打ちに心を奪われた","explicit"]]},
+{"order":"continuous","explicit_time":"明くる日","elapsed_hint":"四五日立った","location":"中二階の十畳の間","present":["hagiwara","shinichi","senkichi","jochu","mitsuko"],
+ "states":{"shinichi":[0,0,0,-1,1,0],"senkichi":[0,0,0,0,0,0],"hagiwara":[0,0,0,0,0,0],"mitsuko":[0,0,0,0,0,0]},
+ "facts":[["shinichi","STATE_CHANGED","学校では意気地なしにいじけている","explicit"],["senkichi","STATE_CHANGED","学校では餓鬼大将に戻っている","explicit"],["hagiwara","MOVED_TO","中二階の十畳の間","explicit"],[null,"HOOK_OPENED","仙吉を白酒で酔わせる企み","explicit"]]}
+]}
