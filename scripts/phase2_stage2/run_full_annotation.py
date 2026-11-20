@@ -26,7 +26,7 @@ sys.path.insert(0, str(REPO / "scripts/phase2"))
 sys.path.insert(0, str(REPO / "scripts/step1/modern_gold"))
 
 from janome.tokenizer import Tokenizer  # noqa: E402
-from build_annotations import POLITE_MAP, roster_entries, segment  # noqa: E402
+from build_annotations import POLITE_MAP, PRONOUN_ALIASES, segment  # noqa: E402
 from build_modern_gold import classify_politeness_surface  # noqa: E402
 from usir_py.sensor_eval.ollama_client import call_ollama_chat  # noqa: E402
 from usir_py.sensor_eval.scene_annotator import (  # noqa: E402
@@ -58,6 +58,20 @@ SOURCES = {
 MODEL = "qwen2.5:14b"
 
 
+def roster_entries(characters: list[dict]) -> list[dict]:
+    """Same rule as phase2 step1 (pronoun aliases and aliases shared by several characters removed); name defaults to id."""
+    surf = lambda c: set(c["aliases"]) | {c.get("name", c["id"])}  # noqa: E731
+    count: dict[str, int] = {}
+    for c in characters:
+        for a in surf(c):
+            count[a] = count.get(a, 0) + 1
+    out = []
+    for c in characters:
+        al = {a for a in surf(c) if a not in PRONOUN_ALIASES and count[a] == 1}
+        out.append({"id": c["id"], "aliases": sorted(al, key=lambda s: (-len(s), s)), "gender": c["gender"], "honored": False})
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("out_dir")
@@ -68,7 +82,8 @@ def main() -> int:
     schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
     tok = Tokenizer()
     pr_hash = scene_prompt_hash()
-    summary = {"model": MODEL, "scene_prompt_hash": pr_hash, "works": {}}
+    sp = out_dir / "stageA_summary.json"
+    summary = json.loads(sp.read_text(encoding="utf-8")) if a.only and sp.exists() else {"model": MODEL, "scene_prompt_hash": pr_hash, "works": {}}
     t_all = time.perf_counter()
     for group, src in SOURCES.items():
         gold = json.loads(Path(src["gold"]).read_text(encoding="utf-8"))
@@ -109,7 +124,11 @@ def main() -> int:
                     assert p["utterance_index"] == k
                     chars = list(scene_text)
                     quote = "".join(chars[u["local"]["start"] - 1 : u["local"]["end"] + 1])
-                    assert quote == w["utterances"][k]["quote_text"], (wid, k)
+                    gu = w["utterances"][k]
+                    if "quote_text" in gu:
+                        assert quote == gu["quote_text"], (wid, k)
+                    else:  # F9 gold stores only the head of each quote
+                        m = min(len(quote) - 1, len(gu["head"]), 6); assert quote[1 : 1 + m] == gu["head"][:m], (wid, k, quote[:12], gu["head"][:6])
                     pol = classify_politeness_surface(quote, tok)
                     utts.append(
                         {
