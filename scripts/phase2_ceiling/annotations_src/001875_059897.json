@@ -1,0 +1,14 @@
+{"scenes":[
+{"order":"unknown","explicit_time":"一か月目ぐらい","elapsed_hint":null,"location":"安江の家","present":["yasue","otoe","heiroku","susumu"],
+ "states":{"yasue":[0,0,0,1,0,0],"heiroku":[0,0,0,0,0,0],"otoe":[0,0,0,0,0,0],"susumu":[0,0,0,0,0,0]},
+ "facts":[["yasue","ACQUIRED","赤ん坊(夏樹)の預かり","explicit"],["yasue","MOVED_TO","安江の家(帰宅)","explicit"],["heiroku","MOVED_TO","安江の家","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":"そのあとしばらく","location":null,"present":["yasue","heiroku","otoe","bunkichi"],
+ "states":{"heiroku":[0,-1,-1,-1,0,0],"yasue":[0,0,0,0,0,0],"bunkichi":[0,0,0,0,0,0],"otoe":[0,0,0,0,0,0]},
+ "facts":[["bunkichi","LOST","二千円(兵六への貸金)","explicit"],["bunkichi","ACQUIRED","二百円(利子名目の返済)","explicit"],["yasue","LEARNED","文吉が兵六に二千円を貸した","explicit"],["heiroku","STATE_CHANGED","食糧統制違反で新聞に出た","explicit"],["heiroku","STATE_CHANGED","家に来なくなった","explicit"],[null,"HOOK_OPENED","進君の部屋の権利金を安江が夫に隠している","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":null,"present":["yasue","otoe","susumu"],
+ "states":{"yasue":[0,0,0,1,0,-1],"otoe":[0,0,0,1,0,0],"susumu":[0,0,0,0,0,0],"bunkichi":[0,0,-1,0,0,0]},
+ "facts":[["bunkichi","LOST","三千円(兵六への貸金)","explicit"],["yasue","LEARNED","進君の生活費が兵六に預けられたまま渡されていない","explicit"],["yasue","LOST","五百円(進君への貸し)","explicit"],["susumu","ACQUIRED","五百円(借り)","explicit"],[null,"HOOK_OPENED","進君の預けた金が兵六から払われない","explicit"]]},
+{"order":"continuous","explicit_time":"きょう","elapsed_hint":null,"location":null,"present":["yasue","susumu"],
+ "states":{"susumu":[0,1,0,0,0,0],"yasue":[0,0,0,1,0,0]},
+ "facts":[["yasue","LEARNED","進君は兵六になかなか会えない","explicit"],[null,"HOOK_OPENED","進君の新しい部屋を探す約束(ことしうち)","explicit"],["susumu","MOVED_TO","兵六のところ","inferred"]]}
+]}

@@ -1,0 +1,14 @@
+{"scenes":[
+{"order":"unknown","explicit_time":"三日目","elapsed_hint":null,"location":"代田橋","present":["boku","fuwa"],
+ "states":{"boku":[0,0,0,0,0,0],"fuwa":[0,0,0,0,0,0]},
+ "facts":[["boku","MOVED_TO","代田橋","explicit"],["boku","ACQUIRED","不破宅の間借り(賃貸契約)","explicit"],["boku","LOST","四万円","explicit"],["boku","LEARNED","不破夫人は亭主を上回る酒豪","explicit"]]},
+{"order":"continuous","explicit_time":"失踪の前の晩","elapsed_hint":"一週間目","location":"僕の部屋","present":["boku","fuwa"],
+ "states":{"boku":[0,0,0,0,0,0],"fuwa":[0,0,-1,0,0,0]},
+ "facts":[["boku","LOST","二千円","explicit"],["boku","LOST","不破夫妻との同居生活","explicit"],["fuwa","STATE_CHANGED","失踪","explicit"],["fuwa","MOVED_TO","赤穂","inferred"],[null,"HOOK_OPENED","野呂が留守番に来る約束","explicit"]]},
+{"order":"continuous","explicit_time":"翌朝","elapsed_hint":"二三日経った正午頃","location":"板の間","present":["boku","noro"],
+ "states":{"boku":[0,0,0,0,0,0],"noro":[0,0,0,-1,0,0]},
+ "facts":[["noro","MOVED_TO","不破の家(庭)","explicit"],["boku","LEARNED","野呂は家を買い受けたと主張している","explicit"],["noro","LEARNED","不破が兵庫に立った","explicit"],[null,"HOOK_OPENED","家の所有権の食い違い","explicit"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":"板の間","present":["boku","noro"],
+ "states":{"boku":[0,1,0,0,0,0],"noro":[0,0,0,0,0,0]},
+ "facts":[["boku","LEARNED","野呂も不破氏から家を買い受けた","explicit"],["noro","STATE_CHANGED","不安と困惑","explicit"],[null,"HOOK_OPENED","不破数馬との売買をめぐる誤解","explicit"]]}
+]}

@@ -1,0 +1,11 @@
+{"scenes":[
+{"order":"unknown","explicit_time":"深夜","elapsed_hint":null,"location":"海","present":["shinichi","onna"],
+ "states":{"shinichi":[0,0,0,1,0,0],"onna":[0,0,0,0,0,0]},
+ "facts":[["shinichi","MOVED_TO","沖","explicit"],["shinichi","LEARNED","泳いでいる女は昼にスポーツ・カーで来た女","explicit"],["shinichi","MOVED_TO","女のそば","explicit"],[null,"HOOK_OPENED","女が深夜の海を泳ぐ理由","inferred"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":null,"present":["shinichi","onna"],
+ "states":{"shinichi":[1,0,0,1,0,0],"onna":[-1,0,0,0,0,0]},
+ "facts":[["shinichi","LEARNED","女は自殺するつもりらしい","inferred"],["onna","LEARNED","慎一の父は去年死んだ","explicit"],[null,"HOOK_OPENED","女は死ぬのか","inferred"]]},
+{"order":"continuous","explicit_time":null,"elapsed_hint":null,"location":"沖","present":["shinichi","onna"],
+ "states":{"shinichi":[0,0,0,0,0,0],"onna":[0,0,0,0,0,0]},
+ "facts":[["onna","LEARNED","慎一の父も自殺した","explicit"],["shinichi","MOVED_TO","岸","explicit"]]}
+]}
