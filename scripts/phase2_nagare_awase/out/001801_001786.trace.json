@@ -1,0 +1,213 @@
+[
+  {
+    "scene_id": "001801_001786:s0",
+    "elapsed_sec": 5.982,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E01\",\n      \"basis\": \"海を泳ぐ慎一と若い女の遭遇\"\n    },\n    {\n      \"code\": \"E09\",\n      \"basis\": \"慎一が女の安全を心配する\"\n    },\n    {\n      \"code\": \"E11\",\n      \"basis\": \"慎一が女の美しさに気づく\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M02\",\n      \"basis\": \"黒い海と夜光虫の光\"\n    },\n    {\n      \"code\": \"M04\",\n      \"basis\": \"女の疲労と苦しげな声\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"慎一が女の顔をおぼえていた\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"慎一が女の安全を心配する\",\n    \"f_basis\": \"黒い海と夜光虫の光\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1483,
+    "eval_count": 269,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E01",
+          "basis": "海を泳ぐ慎一と若い女の遭遇"
+        }
+      },
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E09",
+          "basis": "慎一が女の安全を心配する"
+        }
+      },
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E11",
+          "basis": "慎一が女の美しさに気づく"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M02",
+          "basis": "黒い海と夜光虫の光"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M04",
+          "basis": "女の疲労と苦しげな声"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "慎一が女の顔をおぼえていた"
+        }
+      },
+      {
+        "kind": "awase",
+        "reason": "F_basis_not_in_text",
+        "value": "慎一が女の安全を心配する"
+      },
+      {
+        "kind": "awase",
+        "reason": "f_basis_not_in_text",
+        "value": "黒い海と夜光虫の光"
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E01",
+          "basis": "海を泳ぐ慎一と若い女の遭遇"
+        },
+        {
+          "code": "E09",
+          "basis": "慎一が女の安全を心配する"
+        },
+        {
+          "code": "E11",
+          "basis": "慎一が女の美しさに気づく"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M02",
+          "basis": "黒い海と夜光虫の光"
+        },
+        {
+          "code": "M04",
+          "basis": "女の疲労と苦しげな声"
+        },
+        {
+          "code": "M11",
+          "basis": "慎一が女の顔をおぼえていた"
+        }
+      ],
+      "awase": {
+        "F_basis": "慎一が女の安全を心配する",
+        "f_basis": "黒い海と夜光虫の光"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001801_001786:s1",
+    "elapsed_sec": 5.552,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E03\", \"basis\": \"あなたは、自殺するつもりですか？\"},\n    {\"code\": \"E06\", \"basis\": \"死にました。去年\"},\n    {\"code\": \"E15\", \"basis\": \"その人を好きなように死なしてやるほうが、ずっと親切だし、ほんとうは、ずっと勇気のいることなんだ、って\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M04\", \"basis\": \"死にました。去年\"},\n    {\"code\": \"M11\", \"basis\": \"孤独・疎外・寂寥\"},\n    {\"code\": \"M14\", \"basis\": \"決意・凛然・緊張\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"死にました。去年\",\n    \"f_basis\": \"喘ぐ呼吸が聞こえ、女は反抗的に答えた。\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1484,
+    "eval_count": 248,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "孤独・疎外・寂寥"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M14",
+          "basis": "決意・凛然・緊張"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "あなたは、自殺するつもりですか？"
+        },
+        {
+          "code": "E06",
+          "basis": "死にました。去年"
+        },
+        {
+          "code": "E15",
+          "basis": "その人を好きなように死なしてやるほうが、ずっと親切だし、ほんとうは、ずっと勇気のいることなんだ、って"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "死にました。去年"
+        },
+        {
+          "code": "M11",
+          "basis": "孤独・疎外・寂寥"
+        },
+        {
+          "code": "M14",
+          "basis": "決意・凛然・緊張"
+        }
+      ],
+      "awase": {
+        "F_basis": "死にました。去年",
+        "f_basis": "喘ぐ呼吸が聞こえ、女は反抗的に答えた。"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001801_001786:s2",
+    "elapsed_sec": 4.881,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E06\", \"basis\": \"自殺したんです\"},\n    {\"code\": \"E04\", \"basis\": \"怒ったような目つき\"},\n    {\"code\": \"E10\", \"basis\": \"海をみつめていた\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M04\", \"basis\": \"自殺\"},\n    {\"code\": \"M02\", \"basis\": \"真暗な夜\"},\n    {\"code\": \"M08\", \"basis\": \"ゆっくりと引きかえした\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -2,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"自殺したんです\",\n    \"f_basis\": \"真暗な夜の中で、ただ夜光虫だけが彼につづき、波間にあざやかに濡れた色の燐光を散らしていた\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1099,
+    "eval_count": 228,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E06",
+          "basis": "自殺したんです"
+        },
+        {
+          "code": "E04",
+          "basis": "怒ったような目つき"
+        },
+        {
+          "code": "E10",
+          "basis": "海をみつめていた"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "自殺"
+        },
+        {
+          "code": "M02",
+          "basis": "真暗な夜"
+        },
+        {
+          "code": "M08",
+          "basis": "ゆっくりと引きかえした"
+        }
+      ],
+      "awase": {
+        "F_basis": "自殺したんです",
+        "f_basis": "真暗な夜の中で、ただ夜光虫だけが彼につづき、波間にあざやかに濡れた色の燐光を散らしていた"
+      }
+    },
+    "schema_errors": []
+  }
+]

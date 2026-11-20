@@ -1,0 +1,341 @@
+[
+  {
+    "scene_id": "001383_056643:s0",
+    "elapsed_sec": 7.278,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E05\", \"basis\": \"手を合わせて拝むようにするのを耳にもかけず、素早く仙吉の締めて居る薄穢い浅黄の唐縮緬の兵児帯を解いて後手に縛り上げた\"},\n    {\"code\": \"E04\", \"basis\": \"「貴様は罪人だから額に入墨をしてやる」\"},\n    {\"code\": \"E14\", \"basis\": \"明日学校で意趣返しされると云う恐れがあるので、信一と一緒に徒らをする気にはなれなかった\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M09\", \"basis\": \"憎悪\"},\n    {\"code\": \"M03\", \"basis\": \"滅茶々々にされて\"},\n    {\"code\": \"M11\", \"basis\": \"見る影もない態になって化け物のような目鼻をして居る\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 1,\n    \"f_valence\": -1,\n    \"f_arousal\": 1,\n    \"F_basis\": \"信一の為めに見る影もない態になって化け物のような目鼻をして居る\",\n    \"f_basis\": \"滅茶々々にされて崩れ出しそうな顔の輪廓を奇態に歪めながらひい／＼と泣いて居た\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1409,
+    "eval_count": 332,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E04",
+          "basis": "「貴様は罪人だから額に入墨をしてやる」"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M09",
+          "basis": "憎悪"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E05",
+          "basis": "手を合わせて拝むようにするのを耳にもかけず、素早く仙吉の締めて居る薄穢い浅黄の唐縮緬の兵児帯を解いて後手に縛り上げた"
+        },
+        {
+          "code": "E04",
+          "basis": "「貴様は罪人だから額に入墨をしてやる」"
+        },
+        {
+          "code": "E14",
+          "basis": "明日学校で意趣返しされると云う恐れがあるので、信一と一緒に徒らをする気にはなれなかった"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M09",
+          "basis": "憎悪"
+        },
+        {
+          "code": "M03",
+          "basis": "滅茶々々にされて"
+        },
+        {
+          "code": "M11",
+          "basis": "見る影もない態になって化け物のような目鼻をして居る"
+        }
+      ],
+      "awase": {
+        "F_basis": "信一の為めに見る影もない態になって化け物のような目鼻をして居る",
+        "f_basis": "滅茶々々にされて崩れ出しそうな顔の輪廓を奇態に歪めながらひい／＼と泣いて居た"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001383_056643:s1",
+    "elapsed_sec": 7.386,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E04\",\n      \"basis\": \"恨めしそうに信一の顔を横目で睨んで\"\n    },\n    {\n      \"code\": \"E11\",\n      \"basis\": \"見ると仙吉は泣く真似をして汚れた顔を筒袖で半分程拭き取ってしまって居る可笑しさに\"\n    },\n    {\n      \"code\": \"E05\",\n      \"basis\": \"狼はこう云って旅人の一人をお堂の隅へ追い詰め、体にとび上がって方々へ喰い付く\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M04\",\n      \"basis\": \"薄気味悪かった\"\n    },\n    {\n      \"code\": \"M10\",\n      \"basis\": \"三人は顔を見合わせて笑った\"\n    },\n    {\n      \"code\": \"M09\",\n      \"basis\": \"狼はこう云って旅人の一人をお堂の隅へ追い詰め、体にとび上がって方々へ喰い付く\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 1,\n    \"f_valence\": 0,\n    \"f_arousal\": 1,\n    \"F_basis\": \"薄気味悪かった\",\n    \"f_basis\": \"三人は顔を見合わせて笑った\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1597,
+    "eval_count": 331,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E11",
+          "basis": "見ると仙吉は泣く真似をして汚れた顔を筒袖で半分程拭き取ってしまって居る可笑しさに"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E04",
+          "basis": "恨めしそうに信一の顔を横目で睨んで"
+        },
+        {
+          "code": "E11",
+          "basis": "見ると仙吉は泣く真似をして汚れた顔を筒袖で半分程拭き取ってしまって居る可笑しさに"
+        },
+        {
+          "code": "E05",
+          "basis": "狼はこう云って旅人の一人をお堂の隅へ追い詰め、体にとび上がって方々へ喰い付く"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "薄気味悪かった"
+        },
+        {
+          "code": "M10",
+          "basis": "三人は顔を見合わせて笑った"
+        },
+        {
+          "code": "M09",
+          "basis": "狼はこう云って旅人の一人をお堂の隅へ追い詰め、体にとび上がって方々へ喰い付く"
+        }
+      ],
+      "awase": {
+        "F_basis": "薄気味悪かった",
+        "f_basis": "三人は顔を見合わせて笑った"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001383_056643:s2",
+    "elapsed_sec": 7.002,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E05\", \"basis\": \"狼に着物の裾を咬えられ、...喉笛を喰い切った\"},\n    {\"code\": \"E06\", \"basis\": \"二人共死骸になった\"},\n    {\"code\": \"E11\", \"basis\": \"着物の裾のはだけた処から冷めたい風がすう／＼と股ぐらに吹き込み\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M09\", \"basis\": \"恐ろしい力で...喉笛を喰い切った\"},\n    {\"code\": \"M04\", \"basis\": \"二人ともだらしなく大の字なりに...動けなかった\"},\n    {\"code\": \"M03\", \"basis\": \"急に私は体の処々方々がむず痒くなって...仙吉は体中泥だらけになった\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -2,\n    \"F_arousal\": 2,\n    \"f_valence\": -1,\n    \"f_arousal\": 1,\n    \"F_basis\": \"狼に着物の裾を咬えられ、...喉笛を喰い切った\",\n    \"f_basis\": \"急に私は体の処々方々がむず痒くなって...仙吉は体中泥だらけになった\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1419,
+    "eval_count": 315,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E05",
+          "basis": "狼に着物の裾を咬えられ、...喉笛を喰い切った"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M09",
+          "basis": "恐ろしい力で...喉笛を喰い切った"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M04",
+          "basis": "二人ともだらしなく大の字なりに...動けなかった"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M03",
+          "basis": "急に私は体の処々方々がむず痒くなって...仙吉は体中泥だらけになった"
+        }
+      },
+      {
+        "kind": "awase",
+        "reason": "F_basis_not_in_text",
+        "value": "狼に着物の裾を咬えられ、...喉笛を喰い切った"
+      },
+      {
+        "kind": "awase",
+        "reason": "f_basis_not_in_text",
+        "value": "急に私は体の処々方々がむず痒くなって...仙吉は体中泥だらけになった"
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E05",
+          "basis": "狼に着物の裾を咬えられ、...喉笛を喰い切った"
+        },
+        {
+          "code": "E06",
+          "basis": "二人共死骸になった"
+        },
+        {
+          "code": "E11",
+          "basis": "着物の裾のはだけた処から冷めたい風がすう／＼と股ぐらに吹き込み"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M09",
+          "basis": "恐ろしい力で...喉笛を喰い切った"
+        },
+        {
+          "code": "M04",
+          "basis": "二人ともだらしなく大の字なりに...動けなかった"
+        },
+        {
+          "code": "M03",
+          "basis": "急に私は体の処々方々がむず痒くなって...仙吉は体中泥だらけになった"
+        }
+      ],
+      "awase": {
+        "F_basis": "狼に着物の裾を咬えられ、...喉笛を喰い切った",
+        "f_basis": "急に私は体の処々方々がむず痒くなって...仙吉は体中泥だらけになった"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001383_056643:s3",
+    "elapsed_sec": 4.978,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E11\", \"basis\": \"鼻の頭から喰い始めた\"},\n    {\"code\": \"E09\", \"basis\": \"着物から放つ樟脳の香を嗅ぎ\"},\n    {\"code\": \"E06\", \"basis\": \"仙吉はじっと我慢をして居る\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M06\", \"basis\": \"魅するように\"},\n    {\"code\": \"M11\", \"basis\": \"密かに胸を轟かせた\"},\n    {\"code\": \"M09\", \"basis\": \"恐ろしい\"}\n  ],\n  \"awase\": {\n    \"F_valence\": 1,\n    \"F_arousal\": 2,\n    \"f_valence\": 1,\n    \"f_arousal\": 2,\n    \"F_basis\": \"私の心を征服して行き\",\n    \"f_basis\": \"潤おいのある唇や滑かな舌の端\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1350,
+    "eval_count": 225,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E11",
+          "basis": "鼻の頭から喰い始めた"
+        },
+        {
+          "code": "E09",
+          "basis": "着物から放つ樟脳の香を嗅ぎ"
+        },
+        {
+          "code": "E06",
+          "basis": "仙吉はじっと我慢をして居る"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M06",
+          "basis": "魅するように"
+        },
+        {
+          "code": "M11",
+          "basis": "密かに胸を轟かせた"
+        },
+        {
+          "code": "M09",
+          "basis": "恐ろしい"
+        }
+      ],
+      "awase": {
+        "F_basis": "私の心を征服して行き",
+        "f_basis": "潤おいのある唇や滑かな舌の端"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001383_056643:s4",
+    "elapsed_sec": 4.869,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E04\", \"basis\": \"吃驚して起き上った\"},\n    {\"code\": \"E10\", \"basis\": \"お風呂が沸きましたから\"},\n    {\"code\": \"E16\", \"basis\": \"立ちすくんだ\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M02\", \"basis\": \"青い夕靄\"},\n    {\"code\": \"M04\", \"basis\": \"恐ろしい不思議な国\"},\n    {\"code\": \"M11\", \"basis\": \"今日の出来事を夢のように回想しながら\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"泥の足型が印せられて居る\",\n    \"f_basis\": \"青い夕靄\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1432,
+    "eval_count": 216,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E04",
+          "basis": "吃驚して起き上った"
+        },
+        {
+          "code": "E10",
+          "basis": "お風呂が沸きましたから"
+        },
+        {
+          "code": "E16",
+          "basis": "立ちすくんだ"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M02",
+          "basis": "青い夕靄"
+        },
+        {
+          "code": "M04",
+          "basis": "恐ろしい不思議な国"
+        },
+        {
+          "code": "M11",
+          "basis": "今日の出来事を夢のように回想しながら"
+        }
+      ],
+      "awase": {
+        "F_basis": "泥の足型が印せられて居る",
+        "f_basis": "青い夕靄"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001383_056643:s5",
+    "elapsed_sec": 7.171,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E03\",\n      \"basis\": \"「信ちゃん、何かして遊ばないか」\"\n    },\n    {\n      \"code\": \"E11\",\n      \"basis\": \"「今ね、仙吉を白酒で酔っ拂わしてやるんだよ」\"\n    },\n    {\n      \"code\": \"E09\",\n      \"basis\": \"豆炒りを喰べて居た\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M04\",\n      \"basis\": \"気の毒さ\"\n    },\n    {\n      \"code\": \"M10\",\n      \"basis\": \"此れはどうも結構な御酒でございますな\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"信一は又いつもの通りの意気地なしで、女中と一緒に小さくなって運動場の隅の方にいじけて居る\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 0,\n    \"F_basis\": \"信一は又いつもの通りの意気地なしで、女中と一緒に小さくなって運動場の隅の方にいじけて居る\",\n    \"f_basis\": \"此れはどうも結構な御酒でございますな\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1584,
+    "eval_count": 319,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "「信ちゃん、何かして遊ばないか」"
+        },
+        {
+          "code": "E11",
+          "basis": "「今ね、仙吉を白酒で酔っ拂わしてやるんだよ」"
+        },
+        {
+          "code": "E09",
+          "basis": "豆炒りを喰べて居た"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "気の毒さ"
+        },
+        {
+          "code": "M10",
+          "basis": "此れはどうも結構な御酒でございますな"
+        },
+        {
+          "code": "M11",
+          "basis": "信一は又いつもの通りの意気地なしで、女中と一緒に小さくなって運動場の隅の方にいじけて居る"
+        }
+      ],
+      "awase": {
+        "F_basis": "信一は又いつもの通りの意気地なしで、女中と一緒に小さくなって運動場の隅の方にいじけて居る",
+        "f_basis": "此れはどうも結構な御酒でございますな"
+      }
+    },
+    "schema_errors": []
+  }
+]

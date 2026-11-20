@@ -1,0 +1,218 @@
+[
+  {
+    "scene_id": "001798_056779:s0",
+    "elapsed_sec": 6.54,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E02\", \"basis\": \"はるばる八王子から代田橋にバタバタバタと引越して来ました\"},\n    {\"code\": \"E13\", \"basis\": \"かんたんな契約書を作成し、四万円を手交し\"},\n    {\"code\": \"E10\", \"basis\": \"ソバを肴にして簡略な祝宴を開きました\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M14\", \"basis\": \"かんたんな契約書を作成し、四万円を手交し\"},\n    {\"code\": \"M10\", \"basis\": \"ソバを肴にして簡略な祝宴を開きました\"},\n    {\"code\": \"M03\", \"basis\": \"おどろいたことには夫人はその風貌に似ず、亭主を上廻る酒豪\"}\n  ],\n  \"awase\": {\n    \"F_valence\": 0,\n    \"F_arousal\": 0,\n    \"f_valence\": 0,\n    \"f_arousal\": 0,\n    \"F_basis\": \"かんたんな契約書を作成し、四万円を手交し\",\n    \"f_basis\": \"ソバを肴にして簡略な祝宴を開きました\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1144,
+    "eval_count": 299,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E02",
+          "basis": "はるばる八王子から代田橋にバタバタバタと引越して来ました"
+        },
+        {
+          "code": "E13",
+          "basis": "かんたんな契約書を作成し、四万円を手交し"
+        },
+        {
+          "code": "E10",
+          "basis": "ソバを肴にして簡略な祝宴を開きました"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M14",
+          "basis": "かんたんな契約書を作成し、四万円を手交し"
+        },
+        {
+          "code": "M10",
+          "basis": "ソバを肴にして簡略な祝宴を開きました"
+        },
+        {
+          "code": "M03",
+          "basis": "おどろいたことには夫人はその風貌に似ず、亭主を上廻る酒豪"
+        }
+      ],
+      "awase": {
+        "F_basis": "かんたんな契約書を作成し、四万円を手交し",
+        "f_basis": "ソバを肴にして簡略な祝宴を開きました"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001798_056779:s1",
+    "elapsed_sec": 5.687,
+    "raw_content": "{\n  \"event\": [\n    {\n      \"code\": \"E06\",\n      \"basis\": \"失踪\"\n    },\n    {\n      \"code\": \"E14\",\n      \"basis\": \"夜逃げ\"\n    },\n    {\n      \"code\": \"E03\",\n      \"basis\": \"批評したり、あやしげな画論をはいたり\"\n    }\n  ],\n  \"mood\": [\n    {\n      \"code\": \"M04\",\n      \"basis\": \"予想外な出来ごと\"\n    },\n    {\n      \"code\": \"M11\",\n      \"basis\": \"孤独\"\n    },\n    {\n      \"code\": \"M08\",\n      \"basis\": \"倦怠\"\n    }\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": -1,\n    \"f_valence\": -1,\n    \"f_arousal\": -1,\n    \"F_basis\": \"失踪\",\n    \"f_basis\": \"僕の部屋にやってきて、壁にかかっている僕の画を批評したり、あやしげな画論をはいたり\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1445,
+    "eval_count": 256,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M11",
+          "basis": "孤独"
+        }
+      },
+      {
+        "kind": "mood",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "M08",
+          "basis": "倦怠"
+        }
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E06",
+          "basis": "失踪"
+        },
+        {
+          "code": "E14",
+          "basis": "夜逃げ"
+        },
+        {
+          "code": "E03",
+          "basis": "批評したり、あやしげな画論をはいたり"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "予想外な出来ごと"
+        },
+        {
+          "code": "M11",
+          "basis": "孤独"
+        },
+        {
+          "code": "M08",
+          "basis": "倦怠"
+        }
+      ],
+      "awase": {
+        "F_basis": "失踪",
+        "f_basis": "僕の部屋にやってきて、壁にかかっている僕の画を批評したり、あやしげな画論をはいたり"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001798_056779:s2",
+    "elapsed_sec": 5.656,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E01\", \"basis\": \"不破夫妻の姿は見えませんでした\"},\n    {\"code\": \"E03\", \"basis\": \"『野呂君と仲良くしてやって呉れ給え』\"},\n    {\"code\": \"E04\", \"basis\": \"一体君は何だね。留守番かね？\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M04\", \"basis\": \"しんからの好人物\"},\n    {\"code\": \"M09\", \"basis\": \"バカじゃなかろうかというような眼付\"},\n    {\"code\": \"M11\", \"basis\": \"この家は僕のものだよ\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"野呂が僕の居住者としての権利を否定\",\n    \"f_basis\": \"不破夫妻の姿は見えませんでした、しんからの好人物\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1517,
+    "eval_count": 251,
+    "parse_ok": true,
+    "rejected": [
+      {
+        "kind": "event",
+        "reason": "basis_not_in_text",
+        "item": {
+          "code": "E03",
+          "basis": "『野呂君と仲良くしてやって呉れ給え』"
+        }
+      },
+      {
+        "kind": "awase",
+        "reason": "F_basis_not_in_text",
+        "value": "野呂が僕の居住者としての権利を否定"
+      },
+      {
+        "kind": "awase",
+        "reason": "f_basis_not_in_text",
+        "value": "不破夫妻の姿は見えませんでした、しんからの好人物"
+      }
+    ],
+    "trace": {
+      "event": [
+        {
+          "code": "E01",
+          "basis": "不破夫妻の姿は見えませんでした"
+        },
+        {
+          "code": "E03",
+          "basis": "『野呂君と仲良くしてやって呉れ給え』"
+        },
+        {
+          "code": "E04",
+          "basis": "一体君は何だね。留守番かね？"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "しんからの好人物"
+        },
+        {
+          "code": "M09",
+          "basis": "バカじゃなかろうかというような眼付"
+        },
+        {
+          "code": "M11",
+          "basis": "この家は僕のものだよ"
+        }
+      ],
+      "awase": {
+        "F_basis": "野呂が僕の居住者としての権利を否定",
+        "f_basis": "不破夫妻の姿は見えませんでした、しんからの好人物"
+      }
+    },
+    "schema_errors": []
+  },
+  {
+    "scene_id": "001798_056779:s3",
+    "elapsed_sec": 7.363,
+    "raw_content": "{\n  \"event\": [\n    {\"code\": \"E03\", \"basis\": \"「買い受けただって？」\"},\n    {\"code\": \"E04\", \"basis\": \"「そ、そんな無茶な。僕だってちゃんと権利金を払い、きちんと賃貸借の契約をしたんだぞ」\"},\n    {\"code\": \"E09\", \"basis\": \"僕は僕の部屋にかけこんで、領収証と契約書を急いで取出し、引返して野呂の前につきつけてやりました\"}\n  ],\n  \"mood\": [\n    {\"code\": \"M04\", \"basis\": \"不安と困惑の色が彼の顔いっぱいに拡がって来たようでした\"},\n    {\"code\": \"M08\", \"basis\": \"おろおろと\"},\n    {\"code\": \"M11\", \"basis\": \"僕は僕の部屋にかけこんで\"}\n  ],\n  \"awase\": {\n    \"F_valence\": -1,\n    \"F_arousal\": 0,\n    \"f_valence\": -1,\n    \"f_arousal\": 0,\n    \"F_basis\": \"何か誤解がある。まるでこの世には誤解が充ち満ちているようだ\",\n    \"f_basis\": \"僕は僕の部屋にかけこんで、領収証と契約書を急いで取出し、引返して野呂の前につきつけてやりました\"\n  }\n}",
+    "parse_error": null,
+    "prompt_eval_count": 1204,
+    "eval_count": 341,
+    "parse_ok": true,
+    "rejected": [],
+    "trace": {
+      "event": [
+        {
+          "code": "E03",
+          "basis": "「買い受けただって？」"
+        },
+        {
+          "code": "E04",
+          "basis": "「そ、そんな無茶な。僕だってちゃんと権利金を払い、きちんと賃貸借の契約をしたんだぞ」"
+        },
+        {
+          "code": "E09",
+          "basis": "僕は僕の部屋にかけこんで、領収証と契約書を急いで取出し、引返して野呂の前につきつけてやりました"
+        }
+      ],
+      "mood": [
+        {
+          "code": "M04",
+          "basis": "不安と困惑の色が彼の顔いっぱいに拡がって来たようでした"
+        },
+        {
+          "code": "M08",
+          "basis": "おろおろと"
+        },
+        {
+          "code": "M11",
+          "basis": "僕は僕の部屋にかけこんで"
+        }
+      ],
+      "awase": {
+        "F_basis": "何か誤解がある。まるでこの世には誤解が充ち満ちているようだ",
+        "f_basis": "僕は僕の部屋にかけこんで、領収証と契約書を急いで取出し、引返して野呂の前につきつけてやりました"
+      }
+    },
+    "schema_errors": []
+  }
+]

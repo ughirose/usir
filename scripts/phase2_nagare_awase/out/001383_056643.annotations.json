@@ -1,0 +1,807 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001383_056643:s0",
+      "scene_hash": "a0bbcc20d32cbbcba949822da1ba3224fa42c4551aaa21acdf5071ca1194621b",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:21d6af2b4d32f77c",
+      "work_id": "001383_056643",
+      "scene_index": 0,
+      "scene_count": 6,
+      "char_len": 593,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "shinichi"
+      ],
+      "pov_character": "hagiwara",
+      "nagare": null,
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": 1,
+        "f_style_valence": -1,
+        "f_style_arousal": 1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "hagiwara",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "senkichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          -1,
+          0,
+          -1,
+          1,
+          1
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 4,
+        "subject": "senkichi",
+        "predicate": "STATE_CHANGED",
+        "object": "精神状態",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001383_056643:s1",
+      "scene_hash": "f2945c3c2df8b85ea46a066a8ca2e3dbb01e208a3f703711c87d87746745f977",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:21d6af2b4d32f77c",
+      "work_id": "001383_056643",
+      "scene_index": 1,
+      "scene_count": 6,
+      "char_len": 834,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "ambiguous"
+      },
+      "location_id": "物置小屋",
+      "present_character_ids": [
+        "shinichi",
+        "senkichi",
+        "hagiwara"
+      ],
+      "pov_character": "hagiwara",
+      "nagare": null,
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 1,
+        "f_style_valence": 0,
+        "f_style_arousal": 1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "senkichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "senkichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "senkichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "hagiwara",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 3,
+        "subject": "senkichi",
+        "predicate": "STATE_CHANGED",
+        "object": "泣く",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 8,
+        "subject": "senkichi",
+        "predicate": "ACQUIRED",
+        "object": "旅人の役割",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 11,
+        "subject": "senkichi",
+        "predicate": "STATE_CHANGED",
+        "object": "倒れる",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001383_056643:s2",
+      "scene_hash": "f166adabb8ee0745cc5fdfd5cdc7f9b51315660bc39458529ee919316c6ba017",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:21d6af2b4d32f77c",
+      "work_id": "001383_056643",
+      "scene_index": 2,
+      "scene_count": 6,
+      "char_len": 616,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "土間",
+      "present_character_ids": [
+        "shinichi",
+        "senkichi"
+      ],
+      "pov_character": "hagiwara",
+      "nagare": null,
+      "awase": null
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "hagiwara",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "senkichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          -1,
+          0,
+          -1,
+          1,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "senkichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 2,
+        "subject": "shinichi",
+        "predicate": "STATE_CHANGED",
+        "object": "殺人者",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001383_056643:s3",
+      "scene_hash": "7e92d79f924ff5ca9a5ffb98657dab6ca18a7dd787fe427457f438910eba5b1f",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:21d6af2b4d32f77c",
+      "work_id": "001383_056643",
+      "scene_index": 3,
+      "scene_count": 6,
+      "char_len": 522,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "senkichi",
+        "shinichi"
+      ],
+      "pov_character": "hagiwara",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E11",
+            "rank_weight": 3
+          },
+          {
+            "code": "E09",
+            "rank_weight": 2
+          },
+          {
+            "code": "E06",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M06",
+            "rank_weight": 3
+          },
+          {
+            "code": "M11",
+            "rank_weight": 2
+          },
+          {
+            "code": "M09",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 1,
+        "f_event_arousal": 2,
+        "f_style_valence": 1,
+        "f_style_arousal": 2
+      }
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          1,
+          -1,
+          -1,
+          1,
+          -1
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 0,
+        "subject": "senkichi",
+        "predicate": "STATE_CHANGED",
+        "object": "臀を捲くられた",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 4,
+        "subject": "shinichi",
+        "predicate": "STATE_CHANGED",
+        "object": "私の胸の上へ跨がって",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 4,
+        "subject": "shinichi",
+        "predicate": "STATE_CHANGED",
+        "object": "鼻の頭から喰い始めた",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001383_056643:s4",
+      "scene_hash": "4487f4344ae042ff09854ce6645c172d1db7df29be75067d864367eed3a07370",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:21d6af2b4d32f77c",
+      "work_id": "001383_056643",
+      "scene_index": 4,
+      "scene_count": 6,
+      "char_len": 677,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "ambiguous"
+      },
+      "location_id": "小屋",
+      "present_character_ids": [
+        "shinichi",
+        "senkichi",
+        "hagiwara",
+        "jochu"
+      ],
+      "pov_character": "hagiwara",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E04",
+            "rank_weight": 3
+          },
+          {
+            "code": "E10",
+            "rank_weight": 2
+          },
+          {
+            "code": "E16",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M02",
+            "rank_weight": 3
+          },
+          {
+            "code": "M04",
+            "rank_weight": 2
+          },
+          {
+            "code": "M11",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": -1,
+        "f_event_arousal": -1,
+        "f_style_valence": -1,
+        "f_style_arousal": -1
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "jochu",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "jochu",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "hagiwara",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "hagiwara",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "hagiwara",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "jochu",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 8,
+        "subject": "hagiwara",
+        "predicate": "MOVED_TO",
+        "object": "家",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 8,
+        "subject": "hagiwara",
+        "predicate": "STATE_CHANGED",
+        "object": "心を奪われた",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001383_056643:s5",
+      "scene_hash": "217aa33534a1c458fc089e995fa1b56aa435c7a1427d4227dcad6a9c819139f1",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38+nagare_awase:21d6af2b4d32f77c",
+      "work_id": "001383_056643",
+      "scene_index": 5,
+      "scene_count": 6,
+      "char_len": 818,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "明くる日"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "hagiwara",
+        "senkichi",
+        "jochu",
+        "mitsuko"
+      ],
+      "pov_character": "hagiwara",
+      "nagare": {
+        "event_top3": [
+          {
+            "code": "E03",
+            "rank_weight": 3
+          },
+          {
+            "code": "E11",
+            "rank_weight": 2
+          },
+          {
+            "code": "E09",
+            "rank_weight": 1
+          }
+        ],
+        "mood_top3": [
+          {
+            "code": "M04",
+            "rank_weight": 3
+          },
+          {
+            "code": "M10",
+            "rank_weight": 2
+          },
+          {
+            "code": "M11",
+            "rank_weight": 1
+          }
+        ]
+      },
+      "awase": {
+        "f_event_valence": 0,
+        "f_event_arousal": 0,
+        "f_style_valence": 0,
+        "f_style_arousal": 0
+      }
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "hagiwara",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "jochu",
+        "addressee_id": null,
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "senkichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "shinichi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [],
+    "fact_updates": [
+      {
+        "sentence_index": 0,
+        "subject": "hagiwara",
+        "predicate": "MOVED_TO",
+        "object": "学校",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 5,
+        "subject": "hagiwara",
+        "predicate": "MOVED_TO",
+        "object": "信一の家",
+        "evidence": "explicit"
+      }
+    ]
+  }
+]
