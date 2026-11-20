@@ -1,0 +1,120 @@
+{
+ "gold_char_scenes": 71,
+ "predicted_char_scenes": 46,
+ "not_predicted": 25,
+ "gold_nonzero_axes": 97,
+ "gold_nonzero_axes_category": {
+  "pred_zero_on_axis(all-zero vector)": 30,
+  "pred_zero_on_axis": 14,
+  "same_sign": 17,
+  "character_not_predicted": 31,
+  "opposite_sign": 5
+ },
+ "gold_nonzero_axes_persisting_in_other_scenes_of_same_character": {
+  "n": 63,
+  "of": 97
+ },
+ "by_axis": {
+  "0": {
+   "pred_zero_on_axis(all-zero vector)": 3,
+   "character_not_predicted": 2,
+   "pred_zero_on_axis": 1
+  },
+  "1": {
+   "pred_zero_on_axis(all-zero vector)": 5,
+   "pred_zero_on_axis": 5,
+   "opposite_sign": 2,
+   "character_not_predicted": 5,
+   "same_sign": 4
+  },
+  "2": {
+   "pred_zero_on_axis(all-zero vector)": 4,
+   "opposite_sign": 1,
+   "pred_zero_on_axis": 1
+  },
+  "3": {
+   "same_sign": 8,
+   "pred_zero_on_axis(all-zero vector)": 6,
+   "opposite_sign": 1,
+   "character_not_predicted": 5,
+   "pred_zero_on_axis": 2
+  },
+  "4": {
+   "pred_zero_on_axis(all-zero vector)": 6,
+   "character_not_predicted": 11,
+   "same_sign": 5,
+   "pred_zero_on_axis": 1
+  },
+  "5": {
+   "pred_zero_on_axis": 4,
+   "character_not_predicted": 8,
+   "opposite_sign": 1,
+   "pred_zero_on_axis(all-zero vector)": 6
+  }
+ },
+ "pred_vectors_all_zero": 25,
+ "pred_dense_vectors_(>=5 nonzero axes)": [
+  {
+   "scene": "001801_001786:s1",
+   "char": "shinichi",
+   "vec": [
+    1,
+    1,
+    -1,
+    1,
+    -1,
+    1
+   ]
+  },
+  {
+   "scene": "000035_000301:s0",
+   "char": "yozo",
+   "vec": [
+    0,
+    -1,
+    -1,
+    -1,
+    1,
+    1
+   ]
+  },
+  {
+   "scene": "000035_000301:s4",
+   "char": "yozo",
+   "vec": [
+    0,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ]
+  },
+  {
+   "scene": "001383_056643:s3",
+   "char": "shinichi",
+   "vec": [
+    0,
+    1,
+    -1,
+    -1,
+    1,
+    -1
+   ]
+  },
+  {
+   "scene": "000050_003586:s1",
+   "char": "tabiso",
+   "vec": [
+    1,
+    1,
+    -1,
+    1,
+    -1,
+    1
+   ]
+  }
+ ],
+ "pred_nonzero_axes": 57,
+ "pred_nonzero_on_gold_zero_axes": 35
+}
