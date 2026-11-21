@@ -1,0 +1,213 @@
+{
+  "traces": [
+    {
+      "scene_id": "001801_001786:s0",
+      "present": [
+        {
+          "id": "shinichi",
+          "basis": "慎一は、知らぬまにかなり沖にきていた"
+        },
+        {
+          "id": "onna",
+          "basis": "若い女の声が呼んだ"
+        }
+      ],
+      "states": [
+        {
+          "id": "shinichi",
+          "basis": "慎一は、知らぬまにかなり沖にきていた"
+        },
+        {
+          "id": "onna",
+          "basis": "女の声はひどく疲れ、喘いでいた"
+        }
+      ],
+      "facts": [
+        {
+          "basis": "若い女の声が呼んだ"
+        },
+        {
+          "basis": "女の声はひどく疲れ、喘いでいた"
+        },
+        {
+          "basis": "「……あなた、この町の人ね？」"
+        },
+        {
+          "basis": "ああ、と慎一は思った。彼は、その顔をおぼえていた"
+        }
+      ],
+      "location_surface": "深夜の海"
+    },
+    {
+      "scene_id": "001801_001786:s1",
+      "present": [],
+      "states": [
+        {
+          "id": "shinichi",
+          "basis": "親父がぼくにいったんです。死のうとしている人間を、軽蔑しちゃいけない。どんな人間にも、その人なりの苦労や、正義がある。その人だけの生き甲斐ってやつがある。"
+        }
+      ],
+      "facts": [
+        {
+          "basis": "親父がぼくにいったんです。死のうとしている人間を、軽蔑しちゃいけない。どんな人間にも、その人なりの苦労や、正義がある。その人だけの生き甲斐ってやつがある。"
+        },
+        {
+          "basis": "女は無言だった。"
+        }
+      ],
+      "location_surface": null
+    },
+    {
+      "scene_id": "001801_001786:s2",
+      "present": [
+        {
+          "id": "onna",
+          "basis": "女の顔"
+        },
+        {
+          "id": "shinichi",
+          "basis": "彼"
+        }
+      ],
+      "states": [],
+      "facts": [
+        {
+          "basis": "女は怒ったような目つきで、海をみつめていた"
+        }
+      ],
+      "location_surface": "海"
+    }
+  ],
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 2,
+        "states": 2,
+        "facts": 4
+      },
+      "schema_errors": [],
+      "scene_id": "001801_001786:s0",
+      "elapsed_sec": 17.539
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "海辺"
+        },
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "shinichi",
+            "basis": "慎一は、ゆっくりとその女のそばをまわりながら、彼はいった。"
+          }
+        },
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "onna",
+            "basis": "女はだまった。喘ぐ呼吸が聞こえ、女は反抗的に答えた。"
+          }
+        },
+        {
+          "kind": "state",
+          "reason": "basis_not_in_text",
+          "item": {
+            "character_id": "onna",
+            "values_6d": [
+              -1,
+              -1,
+              -1,
+              -1,
+              1,
+              -1
+            ],
+            "evidence": "explicit",
+            "basis": "女はだまった。喘ぐ呼吸が聞こえ、女は反抗的に答えた。"
+          }
+        }
+      ],
+      "kept": {
+        "present": 0,
+        "states": 1,
+        "facts": 2
+      },
+      "schema_errors": [],
+      "scene_id": "001801_001786:s1",
+      "elapsed_sec": 17.428
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "state",
+          "reason": "basis_not_in_text",
+          "item": {
+            "character_id": "shinichi",
+            "values_6d": [
+              1,
+              -1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "evidence": "explicit",
+            "basis": "ぼくの親父も、自殺したんです。……あなたも、ぼくはとめはしません"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_text",
+          "item": {
+            "subject": "shinichi",
+            "predicate": "STATE_CHANGED",
+            "object": "感情",
+            "evidence": "explicit",
+            "basis": "ぼくの親父も、自殺したんです。……あなたも、ぼくはとめはしません"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "states": 0,
+        "facts": 1
+      },
+      "schema_errors": [],
+      "scene_id": "001801_001786:s2",
+      "elapsed_sec": 11.709
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "001801_001786:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"深夜の海\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"慎一は、知らぬまにかなり沖にきていた\"\n    },\n    {\n      \"id\": \"onna\",\n      \"basis\": \"若い女の声が呼んだ\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"shinichi\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"慎一は、知らぬまにかなり沖にきていた\"\n    },\n    {\n      \"character_id\": \"onna\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"女の声はひどく疲れ、喘いでいた\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"若い女が深夜の海を泳いでいる\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"若い女の声が呼んだ\"\n    },\n    {\n      \"subject\": \"onna\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"疲れている\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"女の声はひどく疲れ、喘いでいた\"\n    },\n    {\n      \"subject\": \"onna\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"慎一の存在を知る\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"「……あなた、この町の人ね？」\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"女の顔を覚えていた\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"ああ、と慎一は思った。彼は、その顔をおぼえていた\"\n    }\n  ]\n}",
+      "parse_error": null,
+      "prompt_eval_count": 1505,
+      "eval_count": 498,
+      "format_mode": "json_schema"
+    },
+    {
+      "scene_id": "001801_001786:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"海辺\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"慎一は、ゆっくりとその女のそばをまわりながら、彼はいった。\"\n    },\n    {\n      \"id\": \"onna\",\n      \"basis\": \"女はだまった。喘ぐ呼吸が聞こえ、女は反抗的に答えた。\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"shinichi\",\n      \"values_6d\": [1, 1, -1, 1, -1, 1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"親父がぼくにいったんです。死のうとしている人間を、軽蔑しちゃいけない。どんな人間にも、その人なりの苦労や、正義がある。その人だけの生き甲斐ってやつがある。\"\n    },\n    {\n      \"character_id\": \"onna\",\n      \"values_6d\": [-1, -1, -1, -1, 1, -1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"女はだまった。喘ぐ呼吸が聞こえ、女は反抗的に答えた。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"親父の教え\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"親父がぼくにいったんです。死のうとしている人間を、軽蔑しちゃいけない。どんな人間にも、その人なりの苦労や、正義がある。その人だけの生き甲斐ってやつがある。\"\n    },\n    {\n      \"subject\": \"onna\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"無言\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"女は無言だった。\"\n    }\n  ]\n}",
+      "parse_error": null,
+      "prompt_eval_count": 1584,
+      "eval_count": 487,
+      "format_mode": "json_schema"
+    },
+    {
+      "scene_id": "001801_001786:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"海\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"onna\",\n      \"basis\": \"女の顔\"\n    },\n    {\n      \"id\": \"shinichi\",\n      \"basis\": \"彼\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"shinichi\",\n      \"values_6d\": [1, -1, 0, 0, 0, 1],\n      \"evidence\": \"explicit\",\n      \"basis\": \"ぼくの親父も、自殺したんです。……あなたも、ぼくはとめはしません\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"女の感情\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"女は怒ったような目つきで、海をみつめていた\"\n    },\n    {\n      \"subject\": \"shinichi\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"感情\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"ぼくの親父も、自殺したんです。……あなたも、ぼくはとめはしません\"\n    }\n  ]\n}",
+      "parse_error": null,
+      "prompt_eval_count": 1195,
+      "eval_count": 323,
+      "format_mode": "json_schema"
+    }
+  ]
+}

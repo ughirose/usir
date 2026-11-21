@@ -1,0 +1,476 @@
+{
+  "source_result_file": "scripts/step1/results/v5_twostage/qwen2.5_14b_dev.json",
+  "split": "dev",
+  "model_spec": "qwen2.5:14b",
+  "overall": {
+    "explicit_error_rate": 0.0,
+    "explicit_errors": 0,
+    "explicit_denominator": 11,
+    "overall_error_rate": 0.1,
+    "overall_errors": 9,
+    "attributed_total": 90,
+    "wrong_speaker_count": 9
+  },
+  "error_count": 9,
+  "addressee_inversion_count": 5,
+  "confusion_pairs": [
+    {
+      "work_id": "000035_000301",
+      "title": "人間失格",
+      "gold_speaker": "yozo",
+      "pred_speaker": "horiki",
+      "count": 1
+    },
+    {
+      "work_id": "000050_003586",
+      "title": "草迷宮",
+      "gold_speaker": "niemon",
+      "pred_speaker": "saihachi",
+      "count": 1
+    },
+    {
+      "work_id": "000050_003586",
+      "title": "草迷宮",
+      "gold_speaker": "saihachi",
+      "pred_speaker": "kundo",
+      "count": 2
+    },
+    {
+      "work_id": "000050_003586",
+      "title": "草迷宮",
+      "gold_speaker": "uba",
+      "pred_speaker": "tabiso",
+      "count": 1
+    },
+    {
+      "work_id": "000081_000456",
+      "title": "銀河鉄道の夜",
+      "gold_speaker": "daigakushi",
+      "pred_speaker": "giovanni",
+      "count": 1
+    },
+    {
+      "work_id": "000081_000456",
+      "title": "銀河鉄道の夜",
+      "gold_speaker": "giovanni",
+      "pred_speaker": "campanella",
+      "count": 1
+    },
+    {
+      "work_id": "001383_056643",
+      "title": "少年",
+      "gold_speaker": "senkichi",
+      "pred_speaker": "mitsuko",
+      "count": 1
+    },
+    {
+      "work_id": "001383_056643",
+      "title": "少年",
+      "gold_speaker": "shinichi",
+      "pred_speaker": "hagiwara",
+      "count": 1
+    }
+  ],
+  "by_work": [
+    {
+      "work_id": "000035_000301",
+      "title": "人間失格",
+      "narration": "first",
+      "attributed_total": 19,
+      "overall_errors": 1,
+      "overall_error_rate": 0.05263157894736842,
+      "explicit_errors": 0,
+      "explicit_denominator": 2,
+      "inferred_errors": 1,
+      "inferred_count": 17,
+      "not_speech_abstained": 7,
+      "not_speech_total": 8,
+      "undetermined_abstained": 0,
+      "undetermined_total": 0
+    },
+    {
+      "work_id": "001383_056643",
+      "title": "少年",
+      "narration": "first",
+      "attributed_total": 24,
+      "overall_errors": 2,
+      "overall_error_rate": 0.08333333333333333,
+      "explicit_errors": 0,
+      "explicit_denominator": 1,
+      "inferred_errors": 2,
+      "inferred_count": 23,
+      "not_speech_abstained": 0,
+      "not_speech_total": 0,
+      "undetermined_abstained": 0,
+      "undetermined_total": 3
+    },
+    {
+      "work_id": "000050_003586",
+      "title": "草迷宮",
+      "narration": "third",
+      "attributed_total": 26,
+      "overall_errors": 4,
+      "overall_error_rate": 0.15384615384615385,
+      "explicit_errors": 0,
+      "explicit_denominator": 1,
+      "inferred_errors": 4,
+      "inferred_count": 25,
+      "not_speech_abstained": 0,
+      "not_speech_total": 0,
+      "undetermined_abstained": 0,
+      "undetermined_total": 0
+    },
+    {
+      "work_id": "000081_000456",
+      "title": "銀河鉄道の夜",
+      "narration": "third",
+      "attributed_total": 21,
+      "overall_errors": 2,
+      "overall_error_rate": 0.09523809523809523,
+      "explicit_errors": 0,
+      "explicit_denominator": 7,
+      "inferred_errors": 2,
+      "inferred_count": 14,
+      "not_speech_abstained": 0,
+      "not_speech_total": 0,
+      "undetermined_abstained": 0,
+      "undetermined_total": 6
+    }
+  ],
+  "inferred_target_counts": {
+    "total": 89,
+    "attributed": 79,
+    "undetermined": 9,
+    "not_speech": 1,
+    "per_work": [
+      {
+        "work_id": "000035_000301",
+        "title": "人間失格",
+        "narration": "first",
+        "total_quotes": 27,
+        "recheck_targets_total": 18,
+        "recheck_targets_attributed": 17,
+        "recheck_targets_undetermined": 0,
+        "recheck_targets_not_speech": 1
+      },
+      {
+        "work_id": "001383_056643",
+        "title": "少年",
+        "narration": "first",
+        "total_quotes": 27,
+        "recheck_targets_total": 26,
+        "recheck_targets_attributed": 23,
+        "recheck_targets_undetermined": 3,
+        "recheck_targets_not_speech": 0
+      },
+      {
+        "work_id": "000050_003586",
+        "title": "草迷宮",
+        "narration": "third",
+        "total_quotes": 26,
+        "recheck_targets_total": 25,
+        "recheck_targets_attributed": 25,
+        "recheck_targets_undetermined": 0,
+        "recheck_targets_not_speech": 0
+      },
+      {
+        "work_id": "000081_000456",
+        "title": "銀河鉄道の夜",
+        "narration": "third",
+        "total_quotes": 27,
+        "recheck_targets_total": 20,
+        "recheck_targets_attributed": 14,
+        "recheck_targets_undetermined": 6,
+        "recheck_targets_not_speech": 0
+      }
+    ]
+  },
+  "errors": [
+    {
+      "work_id": "000035_000301",
+      "title": "人間失格",
+      "narration": "first",
+      "utterance_index": 25,
+      "gold_speaker": "yozo",
+      "pred_speaker": "horiki",
+      "pred_addressee": "yozo",
+      "gold_equals_pred_addressee": true,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「そう」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [],
+      "prev_utterance": {
+        "utterance_index": 24,
+        "gold_status": "attributed",
+        "gold_speaker": "horiki",
+        "pred_speaker": "horiki",
+        "pred_addressee": "yozo",
+        "pred_evidence": "inferred"
+      },
+      "next_utterance": {
+        "utterance_index": 26,
+        "gold_status": "attributed",
+        "gold_speaker": "horiki",
+        "pred_speaker": "horiki",
+        "pred_addressee": "yozo",
+        "pred_evidence": "inferred"
+      }
+    },
+    {
+      "work_id": "001383_056643",
+      "title": "少年",
+      "narration": "first",
+      "utterance_index": 0,
+      "gold_speaker": "shinichi",
+      "pred_speaker": "hagiwara",
+      "pred_addressee": null,
+      "gold_equals_pred_addressee": false,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「まだ其の外にも人を殺したろう。よし、よし、云わないな。云わなければ拷問にかけてやる」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [],
+      "prev_utterance": null,
+      "next_utterance": {
+        "utterance_index": 1,
+        "gold_status": "attributed",
+        "gold_speaker": "senkichi",
+        "pred_speaker": "senkichi",
+        "pred_addressee": null,
+        "pred_evidence": "inferred"
+      }
+    },
+    {
+      "work_id": "001383_056643",
+      "title": "少年",
+      "narration": "first",
+      "utterance_index": 6,
+      "gold_speaker": "senkichi",
+      "pred_speaker": "mitsuko",
+      "pred_addressee": null,
+      "gold_equals_pred_addressee": false,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「坊ちゃん、もう乱暴をしちゃいけませんよ。こら御覧なさい、こんなにひどく痕が附いたじゃありませんか」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [
+        {
+          "character_id": "shinichi",
+          "alias": "坊ちゃん"
+        }
+      ],
+      "prev_utterance": {
+        "utterance_index": 5,
+        "gold_status": "undetermined",
+        "gold_speaker": null,
+        "pred_speaker": "shinichi",
+        "pred_addressee": null,
+        "pred_evidence": "inferred"
+      },
+      "next_utterance": {
+        "utterance_index": 7,
+        "gold_status": "attributed",
+        "gold_speaker": "shinichi",
+        "pred_speaker": "shinichi",
+        "pred_addressee": null,
+        "pred_evidence": "inferred"
+      }
+    },
+    {
+      "work_id": "000050_003586",
+      "title": "草迷宮",
+      "narration": "third",
+      "utterance_index": 8,
+      "gold_speaker": "uba",
+      "pred_speaker": "tabiso",
+      "pred_addressee": "uba",
+      "gold_equals_pred_addressee": true,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「こりゃ仰有りそうな処、御自分の越度をお明かしなさりまして、路々念仏申してやろう、と前途をお急ぎなさります飾りの無いお前様。\n道中、お髪の伸びたのさえ、かえって貴う拝まれまする。どうぞ、その御回向を黒門の別宅で、近々として進ぜて下さりませぬか。……\nもし、鶴谷でもどのくらい喜びますか分りませぬ。」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [],
+      "prev_utterance": {
+        "utterance_index": 7,
+        "gold_status": "attributed",
+        "gold_speaker": "uba",
+        "pred_speaker": "uba",
+        "pred_addressee": "tabiso",
+        "pred_evidence": "inferred"
+      },
+      "next_utterance": {
+        "utterance_index": 9,
+        "gold_status": "attributed",
+        "gold_speaker": "niemon",
+        "pred_speaker": "niemon",
+        "pred_addressee": "saihachi",
+        "pred_evidence": "inferred"
+      }
+    },
+    {
+      "work_id": "000050_003586",
+      "title": "草迷宮",
+      "narration": "third",
+      "utterance_index": 16,
+      "gold_speaker": "saihachi",
+      "pred_speaker": "kundo",
+      "pred_addressee": "saihachi",
+      "gold_equals_pred_addressee": true,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「見馴れねえ旅の書生さんじゃ、下ろした荷物に、寝そべりかかって、腕を曲げての、足をお前、草の上へ横投げに投出して、ソレそこいら、白鷺の鶏冠のように、川面へほんのり白く、すいすいと出て咲いていら、昼間見ると桃色の優しい花だ、はて、蓬でなしよ。」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [],
+      "prev_utterance": {
+        "utterance_index": 15,
+        "gold_status": "attributed",
+        "gold_speaker": "saihachi",
+        "pred_speaker": "saihachi",
+        "pred_addressee": "niemon",
+        "pred_evidence": "inferred"
+      },
+      "next_utterance": {
+        "utterance_index": 17,
+        "gold_status": "attributed",
+        "gold_speaker": "niemon",
+        "pred_speaker": "saihachi",
+        "pred_addressee": "kundo",
+        "pred_evidence": "inferred"
+      }
+    },
+    {
+      "work_id": "000050_003586",
+      "title": "草迷宮",
+      "narration": "third",
+      "utterance_index": 17,
+      "gold_speaker": "niemon",
+      "pred_speaker": "saihachi",
+      "pred_addressee": "kundo",
+      "gold_equals_pred_addressee": false,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「石竹だっぺい。」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [],
+      "prev_utterance": {
+        "utterance_index": 16,
+        "gold_status": "attributed",
+        "gold_speaker": "saihachi",
+        "pred_speaker": "kundo",
+        "pred_addressee": "saihachi",
+        "pred_evidence": "inferred"
+      },
+      "next_utterance": {
+        "utterance_index": 18,
+        "gold_status": "attributed",
+        "gold_speaker": "kundo",
+        "pred_speaker": "kundo",
+        "pred_addressee": "saihachi",
+        "pred_evidence": "inferred"
+      }
+    },
+    {
+      "work_id": "000050_003586",
+      "title": "草迷宮",
+      "narration": "third",
+      "utterance_index": 20,
+      "gold_speaker": "saihachi",
+      "pred_speaker": "kundo",
+      "pred_addressee": "saihachi",
+      "gold_equals_pred_addressee": true,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「その蛙……いんねさ、常夏け。その花を摘んでどうするだか、一束手ぶしに持ったがね。別にハイそれを視めるでもねえだ。美しい目水晶ぱちくりと、川上の空さ碧く光っとる星い向いて、相談打つような形だね。\n草鞋がけじゃで、近辺の人ではねえ。道さ迷ったら教えて進ぜべい、と私もう内へ帰って、婆様と、お客に売った渋茶の出殻で、茶漬え掻食うばかりだもんで、のっそりその人の背中へ立って見ていると、しばらく経ってよ。\nむっくりと起返った、と思うとの。……（爺様、あれあれ、）」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [],
+      "prev_utterance": {
+        "utterance_index": 19,
+        "gold_status": "attributed",
+        "gold_speaker": "kundo",
+        "pred_speaker": "kundo",
+        "pred_addressee": "saihachi",
+        "pred_evidence": "inferred"
+      },
+      "next_utterance": {
+        "utterance_index": 21,
+        "gold_status": "attributed",
+        "gold_speaker": "saihachi",
+        "pred_speaker": "saihachi",
+        "pred_addressee": null,
+        "pred_evidence": "inferred"
+      }
+    },
+    {
+      "work_id": "000081_000456",
+      "title": "銀河鉄道の夜",
+      "narration": "third",
+      "utterance_index": 11,
+      "gold_speaker": "giovanni",
+      "pred_speaker": "campanella",
+      "pred_addressee": null,
+      "gold_equals_pred_addressee": false,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「くるみの実だよ。そら、沢山ある。流れて来たんじゃない。岩の中に入ってるんだ。」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [],
+      "prev_utterance": {
+        "utterance_index": 10,
+        "gold_status": "attributed",
+        "gold_speaker": "campanella",
+        "pred_speaker": "campanella",
+        "pred_addressee": null,
+        "pred_evidence": "inferred"
+      },
+      "next_utterance": {
+        "utterance_index": 12,
+        "gold_status": "undetermined",
+        "gold_speaker": null,
+        "pred_speaker": "giovanni",
+        "pred_addressee": "campanella",
+        "pred_evidence": "inferred"
+      }
+    },
+    {
+      "work_id": "000081_000456",
+      "title": "銀河鉄道の夜",
+      "narration": "third",
+      "utterance_index": 16,
+      "gold_speaker": "daigakushi",
+      "pred_speaker": "giovanni",
+      "pred_addressee": "daigakushi",
+      "gold_equals_pred_addressee": true,
+      "pred_evidence": "inferred",
+      "outcome": "wrong_speaker",
+      "quote_text": "「くるみが沢山あったろう。それはまあ、ざっと百二十万年ぐらい前のくるみだよ。ごく新らしい方さ。ここは百二十万年前、第三紀のあとのころは海岸でね、この下からは貝がらも出る。いま川の流れているとこに、そっくり塩水が寄せたり引いたりもしていたのだ。このけものかね、これはボスといってね、おいおい、そこつるはしはよしたまえ。ていねいに鑿でやってくれたまえ。ボスといってね、いまの牛の先祖で、昔はたくさん居たさ。」",
+      "pre_speech_verb": null,
+      "post_speech_verb": null,
+      "in_quote_aliases": [],
+      "prev_utterance": {
+        "utterance_index": 15,
+        "gold_status": "attributed",
+        "gold_speaker": "daigakushi",
+        "pred_speaker": "daigakushi",
+        "pred_addressee": null,
+        "pred_evidence": "explicit"
+      },
+      "next_utterance": {
+        "utterance_index": 17,
+        "gold_status": "undetermined",
+        "gold_speaker": null,
+        "pred_speaker": "campanella",
+        "pred_addressee": "daigakushi",
+        "pred_evidence": "inferred"
+      }
+    }
+  ]
+}

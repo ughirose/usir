@@ -1,0 +1,25 @@
+{
+  "gold_dir": "C:\\dev\\nishiki\\crates\\nishiki-discourse\\tests\\data\\f9_gold",
+  "split_file": "scripts/step1/f9_split.json",
+  "split": "dev",
+  "prompt_version": "v5",
+  "out_dir": "scripts/step1/results/v5_twostage",
+  "ollama_url": "http://127.0.0.1:11434",
+  "seed": 42,
+  "num_ctx": 9216,
+  "num_predict": 4096,
+  "timeout": 300,
+  "postprocess": {
+    "explicit_evidence_gate": true,
+    "inline_non_speech_filter": true,
+    "inline_non_speech_max_chars": 11
+  },
+  "models": [
+    {
+      "spec": "qwen2.5:14b",
+      "num_ctx": 9216,
+      "num_predict": 4096,
+      "timeout": 300
+    }
+  ]
+}

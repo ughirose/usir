@@ -1,0 +1,64 @@
+{
+  "model": "qwen2.5:14b",
+  "scene_prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+  "works": {
+    "001798_056779": {
+      "group": "modern",
+      "scenes": 4,
+      "elapsed_sec": 52.5,
+      "kept": {
+        "present": 8,
+        "states": 8,
+        "facts": 17
+      },
+      "rejected": 6,
+      "rejected_reasons": {
+        "time:explicit_time_not_in_text": 1,
+        "present:basis_not_in_text": 1,
+        "location:surface_not_in_text": 2,
+        "fact:basis_not_in_text": 2
+      },
+      "schema_errors": 0,
+      "parse_failures": 0
+    },
+    "001801_001786": {
+      "group": "modern",
+      "scenes": 3,
+      "elapsed_sec": 29.6,
+      "kept": {
+        "present": 4,
+        "states": 3,
+        "facts": 7
+      },
+      "rejected": 6,
+      "rejected_reasons": {
+        "location:surface_not_in_text": 1,
+        "present:basis_not_in_text": 2,
+        "state:basis_not_in_text": 2,
+        "fact:basis_not_in_text": 1
+      },
+      "schema_errors": 0,
+      "parse_failures": 0
+    },
+    "001875_059897": {
+      "group": "modern",
+      "scenes": 4,
+      "elapsed_sec": 55.4,
+      "kept": {
+        "present": 12,
+        "states": 5,
+        "facts": 6
+      },
+      "rejected": 15,
+      "rejected_reasons": {
+        "location:surface_not_in_text": 3,
+        "state:basis_not_in_text": 6,
+        "fact:basis_not_in_text": 4,
+        "present:basis_not_in_text": 2
+      },
+      "schema_errors": 0,
+      "parse_failures": 0
+    }
+  },
+  "total_elapsed_sec": 137.6
+}

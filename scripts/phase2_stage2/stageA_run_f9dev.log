@@ -1,0 +1,104 @@
+000035_000301 0 {'present': 1, 'states': 1, 'facts': 6} rej 1 schema_err 0 29.973s
+000035_000301 1 {'present': 2, 'states': 0, 'facts': 2} rej 2 schema_err 0 15.851s
+000035_000301 2 {'present': 2, 'states': 1, 'facts': 1} rej 4 schema_err 0 30.64s
+000035_000301 3 {'present': 2, 'states': 1, 'facts': 3} rej 1 schema_err 0 16.584s
+000035_000301 4 {'present': 2, 'states': 2, 'facts': 0} rej 1 schema_err 0 15.089s
+000035_000301 5 {'present': 2, 'states': 0, 'facts': 3} rej 1 schema_err 0 13.853s
+000035_000301 6 {'present': 2, 'states': 1, 'facts': 2} rej 1 schema_err 0 9.037s
+001383_056643 0 {'present': 1, 'states': 1, 'facts': 2} rej 3 schema_err 0 32.736s
+001383_056643 1 {'present': 3, 'states': 3, 'facts': 4} rej 0 schema_err 0 15.629s
+001383_056643 2 {'present': 2, 'states': 2, 'facts': 2} rej 0 schema_err 0 11.222s
+001383_056643 3 {'present': 2, 'states': 1, 'facts': 3} rej 3 schema_err 0 15.223s
+001383_056643 4 {'present': 4, 'states': 3, 'facts': 2} rej 1 schema_err 0 15.506s
+001383_056643 5 {'present': 4, 'states': 0, 'facts': 2} rej 5 schema_err 0 12.97s
+000050_003586 0 {'present': 2, 'states': 2, 'facts': 3} rej 0 schema_err 0 11.446s
+000050_003586 1 {'present': 2, 'states': 2, 'facts': 2} rej 0 schema_err 0 13.495s
+000050_003586 2 {'present': 3, 'states': 3, 'facts': 3} rej 0 schema_err 0 11.505s
+000050_003586 3 {'present': 3, 'states': 3, 'facts': 4} rej 0 schema_err 0 15.088s
+000050_003586 4 {'present': 1, 'states': 0, 'facts': 2} rej 3 schema_err 0 9.539s
+000081_000456 0 {'present': 3, 'states': 2, 'facts': 2} rej 0 schema_err 0 13.412s
+000081_000456 1 {'present': 2, 'states': 2, 'facts': 3} rej 0 schema_err 0 10.937s
+000081_000456 2 {'present': 1, 'states': 2, 'facts': 2} rej 3 schema_err 0 12.549s
+000081_000456 3 {'present': 2, 'states': 1, 'facts': 3} rej 1 schema_err 0 13.341s
+000081_000456 4 {'present': 3, 'states': 3, 'facts': 3} rej 1 schema_err 0 15.038s
+000081_000456 5 {'present': 3, 'states': 2, 'facts': 2} rej 1 schema_err 0 13.473s
+{
+ "model": "qwen2.5:14b",
+ "scene_prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+ "works": {
+  "000035_000301": {
+   "group": "f9dev",
+   "scenes": 7,
+   "elapsed_sec": 131.1,
+   "kept": {
+    "present": 13,
+    "states": 6,
+    "facts": 17
+   },
+   "rejected": 11,
+   "rejected_reasons": {
+    "fact:basis_not_in_text": 3,
+    "state:basis_not_in_text": 7,
+    "present:basis_not_in_text": 1
+   },
+   "schema_errors": 0,
+   "parse_failures": 0
+  },
+  "001383_056643": {
+   "group": "f9dev",
+   "scenes": 6,
+   "elapsed_sec": 103.4,
+   "kept": {
+    "present": 16,
+    "states": 10,
+    "facts": 15
+   },
+   "rejected": 12,
+   "rejected_reasons": {
+    "location:surface_not_in_text": 3,
+    "present:basis_not_in_text": 2,
+    "state:basis_not_in_text": 6,
+    "fact:basis_not_in_text": 1
+   },
+   "schema_errors": 0,
+   "parse_failures": 0
+  },
+  "000050_003586": {
+   "group": "f9dev",
+   "scenes": 5,
+   "elapsed_sec": 61.4,
+   "kept": {
+    "present": 11,
+    "states": 10,
+    "facts": 14
+   },
+   "rejected": 3,
+   "rejected_reasons": {
+    "present:basis_not_in_text": 1,
+    "state:basis_not_in_text": 2
+   },
+   "schema_errors": 0,
+   "parse_failures": 0
+  },
+  "000081_000456": {
+   "group": "f9dev",
+   "scenes": 6,
+   "elapsed_sec": 78.8,
+   "kept": {
+    "present": 14,
+    "states": 12,
+    "facts": 15
+   },
+   "rejected": 6,
+   "rejected_reasons": {
+    "location:surface_not_in_text": 3,
+    "present:basis_not_in_text": 1,
+    "fact:basis_not_in_text": 1,
+    "state:basis_not_in_text": 1
+   },
+   "schema_errors": 0,
+   "parse_failures": 0
+  }
+ },
+ "total_elapsed_sec": 374.9
+}

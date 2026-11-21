@@ -1,0 +1,151 @@
+{
+  "run_timestamp": "2026-11-20T00:54:32.408016+00:00",
+  "split": "holdout",
+  "split_version": "f9_step1_work_stratified_v1",
+  "gold_json_sha256": "35e9364d63a60098408e99374fec3bc2f3782bb086dcf4e9f384631ed81e2780",
+  "work_ids_evaluated": [
+    "000148_000752",
+    "000074_000429",
+    "000129_000689",
+    "001095_042618"
+  ],
+  "prompt_version": "step1_utterances_v5",
+  "prompt_hash": "dfeb6de4ec57c881ef1650afcfee9d173cab681b2453f00ecb5c277b1f7c553a",
+  "step1_pass_thresholds": {
+    "explicit_error_rate_lt": 0.05,
+    "overall_error_rate_lt": 0.1,
+    "politeness_agreement_rate_ge": 0.9
+  },
+  "models": [
+    {
+      "model_spec": "qwen2.5:14b",
+      "model_name": "qwen2.5:14b",
+      "think": null,
+      "prompt_version": "step1_utterances_v5",
+      "prompt_hash": "dfeb6de4ec57c881ef1650afcfee9d173cab681b2453f00ecb5c277b1f7c553a",
+      "result_file": "qwen2.5_14b_holdout.json",
+      "elapsed_sec": 341.221,
+      "prompt_eval_count": 280048,
+      "eval_count": 10112,
+      "context_window_warning": false,
+      "schema_valid_works": 4,
+      "total_works": 4,
+      "non_roster_speaker_count": 0,
+      "null_string_speaker_count": 0,
+      "explicit_error_rate": 0.0,
+      "explicit_errors": 0,
+      "explicit_denominator": 5,
+      "overall_error_rate": 0.13541666666666666,
+      "overall_errors": 13,
+      "overall_error_rate_raw_speaker": 0.125,
+      "overall_errors_raw_speaker": 12,
+      "attributed_total": 96,
+      "politeness_agreement_rate": null,
+      "politeness_gold_available": false,
+      "ambiguous_rate": 0.052083333333333336,
+      "ambiguous_attributed_count": 5,
+      "ambiguous_rate_all_quotes": 0.09433962264150944,
+      "excluded_abstention_rate": 0.5,
+      "not_speech_abstention_rate": null,
+      "not_speech_abstained": 0,
+      "not_speech_total": 0,
+      "undetermined_abstention_rate": 0.5,
+      "undetermined_abstained": 5,
+      "undetermined_total": 10,
+      "gate": {
+        "passed": false,
+        "speaker_gate_passed": false,
+        "explicit_passed": true,
+        "overall_passed": false,
+        "validation_passed": true,
+        "politeness_passed": null,
+        "thresholds": {
+          "explicit_error_rate_lt": 0.05,
+          "overall_error_rate_lt": 0.1,
+          "politeness_agreement_rate_ge": 0.9
+        }
+      },
+      "by_evidence": {
+        "explicit": {
+          "count": 5,
+          "correct": 5,
+          "errors": 0,
+          "error_rate": 0.0,
+          "accuracy": 1.0
+        },
+        "inferred": {
+          "count": 86,
+          "correct": 78,
+          "errors": 8,
+          "error_rate": 0.09302325581395349,
+          "accuracy": 0.9069767441860465
+        },
+        "ambiguous": {
+          "count": 5,
+          "correct_raw_speaker": 1
+        },
+        "missing": {
+          "count": 0
+        }
+      },
+      "by_narration": {
+        "first": {
+          "explicit_error_rate": null,
+          "overall_error_rate": 0.058823529411764705,
+          "overall_error_rate_raw_speaker": 0.058823529411764705,
+          "ambiguous_rate": 0.058823529411764705,
+          "attributed_total": 17
+        },
+        "third": {
+          "explicit_error_rate": 0.0,
+          "overall_error_rate": 0.1518987341772152,
+          "overall_error_rate_raw_speaker": 0.13924050632911392,
+          "ambiguous_rate": 0.05063291139240506,
+          "attributed_total": 79
+        }
+      },
+      "postprocess": {
+        "explicit_evidence_gate": true,
+        "inline_non_speech_filter": true,
+        "inline_non_speech_max_chars": 11
+      },
+      "postprocess_summary": {
+        "inline_non_speech_forced_count": 9,
+        "inline_non_speech_changed_count": 9,
+        "explicit_downgraded_count": 5
+      },
+      "speaker_recheck": {
+        "enabled": true,
+        "mode": "per_utterance",
+        "model": "qwen2.5:14b",
+        "prompt_version": "recheck_v2",
+        "flow_window_before": 4,
+        "flow_window_after": 3,
+        "context_chars_before": 700,
+        "context_chars_after": 500,
+        "sequential": false,
+        "num_ctx": 9216,
+        "num_predict": 384,
+        "seed": 42,
+        "timeout": 120.0
+      },
+      "speaker_recheck_summary": {
+        "recheck_prompt_version": "step1_speaker_recheck_v2",
+        "recheck_prompt_hash": "c8a85d1b3a2d34f55d17980925ad67c2ab560c8ea4238e7ba73cad668d0e83b7",
+        "target_count": 90,
+        "rechecked_count": 90,
+        "changed_count": 0,
+        "rejected_count": 0,
+        "elapsed_sec": 194.525,
+        "prompt_eval_count": 261264,
+        "eval_count": 4466,
+        "any_context_window_warning": false
+      }
+    }
+  ],
+  "politeness_pairwise_agreement": {
+    "scope": "attributed_only",
+    "total_items": 96,
+    "pairs": []
+  }
+}

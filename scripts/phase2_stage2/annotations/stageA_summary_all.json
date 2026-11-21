@@ -1,0 +1,130 @@
+{
+ "works": {
+  "000035_000301": {
+   "scenes": 7,
+   "llm_sec": 131.0,
+   "present": 13,
+   "states": 6,
+   "facts": 17,
+   "rejected": 11,
+   "schema_errors": 0,
+   "parse_failures": 0,
+   "reasons": {
+    "fact:basis_not_in_text": 3,
+    "state:basis_not_in_text": 7,
+    "present:basis_not_in_text": 1
+   }
+  },
+  "000050_003586": {
+   "scenes": 5,
+   "llm_sec": 61.1,
+   "present": 11,
+   "states": 10,
+   "facts": 14,
+   "rejected": 3,
+   "schema_errors": 0,
+   "parse_failures": 0,
+   "reasons": {
+    "present:basis_not_in_text": 1,
+    "state:basis_not_in_text": 2
+   }
+  },
+  "000081_000456": {
+   "scenes": 6,
+   "llm_sec": 78.8,
+   "present": 14,
+   "states": 12,
+   "facts": 15,
+   "rejected": 6,
+   "schema_errors": 0,
+   "parse_failures": 0,
+   "reasons": {
+    "location:surface_not_in_text": 3,
+    "present:basis_not_in_text": 1,
+    "fact:basis_not_in_text": 1,
+    "state:basis_not_in_text": 1
+   }
+  },
+  "001383_056643": {
+   "scenes": 6,
+   "llm_sec": 103.3,
+   "present": 16,
+   "states": 10,
+   "facts": 15,
+   "rejected": 12,
+   "schema_errors": 0,
+   "parse_failures": 0,
+   "reasons": {
+    "location:surface_not_in_text": 3,
+    "present:basis_not_in_text": 2,
+    "state:basis_not_in_text": 6,
+    "fact:basis_not_in_text": 1
+   }
+  },
+  "001798_056779": {
+   "scenes": 4,
+   "llm_sec": 80.6,
+   "present": 8,
+   "states": 8,
+   "facts": 18,
+   "rejected": 6,
+   "schema_errors": 0,
+   "parse_failures": 0,
+   "reasons": {
+    "time:explicit_time_not_in_text": 1,
+    "present:basis_not_in_text": 1,
+    "fact:basis_not_in_text": 3,
+    "location:surface_not_in_text": 1
+   }
+  },
+  "001801_001786": {
+   "scenes": 3,
+   "llm_sec": 46.7,
+   "present": 4,
+   "states": 3,
+   "facts": 7,
+   "rejected": 6,
+   "schema_errors": 0,
+   "parse_failures": 0,
+   "reasons": {
+    "location:surface_not_in_text": 1,
+    "present:basis_not_in_text": 2,
+    "state:basis_not_in_text": 2,
+    "fact:basis_not_in_text": 1
+   }
+  },
+  "001875_059897": {
+   "scenes": 4,
+   "llm_sec": 94.8,
+   "present": 12,
+   "states": 5,
+   "facts": 6,
+   "rejected": 15,
+   "schema_errors": 0,
+   "parse_failures": 0,
+   "reasons": {
+    "location:surface_not_in_text": 3,
+    "state:basis_not_in_text": 6,
+    "fact:basis_not_in_text": 4,
+    "present:basis_not_in_text": 2
+   }
+  }
+ },
+ "total": {
+  "scenes": 35,
+  "llm_sec": 596.3,
+  "present": 78,
+  "states": 54,
+  "facts": 92,
+  "rejected": 59,
+  "schema_errors": 0,
+  "parse_failures": 0,
+  "reasons": {
+   "fact:basis_not_in_text": 13,
+   "state:basis_not_in_text": 24,
+   "present:basis_not_in_text": 10,
+   "location:surface_not_in_text": 11,
+   "time:explicit_time_not_in_text": 1
+  }
+ }
+}

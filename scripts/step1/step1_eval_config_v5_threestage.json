@@ -1,0 +1,40 @@
+{
+  "gold_dir": "C:\\dev\\nishiki\\crates\\nishiki-discourse\\tests\\data\\f9_gold",
+  "split_file": "scripts/step1/f9_split.json",
+  "split": "dev",
+  "prompt_version": "v5",
+  "out_dir": "scripts/step1/results/v5_threestage",
+  "ollama_url": "http://127.0.0.1:11434",
+  "seed": 42,
+  "num_ctx": 9216,
+  "num_predict": 4096,
+  "timeout": 300,
+  "postprocess": {
+    "explicit_evidence_gate": true,
+    "inline_non_speech_filter": true,
+    "inline_non_speech_max_chars": 11
+  },
+  "speaker_recheck": {
+    "enabled": true,
+    "mode": "per_utterance",
+    "model": "qwen2.5:14b",
+    "prompt_version": "recheck_v2",
+    "flow_window_before": 4,
+    "flow_window_after": 3,
+    "context_chars_before": 700,
+    "context_chars_after": 500,
+    "sequential": false,
+    "num_ctx": 9216,
+    "num_predict": 384,
+    "seed": 42,
+    "timeout": 120
+  },
+  "models": [
+    {
+      "spec": "qwen2.5:14b",
+      "num_ctx": 9216,
+      "num_predict": 4096,
+      "timeout": 300
+    }
+  ]
+}

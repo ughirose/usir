@@ -1,0 +1,562 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://usir.dev/schemas/sensor_v2.schema.json",
+  "title": "UsirSensorAnnotationV2",
+  "description": "Draft scene-level sensor annotation schema (sensor.v2) for Step 1-3 validation. Sasae and Sadame fields are required; Nagare, Awase, and Kamae fields are optional future slots aligned with nishiki/crates/usir-schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "scene_meta",
+    "utterances",
+    "character_states",
+    "fact_updates"
+  ],
+  "properties": {
+    "contract": {
+      "type": "object",
+      "description": "Contract and reproducibility header. Splitter version and scene hash are owned by Nishiki.",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "splitter_version",
+        "scene_id",
+        "scene_hash",
+        "ledger_hash",
+        "model_id",
+        "prompt_hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "sensor.v2"
+        },
+        "splitter_version": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Scene splitter identifier (e.g. 'usir_v5_splitter@1')."
+        },
+        "scene_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Hierarchical scene identifier including chapter ID (e.g. 'ch03:s02')."
+        },
+        "scene_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 hex digest of the normalized scene text produced by Nishiki."
+        },
+        "ledger_hash": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Audit version/hash string of the Plotailor ledger used during annotation."
+        },
+        "model_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Annotator model identifier (or 'manual-mock' for handwritten fixtures)."
+        },
+        "prompt_hash": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Hash/identifier of the system prompt used for annotation."
+        },
+        "author_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Optional machine-filled author identifier for SceneAnnotation projection."
+        },
+        "work_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Optional machine-filled work/volume identifier for SceneAnnotation projection."
+        },
+        "scene_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295,
+          "description": "Optional machine-filled 0-based sequential index across the target text."
+        },
+        "scene_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295,
+          "description": "Optional machine-filled total scene count for SceneAnnotation projection."
+        },
+        "char_len": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295,
+          "description": "Optional machine-filled Unicode scalar length of the normalized scene text."
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Optional inference seed recorded by the runner (0 for manual mocks)."
+        },
+        "stale_context": {
+          "type": "boolean",
+          "description": "Set true by runner when a preceding scene changed and downstream context may be stale."
+        },
+        "override_applied": {
+          "type": "boolean",
+          "description": "Set true when human overrides from .nishiki/overrides/ have been merged."
+        }
+      }
+    },
+    "scene_meta": {
+      "type": "object",
+      "description": "Scene-level metadata. Sasae fields are required; Nagare, Awase, and Kamae slots are optional for forward compatibility.",
+      "additionalProperties": false,
+      "required": [
+        "time",
+        "location_id",
+        "present_character_ids",
+        "pov_character"
+      ],
+      "properties": {
+        "time": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "relative_order"
+          ],
+          "properties": {
+            "relative_order": {
+              "type": "string",
+              "enum": [
+                "continuous",
+                "flashback",
+                "parallel",
+                "unknown"
+              ]
+            },
+            "elapsed_hint": {
+              "$ref": "#/$defs/nullable_non_empty_string"
+            },
+            "explicit_time": {
+              "$ref": "#/$defs/nullable_non_empty_string"
+            },
+            "evidence": {
+              "$ref": "#/$defs/evidence_level"
+            }
+          }
+        },
+        "location_id": {
+          "$ref": "#/$defs/nullable_non_empty_string",
+          "description": "Location ID or provisional ID (null if unknown)."
+        },
+        "present_character_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "description": "Character IDs (or provisional IDs) present in the scene."
+        },
+        "pov_character": {
+          "$ref": "#/$defs/nullable_non_empty_string",
+          "description": "Focal/POV character ID (maps to SceneAnnotation.focal_character and SolverConfig.pov)."
+        },
+        "nagare": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nagare_ann"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional Nagare slot matching usir_schema::NagareAnn."
+        },
+        "awase": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/awase_ann"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional Awase slot matching usir_schema::AwaseAnn."
+        },
+        "kamae": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/kamae_ann"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional Kamae B summary slot. Primary 1-pass hook signals are emitted via fact_updates (HOOK_OPENED / HOOK_RESOLVED); this slot provides string-ID compatibility with Plotailor hooks.yaml before deterministic u32 projection."
+        }
+      }
+    },
+    "utterances": {
+      "type": "array",
+      "description": "Per-utterance speaker attribution and register.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "utterance_index",
+          "speaker_id",
+          "addressee_id",
+          "evidence",
+          "register"
+        ],
+        "properties": {
+          "utterance_index": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "0-based [U0] utterance index assigned deterministically by Nishiki."
+          },
+          "speaker_id": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          },
+          "addressee_id": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          },
+          "evidence": {
+            "$ref": "#/$defs/evidence_level"
+          },
+          "register": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "politeness",
+              "first_person"
+            ],
+            "properties": {
+              "politeness": {
+                "type": "string",
+                "enum": [
+                  "plain",
+                  "polite",
+                  "honorific",
+                  "rough",
+                  "unknown"
+                ]
+              },
+              "first_person": {
+                "$ref": "#/$defs/nullable_non_empty_string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "character_states": {
+      "type": "array",
+      "description": "6-axis value stances for active characters only (speaking, acting, or internal focalization).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "character_id",
+          "values_6d",
+          "evidence"
+        ],
+        "properties": {
+          "character_id": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "values_6d": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "integer",
+              "minimum": -1,
+              "maximum": 1
+            },
+            "description": "6-axis quantized values in {-1, 0, +1} per Decision 1 (aligned with usir-metrics::sadame INTER_NORM = 24.0)."
+          },
+          "evidence": {
+            "$ref": "#/$defs/evidence_level"
+          }
+        }
+      }
+    },
+    "fact_updates": {
+      "type": "array",
+      "description": "State/fact transitions under the closed 7-predicate set.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "subject",
+          "predicate",
+          "object",
+          "evidence"
+        ],
+        "properties": {
+          "sentence_index": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Optional 0-based [S0] sentence index assigned deterministically by Nishiki."
+          },
+          "subject": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          },
+          "predicate": {
+            "type": "string",
+            "enum": [
+              "LEARNED",
+              "ACQUIRED",
+              "LOST",
+              "MOVED_TO",
+              "STATE_CHANGED",
+              "HOOK_OPENED",
+              "HOOK_RESOLVED"
+            ]
+          },
+          "object": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "evidence": {
+            "$ref": "#/$defs/evidence_level"
+          }
+        }
+      }
+    },
+    "provisional_entities": {
+      "type": "array",
+      "description": "Optional provisional IDs issued by the sensor for entities not yet registered in Plotailor YAML ledgers.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "provisional_id",
+          "kind",
+          "surface"
+        ],
+        "properties": {
+          "provisional_id": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "character",
+              "location",
+              "hook",
+              "time_marker"
+            ]
+          },
+          "surface": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "sentence_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "utterance_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullable_non_empty_string": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evidence_level": {
+      "type": "string",
+      "enum": [
+        "explicit",
+        "inferred",
+        "ambiguous"
+      ]
+    },
+    "awase_rating": {
+      "type": "integer",
+      "minimum": -2,
+      "maximum": 2
+    },
+    "logp16": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "items": {
+        "type": "number",
+        "maximum": 0
+      }
+    },
+    "ranked_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "rank_weight"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "E11",
+            "E12",
+            "E13",
+            "E14",
+            "E15",
+            "E16"
+          ]
+        },
+        "rank_weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        }
+      }
+    },
+    "ranked_mood": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "rank_weight"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "M01",
+            "M02",
+            "M03",
+            "M04",
+            "M05",
+            "M06",
+            "M07",
+            "M08",
+            "M09",
+            "M10",
+            "M11",
+            "M12",
+            "M13",
+            "M14",
+            "M15",
+            "M16"
+          ]
+        },
+        "rank_weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        }
+      }
+    },
+    "nagare_ann": {
+      "type": "object",
+      "description": "Mirrors usir_schema::NagareAnn. Semantic check: duplicate codes within event_top3 or mood_top3 must be rejected by the validator.",
+      "additionalProperties": false,
+      "required": [
+        "event_top3",
+        "mood_top3"
+      ],
+      "properties": {
+        "event_top3": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/ranked_event"
+          }
+        },
+        "mood_top3": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/ranked_mood"
+          }
+        },
+        "event_logp": {
+          "$ref": "#/$defs/logp16"
+        },
+        "mood_logp": {
+          "$ref": "#/$defs/logp16"
+        }
+      }
+    },
+    "awase_ann": {
+      "type": "object",
+      "description": "Mirrors usir_schema::AwaseAnn.",
+      "additionalProperties": false,
+      "required": [
+        "f_event_valence",
+        "f_event_arousal",
+        "f_style_valence",
+        "f_style_arousal"
+      ],
+      "properties": {
+        "f_event_valence": {
+          "$ref": "#/$defs/awase_rating"
+        },
+        "f_event_arousal": {
+          "$ref": "#/$defs/awase_rating"
+        },
+        "f_style_valence": {
+          "$ref": "#/$defs/awase_rating"
+        },
+        "f_style_arousal": {
+          "$ref": "#/$defs/awase_rating"
+        }
+      }
+    },
+    "kamae_ann": {
+      "type": "object",
+      "description": "Optional Kamae B hook summary with string hook IDs aligned to Plotailor hooks.yaml (projected deterministically to u32 IDs for usir_schema::KamaeAnn).",
+      "additionalProperties": false,
+      "required": [
+        "opened_hooks",
+        "closed_hook_ids"
+      ],
+      "properties": {
+        "opened_hooks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "label"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "closed_hook_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "traces": [
+    {
+      "scene_id": "001798_056779:s0",
+      "present": [
+        {
+          "id": "boku",
+          "basis": "僕"
+        },
+        {
+          "id": "fuwa",
+          "basis": "不破"
+        }
+      ],
+      "states": [
+        {
+          "id": "boku",
+          "basis": "バタバタバタと引越して来ました"
+        },
+        {
+          "id": "fuwa",
+          "basis": "かんたんな契約書を作成し、四万円を手交し"
+        }
+      ],
+      "facts": [
+        {
+          "basis": "はるばる八王子から代田橋にバタバタバタと引越して来ました"
+        },
+        {
+          "basis": "世帯道具や画の道具一式をオート三輪に積みこんで"
+        },
+        {
+          "basis": "かんたんな契約書を作成し、四万円を手交し"
+        },
+        {
+          "basis": "四万円を手交し"
+        },
+        {
+          "basis": "ソバを肴にして簡略な祝宴を開きました"
+        },
+        {
+          "basis": "四万円を手交し"
+        },
+        {
+          "basis": "ソバを肴にして簡略な祝宴を開きました"
+        },
+        {
+          "basis": "不破夫人もその祝宴に参加して来ましたが"
+        },
+        {
+          "basis": "亭主を上廻る酒豪で、二升用意したのが足りなくて、もう一升買い足したほどでした"
+        }
+      ],
+      "location_surface": "代田橋"
+    },
+    {
+      "scene_id": "001798_056779:s1",
+      "present": [
+        {
+          "id": "boku",
+          "basis": "僕の部屋"
+        },
+        {
+          "id": "fuwa",
+          "basis": "僕の部屋にやってきて"
+        }
+      ],
+      "states": [
+        {
+          "id": "boku",
+          "basis": "僕の部屋"
+        },
+        {
+          "id": "fuwa",
+          "basis": "部屋代の前納という形でもいいから、二千円ばかり貸して欲しい"
+        }
+      ],
+      "facts": [
+        {
+          "basis": "すこし酔って僕の部屋にやってきて"
+        },
+        {
+          "basis": "なけなしの財布から千円札二枚渡してやりました"
+        },
+        {
+          "basis": "赤穂行は墓参のためだけでなく、あちらにある山林を処分する用も兼ねている"
+        },
+        {
+          "basis": "遠縁の野呂という男をここに寝泊りさせるから"
+        }
+      ],
+      "location_surface": "僕の部屋"
+    },
+    {
+      "scene_id": "001798_056779:s2",
+      "present": [
+        {
+          "id": "boku",
+          "basis": "僕"
+        },
+        {
+          "id": "noro",
+          "basis": "野呂君"
+        }
+      ],
+      "states": [
+        {
+          "id": "boku",
+          "basis": "僕もむっとして言い返しました。"
+        },
+        {
+          "id": "noro",
+          "basis": "バカじゃなかろうかというような眼付で、野呂は僕を見た。"
+        }
+      ],
+      "facts": [
+        {
+          "basis": "野呂がやって来たのは、それから二三日経った正午頃でした。"
+        },
+        {
+          "basis": "少々僕もむっとして言い返しました。"
+        },
+        {
+          "basis": "そして野呂はじろじろと僕を上から下まで眺め廻して、急に言葉がぞんざいになりました。"
+        }
+      ],
+      "location_surface": "板の間"
+    },
+    {
+      "scene_id": "001798_056779:s3",
+      "present": [
+        {
+          "id": "boku",
+          "basis": "僕"
+        },
+        {
+          "id": "noro",
+          "basis": "野呂"
+        }
+      ],
+      "states": [
+        {
+          "id": "boku",
+          "basis": "僕は僕の部屋にかけこんで、領収証と契約書を急いで取出し、引返して野呂の前につきつけてやりました。"
+        },
+        {
+          "id": "noro",
+          "basis": "彼はがっくりと板の間に腰をおろし、嘆息するように言いました。"
+        }
+      ],
+      "facts": [
+        {
+          "basis": "「買い受けただって？」"
+        },
+        {
+          "basis": "「何か誤解がある。まるでこの世には誤解が充ち満ちているようだ」"
+        }
+      ],
+      "location_surface": null
+    }
+  ],
+  "audits": [
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "time",
+          "reason": "explicit_time_not_in_text",
+          "item": "三日目の夜"
+        },
+        {
+          "kind": "present",
+          "reason": "basis_not_in_text",
+          "item": {
+            "id": "noro",
+            "basis": "野呂君、彼"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "states": 2,
+        "facts": 9
+      },
+      "schema_errors": [],
+      "scene_id": "001798_056779:s0",
+      "elapsed_sec": 26.38
+    },
+    {
+      "parse_ok": true,
+      "rejected": [],
+      "kept": {
+        "present": 2,
+        "states": 2,
+        "facts": 4
+      },
+      "schema_errors": [],
+      "scene_id": "001798_056779:s1",
+      "elapsed_sec": 17.331
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_text",
+          "item": {
+            "subject": "noro",
+            "predicate": "STATE_CHANGED",
+            "object": "困惑",
+            "evidence": "explicit",
+            "basis": "野呂は眉をひそめました。「十日？」野呂は眉をひそめました。"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "states": 2,
+        "facts": 3
+      },
+      "schema_errors": [],
+      "scene_id": "001798_056779:s2",
+      "elapsed_sec": 19.371
+    },
+    {
+      "parse_ok": true,
+      "rejected": [
+        {
+          "kind": "location",
+          "reason": "surface_not_in_text",
+          "item": "この家"
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_text",
+          "item": {
+            "subject": "boku",
+            "predicate": "LOST",
+            "object": "家",
+            "evidence": "inferred",
+            "basis": "「早く荷物をまとめて出て行って呉れ」"
+          }
+        },
+        {
+          "kind": "fact",
+          "reason": "basis_not_in_text",
+          "item": {
+            "subject": "noro",
+            "predicate": "ACQUIRED",
+            "object": "家",
+            "evidence": "explicit",
+            "basis": "「この家は僕のものだよ。不破氏から僕が買い受けたんだ」"
+          }
+        }
+      ],
+      "kept": {
+        "present": 2,
+        "states": 2,
+        "facts": 2
+      },
+      "schema_errors": [],
+      "scene_id": "001798_056779:s3",
+      "elapsed_sec": 17.546
+    }
+  ],
+  "raw": [
+    {
+      "scene_id": "001798_056779:s0",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"unknown\",\n    \"explicit_time\": \"三日目の夜\",\n    \"elapsed_hint\": null,\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"代田橋\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"fuwa\",\n      \"basis\": \"不破\"\n    },\n    {\n      \"id\": \"noro\",\n      \"basis\": \"野呂君、彼\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"boku\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"バタバタバタと引越して来ました\"\n    },\n    {\n      \"character_id\": \"fuwa\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"かんたんな契約書を作成し、四万円を手交し\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"MOVED_TO\",\n      \"object\": \"代田橋\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"はるばる八王子から代田橋にバタバタバタと引越して来ました\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"世帯道具や画の道具一式\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"世帯道具や画の道具一式をオート三輪に積みこんで\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"契約\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"かんたんな契約書を作成し、四万円を手交し\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"四万円\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"四万円を手交し\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"祝宴\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"ソバを肴にして簡略な祝宴を開きました\"\n    },\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"四万円\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"四万円を手交し\"\n    },\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"祝宴\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"ソバを肴にして簡略な祝宴を開きました\"\n    },\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"夫人\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"不破夫人もその祝宴に参加して来ましたが\"\n    },\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"酒豪\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"亭主を上廻る酒豪で、二升用意したのが足りなくて、もう一升買い足したほどでした\"\n    }\n  ]\n}",
+      "parse_error": null,
+      "prompt_eval_count": 1200,
+      "eval_count": 810,
+      "format_mode": "json_schema"
+    },
+    {
+      "scene_id": "001798_056779:s1",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": \"一週間\",\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"僕の部屋\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕の部屋\"\n    },\n    {\n      \"id\": \"fuwa\",\n      \"basis\": \"僕の部屋にやってきて\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"boku\",\n      \"values_6d\": [0, 0, 0, 0, 0, 0],\n      \"evidence\": \"ambiguous\",\n      \"basis\": \"僕の部屋\"\n    },\n    {\n      \"character_id\": \"fuwa\",\n      \"values_6d\": [0, 0, 0, -1, 0, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"部屋代の前納という形でもいいから、二千円ばかり貸して欲しい\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"酔っている\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"すこし酔って僕の部屋にやってきて\"\n    },\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"二千円\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"なけなしの財布から千円札二枚渡してやりました\"\n    },\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"HOOK_OPENED\",\n      \"object\": \"赤穂行\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"赤穂行は墓参のためだけでなく、あちらにある山林を処分する用も兼ねている\"\n    },\n    {\n      \"subject\": \"fuwa\",\n      \"predicate\": \"HOOK_OPENED\",\n      \"object\": \"野呂\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"遠縁の野呂という男をここに寝泊りさせるから\"\n    }\n  ]\n}",
+      "parse_error": null,
+      "prompt_eval_count": 1583,
+      "eval_count": 512,
+      "format_mode": "json_schema"
+    },
+    {
+      "scene_id": "001798_056779:s2",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": \"翌朝、十一時頃まで朝寝して、起き出した時には\",\n    \"elapsed_hint\": \"それから二三日経った正午頃\",\n    \"evidence\": \"explicit\"\n  },\n  \"location\": {\n    \"surface\": \"板の間\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"noro\",\n      \"basis\": \"野呂君\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"boku\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"僕もむっとして言い返しました。\"\n    },\n    {\n      \"character_id\": \"noro\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"バカじゃなかろうかというような眼付で、野呂は僕を見た。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"野呂がやって来た\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"野呂がやって来たのは、それから二三日経った正午頃でした。\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"不快\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"少々僕もむっとして言い返しました。\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"困惑\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"野呂は眉をひそめました。「十日？」野呂は眉をひそめました。\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"STATE_CHANGED\",\n      \"object\": \"挑発的\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"そして野呂はじろじろと僕を上から下まで眺め廻して、急に言葉がぞんざいになりました。\"\n    }\n  ]\n}",
+      "parse_error": null,
+      "prompt_eval_count": 1653,
+      "eval_count": 554,
+      "format_mode": "json_schema"
+    },
+    {
+      "scene_id": "001798_056779:s3",
+      "raw_content": "{\n  \"time\": {\n    \"relative_order\": \"continuous\",\n    \"explicit_time\": null,\n    \"elapsed_hint\": null,\n    \"evidence\": \"inferred\"\n  },\n  \"location\": {\n    \"surface\": \"この家\"\n  },\n  \"present_characters\": [\n    {\n      \"id\": \"boku\",\n      \"basis\": \"僕\"\n    },\n    {\n      \"id\": \"noro\",\n      \"basis\": \"野呂\"\n    }\n  ],\n  \"character_states\": [\n    {\n      \"character_id\": \"boku\",\n      \"values_6d\": [0, 0, 0, -1, 1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"僕は僕の部屋にかけこんで、領収証と契約書を急いで取出し、引返して野呂の前につきつけてやりました。\"\n    },\n    {\n      \"character_id\": \"noro\",\n      \"values_6d\": [0, 0, 0, 1, -1, 0],\n      \"evidence\": \"inferred\",\n      \"basis\": \"彼はがっくりと板の間に腰をおろし、嘆息するように言いました。\"\n    }\n  ],\n  \"fact_updates\": [\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LEARNED\",\n      \"object\": \"野呂が家を買い受けた\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"「買い受けただって？」\"\n    },\n    {\n      \"subject\": \"boku\",\n      \"predicate\": \"LOST\",\n      \"object\": \"家\",\n      \"evidence\": \"inferred\",\n      \"basis\": \"「早く荷物をまとめて出て行って呉れ」\"\n    },\n    {\n      \"subject\": \"noro\",\n      \"predicate\": \"ACQUIRED\",\n      \"object\": \"家\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"「この家は僕のものだよ。不破氏から僕が買い受けたんだ」\"\n    },\n    {\n      \"subject\": null,\n      \"predicate\": \"HOOK_OPENED\",\n      \"object\": \"不破数馬氏との誤解\",\n      \"evidence\": \"explicit\",\n      \"basis\": \"「何か誤解がある。まるでこの世には誤解が充ち満ちているようだ」\"\n    }\n  ]\n}",
+      "parse_error": null,
+      "prompt_eval_count": 1348,
+      "eval_count": 536,
+      "format_mode": "json_schema"
+    }
+  ]
+}

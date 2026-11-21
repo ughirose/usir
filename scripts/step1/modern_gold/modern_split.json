@@ -1,0 +1,87 @@
+{
+  "split_version": "modern_gold_draft_v1",
+  "created_at": "2026-11-20",
+  "status": "draft_pending_orion_freeze",
+  "source_gold_dir": "scripts/step1/modern_gold",
+  "gold_json_sha256": "22e64a6975c70c71e8f34c1dc0de325a38fe11267189ec2ea4c85f601a6df31d",
+  "split_policy": "Draft split containing all 3 postwar modern-Japanese excerpts under 'dev' for loader and nishiki segment verification prior to Orion review & freeze.",
+  "dev": {
+    "work_ids": [
+      "001798_056779",
+      "001875_059897",
+      "001801_001786"
+    ],
+    "summary": {
+      "works": 3,
+      "first_person_works": 1,
+      "third_person_works": 2,
+      "attributed_utterances": 76,
+      "undetermined_utterances": 0,
+      "not_speech_utterances": 1,
+      "total_outer_quotes": 77,
+      "politeness_attributed": {
+        "polite": 17,
+        "plain": 30,
+        "ambiguous": 29
+      },
+      "per_work": [
+        {
+          "work_id": "001798_056779",
+          "author": "梅崎春生",
+          "title": "ボロ家の春秋",
+          "narration": "first",
+          "total_quotes": 25,
+          "attributed": 24,
+          "undetermined": 0,
+          "not_speech": 1,
+          "politeness_attributed": {
+            "polite": 5,
+            "plain": 12,
+            "ambiguous": 7
+          }
+        },
+        {
+          "work_id": "001875_059897",
+          "author": "壺井栄",
+          "title": "雑居家族",
+          "narration": "third",
+          "total_quotes": 28,
+          "attributed": 28,
+          "undetermined": 0,
+          "not_speech": 0,
+          "politeness_attributed": {
+            "polite": 4,
+            "plain": 15,
+            "ambiguous": 9
+          }
+        },
+        {
+          "work_id": "001801_001786",
+          "author": "山川方夫",
+          "title": "他人の夏",
+          "narration": "third",
+          "total_quotes": 24,
+          "attributed": 24,
+          "undetermined": 0,
+          "not_speech": 0,
+          "politeness_attributed": {
+            "polite": 8,
+            "plain": 3,
+            "ambiguous": 13
+          }
+        }
+      ]
+    }
+  },
+  "holdout": {
+    "sealed": true,
+    "work_ids": [],
+    "summary": {
+      "works": 0,
+      "attributed_utterances": 0,
+      "undetermined_utterances": 0,
+      "not_speech_utterances": 0,
+      "total_outer_quotes": 0
+    }
+  }
+}

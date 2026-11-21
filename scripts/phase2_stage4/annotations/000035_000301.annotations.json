@@ -1,0 +1,677 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000035_000301:s0",
+      "scene_hash": "3420dd57e26a637961222eae99844c0924870fca9e803638762a02a51b21383d",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+      "work_id": "000035_000301",
+      "scene_index": 0,
+      "scene_count": 7,
+      "char_len": 986,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "ambiguous"
+      },
+      "location_id": "下宿",
+      "present_character_ids": [
+        "yozo"
+      ],
+      "pov_character": "yozo"
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": null,
+        "addressee_id": null,
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": null,
+        "addressee_id": null,
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "yozo",
+        "values_6d": [
+          0,
+          -1,
+          -1,
+          -1,
+          1,
+          1
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 1,
+        "subject": "yozo",
+        "predicate": "STATE_CHANGED",
+        "object": "学業",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 1,
+        "subject": "yozo",
+        "predicate": "STATE_CHANGED",
+        "object": "身の上",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 3,
+        "subject": "yozo",
+        "predicate": "STATE_CHANGED",
+        "object": "直接の苦痛",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 8,
+        "subject": "yozo",
+        "predicate": "STATE_CHANGED",
+        "object": "病弱のからだ",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 9,
+        "subject": "yozo",
+        "predicate": "STATE_CHANGED",
+        "object": "感",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 10,
+        "subject": "yozo",
+        "predicate": "STATE_CHANGED",
+        "object": "死ぬ事",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000035_000301:s1",
+      "scene_hash": "834c904d9ee2346e61880fcf1571746af4f8f58909c28206e2340634cf0e9143",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+      "work_id": "000035_000301",
+      "scene_index": 1,
+      "scene_count": 7,
+      "char_len": 753,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "仙遊館",
+      "present_character_ids": [
+        "yozo",
+        "musume"
+      ],
+      "pov_character": "yozo"
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "musume",
+        "addressee_id": null,
+        "evidence": "explicit",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "yozo",
+        "addressee_id": "musume",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "musume",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "yozo",
+        "addressee_id": "musume",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": "musume",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 5,
+        "speaker_id": "yozo",
+        "addressee_id": "musume",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 6,
+        "speaker_id": "yozo",
+        "addressee_id": "musume",
+        "evidence": "explicit",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 7,
+        "speaker_id": "musume",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [],
+    "fact_updates": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000035_000301:s2",
+      "scene_hash": "6822e1256e8520671e252c6d3983f503435baa42c42ec8edbfa4eac287657b91",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+      "work_id": "000035_000301",
+      "scene_index": 2,
+      "scene_count": 7,
+      "char_len": 1207,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "ambiguous"
+      },
+      "location_id": "銀座の或る大カフエ",
+      "present_character_ids": [
+        "yozo",
+        "doshi"
+      ],
+      "pov_character": "yozo"
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": null,
+        "addressee_id": null,
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "doshi",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "yozo",
+        "addressee_id": "doshi",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": null,
+        "addressee_id": null,
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 4,
+        "speaker_id": null,
+        "addressee_id": null,
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "doshi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 7,
+        "subject": "yozo",
+        "predicate": "HOOK_OPENED",
+        "object": "心配やら、空おそろしさ",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000035_000301:s3",
+      "scene_hash": "246fc00a5a978076c8c9bb497bdbe0937a2d39e6ddbcfbd32896036571300257",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+      "work_id": "000035_000301",
+      "scene_index": 3,
+      "scene_count": 7,
+      "char_len": 832,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "秋の、寒い夜"
+      },
+      "location_id": "銀座裏の、或る屋台のお鮨や",
+      "present_character_ids": [
+        "yozo",
+        "tsuneko"
+      ],
+      "pov_character": "yozo"
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "yozo",
+        "addressee_id": "tsuneko",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "tsuneko",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "polite",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "tsuneko",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "tsuneko",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "tsuneko",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 3,
+        "subject": "yozo",
+        "predicate": "STATE_CHANGED",
+        "object": "心配が要らない",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 10,
+        "subject": "yozo",
+        "predicate": "HOOK_OPENED",
+        "object": "ツネ子の名前",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 11,
+        "subject": "yozo",
+        "predicate": "HOOK_OPENED",
+        "object": "鮨やの親爺の顔",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000035_000301:s4",
+      "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+      "work_id": "000035_000301",
+      "scene_index": 4,
+      "scene_count": 7,
+      "char_len": 767,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": "本所の大工さんの二階",
+      "present_character_ids": [
+        "yozo",
+        "doshi"
+      ],
+      "pov_character": "yozo"
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": null,
+        "addressee_id": null,
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": null,
+        "addressee_id": null,
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "yozo",
+        "values_6d": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "doshi",
+        "values_6d": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": []
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000035_000301:s5",
+      "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+      "work_id": "000035_000301",
+      "scene_index": 5,
+      "scene_count": 7,
+      "char_len": 646,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "ambiguous"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yozo",
+        "tsuneko"
+      ],
+      "pov_character": "yozo"
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "yozo",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "ぼく"
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": null,
+        "addressee_id": null,
+        "evidence": "ambiguous",
+        "register": {
+          "politeness": "unknown",
+          "first_person": "ぼく"
+        }
+      }
+    ],
+    "character_states": [],
+    "fact_updates": [
+      {
+        "sentence_index": 2,
+        "subject": "yozo",
+        "predicate": "STATE_CHANGED",
+        "object": "状態",
+        "evidence": "inferred"
+      },
+      {
+        "sentence_index": 8,
+        "subject": "yozo",
+        "predicate": "HOOK_OPENED",
+        "object": "金の切れめが縁の切れめ",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "000035_000301:s6",
+      "scene_hash": "c29aa59163372bd54d3f7f0af925d04810330aadbd386bcb6df72ad3d000a806",
+      "ledger_hash": "gold-roster:35e9364d63a60098",
+      "model_id": "qwen2.5:14b",
+      "prompt_hash": "utt:dfeb6de4ec57c881+scene:99f566710028cc38",
+      "work_id": "000035_000301",
+      "scene_index": 6,
+      "scene_count": 7,
+      "char_len": 638,
+      "seed": 42
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "elapsed_hint": "ひとつき"
+      },
+      "location_id": "神田の屋台",
+      "present_character_ids": [
+        "yozo",
+        "horiki"
+      ],
+      "pov_character": "yozo"
+    },
+    "utterances": [
+      {
+        "utterance_index": 0,
+        "speaker_id": "yozo",
+        "addressee_id": "horiki",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 1,
+        "speaker_id": "horiki",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 2,
+        "speaker_id": "yozo",
+        "addressee_id": "horiki",
+        "evidence": "inferred",
+        "register": {
+          "politeness": "unknown",
+          "first_person": null
+        }
+      },
+      {
+        "utterance_index": 3,
+        "speaker_id": "horiki",
+        "addressee_id": null,
+        "evidence": "inferred",
+        "register": {
+          "politeness": "plain",
+          "first_person": null
+        }
+      }
+    ],
+    "character_states": [
+      {
+        "character_id": "horiki",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "ambiguous"
+      }
+    ],
+    "fact_updates": [
+      {
+        "sentence_index": 2,
+        "subject": "yozo",
+        "predicate": "MOVED_TO",
+        "object": "神田の屋台",
+        "evidence": "explicit"
+      },
+      {
+        "sentence_index": 3,
+        "subject": "yozo",
+        "predicate": "ACQUIRED",
+        "object": "酔い",
+        "evidence": "inferred"
+      }
+    ]
+  }
+]

@@ -1,0 +1,723 @@
+{
+ "annotations_dir": "scripts\\phase2_stage2\\annotations_rerun",
+ "missing_scenes": [
+  "000035_000301:s0",
+  "000035_000301:s1",
+  "000035_000301:s2",
+  "000035_000301:s3",
+  "000035_000301:s4",
+  "000035_000301:s5",
+  "000035_000301:s6",
+  "001383_056643:s0",
+  "001383_056643:s1",
+  "001383_056643:s2",
+  "001383_056643:s3",
+  "001383_056643:s4",
+  "001383_056643:s5",
+  "000050_003586:s0",
+  "000050_003586:s1",
+  "000050_003586:s2",
+  "000050_003586:s3",
+  "000050_003586:s4",
+  "000081_000456:s0",
+  "000081_000456:s1",
+  "000081_000456:s2",
+  "000081_000456:s3",
+  "000081_000456:s4",
+  "000081_000456:s5"
+ ],
+ "modern_11": {
+  "scenes": 11,
+  "present": {
+   "tp": 24,
+   "fp": 0,
+   "fn": 3,
+   "precision": 1.0,
+   "recall": 0.8888888888888888,
+   "f1": 0.9411764705882353
+  },
+  "present_mechanical_baseline": {
+   "tp": 23,
+   "fp": 1,
+   "fn": 4,
+   "precision": 0.9583333333333334,
+   "recall": 0.8518518518518519,
+   "f1": 0.9019607843137256
+  },
+  "time_relative_order": {
+   "match": 11,
+   "n": 11,
+   "rate": 1.0
+  },
+  "time_explicit": {
+   "match": 8,
+   "n": 11,
+   "rate": 0.7272727272727273
+  },
+  "location": {
+   "match": 9,
+   "n": 11,
+   "rate": 0.8181818181818182
+  },
+  "fact_updates_pred_obj": {
+   "tp": 4,
+   "fp": 26,
+   "fn": 22,
+   "precision": 0.13333333333333333,
+   "recall": 0.15384615384615385,
+   "f1": 0.14285714285714288
+  },
+  "fact_updates_strict_subject": {
+   "tp": 4,
+   "fp": 26,
+   "fn": 22,
+   "precision": 0.13333333333333333,
+   "recall": 0.15384615384615385,
+   "f1": 0.14285714285714288
+  },
+  "fact_pred_predicate_counts": {
+   "MOVED_TO": 3,
+   "ACQUIRED": 10,
+   "STATE_CHANGED": 6,
+   "HOOK_OPENED": 3,
+   "LEARNED": 8
+  },
+  "states_character_set": {
+   "tp": 15,
+   "fp": 1,
+   "fn": 9,
+   "precision": 0.9375,
+   "recall": 0.625,
+   "f1": 0.75
+  },
+  "values_6d": {
+   "matched_character_scenes": 15,
+   "vector_exact": {
+    "match": 0,
+    "n": 15,
+    "rate": 0.0
+   },
+   "axis_exact": {
+    "match": 62,
+    "n": 90,
+    "rate": 0.6888888888888889
+   },
+   "polarity_both_nonzero": {
+    "match": 2,
+    "n": 6,
+    "rate": 0.3333333333333333
+   },
+   "gold_nonzero_axes_same_sign": {
+    "match": 2,
+    "n": 18,
+    "rate": 0.1111111111111111
+   },
+   "all_zero_baseline": {
+    "gold_characters": 24,
+    "vector_exact_rate": 0.0,
+    "axis_exact_rate": 0.7986111111111112
+   }
+  },
+  "per_scene": [
+   {
+    "scene_id": "001798_056779:s0",
+    "present_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "present_pred": [
+     "boku",
+     "fuwa"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 1,
+    "facts_pred": 9,
+    "states_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "states_pred": [
+     "boku",
+     "fuwa"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s1",
+    "present_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "present_pred": [
+     "boku",
+     "fuwa"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "states_pred": [
+     "boku",
+     "fuwa"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s2",
+    "present_gold": [
+     "boku",
+     "noro"
+    ],
+    "present_pred": [
+     "boku",
+     "noro"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "boku",
+     "noro"
+    ],
+    "states_pred": [
+     "boku",
+     "noro"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s3",
+    "present_gold": [
+     "boku",
+     "noro"
+    ],
+    "present_pred": [
+     "boku",
+     "noro"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "boku",
+     "noro"
+    ],
+    "states_pred": [
+     "boku",
+     "noro"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s0",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 4,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "onna",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s1",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 2,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s2",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 1,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": []
+   },
+   {
+    "scene_id": "001875_059897:s0",
+    "present_gold": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "heiroku",
+     "yasue"
+    ],
+    "states_pred": [
+     "heiroku",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s1",
+    "present_gold": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ],
+    "present_pred": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 2,
+    "states_gold": [
+     "bunkichi",
+     "heiroku",
+     "yasue"
+    ],
+    "states_pred": [
+     "bunkichi",
+     "heiroku",
+     "otoe"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s2",
+    "present_gold": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 0,
+    "states_gold": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "states_pred": []
+   },
+   {
+    "scene_id": "001875_059897:s3",
+    "present_gold": [
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 1,
+    "states_gold": [
+     "susumu",
+     "yasue"
+    ],
+    "states_pred": []
+   }
+  ]
+ },
+ "all": {
+  "scenes": 11,
+  "present": {
+   "tp": 24,
+   "fp": 0,
+   "fn": 3,
+   "precision": 1.0,
+   "recall": 0.8888888888888888,
+   "f1": 0.9411764705882353
+  },
+  "present_mechanical_baseline": {
+   "tp": 23,
+   "fp": 1,
+   "fn": 4,
+   "precision": 0.9583333333333334,
+   "recall": 0.8518518518518519,
+   "f1": 0.9019607843137256
+  },
+  "time_relative_order": {
+   "match": 11,
+   "n": 11,
+   "rate": 1.0
+  },
+  "time_explicit": {
+   "match": 8,
+   "n": 11,
+   "rate": 0.7272727272727273
+  },
+  "location": {
+   "match": 9,
+   "n": 11,
+   "rate": 0.8181818181818182
+  },
+  "fact_updates_pred_obj": {
+   "tp": 4,
+   "fp": 26,
+   "fn": 22,
+   "precision": 0.13333333333333333,
+   "recall": 0.15384615384615385,
+   "f1": 0.14285714285714288
+  },
+  "fact_updates_strict_subject": {
+   "tp": 4,
+   "fp": 26,
+   "fn": 22,
+   "precision": 0.13333333333333333,
+   "recall": 0.15384615384615385,
+   "f1": 0.14285714285714288
+  },
+  "fact_pred_predicate_counts": {
+   "MOVED_TO": 3,
+   "ACQUIRED": 10,
+   "STATE_CHANGED": 6,
+   "HOOK_OPENED": 3,
+   "LEARNED": 8
+  },
+  "states_character_set": {
+   "tp": 15,
+   "fp": 1,
+   "fn": 9,
+   "precision": 0.9375,
+   "recall": 0.625,
+   "f1": 0.75
+  },
+  "values_6d": {
+   "matched_character_scenes": 15,
+   "vector_exact": {
+    "match": 0,
+    "n": 15,
+    "rate": 0.0
+   },
+   "axis_exact": {
+    "match": 62,
+    "n": 90,
+    "rate": 0.6888888888888889
+   },
+   "polarity_both_nonzero": {
+    "match": 2,
+    "n": 6,
+    "rate": 0.3333333333333333
+   },
+   "gold_nonzero_axes_same_sign": {
+    "match": 2,
+    "n": 18,
+    "rate": 0.1111111111111111
+   },
+   "all_zero_baseline": {
+    "gold_characters": 24,
+    "vector_exact_rate": 0.0,
+    "axis_exact_rate": 0.7986111111111112
+   }
+  },
+  "per_scene": [
+   {
+    "scene_id": "001798_056779:s0",
+    "present_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "present_pred": [
+     "boku",
+     "fuwa"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 1,
+    "facts_pred": 9,
+    "states_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "states_pred": [
+     "boku",
+     "fuwa"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s1",
+    "present_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "present_pred": [
+     "boku",
+     "fuwa"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "boku",
+     "fuwa"
+    ],
+    "states_pred": [
+     "boku",
+     "fuwa"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s2",
+    "present_gold": [
+     "boku",
+     "noro"
+    ],
+    "present_pred": [
+     "boku",
+     "noro"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 3,
+    "states_gold": [
+     "boku",
+     "noro"
+    ],
+    "states_pred": [
+     "boku",
+     "noro"
+    ]
+   },
+   {
+    "scene_id": "001798_056779:s3",
+    "present_gold": [
+     "boku",
+     "noro"
+    ],
+    "present_pred": [
+     "boku",
+     "noro"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 2,
+    "states_gold": [
+     "boku",
+     "noro"
+    ],
+    "states_pred": [
+     "boku",
+     "noro"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s0",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 4,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "onna",
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s1",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 2,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": [
+     "shinichi"
+    ]
+   },
+   {
+    "scene_id": "001801_001786:s2",
+    "present_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "present_pred": [
+     "onna",
+     "shinichi"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 1,
+    "states_gold": [
+     "onna",
+     "shinichi"
+    ],
+    "states_pred": []
+   },
+   {
+    "scene_id": "001875_059897:s0",
+    "present_gold": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "heiroku",
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "unknown",
+    "order_pred": "unknown",
+    "facts_gold": 2,
+    "facts_pred": 3,
+    "states_gold": [
+     "heiroku",
+     "yasue"
+    ],
+    "states_pred": [
+     "heiroku",
+     "yasue"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s1",
+    "present_gold": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ],
+    "present_pred": [
+     "bunkichi",
+     "heiroku",
+     "otoe",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 2,
+    "states_gold": [
+     "bunkichi",
+     "heiroku",
+     "yasue"
+    ],
+    "states_pred": [
+     "bunkichi",
+     "heiroku",
+     "otoe"
+    ]
+   },
+   {
+    "scene_id": "001875_059897:s2",
+    "present_gold": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 3,
+    "facts_pred": 0,
+    "states_gold": [
+     "otoe",
+     "susumu",
+     "yasue"
+    ],
+    "states_pred": []
+   },
+   {
+    "scene_id": "001875_059897:s3",
+    "present_gold": [
+     "susumu",
+     "yasue"
+    ],
+    "present_pred": [
+     "yasue"
+    ],
+    "order_gold": "continuous",
+    "order_pred": "continuous",
+    "facts_gold": 2,
+    "facts_pred": 1,
+    "states_gold": [
+     "susumu",
+     "yasue"
+    ],
+    "states_pred": []
+   }
+  ]
+ }
+}
