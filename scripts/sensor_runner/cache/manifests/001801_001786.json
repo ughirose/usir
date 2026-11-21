@@ -1,0 +1,37 @@
+{
+ "cached_count": 3,
+ "instruction_version": "strong.v1",
+ "scene_count": 3,
+ "scenes": [
+  {
+   "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+   "char_len": 766,
+   "index": 0,
+   "provenance": "seed:hybrid-full-run@6043212",
+   "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+   "scene_id": "001801_001786:s0",
+   "status": "cached"
+  },
+  {
+   "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+   "char_len": 818,
+   "index": 1,
+   "provenance": "seed:hybrid-full-run@6043212",
+   "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+   "scene_id": "001801_001786:s1",
+   "status": "cached"
+  },
+  {
+   "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+   "char_len": 215,
+   "index": 2,
+   "provenance": "seed:hybrid-full-run@6043212",
+   "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+   "scene_id": "001801_001786:s2",
+   "status": "cached"
+  }
+ ],
+ "schema": "sensor.manifest/1",
+ "splitter_version": "usir_v5_splitter@1",
+ "work_id": "001801_001786"
+}

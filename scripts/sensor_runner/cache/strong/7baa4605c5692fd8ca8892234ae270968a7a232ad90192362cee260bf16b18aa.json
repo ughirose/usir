@@ -1,0 +1,105 @@
+{
+ "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "弱虫は、幸福をさえおそれるものです",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "金の切れめが縁の切れめ、ってのはね、あれはね、解釈が逆なんだ",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "れいのお道化の煙幕を張りめぐらすのでした",
+   "code": "E08"
+  },
+  {
+   "basis": "顔も洗わずに素早く引上げたのですが",
+   "code": "E14"
+  },
+  {
+   "basis": "ツネ子を噴き出させたような記憶があります",
+   "code": "E03"
+  }
+ ],
+ "facts": [
+  {
+   "basis": null,
+   "category": "unclassified",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "yozo",
+   "target": null,
+   "text": "解放された夜からもとのお道化者に戻った"
+  },
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "ツネ子の部屋から引上げた",
+   "predicate": "MOVED_TO",
+   "subject": "yozo"
+  },
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "『金の切れめが縁の切れめ』の放言が後でひっかかりを生じる",
+   "predicate": "HOOK_OPENED",
+   "subject": null
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "れいのお道化の煙幕を張りめぐらすのでした",
+   "code": "M05"
+  },
+  {
+   "basis": "解放せられた夜でした",
+   "code": "M10"
+  },
+  {
+   "basis": "傷つけられないうちに、早く、このまま、わかれたいとあせり",
+   "code": "M03"
+  }
+ ],
+ "pov_character": "yozo",
+ "present": [
+  {
+   "basis": null,
+   "id": "yozo"
+  },
+  {
+   "basis": null,
+   "id": "tsuneko"
+  }
+ ],
+ "provenance": "seed:hybrid-full-run@6043212",
+ "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "朝",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 4,
+     "basis": null,
+     "delta": -1
+    }
+   ],
+   "character_id": "yozo",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "tsuneko",
+   "evidence": "inferred"
+  }
+ ]
+}

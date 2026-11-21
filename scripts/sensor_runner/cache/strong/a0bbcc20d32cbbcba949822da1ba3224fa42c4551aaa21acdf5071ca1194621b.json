@@ -1,0 +1,124 @@
+{
+ "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "仙吉は滅茶々々にされて崩れ出しそうな顔の輪廓を奇態に歪めながらひい／＼と泣いて居た",
+  "F_valence": -1,
+  "f_arousal": 1,
+  "f_basis": "芝居の子役か雛妓の手のようなきゃしゃな青白い指先が狡猾に働いて",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "素早く仙吉の締めて居る薄穢い浅黄の唐縮緬の兵児帯を解いて後手に縛り上げた上",
+   "code": "E05"
+  },
+  {
+   "basis": "私はこれ迄出会ったことのない一種不思議な快感に襲われた",
+   "code": "E07"
+  },
+  {
+   "basis": "貴様は罪人だから額に入墨をしてやる",
+   "code": "E13"
+  }
+ ],
+ "facts": [
+  {
+   "basis": null,
+   "category": "unclassified",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "senkichi",
+   "target": null,
+   "text": "縛られ額に炭をこすりつけられて顔が崩れる"
+  },
+  {
+   "basis": null,
+   "category": "unclassified",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "hagiwara",
+   "target": null,
+   "text": "不思議な快感に襲われた"
+  },
+  {
+   "basis": null,
+   "category": "unclassified",
+   "evidence": "inferred",
+   "predicate": "STATE_CHANGED",
+   "subject": "hagiwara",
+   "target": null,
+   "text": "明日学校で意趣返しされる恐れ"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "芝居の子役か雛妓の手のようなきゃしゃな青白い指先が狡猾に働いて",
+   "code": "M06"
+  },
+  {
+   "basis": "ゴムのように面白く伸びたり縮んだりした",
+   "code": "M05"
+  },
+  {
+   "basis": "化け物のような目鼻をして居る",
+   "code": "M07"
+  }
+ ],
+ "pov_character": "hagiwara",
+ "present": [
+  {
+   "basis": null,
+   "id": "hagiwara"
+  },
+  {
+   "basis": null,
+   "id": "shinichi"
+  },
+  {
+   "basis": null,
+   "id": "senkichi"
+  }
+ ],
+ "provenance": "seed:hybrid-full-run@6043212",
+ "scene_hash": "a0bbcc20d32cbbcba949822da1ba3224fa42c4551aaa21acdf5071ca1194621b",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "unknown"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "shinichi",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [
+    {
+     "axis": 5,
+     "basis": null,
+     "delta": -1
+    }
+   ],
+   "character_id": "senkichi",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [
+    {
+     "axis": 4,
+     "basis": null,
+     "delta": 1
+    }
+   ],
+   "character_id": "hagiwara",
+   "evidence": "inferred"
+  }
+ ]
+}
