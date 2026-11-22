@@ -1,0 +1,104 @@
+{
+ "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "声は苦しげで、笑い声もうまく続かなかった",
+  "F_valence": -1,
+  "f_arousal": -1,
+  "f_basis": "黒い海にはきらきらと夜光虫が淡い緑いろの光の呼吸をしている",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "まちがいなく若い女がひとり、深夜の海を泳いでいるのだった",
+   "code": "E01"
+  },
+  {
+   "basis": "大丈夫ですか？",
+   "code": "E03"
+  },
+  {
+   "basis": "彼は、その顔をおぼえていた",
+   "code": "E07"
+  }
+ ],
+ "facts": [
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "沖",
+   "predicate": "MOVED_TO",
+   "subject": "shinichi"
+  },
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "泳いでいる女は昼にスポーツ・カーで来た女",
+   "predicate": "LEARNED",
+   "subject": "shinichi"
+  },
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "女のそば",
+   "predicate": "MOVED_TO",
+   "subject": "shinichi"
+  },
+  {
+   "basis": null,
+   "evidence": "inferred",
+   "object": "女が深夜の海を泳ぐ理由",
+   "predicate": "HOOK_OPENED",
+   "subject": null
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "海",
+ "mood_top3": [
+  {
+   "basis": "黒い海にはきらきらと夜光虫が淡い緑いろの光の呼吸をしている",
+   "code": "M01"
+  },
+  {
+   "basis": "夜光虫は、泳ぐ彼の全身に瞬きながらもつれ、まつわりつき",
+   "code": "M07"
+  },
+  {
+   "basis": "ひとりごとのようにいった",
+   "code": "M11"
+  }
+ ],
+ "pov_character": "shinichi",
+ "present": [
+  {
+   "basis": null,
+   "id": "shinichi"
+  },
+  {
+   "basis": null,
+   "id": "onna"
+  }
+ ],
+ "provenance": "seed:hybrid-full-run@6043212",
+ "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "深夜",
+  "relative_order": "unknown"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "shinichi",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "onna",
+   "evidence": "inferred"
+  }
+ ]
+}

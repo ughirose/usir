@@ -1,0 +1,104 @@
+{
+ "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "二人は一度にはねあがってドアを飛び出して改札口へかけて行きました",
+  "F_valence": 1,
+  "f_arousal": -1,
+  "f_basis": "二人は、停車場の前の、水晶細工のように見える銀杏の木に囲まれた、小さな広場に出ました",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "二人は一度にはねあがってドアを飛び出して改札口へかけて行きました",
+   "code": "E02"
+  },
+  {
+   "basis": "この砂はみんな水晶だ。中で小さな火が燃えている。",
+   "code": "E07"
+  },
+  {
+   "basis": "ぼくたちも降りて見ようか",
+   "code": "E03"
+  }
+ ],
+ "facts": [
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "白鳥停車場",
+   "predicate": "MOVED_TO",
+   "subject": "giovanni"
+  },
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "白鳥停車場",
+   "predicate": "MOVED_TO",
+   "subject": "campanella"
+  },
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "河原",
+   "predicate": "MOVED_TO",
+   "subject": "giovanni"
+  },
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "河原",
+   "predicate": "MOVED_TO",
+   "subject": "campanella"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "白鳥停車場",
+ "mood_top3": [
+  {
+   "basis": "さわやかな秋の時計の盤面には、青く灼かれたはがねの二本の針が、くっきり十一時を指しました",
+   "code": "M01"
+  },
+  {
+   "basis": "夢のように云っているのでした",
+   "code": "M13"
+  },
+  {
+   "basis": "駅長や赤帽らしい人の、影もなかったのです",
+   "code": "M11"
+  }
+ ],
+ "pov_character": "giovanni",
+ "present": [
+  {
+   "basis": null,
+   "id": "giovanni"
+  },
+  {
+   "basis": null,
+   "id": "campanella"
+  }
+ ],
+ "provenance": "seed:hybrid-full-run@6043212",
+ "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "十一時",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "giovanni",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "campanella",
+   "evidence": "inferred"
+  }
+ ]
+}

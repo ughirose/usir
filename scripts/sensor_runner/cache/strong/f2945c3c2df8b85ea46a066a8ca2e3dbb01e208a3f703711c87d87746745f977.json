@@ -1,0 +1,101 @@
+{
+ "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "掴まったらどんな事をされるかと、私は心から少し恐くなって",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "とう／＼狼は戸を喰い破ってお堂の中を四つ這いに這いながら",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "あたしが狼になるから、二人旅人にならないか",
+   "code": "E10"
+  },
+  {
+   "basis": "逃げ廻る二人の旅人を追い廻す",
+   "code": "E14"
+  },
+  {
+   "basis": "遂に喉笛を喰い切られて",
+   "code": "E05"
+  }
+ ],
+ "facts": [
+  {
+   "basis": null,
+   "category": "unclassified",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "senkichi",
+   "target": null,
+   "text": "縛られた痕が手首に赤く残る"
+  },
+  {
+   "basis": null,
+   "evidence": "explicit",
+   "object": "仙吉は泣く真似をしていた",
+   "predicate": "LEARNED",
+   "subject": "shinichi"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "物置小屋",
+ "mood_top3": [
+  {
+   "basis": "犬のような牛のような稀有な呻り声を立て",
+   "code": "M07"
+  },
+  {
+   "basis": "仙吉は泣く真似をして汚れた顔を筒袖で半分程拭き取ってしまって居る可笑しさに",
+   "code": "M05"
+  },
+  {
+   "basis": "私は心から少し恐くなってにや／＼不安な笑いを浮かべながら",
+   "code": "M03"
+  }
+ ],
+ "pov_character": "hagiwara",
+ "present": [
+  {
+   "basis": null,
+   "id": "hagiwara"
+  },
+  {
+   "basis": null,
+   "id": "shinichi"
+  },
+  {
+   "basis": null,
+   "id": "senkichi"
+  }
+ ],
+ "provenance": "seed:hybrid-full-run@6043212",
+ "scene_hash": "f2945c3c2df8b85ea46a066a8ca2e3dbb01e208a3f703711c87d87746745f977",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "暫くしてから",
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "shinichi",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "senkichi",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "hagiwara",
+   "evidence": "inferred"
+  }
+ ]
+}
