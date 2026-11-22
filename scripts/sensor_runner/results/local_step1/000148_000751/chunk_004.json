@@ -1,6 +1,14 @@
 {
- "chars": 1561,
+ "c2_retry": null,
+ "chars": 1560,
  "chunk": 4,
+ "chunk_narration_speakers": [
+  "rokusan",
+  "keisan"
+ ],
+ "context_chars": 0,
+ "context_scenes": [],
+ "context_source": "none",
  "ctx_warning": false,
  "final": [
   {
@@ -10,7 +18,7 @@
     "first_person": null,
     "politeness": "plain"
    },
-   "speaker_id": "rokusan",
+   "speaker_id": "keisan",
    "utterance_index": 0
   },
   {
@@ -20,17 +28,17 @@
     "first_person": null,
     "politeness": "plain"
    },
-   "speaker_id": "keisan",
+   "speaker_id": "rokusan",
    "utterance_index": 1
   },
   {
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
-   "speaker_id": "rokusan",
+   "speaker_id": "keisan",
    "utterance_index": 2
   },
   {
@@ -40,7 +48,7 @@
     "first_person": null,
     "politeness": "plain"
    },
-   "speaker_id": "keisan",
+   "speaker_id": "rokusan",
    "utterance_index": 3
   },
   {
@@ -57,7 +65,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -67,7 +75,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -77,7 +85,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -87,17 +95,17 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
-   "speaker_id": "rokusan",
+   "speaker_id": "keisan",
    "utterance_index": 8
   },
   {
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -107,7 +115,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -117,7 +125,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -127,7 +135,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -137,7 +145,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -157,7 +165,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -177,7 +185,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -187,7 +195,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -197,7 +205,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -207,7 +215,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -217,7 +225,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -227,7 +235,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -237,27 +245,27 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
-   "speaker_id": "rokusan",
+   "speaker_id": "keisan",
    "utterance_index": 23
   },
   {
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
-   "speaker_id": "keisan",
+   "speaker_id": "rokusan",
    "utterance_index": 24
   },
   {
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -267,7 +275,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -340,7 +348,7 @@
     "first_person": null,
     "politeness": "plain"
    },
-   "speaker_id": "keisan",
+   "speaker_id": "rokusan",
    "utterance_index": 33
   },
   {
@@ -357,7 +365,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -367,20 +375,7 @@
  "missing_predictions": 0,
  "parse_error": null,
  "pp_audit": {
-  "explicit_downgraded": [
-   {
-    "post_speaker_and_verb": false,
-    "pre_speaker_and_verb": false,
-    "speaker_id": "keisan",
-    "utterance_index": 32
-   },
-   {
-    "post_speaker_and_verb": false,
-    "pre_speaker_and_verb": false,
-    "speaker_id": "keisan",
-    "utterance_index": 35
-   }
-  ],
+  "explicit_downgraded": [],
   "inline_non_speech_forced": [],
   "work_id": "000148_000751#c4"
  },
@@ -396,36 +391,53 @@
    {
     "accepted": true,
     "addressee_id": null,
-    "after_speaker": "rokusan",
-    "before_speaker": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.237,
-    "eval_count": 52,
+    "elapsed_sec": 3.041,
+    "eval_count": 44,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 2395,
-    "reason": "直後のkeisanの発話と文脈から、rokusanが質問するのも自然。矛盾なし。",
+    "reason": "直後の地の文と矛盾せず、暫定話者の成立は問題ない",
     "rejected_reason": null,
     "utterance_index": 0
    },
    {
     "accepted": true,
     "addressee_id": null,
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.331,
+    "eval_count": 46,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2464,
+    "reason": "直前・直後の会話と矛盾せず、話者の変更も自然である。",
+    "rejected_reason": null,
+    "utterance_index": 1
+   },
+   {
+    "accepted": true,
+    "addressee_id": null,
     "after_speaker": "keisan",
     "before_speaker": "keisan",
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.382,
-    "eval_count": 48,
+    "elapsed_sec": 2.517,
+    "eval_count": 49,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2464,
-    "reason": "直前・直後の会話文脈と矛盾せず、話者の変更も自然である。",
+    "prompt_eval_count": 2636,
+    "reason": "直前・直後の会話と矛盾せず、話者の口調や内容も妥当である。",
     "rejected_reason": null,
-    "utterance_index": 1
+    "utterance_index": 2
    },
    {
     "accepted": true,
@@ -435,29 +447,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.392,
-    "eval_count": 45,
-    "format_mode": "json_schema",
-    "parse_error": null,
-    "prompt_eval_count": 2636,
-    "reason": "直前の文脈と直後の会話の流れに矛盾無く成立する。",
-    "rejected_reason": null,
-    "utterance_index": 2
-   },
-   {
-    "accepted": true,
-    "addressee_id": null,
-    "after_speaker": "keisan",
-    "before_speaker": "keisan",
-    "changed": false,
-    "context_window_warning": false,
-    "contradiction_found": false,
-    "elapsed_sec": 2.513,
-    "eval_count": 42,
+    "elapsed_sec": 2.996,
+    "eval_count": 55,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 2733,
-    "reason": "直前の会話と直後の会話とも矛盾なく成立する。",
+    "reason": "直前のkeisanの発話と直後の碌さんの発話と矛盾せず、会話の流れも自然である。",
     "rejected_reason": null,
     "utterance_index": 3
    },
@@ -469,12 +464,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.644,
-    "eval_count": 45,
+    "elapsed_sec": 2.735,
+    "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 2767,
-    "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+    "reason": "直前の会話の流れと矛盾せず、暫定話者が話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 4
    },
@@ -486,7 +481,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.969,
+    "elapsed_sec": 3.049,
     "eval_count": 51,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -503,12 +498,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.773,
+    "elapsed_sec": 2.81,
     "eval_count": 45,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2853,
-    "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+    "prompt_eval_count": 2852,
+    "reason": "直前直後の会話と矛盾せず、暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 6
    },
@@ -520,29 +515,29 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.763,
-    "eval_count": 44,
+    "elapsed_sec": 3.075,
+    "eval_count": 52,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 2898,
-    "reason": "直前の発話と直後の発話の流れに矛盾がない。",
+    "reason": "直前の発話と直後の発話の流れに矛盾がない。暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 7
    },
    {
     "accepted": true,
     "addressee_id": null,
-    "after_speaker": "rokusan",
-    "before_speaker": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.867,
-    "eval_count": 48,
+    "elapsed_sec": 2.724,
+    "eval_count": 43,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2860,
-    "reason": "直前・直後の会話文脈と矛盾せず、暫定話者として成立する。",
+    "prompt_eval_count": 2859,
+    "reason": "直前・直後の会話文脈と矛盾無く成立する。",
     "rejected_reason": null,
     "utterance_index": 8
    },
@@ -554,12 +549,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.703,
-    "eval_count": 43,
+    "elapsed_sec": 2.918,
+    "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2945,
-    "reason": "直前の発話と直後の会話の流れに矛盾がない。",
+    "prompt_eval_count": 2944,
+    "reason": "直前の会話の流れと矛盾せず、暫定話者が話すとして成立する。",
     "rejected_reason": null,
     "utterance_index": 9
    },
@@ -571,12 +566,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.706,
-    "eval_count": 45,
+    "elapsed_sec": 2.931,
+    "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2941,
-    "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+    "prompt_eval_count": 2940,
+    "reason": "直前の会話の流れと矛盾せず、暫定話者が話すとして成立する。",
     "rejected_reason": null,
     "utterance_index": 10
    },
@@ -588,12 +583,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.833,
-    "eval_count": 42,
+    "elapsed_sec": 3.14,
+    "eval_count": 50,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2929,
-    "reason": "直前の会話と直後の会話の流れに矛盾がない。",
+    "prompt_eval_count": 2928,
+    "reason": "直前の発話と直後の地の文と矛盾せず、会話の流れも自然である。",
     "rejected_reason": null,
     "utterance_index": 11
    },
@@ -605,12 +600,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.857,
-    "eval_count": 47,
+    "elapsed_sec": 3.13,
+    "eval_count": 53,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2932,
-    "reason": "直前の会話の流れと矛盾せず、暫定話者が話者として成立する。",
+    "prompt_eval_count": 2931,
+    "reason": "直前のkeisanの発話と直後のkeisanの発話の流れに矛盾無く成立する。",
     "rejected_reason": null,
     "utterance_index": 12
    },
@@ -622,7 +617,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.919,
+    "elapsed_sec": 2.985,
     "eval_count": 45,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -639,11 +634,11 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.964,
+    "elapsed_sec": 3.035,
     "eval_count": 48,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2993,
+    "prompt_eval_count": 2995,
     "reason": "直前・直後の会話文脈と矛盾せず、暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 14
@@ -656,11 +651,11 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.069,
+    "elapsed_sec": 3.1,
     "eval_count": 48,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3074,
+    "prompt_eval_count": 3076,
     "reason": "直前・直後の会話文脈と矛盾せず、暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 15
@@ -673,12 +668,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.002,
+    "elapsed_sec": 3.096,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3065,
-    "reason": "直前直後の会話文脈と矛盾せず、暫定話者として成立する。",
+    "prompt_eval_count": 3067,
+    "reason": "直前の地の文と直後の地の文の流れに矛盾無く成立する。",
     "rejected_reason": null,
     "utterance_index": 16
    },
@@ -690,11 +685,11 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.087,
+    "elapsed_sec": 3.151,
     "eval_count": 48,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3227,
+    "prompt_eval_count": 3229,
     "reason": "直前・直後の会話文脈と矛盾せず、暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 17
@@ -707,12 +702,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.864,
-    "eval_count": 40,
+    "elapsed_sec": 3.127,
+    "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3216,
-    "reason": "直前直後の会話と矛盾無く成立する。",
+    "prompt_eval_count": 3217,
+    "reason": "直前直後の会話文脈と矛盾せず、暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 18
    },
@@ -724,12 +719,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.114,
-    "eval_count": 48,
+    "elapsed_sec": 3.21,
+    "eval_count": 49,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3195,
-    "reason": "直前直後の会話文脈と矛盾せず、話者の一貫性を保つ。",
+    "prompt_eval_count": 3197,
+    "reason": "直前直後の会話文脈と矛盾せず、話者の一貫性も保たれる。",
     "rejected_reason": null,
     "utterance_index": 19
    },
@@ -741,12 +736,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.115,
+    "elapsed_sec": 3.287,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 3232,
-    "reason": "直前直後の会話と矛盾せず、話者の語りが自然に続いている。",
+    "reason": "直前・直後の会話と矛盾せず、話者の一貫性を保つ。",
     "rejected_reason": null,
     "utterance_index": 20
    },
@@ -758,11 +753,11 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.095,
+    "elapsed_sec": 3.182,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3210,
+    "prompt_eval_count": 3214,
     "reason": "直前直後の会話文脈と矛盾せず、暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 21
@@ -775,31 +770,14 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.11,
-    "eval_count": 47,
+    "elapsed_sec": 3.225,
+    "eval_count": 48,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3263,
-    "reason": "直前・直後の会話と矛盾せず、話者の一貫性を保つ。",
+    "prompt_eval_count": 3266,
+    "reason": "直前・直後の会話と矛盾せず、暫定話者の話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 22
-   },
-   {
-    "accepted": true,
-    "addressee_id": null,
-    "after_speaker": "rokusan",
-    "before_speaker": "rokusan",
-    "changed": false,
-    "context_window_warning": false,
-    "contradiction_found": false,
-    "elapsed_sec": 3.076,
-    "eval_count": 46,
-    "format_mode": "json_schema",
-    "parse_error": null,
-    "prompt_eval_count": 3229,
-    "reason": "直前・直後の会話と矛盾せず、暫定話者として成立する。",
-    "rejected_reason": null,
-    "utterance_index": 23
    },
    {
     "accepted": true,
@@ -809,12 +787,29 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.078,
-    "eval_count": 47,
+    "elapsed_sec": 3.02,
+    "eval_count": 41,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3221,
-    "reason": "直前・直後の会話と矛盾せず、話者の一貫性を保つ。",
+    "prompt_eval_count": 3233,
+    "reason": "直前・直後の会話と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 23
+   },
+   {
+    "accepted": true,
+    "addressee_id": null,
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.089,
+    "eval_count": 46,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3225,
+    "reason": "直前・直後の会話と矛盾せず、暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 24
    },
@@ -826,12 +821,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.102,
-    "eval_count": 45,
+    "elapsed_sec": 3.127,
+    "eval_count": 44,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3292,
-    "reason": "直前直後の会話と矛盾せず、暫定話者として成立する。",
+    "prompt_eval_count": 3296,
+    "reason": "直前・直後の会話と矛盾せず、文脈に問題なし。",
     "rejected_reason": null,
     "utterance_index": 25
    },
@@ -843,11 +838,11 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.389,
+    "elapsed_sec": 3.462,
     "eval_count": 52,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3333,
+    "prompt_eval_count": 3336,
     "reason": "直後の地の文で圭さんが背中を流す描写があり、話者の一貫性を確認できる。",
     "rejected_reason": null,
     "utterance_index": 26
@@ -860,12 +855,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.28,
-    "eval_count": 52,
+    "elapsed_sec": 3.203,
+    "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3262,
-    "reason": "直後の地の文で圭さんの動作が描写されているため、暫定話者が圭さんであると成立する。",
+    "prompt_eval_count": 3265,
+    "reason": "直後の地の文で圭さんが動作を描写されているため、話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 27
    },
@@ -877,12 +872,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.29,
-    "eval_count": 50,
+    "elapsed_sec": 3.254,
+    "eval_count": 46,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3364,
-    "reason": "直前・直後の会話と地の文と矛盾せず、暫定話者として成立する。",
+    "prompt_eval_count": 3367,
+    "reason": "直前・直後の文脈と矛盾せず、暫定話者の成立を確認。",
     "rejected_reason": null,
     "utterance_index": 28
    },
@@ -894,11 +889,11 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.188,
+    "elapsed_sec": 3.277,
     "eval_count": 50,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3170,
+    "prompt_eval_count": 3171,
     "reason": "直前の地の文と直後の地の文とも矛盾せず、会話の流れも自然である。",
     "rejected_reason": null,
     "utterance_index": 29
@@ -911,12 +906,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.147,
-    "eval_count": 52,
+    "elapsed_sec": 3.116,
+    "eval_count": 50,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3041,
-    "reason": "直前の発話と直後の地の文の流れと矛盾せず、暫定話者として成立する。",
+    "prompt_eval_count": 3044,
+    "reason": "直前の発話と直後の地の文と矛盾せず、会話の流れも自然である。",
     "rejected_reason": null,
     "utterance_index": 31
    },
@@ -928,12 +923,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.634,
-    "eval_count": 38,
+    "elapsed_sec": 2.934,
+    "eval_count": 45,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 3020,
-    "reason": "直後の地の文と矛盾なく成立する。",
+    "prompt_eval_count": 3023,
+    "reason": "直後の地の文で圭さんが波の中での発話と一致する。",
     "rejected_reason": null,
     "utterance_index": 32
    },
@@ -945,11 +940,11 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.867,
+    "elapsed_sec": 2.943,
     "eval_count": 50,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2742,
+    "prompt_eval_count": 2743,
     "reason": "直前の地の文と直後の地の文とも矛盾せず、会話の流れも自然である。",
     "rejected_reason": null,
     "utterance_index": 34
@@ -962,28 +957,31 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.612,
+    "elapsed_sec": 2.71,
     "eval_count": 46,
     "format_mode": "json_schema",
     "parse_error": null,
-    "prompt_eval_count": 2632,
-    "reason": "直前の会話と文脈に矛盾せず、圭さんが話していると成立する。",
+    "prompt_eval_count": 2633,
+    "reason": "直前の会話と文脈に矛盾せず、圭さんが話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 35
    }
   ],
-  "elapsed_sec": 99.641,
+  "elapsed_sec": 102.93,
   "enabled": true,
-  "eval_count": 1590,
+  "eval_count": 1620,
   "mode": "per_utterance",
   "model": "qwen2.5:14b",
-  "prompt_eval_count": 102088,
+  "prompt_eval_count": 102130,
   "rechecked_count": 34,
   "rejected_count": 0,
   "target_count": 34,
   "work_id": "000148_000751#c4"
  },
- "stage1_eval_tok": 1833,
+ "stage1_all_null_scenes": [],
+ "stage1_anomaly_scenes": [],
+ "stage1_attempts": 1,
+ "stage1_eval_tok": 1879,
  "stage1_parsed": [
   {
    "addressee_id": null,
@@ -992,7 +990,7 @@
     "first_person": null,
     "politeness": "plain"
    },
-   "speaker_id": "rokusan",
+   "speaker_id": "keisan",
    "utterance_index": 0
   },
   {
@@ -1002,17 +1000,17 @@
     "first_person": null,
     "politeness": "plain"
    },
-   "speaker_id": "keisan",
+   "speaker_id": "rokusan",
    "utterance_index": 1
   },
   {
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
-   "speaker_id": "rokusan",
+   "speaker_id": "keisan",
    "utterance_index": 2
   },
   {
@@ -1022,7 +1020,7 @@
     "first_person": null,
     "politeness": "plain"
    },
-   "speaker_id": "keisan",
+   "speaker_id": "rokusan",
    "utterance_index": 3
   },
   {
@@ -1039,7 +1037,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1049,7 +1047,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -1059,7 +1057,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1069,17 +1067,17 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
-   "speaker_id": "rokusan",
+   "speaker_id": "keisan",
    "utterance_index": 8
   },
   {
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1089,7 +1087,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -1099,7 +1097,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1109,7 +1107,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -1119,7 +1117,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1139,7 +1137,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1159,7 +1157,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1169,7 +1167,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -1179,7 +1177,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1189,7 +1187,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1199,7 +1197,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -1209,7 +1207,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1219,27 +1217,27 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
-   "speaker_id": "rokusan",
+   "speaker_id": "keisan",
    "utterance_index": 23
   },
   {
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
-   "speaker_id": "keisan",
+   "speaker_id": "rokusan",
    "utterance_index": 24
   },
   {
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
@@ -1249,7 +1247,7 @@
    "addressee_id": null,
    "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
@@ -1307,7 +1305,7 @@
   },
   {
    "addressee_id": null,
-   "evidence": "explicit",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
     "politeness": "plain"
@@ -1322,7 +1320,7 @@
     "first_person": null,
     "politeness": "plain"
    },
-   "speaker_id": "keisan",
+   "speaker_id": "rokusan",
    "utterance_index": 33
   },
   {
@@ -1337,15 +1335,16 @@
   },
   {
    "addressee_id": null,
-   "evidence": "explicit",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
+    "first_person": "僕",
     "politeness": "plain"
    },
    "speaker_id": "keisan",
    "utterance_index": 35
   }
  ],
- "stage1_prompt_tok": 4206,
- "wall_s": 169.2
+ "stage1_prompt_tok": 4207,
+ "stage1_s": 70.895,
+ "wall_s": 173.8
 }
