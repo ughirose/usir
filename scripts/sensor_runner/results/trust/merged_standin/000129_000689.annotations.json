@@ -1,0 +1,1297 @@
+[
+ {
+  "character_states": [
+   {
+    "character_id": "ubatake",
+    "evidence": "explicit",
+    "values_6d": [
+     -1,
+     1,
+     0,
+     1,
+     1,
+     -1
+    ]
+   },
+   {
+    "character_id": "sado",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     -1,
+     -1,
+     -1,
+     0,
+     1
+    ]
+   },
+   {
+    "character_id": "haha",
+    "evidence": "explicit",
+    "values_6d": [
+     -1,
+     1,
+     0,
+     1,
+     1,
+     -1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 480,
+   "ledger_hash": "ledger:b178a4097dba",
+   "model_id": "claude-code-session:claude-sonnet-5-5",
+   "prompt_hash": "strong:strong.v1:31875cee7bb60908",
+   "scene_count": 7,
+   "scene_hash": "2dbe1a8c6c101a1e7b4ac2f982491adc85fec324ef29faa27dedf08b87c807ae",
+   "scene_id": "000129_000689:s0",
+   "scene_index": 0,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000129_000689"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[situation] ubatake: 舟から海へ身を投げた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 5,
+    "subject": "ubatake"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[body_health] haha: 髪をつかまれ引き倒され、牽で巻かれて身動きできなくなった",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 10,
+    "subject": "haha"
+   },
+   {
+    "evidence": "explicit",
+    "object": "袿",
+    "predicate": "LOST",
+    "sentence_index": 7,
+    "subject": "haha"
+   },
+   {
+    "evidence": "explicit",
+    "object": "北",
+    "predicate": "MOVED_TO",
+    "sentence_index": 11,
+    "subject": "sado"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 2,
+    "f_event_valence": -2,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": "舟",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E06",
+      "rank_weight": 3
+     },
+     {
+      "code": "E05",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M04",
+      "rank_weight": 3
+     },
+     {
+      "code": "M09",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "ubatake",
+    "sado",
+    "haha"
+   ],
+   "time": {
+    "evidence": "ambiguous",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "sado",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "ubatake",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "sado",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "ubatake",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "ubatake",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "sado",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "haha",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "ubatake",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "ubatake",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "sado",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "sado",
+    "evidence": "inferred",
+    "register": {
+     "first_person": "わたくし",
+     "politeness": "polite"
+    },
+    "speaker_id": "haha",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "haha",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "sado",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "haha",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "sado",
+    "utterance_index": 7
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "anju",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "character_id": "zushio",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "character_id": "miyazaki",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     -1,
+     -1,
+     -1,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "yakkogashira",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     1,
+     -1,
+     0,
+     -1,
+     -1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 790,
+   "ledger_hash": "ledger:b178a4097dba",
+   "model_id": "claude-code-session:claude-sonnet-5-5",
+   "prompt_hash": "strong:strong.v1:31875cee7bb60908",
+   "scene_count": 7,
+   "scene_hash": "498040563d41c2b07ff9b332ff684b18d565aaaccbafe3190d64c3666667fe8e",
+   "scene_id": "000129_000689:s1",
+   "scene_index": 1,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000129_000689"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[relation_status] anju: 母と引き離された",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 3,
+    "subject": "anju"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[identity_form] anju: 山椒大夫方に七貫文で買われ奴婢の身となった",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 17,
+    "subject": "anju"
+   },
+   {
+    "evidence": "explicit",
+    "object": "銭",
+    "predicate": "ACQUIRED",
+    "sentence_index": 18,
+    "subject": "miyazaki"
+   },
+   {
+    "evidence": "explicit",
+    "object": "丹後の由良の港",
+    "predicate": "MOVED_TO",
+    "sentence_index": 14,
+    "subject": "miyazaki"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": -2,
+    "f_style_arousal": -1,
+    "f_style_valence": -1
+   },
+   "location_id": "丹後の由良の港",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E13",
+      "rank_weight": 3
+     },
+     {
+      "code": "E06",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M04",
+      "rank_weight": 3
+     },
+     {
+      "code": "M11",
+      "rank_weight": 2
+     },
+     {
+      "code": "M16",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "miyazaki",
+    "anju",
+    "zushio",
+    "yakkogashira"
+   ],
+   "time": {
+    "elapsed_hint": "こうして二人は幾日か舟に明かし暮らした",
+    "evidence": "explicit",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "miyazaki",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "miyazaki",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "miyazaki",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "miyazaki",
+    "utterance_index": 4
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "dayu",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     1,
+     -1,
+     -1,
+     -1,
+     1
+    ]
+   },
+   {
+    "character_id": "saburo",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     0,
+     -1,
+     -1,
+     0,
+     1
+    ]
+   },
+   {
+    "character_id": "jiro",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     1,
+     -1,
+     0,
+     -1,
+     0
+    ]
+   },
+   {
+    "character_id": "yakkogashira",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     1,
+     -1,
+     0,
+     -1,
+     -1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 756,
+   "ledger_hash": "ledger:b178a4097dba",
+   "model_id": "claude-code-session:claude-sonnet-5-5",
+   "prompt_hash": "strong:strong.v1:31875cee7bb60908",
+   "scene_count": 7,
+   "scene_hash": "96fae1b9405675688cbfa75e92432292d8173460fe2a19cf044f0df5631a8413",
+   "scene_id": "000129_000689:s2",
+   "scene_index": 2,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000129_000689"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[identity_form] anju: 大夫に垣衣という名を付けられた",
+    "predicate": "STATE_CHANGED",
+    "subject": "anju"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[identity_form] zushio: 大夫に萱草という名を付けられた",
+    "predicate": "STATE_CHANGED",
+    "subject": "zushio"
+   },
+   {
+    "evidence": "explicit",
+    "object": "長男太郎の失踪",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 3,
+    "subject": null
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": "大廈の奥深い広間",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E13",
+      "rank_weight": 3
+     },
+     {
+      "code": "E09",
+      "rank_weight": 2
+     },
+     {
+      "code": "E01",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M07",
+      "rank_weight": 3
+     },
+     {
+      "code": "M14",
+      "rank_weight": 2
+     },
+     {
+      "code": "M02",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "dayu",
+    "jiro",
+    "saburo",
+    "yakkogashira",
+    "anju",
+    "zushio"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "yakkogashira",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "dayu",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "dayu",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "saburo",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "dayu",
+    "evidence": "explicit",
+    "register": {
+     "first_person": "わたくし",
+     "politeness": "polite"
+    },
+    "speaker_id": "yakkogashira",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "dayu",
+    "utterance_index": 3
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "zushio",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "character_id": "anju",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     0,
+     -1
+    ]
+   },
+   {
+    "character_id": "saburo",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     -1,
+     -1,
+     -1,
+     0,
+     1
+    ]
+   },
+   {
+    "character_id": "yakkogashira",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     1,
+     -1,
+     0,
+     -1,
+     -1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 869,
+   "ledger_hash": "ledger:b178a4097dba",
+   "model_id": "claude-code-session:claude-sonnet-5-5",
+   "prompt_hash": "strong:strong.v1:31875cee7bb60908",
+   "scene_count": 7,
+   "scene_hash": "6aae1e7b907f3f8d7f2edc0c4927de69100d69f0a7294c0a6737b8fb543f8ba5",
+   "scene_id": "000129_000689:s3",
+   "scene_index": 3,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000129_000689"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "桶と杓",
+    "predicate": "ACQUIRED",
+    "sentence_index": 1,
+    "subject": "anju"
+   },
+   {
+    "evidence": "explicit",
+    "object": "籠と鎌",
+    "predicate": "ACQUIRED",
+    "sentence_index": 1,
+    "subject": "zushio"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[body_health] zushio: 柴刈りで指を傷めた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 22,
+    "subject": "zushio"
+   },
+   {
+    "evidence": "explicit",
+    "object": "由良が嶽の山",
+    "predicate": "MOVED_TO",
+    "sentence_index": 16,
+    "subject": "zushio"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": -1,
+    "f_style_arousal": -1,
+    "f_style_valence": -1
+   },
+   "location_id": "新参小屋",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E09",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M11",
+      "rank_weight": 3
+     },
+     {
+      "code": "M01",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "zushio",
+   "present_character_ids": [
+    "saburo",
+    "yakkogashira",
+    "anju",
+    "zushio"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "翌日の朝はひどく寒かった",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "yakkogashira",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "saburo",
+    "utterance_index": 0
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "kikori",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     1,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "kohagi",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "zushio",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     1,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "character_id": "anju",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 607,
+   "ledger_hash": "ledger:b178a4097dba",
+   "model_id": "claude-code-session:claude-sonnet-5-5",
+   "prompt_hash": "strong:strong.v1:31875cee7bb60908",
+   "scene_count": 7,
+   "scene_hash": "79367411331b4528b85018d8e428f9934c4e89b30bce35d5536461614a68696b",
+   "scene_id": "000129_000689:s4",
+   "scene_index": 4,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000129_000689"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "柴の苅り方",
+    "predicate": "LEARNED",
+    "sentence_index": 2,
+    "subject": "zushio"
+   },
+   {
+    "evidence": "explicit",
+    "object": "汐の汲み方",
+    "predicate": "LEARNED",
+    "sentence_index": 10,
+    "subject": "anju"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[relation_status] kohagi: 安寿と小萩が姉妹の誓いをした",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 12,
+    "subject": "anju"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": 1,
+    "f_style_arousal": -1,
+    "f_style_valence": 0
+   },
+   "location_id": "潮を汲む場所",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E15",
+      "rank_weight": 3
+     },
+     {
+      "code": "E09",
+      "rank_weight": 2
+     },
+     {
+      "code": "E01",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M10",
+      "rank_weight": 3
+     },
+     {
+      "code": "M14",
+      "rank_weight": 2
+     },
+     {
+      "code": "M03",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "kikori",
+    "zushio",
+    "anju",
+    "kohagi"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "日がよほど昇ってから",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "zushio",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "kikori",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "kikori",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "zushio",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "zushio",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "kikori",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "anju",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "kohagi",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "kohagi",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "anju",
+    "utterance_index": 4
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "anju",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "character_id": "zushio",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     1,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "dayu",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     1,
+     -1,
+     -1,
+     -1,
+     1
+    ]
+   },
+   {
+    "character_id": "jiro",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     0,
+     -1,
+     0,
+     -1,
+     0
+    ]
+   },
+   {
+    "character_id": "yakkogashira",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     1,
+     -1,
+     0,
+     -1,
+     -1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 498,
+   "ledger_hash": "ledger:b178a4097dba",
+   "model_id": "claude-code-session:claude-sonnet-5-5",
+   "prompt_hash": "strong:strong.v1:31875cee7bb60908",
+   "scene_count": 7,
+   "scene_hash": "2d3ca8376c373f514bcd616851c76f7c4e344283eeeddf4dd0b98306c5518326",
+   "scene_id": "000129_000689:s5",
+   "scene_index": 5,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000129_000689"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[relation_status] anju: 組分けを免れ、姉弟が同じ小屋に置かれた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 11,
+    "subject": "jiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "三の木戸の小屋",
+    "predicate": "MOVED_TO",
+    "sentence_index": 11,
+    "subject": "anju"
+   },
+   {
+    "evidence": "explicit",
+    "object": "三の木戸の小屋",
+    "predicate": "MOVED_TO",
+    "sentence_index": 11,
+    "subject": "zushio"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": "新参小屋",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E13",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E03",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M16",
+      "rank_weight": 2
+     },
+     {
+      "code": "M04",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "anju",
+    "zushio",
+    "yakkogashira",
+    "dayu",
+    "jiro"
+   ],
+   "time": {
+    "elapsed_hint": "とかくするうちに十日立った",
+    "evidence": "explicit",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "yakkogashira",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "dayu",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "dayu",
+    "evidence": "explicit",
+    "register": {
+     "first_person": "わたくし",
+     "politeness": "polite"
+    },
+    "speaker_id": "jiro",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "jiro",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "dayu",
+    "utterance_index": 2
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "anju",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "character_id": "jiro",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     1,
+     -1,
+     1,
+     -1,
+     0
+    ]
+   },
+   {
+    "character_id": "saburo",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     0,
+     -1,
+     -1,
+     0,
+     1
+    ]
+   },
+   {
+    "character_id": "zushio",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     0,
+     1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 675,
+   "ledger_hash": "ledger:b178a4097dba",
+   "model_id": "claude-code-session:claude-sonnet-5-5",
+   "prompt_hash": "strong:strong.v1:31875cee7bb60908",
+   "scene_count": 7,
+   "scene_hash": "9f0788717935b35f2d8128d36a3472bb2f46188ee88ead3c78ebaf7e1411e20e",
+   "scene_id": "000129_000689:s6",
+   "scene_index": 6,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000129_000689"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "厨子王の逃亡計画",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 10,
+    "subject": "anju"
+   },
+   {
+    "evidence": "explicit",
+    "object": "二人の逃亡の談合",
+    "predicate": "LEARNED",
+    "subject": "saburo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] anju: 逃亡の相談を聞かれ、烙印の脅しを受けた",
+    "predicate": "STATE_CHANGED",
+    "subject": "anju"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 2,
+    "f_event_valence": -2,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": "小屋",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E07",
+      "rank_weight": 3
+     },
+     {
+      "code": "E08",
+      "rank_weight": 2
+     },
+     {
+      "code": "E13",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M07",
+      "rank_weight": 2
+     },
+     {
+      "code": "M03",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "anju",
+    "zushio",
+    "jiro",
+    "saburo"
+   ],
+   "time": {
+    "elapsed_hint": "ほど経てまたある日の暮れに",
+    "evidence": "explicit",
+    "explicit_time": "ある日の暮れに",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "jiro",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "zushio",
+    "evidence": "explicit",
+    "register": {
+     "first_person": "わたし",
+     "politeness": "plain"
+    },
+    "speaker_id": "anju",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "saburo",
+    "utterance_index": 2
+   }
+  ]
+ }
+]

@@ -1,0 +1,291 @@
+{
+ "cases": [
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "facts[0].basis replaced by a phrase absent from the scene text",
+   "id": "R01_basis_not_in_text",
+   "reasons": [
+    "facts[0]: basis not verbatim in scene text: '月の裏側に広がる砂漠の民'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "present gets an id not in the roster",
+   "id": "R02_present_id_not_in_roster",
+   "reasons": [
+    "present[4]: id not in roster: 'ghost_not_in_roster'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "STATE_CHANGED.category = 'mental_state'",
+   "id": "R03_state_category_outside_closed_set",
+   "reasons": [
+    "facts[2]: category 'mental_state'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "event_top3 codes duplicated (E09, E09, E16)",
+   "id": "R04_event_code_duplicate",
+   "reasons": [
+    "event_top3: duplicate codes ['E09', 'E09', 'E16']"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "STATE_CHANGED.category = 'unclassified' (seed-only) in a session entry",
+   "id": "R05_session_uses_unclassified",
+   "reasons": [
+    "facts[2]: category 'unclassified'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "event_top3[0].code = 'E99'",
+   "id": "R06_event_code_out_of_table",
+   "reasons": [
+    "event_top3[0]: bad code 'E99'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "trait_changes[0].character_id not in roster",
+   "id": "R07_trait_character_not_in_roster",
+   "reasons": [
+    "trait_changes[0]: character not in roster: 'ghost_not_in_roster'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "delta=0, axis=7, duplicate axis in one character",
+   "id": "R08_trait_delta_zero_axis_range_dup_axis",
+   "reasons": [
+    "trait_changes[0].changes[0]: delta 0",
+    "trait_changes[0].changes[1]: axis 7",
+    "trait_changes[0].changes[2]: duplicate axis 3"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "location is a phrase not in the scene text",
+   "id": "R09_location_not_verbatim",
+   "reasons": [
+    "location: not verbatim in scene text: 'どこかの港町'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "pov_character not in roster",
+   "id": "R10_pov_not_in_roster",
+   "reasons": [
+    "pov_character: not in roster: 'ghost_not_in_roster'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "awase.F_valence=3 and f_basis not verbatim",
+   "id": "R11_awase_out_of_range_and_basis",
+   "reasons": [
+    "awase.F_valence: 3",
+    "awase.f_basis: not verbatim in scene text"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "instruction_version = 'strong.v0'",
+   "id": "R12_instruction_version_wrong",
+   "reasons": [
+    "instruction_version != strong.v1"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "ledger_additions for an id that already has a baseline",
+   "id": "R13_ledger_addition_overwrites_existing",
+   "reasons": [
+    "ledger_additions[zushio]: baseline already exists (no overwrite)"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "present lists the same id twice",
+   "id": "R14_duplicate_present_id",
+   "reasons": [
+    "present[4]: duplicate id 'saburo'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "R01+R02+R03+R04 in one file (all reasons must be reported)",
+   "id": "R15_multiple_violations",
+   "reasons": [
+    "present[4]: id not in roster: 'ghost_not_in_roster'",
+    "facts[0]: basis not verbatim in scene text: '月の裏側に広がる砂漠の民'",
+    "facts[2]: category 'mental_state'",
+    "event_top3: duplicate codes ['E09', 'E09', 'E16']"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "scene_hash with no pack",
+   "id": "R16_unknown_scene_hash",
+   "reasons": [
+    "no_pack_for_scene_hash (run prepare first; hash must be of a pending scene)"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "top-level JSON array",
+   "id": "R17_not_an_object",
+   "reasons": [
+    "no_pack_for_scene_hash (run prepare first; hash must be of a pending scene)"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "truncated JSON text",
+   "id": "R18_json_parse_error",
+   "reasons": [
+    "json_parse_error: Unterminated string starting at: line 1 column 199 (char 198)"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "facts[0].basis = null in a session entry",
+   "id": "R19_facts_missing_basis",
+   "reasons": [
+    "facts[0]: basis not verbatim in scene text: None"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  },
+  {
+   "accepted": false,
+   "cache_tree_unchanged": true,
+   "desc": "valid ledger_additions ['kikori', 'kohagi'] + facts[0].basis not verbatim",
+   "id": "R20_ledger_additions_with_bad_basis",
+   "ledger_ids_added_by_file_present_after": [],
+   "ledger_unchanged": true,
+   "reasons": [
+    "facts[0]: basis not verbatim in scene text: '月の裏側に広がる砂漠の民'"
+   ],
+   "reject_file_reasons_equal": true,
+   "reject_file_written": true,
+   "strong_entry_exists_after": false
+  }
+ ],
+ "control_scene3": {
+  "accepted_entry_sha256_unchanged": true,
+  "cache_tree_unchanged_by_invalid_after_accept": true,
+  "files_changed_by_valid_accept": [
+   "manifests/000129_000689.json",
+   "strong/6aae1e7b907f3f8d7f2edc0c4927de69100d69f0a7294c0a6737b8fb543f8ba5.json"
+  ],
+  "invalid_after_accept_accepted": false,
+  "invalid_after_accept_reasons": [
+   "event_top3: duplicate codes ['E09', 'E09', 'E16']"
+  ],
+  "manifest_cached_count_before_after": [
+   6,
+   7
+  ],
+  "valid_accepted": true,
+  "valid_reasons": []
+ },
+ "control_scene4": {
+  "accepted": true,
+  "ledger_ids_added_by_file_present_after": [
+   "kikori",
+   "kohagi"
+  ],
+  "manifest_cached_count_after": 7,
+  "reasons": [],
+  "strong_entry_exists_after": true
+ },
+ "summary": {
+  "all_cache_unchanged": true,
+  "all_reject_files_written": true,
+  "all_reject_reasons_equal": true,
+  "all_rejected_with_reasons": true,
+  "cases": 20,
+  "rejected": 20,
+  "scene3_hash": "6aae1e7b907f3f8d7f2edc0c4927de69100d69f0a7294c0a6737b8fb543f8ba5",
+  "scene4_hash": "79367411331b4528b85018d8e428f9934c4e89b30bce35d5536461614a68696b",
+  "work_id": "000129_000689"
+ }
+}
