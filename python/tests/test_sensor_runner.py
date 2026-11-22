@@ -292,14 +292,19 @@ needs_env = pytest.mark.skipif(_nishiki() is None or not (common.CACHE_ROOT / "m
 
 
 @needs_env
-def test_seed_all_35_scenes_cached_in_manifests():
-    total = cached = 0
+def test_seed_all_scenes_cached_in_manifests():
+    # the expected total is counted from the manifests' scene rows (it grows with every live run), not a fixed number
+    total = cached = expected = 0
     for w in common.all_work_ids():
         m = Cache().manifest(w)
+        assert m["scene_count"] == len(m["scenes"]), w
+        expected += len(m["scenes"])
         total += m["scene_count"]
         cached += m["cached_count"]
+        assert all(r["status"] == "cached" for r in m["scenes"]), w
         assert all(Cache().has(r["scene_hash"]) for r in m["scenes"])
-    assert (total, cached) == (35, 35)
+    assert expected > 0
+    assert (total, cached) == (expected, expected)
 
 
 @needs_env
@@ -332,3 +337,18 @@ def test_seed_prepare_delta_and_diagnose_all_lenses_ok(tmp_path):
         (tmp_path / f"{wid}.characters.json").write_text(json.dumps(wk["characters"], ensure_ascii=False), encoding="utf-8")
         d = run_diagnose(nis, wk["text_abs"], tmp_path / f"{wid}.characters.json", tmp_path / f"{wid}.annotations.json")
         assert all_ok(d), (wid, d["lenses"])
+
+
+def test_nogold_warns_when_stage1_returns_all_speakers_null():
+    from local_from_step1_nogold import all_null_scene_warnings
+
+    scenes = [(0, "h0", 2), (1, "h1", 3), (2, "h2", 0), (3, "h3", 1)]
+    stage1 = [
+        {"utterance_index": 0, "speaker_id": "a"}, {"utterance_index": 1, "speaker_id": None},  # s0: one speaker -> no warning
+        {"utterance_index": 2, "speaker_id": None}, {"utterance_index": 3, "speaker_id": None},  # s1: all null (index 4 missing)
+    ]  # s2 has no utterances; s3 (index 5) has no prediction at all -> counts as null
+    final = [{"utterance_index": 2, "speaker_id": "a"}]
+    w = all_null_scene_warnings(scenes, stage1, final)
+    assert [(x["scene_index"], x["utterances"], x["final_speaker_null"]) for x in w] == [(1, 3, 2), (3, 1, 1)]
+    assert all(x["warning"] == "stage1_all_speakers_null" for x in w)
+    assert all_null_scene_warnings(scenes[:1], stage1) == []

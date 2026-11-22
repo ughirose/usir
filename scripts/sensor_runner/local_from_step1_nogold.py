@@ -50,6 +50,26 @@ def make_chunks(scenes, max_chars, max_quotes):
     return chunks
 
 
+def all_null_scene_warnings(scenes, stage1, final=None):
+    """Scenes whose utterances ALL have speaker_id null in the stage-1 output (a missing prediction counts as null).
+
+    `scenes` is the chunk's scene list in order, as (scene_index, scene_hash, utterance_count); utterance numbers run
+    through the chunk. Stage 3 only rechecks utterances that already have a speaker, so such a scene is never rechecked
+    (live run 2 on 000148_000751: s31 40/40 and s39 30/30). Returns one warning dict per scene.
+    """
+    s1 = {int(u["utterance_index"]): u for u in stage1 or []}
+    fin = {int(u["utterance_index"]): u for u in final or []}
+    out, n = [], 0
+    for idx, h, cnt in scenes:
+        rng = range(n, n + cnt)
+        n += cnt
+        if cnt == 0 or any((s1.get(i) or {}).get("speaker_id") is not None for i in rng):
+            continue
+        out.append({"warning": "stage1_all_speakers_null", "scene_index": idx, "scene_hash": h, "utterances": cnt,
+                    "final_speaker_null": sum(1 for i in rng if (fin.get(i) or {}).get("speaker_id") is None)})
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("work_id")
@@ -83,6 +103,7 @@ def main() -> int:
               "stage3_prompt_tok": 0, "stage3_eval_tok": 0, "pp_forced": 0, "pp_changed": 0, "pp_downgraded": 0,
               "sr_target": 0, "sr_rechecked": 0, "sr_changed": 0, "sr_rejected": 0, "ctx_warn_chunks": 0, "parse_error_chunks": 0}
     chunk_log = []
+    warnings: list[dict] = []
     t_all = time.time()
     for ci, ch in enumerate(chunks):
         t0 = time.time()
@@ -138,9 +159,12 @@ def main() -> int:
             totals["sr_rejected"] += int(sr_audit["rejected_count"])
         totals["ctx_warn_chunks"] += int(ctx_warn)
         totals["parse_error_chunks"] += int(bool(resp.parse_error))
+        null_warn = [{"chunk": ci, **x} for x in all_null_scene_warnings(
+            [(s["index"], s["scene_hash"], len(s["utterances"])) for s in ch], raw, final)]
+        warnings.extend(null_warn)
         row = {"chunk": ci, "scenes": [s["index"] for s in ch], "chars": len(text), "quotes": exp, "missing_predictions": missing,
                "wall_s": round(dt, 1), "stage1_prompt_tok": p_tok, "stage1_eval_tok": e_tok, "ctx_warning": ctx_warn,
-               "parse_error": resp.parse_error}
+               "parse_error": resp.parse_error, "stage1_all_null_scenes": [x["scene_index"] for x in null_warn]}
         chunk_log.append(row)
         write_json(out_dir / f"chunk_{ci:03d}.json", {**row, "stage1_parsed": raw, "final": final, "pp_audit": pp_audit, "sr_audit": sr_audit})
         write_json(local_out, {"schema": "sensor.local_utterances/1",
@@ -148,8 +172,13 @@ def main() -> int:
                                "scenes": scenes_out})
         print(json.dumps(row, ensure_ascii=False), flush=True)
     totals["elapsed_wall_s"] = round(time.time() - t_all, 1)
+    totals["stage1_all_null_scenes"] = len(warnings)
     write_json(out_dir / "summary.json", {"work_id": a.work_id, "model": model_spec, "num_ctx": num_ctx, "num_predict": num_predict,
-                                           "max_chars": a.max_chars, "max_quotes": a.max_quotes, "chunks": chunk_log, "totals": totals})
+                                           "max_chars": a.max_chars, "max_quotes": a.max_quotes, "chunks": chunk_log, "totals": totals,
+                                           "warnings": warnings})
+    for x in warnings:
+        print(f"WARNING stage 1 returned speaker null for all {x['utterances']} utterances of scene s{x['scene_index']} "
+              f"(chunk {x['chunk']}); stage 3 does not recheck them", flush=True)
     print("DONE", json.dumps(totals), flush=True)
     return 0
 
