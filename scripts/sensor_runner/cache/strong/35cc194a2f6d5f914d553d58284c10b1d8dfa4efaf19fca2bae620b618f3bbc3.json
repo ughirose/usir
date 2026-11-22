@@ -1,0 +1,90 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": -1,
+  "F_basis": "別段何もない",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "圭さんは時々妙な事に感心する",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "どこへ行ったね",
+   "code": "E03"
+  },
+  {
+   "basis": "町を歩行いて来た",
+   "code": "E02"
+  },
+  {
+   "basis": "馬の沓を替えるところを見て来た",
+   "code": "E09"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "どこからか帰って来る",
+   "evidence": "inferred",
+   "object": "宿へ帰る",
+   "predicate": "MOVED_TO",
+   "subject": "keisan"
+  },
+  {
+   "basis": "馬の沓を替えるところを見て来た",
+   "evidence": "explicit",
+   "object": "馬の沓の替え方",
+   "predicate": "LEARNED",
+   "subject": "keisan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "君はよっぽど呑気だよ",
+   "code": "M05"
+  },
+  {
+   "basis": "薄暗い所で赤い鉄を打つと奇麗だね",
+   "code": "M02"
+  },
+  {
+   "basis": "ちと、時間が長過ぎると思った",
+   "code": "M08"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "圭さんがどこからか帰って来る",
+   "id": "keisan"
+  },
+  {
+   "basis": "どこへ行ったね",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "35cc194a2f6d5f914d553d58284c10b1d8dfa4efaf19fca2bae620b618f3bbc3",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "ambiguous",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

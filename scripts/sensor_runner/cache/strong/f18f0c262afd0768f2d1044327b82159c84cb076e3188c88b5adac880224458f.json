@@ -1,0 +1,97 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "雨を捲いて颯とおろす一陣の風が",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "痛快だ。風の飛んで行く足跡が草の上に見える",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "五六歩、左の方へ進んだが",
+   "code": "E02"
+  },
+  {
+   "basis": "どうしてって、右の方には馬の足跡があるが",
+   "code": "E03"
+  },
+  {
+   "basis": "取って来てやろうか",
+   "code": "E15"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "僕は右へ行くつもりだ",
+   "evidence": "inferred",
+   "object": "左右の分かれ道の選択",
+   "predicate": "HOOK_RESOLVED",
+   "subject": "keisan"
+  },
+  {
+   "basis": "碌さんの麦藁帽を遠慮なく、吹き込めて、五六間先まで飛ばして行く",
+   "evidence": "explicit",
+   "object": "麦藁帽",
+   "predicate": "LOST",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "薄の中に飛び込んだ",
+   "evidence": "explicit",
+   "object": "薄の中",
+   "predicate": "MOVED_TO",
+   "subject": "keisan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "青い草の海",
+ "mood_top3": [
+  {
+   "basis": "風を受けて一度に向うへ靡いて",
+   "code": "M07"
+  },
+  {
+   "basis": "君の天祐はあてにならない事夥しいよ",
+   "code": "M05"
+  },
+  {
+   "basis": "あとに残った碌さんはまた心配になる",
+   "code": "M03"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんが云い了らぬうちに",
+   "id": "keisan"
+  },
+  {
+   "basis": "あとに残った碌さんはまた心配になる",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "f18f0c262afd0768f2d1044327b82159c84cb076e3188c88b5adac880224458f",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

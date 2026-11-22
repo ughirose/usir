@@ -1,0 +1,90 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "人を圧迫した上に、人に頭を下げさせようとするんだぜ",
+  "F_valence": -1,
+  "f_arousal": 0,
+  "f_basis": "棕梠緒の貸下駄には都らしく宿の焼印が押してある",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "全体君が豆腐屋の伜から、今日までに変化した因縁はどう云う筋道なんだい",
+   "code": "E03"
+  },
+  {
+   "basis": "圭さんと碌さんは手拭をぶら下げて、庭へ降りる",
+   "code": "E02"
+  },
+  {
+   "basis": "今の豆腐屋連はみんな、そう云う気違ばかりだよ",
+   "code": "E04"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "ちょいと夕飯前に温泉に這入ろう",
+   "evidence": "explicit",
+   "object": "温泉",
+   "predicate": "MOVED_TO",
+   "subject": "keisan"
+  },
+  {
+   "basis": "うん這入ろう",
+   "evidence": "explicit",
+   "object": "温泉",
+   "predicate": "MOVED_TO",
+   "subject": "rokusan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "そんな気違を増長させるくらいなら、世の中に生れて来ない方がいい",
+   "code": "M09"
+  },
+  {
+   "basis": "気狂なら謝まらないでもいいものかな",
+   "code": "M05"
+  },
+  {
+   "basis": "村鍛冶の音は、会話が切れるたびに静かな里の端から端までかあんかあんと響く",
+   "code": "M01"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "圭さんは再びふふんと云った",
+   "id": "keisan"
+  },
+  {
+   "basis": "圭さんと碌さんは手拭をぶら下げて",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "92418b9732287783c75305dc7695a89ebe85e446bb45519a61d39138738fe8f4",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

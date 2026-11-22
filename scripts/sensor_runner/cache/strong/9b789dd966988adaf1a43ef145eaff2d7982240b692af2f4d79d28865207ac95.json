@@ -1,0 +1,94 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "ざぶんと温泉の中へ、石のように大きな背中を落す",
+  "F_valence": 1,
+  "f_arousal": 2,
+  "f_basis": "満槽の湯は一度に面喰って、槽の底から大恐惶を持ち上げる",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "ぎゅうと手拭をしごいたと思ったら",
+   "code": "E09"
+  },
+  {
+   "basis": "あの隣りの客は元来何者だろう",
+   "code": "E03"
+  },
+  {
+   "basis": "ああいい心持ちだ",
+   "code": "E10"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "感心の極、流しへ突っ立ったまま、茫然として",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "圭さんの行水に感心し、茫然とする"
+  },
+  {
+   "basis": "もう済んだ。ああ好い心持だ",
+   "category": "body_health",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "背中を洗い終え、湯に浸かって心地よくなる"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "湯槽",
+ "mood_top3": [
+  {
+   "basis": "まるで仁王のようだね。仁王の行水だ",
+   "code": "M05"
+  },
+  {
+   "basis": "ざあっざあっと音がして、流しへ溢れだす",
+   "code": "M12"
+  },
+  {
+   "basis": "ああ好い心持だ",
+   "code": "M10"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんは、両足を湯壺の中にうんと踏ん張って",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんは湯槽を飛び出した",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "9b789dd966988adaf1a43ef145eaff2d7982240b692af2f4d79d28865207ac95",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

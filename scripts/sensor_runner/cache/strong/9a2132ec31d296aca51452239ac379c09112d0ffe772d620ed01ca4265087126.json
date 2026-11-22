@@ -1,0 +1,98 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "あすこへ登るんだね",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "阿蘇の山がごううごううと遠くながら鳴っている",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "風呂場を出ると",
+   "code": "E02"
+  },
+  {
+   "basis": "あとから竹刀と小手がいっしょに来たぜ",
+   "code": "E01"
+  },
+  {
+   "basis": "あすこへ登るんだね",
+   "code": "E03"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "風呂場を出ると",
+   "evidence": "explicit",
+   "object": "風呂場の外",
+   "predicate": "MOVED_TO",
+   "subject": "keisan"
+  },
+  {
+   "basis": "僕はともかくも出るよ",
+   "evidence": "explicit",
+   "object": "風呂場の外",
+   "predicate": "MOVED_TO",
+   "subject": "rokusan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "風呂場",
+ "mood_top3": [
+  {
+   "basis": "ひやりと吹く秋風が、袖口からすうと這入って",
+   "code": "M01"
+  },
+  {
+   "basis": "夕暮の秋を淋しく咲いている",
+   "code": "M02"
+  },
+  {
+   "basis": "阿蘇の山がごううごううと遠くながら鳴っている",
+   "code": "M07"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "出臍の圭さんは、はっくしょうと大きな苦沙弥を無遠慮にやる",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんが云う",
+   "id": "rokusan"
+  },
+  {
+   "basis": "あとから竹刀と小手がいっしょに来たぜ",
+   "id": "tonari_a"
+  },
+  {
+   "basis": "あとから竹刀と小手がいっしょに来たぜ",
+   "id": "tonari_b"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "9a2132ec31d296aca51452239ac379c09112d0ffe772d620ed01ca4265087126",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "夕暮の秋",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

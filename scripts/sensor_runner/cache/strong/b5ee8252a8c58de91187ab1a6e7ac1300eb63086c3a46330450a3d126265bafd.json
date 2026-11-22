@@ -1,0 +1,85 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": -1,
+  "F_basis": "飲んでもいいんだよ",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "出臍の先生は、両手に温泉を掬んで、口へ入れて見る",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "この湯は何に利くんだろう",
+   "code": "E03"
+  },
+  {
+   "basis": "湯槽のなかで、ざぶざぶやりながら聞く",
+   "code": "E09"
+  },
+  {
+   "basis": "また華族と金持ちか。眼の敵だね",
+   "code": "E04"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "足の強いのには驚いたよ",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "圭さんの足の強さに驚き、途中で引き返そうと思っていた"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "湯槽のなか",
+ "mood_top3": [
+  {
+   "basis": "豆腐屋出身だからなあ",
+   "code": "M05"
+  },
+  {
+   "basis": "湯槽の縁へ肘をかけて漫然と",
+   "code": "M10"
+  },
+  {
+   "basis": "硝子越しに外を眺めている",
+   "code": "M08"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "豆腐屋の圭さんが湯槽のなかで",
+   "id": "keisan"
+  },
+  {
+   "basis": "碌さんは首だけ湯に漬かって",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "b5ee8252a8c58de91187ab1a6e7ac1300eb63086c3a46330450a3d126265bafd",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

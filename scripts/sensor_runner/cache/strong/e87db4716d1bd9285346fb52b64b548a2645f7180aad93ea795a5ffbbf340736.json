@@ -1,0 +1,100 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "おいこれから曲がっていよいよ登るんだろう",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "二十世紀はこの桀紂で充満しているんだぜ",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "おいこれから曲がっていよいよ登るんだろう",
+   "code": "E02"
+  },
+  {
+   "basis": "饂飩屋の爺さんがか",
+   "code": "E03"
+  },
+  {
+   "basis": "どうも饂飩屋は性に合わない",
+   "code": "E04"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "しきりに胸を撫で廻す",
+   "category": "body_health",
+   "evidence": "inferred",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "饂飩で胸がつかえ、胸を撫で廻す"
+  },
+  {
+   "basis": "天気が少々剣呑になって来たぜ",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "天気",
+   "text": "天気が怪しくなる"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "いくら饂飩屋の亭主を恨んでも後の祭りだから",
+   "code": "M05"
+  },
+  {
+   "basis": "意思のある所には天祐がごろごろしているものだ",
+   "code": "M14"
+  },
+  {
+   "basis": "天気が少々剣呑になって来たぜ",
+   "code": "M07"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんが振り返る",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんはしきりに胸を撫で廻す",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "e87db4716d1bd9285346fb52b64b548a2645f7180aad93ea795a5ffbbf340736",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "unknown"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 2,
+     "basis": "意思のある所には天祐がごろごろしているものだ",
+     "delta": 1
+    }
+   ],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

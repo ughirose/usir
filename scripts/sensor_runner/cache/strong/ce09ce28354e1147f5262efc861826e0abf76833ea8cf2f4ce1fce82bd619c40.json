@@ -1,0 +1,105 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "どこか高い所へ登ると、人の通る路が見えるんだがな",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "どうも雲だか、煙りだか非常に濃く、頭の上へやってくる。壮んなものだ",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "君あたまが大変だ。僕の帽子を貸してやろう",
+   "code": "E15"
+  },
+  {
+   "basis": "どうだい、こんな凄い景色はとても、こう云う時でなけりゃ見られないぜ",
+   "code": "E03"
+  },
+  {
+   "basis": "君ここに待っていたまえ。僕がちょっと物見をしてくるから",
+   "code": "E02"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "僕の帽子を貸してやろう",
+   "evidence": "explicit",
+   "object": "圭さんの帽子と杖",
+   "predicate": "ACQUIRED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "登るときは豆が三つばかりだったが、一面になったんだもの",
+   "category": "body_health",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "豆が三つから一面に増え痛みが強まる"
+  },
+  {
+   "basis": "僕がちょっと物見をしてくるから",
+   "evidence": "explicit",
+   "object": "草山に登って路を探す",
+   "predicate": "HOOK_OPENED",
+   "subject": "keisan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "この山のつい裏",
+ "mood_top3": [
+  {
+   "basis": "非常に黒いものが降って来る",
+   "code": "M07"
+  },
+  {
+   "basis": "煙草の吸殻を飯粒で練って、膏薬を製ってやろう",
+   "code": "M05"
+  },
+  {
+   "basis": "あすこへ行くまでに日が暮れてしまうよ",
+   "code": "M03"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "僕の帽子を貸してやろう",
+   "id": "keisan"
+  },
+  {
+   "basis": "少しは歩行きよくなった",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "ce09ce28354e1147f5262efc861826e0abf76833ea8cf2f4ce1fce82bd619c40",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "四時八分",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "僕の帽子を貸してやろう",
+     "delta": 1
+    }
+   ],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

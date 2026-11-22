@@ -1,0 +1,91 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "圭さんはそろそろ慷慨し始める",
+  "F_valence": -1,
+  "f_arousal": 0,
+  "f_basis": "圭さんは腕組をしたままふふんと云った",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "世の中が云う事をきかなければ、向の方が悪いのだろう",
+   "code": "E04"
+  },
+  {
+   "basis": "えらい者って云うのは、何さ",
+   "code": "E03"
+  },
+  {
+   "basis": "村鍛冶の音は不相変かあんかあんと鳴る",
+   "code": "E16"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "圭さんはそろそろ慷慨し始める",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "華族や金持への不満から慷慨し始める"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "むやみに人を圧逼するぜ、ああ云う豆腐屋は",
+   "code": "M09"
+  },
+  {
+   "basis": "そう注文通りに行けば結構だ。ハハハハ",
+   "code": "M05"
+  },
+  {
+   "basis": "不公平な世の中を公平にしてやろうと云うのに",
+   "code": "M14"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんは横着を云う",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんはすぐ様えらい者を説明してしまう",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "4229a594d83719e73108b473720dc787f2871fcd35dccb74498152c19ee41c35",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 4,
+     "basis": "圭さんはそろそろ慷慨し始める",
+     "delta": 1
+    }
+   ],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

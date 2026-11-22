@@ -1,0 +1,104 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "十一時に阿蘇神社へ参詣して、十二時から登るのだ",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "まるで御供のようだね",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "時に昼は何を食うかな",
+   "code": "E03"
+  },
+  {
+   "basis": "十一時に阿蘇神社へ参詣して、十二時から登るのだ",
+   "code": "E02"
+  },
+  {
+   "basis": "何でも御馳走が食いたい",
+   "code": "E10"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "十一時に阿蘇神社へ参詣して、十二時から登るのだ",
+   "evidence": "explicit",
+   "object": "あすの阿蘇登山の予定",
+   "predicate": "HOOK_OPENED",
+   "subject": "keisan"
+  },
+  {
+   "basis": "碌さんはすぐ予防線を張った",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "早起きと早足の登山を警戒する"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "まるで御供のようだね",
+   "code": "M05"
+  },
+  {
+   "basis": "六時に起きて、七時半に湯から出て",
+   "code": "M14"
+  },
+  {
+   "basis": "山へかかってから、あんなに早く歩行いちゃ、御免だ",
+   "code": "M08"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんが、あすの昼飯の相談をする",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんはすぐ予防線を張った",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "0db5ab1925c973d76da8bd688503e591f9a4c0ad6ac3dcc40c0ae93ca141584e",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 1,
+     "basis": "六時に起きて、七時半に湯から出て",
+     "delta": 1
+    }
+   ],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [
+    {
+     "axis": 4,
+     "basis": "何でも御馳走が食いたい",
+     "delta": 1
+    }
+   ],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

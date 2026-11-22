@@ -1,0 +1,101 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "僕は豆腐屋の子だよ",
+  "F_valence": 0,
+  "f_arousal": -1,
+  "f_basis": "まるで器械のように見える",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "君の家は全体どこにある訳だね",
+   "code": "E03"
+  },
+  {
+   "basis": "僕は豆腐屋の子だよ",
+   "code": "E07"
+  },
+  {
+   "basis": "隣り座敷の小手と竹刀は双方ともおとなしくなって",
+   "code": "E16"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "僕は豆腐屋の子だよ",
+   "evidence": "explicit",
+   "object": "圭さんは豆腐屋の子",
+   "predicate": "LEARNED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "碌さんは再び驚ろいた",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "豆腐屋の子と聞いて驚く"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "夜具の裏で海老のようになるのさ",
+   "code": "M15"
+  },
+  {
+   "basis": "海老のようになるって",
+   "code": "M05"
+  },
+  {
+   "basis": "冬の朝なんぞ、霜が強く降って",
+   "code": "M02"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "僕は豆腐屋の子だよ",
+   "id": "keisan"
+  },
+  {
+   "basis": "「へええ。そいつは……」と碌さん驚ろいた",
+   "id": "rokusan"
+  },
+  {
+   "basis": "六十余りの肥った爺さんが",
+   "id": "hige_jii"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "43a197bd38bf781402c1d2e71057166a19f3e9f359afc4e51c0f3435919c6788",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "hige_jii",
+   "evidence": "inferred"
+  }
+ ]
+}

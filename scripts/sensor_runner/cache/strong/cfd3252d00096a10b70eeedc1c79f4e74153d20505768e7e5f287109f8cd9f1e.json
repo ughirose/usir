@@ -1,0 +1,83 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "時に君、背中を流してくれないか",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "このくらいじゃ豆腐いと云う資格はないのかな",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "剛健な趣味を養成するための旅行だから",
+   "code": "E03"
+  },
+  {
+   "basis": "剛健はいいが饂飩は平に不賛成だ",
+   "code": "E04"
+  },
+  {
+   "basis": "襯衣を敷居の上へ乗せて、手頃な丸い石を拾って来て、こつこつ叩いた",
+   "code": "E09"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "僕なぞは学資に窮した時、一日に白米二合で間に合せた事がある",
+   "evidence": "explicit",
+   "object": "圭さんの貧窮時代の話",
+   "predicate": "LEARNED",
+   "subject": "rokusan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "今に、とおふい、油揚、がんもどきと怒鳴って",
+   "code": "M05"
+  },
+  {
+   "basis": "僕なぞは学資に窮した時",
+   "code": "M15"
+  },
+  {
+   "basis": "これから追い追い華族や金持ちを豆腐屋にするんだからな",
+   "code": "M14"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "僕なぞは学資に窮した時",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんが気の毒な事を聞く",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "cfd3252d00096a10b70eeedc1c79f4e74153d20505768e7e5f287109f8cd9f1e",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

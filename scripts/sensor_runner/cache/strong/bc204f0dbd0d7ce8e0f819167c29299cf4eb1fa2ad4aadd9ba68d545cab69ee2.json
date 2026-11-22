@@ -1,0 +1,105 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 2,
+  "F_basis": "同時に碌さんは、どさんと仰向きになって、薄の底に倒れた",
+  "F_valence": 1,
+  "f_arousal": 1,
+  "f_basis": "薩摩の強弓に新しく張った弦のごとくぴんと薄を押し分けて",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "朋友を一人谷底から救い出すぐらいの事は出来るつもりだ",
+   "code": "E15"
+  },
+  {
+   "basis": "大きな毬栗頭がぬっと現われた",
+   "code": "E07"
+  },
+  {
+   "basis": "海老のように腰を曲げて、一生懸命に、傘の柄にかじりついている",
+   "code": "E09"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "大入道の腰から上は、斜めに尻に挿した蝙蝠傘と共に谷から上へ出た",
+   "evidence": "explicit",
+   "object": "谷底からの脱出",
+   "predicate": "HOOK_RESOLVED",
+   "subject": "keisan"
+  },
+  {
+   "basis": "両手が崖の縁にかかるが早いか",
+   "evidence": "explicit",
+   "object": "谷の上",
+   "predicate": "MOVED_TO",
+   "subject": "keisan"
+  },
+  {
+   "basis": "どさんと仰向きになって、薄の底に倒れた",
+   "category": "body_health",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "力を使い果たして薄の底に仰向けに倒れる"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "谷の中",
+ "mood_top3": [
+  {
+   "basis": "僕だって一人前の人間だよ",
+   "code": "M14"
+  },
+  {
+   "basis": "喰い締めた反っ歯の上にはよなが容赦なく降ってくる",
+   "code": "M05"
+  },
+  {
+   "basis": "無論なら安心して、僕に信頼したらよかろう",
+   "code": "M10"
+  }
+ ],
+ "pov_character": "rokusan",
+ "present": [
+  {
+   "basis": "大入道の腰から上は、斜めに尻に挿した蝙蝠傘と共に谷から上へ出た",
+   "id": "keisan"
+  },
+  {
+   "basis": "碌さんは、素肌を二百十日の雨に曝したまま",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "bc204f0dbd0d7ce8e0f819167c29299cf4eb1fa2ad4aadd9ba68d545cab69ee2",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "しばらくすると",
+  "evidence": "explicit",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "一生懸命に、傘の柄にかじりついている",
+     "delta": 1
+    }
+   ],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

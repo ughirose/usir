@@ -1,0 +1,103 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "さあ一杯飲むかい",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "ちょっと眉をひそめた",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "さあ一杯飲むかい",
+   "code": "E10"
+  },
+  {
+   "basis": "ついでにその玉子を二つ貰おうか",
+   "code": "E03"
+  },
+  {
+   "basis": "だって玉子は僕が誂らえたんだぜ",
+   "code": "E04"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "この玉子は生だぜ",
+   "category": "object_state",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "玉子",
+   "text": "割った玉子が半熟でなく生だった"
+  },
+  {
+   "basis": "ちょっと眉をひそめた",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "玉子が生であることに眉をひそめる"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "癇癪を起して飛び込まないように要心をしてか",
+   "code": "M05"
+  },
+  {
+   "basis": "この恵比寿がビールでないんだから面白い",
+   "code": "M10"
+  },
+  {
+   "basis": "雄大の気象を養って",
+   "code": "M14"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんが云う",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんが相手に洋盃を渡す",
+   "id": "rokusan"
+  },
+  {
+   "basis": "筒袖の下女が、盆の上へ",
+   "id": "gejo"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "f7b21ea8d8c9029469716f5b6ac221f61bcd4926c4dd42ab4aeba384e8aa048c",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "gejo",
+   "evidence": "inferred"
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+s0 ingested 17:44:12 ACCEPT (first prepare 17:43:49)
+s1 ingested 17:44:36 ACCEPT
+s1 next_prepared 17:44:37
+s2 pack regenerated 17:54:56 (local ready; waited for step1)
+s2 ingested 17:55:09 ACCEPT
+s2 next_prepared 17:55:09
+s3 ingested 17:55:30 ACCEPT
+s3 next_prepared 17:55:30
+s4 ingested 17:55:52 ACCEPT
+s4 next_prepared 17:55:53
+s5 ingested 17:56:09 ACCEPT
+s5 next_prepared 17:56:09
+s6 ingested 17:56:24 ACCEPT
+s6 next_prepared 17:56:25
+s7 ingested 17:56:41 ACCEPT
+s7 next_prepared 17:56:41
+s8 ingested 17:57:09 ACCEPT
+s8 next_prepared 17:57:09
+s9 ingested 17:57:29 ACCEPT
+s9 next_prepared 17:57:29
+s10 ingested 18:00:56 REJECT
+s10 next_prepared 18:00:57
+s10 REJECT#1 (basis typo, present[0]); fixed
+s10b ingested 18:01:01 ACCEPT
+s10b next_prepared 18:01:02
+s11 ingested 18:01:22 ACCEPT
+s11 next_prepared 18:01:22
+s12 ingested 18:03:12 ACCEPT
+s12 next_prepared 18:03:13
+s13 ingested 18:03:32 ACCEPT
+s13 next_prepared 18:03:32
+s14 ingested 18:06:54 ACCEPT
+s14 next_prepared 18:06:55
+s15 ingested 18:07:11 ACCEPT
+s15 next_prepared 18:07:12
+s16 ingested 18:10:56 ACCEPT
+s16 next_prepared 18:10:56
+s17 ingested 18:11:11 ACCEPT
+s17 next_prepared 18:11:12
+s18 ingested 18:14:44 ACCEPT
+s18 next_prepared 18:14:45
+s19 ingested 18:15:04 ACCEPT
+s19 next_prepared 18:15:04
+s20 ingested 18:18:27 ACCEPT
+s20 next_prepared 18:18:27
+s21 ingested 18:18:45 ACCEPT
+s21 next_prepared 18:18:46
+s22 ingested 18:19:03 ACCEPT
+s22 next_prepared 18:19:04
+s23 ingested 18:21:37 ACCEPT
+s23 next_prepared 18:21:37
+s24 ingested 18:21:53 ACCEPT
+s24 next_prepared 18:21:54
+s25 ingested 18:24:50 REJECT
+s25 next_prepared 18:24:50
+s25 ingested 18:24:54 ACCEPT
+s25 next_prepared 18:24:55
+s26 ingested 18:25:13 ACCEPT
+s26 next_prepared 18:25:14
+s27 ingested 18:28:33 ACCEPT
+s27 next_prepared 18:28:33
+s28 ingested 18:28:47 ACCEPT
+s28 next_prepared 18:28:48
+s29 ingested 18:32:46 ACCEPT
+s29 next_prepared 18:32:47
+s30 ingested 18:33:01 ACCEPT
+s30 next_prepared 18:33:01
+s31 ingested 18:34:05 ACCEPT
+s31 next_prepared 18:34:05
+s32 ingested 18:38:34 ACCEPT
+s32 next_prepared 18:38:35
+s33 ingested 18:38:48 ACCEPT
+s33 next_prepared 18:38:49
+s34 ingested 18:39:05 ACCEPT
+s34 next_prepared 18:39:05
+s35 ingested 18:40:44 ACCEPT
+s35 next_prepared 18:40:45
+s36 ingested 18:42:54 ACCEPT
+s36 next_prepared 18:42:55
+s37 ingested 18:45:37 ACCEPT
+s37 next_prepared 18:45:38
+s38 ingested 18:48:24 REJECT
+s38 next_prepared 18:48:25
+s38 ingested 18:48:31 ACCEPT
+s38 next_prepared 18:48:31
+s39 ingested 18:49:20 ACCEPT
+s39 next_prepared 18:49:20

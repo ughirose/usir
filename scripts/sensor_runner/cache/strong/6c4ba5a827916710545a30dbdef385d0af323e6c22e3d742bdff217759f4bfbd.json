@@ -1,0 +1,107 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 2,
+  "F_basis": "谷の中の人は二百十日の風に吹き浚われたものか、うんとも、すんとも返事がない",
+  "F_valence": -1,
+  "f_arousal": 2,
+  "f_basis": "噴火孔から吹き出す幾万斛の煙りは卍のなかに万遍なく捲き込まれて",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "全体何だって、そんな所へ落ちたんだい",
+   "code": "E03"
+  },
+  {
+   "basis": "会話はしばらく途切れる",
+   "code": "E16"
+  },
+  {
+   "basis": "谷の中の人は二百十日の風に吹き浚われたものか、うんとも、すんとも返事がない",
+   "code": "E14"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "ことによると二百十日かも知れないね",
+   "evidence": "inferred",
+   "object": "今日が二百十日かもしれない",
+   "predicate": "LEARNED",
+   "subject": "keisan"
+  },
+  {
+   "basis": "碌さんは青くなって、また草の上へ棒のように腹這になった",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "返事が途絶え、恐怖で顔色を失う"
+  },
+  {
+   "basis": "一丁先は靡く姿さえ、判然と見えぬようになった",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "天気",
+   "text": "二百十日の嵐で視界が一丁先も利かなくなる"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "谷の中",
+ "mood_top3": [
+  {
+   "basis": "阿蘇の御山は割れるばかりにごううと鳴る",
+   "code": "M07"
+  },
+  {
+   "basis": "刻々と逼る暮色のなかに、嵐は卍に吹きすさむ",
+   "code": "M03"
+  },
+  {
+   "basis": "碌さんは青くなって、また草の上へ棒のように腹這になった",
+   "code": "M11"
+  }
+ ],
+ "pov_character": "rokusan",
+ "present": [
+  {
+   "basis": "そのうち僕がここで出る工夫を考えて置くから",
+   "id": "keisan"
+  },
+  {
+   "basis": "草の中に立って碌さんが覚束なく四方を見渡すと",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "6c4ba5a827916710545a30dbdef385d0af323e6c22e3d742bdff217759f4bfbd",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "時計はもう五時に近い",
+  "evidence": "explicit",
+  "explicit_time": "九月二日",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "それじゃ、僕のために落ちたようなものだ。気の毒だな",
+     "delta": 1
+    }
+   ],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

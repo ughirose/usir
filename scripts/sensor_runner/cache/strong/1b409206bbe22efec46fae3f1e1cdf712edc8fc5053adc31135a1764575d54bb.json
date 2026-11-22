@@ -1,0 +1,92 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "ほら、あの轟々鳴って吹き出すのと同じ事さ",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "渦を捲き、渦を捲いて、幾百噸の量とも知れず立ち上がる",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "君の経歴を聞かせるか",
+   "code": "E03"
+  },
+  {
+   "basis": "今夜は御馳走を食わせなくっちゃ、いやだぜ",
+   "code": "E10"
+  },
+  {
+   "basis": "圭さんは立ち留まって、黒い煙の方を見る",
+   "code": "E02"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "あるく事はあるくが、今夜は御馳走を食わせなくっちゃ、いやだぜ",
+   "category": "emotion",
+   "evidence": "inferred",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "歩く気を取り戻し、代償に御馳走を要求する"
+  },
+  {
+   "basis": "それも今夜僕が寝ながら話してやろう",
+   "evidence": "explicit",
+   "object": "今夜の革命話の約束",
+   "predicate": "HOOK_OPENED",
+   "subject": "keisan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "雨と風のなか",
+ "mood_top3": [
+  {
+   "basis": "濛々と天地を鎖す秋雨を突き抜いて",
+   "code": "M07"
+  },
+  {
+   "basis": "ハハハハそんなに聞きたければ話すよ",
+   "code": "M05"
+  },
+  {
+   "basis": "非常な落ちついた調子で",
+   "code": "M14"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんは立ち留まって、黒い煙の方を見る",
+   "id": "keisan"
+  },
+  {
+   "basis": "まだ何か注文があるのかい",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "1b409206bbe22efec46fae3f1e1cdf712edc8fc5053adc31135a1764575d54bb",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

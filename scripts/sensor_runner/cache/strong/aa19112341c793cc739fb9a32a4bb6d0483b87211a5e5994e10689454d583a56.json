@@ -1,0 +1,94 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "と碌さんは大恐悦である",
+  "F_valence": 1,
+  "f_arousal": 1,
+  "f_basis": "ハハハハ荒木、ハハハハ荒木、又ハハハハ又右衛門が、相撲取り",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "又右衛門、荒木又右衛門だね",
+   "code": "E03"
+  },
+  {
+   "basis": "毫も僕の人格には関係はしまい",
+   "code": "E04"
+  },
+  {
+   "basis": "うん分った",
+   "code": "E07"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "いよいよ、あきれてしまった",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "圭さんの無識に呆れて大笑いする"
+  },
+  {
+   "basis": "相撲取だ",
+   "category": "other",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "荒木又右衛門",
+   "text": "圭さんが荒木又右衛門を相撲取と取り違える"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "ハハハハ荒木、ハハハハ荒木、又ハハハハ又右衛門が、相撲取り",
+   "code": "M05"
+  },
+  {
+   "basis": "僕のような高尚な男が、そんな愚な真似をするものか",
+   "code": "M14"
+  },
+  {
+   "basis": "ハハハハつまらん事を云っていらあ",
+   "code": "M12"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "じゃ待った。少し考えるから",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんは大恐悦である",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "aa19112341c793cc739fb9a32a4bb6d0483b87211a5e5994e10689454d583a56",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

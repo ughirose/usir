@@ -1,0 +1,101 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "ともかくも僕は上がれないよ",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "なぜ黙ってるんだ",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "それじゃ、君はこの穴の縁を伝って歩行くさ",
+   "code": "E03"
+  },
+  {
+   "basis": "抛げるぜ、そら",
+   "code": "E15"
+  },
+  {
+   "basis": "ちょっと考えていた",
+   "code": "E16"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "繃帯はもうでき上がった",
+   "category": "body_health",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "ハンケチを裂いて傷に繃帯を巻く"
+  },
+  {
+   "basis": "胸くらいまで生えている",
+   "evidence": "explicit",
+   "object": "穴の縁に路が無く草が胸まで生えている",
+   "predicate": "LEARNED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "穴から出る工夫をさ",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "穴から上がれず、脱出の工夫を考える"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "この穴",
+ "mood_top3": [
+  {
+   "basis": "いっその事に、ここへ飛び込まないか",
+   "code": "M05"
+  },
+  {
+   "basis": "だいぶ暗くなって来たね",
+   "code": "M03"
+  },
+  {
+   "basis": "痛いのは生きてる証拠だ",
+   "code": "M14"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "痛いのは生きてる証拠だ",
+   "id": "keisan"
+  },
+  {
+   "basis": "僕は腹が痛くなった",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "3d874b95a42436b22a037be5e44d251a289b77d768cbb61ade9f378b5b0f6b10",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

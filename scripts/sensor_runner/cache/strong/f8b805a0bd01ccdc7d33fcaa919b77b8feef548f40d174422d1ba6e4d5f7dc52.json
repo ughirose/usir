@@ -1,0 +1,99 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "阿蘇町さ",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "全体何てえ間抜だろう。これからもう君の天祐は信用しないよ",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "時に君はきのう怒ったね",
+   "code": "E03"
+  },
+  {
+   "basis": "もう飯だ、起きないか",
+   "code": "E16"
+  },
+  {
+   "basis": "ハハハしかし御蔭で谷から出られたよ",
+   "code": "E15"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "ようやく下りて見たら元の所だなんて",
+   "evidence": "explicit",
+   "object": "山を下りたら元の阿蘇町の宿だった",
+   "predicate": "LEARNED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "まあ大抵癒ったようなものだが",
+   "category": "body_health",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "腹痛はほぼ癒えたが足の豆は痛む"
+  },
+  {
+   "basis": "阿蘇へ行くつもりで、出掛けたんだもの",
+   "evidence": "explicit",
+   "object": "阿蘇行きの再開",
+   "predicate": "HOOK_OPENED",
+   "subject": "keisan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "馬車宿",
+ "mood_top3": [
+  {
+   "basis": "吸殻で利目があっちゃ大変だよ",
+   "code": "M05"
+  },
+  {
+   "basis": "うん。起きないよ",
+   "code": "M08"
+  },
+  {
+   "basis": "君が怒らなければ僕は今頃谷底で往生してしまったかも知れないところだ",
+   "code": "M10"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "どうだいこれから出掛けようじゃないか",
+   "id": "keisan"
+  },
+  {
+   "basis": "豆は痛むかね",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "f8b805a0bd01ccdc7d33fcaa919b77b8feef548f40d174422d1ba6e4d5f7dc52",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "きのう",
+  "evidence": "explicit",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

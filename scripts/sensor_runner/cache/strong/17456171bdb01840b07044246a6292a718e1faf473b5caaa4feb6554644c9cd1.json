@@ -1,0 +1,107 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "帽子はないぞう",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "むくむくと捲き上がって",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "圭さんの首が忽然と現われた",
+   "code": "E01"
+  },
+  {
+   "basis": "ともかくもあるこう",
+   "code": "E03"
+  },
+  {
+   "basis": "僕が看病をして、僕が伝染して、本人の君は助けるようにしてやるよ",
+   "code": "E15"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "薄の中を泳いでくる",
+   "evidence": "explicit",
+   "object": "碌さんのもと",
+   "predicate": "MOVED_TO",
+   "subject": "keisan"
+  },
+  {
+   "basis": "あるく元気がなくなるね",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "煙と雨に怖気づき歩く元気を失う"
+  },
+  {
+   "basis": "天気もだいぶよくなって来たよ",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "天気",
+   "text": "天気が回復し始める"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "薄の中",
+ "mood_top3": [
+  {
+   "basis": "碌さんは悄然として、首の消えた方角を見つめている",
+   "code": "M11"
+  },
+  {
+   "basis": "むくむくと捲き上がって",
+   "code": "M07"
+  },
+  {
+   "basis": "僕の代理に病気になれもしまい",
+   "code": "M05"
+  }
+ ],
+ "pov_character": "rokusan",
+ "present": [
+  {
+   "basis": "圭さんは坊主頭を振り立てながら、薄の中を泳いでくる",
+   "id": "keisan"
+  },
+  {
+   "basis": "碌さんは悄然として、首の消えた方角を見つめている",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "17456171bdb01840b07044246a6292a718e1faf473b5caaa4feb6554644c9cd1",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "僕が看病をして、僕が伝染して、本人の君は助けるようにしてやるよ",
+     "delta": 1
+    }
+   ],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

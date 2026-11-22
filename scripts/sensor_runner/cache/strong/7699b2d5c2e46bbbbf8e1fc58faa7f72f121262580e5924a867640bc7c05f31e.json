@@ -1,0 +1,99 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "荒れて来たぞうう",
+  "F_valence": -1,
+  "f_arousal": 1,
+  "f_basis": "むくむくと黒い煙りが持ち上がってくる",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "ようやく追いつく碌さんを待ち受けて",
+   "code": "E01"
+  },
+  {
+   "basis": "あの煙りの出る所を目当にして行けば訳はない",
+   "code": "E02"
+  },
+  {
+   "basis": "よなが雨に溶けて降ってくるんだ",
+   "code": "E07"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "ようやく追いつく碌さんを待ち受けて",
+   "evidence": "explicit",
+   "object": "圭さんのいる原",
+   "predicate": "MOVED_TO",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "拭くと、着物がどす黒くなる",
+   "category": "object_state",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "着物",
+   "text": "降灰と雨で着物と顔が黒く汚れる"
+  },
+  {
+   "basis": "ここを左りへ行くか、右へ行くかと云う、ちょうど股の所なんだ",
+   "evidence": "explicit",
+   "object": "左右の分かれ道の選択",
+   "predicate": "HOOK_OPENED",
+   "subject": "keisan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "青い原",
+ "mood_top3": [
+  {
+   "basis": "むくむくと黒い煙りが持ち上がってくる",
+   "code": "M07"
+  },
+  {
+   "basis": "困ったな、こりゃ",
+   "code": "M03"
+  },
+  {
+   "basis": "おい君の顔はどうしたんだ。真黒だ",
+   "code": "M05"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "大入道の圭さんが空を仰いで立っている",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんは一生懸命に草のなかを這い上がる",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "7699b2d5c2e46bbbbf8e1fc58faa7f72f121262580e5924a867640bc7c05f31e",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "一時間ほどで林は尽きる",
+  "evidence": "explicit",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

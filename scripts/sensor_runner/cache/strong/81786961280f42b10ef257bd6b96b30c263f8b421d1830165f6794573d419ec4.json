@@ -1,0 +1,108 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "それじゃ、その八時で立つ事にするからね",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "負けた方が今日一日命令に服するんだぜ",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "せっかくは君の命令に因って、せっかく来たに相違ないんだがね",
+   "code": "E03"
+  },
+  {
+   "basis": "それから腹がわるいんだから、粥を焚いて貰いたい",
+   "code": "E10"
+  },
+  {
+   "basis": "だから、君もいっしょに帰りたまえな",
+   "code": "E04"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "熊本通いは八時と一時に出ますたい",
+   "evidence": "explicit",
+   "object": "熊本行きの馬車は八時と一時発",
+   "predicate": "LEARNED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "それじゃ、その八時で立つ事にするからね",
+   "evidence": "explicit",
+   "object": "八時の馬車で熊本へ帰る決定",
+   "predicate": "HOOK_OPENED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "しかし阿蘇へ登りに来たんだから、登らないで帰っちゃあ済まない",
+   "category": "relation_status",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "relation_to_rokusan",
+   "text": "阿蘇へ登る主張で碌さんの帰る案に反対する"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "台所の方",
+ "mood_top3": [
+  {
+   "basis": "占って君と賭をする",
+   "code": "M05"
+  },
+  {
+   "basis": "しかし阿蘇へ登りに来たんだから、登らないで帰っちゃあ済まない",
+   "code": "M14"
+  },
+  {
+   "basis": "この豆じゃ、どうにも、こうにも、――天祐を空しくするよりほかに道はあるまいよ",
+   "code": "M08"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "裏へ出て、冷水浴をしていたら、かみさんが着物を持って来てくれた",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんは、勢よく、手をぽんぽん敲く",
+   "id": "rokusan"
+  },
+  {
+   "basis": "熊本通いは八時と一時に出ますたい",
+   "id": "yadoyatoi"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "81786961280f42b10ef257bd6b96b30c263f8b421d1830165f6794573d419ec4",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "八時",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "yadoyatoi",
+   "evidence": "inferred"
+  }
+ ]
+}

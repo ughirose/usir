@@ -1,0 +1,110 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "圭さんの影を見失った",
+  "F_valence": -1,
+  "f_arousal": 0,
+  "f_basis": "樹と樹の間をすかして見ても何にも見えぬ",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "路は左右に曲折して爪先上りだから",
+   "code": "E02"
+  },
+  {
+   "basis": "小股に後から尾いて行く",
+   "code": "E14"
+  },
+  {
+   "basis": "非常な音だ。たしかに足の下がうなってる",
+   "code": "E07"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "しばらくは雑木林の間を行く",
+   "evidence": "explicit",
+   "object": "雑木林の山道",
+   "predicate": "MOVED_TO",
+   "subject": "keisan"
+  },
+  {
+   "basis": "圭さんの影を見失った",
+   "category": "relation_status",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "keisan",
+   "text": "碌さんが先行する圭さんを見失う"
+  },
+  {
+   "basis": "少々心細くなった",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "一人になり心細くなる"
+  },
+  {
+   "basis": "梢にしたたる雨の音が、さあと北の方へ走る",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "天気",
+   "text": "雨が降り出す"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "雑木林",
+ "mood_top3": [
+  {
+   "basis": "たしかに足の下がうなってる",
+   "code": "M07"
+  },
+  {
+   "basis": "饂飩腹の碌さんは少々心細くなった",
+   "code": "M03"
+  },
+  {
+   "basis": "山を下りる人は一人もない",
+   "code": "M11"
+  }
+ ],
+ "pov_character": "rokusan",
+ "present": [
+  {
+   "basis": "と圭さんは薄黒く渦巻く煙りを仰いで",
+   "id": "keisan"
+  },
+  {
+   "basis": "碌さんは小さな体躯をすぼめて、小股に後から尾いて行く",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "a5384559378f66aa759dca733b716f3da3fa170c99af33beef9498ae3c7386c9",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "三十分と立たぬうちに",
+  "evidence": "explicit",
+  "explicit_time": "今朝宿を立つ時",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

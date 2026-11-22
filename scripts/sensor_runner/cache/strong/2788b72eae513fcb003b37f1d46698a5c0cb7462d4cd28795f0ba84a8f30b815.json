@@ -1,0 +1,112 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": -1,
+  "F_basis": "黙然として、対坐していた圭さんと碌さんは顔を見合わして、にやりと笑った",
+  "F_valence": 0,
+  "f_arousal": -1,
+  "f_basis": "癇走った上に何だか心細い",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "聞えるだろう",
+   "code": "E03"
+  },
+  {
+   "basis": "二人の話しはどこまで行っても竹刀と小手で持ち切っている",
+   "code": "E16"
+  },
+  {
+   "basis": "かあんかあんと鉄を打つ音がする",
+   "code": "E09"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "何だか寒いね、君",
+   "category": "body_health",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "寒さを感じ、体が堅くなる"
+  },
+  {
+   "basis": "にやりと笑った",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "碌さんと顔を見合わせて笑う"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "ふうん。竹刀を落したのかい",
+   "code": "M05"
+  },
+  {
+   "basis": "初秋の日脚は、うそ寒く、遠い国の方へ傾いて",
+   "code": "M02"
+  },
+  {
+   "basis": "かあんかあんと鉄を打つ音が静かな村へ響き渡る",
+   "code": "M01"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "「聞えるだろう」と圭さんが云う",
+   "id": "keisan"
+  },
+  {
+   "basis": "「うん」と碌さんは答えたぎり黙然としている",
+   "id": "rokusan"
+  },
+  {
+   "basis": "隣りの部屋で何だか二人しきりに話をしている",
+   "id": "tonari_a"
+  },
+  {
+   "basis": "隣りの部屋で何だか二人しきりに話をしている",
+   "id": "tonari_b"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "2788b72eae513fcb003b37f1d46698a5c0cb7462d4cd28795f0ba84a8f30b815",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "初秋の日脚は、うそ寒く、遠い国の方へ傾いて",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "tonari_a",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "tonari_b",
+   "evidence": "inferred"
+  }
+ ]
+}

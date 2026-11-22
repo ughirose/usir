@@ -1,0 +1,5510 @@
+{
+ "provenance": "step1-threestage-nogold:qwen2.5:14b (chunked; stage1 + postprocess + stage3 recheck_v2), config step1_eval_config_v5_threestage.json, chunks_done 22/22",
+ "scenes": {
+  "0c2cec2759852a52e222fd7ab737acbe7154e42b7034614be509f0b454e0d19c": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   }
+  ],
+  "0d690b18a1186fc03d5423282d11f137a93e2e34126ce109ce56588f728a6e32": [
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 27
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 28
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 29
+   }
+  ],
+  "0db5ab1925c973d76da8bd688503e591f9a4c0ad6ac3dcc40c0ae93ca141584e": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 22
+   }
+  ],
+  "17456171bdb01840b07044246a6292a718e1faf473b5caaa4feb6554644c9cd1": [
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   }
+  ],
+  "1b409206bbe22efec46fae3f1e1cdf712edc8fc5053adc31135a1764575d54bb": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   }
+  ],
+  "2209d0b73755f5ce63e475704a23449ed2461e3b0fd077234c2471c5640764a3": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 27
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 28
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 29
+   }
+  ],
+  "2788b72eae513fcb003b37f1d46698a5c0cb7462d4cd28795f0ba84a8f30b815": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "tonari_a",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "tonari_b",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "tonari_a",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "tonari_b",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "tonari_a",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "tonari_b",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "tonari_a",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   }
+  ],
+  "2defd3e1b8eae0b58096c29d66956a2161f3e0bef9a1f048e52556df88981090": [
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 26
+   }
+  ],
+  "327ae8eb07a80768b7de1013482e2ff4be7b222bc32b18cb9b028045f1e9e34b": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 22
+   }
+  ],
+  "35cc194a2f6d5f914d553d58284c10b1d8dfa4efaf19fca2bae620b618f3bbc3": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 27
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 28
+   }
+  ],
+  "3d874b95a42436b22a037be5e44d251a289b77d768cbb61ade9f378b5b0f6b10": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 27
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 28
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 29
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 30
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 31
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 32
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 33
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 34
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 35
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 36
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 37
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 38
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 39
+   }
+  ],
+  "4229a594d83719e73108b473720dc787f2871fcd35dccb74498152c19ee41c35": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   }
+  ],
+  "43a197bd38bf781402c1d2e71057166a19f3e9f359afc4e51c0f3435919c6788": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   }
+  ],
+  "5d4298ebdc709044d9946a35d43fafc8507fa7b60eaf0062156ae77cfe427885": [
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 27
+   }
+  ],
+  "6c4ba5a827916710545a30dbdef385d0af323e6c22e3d742bdff217759f4bfbd": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   }
+  ],
+  "7699b2d5c2e46bbbbf8e1fc58faa7f72f121262580e5924a867640bc7c05f31e": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   }
+  ],
+  "81786961280f42b10ef257bd6b96b30c263f8b421d1830165f6794573d419ec4": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 27
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 28
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 29
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 30
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 31
+   }
+  ],
+  "83e2e91fa9b0d8b7200e1f121bee815e1da8fb084d59bf1545779b7ff50a2e8c": [
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 27
+   }
+  ],
+  "864d37a9a24828335825a8c5f7bb0e27509a5973d4c397f6e7be27791725a667": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 21
+   }
+  ],
+  "92418b9732287783c75305dc7695a89ebe85e446bb45519a61d39138738fe8f4": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   }
+  ],
+  "9a2132ec31d296aca51452239ac379c09112d0ffe772d620ed01ca4265087126": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   }
+  ],
+  "9b789dd966988adaf1a43ef145eaff2d7982240b692af2f4d79d28865207ac95": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   }
+  ],
+  "a5321541d98acf67b45f20b033d8ed413464899620c2616ef1d0717b24e70ea3": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   }
+  ],
+  "a5384559378f66aa759dca733b716f3da3fa170c99af33beef9498ae3c7386c9": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   }
+  ],
+  "a73fcb87a406a84aa78e3c5379fa5ffe4abe5c17f619ee4e8dfad393d7b86188": [
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 27
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 28
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 29
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 30
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 31
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 32
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 33
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 34
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 35
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 36
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 37
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 38
+   }
+  ],
+  "aa19112341c793cc739fb9a32a4bb6d0483b87211a5e5994e10689454d583a56": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 23
+   }
+  ],
+  "ac6a2e95953d80ae3b125b9b3b4d238a4329e4ea5555b2057c4694c3f3163733": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 27
+   }
+  ],
+  "b5ee8252a8c58de91187ab1a6e7ac1300eb63086c3a46330450a3d126265bafd": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   }
+  ],
+  "bc204f0dbd0d7ce8e0f819167c29299cf4eb1fa2ad4aadd9ba68d545cab69ee2": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   }
+  ],
+  "bea770eff1142d6fd9d1b08f18be11dc05452212df7d1e277fd2a02dfe43167b": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 27
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 28
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 29
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 30
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 31
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 32
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 33
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 34
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "yadoyatoi",
+    "utterance_index": 35
+   },
+   {
+    "addressee_id": "yadoyatoi",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 36
+   }
+  ],
+  "ce09ce28354e1147f5262efc861826e0abf76833ea8cf2f4ce1fce82bd619c40": [
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   }
+  ],
+  "cfd3252d00096a10b70eeedc1c79f4e74153d20505768e7e5f287109f8cd9f1e": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 26
+   }
+  ],
+  "d90cf40ff23341580306605e69bde6d0419766f10b808a5be206313274022554": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 27
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 28
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 29
+   }
+  ],
+  "e87db4716d1bd9285346fb52b64b548a2645f7180aad93ea795a5ffbbf340736": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   }
+  ],
+  "f00bcc1d7e9187847921c6c3fcbd46de3a8e9558a5ef2fbd820cd50732115acb": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "speaker_id": "keisan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 27
+   }
+  ],
+  "f18f0c262afd0768f2d1044327b82159c84cb076e3188c88b5adac880224458f": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   }
+  ],
+  "f1ea2bb6a4c6aa58669e3f8869b16462866b09c13ebc75609fd7dc19dadfea9a": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "hige_jii",
+    "utterance_index": 19
+   }
+  ],
+  "f49bd5fda426a752be1ff25809b35786f54b2c058ca0842e94669a5e3089fc67": [
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "explicit",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "explicit",
+    "speaker_id": "gejo",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "gejo",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   }
+  ],
+  "f7b21ea8d8c9029469716f5b6ac221f61bcd4926c4dd42ab4aeba384e8aa048c": [
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "gejo",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   }
+  ],
+  "f8b805a0bd01ccdc7d33fcaa919b77b8feef548f40d174422d1ba6e4d5f7dc52": [
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 7
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 8
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 9
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 10
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 11
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 12
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 13
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 14
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 15
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 16
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 17
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 18
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 19
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 20
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 21
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 22
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 23
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 24
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 25
+   },
+   {
+    "addressee_id": "keisan",
+    "evidence": "inferred",
+    "speaker_id": "rokusan",
+    "utterance_index": 26
+   },
+   {
+    "addressee_id": "rokusan",
+    "evidence": "inferred",
+    "speaker_id": "keisan",
+    "utterance_index": 27
+   }
+  ]
+ },
+ "schema": "sensor.local_utterances/1"
+}

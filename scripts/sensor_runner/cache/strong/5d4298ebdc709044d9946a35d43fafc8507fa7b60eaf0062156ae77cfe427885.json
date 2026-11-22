@@ -1,0 +1,103 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "安心して上がりたまえ",
+  "F_valence": 1,
+  "f_arousal": 1,
+  "f_basis": "僕の身体は十七貫六百目あるんだから",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "安心して上がりたまえ",
+   "code": "E15"
+  },
+  {
+   "basis": "そこへ、ちょっと、首を出して見てくれ",
+   "code": "E03"
+  },
+  {
+   "basis": "脱兎の勢で飛び出した",
+   "code": "E02"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "こりゃ大変浅い",
+   "evidence": "explicit",
+   "object": "谷の浅い所から上がれる",
+   "predicate": "LEARNED",
+   "subject": "keisan"
+  },
+  {
+   "basis": "兵児帯を解いて、その先を傘の柄へ結びつけて",
+   "evidence": "explicit",
+   "object": "圭さんを引き上げる帯と傘の綱",
+   "predicate": "ACQUIRED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "そら上がるぜ",
+   "evidence": "explicit",
+   "object": "帯と傘による引き上げ",
+   "predicate": "HOOK_OPENED",
+   "subject": "keisan"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "薄暗い谷底",
+ "mood_top3": [
+  {
+   "basis": "長いのが天竺から、ぶら下がったろう",
+   "code": "M05"
+  },
+  {
+   "basis": "君が滑べると、二人共落ちてしまうぜ",
+   "code": "M03"
+  },
+  {
+   "basis": "ちっとも気の毒じゃない",
+   "code": "M10"
+  }
+ ],
+ "pov_character": "rokusan",
+ "present": [
+  {
+   "basis": "ぼんやりと白い者が動いている",
+   "id": "keisan"
+  },
+  {
+   "basis": "碌さんは腹の痛いのも、足の豆も忘れて、脱兎の勢で飛び出した",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "5d4298ebdc709044d9946a35d43fafc8507fa7b60eaf0062156ae77cfe427885",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "結びつけるとも。すぐ結びつけてやる",
+     "delta": 1
+    }
+   ],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

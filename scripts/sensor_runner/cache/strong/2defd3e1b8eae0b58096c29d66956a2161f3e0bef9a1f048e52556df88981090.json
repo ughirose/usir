@@ -1,0 +1,107 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "圭さんは自己の申し出しを惜気もなし撤回した",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "かあんかあんと澄み切った空の底に響き渡る",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "あれは何日掛ったら抜けるだろう",
+   "code": "E03"
+  },
+  {
+   "basis": "碌さんが反対する",
+   "code": "E04"
+  },
+  {
+   "basis": "古いのを抜いちまわないうちに、新しいのが生えるかも知れないね",
+   "code": "E16"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "全体豆腐屋の子がどうして、そんなになったもんだね",
+   "evidence": "explicit",
+   "object": "圭さんが豆腐屋の子から変化した因縁",
+   "predicate": "HOOK_OPENED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "あの音を聞くと、どうしても豆腐屋の音が思い出される",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "話題",
+   "text": "髯を抜く爺さんの話から豆腐屋の話へ戻る"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": null,
+ "mood_top3": [
+  {
+   "basis": "痛いに違いないね。忠告してやろうか",
+   "code": "M05"
+  },
+  {
+   "basis": "かあんかあんと澄み切った空の底に響き渡る",
+   "code": "M01"
+  },
+  {
+   "basis": "自分でなろうと思うのさ",
+   "code": "M14"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんは話頭を転じた",
+   "id": "keisan"
+  },
+  {
+   "basis": "碌さんが圭さんに質問をかける",
+   "id": "rokusan"
+  },
+  {
+   "basis": "あの丁寧に顋を撫で廻しながら抜いてるのを",
+   "id": "hige_jii"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "2defd3e1b8eae0b58096c29d66956a2161f3e0bef9a1f048e52556df88981090",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 5,
+     "basis": "自分でなろうと思うのさ",
+     "delta": 1
+    }
+   ],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "hige_jii",
+   "evidence": "inferred"
+  }
+ ]
+}

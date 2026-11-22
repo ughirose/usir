@@ -1,0 +1,116 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "あの青い葉が一面に、こう照らされているじゃないか",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "奈落から半空に向って、真直に立つ火の柱を見詰めていた",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "あのくらい火が出たって、御山へは登れるんだろう",
+   "code": "E03"
+  },
+  {
+   "basis": "君は無学だよ",
+   "code": "E04"
+  },
+  {
+   "basis": "ごろりと寝転んだ",
+   "code": "E16"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "女でも登りますたい",
+   "evidence": "explicit",
+   "object": "女でも登山できること",
+   "predicate": "LEARNED",
+   "subject": "rokusan"
+  },
+  {
+   "basis": "ごろりと寝転んだ",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "言い捨てて部屋に寝転ぶ"
+  },
+  {
+   "basis": "黙然と、眉を軒げて",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "一人で黙って噴火の火柱を見詰める"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "部屋のなか",
+ "mood_top3": [
+  {
+   "basis": "真直に立つ火の柱を見詰めていた",
+   "code": "M07"
+  },
+  {
+   "basis": "命にかかわっちゃ降参だ",
+   "code": "M05"
+  },
+  {
+   "basis": "黙然と、眉を軒げて",
+   "code": "M14"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんは、横から相手の顔を見た",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんは下女の顔を覗き込む",
+   "id": "rokusan"
+  },
+  {
+   "basis": "ねえい。女でも登りますたい",
+   "id": "gejo"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "0c2cec2759852a52e222fd7ab737acbe7154e42b7034614be509f0b454e0d19c",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 2,
+     "basis": "真直に立つ火の柱を見詰めていた",
+     "delta": 1
+    }
+   ],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "gejo",
+   "evidence": "inferred"
+  }
+ ]
+}

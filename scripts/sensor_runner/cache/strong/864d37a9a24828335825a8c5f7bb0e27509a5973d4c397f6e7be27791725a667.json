@@ -1,0 +1,109 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "社会の悪徳を公然道楽にしている奴らは、どうしても叩きつけなければならん",
+  "F_valence": 1,
+  "f_arousal": 0,
+  "f_basis": "空にあるものは、煙りと、雨と、風と雲である",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "文明の革命とは",
+   "code": "E03"
+  },
+  {
+   "basis": "碌さんは黙然として尾いて行く",
+   "code": "E02"
+  },
+  {
+   "basis": "地に残る馬の足跡さえ、ようやく見つけたくらいだから",
+   "code": "E14"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "僕の精神はあれだよ",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "keisan",
+   "text": "文明の革命への信念を碌さんに表明する"
+  },
+  {
+   "basis": "うん、やる",
+   "category": "relation_status",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "圭さんの主張に同意し、やると応じる"
+  },
+  {
+   "basis": "腰から下はどぶ鼠のように染まった",
+   "category": "object_state",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "二人の姿",
+   "text": "降灰と雨で腰から下が泥鼠色に染まる"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "無人の境",
+ "mood_top3": [
+  {
+   "basis": "君もやれ",
+   "code": "M14"
+  },
+  {
+   "basis": "二人は煢々として無人の境を行く",
+   "code": "M11"
+  },
+  {
+   "basis": "雄大だろう、君",
+   "code": "M07"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "圭さんは、のっそりと踵をめぐらした",
+   "id": "keisan"
+  },
+  {
+   "basis": "碌さんは黙然として尾いて行く",
+   "id": "rokusan"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "864d37a9a24828335825a8c5f7bb0e27509a5973d4c397f6e7be27791725a667",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 4,
+     "basis": "社会の悪徳を公然道楽にしている奴らは、どうしても叩きつけなければならん",
+     "delta": 1
+    }
+   ],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  }
+ ]
+}

@@ -1,0 +1,108 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "どれと、圭さんはすぐ椽側へ飛び出す",
+  "F_valence": 0,
+  "f_arousal": 1,
+  "f_basis": "と黒い指先を出す",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "いやあ、こいつは熾だ",
+   "code": "E07"
+  },
+  {
+   "basis": "御山へ御登りなさいますか",
+   "code": "E03"
+  },
+  {
+   "basis": "僕は登りたくなくって、仕方がないんだ",
+   "code": "E04"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "灰でござりまっす",
+   "evidence": "explicit",
+   "object": "阿蘇の灰が降っていること",
+   "predicate": "LEARNED",
+   "subject": "keisan"
+  },
+  {
+   "basis": "圭さんはすぐ椽側へ飛び出す",
+   "evidence": "explicit",
+   "object": "椽側",
+   "predicate": "MOVED_TO",
+   "subject": "keisan"
+  },
+  {
+   "basis": "あれじゃとうてい駄目だ",
+   "category": "emotion",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "rokusan",
+   "text": "噴火の赤い火を見て登山を怯む"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "椽側",
+ "mood_top3": [
+  {
+   "basis": "今夜は大変赤く見えます",
+   "code": "M07"
+  },
+  {
+   "basis": "登る途中で焼き殺されちまうだろう",
+   "code": "M05"
+  },
+  {
+   "basis": "荒れればなお愉快だ",
+   "code": "M14"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "と圭さんが云うと",
+   "id": "keisan"
+  },
+  {
+   "basis": "と碌さんが打ち壊わした",
+   "id": "rokusan"
+  },
+  {
+   "basis": "下女は障子をあけて",
+   "id": "gejo"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "ac6a2e95953d80ae3b125b9b3b4d238a4329e4ea5555b2057c4694c3f3163733",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "夜だから",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "gejo",
+   "evidence": "inferred"
+  }
+ ]
+}

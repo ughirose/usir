@@ -1,0 +1,110 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "そこが今悶着中さ",
+  "F_valence": 0,
+  "f_arousal": 0,
+  "f_basis": "ハハハありゃ御者でも亭主でもないんだとさ。弱ったな",
+  "f_valence": 1
+ },
+ "event_top3": [
+  {
+   "basis": "また主義か。窮屈な主義だね",
+   "code": "E04"
+  },
+  {
+   "basis": "君は御者かい",
+   "code": "E03"
+  },
+  {
+   "basis": "僕の命令に服さなければならなくなる",
+   "code": "E13"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "雇人で……",
+   "evidence": "explicit",
+   "object": "宿の男は御者でも亭主でもなく雇人",
+   "predicate": "LEARNED",
+   "subject": "keisan"
+  },
+  {
+   "basis": "八時前に悶着をかたづけて置こう",
+   "category": "relation_status",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "rokusan",
+   "target": "relation_to_keisan",
+   "text": "帰るか登るかの談判が八時前まで持ち越される"
+  },
+  {
+   "basis": "あの男が御者ですと云うだろう",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "keisan",
+   "target": "賭",
+   "text": "賭の勝負が成立せず無効になる"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "宿",
+ "mood_top3": [
+  {
+   "basis": "僕が賭に勝つ訳になるから",
+   "code": "M05"
+  },
+  {
+   "basis": "僕の主義に済まない",
+   "code": "M14"
+  },
+  {
+   "basis": "君は元来強情過ぎるよ",
+   "code": "M08"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "また主義か。窮屈な主義だね",
+   "id": "keisan"
+  },
+  {
+   "basis": "僕の主義に済まない",
+   "id": "rokusan"
+  },
+  {
+   "basis": "雇人で……",
+   "id": "yadoyatoi"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "bea770eff1142d6fd9d1b08f18be11dc05452212df7d1e277fd2a02dfe43167b",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "八時",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [],
+   "character_id": "keisan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "rokusan",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "yadoyatoi",
+   "evidence": "inferred"
+  }
+ ]
+}
