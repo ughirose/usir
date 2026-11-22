@@ -1,0 +1,164 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "弱々しゅう見えてもしぶとい者どもじゃ",
+  "F_valence": -1,
+  "f_arousal": 0,
+  "f_basis": "左右には二郎、三郎の二人の息子が狛犬のように列んでいる",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "名はわしがつけてやる。姉はいたつきを垣衣、弟は我が名を萱草じゃ",
+   "code": "E13"
+  },
+  {
+   "basis": "垣衣は浜へ往って、日に三荷の潮を汲め",
+   "code": "E09"
+  },
+  {
+   "basis": "ただ目をみはって大夫を見ている",
+   "code": "E01"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "姉はいたつきを垣衣",
+   "category": "identity_form",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "anju",
+   "target": "anju",
+   "text": "大夫に垣衣という名を付けられた"
+  },
+  {
+   "basis": "弟は我が名を萱草じゃ",
+   "category": "identity_form",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "zushio",
+   "target": "zushio",
+   "text": "大夫に萱草という名を付けられた"
+  },
+  {
+   "basis": "ふいと家を出て行くえが知れなくなった",
+   "evidence": "explicit",
+   "object": "長男太郎の失踪",
+   "predicate": "HOOK_OPENED",
+   "subject": null
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {
+  "dayu": [
+   0,
+   1,
+   -1,
+   -1,
+   -1,
+   1
+  ],
+  "jiro": [
+   0,
+   1,
+   -1,
+   0,
+   -1,
+   0
+  ],
+  "saburo": [
+   0,
+   -1,
+   -1,
+   -1,
+   0,
+   1
+  ]
+ },
+ "location": "大廈の奥深い広間",
+ "mood_top3": [
+  {
+   "basis": "髪も鬚も銀色に光っている",
+   "code": "M07"
+  },
+  {
+   "basis": "辞儀をせいと言った",
+   "code": "M14"
+  },
+  {
+   "basis": "炭火がおこしてある",
+   "code": "M02"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "山椒大夫は几にもたれている",
+   "id": "dayu"
+  },
+  {
+   "basis": "左右には二郎、三郎の二人の息子が狛犬のように列んでいる",
+   "id": "jiro"
+  },
+  {
+   "basis": "そばから三郎が口を出した",
+   "id": "saburo"
+  },
+  {
+   "basis": "奴頭が安寿、厨子王を連れて前へ出た",
+   "id": "yakkogashira"
+  },
+  {
+   "basis": "奴頭が安寿、厨子王を連れて前へ出た",
+   "id": "anju"
+  },
+  {
+   "basis": "奴頭が安寿、厨子王を連れて前へ出た",
+   "id": "zushio"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "96fae1b9405675688cbfa75e92432292d8173460fe2a19cf044f0df5631a8413",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "inferred",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "名はわしがつけてやる",
+     "delta": -1
+    }
+   ],
+   "character_id": "dayu",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 1,
+     "basis": "奉公初めは男が柴苅り、女が汐汲みときまっている",
+     "delta": 1
+    }
+   ],
+   "character_id": "saburo",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [],
+   "character_id": "jiro",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "yakkogashira",
+   "evidence": "explicit"
+  }
+ ]
+}

@@ -1,0 +1,182 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "二人は餅を手に持って食べようともせず、目を見合わせて泣いた",
+  "F_valence": -2,
+  "f_arousal": -1,
+  "f_basis": "ただ悲しさばかりが胸にあふれて",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "安寿、厨子王をすぐに七貫文に買った",
+   "code": "E13"
+  },
+  {
+   "basis": "今はからずも引き分けられて",
+   "code": "E06"
+  },
+  {
+   "basis": "岸に沿うて南へ走って行く",
+   "code": "E02"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "今はからずも引き分けられて",
+   "category": "relation_status",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "anju",
+   "target": "anju",
+   "text": "母と引き離された"
+  },
+  {
+   "basis": "安寿、厨子王をすぐに七貫文に買った",
+   "category": "identity_form",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "anju",
+   "target": "anju",
+   "text": "山椒大夫方に七貫文で買われ奴婢の身となった"
+  },
+  {
+   "basis": "受け取った銭を懐に入れた",
+   "evidence": "explicit",
+   "object": "銭",
+   "predicate": "ACQUIRED",
+   "subject": "miyazaki"
+  },
+  {
+   "basis": "丹後の由良の港に来た",
+   "evidence": "explicit",
+   "object": "丹後の由良の港",
+   "predicate": "MOVED_TO",
+   "subject": "miyazaki"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {
+  "anju": [
+   1,
+   1,
+   0,
+   1,
+   0,
+   0
+  ],
+  "miyazaki": [
+   0,
+   -1,
+   -1,
+   -1,
+   0,
+   0
+  ],
+  "yakkogashira": [
+   0,
+   1,
+   -1,
+   0,
+   -1,
+   -1
+  ],
+  "zushio": [
+   1,
+   1,
+   0,
+   0,
+   1,
+   0
+  ]
+ },
+ "location": "丹後の由良の港",
+ "mood_top3": [
+  {
+   "basis": "ただ悲しさばかりが胸にあふれて",
+   "code": "M04"
+  },
+  {
+   "basis": "二人はどうしていいかわからない",
+   "code": "M11"
+  },
+  {
+   "basis": "やれやれ、餓鬼どもを片づけて身が軽うなった",
+   "code": "M16"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "宮崎の三郎が舟は岸に沿うて南へ走って行く",
+   "id": "miyazaki"
+  },
+  {
+   "basis": "姉の安寿と弟の厨子王とは抱き合って泣いている",
+   "id": "anju"
+  },
+  {
+   "basis": "姉の安寿と弟の厨子王とは抱き合って泣いている",
+   "id": "zushio"
+  },
+  {
+   "basis": "港に出張っていた大夫の奴頭は",
+   "id": "yakkogashira"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "498040563d41c2b07ff9b332ff684b18d565aaaccbafe3190d64c3666667fe8e",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "こうして二人は幾日か舟に明かし暮らした",
+  "evidence": "explicit",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 4,
+     "basis": "姉の安寿と弟の厨子王とは抱き合って泣いている",
+     "delta": 1
+    }
+   ],
+   "character_id": "anju",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [
+    {
+     "axis": 4,
+     "basis": "目を見合わせて泣いた",
+     "delta": 1
+    }
+   ],
+   "character_id": "zushio",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "やれやれ、餓鬼どもを片づけて身が軽うなった",
+     "delta": -1
+    },
+    {
+     "axis": 1,
+     "basis": "いつまでも泣くか」と二人を打つようになった",
+     "delta": -1
+    }
+   ],
+   "character_id": "miyazaki",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [],
+   "character_id": "yakkogashira",
+   "evidence": "explicit"
+  }
+ ]
+}

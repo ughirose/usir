@@ -1,0 +1,152 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "身の上を打ち明けて、姉妹の誓いをした",
+  "F_valence": 1,
+  "f_arousal": -1,
+  "f_basis": "日の暮れまでに首尾よく調った",
+  "f_valence": 0
+ },
+ "event_top3": [
+  {
+   "basis": "樵は我が荷をおろして置いて、すぐに一荷苅ってくれた",
+   "code": "E15"
+  },
+  {
+   "basis": "ようよう午までに一荷苅り、午からまた一荷苅った",
+   "code": "E09"
+  },
+  {
+   "basis": "隣で汲んでいる女子に、無邪気な安寿が気に入った",
+   "code": "E01"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "柴はこうして苅るものじゃ",
+   "evidence": "explicit",
+   "object": "柴の苅り方",
+   "predicate": "LEARNED",
+   "subject": "zushio"
+  },
+  {
+   "basis": "安寿は汐を汲み覚えた",
+   "evidence": "explicit",
+   "object": "汐の汲み方",
+   "predicate": "LEARNED",
+   "subject": "anju"
+  },
+  {
+   "basis": "姉妹の誓いをした",
+   "category": "relation_status",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "anju",
+   "target": "kohagi",
+   "text": "安寿と小萩が姉妹の誓いをした"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {
+  "kikori": [
+   0,
+   1,
+   0,
+   1,
+   0,
+   0
+  ],
+  "kohagi": [
+   1,
+   1,
+   0,
+   1,
+   0,
+   0
+  ]
+ },
+ "location": "潮を汲む場所",
+ "mood_top3": [
+  {
+   "basis": "無邪気な安寿が気に入った",
+   "code": "M10"
+  },
+  {
+   "basis": "心で心を励まして",
+   "code": "M14"
+  },
+  {
+   "basis": "これも汐の汲みようを知らない",
+   "code": "M03"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "柴を背負って麓へ降りる、ほかの樵が通りかかって",
+   "id": "kikori"
+  },
+  {
+   "basis": "と厨子王は正直に言った",
+   "id": "zushio"
+  },
+  {
+   "basis": "浜辺に往く姉の安寿は、川の岸を北へ行った",
+   "id": "anju"
+  },
+  {
+   "basis": "これは伊勢の小萩といって",
+   "id": "kohagi"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "79367411331b4528b85018d8e428f9934c4e89b30bce35d5536461614a68696b",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "日がよほど昇ってから",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "樵は我が荷をおろして置いて、すぐに一荷苅ってくれた",
+     "delta": 1
+    }
+   ],
+   "character_id": "kikori",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "とうとう一荷汲んでくれた",
+     "delta": 1
+    }
+   ],
+   "character_id": "kohagi",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 1,
+     "basis": "と厨子王は正直に言った",
+     "delta": 1
+    }
+   ],
+   "character_id": "zushio",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [],
+   "character_id": "anju",
+   "evidence": "explicit"
+  }
+ ]
+}

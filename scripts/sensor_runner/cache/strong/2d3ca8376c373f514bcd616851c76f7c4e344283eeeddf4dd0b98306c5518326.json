@@ -1,0 +1,150 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 1,
+  "F_basis": "二人は死んでも別れぬと言った",
+  "F_valence": -1,
+  "f_arousal": 0,
+  "f_basis": "言っては泣き、泣いては言う",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "奴は奴の組へ引きずって往け。婢は婢の組へ引きずって往け",
+   "code": "E13"
+  },
+  {
+   "basis": "二人は死んでも別れぬと言った",
+   "code": "E04"
+  },
+  {
+   "basis": "わたくしがいいように計らってやりましょう",
+   "code": "E03"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "姉と弟とを一しょに置いた",
+   "category": "relation_status",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "jiro",
+   "target": "anju",
+   "text": "組分けを免れ、姉弟が同じ小屋に置かれた"
+  },
+  {
+   "basis": "二郎は三の木戸に小屋を掛けさせて",
+   "evidence": "explicit",
+   "object": "三の木戸の小屋",
+   "predicate": "MOVED_TO",
+   "subject": "anju"
+  },
+  {
+   "basis": "二郎は三の木戸に小屋を掛けさせて",
+   "evidence": "explicit",
+   "object": "三の木戸の小屋",
+   "predicate": "MOVED_TO",
+   "subject": "zushio"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "新参小屋",
+ "mood_top3": [
+  {
+   "basis": "二人は死んでも別れぬと言った",
+   "code": "M14"
+  },
+  {
+   "basis": "損になることはわしも嫌いじゃ",
+   "code": "M16"
+  },
+  {
+   "basis": "言っては泣き、泣いては言う",
+   "code": "M04"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "二人は死んでも別れぬと言った",
+   "id": "anju"
+  },
+  {
+   "basis": "二人は死んでも別れぬと言った",
+   "id": "zushio"
+  },
+  {
+   "basis": "奴頭が大夫に訴えた",
+   "id": "yakkogashira"
+  },
+  {
+   "basis": "大夫は言った",
+   "id": "dayu"
+  },
+  {
+   "basis": "二郎がかたわらから呼び止めた",
+   "id": "jiro"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "2d3ca8376c373f514bcd616851c76f7c4e344283eeeddf4dd0b98306c5518326",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "とかくするうちに十日立った",
+  "evidence": "explicit",
+  "explicit_time": null,
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 5,
+     "basis": "二人は死んでも別れぬと言った",
+     "delta": 1
+    }
+   ],
+   "character_id": "anju",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 5,
+     "basis": "二人は死んでも別れぬと言った",
+     "delta": 1
+    }
+   ],
+   "character_id": "zushio",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "損になることはわしも嫌いじゃ",
+     "delta": -1
+    }
+   ],
+   "character_id": "dayu",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 1,
+     "basis": "わたくしがいいように計らってやりましょう",
+     "delta": -1
+    }
+   ],
+   "character_id": "jiro",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [],
+   "character_id": "yakkogashira",
+   "evidence": "explicit"
+  }
+ ]
+}

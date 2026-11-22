@@ -1,0 +1,141 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 0,
+  "F_basis": "ひとり涙をこぼしていた",
+  "F_valence": -1,
+  "f_arousal": -1,
+  "f_basis": "屋根の上、地にちらばった藁の上には霜が降っている",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "一枝二枝苅るうちに、厨子王は指を傷めた",
+   "code": "E09"
+  },
+  {
+   "basis": "姉は浜辺へ、弟は山路をさして行くのである",
+   "code": "E02"
+  },
+  {
+   "basis": "ぼんやりすわって時を過した",
+   "code": "E16"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "安寿には桶と杓",
+   "evidence": "explicit",
+   "object": "桶と杓",
+   "predicate": "ACQUIRED",
+   "subject": "anju"
+  },
+  {
+   "basis": "厨子王には籠と鎌を渡した",
+   "evidence": "explicit",
+   "object": "籠と鎌",
+   "predicate": "ACQUIRED",
+   "subject": "zushio"
+  },
+  {
+   "basis": "厨子王は指を傷めた",
+   "category": "body_health",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "zushio",
+   "target": "zushio",
+   "text": "柴刈りで指を傷めた"
+  },
+  {
+   "basis": "厨子王が登る山は由良が嶽の裾で",
+   "evidence": "explicit",
+   "object": "由良が嶽の山",
+   "predicate": "MOVED_TO",
+   "subject": "zushio"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "新参小屋",
+ "mood_top3": [
+  {
+   "basis": "ひとり涙をこぼしていた",
+   "code": "M11"
+  },
+  {
+   "basis": "翌日の朝はひどく寒かった",
+   "code": "M01"
+  },
+  {
+   "basis": "運命のもとに項を屈めるよりほかはないと、けなげにも相談した",
+   "code": "M14"
+  }
+ ],
+ "pov_character": "zushio",
+ "present": [
+  {
+   "basis": "三郎が言った",
+   "id": "saburo"
+  },
+  {
+   "basis": "奴頭は二人の子供を新参小屋に連れて往って",
+   "id": "yakkogashira"
+  },
+  {
+   "basis": "安寿には桶と杓",
+   "id": "anju"
+  },
+  {
+   "basis": "厨子王には籠と鎌を渡した",
+   "id": "zushio"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "6aae1e7b907f3f8d7f2edc0c4927de69100d69f0a7294c0a6737b8fb543f8ba5",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": null,
+  "evidence": "explicit",
+  "explicit_time": "翌日の朝はひどく寒かった",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "ひとり涙をこぼしていた",
+     "delta": 1
+    },
+    {
+     "axis": 1,
+     "basis": "あすからはめいめいがもらいに来ると誓って",
+     "delta": 1
+    }
+   ],
+   "character_id": "zushio",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 5,
+     "basis": "運命のもとに項を屈めるよりほかはないと、けなげにも相談した",
+     "delta": -1
+    }
+   ],
+   "character_id": "anju",
+   "evidence": "inferred"
+  },
+  {
+   "changes": [],
+   "character_id": "saburo",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [],
+   "character_id": "yakkogashira",
+   "evidence": "explicit"
+  }
+ ]
+}

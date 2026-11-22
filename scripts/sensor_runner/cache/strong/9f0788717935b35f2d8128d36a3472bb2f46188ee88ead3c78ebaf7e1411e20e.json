@@ -1,0 +1,145 @@
+{
+ "annotator": "claude-code-session:claude-sonnet-5-5",
+ "awase": {
+  "F_arousal": 2,
+  "F_basis": "逃亡の企てをしたものには烙印をする",
+  "F_valence": -2,
+  "f_arousal": 1,
+  "f_basis": "三郎は弓矢を持って、つと小屋のうちにはいった",
+  "f_valence": -1
+ },
+ "event_top3": [
+  {
+   "basis": "三郎が立聞きをしたのは、あいにくこの安寿の詞であった",
+   "code": "E07"
+  },
+  {
+   "basis": "どうしても二人一しょにここを逃げ出しては駄目なの",
+   "code": "E08"
+  },
+  {
+   "basis": "逃亡の企てをしたものには烙印をする",
+   "code": "E13"
+  }
+ ],
+ "facts": [
+  {
+   "basis": "お前一人で逃げなくては",
+   "evidence": "explicit",
+   "object": "厨子王の逃亡計画",
+   "predicate": "HOOK_OPENED",
+   "subject": "anju"
+  },
+  {
+   "basis": "お主たちは逃げる談合をしておるな",
+   "evidence": "explicit",
+   "object": "二人の逃亡の談合",
+   "predicate": "LEARNED",
+   "subject": "saburo"
+  },
+  {
+   "basis": "逃亡の企てをしたものには烙印をする",
+   "category": "situation",
+   "evidence": "explicit",
+   "predicate": "STATE_CHANGED",
+   "subject": "anju",
+   "target": "anju",
+   "text": "逃亡の相談を聞かれ、烙印の脅しを受けた"
+  }
+ ],
+ "instruction_version": "strong.v1",
+ "ledger_additions": {},
+ "location": "小屋",
+ "mood_top3": [
+  {
+   "basis": "お前一人で逃げなくては",
+   "code": "M14"
+  },
+  {
+   "basis": "赤うなった鉄は熱いぞよ",
+   "code": "M07"
+  },
+  {
+   "basis": "三郎は弓矢を持って、つと小屋のうちにはいった",
+   "code": "M03"
+  }
+ ],
+ "pov_character": null,
+ "present": [
+  {
+   "basis": "きょうは姉がこう言った",
+   "id": "anju"
+  },
+  {
+   "basis": "二人は父母のことを言うたびに",
+   "id": "zushio"
+  },
+  {
+   "basis": "二郎は小屋にはいって二人に言った",
+   "id": "jiro"
+  },
+  {
+   "basis": "三郎は弓矢を持って、つと小屋のうちにはいった",
+   "id": "saburo"
+  }
+ ],
+ "provenance": "session",
+ "scene_hash": "9f0788717935b35f2d8128d36a3472bb2f46188ee88ead3c78ebaf7e1411e20e",
+ "schema": "sensor.strong/1",
+ "time": {
+  "elapsed_hint": "ほど経てまたある日の暮れに",
+  "evidence": "explicit",
+  "explicit_time": "ある日の暮れに",
+  "relative_order": "continuous"
+ },
+ "trait_changes": [
+  {
+   "changes": [
+    {
+     "axis": 5,
+     "basis": "わたしたちはその出来ないことがしたいのだわ",
+     "delta": 2
+    },
+    {
+     "axis": 3,
+     "basis": "わたしには構わないで、お前一人で逃げなくては",
+     "delta": 1
+    }
+   ],
+   "character_id": "anju",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 3,
+     "basis": "父母に逢いたいなら、大きゅうなる日を待つがよい",
+     "delta": 1
+    }
+   ],
+   "character_id": "jiro",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [
+    {
+     "axis": 1,
+     "basis": "それがこの邸の掟じゃ",
+     "delta": 1
+    },
+    {
+     "axis": 3,
+     "basis": "赤うなった鉄は熱いぞよ",
+     "delta": -1
+    }
+   ],
+   "character_id": "saburo",
+   "evidence": "explicit"
+  },
+  {
+   "changes": [],
+   "character_id": "zushio",
+   "evidence": "inferred"
+  }
+ ]
+}
