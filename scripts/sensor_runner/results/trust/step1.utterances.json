@@ -1,0 +1,194 @@
+{
+ "provenance": "step1-threestage:qwen2.5:14b (stage1 + postprocess + stage3 recheck_v2), config step1_eval_config_v5_threestage.json, run 2026-11-22T07:49:32.362304+00:00",
+ "scenes": {
+  "2d3ca8376c373f514bcd616851c76f7c4e344283eeeddf4dd0b98306c5518326": [
+   {
+    "addressee_id": "yakkogashira",
+    "evidence": "inferred",
+    "speaker_id": "dayu",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "dayu",
+    "evidence": "inferred",
+    "speaker_id": "jiro",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "jiro",
+    "evidence": "inferred",
+    "speaker_id": "dayu",
+    "utterance_index": 2
+   }
+  ],
+  "2dbe1a8c6c101a1e7b4ac2f982491adc85fec324ef29faa27dedf08b87c807ae": [
+   {
+    "addressee_id": "sado",
+    "evidence": "inferred",
+    "speaker_id": "ubatake",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "sado",
+    "evidence": "inferred",
+    "speaker_id": "ubatake",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "ubatake",
+    "evidence": "inferred",
+    "speaker_id": "sado",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "inferred",
+    "speaker_id": "ubatake",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "ubatake",
+    "evidence": "inferred",
+    "speaker_id": "sado",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "sado",
+    "evidence": "inferred",
+    "speaker_id": "haha",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "haha",
+    "evidence": "inferred",
+    "speaker_id": "sado",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "haha",
+    "evidence": "inferred",
+    "speaker_id": "sado",
+    "utterance_index": 7
+   }
+  ],
+  "498040563d41c2b07ff9b332ff684b18d565aaaccbafe3190d64c3666667fe8e": [
+   {
+    "addressee_id": "zushio",
+    "evidence": "explicit",
+    "speaker_id": "anju",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "anju",
+    "evidence": "explicit",
+    "speaker_id": "miyazaki",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "anju",
+    "evidence": "inferred",
+    "speaker_id": "miyazaki",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "anju",
+    "evidence": "ambiguous",
+    "speaker_id": null,
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "yakkogashira",
+    "evidence": "explicit",
+    "speaker_id": "miyazaki",
+    "utterance_index": 4
+   }
+  ],
+  "6aae1e7b907f3f8d7f2edc0c4927de69100d69f0a7294c0a6737b8fb543f8ba5": [
+   {
+    "addressee_id": "dayu",
+    "evidence": "inferred",
+    "speaker_id": "saburo",
+    "utterance_index": 0
+   }
+  ],
+  "79367411331b4528b85018d8e428f9934c4e89b30bce35d5536461614a68696b": [
+   {
+    "addressee_id": "zushio",
+    "evidence": "inferred",
+    "speaker_id": "kikori",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "kikori",
+    "evidence": "inferred",
+    "speaker_id": "zushio",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "zushio",
+    "evidence": "inferred",
+    "speaker_id": "kikori",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "anju",
+    "evidence": "inferred",
+    "speaker_id": "kohagi",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "kohagi",
+    "evidence": "inferred",
+    "speaker_id": "anju",
+    "utterance_index": 4
+   }
+  ],
+  "96fae1b9405675688cbfa75e92432292d8173460fe2a19cf044f0df5631a8413": [
+   {
+    "addressee_id": "yakkogashira",
+    "evidence": "inferred",
+    "speaker_id": "dayu",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "dayu",
+    "evidence": "inferred",
+    "speaker_id": "saburo",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "dayu",
+    "evidence": "explicit",
+    "speaker_id": "yakkogashira",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "yakkogashira",
+    "evidence": "inferred",
+    "speaker_id": "dayu",
+    "utterance_index": 3
+   }
+  ],
+  "9f0788717935b35f2d8128d36a3472bb2f46188ee88ead3c78ebaf7e1411e20e": [
+   {
+    "addressee_id": "anju",
+    "evidence": "inferred",
+    "speaker_id": "jiro",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "zushio",
+    "evidence": "inferred",
+    "speaker_id": "anju",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "anju",
+    "evidence": "inferred",
+    "speaker_id": "saburo",
+    "utterance_index": 2
+   }
+  ]
+ },
+ "schema": "sensor.local_utterances/1"
+}

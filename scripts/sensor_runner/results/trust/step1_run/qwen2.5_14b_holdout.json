@@ -1,0 +1,1794 @@
+{
+  "run_timestamp": "2026-11-22T07:49:32.362304+00:00",
+  "split": "holdout",
+  "split_version": "f9_step1_work_stratified_v1",
+  "gold_json_sha256": "35e9364d63a60098408e99374fec3bc2f3782bb086dcf4e9f384631ed81e2780",
+  "politeness_mode": "exact",
+  "work_ids_evaluated": [
+    "000129_000689"
+  ],
+  "model_spec": "qwen2.5:14b",
+  "model_name": "qwen2.5:14b",
+  "think": null,
+  "prompt_version": "step1_utterances_v5",
+  "prompt_hash": "dfeb6de4ec57c881ef1650afcfee9d173cab681b2453f00ecb5c277b1f7c553a",
+  "inference_options": {
+    "num_ctx": 9216,
+    "num_predict": 4096,
+    "seed": 42,
+    "timeout": 300.0,
+    "temperature": 0.0
+  },
+  "runtime_totals": {
+    "elapsed_sec": 150.246,
+    "prompt_eval_count": 83009,
+    "eval_count": 2754,
+    "any_context_window_warning": false,
+    "stage1_elapsed_sec": 70.158,
+    "stage3_elapsed_sec": 80.088,
+    "stage1_prompt_eval_count": 6457,
+    "stage3_prompt_eval_count": 76552,
+    "stage1_eval_count": 1578,
+    "stage3_eval_count": 1176
+  },
+  "gate": {
+    "passed": true,
+    "speaker_gate_passed": true,
+    "explicit_passed": true,
+    "overall_passed": true,
+    "validation_passed": true,
+    "politeness_passed": null,
+    "thresholds": {
+      "explicit_error_rate_lt": 0.05,
+      "overall_error_rate_lt": 0.1,
+      "politeness_agreement_rate_ge": 0.9
+    }
+  },
+  "metrics": {
+    "overall": {
+      "attributed_total": 28,
+      "all_quotes_total": 29,
+      "explicit_error_rate": 0.0,
+      "explicit_correct": 3,
+      "explicit_errors": 0,
+      "explicit_denominator": 3,
+      "explicit_coverage": 0.10714285714285714,
+      "overall_error_rate": 0.03571428571428571,
+      "overall_errors": 1,
+      "overall_correct": 27,
+      "overall_error_rate_raw_speaker": 0.03571428571428571,
+      "overall_errors_raw_speaker": 1,
+      "overall_correct_raw_speaker": 27,
+      "politeness_agreement_rate": null,
+      "politeness_gold_available": false,
+      "politeness_gold_total": 0,
+      "politeness_correct": 0,
+      "ambiguous_rate": 0.03571428571428571,
+      "ambiguous_attributed_count": 1,
+      "ambiguous_rate_all_quotes": 0.034482758620689655,
+      "ambiguous_all_quotes_count": 1,
+      "excluded_total": 1,
+      "excluded_abstention_rate": 0.0,
+      "excluded_abstained": 0,
+      "excluded_over_attributed": 1,
+      "not_speech_total": 0,
+      "not_speech_abstention_rate": null,
+      "not_speech_abstained": 0,
+      "not_speech_over_attributed": 0,
+      "undetermined_total": 1,
+      "undetermined_abstention_rate": 0.0,
+      "undetermined_abstained": 0,
+      "undetermined_over_attributed": 1,
+      "non_roster_speaker_count": 0,
+      "null_string_speaker_count": 0,
+      "error_breakdown": {
+        "wrong_speaker": 0,
+        "ambiguous_evasion": 1,
+        "ambiguous_evasion_with_correct_speaker": 0,
+        "unattributed_null": 0,
+        "missing_utterance": 0
+      },
+      "by_evidence": {
+        "explicit": {
+          "count": 3,
+          "correct": 3,
+          "errors": 0,
+          "error_rate": 0.0,
+          "accuracy": 1.0
+        },
+        "inferred": {
+          "count": 24,
+          "correct": 24,
+          "errors": 0,
+          "error_rate": 0.0,
+          "accuracy": 1.0
+        },
+        "ambiguous": {
+          "count": 1,
+          "correct_raw_speaker": 0
+        },
+        "missing": {
+          "count": 0
+        }
+      },
+      "politeness_distribution_attributed": {
+        "plain": 24,
+        "polite": 4,
+        "honorific": 0,
+        "rough": 0,
+        "unknown": 0
+      },
+      "politeness_distribution_all": {
+        "plain": 25,
+        "polite": 4,
+        "honorific": 0,
+        "rough": 0,
+        "unknown": 0
+      }
+    },
+    "by_narration": {
+      "first": {
+        "attributed_total": 0,
+        "all_quotes_total": 0,
+        "explicit_error_rate": null,
+        "explicit_correct": 0,
+        "explicit_errors": 0,
+        "explicit_denominator": 0,
+        "explicit_coverage": null,
+        "overall_error_rate": null,
+        "overall_errors": 0,
+        "overall_correct": 0,
+        "overall_error_rate_raw_speaker": null,
+        "overall_errors_raw_speaker": 0,
+        "overall_correct_raw_speaker": 0,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": null,
+        "ambiguous_attributed_count": 0,
+        "ambiguous_rate_all_quotes": null,
+        "ambiguous_all_quotes_count": 0,
+        "excluded_total": 0,
+        "excluded_abstention_rate": null,
+        "excluded_abstained": 0,
+        "excluded_over_attributed": 0,
+        "not_speech_total": 0,
+        "not_speech_abstention_rate": null,
+        "not_speech_abstained": 0,
+        "not_speech_over_attributed": 0,
+        "undetermined_total": 0,
+        "undetermined_abstention_rate": null,
+        "undetermined_abstained": 0,
+        "undetermined_over_attributed": 0,
+        "non_roster_speaker_count": 0,
+        "null_string_speaker_count": 0,
+        "error_breakdown": {
+          "wrong_speaker": 0,
+          "ambiguous_evasion": 0,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 0,
+            "correct": 0,
+            "errors": 0,
+            "error_rate": null,
+            "accuracy": null
+          },
+          "inferred": {
+            "count": 0,
+            "correct": 0,
+            "errors": 0,
+            "error_rate": null,
+            "accuracy": null
+          },
+          "ambiguous": {
+            "count": 0,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 0,
+          "polite": 0,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0
+        },
+        "politeness_distribution_all": {
+          "plain": 0,
+          "polite": 0,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0
+        }
+      },
+      "third": {
+        "attributed_total": 28,
+        "all_quotes_total": 29,
+        "explicit_error_rate": 0.0,
+        "explicit_correct": 3,
+        "explicit_errors": 0,
+        "explicit_denominator": 3,
+        "explicit_coverage": 0.10714285714285714,
+        "overall_error_rate": 0.03571428571428571,
+        "overall_errors": 1,
+        "overall_correct": 27,
+        "overall_error_rate_raw_speaker": 0.03571428571428571,
+        "overall_errors_raw_speaker": 1,
+        "overall_correct_raw_speaker": 27,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": 0.03571428571428571,
+        "ambiguous_attributed_count": 1,
+        "ambiguous_rate_all_quotes": 0.034482758620689655,
+        "ambiguous_all_quotes_count": 1,
+        "excluded_total": 1,
+        "excluded_abstention_rate": 0.0,
+        "excluded_abstained": 0,
+        "excluded_over_attributed": 1,
+        "not_speech_total": 0,
+        "not_speech_abstention_rate": null,
+        "not_speech_abstained": 0,
+        "not_speech_over_attributed": 0,
+        "undetermined_total": 1,
+        "undetermined_abstention_rate": 0.0,
+        "undetermined_abstained": 0,
+        "undetermined_over_attributed": 1,
+        "non_roster_speaker_count": 0,
+        "null_string_speaker_count": 0,
+        "error_breakdown": {
+          "wrong_speaker": 0,
+          "ambiguous_evasion": 1,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 3,
+            "correct": 3,
+            "errors": 0,
+            "error_rate": 0.0,
+            "accuracy": 1.0
+          },
+          "inferred": {
+            "count": 24,
+            "correct": 24,
+            "errors": 0,
+            "error_rate": 0.0,
+            "accuracy": 1.0
+          },
+          "ambiguous": {
+            "count": 1,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 24,
+          "polite": 4,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0
+        },
+        "politeness_distribution_all": {
+          "plain": 25,
+          "polite": 4,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0
+        }
+      }
+    },
+    "by_work": [
+      {
+        "attributed_total": 28,
+        "all_quotes_total": 29,
+        "explicit_error_rate": 0.0,
+        "explicit_correct": 3,
+        "explicit_errors": 0,
+        "explicit_denominator": 3,
+        "explicit_coverage": 0.10714285714285714,
+        "overall_error_rate": 0.03571428571428571,
+        "overall_errors": 1,
+        "overall_correct": 27,
+        "overall_error_rate_raw_speaker": 0.03571428571428571,
+        "overall_errors_raw_speaker": 1,
+        "overall_correct_raw_speaker": 27,
+        "politeness_agreement_rate": null,
+        "politeness_gold_available": false,
+        "politeness_gold_total": 0,
+        "politeness_correct": 0,
+        "ambiguous_rate": 0.03571428571428571,
+        "ambiguous_attributed_count": 1,
+        "ambiguous_rate_all_quotes": 0.034482758620689655,
+        "ambiguous_all_quotes_count": 1,
+        "excluded_total": 1,
+        "excluded_abstention_rate": 0.0,
+        "excluded_abstained": 0,
+        "excluded_over_attributed": 1,
+        "not_speech_total": 0,
+        "not_speech_abstention_rate": null,
+        "not_speech_abstained": 0,
+        "not_speech_over_attributed": 0,
+        "undetermined_total": 1,
+        "undetermined_abstention_rate": 0.0,
+        "undetermined_abstained": 0,
+        "undetermined_over_attributed": 1,
+        "non_roster_speaker_count": 0,
+        "null_string_speaker_count": 0,
+        "error_breakdown": {
+          "wrong_speaker": 0,
+          "ambiguous_evasion": 1,
+          "ambiguous_evasion_with_correct_speaker": 0,
+          "unattributed_null": 0,
+          "missing_utterance": 0
+        },
+        "by_evidence": {
+          "explicit": {
+            "count": 3,
+            "correct": 3,
+            "errors": 0,
+            "error_rate": 0.0,
+            "accuracy": 1.0
+          },
+          "inferred": {
+            "count": 24,
+            "correct": 24,
+            "errors": 0,
+            "error_rate": 0.0,
+            "accuracy": 1.0
+          },
+          "ambiguous": {
+            "count": 1,
+            "correct_raw_speaker": 0
+          },
+          "missing": {
+            "count": 0
+          }
+        },
+        "politeness_distribution_attributed": {
+          "plain": 24,
+          "polite": 4,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0
+        },
+        "politeness_distribution_all": {
+          "plain": 25,
+          "polite": 4,
+          "honorific": 0,
+          "rough": 0,
+          "unknown": 0
+        },
+        "work_id": "000129_000689",
+        "title": "山椒大夫",
+        "author": "森鴎外",
+        "narration": "third",
+        "schema_valid": true
+      }
+    ],
+    "schema_validation": {
+      "all_works_valid": true,
+      "valid_works": 1,
+      "total_works": 1,
+      "per_work": {
+        "000129_000689": {
+          "schema_valid": true,
+          "schema_error_count": 0,
+          "schema_errors": [],
+          "predicted_count": 29,
+          "expected_count": 29,
+          "duplicate_indices": [],
+          "extra_indices": []
+        }
+      }
+    },
+    "non_roster_speaker_ids": [],
+    "non_roster_speaker_count": 0,
+    "null_string_speaker_count": 0,
+    "errors": [
+      {
+        "work_id": "000129_000689",
+        "narration": "third",
+        "utterance_index": 11,
+        "head": "いつまでも泣くか",
+        "gold_speaker": "miyazaki",
+        "pred_speaker": null,
+        "pred_evidence": "ambiguous",
+        "pred_politeness": "plain",
+        "outcome": "ambiguous_evasion"
+      }
+    ],
+    "excluded_over_attributions": [
+      {
+        "work_id": "000129_000689",
+        "utterance_index": 8,
+        "gold_status": "undetermined",
+        "head": "お母あさまお母あ",
+        "pred_speaker": "anju",
+        "pred_evidence": "explicit",
+        "pred_politeness": "plain",
+        "speaker_violation": null
+      }
+    ]
+  },
+  "raw_outputs": {
+    "000129_000689": {
+      "format_mode": "json_schema",
+      "elapsed_sec": 70.158,
+      "prompt_eval_count": 6457,
+      "eval_count": 1578,
+      "effective_num_ctx": 9216,
+      "effective_num_predict": 4096,
+      "effective_timeout": 300.0,
+      "context_window_warning": false,
+      "total_duration_ns": 70112111200,
+      "load_duration_ns": 7615590900,
+      "eval_duration_ns": 58332636000,
+      "parse_error": null,
+      "thinking_chars": 0,
+      "parsed_utterances": [
+        {
+          "utterance_index": 0,
+          "speaker_id": "ubatake",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 1,
+          "speaker_id": "ubatake",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 2,
+          "speaker_id": "sado",
+          "addressee_id": "ubatake",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 3,
+          "speaker_id": "ubatake",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 4,
+          "speaker_id": "sado",
+          "addressee_id": "ubatake",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 5,
+          "speaker_id": "haha",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 6,
+          "speaker_id": "sado",
+          "addressee_id": "haha",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 7,
+          "speaker_id": "sado",
+          "addressee_id": "haha",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 8,
+          "speaker_id": "anju",
+          "addressee_id": "zushio",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 9,
+          "speaker_id": "miyazaki",
+          "addressee_id": "anju",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 10,
+          "speaker_id": "miyazaki",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 11,
+          "speaker_id": null,
+          "addressee_id": "anju",
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 12,
+          "speaker_id": "miyazaki",
+          "addressee_id": "yakkogashira",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 13,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 14,
+          "speaker_id": "saburo",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 15,
+          "speaker_id": "yakkogashira",
+          "addressee_id": "dayu",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 16,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 17,
+          "speaker_id": "saburo",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 18,
+          "speaker_id": "kikori",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 19,
+          "speaker_id": "zushio",
+          "addressee_id": "kikori",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 20,
+          "speaker_id": "kikori",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 21,
+          "speaker_id": "kohagi",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 22,
+          "speaker_id": "anju",
+          "addressee_id": "kohagi",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 23,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 24,
+          "speaker_id": "jiro",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 25,
+          "speaker_id": "dayu",
+          "addressee_id": "jiro",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 26,
+          "speaker_id": "jiro",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 27,
+          "speaker_id": "anju",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": "私"
+          }
+        },
+        {
+          "utterance_index": 28,
+          "speaker_id": "saburo",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        }
+      ],
+      "raw_content": "{\n  \"utterances\": [\n    {\"utterance_index\": 0, \"speaker_id\": \"ubatake\", \"addressee_id\": \"sado\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 1, \"speaker_id\": \"ubatake\", \"addressee_id\": \"sado\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 2, \"speaker_id\": \"sado\", \"addressee_id\": \"ubatake\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 3, \"speaker_id\": \"ubatake\", \"addressee_id\": null, \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 4, \"speaker_id\": \"sado\", \"addressee_id\": \"ubatake\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 5, \"speaker_id\": \"haha\", \"addressee_id\": \"sado\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"polite\", \"first_person\": null}},\n    {\"utterance_index\": 6, \"speaker_id\": \"sado\", \"addressee_id\": \"haha\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 7, \"speaker_id\": \"sado\", \"addressee_id\": \"haha\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 8, \"speaker_id\": \"anju\", \"addressee_id\": \"zushio\", \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 9, \"speaker_id\": \"miyazaki\", \"addressee_id\": \"anju\", \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 10, \"speaker_id\": \"miyazaki\", \"addressee_id\": \"anju\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 11, \"speaker_id\": \"miyazaki\", \"addressee_id\": \"anju\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 12, \"speaker_id\": \"miyazaki\", \"addressee_id\": \"yakkogashira\", \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 13, \"speaker_id\": \"dayu\", \"addressee_id\": \"yakkogashira\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 14, \"speaker_id\": \"saburo\", \"addressee_id\": \"dayu\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 15, \"speaker_id\": \"yakkogashira\", \"addressee_id\": \"dayu\", \"evidence\": \"explicit\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 16, \"speaker_id\": \"dayu\", \"addressee_id\": \"yakkogashira\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 17, \"speaker_id\": \"saburo\", \"addressee_id\": \"dayu\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 18, \"speaker_id\": \"kikori\", \"addressee_id\": \"zushio\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 19, \"speaker_id\": \"zushio\", \"addressee_id\": \"kikori\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 20, \"speaker_id\": \"kikori\", \"addressee_id\": \"zushio\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 21, \"speaker_id\": \"kohagi\", \"addressee_id\": \"anju\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 22, \"speaker_id\": \"anju\", \"addressee_id\": \"kohagi\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 23, \"speaker_id\": \"dayu\", \"addressee_id\": \"yakkogashira\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 24, \"speaker_id\": \"jiro\", \"addressee_id\": \"dayu\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 25, \"speaker_id\": \"dayu\", \"addressee_id\": \"jiro\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 26, \"speaker_id\": \"jiro\", \"addressee_id\": \"anju\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}},\n    {\"utterance_index\": 27, \"speaker_id\": \"anju\", \"addressee_id\": \"zushio\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": \"私\"}},\n    {\"utterance_index\": 28, \"speaker_id\": \"saburo\", \"addressee_id\": \"anju\", \"evidence\": \"inferred\", \"register\": {\"politeness\": \"plain\", \"first_person\": null}}\n  ]\n}",
+      "stage1_parsed_utterances": [
+        {
+          "utterance_index": 0,
+          "speaker_id": "ubatake",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 1,
+          "speaker_id": "ubatake",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 2,
+          "speaker_id": "sado",
+          "addressee_id": "ubatake",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 3,
+          "speaker_id": "ubatake",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 4,
+          "speaker_id": "sado",
+          "addressee_id": "ubatake",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 5,
+          "speaker_id": "haha",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 6,
+          "speaker_id": "sado",
+          "addressee_id": "haha",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 7,
+          "speaker_id": "sado",
+          "addressee_id": "haha",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 8,
+          "speaker_id": "anju",
+          "addressee_id": "zushio",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 9,
+          "speaker_id": "miyazaki",
+          "addressee_id": "anju",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 10,
+          "speaker_id": "miyazaki",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 11,
+          "speaker_id": "miyazaki",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 12,
+          "speaker_id": "miyazaki",
+          "addressee_id": "yakkogashira",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 13,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 14,
+          "speaker_id": "saburo",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 15,
+          "speaker_id": "yakkogashira",
+          "addressee_id": "dayu",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 16,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 17,
+          "speaker_id": "saburo",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 18,
+          "speaker_id": "kikori",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 19,
+          "speaker_id": "zushio",
+          "addressee_id": "kikori",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 20,
+          "speaker_id": "kikori",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 21,
+          "speaker_id": "kohagi",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 22,
+          "speaker_id": "anju",
+          "addressee_id": "kohagi",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 23,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 24,
+          "speaker_id": "jiro",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 25,
+          "speaker_id": "dayu",
+          "addressee_id": "jiro",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 26,
+          "speaker_id": "jiro",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 27,
+          "speaker_id": "anju",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": "私"
+          }
+        },
+        {
+          "utterance_index": 28,
+          "speaker_id": "saburo",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        }
+      ],
+      "postprocess_audit": {
+        "work_id": "000129_000689",
+        "inline_non_speech_forced": [
+          {
+            "utterance_index": 11,
+            "quote_chars": 8,
+            "prev_speaker": "miyazaki",
+            "prev_evidence": "inferred",
+            "changed": true
+          }
+        ],
+        "explicit_downgraded": []
+      },
+      "stage2_parsed_utterances": [
+        {
+          "utterance_index": 0,
+          "speaker_id": "ubatake",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 1,
+          "speaker_id": "ubatake",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 2,
+          "speaker_id": "sado",
+          "addressee_id": "ubatake",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 3,
+          "speaker_id": "ubatake",
+          "addressee_id": null,
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 4,
+          "speaker_id": "sado",
+          "addressee_id": "ubatake",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 5,
+          "speaker_id": "haha",
+          "addressee_id": "sado",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "polite",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 6,
+          "speaker_id": "sado",
+          "addressee_id": "haha",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 7,
+          "speaker_id": "sado",
+          "addressee_id": "haha",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 8,
+          "speaker_id": "anju",
+          "addressee_id": "zushio",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 9,
+          "speaker_id": "miyazaki",
+          "addressee_id": "anju",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 10,
+          "speaker_id": "miyazaki",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 11,
+          "speaker_id": null,
+          "addressee_id": "anju",
+          "evidence": "ambiguous",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 12,
+          "speaker_id": "miyazaki",
+          "addressee_id": "yakkogashira",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 13,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 14,
+          "speaker_id": "saburo",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 15,
+          "speaker_id": "yakkogashira",
+          "addressee_id": "dayu",
+          "evidence": "explicit",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 16,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 17,
+          "speaker_id": "saburo",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 18,
+          "speaker_id": "kikori",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 19,
+          "speaker_id": "zushio",
+          "addressee_id": "kikori",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 20,
+          "speaker_id": "kikori",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 21,
+          "speaker_id": "kohagi",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 22,
+          "speaker_id": "anju",
+          "addressee_id": "kohagi",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 23,
+          "speaker_id": "dayu",
+          "addressee_id": "yakkogashira",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 24,
+          "speaker_id": "jiro",
+          "addressee_id": "dayu",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 25,
+          "speaker_id": "dayu",
+          "addressee_id": "jiro",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 26,
+          "speaker_id": "jiro",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        },
+        {
+          "utterance_index": 27,
+          "speaker_id": "anju",
+          "addressee_id": "zushio",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": "私"
+          }
+        },
+        {
+          "utterance_index": 28,
+          "speaker_id": "saburo",
+          "addressee_id": "anju",
+          "evidence": "inferred",
+          "register": {
+            "politeness": "plain",
+            "first_person": null
+          }
+        }
+      ],
+      "speaker_recheck_audit": {
+        "mode": "per_utterance",
+        "work_id": "000129_000689",
+        "enabled": true,
+        "model": "qwen2.5:14b",
+        "target_count": 24,
+        "rechecked_count": 24,
+        "changed_count": 0,
+        "rejected_count": 0,
+        "elapsed_sec": 80.088,
+        "prompt_eval_count": 76552,
+        "eval_count": 1176,
+        "any_context_window_warning": false,
+        "decisions": [
+          {
+            "utterance_index": 0,
+            "before_speaker": "ubatake",
+            "after_speaker": "ubatake",
+            "addressee_id": "sado",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "姥竹が船頭に声をかける場面で、話者が姥竹であることは文脈と一致する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 4.204,
+            "prompt_eval_count": 2393,
+            "eval_count": 53,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 1,
+            "before_speaker": "ubatake",
+            "after_speaker": "ubatake",
+            "addressee_id": "sado",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "姥竹が船頭に話しかけている内容と直後の反応が一致する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 2.709,
+            "prompt_eval_count": 2765,
+            "eval_count": 49,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 2,
+            "before_speaker": "sado",
+            "after_speaker": "sado",
+            "addressee_id": "ubatake",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の地の文と直後の地の文の流れに矛盾無く成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 2.968,
+            "prompt_eval_count": 2740,
+            "eval_count": 47,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 3,
+            "before_speaker": "ubatake",
+            "after_speaker": "ubatake",
+            "addressee_id": null,
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "姥竹が海に飛び込む直前の発話として成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 2.967,
+            "prompt_eval_count": 2834,
+            "eval_count": 44,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 4,
+            "before_speaker": "sado",
+            "after_speaker": "sado",
+            "addressee_id": "ubatake",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "船頭の佐渡が姥竹を止める発話として成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.041,
+            "prompt_eval_count": 2862,
+            "eval_count": 45,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 5,
+            "before_speaker": "haha",
+            "after_speaker": "haha",
+            "addressee_id": "sado",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "母親の発話として成立する。直前の状況と矛盾せず、直後の佐渡の反応とも整合性がある。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.6,
+            "prompt_eval_count": 3004,
+            "eval_count": 57,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 6,
+            "before_speaker": "sado",
+            "after_speaker": "sado",
+            "addressee_id": "haha",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の母親の発話と直後の船頭の行動が続くため、船頭である佐渡が成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.425,
+            "prompt_eval_count": 2944,
+            "eval_count": 54,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 7,
+            "before_speaker": "sado",
+            "after_speaker": "sado",
+            "addressee_id": "haha",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.163,
+            "prompt_eval_count": 3028,
+            "eval_count": 45,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 10,
+            "before_speaker": "miyazaki",
+            "after_speaker": "miyazaki",
+            "addressee_id": "anju",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の発話と直後の地の文とも矛盾せず、会話の流れも自然である。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.668,
+            "prompt_eval_count": 3259,
+            "eval_count": 52,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 13,
+            "before_speaker": "dayu",
+            "after_speaker": "dayu",
+            "addressee_id": "yakkogashira",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "大夫の発言として成立する。直後の三郎の発話も大夫の子供たちへの指示であるため、大夫が話していることは矛盾しない。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 4.408,
+            "prompt_eval_count": 3530,
+            "eval_count": 63,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 14,
+            "before_speaker": "saburo",
+            "after_speaker": "saburo",
+            "addressee_id": "dayu",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の地の文と直後の地の文とも矛盾せず、会話の流れも自然である。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.797,
+            "prompt_eval_count": 3566,
+            "eval_count": 51,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 16,
+            "before_speaker": "dayu",
+            "after_speaker": "dayu",
+            "addressee_id": "yakkogashira",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "大夫が子供たちに名前をつけて仕事を与える発話であり、文脈と矛盾しない",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.671,
+            "prompt_eval_count": 3571,
+            "eval_count": 51,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 17,
+            "before_speaker": "saburo",
+            "after_speaker": "saburo",
+            "addressee_id": "dayu",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "三郎が大夫の指示に対して反論している様子が自然。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.35,
+            "prompt_eval_count": 3410,
+            "eval_count": 43,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 18,
+            "before_speaker": "kikori",
+            "after_speaker": "kikori",
+            "addressee_id": "zushio",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直後の地の文と矛盾無く成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.279,
+            "prompt_eval_count": 3386,
+            "eval_count": 40,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 19,
+            "before_speaker": "zushio",
+            "after_speaker": "zushio",
+            "addressee_id": "kikori",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前・直後の地の文と矛盾せず、話者の一貫性を保つ。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.417,
+            "prompt_eval_count": 3379,
+            "eval_count": 49,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 20,
+            "before_speaker": "kikori",
+            "after_speaker": "kikori",
+            "addressee_id": "zushio",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の地の文と直後の地の文とも矛盾せず、話者の一貫性を保つ。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.497,
+            "prompt_eval_count": 3410,
+            "eval_count": 52,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 21,
+            "before_speaker": "kohagi",
+            "after_speaker": "kohagi",
+            "addressee_id": "anju",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直後の地の文で小萩と明示されているため、暫定話者である小萩が成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.514,
+            "prompt_eval_count": 3416,
+            "eval_count": 53,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 22,
+            "before_speaker": "anju",
+            "after_speaker": "anju",
+            "addressee_id": "kohagi",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の女子の教えを受け、無邪気に感謝する安寿として成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 2.714,
+            "prompt_eval_count": 3401,
+            "eval_count": 45,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 23,
+            "before_speaker": "dayu",
+            "after_speaker": "dayu",
+            "addressee_id": "yakkogashira",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "大夫が話していると文脈と矛盾しない。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 2.412,
+            "prompt_eval_count": 3384,
+            "eval_count": 38,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 24,
+            "before_speaker": "jiro",
+            "after_speaker": "jiro",
+            "addressee_id": "dayu",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の地の文と直後の地の文とも矛盾せず、会話の流れも自然である。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.365,
+            "prompt_eval_count": 3565,
+            "eval_count": 50,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 25,
+            "before_speaker": "dayu",
+            "after_speaker": "dayu",
+            "addressee_id": "jiro",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "大夫が二郎の提案を聞き、賛成の意を示している。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.218,
+            "prompt_eval_count": 3345,
+            "eval_count": 45,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 26,
+            "before_speaker": "jiro",
+            "after_speaker": "jiro",
+            "addressee_id": "anju",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "直前の文脈と矛盾せず、二郎が子供たちに話している様子が自然に成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.546,
+            "prompt_eval_count": 3371,
+            "eval_count": 52,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 27,
+            "before_speaker": "anju",
+            "after_speaker": "anju",
+            "addressee_id": "zushio",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "姉の安寿が弟に語りかける内容と文脈に矛盾無し",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.133,
+            "prompt_eval_count": 3237,
+            "eval_count": 46,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          },
+          {
+            "utterance_index": 28,
+            "before_speaker": "saburo",
+            "after_speaker": "saburo",
+            "addressee_id": "anju",
+            "changed": false,
+            "accepted": true,
+            "rejected_reason": null,
+            "reason": "三郎が弓矢を持って小屋に入った直後に話しているため、三郎が話者として成立する。",
+            "format_mode": "json_schema",
+            "elapsed_sec": 3.022,
+            "prompt_eval_count": 2752,
+            "eval_count": 52,
+            "context_window_warning": false,
+            "parse_error": null,
+            "contradiction_found": false
+          }
+        ]
+      }
+    }
+  },
+  "postprocess": {
+    "explicit_evidence_gate": true,
+    "inline_non_speech_filter": true,
+    "inline_non_speech_max_chars": 11
+  },
+  "postprocess_summary": {
+    "inline_non_speech_forced_count": 1,
+    "inline_non_speech_changed_count": 1,
+    "explicit_downgraded_count": 0
+  },
+  "speaker_recheck": {
+    "enabled": true,
+    "mode": "per_utterance",
+    "model": "qwen2.5:14b",
+    "prompt_version": "recheck_v2",
+    "flow_window_before": 4,
+    "flow_window_after": 3,
+    "context_chars_before": 700,
+    "context_chars_after": 500,
+    "sequential": false,
+    "num_ctx": 9216,
+    "num_predict": 384,
+    "seed": 42,
+    "timeout": 120.0
+  },
+  "speaker_recheck_summary": {
+    "recheck_prompt_version": "step1_speaker_recheck_v2",
+    "recheck_prompt_hash": "c8a85d1b3a2d34f55d17980925ad67c2ab560c8ea4238e7ba73cad668d0e83b7",
+    "target_count": 24,
+    "rechecked_count": 24,
+    "changed_count": 0,
+    "rejected_count": 0,
+    "elapsed_sec": 80.088,
+    "prompt_eval_count": 76552,
+    "eval_count": 1176,
+    "any_context_window_warning": false
+  }
+}

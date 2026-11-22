@@ -1,0 +1,361 @@
+{
+ "n": 29,
+ "gold_status": {
+  "attributed": 28,
+  "undetermined": 1
+ },
+ "step1_vs_gold": {
+  "attributed_total": 28,
+  "speaker_match": 27,
+  "speaker_null": 1,
+  "speaker_wrong": 0,
+  "ev": {
+   "inferred": 24,
+   "explicit": 3,
+   "ambiguous": 1
+  },
+  "match_explicit_only": [
+   3,
+   24
+  ]
+ },
+ "standin_vs_gold": {
+  "attributed_total": 28,
+  "speaker_match": 28,
+  "speaker_null": 0,
+  "speaker_wrong": 0,
+  "ev": {
+   "explicit": 14,
+   "inferred": 14
+  },
+  "match_explicit_only": [
+   14,
+   14
+  ]
+ },
+ "step1_vs_standin_speaker_equal": 27,
+ "step1_vs_standin_addressee_equal": 19,
+ "step1_null_speaker_total": 1,
+ "step1_null_addressee_total": 1,
+ "rows": [
+  {
+   "n": 0,
+   "scene": 0,
+   "gold_status": "attributed",
+   "gold": "ubatake",
+   "step1": "ubatake",
+   "step1_ev": "inferred",
+   "step1_addr": "sado",
+   "standin": "ubatake",
+   "standin_addr": "sado"
+  },
+  {
+   "n": 1,
+   "scene": 0,
+   "gold_status": "attributed",
+   "gold": "ubatake",
+   "step1": "ubatake",
+   "step1_ev": "inferred",
+   "step1_addr": "sado",
+   "standin": "ubatake",
+   "standin_addr": "sado"
+  },
+  {
+   "n": 2,
+   "scene": 0,
+   "gold_status": "attributed",
+   "gold": "sado",
+   "step1": "sado",
+   "step1_ev": "inferred",
+   "step1_addr": "ubatake",
+   "standin": "sado",
+   "standin_addr": "ubatake"
+  },
+  {
+   "n": 3,
+   "scene": 0,
+   "gold_status": "attributed",
+   "gold": "ubatake",
+   "step1": "ubatake",
+   "step1_ev": "inferred",
+   "step1_addr": null,
+   "standin": "ubatake",
+   "standin_addr": "haha"
+  },
+  {
+   "n": 4,
+   "scene": 0,
+   "gold_status": "attributed",
+   "gold": "sado",
+   "step1": "sado",
+   "step1_ev": "inferred",
+   "step1_addr": "ubatake",
+   "standin": "sado",
+   "standin_addr": "ubatake"
+  },
+  {
+   "n": 5,
+   "scene": 0,
+   "gold_status": "attributed",
+   "gold": "haha",
+   "step1": "haha",
+   "step1_ev": "inferred",
+   "step1_addr": "sado",
+   "standin": "haha",
+   "standin_addr": "sado"
+  },
+  {
+   "n": 6,
+   "scene": 0,
+   "gold_status": "attributed",
+   "gold": "sado",
+   "step1": "sado",
+   "step1_ev": "inferred",
+   "step1_addr": "haha",
+   "standin": "sado",
+   "standin_addr": "haha"
+  },
+  {
+   "n": 7,
+   "scene": 0,
+   "gold_status": "attributed",
+   "gold": "sado",
+   "step1": "sado",
+   "step1_ev": "inferred",
+   "step1_addr": "haha",
+   "standin": "sado",
+   "standin_addr": "haha"
+  },
+  {
+   "n": 8,
+   "scene": 1,
+   "gold_status": "undetermined",
+   "gold": null,
+   "step1": "anju",
+   "step1_ev": "explicit",
+   "step1_addr": "zushio",
+   "standin": null,
+   "standin_addr": null
+  },
+  {
+   "n": 9,
+   "scene": 1,
+   "gold_status": "attributed",
+   "gold": "miyazaki",
+   "step1": "miyazaki",
+   "step1_ev": "explicit",
+   "step1_addr": "anju",
+   "standin": "miyazaki",
+   "standin_addr": null
+  },
+  {
+   "n": 10,
+   "scene": 1,
+   "gold_status": "attributed",
+   "gold": "miyazaki",
+   "step1": "miyazaki",
+   "step1_ev": "inferred",
+   "step1_addr": "anju",
+   "standin": "miyazaki",
+   "standin_addr": null
+  },
+  {
+   "n": 11,
+   "scene": 1,
+   "gold_status": "attributed",
+   "gold": "miyazaki",
+   "step1": null,
+   "step1_ev": "ambiguous",
+   "step1_addr": "anju",
+   "standin": "miyazaki",
+   "standin_addr": null
+  },
+  {
+   "n": 12,
+   "scene": 1,
+   "gold_status": "attributed",
+   "gold": "miyazaki",
+   "step1": "miyazaki",
+   "step1_ev": "explicit",
+   "step1_addr": "yakkogashira",
+   "standin": "miyazaki",
+   "standin_addr": null
+  },
+  {
+   "n": 13,
+   "scene": 2,
+   "gold_status": "attributed",
+   "gold": "dayu",
+   "step1": "dayu",
+   "step1_ev": "inferred",
+   "step1_addr": "yakkogashira",
+   "standin": "dayu",
+   "standin_addr": "yakkogashira"
+  },
+  {
+   "n": 14,
+   "scene": 2,
+   "gold_status": "attributed",
+   "gold": "saburo",
+   "step1": "saburo",
+   "step1_ev": "inferred",
+   "step1_addr": "dayu",
+   "standin": "saburo",
+   "standin_addr": "dayu"
+  },
+  {
+   "n": 15,
+   "scene": 2,
+   "gold_status": "attributed",
+   "gold": "yakkogashira",
+   "step1": "yakkogashira",
+   "step1_ev": "explicit",
+   "step1_addr": "dayu",
+   "standin": "yakkogashira",
+   "standin_addr": "dayu"
+  },
+  {
+   "n": 16,
+   "scene": 2,
+   "gold_status": "attributed",
+   "gold": "dayu",
+   "step1": "dayu",
+   "step1_ev": "inferred",
+   "step1_addr": "yakkogashira",
+   "standin": "dayu",
+   "standin_addr": null
+  },
+  {
+   "n": 17,
+   "scene": 3,
+   "gold_status": "attributed",
+   "gold": "saburo",
+   "step1": "saburo",
+   "step1_ev": "inferred",
+   "step1_addr": "dayu",
+   "standin": "saburo",
+   "standin_addr": "yakkogashira"
+  },
+  {
+   "n": 18,
+   "scene": 4,
+   "gold_status": "attributed",
+   "gold": "kikori",
+   "step1": "kikori",
+   "step1_ev": "inferred",
+   "step1_addr": "zushio",
+   "standin": "kikori",
+   "standin_addr": "zushio"
+  },
+  {
+   "n": 19,
+   "scene": 4,
+   "gold_status": "attributed",
+   "gold": "zushio",
+   "step1": "zushio",
+   "step1_ev": "inferred",
+   "step1_addr": "kikori",
+   "standin": "zushio",
+   "standin_addr": "kikori"
+  },
+  {
+   "n": 20,
+   "scene": 4,
+   "gold_status": "attributed",
+   "gold": "kikori",
+   "step1": "kikori",
+   "step1_ev": "inferred",
+   "step1_addr": "zushio",
+   "standin": "kikori",
+   "standin_addr": "zushio"
+  },
+  {
+   "n": 21,
+   "scene": 4,
+   "gold_status": "attributed",
+   "gold": "kohagi",
+   "step1": "kohagi",
+   "step1_ev": "inferred",
+   "step1_addr": "anju",
+   "standin": "kohagi",
+   "standin_addr": "anju"
+  },
+  {
+   "n": 22,
+   "scene": 4,
+   "gold_status": "attributed",
+   "gold": "anju",
+   "step1": "anju",
+   "step1_ev": "inferred",
+   "step1_addr": "kohagi",
+   "standin": "anju",
+   "standin_addr": "kohagi"
+  },
+  {
+   "n": 23,
+   "scene": 5,
+   "gold_status": "attributed",
+   "gold": "dayu",
+   "step1": "dayu",
+   "step1_ev": "inferred",
+   "step1_addr": "yakkogashira",
+   "standin": "dayu",
+   "standin_addr": "yakkogashira"
+  },
+  {
+   "n": 24,
+   "scene": 5,
+   "gold_status": "attributed",
+   "gold": "jiro",
+   "step1": "jiro",
+   "step1_ev": "inferred",
+   "step1_addr": "dayu",
+   "standin": "jiro",
+   "standin_addr": "dayu"
+  },
+  {
+   "n": 25,
+   "scene": 5,
+   "gold_status": "attributed",
+   "gold": "dayu",
+   "step1": "dayu",
+   "step1_ev": "inferred",
+   "step1_addr": "jiro",
+   "standin": "dayu",
+   "standin_addr": "jiro"
+  },
+  {
+   "n": 26,
+   "scene": 6,
+   "gold_status": "attributed",
+   "gold": "jiro",
+   "step1": "jiro",
+   "step1_ev": "inferred",
+   "step1_addr": "anju",
+   "standin": "jiro",
+   "standin_addr": null
+  },
+  {
+   "n": 27,
+   "scene": 6,
+   "gold_status": "attributed",
+   "gold": "anju",
+   "step1": "anju",
+   "step1_ev": "inferred",
+   "step1_addr": "zushio",
+   "standin": "anju",
+   "standin_addr": "zushio"
+  },
+  {
+   "n": 28,
+   "scene": 6,
+   "gold_status": "attributed",
+   "gold": "saburo",
+   "step1": "saburo",
+   "step1_ev": "inferred",
+   "step1_addr": "anju",
+   "standin": "saburo",
+   "standin_addr": null
+  }
+ ]
+}
