@@ -1,0 +1,2136 @@
+{
+  "001798_056779:s0": {
+    "present": {
+      "gold": [
+        "boku",
+        "fuwa"
+      ],
+      "pred": [
+        "boku",
+        "fuwa"
+      ],
+      "tp": [
+        "boku",
+        "fuwa"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "unknown",
+      "relative_order_pred": "unknown",
+      "relative_order_match": true,
+      "explicit_time_gold": [
+        "三日目"
+      ],
+      "explicit_time_pred": "不破と知合いになって三日目",
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [
+        "代田橋"
+      ],
+      "pred": "代田橋",
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "boku": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fuwa": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      "pred": {
+        "boku": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fuwa": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "boku",
+            "predicate": "MOVED_TO",
+            "object": "代田橋",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "boku",
+            "predicate": "MOVED_TO",
+            "object": "代田橋"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 1,
+          "fact": {
+            "subject": "boku",
+            "predicate": "ACQUIRED",
+            "object": "契約書",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "fuwa",
+            "predicate": "ACQUIRED",
+            "object": "四万円",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "boku",
+            "predicate": "MOVED_TO",
+            "object": "代田橋",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "boku",
+            "predicate": "MOVED_TO",
+            "object": "代田橋"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 1,
+          "fact": {
+            "subject": "boku",
+            "predicate": "ACQUIRED",
+            "object": "契約書",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "fuwa",
+            "predicate": "ACQUIRED",
+            "object": "四万円",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  },
+  "001798_056779:s1": {
+    "present": {
+      "gold": [
+        "boku",
+        "fuwa"
+      ],
+      "pred": [
+        "boku",
+        "fuwa"
+      ],
+      "tp": [
+        "boku",
+        "fuwa"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "continuous",
+      "relative_order_pred": "continuous",
+      "relative_order_match": true,
+      "explicit_time_gold": [
+        "失踪の前の晩"
+      ],
+      "explicit_time_pred": "失踪の前の晩",
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [
+        "僕の部屋"
+      ],
+      "pred": "僕の部屋",
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "boku": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fuwa": [
+          0,
+          -1,
+          0,
+          -1,
+          0,
+          0
+        ]
+      },
+      "pred": {
+        "boku": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fuwa": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "fuwa",
+            "predicate": "STATE_CHANGED",
+            "object": "夫妻で失踪した",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "fuwa",
+            "predicate": "STATE_CHANGED",
+            "object": "失踪"
+          }
+        },
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "fuwa",
+            "predicate": "ACQUIRED",
+            "object": "二千円",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "fuwa",
+            "predicate": "ACQUIRED",
+            "object": "二千円"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "不破の借金の事情"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "fuwa",
+            "predicate": "HOOK_OPENED",
+            "object": "野呂が留守番として来る約束",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "fuwa",
+            "predicate": "STATE_CHANGED",
+            "object": "夫妻で失踪した",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "fuwa",
+            "predicate": "STATE_CHANGED",
+            "object": "失踪"
+          }
+        },
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "fuwa",
+            "predicate": "ACQUIRED",
+            "object": "二千円",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "fuwa",
+            "predicate": "ACQUIRED",
+            "object": "二千円"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "不破の借金の事情"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "fuwa",
+            "predicate": "HOOK_OPENED",
+            "object": "野呂が留守番として来る約束",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  },
+  "001798_056779:s2": {
+    "present": {
+      "gold": [
+        "boku",
+        "noro"
+      ],
+      "pred": [
+        "boku",
+        "noro"
+      ],
+      "tp": [
+        "boku",
+        "noro"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "continuous",
+      "relative_order_pred": "continuous",
+      "relative_order_match": true,
+      "explicit_time_gold": [
+        "翌朝"
+      ],
+      "explicit_time_pred": "翌朝、十一時頃",
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [
+        "板の間",
+        "台所",
+        "庭"
+      ],
+      "pred": "板の間",
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "boku": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "noro": [
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0
+        ]
+      },
+      "pred": {
+        "boku": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "noro": [
+          0,
+          0,
+          -1,
+          -1,
+          0,
+          0
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 1,
+          "gold_index": 0,
+          "pred": {
+            "subject": "noro",
+            "predicate": "MOVED_TO",
+            "object": "この家",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "noro",
+            "predicate": "MOVED_TO",
+            "object": "この家"
+          }
+        },
+        {
+          "pred_index": 2,
+          "gold_index": 1,
+          "pred": {
+            "subject": "noro",
+            "predicate": "LEARNED",
+            "object": "不破が兵庫県に立ったこと",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "noro",
+            "predicate": "LEARNED",
+            "object": "不破が出発したこと"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "家の所有をめぐる食い違い"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "boku",
+            "predicate": "ACQUIRED",
+            "object": "不破の便箋",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "boku",
+            "predicate": "LEARNED",
+            "object": "野呂が不破からこの家を買い受けたこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 4,
+          "fact": {
+            "subject": "noro",
+            "predicate": "STATE_CHANGED",
+            "object": "急に言葉がぞんざいになった",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 5,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "家の居住権と所有権の食い違い",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 1,
+          "gold_index": 0,
+          "pred": {
+            "subject": "noro",
+            "predicate": "MOVED_TO",
+            "object": "この家",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "noro",
+            "predicate": "MOVED_TO",
+            "object": "この家"
+          }
+        },
+        {
+          "pred_index": 2,
+          "gold_index": 1,
+          "pred": {
+            "subject": "noro",
+            "predicate": "LEARNED",
+            "object": "不破が兵庫県に立ったこと",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "noro",
+            "predicate": "LEARNED",
+            "object": "不破が出発したこと"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "家の所有をめぐる食い違い"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "boku",
+            "predicate": "ACQUIRED",
+            "object": "不破の便箋",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "boku",
+            "predicate": "LEARNED",
+            "object": "野呂が不破からこの家を買い受けたこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 4,
+          "fact": {
+            "subject": "noro",
+            "predicate": "STATE_CHANGED",
+            "object": "急に言葉がぞんざいになった",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 5,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "家の居住権と所有権の食い違い",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  },
+  "001798_056779:s3": {
+    "present": {
+      "gold": [
+        "boku",
+        "noro"
+      ],
+      "pred": [
+        "boku",
+        "noro"
+      ],
+      "tp": [
+        "boku",
+        "noro"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "continuous",
+      "relative_order_pred": "continuous",
+      "relative_order_match": true,
+      "explicit_time_gold": [],
+      "explicit_time_pred": null,
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [
+        "板の間"
+      ],
+      "pred": "板の間",
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "boku": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "noro": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1
+        ]
+      },
+      "pred": {
+        "boku": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "noro": [
+          0,
+          0,
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 1,
+          "gold_index": 0,
+          "pred": {
+            "subject": "noro",
+            "predicate": "STATE_CHANGED",
+            "object": "不安と困惑の色が拡がり腰をおろした",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "noro",
+            "predicate": "STATE_CHANGED",
+            "object": "不安と困惑"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 1,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "家の二重契約の誤解"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "noro",
+            "predicate": "LEARNED",
+            "object": "僕が権利金を払い賃貸借契約をしたこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "野呂が家を買い受けた事情と誤解の真相",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 1,
+          "gold_index": 0,
+          "pred": {
+            "subject": "noro",
+            "predicate": "STATE_CHANGED",
+            "object": "不安と困惑の色が拡がり腰をおろした",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "noro",
+            "predicate": "STATE_CHANGED",
+            "object": "不安と困惑"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 1,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "家の二重契約の誤解"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "noro",
+            "predicate": "LEARNED",
+            "object": "僕が権利金を払い賃貸借契約をしたこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "野呂が家を買い受けた事情と誤解の真相",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  },
+  "001801_001786:s0": {
+    "present": {
+      "gold": [
+        "onna",
+        "shinichi"
+      ],
+      "pred": [
+        "onna",
+        "shinichi"
+      ],
+      "tp": [
+        "onna",
+        "shinichi"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "unknown",
+      "relative_order_pred": "unknown",
+      "relative_order_match": true,
+      "explicit_time_gold": [
+        "深夜"
+      ],
+      "explicit_time_pred": "深夜",
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [
+        "海"
+      ],
+      "pred": "海",
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "shinichi": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "onna": [
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "pred": {
+        "shinichi": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "onna": [
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 1,
+          "gold_index": 0,
+          "pred": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "女が今日真赤なスポーツ・カーで来た女であること",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "女が今日スポーツ・カーで来た女であること"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 1,
+          "fact": {
+            "subject": "shinichi",
+            "predicate": "MOVED_TO",
+            "object": "女の方"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "若い女がひどく疲れ喘ぎながら泳いでいること",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一がこの町の出身で親父が漁師だったこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "onna",
+            "predicate": "HOOK_OPENED",
+            "object": "深夜の沖で助けを拒んで泳ぎ続ける理由",
+            "evidence": "inferred"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 1,
+          "gold_index": 0,
+          "pred": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "女が今日真赤なスポーツ・カーで来た女であること",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "女が今日スポーツ・カーで来た女であること"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 1,
+          "fact": {
+            "subject": "shinichi",
+            "predicate": "MOVED_TO",
+            "object": "女の方"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "若い女がひどく疲れ喘ぎながら泳いでいること",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一がこの町の出身で親父が漁師だったこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "onna",
+            "predicate": "HOOK_OPENED",
+            "object": "深夜の沖で助けを拒んで泳ぎ続ける理由",
+            "evidence": "inferred"
+          }
+        }
+      ]
+    }
+  },
+  "001801_001786:s1": {
+    "present": {
+      "gold": [
+        "onna",
+        "shinichi"
+      ],
+      "pred": [
+        "onna",
+        "shinichi"
+      ],
+      "tp": [
+        "onna",
+        "shinichi"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "continuous",
+      "relative_order_pred": "continuous",
+      "relative_order_match": true,
+      "explicit_time_gold": [],
+      "explicit_time_pred": null,
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [],
+      "pred": null,
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "shinichi": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "onna": [
+          -1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      "pred": {
+        "shinichi": [
+          0,
+          0,
+          0,
+          1,
+          -1,
+          1
+        ],
+        "onna": [
+          -1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 0,
+          "fact": {
+            "subject": "shinichi",
+            "predicate": "LOST",
+            "object": "父"
+          }
+        },
+        {
+          "gold_index": 1,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "女の自殺の意図"
+          }
+        },
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一の父の死生観"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一の親父が去年死んだこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 1,
+          "fact": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "女が自殺するつもりであること",
+            "evidence": "inferred"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一が自殺をとめないという考え",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "onna",
+            "predicate": "STATE_CHANGED",
+            "object": "ヒステリックに反発したのち無言になる",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 0,
+          "fact": {
+            "subject": "shinichi",
+            "predicate": "LOST",
+            "object": "父"
+          }
+        },
+        {
+          "gold_index": 1,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "女の自殺の意図"
+          }
+        },
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一の父の死生観"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一の親父が去年死んだこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 1,
+          "fact": {
+            "subject": "shinichi",
+            "predicate": "LEARNED",
+            "object": "女が自殺するつもりであること",
+            "evidence": "inferred"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一が自殺をとめないという考え",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "onna",
+            "predicate": "STATE_CHANGED",
+            "object": "ヒステリックに反発したのち無言になる",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  },
+  "001801_001786:s2": {
+    "present": {
+      "gold": [
+        "onna",
+        "shinichi"
+      ],
+      "pred": [
+        "onna",
+        "shinichi"
+      ],
+      "tp": [
+        "onna",
+        "shinichi"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "continuous",
+      "relative_order_pred": "continuous",
+      "relative_order_match": true,
+      "explicit_time_gold": [],
+      "explicit_time_pred": "真暗な夜",
+      "explicit_time_match": false
+    },
+    "location": {
+      "gold": [
+        "海",
+        "沖"
+      ],
+      "pred": "海",
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "shinichi": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1
+        ],
+        "onna": [
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "pred": {
+        "shinichi": [
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "onna": [
+          -1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一の親父もこの沖で自殺したこと",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一の父が自殺したこと"
+          }
+        },
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "shinichi",
+            "predicate": "MOVED_TO",
+            "object": "岸",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "shinichi",
+            "predicate": "MOVED_TO",
+            "object": "岸"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [],
+      "unmatched_pred_fp": []
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一の親父もこの沖で自殺したこと",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "onna",
+            "predicate": "LEARNED",
+            "object": "慎一の父が自殺したこと"
+          }
+        },
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "shinichi",
+            "predicate": "MOVED_TO",
+            "object": "岸",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "shinichi",
+            "predicate": "MOVED_TO",
+            "object": "岸"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [],
+      "unmatched_pred_fp": []
+    }
+  },
+  "001875_059897:s0": {
+    "present": {
+      "gold": [
+        "heiroku",
+        "otoe",
+        "susumu",
+        "yasue"
+      ],
+      "pred": [
+        "heiroku",
+        "otoe",
+        "susumu",
+        "yasue"
+      ],
+      "tp": [
+        "heiroku",
+        "otoe",
+        "susumu",
+        "yasue"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "unknown",
+      "relative_order_pred": "unknown",
+      "relative_order_match": true,
+      "explicit_time_gold": [
+        "斎木少年がきて一か月目ぐらい"
+      ],
+      "explicit_time_pred": "斎木少年がきて一か月目ぐらいの時",
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [
+        "安江の家"
+      ],
+      "pred": "安江の家",
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "yasue": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "heiroku": [
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0
+        ]
+      },
+      "pred": {
+        "yasue": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "heiroku": [
+          0,
+          -1,
+          -1,
+          0,
+          -1,
+          0
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "yasue",
+            "predicate": "ACQUIRED",
+            "object": "夏樹という赤ん坊をあずかる",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "yasue",
+            "predicate": "ACQUIRED",
+            "object": "夏樹（赤ん坊）"
+          }
+        },
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "heiroku",
+            "predicate": "MOVED_TO",
+            "object": "安江の家",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "heiroku",
+            "predicate": "MOVED_TO",
+            "object": "安江の家"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "heiroku",
+            "predicate": "LEARNED",
+            "object": "進君から赤ん坊の事情",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "yasue",
+            "predicate": "ACQUIRED",
+            "object": "夏樹という赤ん坊をあずかる",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "yasue",
+            "predicate": "ACQUIRED",
+            "object": "夏樹（赤ん坊）"
+          }
+        },
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "heiroku",
+            "predicate": "MOVED_TO",
+            "object": "安江の家",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "heiroku",
+            "predicate": "MOVED_TO",
+            "object": "安江の家"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "heiroku",
+            "predicate": "LEARNED",
+            "object": "進君から赤ん坊の事情",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  },
+  "001875_059897:s1": {
+    "present": {
+      "gold": [
+        "bunkichi",
+        "heiroku",
+        "otoe",
+        "yasue"
+      ],
+      "pred": [
+        "bunkichi",
+        "heiroku",
+        "otoe",
+        "yasue"
+      ],
+      "tp": [
+        "bunkichi",
+        "heiroku",
+        "otoe",
+        "yasue"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "continuous",
+      "relative_order_pred": "continuous",
+      "relative_order_match": true,
+      "explicit_time_gold": [],
+      "explicit_time_pred": null,
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [],
+      "pred": null,
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "yasue": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "bunkichi": [
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "heiroku": [
+          0,
+          -1,
+          0,
+          -1,
+          0,
+          0
+        ]
+      },
+      "pred": {
+        "yasue": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "heiroku": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "bunkichi": [
+          0,
+          1,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "otoe": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "fp_pred_only": [
+        "otoe"
+      ],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "heiroku",
+            "predicate": "STATE_CHANGED",
+            "object": "食糧統制違反で新聞に出てぱったり来なくなった",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "heiroku",
+            "predicate": "STATE_CHANGED",
+            "object": "食糧統制違反で新聞に出る"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 0,
+          "fact": {
+            "subject": "bunkichi",
+            "predicate": "LOST",
+            "object": "二千円"
+          }
+        },
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "兵六への貸金の行方"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "STATE_CHANGED",
+            "object": "恨みがましさも忘れて兵六を許す気になる",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "heiroku",
+            "predicate": "ACQUIRED",
+            "object": "文吉から二千円",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "文吉がへそくりから兵六に二千円貸したこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 4,
+          "fact": {
+            "subject": "heiroku",
+            "predicate": "LEARNED",
+            "object": "安江が権利金未受領を夫に隠している事情",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 5,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "HOOK_OPENED",
+            "object": "斎木少年の権利金を夫に隠していること",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "heiroku",
+            "predicate": "STATE_CHANGED",
+            "object": "食糧統制違反で新聞に出てぱったり来なくなった",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "heiroku",
+            "predicate": "STATE_CHANGED",
+            "object": "食糧統制違反で新聞に出る"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 0,
+          "fact": {
+            "subject": "bunkichi",
+            "predicate": "LOST",
+            "object": "二千円"
+          }
+        },
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "兵六への貸金の行方"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "STATE_CHANGED",
+            "object": "恨みがましさも忘れて兵六を許す気になる",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "heiroku",
+            "predicate": "ACQUIRED",
+            "object": "文吉から二千円",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "文吉がへそくりから兵六に二千円貸したこと",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 4,
+          "fact": {
+            "subject": "heiroku",
+            "predicate": "LEARNED",
+            "object": "安江が権利金未受領を夫に隠している事情",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 5,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "HOOK_OPENED",
+            "object": "斎木少年の権利金を夫に隠していること",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  },
+  "001875_059897:s2": {
+    "present": {
+      "gold": [
+        "otoe",
+        "susumu",
+        "yasue"
+      ],
+      "pred": [
+        "otoe",
+        "susumu",
+        "yasue"
+      ],
+      "tp": [
+        "otoe",
+        "susumu",
+        "yasue"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "continuous",
+      "relative_order_pred": "continuous",
+      "relative_order_match": true,
+      "explicit_time_gold": [],
+      "explicit_time_pred": null,
+      "explicit_time_match": true
+    },
+    "location": {
+      "gold": [],
+      "pred": null,
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "yasue": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "otoe": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "susumu": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "pred": {
+        "yasue": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "otoe": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "bunkichi": [
+          0,
+          0,
+          -1,
+          0,
+          -1,
+          0
+        ],
+        "susumu": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "fp_pred_only": [
+        "bunkichi"
+      ],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "進君の家が兵六に生活費を預けたが渡してもらえないこと",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "進君の生活費が兵六に預けられていること"
+          }
+        },
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "susumu",
+            "predicate": "ACQUIRED",
+            "object": "五百円",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "susumu",
+            "predicate": "ACQUIRED",
+            "object": "五百円"
+          }
+        },
+        {
+          "pred_index": 3,
+          "gold_index": 2,
+          "pred": {
+            "subject": "heiroku",
+            "predicate": "HOOK_OPENED",
+            "object": "兵六が進君の生活費を渡さず会えない問題",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "兵六が進君の生活費を渡さない"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "STATE_CHANGED",
+            "object": "柔和な顔になり五百円を貸した",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [
+        {
+          "pred_index": 0,
+          "gold_index": 0,
+          "pred": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "進君の家が兵六に生活費を預けたが渡してもらえないこと",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "進君の生活費が兵六に預けられていること"
+          }
+        },
+        {
+          "pred_index": 1,
+          "gold_index": 1,
+          "pred": {
+            "subject": "susumu",
+            "predicate": "ACQUIRED",
+            "object": "五百円",
+            "evidence": "explicit"
+          },
+          "gold": {
+            "subject": "susumu",
+            "predicate": "ACQUIRED",
+            "object": "五百円"
+          }
+        }
+      ],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 2,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "兵六が進君の生活費を渡さない"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "STATE_CHANGED",
+            "object": "柔和な顔になり五百円を貸した",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 3,
+          "fact": {
+            "subject": "heiroku",
+            "predicate": "HOOK_OPENED",
+            "object": "兵六が進君の生活費を渡さず会えない問題",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  },
+  "001875_059897:s3": {
+    "present": {
+      "gold": [
+        "susumu",
+        "yasue"
+      ],
+      "pred": [
+        "susumu",
+        "yasue"
+      ],
+      "tp": [
+        "susumu",
+        "yasue"
+      ],
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "time": {
+      "relative_order_gold": "continuous",
+      "relative_order_pred": "continuous",
+      "relative_order_match": true,
+      "explicit_time_gold": [],
+      "explicit_time_pred": "きょう",
+      "explicit_time_match": false
+    },
+    "location": {
+      "gold": [],
+      "pred": null,
+      "match": true
+    },
+    "states": {
+      "gold": {
+        "yasue": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "susumu": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "pred": {
+        "yasue": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "susumu": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "fp_pred_only": [],
+      "fn_gold_only": []
+    },
+    "facts_pred_obj": {
+      "matched": [],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 0,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "進君の部屋探し"
+          }
+        },
+        {
+          "gold_index": 1,
+          "fact": {
+            "subject": "susumu",
+            "predicate": "MOVED_TO",
+            "object": "鷲さんのところ"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "進君が毎日兵六を訪ねており今日も会いに行くつもりであること",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 1,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "STATE_CHANGED",
+            "object": "進君を慰める気持ちになり日ぎりを緩めた",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "susumu",
+            "predicate": "HOOK_OPENED",
+            "object": "兵六に相談してことしうちぐらいに部屋をさがすこと",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    },
+    "facts_strict": {
+      "matched": [],
+      "unmatched_gold_fn": [
+        {
+          "gold_index": 0,
+          "fact": {
+            "subject": null,
+            "predicate": "HOOK_OPENED",
+            "object": "進君の部屋探し"
+          }
+        },
+        {
+          "gold_index": 1,
+          "fact": {
+            "subject": "susumu",
+            "predicate": "MOVED_TO",
+            "object": "鷲さんのところ"
+          }
+        }
+      ],
+      "unmatched_pred_fp": [
+        {
+          "pred_index": 0,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "LEARNED",
+            "object": "進君が毎日兵六を訪ねており今日も会いに行くつもりであること",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 1,
+          "fact": {
+            "subject": "yasue",
+            "predicate": "STATE_CHANGED",
+            "object": "進君を慰める気持ちになり日ぎりを緩めた",
+            "evidence": "explicit"
+          }
+        },
+        {
+          "pred_index": 2,
+          "fact": {
+            "subject": "susumu",
+            "predicate": "HOOK_OPENED",
+            "object": "兵六に相談してことしうちぐらいに部屋をさがすこと",
+            "evidence": "explicit"
+          }
+        }
+      ]
+    }
+  }
+}

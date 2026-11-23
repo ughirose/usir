@@ -1,0 +1,381 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001875_059897:s0",
+      "scene_hash": "f6d7af0927c2c4c128304e9f08826aaec7c1399e3ff3754abce2e13cbf18ddfb",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001875_059897",
+      "scene_index": 0,
+      "scene_count": 4,
+      "char_len": 821,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "explicit",
+        "explicit_time": "斎木少年がきて一か月目ぐらいの時"
+      },
+      "location_id": "安江の家",
+      "present_character_ids": [
+        "yasue",
+        "otoe",
+        "heiroku",
+        "susumu"
+      ],
+      "pov_character": null
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "yasue",
+        "values_6d": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "heiroku",
+        "values_6d": [
+          0,
+          -1,
+          -1,
+          0,
+          -1,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "yasue",
+        "predicate": "ACQUIRED",
+        "object": "夏樹という赤ん坊をあずかる",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "MOVED_TO",
+        "object": "安江の家",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "LEARNED",
+        "object": "進君から赤ん坊の事情",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001875_059897:s1",
+      "scene_hash": "08ec58f6ba2228b78deb8873b08d5f4658cea9ebe819e80a3d5e0549da5a2174",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001875_059897",
+      "scene_index": 1,
+      "scene_count": 4,
+      "char_len": 977,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yasue",
+        "heiroku",
+        "otoe",
+        "bunkichi"
+      ],
+      "pov_character": null
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "yasue",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "heiroku",
+        "values_6d": [
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "bunkichi",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "otoe",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "yasue",
+        "predicate": "STATE_CHANGED",
+        "object": "恨みがましさも忘れて兵六を許す気になる",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "STATE_CHANGED",
+        "object": "食糧統制違反で新聞に出てぱったり来なくなった",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "ACQUIRED",
+        "object": "文吉から二千円",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "yasue",
+        "predicate": "LEARNED",
+        "object": "文吉がへそくりから兵六に二千円貸したこと",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "LEARNED",
+        "object": "安江が権利金未受領を夫に隠している事情",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "yasue",
+        "predicate": "HOOK_OPENED",
+        "object": "斎木少年の権利金を夫に隠していること",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001875_059897:s2",
+      "scene_hash": "f6bb4a8cd076d8932f313a5377a7aab0bd3939d5dcf72046e618a060e7107ad6",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001875_059897",
+      "scene_index": 2,
+      "scene_count": 4,
+      "char_len": 751,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "inferred"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yasue",
+        "otoe",
+        "susumu"
+      ],
+      "pov_character": null
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "yasue",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "otoe",
+        "values_6d": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "bunkichi",
+        "values_6d": [
+          0,
+          0,
+          -1,
+          0,
+          -1,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "susumu",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "yasue",
+        "predicate": "LEARNED",
+        "object": "進君の家が兵六に生活費を預けたが渡してもらえないこと",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "susumu",
+        "predicate": "ACQUIRED",
+        "object": "五百円",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "yasue",
+        "predicate": "STATE_CHANGED",
+        "object": "柔和な顔になり五百円を貸した",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "heiroku",
+        "predicate": "HOOK_OPENED",
+        "object": "兵六が進君の生活費を渡さず会えない問題",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001875_059897:s3",
+      "scene_hash": "7de1b26ff94b2389bbd6a6f211e27625359ea809b587b93a1595e3426c19953f",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001875_059897",
+      "scene_index": 3,
+      "scene_count": 4,
+      "char_len": 247,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "きょう"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "yasue",
+        "susumu"
+      ],
+      "pov_character": null
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "yasue",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "susumu",
+        "values_6d": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "yasue",
+        "predicate": "LEARNED",
+        "object": "進君が毎日兵六を訪ねており今日も会いに行くつもりであること",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "yasue",
+        "predicate": "STATE_CHANGED",
+        "object": "進君を慰める気持ちになり日ぎりを緩めた",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "susumu",
+        "predicate": "HOOK_OPENED",
+        "object": "兵六に相談してことしうちぐらいに部屋をさがすこと",
+        "evidence": "explicit"
+      }
+    ]
+  }
+]

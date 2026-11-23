@@ -1,0 +1,235 @@
+[
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001801_001786:s0",
+      "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001801_001786",
+      "scene_index": 0,
+      "scene_count": 3,
+      "char_len": 766,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "unknown",
+        "evidence": "explicit",
+        "explicit_time": "深夜"
+      },
+      "location_id": "海",
+      "present_character_ids": [
+        "shinichi",
+        "onna"
+      ],
+      "pov_character": "shinichi"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "onna",
+        "values_6d": [
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "evidence": "inferred"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "若い女がひどく疲れ喘ぎながら泳いでいること",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "女が今日真赤なスポーツ・カーで来た女であること",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "onna",
+        "predicate": "LEARNED",
+        "object": "慎一がこの町の出身で親父が漁師だったこと",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "onna",
+        "predicate": "HOOK_OPENED",
+        "object": "深夜の沖で助けを拒んで泳ぎ続ける理由",
+        "evidence": "inferred"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001801_001786:s1",
+      "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001801_001786",
+      "scene_index": 1,
+      "scene_count": 3,
+      "char_len": 818,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit"
+      },
+      "location_id": null,
+      "present_character_ids": [
+        "shinichi",
+        "onna"
+      ],
+      "pov_character": "shinichi"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          1,
+          -1,
+          1
+        ],
+        "evidence": "inferred"
+      },
+      {
+        "character_id": "onna",
+        "values_6d": [
+          -1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "onna",
+        "predicate": "LEARNED",
+        "object": "慎一の親父が去年死んだこと",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "shinichi",
+        "predicate": "LEARNED",
+        "object": "女が自殺するつもりであること",
+        "evidence": "inferred"
+      },
+      {
+        "subject": "onna",
+        "predicate": "LEARNED",
+        "object": "慎一が自殺をとめないという考え",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "onna",
+        "predicate": "STATE_CHANGED",
+        "object": "ヒステリックに反発したのち無言になる",
+        "evidence": "explicit"
+      }
+    ]
+  },
+  {
+    "contract": {
+      "schema_version": "sensor.v2",
+      "splitter_version": "usir_v5_splitter@1",
+      "scene_id": "001801_001786:s2",
+      "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+      "ledger_hash": "blind-gold-audit-v1",
+      "model_id": "google-gemini-independent-audit",
+      "prompt_hash": "99f566710028cc3878e364e8c298cc74efe45d90326f792fb6c90779af2a4eba",
+      "work_id": "001801_001786",
+      "scene_index": 2,
+      "scene_count": 3,
+      "char_len": 215,
+      "seed": 0
+    },
+    "scene_meta": {
+      "time": {
+        "relative_order": "continuous",
+        "evidence": "explicit",
+        "explicit_time": "真暗な夜"
+      },
+      "location_id": "海",
+      "present_character_ids": [
+        "shinichi",
+        "onna"
+      ],
+      "pov_character": "shinichi"
+    },
+    "utterances": [],
+    "character_states": [
+      {
+        "character_id": "shinichi",
+        "values_6d": [
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "evidence": "explicit"
+      },
+      {
+        "character_id": "onna",
+        "values_6d": [
+          -1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "evidence": "explicit"
+      }
+    ],
+    "fact_updates": [
+      {
+        "subject": "onna",
+        "predicate": "LEARNED",
+        "object": "慎一の親父もこの沖で自殺したこと",
+        "evidence": "explicit"
+      },
+      {
+        "subject": "shinichi",
+        "predicate": "MOVED_TO",
+        "object": "岸",
+        "evidence": "explicit"
+      }
+    ]
+  }
+]
