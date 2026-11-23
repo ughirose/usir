@@ -352,3 +352,188 @@ def test_nogold_warns_when_stage1_returns_all_speakers_null():
     assert [(x["scene_index"], x["utterances"], x["final_speaker_null"]) for x in w] == [(1, 3, 2), (3, 1, 1)]
     assert all(x["warning"] == "stage1_all_speakers_null" for x in w)
     assert all_null_scene_warnings(scenes[:1], stage1) == []
+
+
+def test_nogold_join_scenes_preserves_raw_newlines():
+    from local_from_step1_nogold import join_scenes_text
+
+    raw = "一\r\n\r\n「あ」\r\n「い」\r\n\r\n二\r\n\r\n「う」\r\n"
+    scenes = [
+        {"index": 0, "scene_text": "一\n「あ」", "span": {"start": 0, "end": 8}},
+        {"index": 1, "scene_text": "「い」", "span": {"start": 10, "end": 13}},
+        {"index": 2, "scene_text": "二\n「う」", "span": {"start": 17, "end": 25}},
+    ]
+    assert join_scenes_text(scenes[:2], raw) == "一\n\n「あ」\n「い」"
+    assert join_scenes_text(scenes[1:3], raw) == "「い」\n\n二\n\n「う」"
+    assert join_scenes_text(scenes[:2], None) == "一\n「あ」\n「い」"
+
+
+def test_nogold_a2_warnings_extended_and_essay_suppression():
+    from local_from_step1_nogold import all_null_scene_warnings
+    from usir_py.sensor_eval.features import UtteranceFeatures
+
+    def _feat(idx: int, pos: str = "standalone_line", qchars: int = 15) -> UtteranceFeatures:
+        return UtteranceFeatures(
+            utterance_index=idx, position=pos, quote_chars=qchars, pre_has_narration=False,
+            pre_speakers=(), pre_speech_verb=None, pre_speaker_and_verb=False,
+            post_speakers=(), post_speech_verb=None, post_speaker_and_verb=False,
+        )
+
+    # s0 (0..4): 5 standalone, 5/5 null + unknown -> stage1_all_speakers_null
+    # s1 (5..9): 5 standalone, 4/5 null (0.80) + plain -> stage1_high_null_speakers
+    # s2 (10..14): 5 standalone, 0 null, all long quotes politeness=unknown -> stage1_template_collapse
+    # s3 (15..19): 5 inline_embedded (0 standalone), 5/5 null & unknown -> suppressed (essay guard)
+    # s4 (20..24): 5 standalone, 0 null, plain -> normal (no warning)
+    scenes = [(0, "h0", 5), (1, "h1", 5), (2, "h2", 5), (3, "h3", 5), (4, "h4", 5)]
+    feats = (
+        [_feat(i, "standalone_line", 15) for i in range(0, 15)]
+        + [_feat(i, "inline_embedded", 15) for i in range(15, 20)]
+        + [_feat(i, "standalone_line", 15) for i in range(20, 25)]
+    )
+    stage1 = (
+        [{"utterance_index": i, "speaker_id": None, "register": {"politeness": "unknown"}} for i in range(0, 5)]
+        + [{"utterance_index": i, "speaker_id": ("a" if i == 5 else None), "register": {"politeness": "plain"}} for i in range(5, 10)]
+        + [{"utterance_index": i, "speaker_id": "a", "register": {"politeness": "unknown"}} for i in range(10, 15)]
+        + [{"utterance_index": i, "speaker_id": None, "register": {"politeness": "unknown"}} for i in range(15, 20)]
+        + [{"utterance_index": i, "speaker_id": "a", "register": {"politeness": "plain"}} for i in range(20, 25)]
+    )
+    warns = all_null_scene_warnings(scenes, stage1, features=feats)
+    assert [(w["scene_index"], w["warning"]) for w in warns] == [
+        (0, "stage1_all_speakers_null"),
+        (1, "stage1_high_null_speakers"),
+        (2, "stage1_template_collapse"),
+    ]
+    assert warns[0]["reasons"] == ["all_speakers_null", "all_long_politeness_unknown"]
+    assert warns[1]["reasons"] == ["high_null_rate"]
+    assert warns[2]["reasons"] == ["all_long_politeness_unknown"]
+
+
+def test_nogold_lookback_context_and_stage3_span_alignment():
+    from local_from_step1_nogold import build_lookback_context, format_numbered_with_context, narration_speakers_in_text
+    from usir_py.sensor_eval.f9_loader import F9Character, F9UtteranceGold, F9Work, number_outer_quotes
+    from usir_py.sensor_eval.features import extract_work_utterance_features
+    from usir_py.sensor_eval.speaker_recheck import compute_numbered_quote_spans
+
+    chars = [
+        F9Character(id="taro", aliases=["太郎"], gender="Male"),
+        F9Character(id="hanako", aliases=["花子"], gender="Female"),
+    ]
+    # s0 has narration anchor; s1 has quote mentioning 太郎 only (must NOT count as narration anchor); s2 is target
+    s0 = "太郎は窓を開けた。花子も頷いた。"
+    s1 = "「太郎さんはどこだい」\n「さあ、知らないよ」"
+    s2 = "「おい」\n「何だい」"
+    raw = f"{s0}\r\n{s1}\r\n{s2}"
+    scenes = [
+        {"index": 0, "scene_text": s0, "span": {"start": 0, "end": len(s0)}},
+        {"index": 1, "scene_text": s1, "span": {"start": len(s0) + 2, "end": len(s0) + 2 + len(s1)}},
+        {"index": 2, "scene_text": s2, "span": {"start": len(s0) + 2 + len(s1) + 2, "end": len(raw)}},
+    ]
+    assert narration_speakers_in_text(s1, chars, "third", None) == ()
+    ctx, ctx_scenes = build_lookback_context(scenes, 2, raw, chars, "third", None, max_chars=1500)
+    assert ctx_scenes == [0, 1]
+    assert "太郎は窓を開けた" in ctx and "[U" not in ctx
+
+    # Check Stage 3 span alignment & feature invariance when context is prepended
+    numbered, spans = number_outer_quotes(s2)
+    gold = [
+        F9UtteranceGold(n=i, open_offset=a, close_offset=b, head="", status="undetermined", speaker=None, quote_text=s2[a:b])
+        for i, (a, b) in enumerate(spans)
+    ]
+    w_plain = F9Work(work_id="t", author=None, title=None, narration="third", narrator=None, pov=None,
+                     characters=chars, text=s2, numbered_text=numbered, scene_hash="h", utterances=gold)
+    w_ctx = F9Work(work_id="t", author=None, title=None, narration="third", narrator=None, pov=None,
+                   characters=chars, text=s2, numbered_text=format_numbered_with_context(numbered, ctx),
+                   scene_hash="h", utterances=gold)
+    assert extract_work_utterance_features(w_ctx) == extract_work_utterance_features(w_plain)
+    recheck_spans = compute_numbered_quote_spans(w_ctx)
+    assert [w_ctx.numbered_text[a:b] for a, b in recheck_spans] == ["[U0]「おい」", "[U1]「何だい」"]
+
+    # When context exceeds max_chars, anchor name must still survive trimming
+    long_s1 = "\n".join([f"「長いセリフ{i}だよ、まだ続くよ」" for i in range(25)])
+    raw2 = f"{s0}\r\n{long_s1}\r\n{s2}"
+    scenes2 = [
+        {"index": 0, "scene_text": s0, "span": {"start": 0, "end": len(s0)}},
+        {"index": 1, "scene_text": long_s1, "span": {"start": len(s0) + 2, "end": len(s0) + 2 + len(long_s1)}},
+        {"index": 2, "scene_text": s2, "span": {"start": len(s0) + 2 + len(long_s1) + 2, "end": len(raw2)}},
+    ]
+    ctx2, _ = build_lookback_context(scenes2, 2, raw2, chars, "third", None, max_chars=200)
+    assert len(ctx2) <= 200
+    assert narration_speakers_in_text(ctx2, chars, "third", None)
+
+
+def test_nogold_scene_opening_narration_cue():
+    from local_from_step1_nogold import scene_has_opening_narration_speaker
+    from usir_py.sensor_eval.f9_loader import F9Character
+
+    chars = [F9Character(id="taro", aliases=["太郎"], gender="Male")]
+    # Alias right before U0 -> True
+    s_pre = {"index": 0, "scene_text": "太郎が来た。「あ」「い」「う」「え」「お」「か」"}
+    assert scene_has_opening_narration_speaker(s_pre, None, chars, "third", None, opening_quotes=5)
+    # Alias right after U4 (before U5) -> True
+    s_u4 = {"index": 1, "scene_text": "「あ」「い」「う」「え」「お」太郎が笑った。「か」"}
+    assert scene_has_opening_narration_speaker(s_u4, None, chars, "third", None, opening_quotes=5)
+    # Alias only inside U0 quote and in narration after U5 -> False
+    s_late = {"index": 2, "scene_text": "「太郎さん」「い」「う」「え」「お」「か」太郎が立った。「き」"}
+    assert not scene_has_opening_narration_speaker(s_late, None, chars, "third", None, opening_quotes=5)
+    # Short scene (< 5 quotes) with no narration alias -> False
+    s_short = {"index": 3, "scene_text": "「太郎」「うん」"}
+    assert not scene_has_opening_narration_speaker(s_short, None, chars, "third", None, opening_quotes=5)
+
+
+def test_nogold_stage1_rank_register_and_tiebreaker():
+    from local_from_step1_nogold import _stage1_rank, quote_has_first_person_pronoun
+    from usir_py.sensor_eval.f9_loader import F9UtteranceGold
+    from usir_py.sensor_eval.features import UtteranceFeatures
+
+    assert quote_has_first_person_pronoun("「僕は行くよ」")
+    assert quote_has_first_person_pronoun("「私の本だ」")
+    assert not quote_has_first_person_pronoun("「私的な問題」「公私混同」")
+
+    def _feat(idx: int, qchars: int = 12) -> UtteranceFeatures:
+        return UtteranceFeatures(
+            utterance_index=idx, position="standalone_line", quote_chars=qchars, pre_has_narration=False,
+            pre_speakers=(), pre_speech_verb=None, pre_speaker_and_verb=False,
+            post_speakers=(), post_speech_verb=None, post_speaker_and_verb=False,
+        )
+
+    utts = [
+        F9UtteranceGold(n=i, open_offset=0, close_offset=14, head="", status="undetermined", speaker=None,
+                        quote_text=("「僕はそう思うよ」" if i in (0, 1) else "「そうかい、わかった」"))
+        for i in range(5)
+    ]
+    feats = [_feat(i) for i in range(5)]
+
+    # Both have zero A2 warnings, zero nulls: no-context misses 1 fp, with-context misses 2 fp -> no-context wins
+    r_no = _stage1_rank(
+        [{"utterance_index": i, "speaker_id": "a", "addressee_id": "b",
+          "register": {"politeness": "plain", "first_person": ("僕" if i == 0 else None)}} for i in range(5)],
+        5, [], features=feats, utterances=utts,
+    )
+    r_ctx_worse = _stage1_rank(
+        [{"utterance_index": i, "speaker_id": "a", "addressee_id": "b",
+          "register": {"politeness": "plain", "first_person": None}} for i in range(5)],
+        5, [], features=feats, utterances=utts,
+    )
+    assert r_no == (0, 0, 0, 0, 1, 0) and r_ctx_worse == (0, 0, 0, 0, 2, 0)
+    assert not (r_ctx_worse < r_no)
+
+    # With-context recovers all fp -> adopted
+    r_ctx_better = _stage1_rank(
+        [{"utterance_index": i, "speaker_id": "a", "addressee_id": "b",
+          "register": {"politeness": "plain", "first_person": ("僕" if i in (0, 1) else None)}} for i in range(5)],
+        5, [], features=feats, utterances=utts,
+    )
+    assert r_ctx_better == (0, 0, 0, 0, 0, 0)
+    assert r_ctx_better < r_no
+
+    # Tie on all indicators -> keep no-context (strict < required)
+    assert not (r_no < r_no)
+
+    # Same fp_missed, with-context fixes addressee_id all-null collapse -> adopted
+    r_addr_null = _stage1_rank(
+        [{"utterance_index": i, "speaker_id": "a", "addressee_id": None,
+          "register": {"politeness": "plain", "first_person": ("僕" if i in (0, 1) else None)}} for i in range(5)],
+        5, [], features=feats, utterances=utts,
+    )
+    assert r_addr_null == (0, 0, 0, 0, 0, 1)
+    assert r_ctx_better < r_addr_null

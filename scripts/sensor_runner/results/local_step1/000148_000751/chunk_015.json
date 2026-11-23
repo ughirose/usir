@@ -1,411 +1,473 @@
 {
+ "adopted_context": true,
+ "c2_retry": null,
  "chars": 761,
  "chunk": 15,
+ "chunk_narration_speakers": [],
+ "context_chars": 783,
+ "context_scenes": [
+  30
+ ],
+ "context_source": "c1_dual_adopted",
  "ctx_warning": false,
+ "dual_run": {
+  "adopted": true,
+  "context_chars": 783,
+  "context_scenes": [
+   30
+  ],
+  "pass1_elapsed_s": 67.066,
+  "pass1_eval_tok": 1921,
+  "pass1_prompt_tok": 3618,
+  "pass1_rank": [
+   0,
+   40,
+   1,
+   25,
+   3,
+   1
+  ],
+  "pass1_warnings": [
+   "stage1_all_speakers_null"
+  ],
+  "pass2_ctx_warning": false,
+  "pass2_elapsed_s": 79.006,
+  "pass2_eval_tok": 2153,
+  "pass2_parse_error": null,
+  "pass2_prompt_tok": 4256,
+  "pass2_rank": [
+   0,
+   0,
+   0,
+   0,
+   1,
+   0
+  ],
+  "pass2_warnings": [],
+  "selection_reason": "context_lower_anomaly",
+  "trigger": "c1_no_opening_cue"
+ },
  "final": [
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 0
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 1
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 2
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 3
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 4
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 5
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 6
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 7
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 8
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 9
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 10
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 11
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 12
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 13
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 14
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 15
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 16
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 17
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 18
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 19
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 20
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 21
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 22
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 23
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 24
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 25
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 26
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 27
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 28
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 29
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 30
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 31
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 32
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 33
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 34
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 35
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 36
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 37
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 38
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 39
   }
  ],
+ "first_scene_has_opening_cue": false,
  "missing_predictions": 0,
  "parse_error": null,
+ "pass1_rank": [
+  0,
+  40,
+  1,
+  25,
+  3,
+  1
+ ],
+ "pass2_rank": [
+  0,
+  0,
+  0,
+  0,
+  1,
+  0
+ ],
  "pp_audit": {
   "explicit_downgraded": [],
   "inline_non_speech_forced": [],
@@ -418,421 +480,1106 @@
  "sr_audit": {
   "any_context_window_warning": false,
   "changed_count": 0,
-  "decisions": [],
-  "elapsed_sec": 0.0,
+  "decisions": [
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.462,
+    "eval_count": 45,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3072,
+    "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 0
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.1,
+    "eval_count": 50,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3103,
+    "reason": "直前の地の文と直後の地の文とも矛盾せず、会話の流れも自然である。",
+    "rejected_reason": null,
+    "utterance_index": 1
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.96,
+    "eval_count": 47,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3114,
+    "reason": "直前の発話と直後の地の文の流れに矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 2
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.98,
+    "eval_count": 46,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3145,
+    "reason": "直前直後の会話文脈と矛盾せず、話者の交替も自然である。",
+    "rejected_reason": null,
+    "utterance_index": 3
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.181,
+    "eval_count": 47,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3227,
+    "reason": "直前・直後の会話と矛盾せず、話者の一貫性を保つ。",
+    "rejected_reason": null,
+    "utterance_index": 4
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.871,
+    "eval_count": 42,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3182,
+    "reason": "直前直後の会話文脈と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 5
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.923,
+    "eval_count": 43,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3171,
+    "reason": "直前・直後の会話文脈と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 6
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.904,
+    "eval_count": 43,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3178,
+    "reason": "直前・直後の会話文脈と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 7
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.999,
+    "eval_count": 45,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3163,
+    "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 8
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.051,
+    "eval_count": 47,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3191,
+    "reason": "直前・直後の会話と矛盾せず、話者の一貫性を保つ。",
+    "rejected_reason": null,
+    "utterance_index": 9
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.136,
+    "eval_count": 50,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3168,
+    "reason": "直前の地の文と直後の地の文とも矛盾せず、会話の流れも自然である。",
+    "rejected_reason": null,
+    "utterance_index": 10
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.205,
+    "eval_count": 50,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3203,
+    "reason": "直前の地の文と直後の地の文とも矛盾せず、会話の流れも自然である。",
+    "rejected_reason": null,
+    "utterance_index": 11
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.892,
+    "eval_count": 45,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3152,
+    "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 12
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.905,
+    "eval_count": 41,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3187,
+    "reason": "直前・直後の会話と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 13
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.991,
+    "eval_count": 47,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3145,
+    "reason": "直前直後の会話構造と矛盾せず、暫定話者として成立する。",
+    "rejected_reason": null,
+    "utterance_index": 14
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.073,
+    "eval_count": 48,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3132,
+    "reason": "直前・直後の会話文脈と矛盾せず、暫定話者として成立する。",
+    "rejected_reason": null,
+    "utterance_index": 15
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.862,
+    "eval_count": 42,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3161,
+    "reason": "直前の会話と直後の会話の流れに矛盾がない。",
+    "rejected_reason": null,
+    "utterance_index": 16
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.984,
+    "eval_count": 46,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3123,
+    "reason": "直前直後の会話文脈と矛盾せず、話者の交替も自然である。",
+    "rejected_reason": null,
+    "utterance_index": 17
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.991,
+    "eval_count": 47,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3109,
+    "reason": "直前直後の会話文脈と矛盾せず、暫定話者として成立する。",
+    "rejected_reason": null,
+    "utterance_index": 18
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.044,
+    "eval_count": 48,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3156,
+    "reason": "直前・直後の会話文脈と矛盾せず、暫定話者として成立する。",
+    "rejected_reason": null,
+    "utterance_index": 19
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.786,
+    "eval_count": 42,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3066,
+    "reason": "直前直後の会話文脈と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 20
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.821,
+    "eval_count": 42,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3074,
+    "reason": "直前直後の会話文脈と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 21
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.095,
+    "eval_count": 50,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3085,
+    "reason": "直前・直後の会話文脈と矛盾せず、暫定話者の話者として成立する。",
+    "rejected_reason": null,
+    "utterance_index": 22
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.185,
+    "eval_count": 49,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 3075,
+    "reason": "直前・直後の会話文脈と矛盾せず、話者の一貫性を保っている。",
+    "rejected_reason": null,
+    "utterance_index": 23
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.827,
+    "eval_count": 45,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2947,
+    "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 24
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.766,
+    "eval_count": 42,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2932,
+    "reason": "直前の会話と直後の会話とも矛盾なく成立する。",
+    "rejected_reason": null,
+    "utterance_index": 25
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.863,
+    "eval_count": 47,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2927,
+    "reason": "直前の地の文と直後の地の文の流れに矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 26
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.75,
+    "eval_count": 45,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2902,
+    "reason": "直前の会話と直後の会話の流れに矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 27
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 3.06,
+    "eval_count": 53,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2874,
+    "reason": "直前の会話の流れと矛盾せず、草の生え具合を説明する立場として妥当",
+    "rejected_reason": null,
+    "utterance_index": 28
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.606,
+    "eval_count": 41,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2861,
+    "reason": "直前・直後の会話と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 29
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.626,
+    "eval_count": 42,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2854,
+    "reason": "直前の会話と直後の会話の流れに矛盾がない。",
+    "rejected_reason": null,
+    "utterance_index": 30
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.548,
+    "eval_count": 42,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2735,
+    "reason": "直前の会話と直後の会話の流れに矛盾がない。",
+    "rejected_reason": null,
+    "utterance_index": 31
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.362,
+    "eval_count": 37,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2724,
+    "reason": "直前の文脈と矛盾なく成立する。",
+    "rejected_reason": null,
+    "utterance_index": 32
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.897,
+    "eval_count": 53,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2706,
+    "reason": "直前のkeisanの発話と直後のkeisanの発話との会話構造と矛盾しない。",
+    "rejected_reason": null,
+    "utterance_index": 33
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.515,
+    "eval_count": 42,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2682,
+    "reason": "直前の会話と直後の会話とも矛盾なく成立する。",
+    "rejected_reason": null,
+    "utterance_index": 34
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.5,
+    "eval_count": 43,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2642,
+    "reason": "直前・直後の会話文脈と矛盾無く成立する。",
+    "rejected_reason": null,
+    "utterance_index": 35
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.287,
+    "eval_count": 37,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2636,
+    "reason": "直前の会話と矛盾なく成立する。",
+    "rejected_reason": null,
+    "utterance_index": 36
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.296,
+    "eval_count": 37,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2566,
+    "reason": "直前の会話と矛盾なく成立する。",
+    "rejected_reason": null,
+    "utterance_index": 37
+   },
+   {
+    "accepted": true,
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.723,
+    "eval_count": 52,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2514,
+    "reason": "直前の会話でkeisanがrokusanに質問しているため、keisanが話者として成立する。",
+    "rejected_reason": null,
+    "utterance_index": 38
+   },
+   {
+    "accepted": true,
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
+    "changed": false,
+    "context_window_warning": false,
+    "contradiction_found": false,
+    "elapsed_sec": 2.562,
+    "eval_count": 48,
+    "format_mode": "json_schema",
+    "parse_error": null,
+    "prompt_eval_count": 2468,
+    "reason": "直前の会話で暫定話者のrokusanが続き、直後の本文も矛盾しない。",
+    "rejected_reason": null,
+    "utterance_index": 39
+   }
+  ],
+  "elapsed_sec": 114.589,
   "enabled": true,
-  "eval_count": 0,
+  "eval_count": 1808,
   "mode": "per_utterance",
   "model": "qwen2.5:14b",
-  "prompt_eval_count": 0,
-  "rechecked_count": 0,
+  "prompt_eval_count": 119352,
+  "rechecked_count": 40,
   "rejected_count": 0,
-  "target_count": 0,
+  "target_count": 40,
   "work_id": "000148_000751#c15"
  },
- "stage1_eval_tok": 1921,
+ "stage1_all_null_scenes": [],
+ "stage1_anomaly_scenes": [],
+ "stage1_attempts": 2,
+ "stage1_eval_tok": 4074,
  "stage1_parsed": [
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 0
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 1
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 2
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 3
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 4
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 5
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 6
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 7
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 8
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 9
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 10
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 11
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 12
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 13
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 14
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 15
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 16
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 17
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 18
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 19
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 20
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 21
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 22
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 23
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 24
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 25
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 26
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 27
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 28
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 29
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 30
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 31
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 32
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 33
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 34
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 35
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 36
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 37
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
    "register": {
     "first_person": null,
-    "politeness": "unknown"
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "keisan",
    "utterance_index": 38
   },
   {
-   "addressee_id": null,
-   "evidence": "ambiguous",
+   "addressee_id": "keisan",
+   "evidence": "inferred",
    "register": {
-    "first_person": null,
-    "politeness": "unknown"
+    "first_person": "僕",
+    "politeness": "plain"
    },
-   "speaker_id": null,
+   "speaker_id": "rokusan",
    "utterance_index": 39
   }
  ],
- "stage1_prompt_tok": 3618,
- "wall_s": 70.3
+ "stage1_prompt_tok": 7874,
+ "stage1_s": 146.072,
+ "wall_s": 260.7
 }

@@ -1,354 +1,989 @@
 {
  "chunks": [
   {
+   "adopted_context": false,
    "chars": 1538,
    "chunk": 0,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan",
+    "tonari_a"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "pass2_rank": null,
    "quotes": 46,
    "scenes": [
     0,
     1
    ],
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
    "stage1_eval_tok": 2356,
-   "stage1_prompt_tok": 4388,
-   "wall_s": 236.0
+   "stage1_prompt_tok": 4389,
+   "stage1_s": 98.022,
+   "wall_s": 236.1
   },
   {
-   "chars": 1662,
+   "adopted_context": true,
+   "chars": 1661,
    "chunk": 1,
+   "chunk_narration_speakers": [
+    "rokusan",
+    "tonari_a",
+    "hige_jii",
+    "keisan"
+   ],
+   "context_chars": 782,
+   "context_scenes": [
+    1
+   ],
+   "context_source": "c1_dual_adopted",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    8,
+    0
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
    "quotes": 47,
    "scenes": [
     2,
     3
    ],
-   "stage1_eval_tok": 2415,
-   "stage1_prompt_tok": 4527,
-   "wall_s": 236.0
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 4837,
+   "stage1_prompt_tok": 9708,
+   "stage1_s": 185.014,
+   "wall_s": 329.3
   },
   {
-   "chars": 1440,
+   "adopted_context": false,
+   "chars": 1439,
    "chunk": 2,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    4,
+    1
+   ],
+   "pass2_rank": null,
    "quotes": 36,
    "scenes": [
     4,
     5
    ],
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
    "stage1_eval_tok": 1838,
    "stage1_prompt_tok": 4031,
-   "wall_s": 170.5
+   "stage1_s": 70.804,
+   "wall_s": 173.9
   },
   {
+   "adopted_context": false,
    "chars": 1517,
    "chunk": 3,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    3,
+    1
+   ],
+   "pass2_rank": null,
    "quotes": 43,
    "scenes": [
     6,
     7
    ],
-   "stage1_eval_tok": 2272,
-   "stage1_prompt_tok": 4308,
-   "wall_s": 209.3
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
+   "stage1_eval_tok": 2711,
+   "stage1_prompt_tok": 4309,
+   "stage1_s": 104.86,
+   "wall_s": 231.9
   },
   {
-   "chars": 1561,
+   "adopted_context": false,
+   "chars": 1560,
    "chunk": 4,
+   "chunk_narration_speakers": [
+    "rokusan",
+    "keisan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1
+   ],
+   "pass2_rank": null,
    "quotes": 36,
    "scenes": [
     8,
     9
    ],
-   "stage1_eval_tok": 1833,
-   "stage1_prompt_tok": 4206,
-   "wall_s": 169.2
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
+   "stage1_eval_tok": 1879,
+   "stage1_prompt_tok": 4207,
+   "stage1_s": 67.935,
+   "wall_s": 169.6
   },
   {
-   "chars": 1573,
+   "adopted_context": true,
+   "chars": 1572,
    "chunk": 5,
+   "chunk_narration_speakers": [
+    "rokusan",
+    "keisan"
+   ],
+   "context_chars": 762,
+   "context_scenes": [
+    9
+   ],
+   "context_source": "c2_retry",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    2,
+    36,
+    6,
+    1
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    1
+   ],
    "quotes": 47,
    "scenes": [
     10,
     11
    ],
-   "stage1_eval_tok": 2398,
-   "stage1_prompt_tok": 4434,
-   "wall_s": 222.0
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 4798,
+   "stage1_prompt_tok": 9509,
+   "stage1_s": 180.94,
+   "wall_s": 317.6
   },
   {
-   "chars": 1145,
+   "adopted_context": true,
+   "chars": 1144,
    "chunk": 6,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan"
+   ],
+   "context_chars": 796,
+   "context_scenes": [
+    11
+   ],
+   "context_source": "c1_dual_adopted",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    27,
+    1,
+    25,
+    9,
+    0
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    4,
+    0
+   ],
    "quotes": 29,
    "scenes": [
     12,
     13
    ],
-   "stage1_eval_tok": 1506,
-   "stage1_prompt_tok": 3672,
-   "wall_s": 135.9
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 2965,
+   "stage1_prompt_tok": 7989,
+   "stage1_s": 110.277,
+   "wall_s": 193.8
   },
   {
+   "adopted_context": false,
    "chars": 1548,
    "chunk": 7,
+   "chunk_narration_speakers": [
+    "keisan",
+    "gejo",
+    "rokusan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0
+   ],
    "quotes": 48,
    "scenes": [
     14,
     15
    ],
-   "stage1_eval_tok": 2556,
-   "stage1_prompt_tok": 4443,
-   "wall_s": 223.0
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 5105,
+   "stage1_prompt_tok": 9220,
+   "stage1_s": 194.032,
+   "wall_s": 328.6
   },
   {
-   "chars": 1538,
+   "adopted_context": false,
+   "chars": 1537,
    "chunk": 8,
+   "chunk_narration_speakers": [
+    "gejo",
+    "rokusan",
+    "keisan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    2,
+    38,
+    6,
+    1
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    2,
+    38,
+    6,
+    1
+   ],
    "quotes": 50,
    "scenes": [
     16,
     17
    ],
-   "stage1_eval_tok": 2551,
-   "stage1_prompt_tok": 4499,
-   "wall_s": 244.1
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [
+    {
+     "scene_index": 16,
+     "warning": "stage1_template_collapse"
+    },
+    {
+     "scene_index": 17,
+     "warning": "stage1_template_collapse"
+    }
+   ],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 5062,
+   "stage1_prompt_tok": 9629,
+   "stage1_s": 190.833,
+   "wall_s": 339.1
   },
   {
-   "chars": 1440,
+   "adopted_context": false,
+   "chars": 1439,
    "chunk": 9,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan",
+    "gejo"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    10,
+    1,
+    0
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    2,
+    34,
+    1,
+    1
+   ],
    "quotes": 47,
    "scenes": [
     18,
     19
    ],
-   "stage1_eval_tok": 2497,
-   "stage1_prompt_tok": 4338,
-   "wall_s": 228.7
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 4892,
+   "stage1_prompt_tok": 9290,
+   "stage1_s": 186.3,
+   "wall_s": 319.0
   },
   {
-   "chars": 2514,
+   "adopted_context": false,
+   "chars": 2513,
    "chunk": 10,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    1
+   ],
+   "pass2_rank": null,
    "quotes": 45,
    "scenes": [
     20,
     21,
     22
    ],
-   "stage1_eval_tok": 2296,
-   "stage1_prompt_tok": 5106,
-   "wall_s": 217.8
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
+   "stage1_eval_tok": 2298,
+   "stage1_prompt_tok": 5107,
+   "stage1_s": 88.085,
+   "wall_s": 223.4
   },
   {
-   "chars": 1460,
+   "adopted_context": false,
+   "chars": 1459,
    "chunk": 11,
+   "chunk_narration_speakers": [
+    "rokusan",
+    "keisan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "pass2_rank": null,
    "quotes": 40,
    "scenes": [
     23,
     24
    ],
-   "stage1_eval_tok": 2171,
-   "stage1_prompt_tok": 4148,
-   "wall_s": 195.7
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
+   "stage1_eval_tok": 2169,
+   "stage1_prompt_tok": 4149,
+   "stage1_s": 81.629,
+   "wall_s": 194.9
   },
   {
-   "chars": 1582,
+   "adopted_context": true,
+   "chars": 1581,
    "chunk": 12,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan"
+   ],
+   "context_chars": 754,
+   "context_scenes": [
+    24
+   ],
+   "context_source": "c1_dual_adopted",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    4,
+    1
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    4,
+    0
+   ],
    "quotes": 40,
    "scenes": [
     25,
     26
    ],
-   "stage1_eval_tok": 2041,
-   "stage1_prompt_tok": 4296,
-   "wall_s": 192.0
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 4159,
+   "stage1_prompt_tok": 9189,
+   "stage1_s": 158.011,
+   "wall_s": 276.0
   },
   {
-   "chars": 1523,
+   "adopted_context": false,
+   "chars": 1522,
    "chunk": 13,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    1,
+    1,
+    0
+   ],
+   "pass2_rank": null,
    "quotes": 46,
    "scenes": [
     27,
     28
    ],
-   "stage1_eval_tok": 2436,
-   "stage1_prompt_tok": 4349,
-   "wall_s": 223.0
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
+   "stage1_eval_tok": 2464,
+   "stage1_prompt_tok": 4350,
+   "stage1_s": 90.9,
+   "wall_s": 220.8
   },
   {
-   "chars": 1546,
+   "adopted_context": false,
+   "chars": 1545,
    "chunk": 14,
+   "chunk_narration_speakers": [
+    "keisan",
+    "rokusan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0
+   ],
+   "pass2_rank": null,
    "quotes": 54,
    "scenes": [
     29,
     30
    ],
-   "stage1_eval_tok": 2863,
-   "stage1_prompt_tok": 4575,
-   "wall_s": 261.5
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
+   "stage1_eval_tok": 2867,
+   "stage1_prompt_tok": 4576,
+   "stage1_s": 107.577,
+   "wall_s": 264.6
   },
   {
+   "adopted_context": true,
    "chars": 761,
    "chunk": 15,
+   "chunk_narration_speakers": [],
+   "context_chars": 783,
+   "context_scenes": [
+    30
+   ],
+   "context_source": "c1_dual_adopted",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    40,
+    1,
+    25,
+    3,
+    1
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
    "quotes": 40,
    "scenes": [
     31
    ],
-   "stage1_eval_tok": 1921,
-   "stage1_prompt_tok": 3618,
-   "wall_s": 70.3
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 4074,
+   "stage1_prompt_tok": 7874,
+   "stage1_s": 146.072,
+   "wall_s": 260.7
   },
   {
-   "chars": 2083,
+   "adopted_context": false,
+   "chars": 2081,
    "chunk": 16,
+   "chunk_narration_speakers": [
+    "rokusan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    9,
+    0
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    9,
+    0
+   ],
    "quotes": 55,
    "scenes": [
     32,
     33,
     34
    ],
-   "stage1_eval_tok": 2917,
-   "stage1_prompt_tok": 5014,
-   "wall_s": 272.5
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 5824,
+   "stage1_prompt_tok": 11187,
+   "stage1_s": 220.444,
+   "wall_s": 383.1
   },
   {
-   "chars": 769,
+   "adopted_context": false,
+   "chars": 770,
    "chunk": 17,
+   "chunk_narration_speakers": [],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    1
+   ],
    "quotes": 28,
    "scenes": [
     35
    ],
-   "stage1_eval_tok": 1485,
-   "stage1_prompt_tok": 3352,
-   "wall_s": 131.4
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 2914,
+   "stage1_prompt_tok": 7183,
+   "stage1_s": 108.16,
+   "wall_s": 186.6
   },
   {
+   "adopted_context": false,
    "chars": 764,
    "chunk": 18,
+   "chunk_narration_speakers": [],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
    "quotes": 28,
    "scenes": [
     36
    ],
-   "stage1_eval_tok": 1509,
-   "stage1_prompt_tok": 3363,
-   "wall_s": 130.5
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 2994,
+   "stage1_prompt_tok": 7782,
+   "stage1_s": 111.261,
+   "wall_s": 190.8
   },
   {
+   "adopted_context": false,
    "chars": 765,
    "chunk": 19,
+   "chunk_narration_speakers": [
+    "rokusan"
+   ],
+   "context_chars": 0,
+   "context_scenes": [],
+   "context_source": "none",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": true,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "pass2_rank": null,
    "quotes": 32,
    "scenes": [
     37
    ],
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 1,
    "stage1_eval_tok": 1697,
    "stage1_prompt_tok": 3447,
-   "wall_s": 153.4
+   "stage1_s": 62.533,
+   "wall_s": 150.7
   },
   {
+   "adopted_context": true,
    "chars": 764,
    "chunk": 20,
+   "chunk_narration_speakers": [],
+   "context_chars": 765,
+   "context_scenes": [
+    37
+   ],
+   "context_source": "c1_dual_adopted",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    0,
+    0,
+    0,
+    4,
+    0
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "quotes": 37,
    "scenes": [
     38
    ],
-   "stage1_eval_tok": 1974,
-   "stage1_prompt_tok": 3559,
-   "wall_s": 175.5
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 4032,
+   "stage1_prompt_tok": 7737,
+   "stage1_s": 149.323,
+   "wall_s": 262.0
   },
   {
+   "adopted_context": true,
    "chars": 837,
    "chunk": 21,
+   "chunk_narration_speakers": [],
+   "context_chars": 1476,
+   "context_scenes": [
+    37,
+    38
+   ],
+   "context_source": "c1_dual_adopted",
    "ctx_warning": false,
+   "first_scene_has_opening_cue": false,
    "missing_predictions": 0,
    "parse_error": null,
+   "pass1_rank": [
+    0,
+    30,
+    1,
+    22,
+    4,
+    1
+   ],
+   "pass2_rank": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "quotes": 30,
    "scenes": [
     39
    ],
-   "stage1_eval_tok": 1441,
-   "stage1_prompt_tok": 3437,
-   "wall_s": 52.4
+   "stage1_all_null_scenes": [],
+   "stage1_anomaly_scenes": [],
+   "stage1_attempts": 2,
+   "stage1_eval_tok": 3060,
+   "stage1_prompt_tok": 8041,
+   "stage1_s": 113.966,
+   "wall_s": 203.4
   }
  ],
  "max_chars": 6000,
+ "max_context_chars": 1500,
  "max_quotes": 55,
  "model": "qwen2.5:14b",
  "num_ctx": 9216,
  "num_predict": 4096,
+ "opening_cue_quotes": 5,
  "totals": {
+  "c1_context_adopted": 6,
+  "c1_context_chunks": 6,
+  "c1_dual_run_chunks": 12,
+  "c1_no_context_kept": 6,
+  "c2_retry_adopted": 1,
+  "c2_retry_chunks": 1,
   "ctx_warn_chunks": 0,
-  "elapsed_wall_s": 4150.7,
+  "dual_pass2_eval_tok": 27615,
+  "dual_pass2_prompt_tok": 61781,
+  "dual_pass2_s": 1045.011,
+  "elapsed_wall_s": 5455.8,
   "parse_error_chunks": 0,
   "pp_changed": 0,
-  "pp_downgraded": 39,
+  "pp_downgraded": 79,
   "pp_forced": 0,
-  "sr_changed": 3,
-  "sr_rechecked": 820,
+  "sr_changed": 5,
+  "sr_rechecked": 889,
   "sr_rejected": 0,
-  "sr_target": 820,
-  "stage1_eval_tok": 46973,
-  "stage1_prompt_tok": 91110,
-  "stage1_s": 1756.6490000000001,
-  "stage3_eval_tok": 38407,
-  "stage3_prompt_tok": 2436476,
-  "stage3_s": 2393.8179999999993
+  "sr_target": 889,
+  "stage1_all_null_scenes": 0,
+  "stage1_anomaly_warnings": 2,
+  "stage1_eval_tok": 74995,
+  "stage1_prompt_tok": 152903,
+  "stage1_s": 2826.9779999999996,
+  "stage3_eval_tok": 41494,
+  "stage3_prompt_tok": 2675033,
+  "stage3_s": 2628.5480000000002
  },
+ "warnings": [
+  {
+   "chunk": 8,
+   "final_speaker_null": 0,
+   "long_politeness_unknown": 19,
+   "long_quotes": 19,
+   "reasons": [
+    "all_long_politeness_unknown"
+   ],
+   "scene_hash": "f7b21ea8d8c9029469716f5b6ac221f61bcd4926c4dd42ab4aeba384e8aa048c",
+   "scene_index": 16,
+   "stage1_null_rate": 0.0,
+   "stage1_speaker_null": 0,
+   "standalone_lines": 16,
+   "utterances": 20,
+   "warning": "stage1_template_collapse"
+  },
+  {
+   "chunk": 8,
+   "final_speaker_null": 0,
+   "long_politeness_unknown": 19,
+   "long_quotes": 19,
+   "reasons": [
+    "all_long_politeness_unknown"
+   ],
+   "scene_hash": "d90cf40ff23341580306605e69bde6d0419766f10b808a5be206313274022554",
+   "scene_index": 17,
+   "stage1_null_rate": 0.0,
+   "stage1_speaker_null": 0,
+   "standalone_lines": 21,
+   "utterances": 30,
+   "warning": "stage1_template_collapse"
+  }
+ ],
  "work_id": "000148_000751"
 }
