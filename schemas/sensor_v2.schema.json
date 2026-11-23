@@ -117,6 +117,7 @@
           "properties": {
             "relative_order": {
               "type": "string",
+              "description": "Strict relation to the preceding scene. parallel means strictly simultaneous with the immediately preceding scene (same moment); overlapping time periods such as 'その頃'/'同じ頃' must use continuous or unknown.",
               "enum": [
                 "continuous",
                 "flashback",
@@ -242,7 +243,7 @@
     },
     "character_states": {
       "type": "array",
-      "description": "6-axis value stances for active characters only (speaking, acting, or internal focalization).",
+      "description": "Legacy per-scene 6-axis value stances for active characters only ([] when trait_variations is present).",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -265,6 +266,54 @@
               "maximum": 1
             },
             "description": "6-axis quantized values in {-1, 0, +1} per Decision 1 (aligned with usir-metrics::sadame INTER_NORM = 24.0)."
+          },
+          "evidence": {
+            "$ref": "#/$defs/evidence_level"
+          }
+        }
+      }
+    },
+    "trait_variations": {
+      "type": "array",
+      "description": "Per-scene delta variations relative to the character ledger traits_6d baseline (canonical diagnose/3 format).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "character_id",
+          "changes",
+          "evidence"
+        ],
+        "properties": {
+          "character_id": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "changes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "axis",
+                "delta"
+              ],
+              "properties": {
+                "axis": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 5
+                },
+                "delta": {
+                  "type": "integer",
+                  "enum": [
+                    -2,
+                    -1,
+                    1,
+                    2
+                  ]
+                }
+              }
+            }
           },
           "evidence": {
             "$ref": "#/$defs/evidence_level"
@@ -310,6 +359,52 @@
           },
           "evidence": {
             "$ref": "#/$defs/evidence_level"
+          },
+          "target": {
+            "$ref": "#/$defs/nullable_non_empty_string",
+            "description": "STATE_CHANGED only (diagnose/3): target character ID or short object/subject label."
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "body_health",
+              "emotion",
+              "relation_status",
+              "object_state",
+              "identity_form",
+              "situation",
+              "other",
+              "unclassified"
+            ],
+            "description": "STATE_CHANGED only (diagnose/3): closed category (unclassified is for seed entries without a category)."
+          }
+        },
+        "if": {
+          "properties": {
+            "predicate": {
+              "not": {
+                "const": "STATE_CHANGED"
+              }
+            }
+          },
+          "required": [
+            "predicate"
+          ]
+        },
+        "then": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "target"
+                ]
+              },
+              {
+                "required": [
+                  "category"
+                ]
+              }
+            ]
           }
         }
       }

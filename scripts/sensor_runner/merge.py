@@ -3,8 +3,9 @@
 Ownership of fields (design, fixed):
   local model + deterministic : utterance_index, speaker_id, addressee_id, evidence   (from the local-side file)
   Policy X (deterministic)    : register.politeness (Janome surface rule), register.first_person (surface regex)
-  strong model (cache)        : time, location, pov, presence (strong model; local ids absent from it are only counted), character_states (ledger + variations),
-                                fact_updates, nagare, awase
+  strong model (cache)        : time, location, pov, presence (strong model; local ids absent from it are only counted),
+                                trait_variations (paired with ledger traits_6d in characters.json),
+                                fact_updates (STATE_CHANGED with target/category + text in object), nagare, awase
 """
 from __future__ import annotations
 
@@ -55,6 +56,7 @@ def load_local(path: Path) -> dict[str, list[dict[str, Any]]]:
 
 
 def state_changed_object(f: dict[str, Any]) -> str:
+    """Legacy bracketed STATE_CHANGED formatter retained for backwards compatibility."""
     if f.get("category") in (None, "unclassified") or not f.get("target"):
         return f["text"]
     return f"[{f['category']}] {f['target']}: {f['text']}"
@@ -62,6 +64,39 @@ def state_changed_object(f: dict[str, Any]) -> str:
 
 def ledger_hash(ledger: dict[str, list[int]]) -> str:
     return "ledger:" + content_hash(ledger)[:12]
+
+
+def characters_with_ledger(characters: list[dict[str, Any]], ledger: dict[str, list[int]]) -> list[dict[str, Any]]:
+    """Return character entries enriched with ledger `traits_6d` without mutating the input list."""
+    out: list[dict[str, Any]] = []
+    for c in characters:
+        row = dict(c)
+        if row["id"] in ledger:
+            row["traits_6d"] = list(ledger[row["id"]])
+        out.append(row)
+    return out
+
+
+def _validate_v3_semantics(rec: dict[str, Any], roster_ids: list[str]) -> list[str]:
+    errs: list[str] = []
+    ids = set(roster_ids)
+    tv = rec.get("trait_variations")
+    if tv is not None:
+        seen_chars: set[str] = set()
+        for v in tv:
+            cid = v["character_id"]
+            if cid not in ids:
+                errs.append(f"roster: trait_variations {cid}")
+            if cid in seen_chars:
+                errs.append(f"duplicate trait_variations character_id: {cid}")
+            seen_chars.add(cid)
+            seen_axes: set[int] = set()
+            for d in v["changes"]:
+                ax = d["axis"]
+                if ax in seen_axes:
+                    errs.append(f"duplicate trait_variations axis {ax} for {cid}")
+                seen_axes.add(ax)
+    return errs
 
 
 def merge_scene(
@@ -107,25 +142,33 @@ def merge_scene(
             if v is not None and v not in present:
                 stats["local_ids_absent_from_present"] += 1
 
-    states = []
-    for c in strong["trait_changes"]:
-        vec = list(ledger[c["character_id"]])
-        for ch in c.get("changes") or []:
-            vec[ch["axis"]] += ch["delta"]
-        states.append({"character_id": c["character_id"], "values_6d": [max(-1, min(1, v)) for v in vec], "evidence": c["evidence"]})
+    variations = [
+        {
+            "character_id": c["character_id"],
+            "changes": [{"axis": ch["axis"], "delta": ch["delta"]} for ch in (c.get("changes") or [])],
+            "evidence": c["evidence"],
+        }
+        for c in strong["trait_changes"]
+    ]
 
     sentences = [(s["index"], s["local"]["start"], s["local"]["end"]) for s in scene["sentences"]]
     facts = []
     for f in strong["facts"]:
-        o = state_changed_object(f) if f["predicate"] == "STATE_CHANGED" else f["object"]
-        rec = {"subject": f["subject"], "predicate": f["predicate"], "object": o, "evidence": f["evidence"]}
+        if f["predicate"] == "STATE_CHANGED":
+            rec_f = {"subject": f["subject"], "predicate": "STATE_CHANGED", "object": f["text"], "evidence": f["evidence"]}
+            if f.get("target"):
+                rec_f["target"] = f["target"]
+            if f.get("category"):
+                rec_f["category"] = f["category"]
+        else:
+            rec_f = {"subject": f["subject"], "predicate": f["predicate"], "object": f["object"], "evidence": f["evidence"]}
         if f.get("basis"):
             si, why = resolve_sentence_index(f["basis"], text, sentences)
             if si is not None:
-                rec["sentence_index"] = si
+                rec_f["sentence_index"] = si
             else:
                 stats["sentence_index_unresolved"] += 1
-        facts.append(rec)
+        facts.append(rec_f)
 
     t = strong["time"]
     time = {"relative_order": t["relative_order"], "evidence": t["evidence"]}
@@ -164,11 +207,13 @@ def merge_scene(
             },
         },
         "utterances": utts,
-        "character_states": states,
+        "character_states": [],
+        "trait_variations": variations,
         "fact_updates": facts,
     }
     schema = read_json(SCHEMA_PATH)
     errs = validate_annotation_schema(rec, schema, roster_ids)
+    errs.extend(_validate_v3_semantics(rec, roster_ids))
     return rec, {**stats, "errors": errs}
 
 

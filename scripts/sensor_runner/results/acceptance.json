@@ -12,13 +12,13 @@
   "removed_scene_index": 3,
   "work": "000035_000301"
  },
- "nishiki": "C:/dev/nishiki-hybrid/target/debug/nishiki.exe",
+ "nishiki": "C:/dev/nishiki-mainint/target/release/nishiki.exe",
  "totals": {
-  "cached": 35,
+  "cached": 82,
   "merge_errors": 0,
-  "sasae_spans": 25,
-  "scenes": 35,
-  "works_all_lenses_ok": 7
+  "sasae_spans": 28,
+  "scenes": 82,
+  "works_all_lenses_ok": 9
  },
  "works": {
   "000035_000301": {
@@ -35,8 +35,11 @@
    "local_ids_absent_from_present": 0,
    "merge_errors": 0,
    "missing_local_utterances": 0,
-   "sasae_spans": 7,
-   "scenes": 7
+   "sasae_spans": 4,
+   "scenes": 7,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
   },
   "000050_003586": {
    "all_lenses_ok": true,
@@ -52,8 +55,11 @@
    "local_ids_absent_from_present": 0,
    "merge_errors": 0,
    "missing_local_utterances": 0,
-   "sasae_spans": 5,
-   "scenes": 5
+   "sasae_spans": 4,
+   "scenes": 5,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
   },
   "000081_000456": {
    "all_lenses_ok": true,
@@ -70,7 +76,50 @@
    "merge_errors": 0,
    "missing_local_utterances": 0,
    "sasae_spans": 2,
-   "scenes": 6
+   "scenes": 6,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
+  },
+  "000129_000689": {
+   "all_lenses_ok": true,
+   "cached": 7,
+   "lenses": {
+    "awase": "ok",
+    "kamae": "ok",
+    "kasane": "ok",
+    "nagare": "ok",
+    "sadame": "ok",
+    "sasae": "ok"
+   },
+   "local_ids_absent_from_present": 1,
+   "merge_errors": 0,
+   "missing_local_utterances": 0,
+   "sasae_spans": 1,
+   "scenes": 7,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
+  },
+  "000148_000751": {
+   "all_lenses_ok": true,
+   "cached": 40,
+   "lenses": {
+    "awase": "ok",
+    "kamae": "ok",
+    "kasane": "ok",
+    "nagare": "ok",
+    "sadame": "ok",
+    "sasae": "ok"
+   },
+   "local_ids_absent_from_present": 0,
+   "merge_errors": 0,
+   "missing_local_utterances": 0,
+   "sasae_spans": 9,
+   "scenes": 40,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
   },
   "001383_056643": {
    "all_lenses_ok": true,
@@ -86,8 +135,11 @@
    "local_ids_absent_from_present": 0,
    "merge_errors": 0,
    "missing_local_utterances": 0,
-   "sasae_spans": 5,
-   "scenes": 6
+   "sasae_spans": 4,
+   "scenes": 6,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
   },
   "001798_056779": {
    "all_lenses_ok": true,
@@ -103,8 +155,11 @@
    "local_ids_absent_from_present": 1,
    "merge_errors": 0,
    "missing_local_utterances": 0,
-   "sasae_spans": 5,
-   "scenes": 4
+   "sasae_spans": 4,
+   "scenes": 4,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
   },
   "001801_001786": {
    "all_lenses_ok": true,
@@ -121,7 +176,10 @@
    "merge_errors": 0,
    "missing_local_utterances": 0,
    "sasae_spans": 0,
-   "scenes": 3
+   "scenes": 3,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
   },
   "001875_059897": {
    "all_lenses_ok": true,
@@ -137,8 +195,11 @@
    "local_ids_absent_from_present": 0,
    "merge_errors": 0,
    "missing_local_utterances": 0,
-   "sasae_spans": 1,
-   "scenes": 4
+   "sasae_spans": 0,
+   "scenes": 4,
+   "trait_ledger_missing_count": 0,
+   "trait_source": "ledger_variation",
+   "warnings": 0
   }
  }
 }

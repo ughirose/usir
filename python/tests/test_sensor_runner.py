@@ -241,11 +241,21 @@ def test_merge_scene_fields(env):
     ledger = env["cache"].ledger(WID)
     rec, stats = merge_mod.merge_scene(WID, s, 3, st, local, ledger, ["taro", "hanako", "ghost"])
     assert stats["errors"] == []
-    # ledger hanako [1,0,0,-1,0,0] + variations -> axis0: 1+2 clamped to 1, axis3: -1+1 = 0
-    assert rec["character_states"][0]["values_6d"] == [1, 0, 0, 0, 0, 0]
-    assert rec["character_states"][1]["values_6d"] == [0] * 6
-    assert rec["fact_updates"][1]["object"] == "[emotion] 花子: 笑った"
-    assert rec["fact_updates"][0]["sentence_index"] == 0 and rec["fact_updates"][1]["sentence_index"] == 1
+    assert rec["character_states"] == []
+    assert rec["trait_variations"] == [
+        {"character_id": "hanako", "changes": [{"axis": 0, "delta": 2}, {"axis": 3, "delta": 1}], "evidence": "explicit"},
+        {"character_id": "taro", "changes": [], "evidence": "inferred"},
+    ]
+    assert rec["fact_updates"][1] == {
+        "sentence_index": 1,
+        "subject": "hanako",
+        "predicate": "STATE_CHANGED",
+        "object": "笑った",
+        "target": "花子",
+        "category": "emotion",
+        "evidence": "explicit",
+    }
+    assert rec["fact_updates"][0]["sentence_index"] == 0
     u = rec["utterances"][0]
     assert (u["speaker_id"], u["addressee_id"], u["evidence"]) == ("taro", "hanako", "explicit")
     assert u["register"]["politeness"] in ("plain", "polite", "unknown") and u["register"]["first_person"] is None
@@ -254,6 +264,54 @@ def test_merge_scene_fields(env):
     assert rec["scene_meta"]["nagare"]["event_top3"][0] == {"code": "E02", "rank_weight": 3}
     assert rec["scene_meta"]["awase"]["f_style_arousal"] == -1
     assert rec["contract"]["model_id"] == "test" and rec["contract"]["scene_id"] == f"{WID}:s0"
+
+
+def test_characters_with_ledger_attaches_traits_6d_without_mutating():
+    chars = [{"id": "taro", "aliases": ["太郎"]}, {"id": "hanako", "aliases": ["花子"]}]
+    orig = copy.deepcopy(chars)
+    enriched = merge_mod.characters_with_ledger(chars, {"taro": [0, 1, 0, -1, 0, 0]})
+    assert chars == orig
+    assert enriched[0]["traits_6d"] == [0, 1, 0, -1, 0, 0]
+    assert "traits_6d" not in enriched[1]
+
+
+def test_sensor_v2_schema_v3_contract_rejects_invalid_fields(env):
+    from scene_annotator_shim import validate_annotation_schema
+
+    schema = common.read_json(common.SCHEMA_PATH)
+    s = env["seg"]["scenes"][0]
+    rec, stats = merge_mod.merge_scene(WID, s, 3, good_entry(s), None, env["cache"].ledger(WID), ["taro", "hanako", "ghost"])
+    assert stats["errors"] == []
+
+    # target / category on non-STATE_CHANGED predicate must fail schema
+    bad_fact = copy.deepcopy(rec)
+    bad_fact["fact_updates"][0]["target"] = "駅"
+    assert validate_annotation_schema(bad_fact, schema, ["taro", "hanako", "ghost"])
+
+    bad_cat = copy.deepcopy(rec)
+    bad_cat["fact_updates"].append({"subject": "taro", "predicate": "STATE_CHANGED", "object": "変化", "target": "taro", "category": "bogus", "evidence": "explicit"})
+    assert validate_annotation_schema(bad_cat, schema, ["taro", "hanako", "ghost"])
+
+    # delta=0 and axis=6 in trait_variations must fail schema
+    bad_delta = copy.deepcopy(rec)
+    bad_delta["trait_variations"][0]["changes"] = [{"axis": 0, "delta": 0}]
+    assert validate_annotation_schema(bad_delta, schema, ["taro", "hanako", "ghost"])
+
+    bad_axis = copy.deepcopy(rec)
+    bad_axis["trait_variations"][0]["changes"] = [{"axis": 6, "delta": 1}]
+    assert validate_annotation_schema(bad_axis, schema, ["taro", "hanako", "ghost"])
+
+    # unknown character_id / duplicate character_id / duplicate axis in trait_variations caught semantically
+    bad_sem = copy.deepcopy(rec)
+    bad_sem["trait_variations"] = [
+        {"character_id": "nobody", "changes": [{"axis": 0, "delta": 1}, {"axis": 0, "delta": -1}], "evidence": "inferred"},
+        {"character_id": "taro", "changes": [], "evidence": "inferred"},
+        {"character_id": "taro", "changes": [], "evidence": "inferred"},
+    ]
+    sem_errs = merge_mod._validate_v3_semantics(bad_sem, ["taro", "hanako", "ghost"])
+    assert any("nobody" in e for e in sem_errs)
+    assert any("duplicate trait_variations character_id" in e for e in sem_errs)
+    assert any("duplicate trait_variations axis" in e for e in sem_errs)
 
 
 def test_merge_flags_missing_local_utterances(env):
@@ -326,17 +384,25 @@ def test_seed_prepare_delta_and_diagnose_all_lenses_ok(tmp_path):
     cache.delete(victim)
     r = prepare_mod.prepare_work(w, cache, seg=seg, packs_dir=tmp_path / "p")
     assert [p["scene_index"] for p in r["packs_written"]] == [3]
-    # diagnose of the merged seed: 6 lenses ok for every work
+    # diagnose of the merged seed: 6 lenses ok for every work, canonical /3 ledger_variation & 000035_000301 conflict cleared
     seed = Cache()
     for wid in common.all_work_ids():
         wk = common.load_work(wid)
         sg = common.segment(nis, wk["text_abs"])
         recs, rep = merge_mod.merge_work(wid, seed, sg)
         assert rep["errors"] == []
+        chars = merge_mod.characters_with_ledger(wk["characters"], seed.ledger(wid))
         (tmp_path / f"{wid}.annotations.json").write_text(json.dumps(recs, ensure_ascii=False), encoding="utf-8")
-        (tmp_path / f"{wid}.characters.json").write_text(json.dumps(wk["characters"], ensure_ascii=False), encoding="utf-8")
+        (tmp_path / f"{wid}.characters.json").write_text(json.dumps(chars, ensure_ascii=False), encoding="utf-8")
         d = run_diagnose(nis, wk["text_abs"], tmp_path / f"{wid}.characters.json", tmp_path / f"{wid}.annotations.json")
         assert all_ok(d), (wid, d["lenses"])
+        assert d["warnings"] == [], (wid, d["warnings"])
+        sadame = next(l for l in d["raw"]["lenses"] if l["id"] == "sadame")
+        assert sadame["labels"]["trait_source"] == "ledger_variation", wid
+        assert sadame["scores"]["trait_ledger_missing_count"] == 0, wid
+        if wid == "000035_000301":
+            sasae = next(l for l in d["raw"]["lenses"] if l["id"] == "sasae")
+            assert sasae["scores"]["s2_place_conflict_count"] == 0
 
 
 def test_nogold_warns_when_stage1_returns_all_speakers_null():

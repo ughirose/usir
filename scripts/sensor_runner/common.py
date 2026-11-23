@@ -29,6 +29,7 @@ INSTRUCTION_VERSION = "strong.v1"
 SPLITTER = "usir_v5_splitter@1"
 
 NISHIKI_DEFAULTS = [
+    "C:/dev/nishiki-mainint/target/release/nishiki.exe",
     "C:/dev/nishiki-hybrid/target/debug/nishiki.exe",
 ]
 

@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cache import Cache  # noqa: E402
 from common import CACHE_ROOT, all_work_ids, find_nishiki, load_work, segment, write_json  # noqa: E402
 from diagnose import all_ok, run_diagnose  # noqa: E402
-from merge import merge_work  # noqa: E402
+from merge import characters_with_ledger, merge_work  # noqa: E402
 from prepare import prepare_work  # noqa: E402
 
 
@@ -38,15 +38,19 @@ def main() -> int:
         cached = sum(cache.has(s["scene_hash"]) for s in scenes)
         recs, rep = merge_work(w, cache, seg)
         write_json(tmp / f"{w}.annotations.json", recs)
-        write_json(tmp / f"{w}.characters.json", work["characters"])
+        write_json(tmp / f"{w}.characters.json", characters_with_ledger(work["characters"], cache.ledger(w)))
         d = run_diagnose(nis, work["text_abs"], tmp / f"{w}.characters.json", tmp / f"{w}.annotations.json")
         sasae = next(l for l in d["raw"]["lenses"] if l["id"] == "sasae")
+        sadame = next(l for l in d["raw"]["lenses"] if l["id"] == "sadame")
         res["works"][w] = {
             "scenes": len(scenes), "cached": cached, "merge_errors": len(rep["errors"]),
             "missing_local_utterances": rep["missing_local_utterances"],
             "local_ids_absent_from_present": rep["local_ids_absent_from_present"],
             "lenses": {k: v["status"] for k, v in d["lenses"].items()}, "all_lenses_ok": all_ok(d),
             "sasae_spans": len(sasae["spans"]),
+            "trait_source": sadame["labels"].get("trait_source"),
+            "trait_ledger_missing_count": sadame["scores"].get("trait_ledger_missing_count", 0),
+            "warnings": len(d["warnings"]),
         }
         tot["scenes"] += len(scenes)
         tot["cached"] += cached

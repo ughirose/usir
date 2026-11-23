@@ -28,7 +28,7 @@ INSTRUCTIONS = (
     "あなたは小説の場面注釈器（強いモデル）です。1つのパックにつき1つの JSON（sensor.strong/1）を出力ファイルへ書きます。\n"
     "分担: 発話の話者・宛先・根拠はローカルモデルが、口調（politeness）は Policy X の規則が、一人称は表層規則が付けます。ここでは書きません。\n"
     "あなたが書く項目:\n"
-    "1. time: relative_order（continuous/flashback/parallel/unknown。直前場面との関係）、explicit_time・elapsed_hint（本文の逐語の語句、無ければ null）、evidence（explicit/inferred/ambiguous）。\n"
+    "1. time: relative_order（continuous/flashback/parallel/unknown。直前場面との関係。parallel は直前場面と同じ時刻に同時に進む別の筋のみ。時期が重なるだけの「その頃」「同じ頃」は continuous か unknown）、explicit_time・elapsed_hint（本文の逐語の語句、無ければ null）、evidence（explicit/inferred/ambiguous）。\n"
     "2. location: 場面の主な場所を表す本文の逐語の語句。判断できなければ null。\n"
     "3. pov_character: 視点人物の名簿 id、無ければ null。\n"
     "4. present: その場に居合わせる人物（名簿 id）と basis（居合わせることを示す本文の逐語の語句）。ローカル側の発話者・宛先の補完を含む。話題に出るだけの人物・回想・伝聞・電話の相手方は含めない。\n"

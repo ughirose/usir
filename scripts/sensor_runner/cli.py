@@ -18,7 +18,7 @@ from cache import Cache  # noqa: E402
 from common import REPO, all_work_ids, find_nishiki, load_work, segment, write_json  # noqa: E402
 from diagnose import all_ok, run_diagnose  # noqa: E402
 from ingest import ingest_paths  # noqa: E402
-from merge import merge_work  # noqa: E402
+from merge import characters_with_ledger, merge_work  # noqa: E402
 from prepare import prepare_work  # noqa: E402
 
 DEFAULT_MERGE_OUT = Path(__file__).resolve().parent / "merged"
@@ -65,7 +65,7 @@ def cmd_merge(a) -> int:
         seg = segment(nishiki, work["text_abs"])
         recs, rep = merge_work(w, cache, seg, partial=a.partial)
         write_json(out / f"{w}.annotations.json", recs)
-        write_json(out / f"{w}.characters.json", work["characters"])
+        write_json(out / f"{w}.characters.json", characters_with_ledger(work["characters"], cache.ledger(w)))
         line = f"{w}: merged={rep['merged']}/{rep['scenes']} errors={len(rep['errors'])} missing_local_utt={rep['missing_local_utterances']} local_ids_absent_from_present={rep['local_ids_absent_from_present']}"
         if a.diagnose:
             d = run_diagnose(nishiki, work["text_abs"], out / f"{w}.characters.json", out / f"{w}.annotations.json")
