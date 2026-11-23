@@ -459,3 +459,81 @@ def test_nogold_lookback_context_and_stage3_span_alignment():
     ctx2, _ = build_lookback_context(scenes2, 2, raw2, chars, "third", None, max_chars=200)
     assert len(ctx2) <= 200
     assert narration_speakers_in_text(ctx2, chars, "third", None)
+
+
+def test_nogold_scene_opening_narration_cue():
+    from local_from_step1_nogold import scene_has_opening_narration_speaker
+    from usir_py.sensor_eval.f9_loader import F9Character
+
+    chars = [F9Character(id="taro", aliases=["太郎"], gender="Male")]
+    # Alias right before U0 -> True
+    s_pre = {"index": 0, "scene_text": "太郎が来た。「あ」「い」「う」「え」「お」「か」"}
+    assert scene_has_opening_narration_speaker(s_pre, None, chars, "third", None, opening_quotes=5)
+    # Alias right after U4 (before U5) -> True
+    s_u4 = {"index": 1, "scene_text": "「あ」「い」「う」「え」「お」太郎が笑った。「か」"}
+    assert scene_has_opening_narration_speaker(s_u4, None, chars, "third", None, opening_quotes=5)
+    # Alias only inside U0 quote and in narration after U5 -> False
+    s_late = {"index": 2, "scene_text": "「太郎さん」「い」「う」「え」「お」「か」太郎が立った。「き」"}
+    assert not scene_has_opening_narration_speaker(s_late, None, chars, "third", None, opening_quotes=5)
+    # Short scene (< 5 quotes) with no narration alias -> False
+    s_short = {"index": 3, "scene_text": "「太郎」「うん」"}
+    assert not scene_has_opening_narration_speaker(s_short, None, chars, "third", None, opening_quotes=5)
+
+
+def test_nogold_stage1_rank_register_and_tiebreaker():
+    from local_from_step1_nogold import _stage1_rank, quote_has_first_person_pronoun
+    from usir_py.sensor_eval.f9_loader import F9UtteranceGold
+    from usir_py.sensor_eval.features import UtteranceFeatures
+
+    assert quote_has_first_person_pronoun("「僕は行くよ」")
+    assert quote_has_first_person_pronoun("「私の本だ」")
+    assert not quote_has_first_person_pronoun("「私的な問題」「公私混同」")
+
+    def _feat(idx: int, qchars: int = 12) -> UtteranceFeatures:
+        return UtteranceFeatures(
+            utterance_index=idx, position="standalone_line", quote_chars=qchars, pre_has_narration=False,
+            pre_speakers=(), pre_speech_verb=None, pre_speaker_and_verb=False,
+            post_speakers=(), post_speech_verb=None, post_speaker_and_verb=False,
+        )
+
+    utts = [
+        F9UtteranceGold(n=i, open_offset=0, close_offset=14, head="", status="undetermined", speaker=None,
+                        quote_text=("「僕はそう思うよ」" if i in (0, 1) else "「そうかい、わかった」"))
+        for i in range(5)
+    ]
+    feats = [_feat(i) for i in range(5)]
+
+    # Both have zero A2 warnings, zero nulls: no-context misses 1 fp, with-context misses 2 fp -> no-context wins
+    r_no = _stage1_rank(
+        [{"utterance_index": i, "speaker_id": "a", "addressee_id": "b",
+          "register": {"politeness": "plain", "first_person": ("僕" if i == 0 else None)}} for i in range(5)],
+        5, [], features=feats, utterances=utts,
+    )
+    r_ctx_worse = _stage1_rank(
+        [{"utterance_index": i, "speaker_id": "a", "addressee_id": "b",
+          "register": {"politeness": "plain", "first_person": None}} for i in range(5)],
+        5, [], features=feats, utterances=utts,
+    )
+    assert r_no == (0, 0, 0, 0, 1, 0) and r_ctx_worse == (0, 0, 0, 0, 2, 0)
+    assert not (r_ctx_worse < r_no)
+
+    # With-context recovers all fp -> adopted
+    r_ctx_better = _stage1_rank(
+        [{"utterance_index": i, "speaker_id": "a", "addressee_id": "b",
+          "register": {"politeness": "plain", "first_person": ("僕" if i in (0, 1) else None)}} for i in range(5)],
+        5, [], features=feats, utterances=utts,
+    )
+    assert r_ctx_better == (0, 0, 0, 0, 0, 0)
+    assert r_ctx_better < r_no
+
+    # Tie on all indicators -> keep no-context (strict < required)
+    assert not (r_no < r_no)
+
+    # Same fp_missed, with-context fixes addressee_id all-null collapse -> adopted
+    r_addr_null = _stage1_rank(
+        [{"utterance_index": i, "speaker_id": "a", "addressee_id": None,
+          "register": {"politeness": "plain", "first_person": ("僕" if i in (0, 1) else None)}} for i in range(5)],
+        5, [], features=feats, utterances=utts,
+    )
+    assert r_addr_null == (0, 0, 0, 0, 0, 1)
+    assert r_ctx_better < r_addr_null

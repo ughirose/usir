@@ -1,4 +1,5 @@
 {
+ "adopted_context": true,
  "c2_retry": null,
  "chars": 837,
  "chunk": 21,
@@ -8,8 +9,46 @@
   37,
   38
  ],
- "context_source": "c1_no_narration_name",
+ "context_source": "c1_dual_adopted",
  "ctx_warning": false,
+ "dual_run": {
+  "adopted": true,
+  "context_chars": 1476,
+  "context_scenes": [
+   37,
+   38
+  ],
+  "pass1_elapsed_s": 52.911,
+  "pass1_eval_tok": 1441,
+  "pass1_prompt_tok": 3437,
+  "pass1_rank": [
+   0,
+   30,
+   1,
+   22,
+   4,
+   1
+  ],
+  "pass1_warnings": [
+   "stage1_all_speakers_null"
+  ],
+  "pass2_ctx_warning": false,
+  "pass2_elapsed_s": 61.055,
+  "pass2_eval_tok": 1619,
+  "pass2_parse_error": null,
+  "pass2_prompt_tok": 4604,
+  "pass2_rank": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "pass2_warnings": [],
+  "selection_reason": "context_lower_anomaly",
+  "trigger": "c1_no_opening_cue"
+ },
  "final": [
   {
    "addressee_id": "keisan",
@@ -112,16 +151,6 @@
    "utterance_index": 9
   },
   {
-   "addressee_id": "rokusan",
-   "evidence": "inferred",
-   "register": {
-    "first_person": "僕",
-    "politeness": "plain"
-   },
-   "speaker_id": "keisan",
-   "utterance_index": 10
-  },
-  {
    "addressee_id": "keisan",
    "evidence": "inferred",
    "register": {
@@ -129,6 +158,16 @@
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
+   "utterance_index": 10
+  },
+  {
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
+   "register": {
+    "first_person": "僕",
+    "politeness": "plain"
+   },
+   "speaker_id": "keisan",
    "utterance_index": 11
   },
   {
@@ -312,8 +351,25 @@
    "utterance_index": 29
   }
  ],
+ "first_scene_has_opening_cue": false,
  "missing_predictions": 0,
  "parse_error": null,
+ "pass1_rank": [
+  0,
+  30,
+  1,
+  22,
+  4,
+  1
+ ],
+ "pass2_rank": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
  "pp_audit": {
   "explicit_downgraded": [],
   "inline_non_speech_forced": [],
@@ -335,7 +391,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.729,
+    "elapsed_sec": 3.708,
     "eval_count": 52,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -352,7 +408,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.012,
+    "elapsed_sec": 3.011,
     "eval_count": 48,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -369,7 +425,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.876,
+    "elapsed_sec": 2.877,
     "eval_count": 43,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -386,7 +442,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.108,
+    "elapsed_sec": 3.094,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -403,7 +459,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.023,
+    "elapsed_sec": 2.995,
     "eval_count": 45,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -420,7 +476,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.367,
+    "elapsed_sec": 3.448,
     "eval_count": 55,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -437,7 +493,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.908,
+    "elapsed_sec": 2.921,
     "eval_count": 41,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -454,7 +510,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.138,
+    "elapsed_sec": 2.895,
     "eval_count": 41,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -471,12 +527,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.941,
-    "eval_count": 43,
+    "elapsed_sec": 3.119,
+    "eval_count": 48,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 3208,
-    "reason": "直前・直後の会話文脈と矛盾無く成立する。",
+    "reason": "直前・直後の会話文脈と矛盾せず、暫定話者として成立する。",
     "rejected_reason": null,
     "utterance_index": 8
    },
@@ -488,24 +544,24 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.112,
+    "elapsed_sec": 3.066,
     "eval_count": 46,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 3242,
-    "reason": "直前・直後の会話と矛盾せず、話者の変化も自然である。",
+    "reason": "直前・直後の会話と矛盾せず、話者の変更は不自然。",
     "rejected_reason": null,
     "utterance_index": 9
    },
    {
     "accepted": true,
-    "addressee_id": "rokusan",
-    "after_speaker": "keisan",
-    "before_speaker": "keisan",
+    "addressee_id": "keisan",
+    "after_speaker": "rokusan",
+    "before_speaker": "rokusan",
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.277,
+    "elapsed_sec": 3.305,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -516,18 +572,18 @@
    },
    {
     "accepted": true,
-    "addressee_id": "keisan",
-    "after_speaker": "rokusan",
-    "before_speaker": "rokusan",
+    "addressee_id": "rokusan",
+    "after_speaker": "keisan",
+    "before_speaker": "keisan",
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.266,
-    "eval_count": 48,
+    "elapsed_sec": 3.309,
+    "eval_count": 49,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 3197,
-    "reason": "直前・直後の会話文脈と矛盾せず、暫定話者として成立する。",
+    "reason": "直前・直後の会話文脈と矛盾せず、話者の継続が自然である。",
     "rejected_reason": null,
     "utterance_index": 11
    },
@@ -539,7 +595,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.909,
+    "elapsed_sec": 2.878,
     "eval_count": 41,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -556,12 +612,12 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.912,
-    "eval_count": 42,
+    "elapsed_sec": 3.011,
+    "eval_count": 46,
     "format_mode": "json_schema",
     "parse_error": null,
     "prompt_eval_count": 3140,
-    "reason": "直前直後の会話文脈と矛盾無く成立する。",
+    "reason": "直前直後の会話文脈と矛盾せず、暫定話者が成立する。",
     "rejected_reason": null,
     "utterance_index": 13
    },
@@ -573,7 +629,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.991,
+    "elapsed_sec": 3.005,
     "eval_count": 45,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -590,7 +646,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.084,
+    "elapsed_sec": 3.077,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -607,7 +663,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.079,
+    "elapsed_sec": 3.064,
     "eval_count": 48,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -624,7 +680,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.925,
+    "elapsed_sec": 2.889,
     "eval_count": 43,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -641,7 +697,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.256,
+    "elapsed_sec": 3.228,
     "eval_count": 50,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -658,7 +714,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 3.098,
+    "elapsed_sec": 3.055,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -675,7 +731,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.961,
+    "elapsed_sec": 2.982,
     "eval_count": 48,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -692,7 +748,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.942,
+    "elapsed_sec": 2.991,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -709,7 +765,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.875,
+    "elapsed_sec": 2.882,
     "eval_count": 44,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -726,7 +782,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.736,
+    "elapsed_sec": 2.693,
     "eval_count": 42,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -743,7 +799,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.884,
+    "elapsed_sec": 2.817,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -760,7 +816,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.592,
+    "elapsed_sec": 2.585,
     "eval_count": 42,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -777,7 +833,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.709,
+    "elapsed_sec": 2.699,
     "eval_count": 45,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -794,7 +850,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.536,
+    "elapsed_sec": 2.485,
     "eval_count": 40,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -811,7 +867,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.69,
+    "elapsed_sec": 2.671,
     "eval_count": 47,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -828,7 +884,7 @@
     "changed": false,
     "context_window_warning": false,
     "contradiction_found": false,
-    "elapsed_sec": 2.765,
+    "elapsed_sec": 2.706,
     "eval_count": 49,
     "format_mode": "json_schema",
     "parse_error": null,
@@ -838,9 +894,9 @@
     "utterance_index": 29
    }
   ],
-  "elapsed_sec": 89.701,
+  "elapsed_sec": 89.466,
   "enabled": true,
-  "eval_count": 1370,
+  "eval_count": 1380,
   "mode": "per_utterance",
   "model": "qwen2.5:14b",
   "prompt_eval_count": 91154,
@@ -851,8 +907,8 @@
  },
  "stage1_all_null_scenes": [],
  "stage1_anomaly_scenes": [],
- "stage1_attempts": 1,
- "stage1_eval_tok": 1619,
+ "stage1_attempts": 2,
+ "stage1_eval_tok": 3060,
  "stage1_parsed": [
   {
    "addressee_id": "keisan",
@@ -955,16 +1011,6 @@
    "utterance_index": 9
   },
   {
-   "addressee_id": "rokusan",
-   "evidence": "inferred",
-   "register": {
-    "first_person": "僕",
-    "politeness": "plain"
-   },
-   "speaker_id": "keisan",
-   "utterance_index": 10
-  },
-  {
    "addressee_id": "keisan",
    "evidence": "inferred",
    "register": {
@@ -972,6 +1018,16 @@
     "politeness": "plain"
    },
    "speaker_id": "rokusan",
+   "utterance_index": 10
+  },
+  {
+   "addressee_id": "rokusan",
+   "evidence": "inferred",
+   "register": {
+    "first_person": "僕",
+    "politeness": "plain"
+   },
+   "speaker_id": "keisan",
    "utterance_index": 11
   },
   {
@@ -1155,7 +1211,7 @@
    "utterance_index": 29
   }
  ],
- "stage1_prompt_tok": 4604,
- "stage1_s": 62.182,
- "wall_s": 151.9
+ "stage1_prompt_tok": 8041,
+ "stage1_s": 113.966,
+ "wall_s": 203.4
 }

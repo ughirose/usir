@@ -34,6 +34,8 @@ from usir_py.sensor_eval.f9_loader import (  # noqa: E402
     number_outer_quotes,
 )
 from usir_py.sensor_eval.features import (  # noqa: E402
+    FIRST_PERSON_NARRATION_PRONOUNS,
+    _find_first_unblocked_pronoun,
     extract_work_utterance_features,
     find_speakers_in_text,
 )
@@ -45,6 +47,13 @@ from usir_py.sensor_eval.speaker_recheck import SpeakerRecheckConfig, apply_spea
 
 CONFIG = REPO / "scripts" / "step1" / "step1_eval_config_v5_threestage.json"
 _U_MARKER_RE = re.compile(r"\[U(\d+)\]")
+_FIRST_PERSON_QUOTE_PRONOUNS: tuple[str, ...] = FIRST_PERSON_NARRATION_PRONOUNS + (
+    "我々",
+    "われわれ",
+    "わし",
+    "おいら",
+    "うち",
+)
 
 
 def make_chunks(scenes, max_chars, max_quotes):
@@ -106,6 +115,30 @@ def narration_speakers_in_text(
 ) -> tuple[str, ...]:
     """Return roster speaker IDs whose aliases appear in narration (outside quotes)."""
     return find_speakers_in_text(narration_only_text(text), characters, narration, narrator)
+
+
+def scene_has_opening_narration_speaker(
+    scene: dict,
+    raw_text: str | None,
+    characters: list[F9Character],
+    narration: str,
+    narrator: str | None,
+    *,
+    opening_quotes: int = 5,
+) -> bool:
+    """Return True if a roster character alias appears in narration up through after the `opening_quotes`-th quote."""
+    scene_text = join_scenes_text([scene], raw_text)
+    spans = extract_outer_quote_spans(scene_text)
+    if not spans or opening_quotes <= 0:
+        return bool(narration_speakers_in_text(scene_text, characters, narration, narrator))
+    end_pos = spans[opening_quotes][0] if len(spans) > opening_quotes else len(scene_text)
+    return bool(narration_speakers_in_text(scene_text[:end_pos], characters, narration, narrator))
+
+
+def quote_has_first_person_pronoun(quote_text: str) -> bool:
+    """Return True if `quote_text` explicitly contains a Japanese first-person pronoun."""
+    inner = quote_text[1:-1] if len(quote_text) >= 2 and quote_text[0] in "「『" and quote_text[-1] in "」』" else quote_text
+    return any(_find_first_unblocked_pronoun(inner, p) is not None for p in _FIRST_PERSON_QUOTE_PRONOUNS)
 
 
 def _trim_anchor_line(line: str, cap: int, characters: list[F9Character], narration: str, narrator: str | None) -> str:
@@ -271,7 +304,26 @@ def all_null_scene_warnings(
     return out
 
 
-def _stage1_rank(raw_utts, exp_cnt: int, warns: list[dict]) -> tuple[int, int, int, int]:
+def _stage1_rank(
+    raw_utts,
+    exp_cnt: int,
+    warns: list[dict],
+    *,
+    features=None,
+    utterances=None,
+    long_quote_min_chars: int = 10,
+    min_standalone_lines: int = 5,
+) -> tuple[int, int, int, int, int, int]:
+    """Lower-is-better deterministic anomaly score for selecting between no-context and with-context Stage 1 runs.
+
+    Components:
+    (0) missing utterance indices
+    (1) speaker_id is None count (missing counts as null)
+    (2) A2 warning count (all-null / high-null / politeness template collapse)
+    (3) long quotes (quote_chars >= long_quote_min_chars) with politeness == "unknown"
+    (4) quotes explicitly containing a 1st-person pronoun whose register.first_person is None
+    (5) addressee_id all-null collapse flag (1 if standalone_lines >= min_standalone_lines and all addressee_id are None)
+    """
     by_i = {
         int(u["utterance_index"]): u
         for u in raw_utts or []
@@ -279,8 +331,32 @@ def _stage1_rank(raw_utts, exp_cnt: int, warns: list[dict]) -> tuple[int, int, i
     }
     missing = sum(1 for i in range(exp_cnt) if i not in by_i)
     nulls = sum(1 for i in range(exp_cnt) if (by_i.get(i) or {}).get("speaker_id") is None)
-    pol_unk = sum(int(w.get("long_politeness_unknown", 0)) for w in warns)
-    return (missing, nulls, len(warns), pol_unk)
+    if features is not None:
+        long_pol_unk = sum(
+            1 for f in features
+            if f.quote_chars >= long_quote_min_chars
+            and (((by_i.get(f.utterance_index) or {}).get("register") or {}).get("politeness") == "unknown")
+        )
+        standalone_cnt = sum(1 for f in features if f.position == "standalone_line")
+    else:
+        long_pol_unk = sum(int(w.get("long_politeness_unknown", 0)) for w in warns)
+        standalone_cnt = 0
+
+    if utterances is not None:
+        fp_missed = sum(
+            1 for u in utterances
+            if quote_has_first_person_pronoun(u.quote_text)
+            and (((by_i.get(u.n) or {}).get("register") or {}).get("first_person") is None)
+        )
+    else:
+        fp_missed = 0
+
+    addr_all_null = int(
+        standalone_cnt >= min_standalone_lines
+        and exp_cnt > 0
+        and all((by_i.get(i) or {}).get("addressee_id") is None for i in range(exp_cnt))
+    )
+    return (missing, nulls, len(warns), long_pol_unk, fp_missed, addr_all_null)
 
 
 def main() -> int:
@@ -289,6 +365,7 @@ def main() -> int:
     ap.add_argument("--max-chars", type=int, default=6000)
     ap.add_argument("--max-quotes", type=int, default=55)
     ap.add_argument("--max-context-chars", type=int, default=1500)
+    ap.add_argument("--opening-cue-quotes", type=int, default=5)
     ap.add_argument("--out-dir", default=None)
     ap.add_argument("--local-out", default=None)
     a = ap.parse_args()
@@ -320,7 +397,9 @@ def main() -> int:
               "stage3_prompt_tok": 0, "stage3_eval_tok": 0, "pp_forced": 0, "pp_changed": 0, "pp_downgraded": 0,
               "sr_target": 0, "sr_rechecked": 0, "sr_changed": 0, "sr_rejected": 0, "ctx_warn_chunks": 0, "parse_error_chunks": 0,
               "stage1_all_null_scenes": 0, "stage1_anomaly_warnings": 0,
-              "c1_context_chunks": 0, "c2_retry_chunks": 0, "c2_retry_adopted": 0}
+              "c1_context_chunks": 0, "c1_dual_run_chunks": 0, "c1_context_adopted": 0, "c1_no_context_kept": 0,
+              "c2_retry_chunks": 0, "c2_retry_adopted": 0,
+              "dual_pass2_s": 0.0, "dual_pass2_prompt_tok": 0, "dual_pass2_eval_tok": 0}
     chunk_log = []
     warnings: list[dict] = []
     t_all = time.time()
@@ -349,17 +428,12 @@ def main() -> int:
 
         feats = extract_work_utterance_features(_make_work(""))
         chunk_nar_spks = list(narration_speakers_in_text(text, chars, narration, narrator))
-        context_text, context_scenes = ("", [])
-        context_source = "none"
-        if not chunk_nar_spks and chunk_start_idx > 0:
-            context_text, context_scenes = build_lookback_context(
-                seg["scenes"], chunk_start_idx, raw_text, chars, narration, narrator, max_chars=a.max_context_chars,
-            )
-            if context_text:
-                context_source = "c1_no_narration_name"
-                totals["c1_context_chunks"] += 1
+        first_scene_has_opening_cue = scene_has_opening_narration_speaker(
+            ch[0], raw_text, chars, narration, narrator, opening_quotes=a.opening_cue_quotes,
+        )
 
-        w = _make_work(context_text)
+        # Pass 1: always run without lookback context first.
+        w = _make_work("")
         resp = call_ollama_chat(model=model_name, messages=build_work_messages(w, prompt_version=cfg["prompt_version"]),
                                 format_schema=fmt, ollama_url=cfg["ollama_url"], num_ctx=num_ctx, num_predict=num_predict,
                                 seed=seed, temperature=0.0, timeout_sec=timeout, think=think)
@@ -370,19 +444,24 @@ def main() -> int:
         chunk_ctx_warn = bool(p_tok + e_tok >= num_ctx or e_tok >= num_predict)
         chunk_parse_error = resp.parse_error
         chunk_attempts = 1
+        context_text, context_scenes = ("", [])
+        context_source = "none"
 
         scene_meta = [(s["index"], s["scene_hash"], len(s["utterances"])) for s in ch]
-        s1_warn = all_null_scene_warnings(scene_meta, raw, features=feats)
-        c2_attempt = None
-        if s1_warn and not context_text and chunk_start_idx > 0:
-            retry_ctx, retry_ctx_scenes = build_lookback_context(
+        s1_warn1 = all_null_scene_warnings(scene_meta, raw, features=feats)
+        rank1 = _stage1_rank(raw, exp, s1_warn1, features=feats, utterances=gold)
+
+        c1_trigger = (not first_scene_has_opening_cue) and (chunk_start_idx > 0)
+        c2_trigger = (not c1_trigger) and bool(s1_warn1) and (chunk_start_idx > 0)
+        dual_run = None
+        if c1_trigger or c2_trigger:
+            cand_ctx, cand_ctx_scenes = build_lookback_context(
                 seg["scenes"], chunk_start_idx, raw_text, chars, narration, narrator, max_chars=a.max_context_chars,
             )
-            if retry_ctx:
-                totals["c2_retry_chunks"] += 1
+            if cand_ctx:
                 chunk_attempts = 2
-                w_retry = _make_work(retry_ctx)
-                resp2 = call_ollama_chat(model=model_name, messages=build_work_messages(w_retry, prompt_version=cfg["prompt_version"]),
+                w_ctx = _make_work(cand_ctx)
+                resp2 = call_ollama_chat(model=model_name, messages=build_work_messages(w_ctx, prompt_version=cfg["prompt_version"]),
                                          format_schema=fmt, ollama_url=cfg["ollama_url"], num_ctx=num_ctx, num_predict=num_predict,
                                          seed=seed, temperature=0.0, timeout_sec=timeout, think=think)
                 raw2 = _extract_utterances(resp2.parsed_json)
@@ -390,30 +469,56 @@ def main() -> int:
                 chunk_stage1_s += float(resp2.elapsed_sec)
                 chunk_p_tok += p_tok2
                 chunk_e_tok += e_tok2
+                totals["dual_pass2_s"] += float(resp2.elapsed_sec)
+                totals["dual_pass2_prompt_tok"] += p_tok2
+                totals["dual_pass2_eval_tok"] += e_tok2
                 ctx_warn2 = bool(p_tok2 + e_tok2 >= num_ctx or e_tok2 >= num_predict)
                 s1_warn2 = all_null_scene_warnings(scene_meta, raw2, features=feats)
-                rank1 = _stage1_rank(raw, exp, s1_warn)
-                rank2 = _stage1_rank(raw2, exp, s1_warn2)
+                rank2 = _stage1_rank(raw2, exp, s1_warn2, features=feats, utterances=gold)
                 adopted = (not resp2.parse_error) and (rank2 < rank1)
-                c2_attempt = {
-                    "triggered_by": [x["warning"] for x in s1_warn],
-                    "retry_context_scenes": retry_ctx_scenes,
-                    "retry_context_chars": len(retry_ctx),
+                if resp2.parse_error:
+                    selection_reason = "parse_error_on_context"
+                elif adopted:
+                    selection_reason = "context_lower_anomaly"
+                else:
+                    selection_reason = "no_context_tie_or_better"
+
+                if c1_trigger:
+                    totals["c1_dual_run_chunks"] += 1
+                    if adopted:
+                        totals["c1_context_adopted"] += 1
+                        totals["c1_context_chunks"] += 1
+                    else:
+                        totals["c1_no_context_kept"] += 1
+                else:
+                    totals["c2_retry_chunks"] += 1
+                    if adopted:
+                        totals["c2_retry_adopted"] += 1
+
+                dual_run = {
+                    "trigger": "c1_no_opening_cue" if c1_trigger else "c2_a2_anomaly",
+                    "context_scenes": cand_ctx_scenes,
+                    "context_chars": len(cand_ctx),
+                    "pass1_warnings": [x["warning"] for x in s1_warn1],
+                    "pass2_warnings": [x["warning"] for x in s1_warn2],
                     "pass1_rank": list(rank1),
                     "pass2_rank": list(rank2),
+                    "pass1_elapsed_s": resp.elapsed_sec,
                     "pass2_elapsed_s": resp2.elapsed_sec,
+                    "pass1_prompt_tok": p_tok,
+                    "pass1_eval_tok": e_tok,
                     "pass2_prompt_tok": p_tok2,
                     "pass2_eval_tok": e_tok2,
                     "pass2_ctx_warning": ctx_warn2,
                     "pass2_parse_error": resp2.parse_error,
                     "adopted": adopted,
+                    "selection_reason": selection_reason,
                 }
                 if adopted:
-                    totals["c2_retry_adopted"] += 1
-                    w, resp, raw = w_retry, resp2, raw2
-                    context_text, context_scenes = retry_ctx, retry_ctx_scenes
-                    context_source = "c2_retry"
-                    chunk_ctx_warn = chunk_ctx_warn or ctx_warn2
+                    w, resp, raw = w_ctx, resp2, raw2
+                    context_text, context_scenes = cand_ctx, cand_ctx_scenes
+                    context_source = "c1_dual_adopted" if c1_trigger else "c2_retry"
+                    chunk_ctx_warn = ctx_warn2
                     chunk_parse_error = resp2.parse_error
 
         s2, pp_audit = apply_postprocessing_to_work(w, raw, pp_cfg, features=feats) if pp_cfg.is_enabled else (raw, None)
@@ -453,12 +558,17 @@ def main() -> int:
         row = {"chunk": ci, "scenes": [s["index"] for s in ch], "chars": len(text), "quotes": exp, "missing_predictions": missing,
                "wall_s": round(dt, 1), "stage1_s": round(chunk_stage1_s, 3), "stage1_attempts": chunk_attempts,
                "stage1_prompt_tok": chunk_p_tok, "stage1_eval_tok": chunk_e_tok, "ctx_warning": chunk_ctx_warn,
-               "parse_error": chunk_parse_error, "context_source": context_source, "context_scenes": context_scenes,
+               "parse_error": chunk_parse_error, "first_scene_has_opening_cue": first_scene_has_opening_cue,
+               "context_source": context_source, "context_scenes": context_scenes,
                "context_chars": len(context_text), "chunk_narration_speakers": chunk_nar_spks,
+               "pass1_rank": list(rank1),
+               "pass2_rank": dual_run["pass2_rank"] if dual_run else None,
+               "adopted_context": bool(dual_run and dual_run["adopted"]),
                "stage1_all_null_scenes": [x["scene_index"] for x in null_warn if x["warning"] == "stage1_all_speakers_null"],
                "stage1_anomaly_scenes": [{"scene_index": x["scene_index"], "warning": x["warning"]} for x in null_warn]}
         chunk_log.append(row)
-        write_json(out_dir / f"chunk_{ci:03d}.json", {**row, "c2_retry": c2_attempt, "stage1_parsed": raw, "final": final, "pp_audit": pp_audit, "sr_audit": sr_audit})
+        c2_compat = dual_run if c2_trigger else None
+        write_json(out_dir / f"chunk_{ci:03d}.json", {**row, "dual_run": dual_run, "c2_retry": c2_compat, "stage1_parsed": raw, "final": final, "pp_audit": pp_audit, "sr_audit": sr_audit})
         write_json(local_out, {"schema": "sensor.local_utterances/1",
                                "provenance": f"step1-threestage-nogold:{model_spec} (chunked; stage1 + postprocess + stage3 recheck_v2), config {CONFIG.name}, chunks_done {ci + 1}/{len(chunks)}",
                                "scenes": scenes_out})
@@ -466,10 +576,12 @@ def main() -> int:
         chunk_start_idx += len(ch)
 
     totals["elapsed_wall_s"] = round(time.time() - t_all, 1)
+    totals["dual_pass2_s"] = round(totals["dual_pass2_s"], 3)
     totals["stage1_all_null_scenes"] = sum(1 for x in warnings if x["warning"] == "stage1_all_speakers_null")
     totals["stage1_anomaly_warnings"] = len(warnings)
     write_json(out_dir / "summary.json", {"work_id": a.work_id, "model": model_spec, "num_ctx": num_ctx, "num_predict": num_predict,
                                            "max_chars": a.max_chars, "max_quotes": a.max_quotes, "max_context_chars": a.max_context_chars,
+                                           "opening_cue_quotes": a.opening_cue_quotes,
                                            "chunks": chunk_log, "totals": totals, "warnings": warnings})
     for x in warnings:
         print(f"WARNING {x['warning']} for scene s{x['scene_index']} (chunk {x['chunk']}, reasons={x.get('reasons')}, "
