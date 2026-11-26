@@ -45,3 +45,6 @@ roster_all_ids を L2 鍵から外す（pack 内容は不変）。roster_all_dig
 
 ## Step 2 完了（2026-11-26）
 A–E 実測完了。cold 35 call、warm 0 call、編集 1/2 call、location 65.7%。詳細: `2026-11-26_phase15_stage2_step2_report.md`、データ: `scripts/sensor_runner/results/phase15_stage2_step2_results.json`。
+
+## Step 3 開始（2026-11-27）
+不具合A（ingest 検証基準を凍結スナップショットへ）・B（timing 並列書込）修正、001875 location 調査。土台は feat/phase15-stage2-step2（33bf69c を含み、step2.py を持つ）。
