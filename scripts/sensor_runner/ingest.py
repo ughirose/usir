@@ -7,8 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from cache import Cache
-from common import INSTRUCTION_VERSION, load_work, read_json, write_json
-from keys import l2_key, ledger_key_hash, roster_hash
+from common import read_json, write_json
 from merge import merge_scene
 from prepare import PACKS_DIR
 from strong import validate_strong
@@ -56,24 +55,20 @@ def ingest_file(path: Path, cache: Cache, packs_dir: Path | None = None, rejects
         res["reasons"] = reasons
         return _reject(res, path, rejects_dir)
 
-    # strict L2 key: the parts the annotator saw (pack) + the ledger this entry was validated against (incl. its additions)
+    # The entry is stored under the key of the pack the annotator actually saw (pack bytes view at prepare time).
     parts = pack.get("l2_parts")
-    if not parts:
+    if not parts or not pack.get("l2_key"):
         res["reasons"] = ["pack_prior_unresolved: the pack was generated while the previous scene was not annotated; "
                           "ingest that scene first, then re-run prepare and annotate the regenerated pack"]
         return _reject(res, path, rejects_dir)
-    cur_roster = roster_hash(load_work(pack["work_id"])["characters"])
-    if cur_roster != parts["roster_hash"]:
-        res["reasons"] = ["pack_stale_roster: characters.json changed since the pack was generated; re-run prepare"]
-        return _reject(res, path, rejects_dir)
 
+    # ledger_additions are NOT applied to the frozen ledger now: they are recorded as pending and applied by `epoch commit`.
     adds = entry.get("ledger_additions") or {}
-    new_ledger = {**ledger, **adds}
-    if adds:
-        cache.put_ledger(pack["work_id"], new_ledger, note="extended by ingest ledger_additions")
-    parts = {**parts, "ledger_hash": ledger_key_hash(new_ledger)}
-    key = l2_key(parts["scene_text_hash"], parts["roster_hash"], parts["ledger_hash"], parts["prior_state_hash"], parts["instruction_version"])
-    cache.put_l2(pack["scene_hash"], key, entry, parts)
+    res["ledger_additions_pending"] = cache.add_pending(pack["work_id"], adds, pack["scene_hash"]) if adds else []
+    prior = pack.get("prior") or {}
+    prior_facts = prior.get("recent_facts") if prior.get("status") == "cached" else None
+    cache.put_l2(pack["scene_hash"], pack["l2_key"], entry, parts, prior_facts=prior_facts)
+    cache.clear_forced(pack["work_id"], pack["scene_hash"])
     cache.mark_cached(pack["work_id"], pack["scene_hash"], entry)
     res["accepted"] = True
     return res

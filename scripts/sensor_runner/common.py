@@ -27,6 +27,10 @@ MANIFEST_SCHEMA = "sensor.manifest/1"
 # Bump when the annotation instructions / strong schema change in a way that invalidates cached entries.
 INSTRUCTION_VERSION = "strong.v1"
 SPLITTER = "usir_v5_splitter@1"
+# Annotation settings that are part of every L2 key (changing the annotator model or sampling invalidates the cache).
+# The strong annotation runs in external sessions, so the model id is declared here (env SENSOR_ANNOTATOR_MODEL_ID).
+ANNOTATION_MODEL_ID = os.environ.get("SENSOR_ANNOTATOR_MODEL_ID", "unspecified")
+ANNOTATION_SAMPLING = os.environ.get("SENSOR_ANNOTATOR_SAMPLING", "default")
 
 NISHIKI_DEFAULTS = [
     "C:/dev/nishiki-hybrid/target/debug/nishiki.exe",

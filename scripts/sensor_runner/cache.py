@@ -1,14 +1,22 @@
-"""Cache for the sensor runner (Phase 1.5 Stage 1: strict composite keys, design memo 2026-11-24 task6).
+"""Cache for the sensor runner (Phase 1.5 Stage 1 layout; Stage 2 Step 1 keys).
 
 Layout (under CACHE_ROOT):
-  l2/<scene_hash>/<l2_key>.json   strong-model annotation (sensor.strong/1) wrapped with its key parts
-                                  key = scene_text_hash + instruction_version + roster_hash + ledger_hash + prior_state_hash
+  l2/<scene_hash>/<l2_key>.json   strong-model annotation (sensor.strong/1) wrapped with its key parts (sensor.cache.l2/2)
+                                  key = H(rendered pack view + instruction_version + model id + sampling), see render.py.
+                                  The wrapper also stores the prior facts shown to the annotator ("premise changed" check).
+                                  Stage 1 entries (sensor.cache.l2/1, component-hash key) are never read as hits; they are
+                                  adopted under the new key by migration only when their old key still matches.
   l1/<l1_key>.json                local Step 1 utterance block (speaker / addressee / Policy X register) of one scene
                                   key = scene_text_hash + roster_hash + prev_tail_hash + step1_algo_version (+ local_utt_hash)
   strong/<scene_hash>.json        LEGACY, unkeyed entries (pre Stage 1). Adopted into l2/ on first resolve when
                                   legacy_adopt is on (the migrate command does this for the whole cache), then removed.
   manifests/<work_id>.json        ordered scene list of a work with cached/pending status
-  ledger/<work_id>.traits.json    baseline 6-axis traits per character (scene side stores variations only)
+  ledger/<work_id>.traits.json    COMMITTED baseline 6-axis traits per character (scene side stores variations only);
+                                  prepare / resolve build packs from this frozen ledger
+  ledger/<work_id>.pending.json   ledger_additions accepted by ingest during the current epoch (applied by `epoch commit`)
+  ledger/<work_id>.epoch.json     epoch counter of the current run (max 2 commits)
+  stale/<work_id>.json            "premise changed" scenes (reused annotation made under different prior facts) and
+                                  scenes forced back to pending by `stale --reannotate`
 Reads never raise on a damaged entry: parse errors, schema or key mismatches are a miss (the caller recomputes and
 overwrites). Writes are atomic (temp file -> fsync -> os.replace). Nothing is deleted except by delete() or gc().
 """
@@ -20,7 +28,7 @@ from pathlib import Path
 from typing import Any
 
 from common import CACHE_ROOT, INSTRUCTION_VERSION, MANIFEST_SCHEMA, read_json, write_json
-from keys import L1_SCHEMA, L2_SCHEMA
+from keys import L1_SCHEMA, L2_SCHEMA, L2_SCHEMA_V1
 
 
 def _load(path: Path, schema: str | None = None) -> Any | None:
@@ -96,13 +104,36 @@ class Cache:
             return None
         return e
 
-    def put_l2(self, scene_hash: str, key: str, entry: dict[str, Any], parts: dict[str, Any], source: str = "ingest") -> Path:
+    def put_l2(self, scene_hash: str, key: str, entry: dict[str, Any], parts: dict[str, Any], source: str = "ingest",
+               prior_facts: list[dict[str, Any]] | None = None) -> Path:
         p = self._l2_dir(scene_hash) / f"{key}.json"
-        write_json(p, {"schema": L2_SCHEMA, "key": key, "scene_hash": scene_hash, "parts": parts, "source": source, "entry": entry})
+        write_json(p, {"schema": L2_SCHEMA, "key": key, "scene_hash": scene_hash, "parts": parts, "source": source,
+                       "prior_facts": prior_facts, "entry": entry})
         return p
 
-    def resolve_l2(self, scene_hash: str, key: str, parts: dict[str, Any] | None = None) -> tuple[dict[str, Any] | None, str]:
-        """Return (entry, how). how: 'hit' | 'adopted' (legacy entry moved under `key`) | 'miss'."""
+    def get_l2_wrapper(self, scene_hash: str, key: str) -> dict[str, Any] | None:
+        """The stored wrapper (parts, source, prior_facts, entry) of a valid v2 entry, else None."""
+        w = _load(self._l2_dir(scene_hash) / f"{key}.json", L2_SCHEMA)
+        if not w or w.get("key") != key:
+            return None
+        e = w.get("entry")
+        if not isinstance(e, dict) or e.get("scene_hash") != scene_hash or e.get("instruction_version") != INSTRUCTION_VERSION:
+            return None
+        return w
+
+    def get_l2_v1(self, scene_hash: str, v1_key: str) -> dict[str, Any] | None:
+        """Entry stored by Stage 1 under its component-hash key (used for migration only)."""
+        w = _load(self._l2_dir(scene_hash) / f"{v1_key}.json", L2_SCHEMA_V1)
+        if not w or w.get("key") != v1_key:
+            return None
+        e = w.get("entry")
+        if not isinstance(e, dict) or e.get("scene_hash") != scene_hash or e.get("instruction_version") != INSTRUCTION_VERSION:
+            return None
+        return e
+
+    def resolve_l2(self, scene_hash: str, key: str, parts: dict[str, Any] | None = None, v1_key: str | None = None) -> tuple[dict[str, Any] | None, str]:
+        """Return (entry, how). how: 'hit' | 'adopted' (legacy unkeyed entry, or a Stage 1 entry whose old key `v1_key`
+        still matches, moved under `key`) | 'miss'."""
         e = self.get_l2(scene_hash, key)
         if e is not None:
             return e, "hit"
@@ -112,19 +143,23 @@ class Cache:
                 self.put_l2(scene_hash, key, leg, parts or {}, source="adopted-legacy")
                 self.entry_path(scene_hash).unlink()
                 return leg, "adopted"
+            if v1_key is not None:
+                old = self.get_l2_v1(scene_hash, v1_key)
+                if old is not None:
+                    self.put_l2(scene_hash, key, old, parts or {}, source="migrated-v1")
+                    return old, "adopted"
         return None, "miss"
 
-    def has_candidate(self, scene_hash: str, roster_h: str, ledger_h: str) -> bool:
-        """True if an entry for this scene text exists that could become a hit once its predecessor is resolved
-        (same instruction version, roster and ledger; only the prior state is still unknown). Legacy entries count."""
+    def has_candidate(self, scene_hash: str) -> bool:
+        """True if an entry for this scene text exists that may become a hit once its predecessor is resolved
+        (same instruction version; whether the pack bytes still match is decided by resolve). Legacy and Stage 1 entries count."""
         leg = self.get(scene_hash)
         if leg is not None and leg.get("instruction_version") == INSTRUCTION_VERSION:
             return True
         d = self._l2_dir(scene_hash)
         for p in d.glob("*.json") if d.exists() else []:
-            w = _load(p, L2_SCHEMA)
-            pr = (w or {}).get("parts") or {}
-            if w and pr.get("roster_hash") == roster_h and pr.get("ledger_hash") == ledger_h and pr.get("instruction_version") == INSTRUCTION_VERSION:
+            w = _load(p)
+            if isinstance(w, dict) and w.get("schema") in (L2_SCHEMA, L2_SCHEMA_V1) and w.get("entry", {}).get("instruction_version") == INSTRUCTION_VERSION:
                 return True
         return False
 
@@ -150,16 +185,94 @@ class Cache:
                 p.unlink()
         return stale
 
-    # ---- ledger -------------------------------------------------------------------------------------------------
+    # ---- ledger (epoch-frozen) ----------------------------------------------------------------------------------
     def ledger_path(self, work_id: str) -> Path:
         return self.root / "ledger" / f"{work_id}.traits.json"
 
-    def ledger(self, work_id: str) -> dict[str, list[int]]:
+    def pending_path(self, work_id: str) -> Path:
+        return self.root / "ledger" / f"{work_id}.pending.json"
+
+    def epoch_path(self, work_id: str) -> Path:
+        return self.root / "ledger" / f"{work_id}.epoch.json"
+
+    def ledger_committed(self, work_id: str) -> dict[str, list[int]]:
+        """The frozen ledger: packs, keys and resolution are built from this one for the whole epoch."""
         p = self.ledger_path(work_id)
         return read_json(p)["baseline"] if p.exists() else {}
 
+    def pending_additions(self, work_id: str) -> dict[str, dict[str, Any]]:
+        """{character: {"baseline": [6 ints], "scene_hash": ..., "seq": n}} accepted by ingest and not yet committed."""
+        p = self.pending_path(work_id)
+        return read_json(p).get("additions", {}) if p.exists() else {}
+
+    def ledger(self, work_id: str) -> dict[str, list[int]]:
+        """Effective ledger = committed baseline + pending additions (validation and merge see additions at once;
+        pack building does not: it uses ledger_committed())."""
+        led = dict(self.ledger_committed(work_id))
+        for ch, rec in self.pending_additions(work_id).items():
+            led.setdefault(ch, rec["baseline"])
+        return led
+
     def put_ledger(self, work_id: str, baseline: dict[str, list[int]], note: str = "") -> None:
+        """Write the committed ledger. Pending additions that are now part of it are dropped."""
         write_json(self.ledger_path(work_id), {"schema": "sensor.ledger/1", "work_id": work_id, "note": note, "baseline": baseline})
+        pend = self.pending_additions(work_id)
+        left = {k: v for k, v in pend.items() if k not in baseline}
+        if left != pend:
+            self._write_pending(work_id, left)
+
+    def _write_pending(self, work_id: str, additions: dict[str, dict[str, Any]]) -> None:
+        if additions:
+            write_json(self.pending_path(work_id), {"schema": "sensor.ledger.pending/1", "work_id": work_id, "additions": additions})
+        elif self.pending_path(work_id).exists():
+            self.pending_path(work_id).unlink()
+
+    def add_pending(self, work_id: str, additions: dict[str, list[int]], scene_hash: str) -> list[str]:
+        """Record ledger_additions of an accepted entry without touching the committed ledger (first writer wins)."""
+        pend = self.pending_additions(work_id)
+        committed = self.ledger_committed(work_id)
+        added = []
+        for ch, vec in additions.items():
+            if ch in committed or ch in pend:
+                continue
+            pend[ch] = {"baseline": list(vec), "scene_hash": scene_hash, "seq": len(pend) + 1}
+            added.append(ch)
+        if added:
+            self._write_pending(work_id, pend)
+        return added
+
+    def epoch_state(self, work_id: str) -> dict[str, Any]:
+        p = self.epoch_path(work_id)
+        return read_json(p) if p.exists() else {"epoch": 0, "history": []}
+
+    def write_epoch_state(self, work_id: str, st: dict[str, Any]) -> None:
+        write_json(self.epoch_path(work_id), {"schema": "sensor.epoch/1", "work_id": work_id, **st})
+
+    # ---- premise-changed registry / forced re-annotation -------------------------------------------------------
+    def stale_path(self, work_id: str) -> Path:
+        return self.root / "stale" / f"{work_id}.json"
+
+    def stale_state(self, work_id: str) -> dict[str, Any]:
+        p = self.stale_path(work_id)
+        j = _load(p) if p.exists() else None
+        return j if isinstance(j, dict) else {"forced": [], "premise_changed": []}
+
+    def write_stale_state(self, work_id: str, st: dict[str, Any]) -> None:
+        write_json(self.stale_path(work_id), {"schema": "sensor.stale/1", "work_id": work_id, "forced": st["forced"], "premise_changed": st["premise_changed"]})
+
+    def forced(self, work_id: str) -> set[str]:
+        return set(self.stale_state(work_id).get("forced", []))
+
+    def force_reannotate(self, work_id: str, scene_hashes: list[str]) -> None:
+        st = self.stale_state(work_id)
+        st["forced"] = sorted(set(st.get("forced", [])) | set(scene_hashes))
+        self.write_stale_state(work_id, st)
+
+    def clear_forced(self, work_id: str, scene_hash: str) -> None:
+        st = self.stale_state(work_id)
+        if scene_hash in st.get("forced", []):
+            st["forced"] = [h for h in st["forced"] if h != scene_hash]
+            self.write_stale_state(work_id, st)
 
     # ---- manifest -----------------------------------------------------------------------------------------------
     def manifest_path(self, work_id: str) -> Path:

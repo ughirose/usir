@@ -6,6 +6,8 @@
   python scripts/sensor_runner/cli.py status
   python scripts/sensor_runner/cli.py migrate [--work ID ...]   (adopt legacy strong/ entries under strict L2 keys)
   python scripts/sensor_runner/cli.py gc [--days N] [--apply]    (explicit only; lists l1/l2 files older than N days)
+  python scripts/sensor_runner/cli.py epoch status|commit|reset [--work ID ...]   (ledger epoch freeze: apply pending ledger_additions)
+  python scripts/sensor_runner/cli.py stale [--work ID ...] [--reannotate [--scene N ...]]   (list "premise changed" scenes; explicit re-annotation)
 """
 from __future__ import annotations
 
@@ -18,7 +20,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from cache import Cache  # noqa: E402
 from common import REPO, all_work_ids, find_nishiki, load_work, segment, write_json  # noqa: E402
-from diagnose import all_ok, run_diagnose  # noqa: E402
+from diagnose import all_ok, run_diagnose
+from epoch import MAX_EPOCHS, commit_epoch, epoch_status, list_premise_changed, reannotate, reset_epochs, unresolved_scenes  # noqa: E402
 from ingest import ingest_paths  # noqa: E402
 from merge import merge_work  # noqa: E402
 from prepare import prepare_work  # noqa: E402
@@ -37,7 +40,7 @@ def cmd_prepare(a) -> int:
     for w in _works(a):
         r = prepare_work(w, cache, nishiki, limit=a.limit, defer_blocked=not a.emit_blocked)
         tot_p += len(r["packs_written"])
-        print(f"{w}: scenes={r['scene_count']} cached={r['cached']} pending={r['pending']} packs_written={len(r['packs_written'])} deferred_blocked={len(r['deferred_blocked'])} l2={r['l2']}")
+        print(f"{w}: scenes={r['scene_count']} cached={r['cached']} pending={r['pending']} packs_written={len(r['packs_written'])} deferred_blocked={len(r['deferred_blocked'])} l2={r['l2']} premise_changed={len(r['premise_changed'])} forced={len(r['forced'])}")
         for p in r["packs_written"]:
             print(f"   s{p['scene_index']} {p['scene_hash'][:12]} {p['pack']}")
     print(f"total packs written: {tot_p}")
@@ -94,6 +97,43 @@ def cmd_migrate(a) -> int:
     return 0
 
 
+def cmd_epoch(a) -> int:
+    nishiki, cache = find_nishiki(a.nishiki), Cache(a.cache)
+    rc = 0
+    for w in _works(a):
+        if a.action == "commit":
+            r = commit_epoch(cache, w)
+            print(f"{w}: {r['status']} epoch={r['epoch']}/{MAX_EPOCHS} applied={r['applied']} unapplied={r['unapplied']}")
+            if r["status"] == "cutoff":
+                rc = 1
+        elif a.action == "reset":
+            reset_epochs(cache, w)
+            print(f"{w}: epoch counter reset (pending additions kept)")
+        work = load_work(w)
+        seg = segment(nishiki, work["text_abs"])
+        st = epoch_status(cache, w)
+        un = unresolved_scenes(cache, w, seg["scenes"], work["characters"])
+        print(f"{w}: epoch={st['epoch']}/{st['max_epochs']} pending_additions={st['pending_additions']} unresolved_scenes={un}"
+              + (" (NOT CONVERGED: epoch limit reached)" if un and st["epoch"] >= st["max_epochs"] else ""))
+    return rc
+
+
+def cmd_stale(a) -> int:
+    nishiki, cache = find_nishiki(a.nishiki), Cache(a.cache)
+    for w in _works(a):
+        work = load_work(w)
+        seg = segment(nishiki, work["text_abs"])
+        rows = list_premise_changed(cache, w, seg["scenes"], work["characters"])
+        print(f"{w}: premise_changed={len(rows)} forced={len(cache.forced(w))}")
+        for r in rows:
+            print(f"   s{r['scene_index']} {r['scene_hash'][:12]} prior facts differ from those shown at annotation time")
+        if a.reannotate:
+            sel = [r for r in rows if not a.scene or r["scene_index"] in a.scene]
+            reannotate(cache, w, [r["scene_hash"] for r in sel])
+            print(f"   marked for re-annotation: {[r['scene_index'] for r in sel]} (run prepare to emit their packs)")
+    return 0
+
+
 def cmd_gc(a) -> int:
     stale = Cache(a.cache).gc(a.days, apply=a.apply)
     print(f"{'deleted' if a.apply else 'would delete'} {len(stale)} file(s) older than {a.days} days")
@@ -119,6 +159,8 @@ def main(argv=None) -> int:
     p = sp.add_parser("ingest"); p.add_argument("paths", nargs="+"); p.set_defaults(f=cmd_ingest)
     p = sp.add_parser("merge"); p.add_argument("--work", nargs="*"); p.add_argument("--out"); p.add_argument("--diagnose", action="store_true"); p.add_argument("--partial", action="store_true"); p.set_defaults(f=cmd_merge)
     p = sp.add_parser("migrate"); p.add_argument("--work", nargs="*"); p.set_defaults(f=cmd_migrate)
+    p = sp.add_parser("epoch"); p.add_argument("action", choices=["status", "commit", "reset"]); p.add_argument("--work", nargs="*"); p.set_defaults(f=cmd_epoch)
+    p = sp.add_parser("stale"); p.add_argument("--work", nargs="*"); p.add_argument("--reannotate", action="store_true"); p.add_argument("--scene", nargs="*", type=int); p.set_defaults(f=cmd_stale)
     p = sp.add_parser("gc"); p.add_argument("--days", type=float, default=30.0); p.add_argument("--apply", action="store_true"); p.set_defaults(f=cmd_gc)
     p = sp.add_parser("status"); p.add_argument("--work", nargs="*"); p.set_defaults(f=cmd_status)
     a = ap.parse_args(argv)

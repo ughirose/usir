@@ -15,7 +15,7 @@ from typing import Any
 
 from common import INSTRUCTION_VERSION, SCHEMA_PATH, SPLITTER, content_hash, read_json
 from keys import canon_hash, l1_key, prev_tail_hash, roster_hash, scene_text_hash, step1_version
-from resolve import resolve_work
+from resolve import record_premise_changes, resolve_work
 from strong import instruction_hash
 
 FIRST_PERSON = ["僕", "ぼく", "わたくし", "私", "わたし", "俺", "おれ", "あたし"]
@@ -197,12 +197,13 @@ def merge_work(work_id, cache, seg, local_path=None, partial=False, use_l1=True)
     local = load_local(lp) if lp.exists() else {}
     ledger = cache.ledger(work_id)
     scenes = seg["scenes"]
-    resolved = resolve_work(work_id, cache, scenes, work["characters"])
+    resolved = resolve_work(work_id, cache, scenes, work["characters"], local=local)
     roster_h = roster_hash(work["characters"])
     algo = step1_version() if use_l1 else None
     records, report = [], {"work_id": work_id, "scenes": len(scenes), "merged": 0, "uncached": [], "errors": [],
                            "missing_local_utterances": 0, "local_ids_absent_from_present": 0, "sentence_index_unresolved": 0,
                            "l1": {"hit": 0, "miss": 0}, "l2": {"hit": 0, "adopted": 0, "miss": 0, "blocked": 0}}
+    report["premise_changed"] = [{"scene_index": r["scene_index"], "scene_hash": r["scene_hash"]} for r in record_premise_changes(cache, work_id, resolved)]
     for s, rv in zip(scenes, resolved):
         report["l2"][rv.how] += 1
         e = rv.entry

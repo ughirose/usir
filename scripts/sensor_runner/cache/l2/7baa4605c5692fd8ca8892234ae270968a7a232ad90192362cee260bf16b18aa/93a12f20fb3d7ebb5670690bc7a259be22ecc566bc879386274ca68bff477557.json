@@ -1,0 +1,131 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "弱虫は、幸福をさえおそれるものです",
+   "F_valence": 0,
+   "f_arousal": 1,
+   "f_basis": "金の切れめが縁の切れめ、ってのはね、あれはね、解釈が逆なんだ",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "れいのお道化の煙幕を張りめぐらすのでした",
+    "code": "E08"
+   },
+   {
+    "basis": "顔も洗わずに素早く引上げたのですが",
+    "code": "E14"
+   },
+   {
+    "basis": "ツネ子を噴き出させたような記憶があります",
+    "code": "E03"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yozo",
+    "target": null,
+    "text": "解放された夜からもとのお道化者に戻った"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "ツネ子の部屋から引上げた",
+    "predicate": "MOVED_TO",
+    "subject": "yozo"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "『金の切れめが縁の切れめ』の放言が後でひっかかりを生じる",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "れいのお道化の煙幕を張りめぐらすのでした",
+    "code": "M05"
+   },
+   {
+    "basis": "解放せられた夜でした",
+    "code": "M10"
+   },
+   {
+    "basis": "傷つけられないうちに、早く、このまま、わかれたいとあせり",
+    "code": "M03"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": null,
+    "id": "yozo"
+   },
+   {
+    "basis": null,
+    "id": "tsuneko"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "朝",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 4,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "tsuneko",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "93a12f20fb3d7ebb5670690bc7a259be22ecc566bc879386274ca68bff477557",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/1",
+  "model_id": "unspecified",
+  "pack_view_hash": "b8ddea798788f257efb938d1e468b208bd0e164475026b146f8b5e819e3cbfeb",
+  "premise_unknown": true,
+  "prior_core": {
+   "pov_character": "yozo",
+   "present": [
+    "tsuneko",
+    "yozo"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "a44627d63b0b3c9350bc7925bdf9ddc7061489a418abf4ae988df9403cca19f9",
+  "sampling": "default",
+  "scene_text_hash": "0f6e3eeeca82323601edf03299efa3fa34d1799edc5557c99e45cf216c40a2bd"
+ },
+ "prior_facts": null,
+ "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+ "schema": "sensor.cache.l2/2",
+ "source": "migrated-v1"
+}

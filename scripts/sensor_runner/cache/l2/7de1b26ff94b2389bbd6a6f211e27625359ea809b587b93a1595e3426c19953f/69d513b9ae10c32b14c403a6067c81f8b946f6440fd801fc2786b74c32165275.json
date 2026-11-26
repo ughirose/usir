@@ -1,0 +1,130 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "あんたも困ってでしょうけどね、わたしんとこも困るのよ",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "今時の若い人に珍らしく、両手をついての切口上を聞くと",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "早く鷲さんに相談して、さがしてくださいね",
+    "code": "E03"
+   },
+   {
+    "basis": "安江はつい慰めずにいられなくなり",
+    "code": "E15"
+   },
+   {
+    "basis": "鷲さんになかなかあえんのです",
+    "code": "E16"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "進君は兵六になかなか会えない",
+    "predicate": "LEARNED",
+    "subject": "yasue"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "進君の新しい部屋を探す約束(ことしうち)",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   },
+   {
+    "basis": null,
+    "evidence": "inferred",
+    "object": "兵六のところ",
+    "predicate": "MOVED_TO",
+    "subject": "susumu"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "安江はつい慰めずにいられなくなり",
+    "code": "M10"
+   },
+   {
+    "basis": "きょうは泊りこんででもあってくるつもりです",
+    "code": "M14"
+   },
+   {
+    "basis": "あんたも困ってでしょうけどね、わたしんとこも困るのよ",
+    "code": "M04"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": null,
+    "id": "yasue"
+   },
+   {
+    "basis": null,
+    "id": "susumu"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "7de1b26ff94b2389bbd6a6f211e27625359ea809b587b93a1595e3426c19953f",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "きょう",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 1,
+      "basis": null,
+      "delta": 1
+     }
+    ],
+    "character_id": "susumu",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "yasue",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "69d513b9ae10c32b14c403a6067c81f8b946f6440fd801fc2786b74c32165275",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/1",
+  "model_id": "unspecified",
+  "pack_view_hash": "6b402a1c671e87620f649f7040cd73c938c30685b3914498e0bfcf9e73996d1a",
+  "premise_unknown": true,
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "otoe",
+    "susumu",
+    "yasue"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "a98d43f4f6a58d521ae46fe02948fe4c81d20b3025eb391b61b5e1b97d5b5610",
+  "sampling": "default",
+  "scene_text_hash": "13127b9939049e545e0c471d0c6231f65f65075fca7f0c67c22db17a4d2b6ddc"
+ },
+ "prior_facts": null,
+ "scene_hash": "7de1b26ff94b2389bbd6a6f211e27625359ea809b587b93a1595e3426c19953f",
+ "schema": "sensor.cache.l2/2",
+ "source": "migrated-v1"
+}

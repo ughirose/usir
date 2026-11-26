@@ -7,9 +7,7 @@ from typing import Any, Callable
 
 from cache import Cache
 from common import (
-    INSTRUCTION_VERSION,
     LOCAL_DIR,
-    PACK_SCHEMA,
     REPO,
     SPLITTER,
     load_work,
@@ -17,53 +15,11 @@ from common import (
     segment,
     write_json,
 )
-from resolve import resolve_work
-from strong import INSTRUCTIONS, OUTPUT_TEMPLATE, instruction_hash
+from render import apply_variations, prior_summary, relevant_roster  # noqa: F401  (re-exported for callers/tests)
+from resolve import load_local_utterances, record_premise_changes, resolve_work
 
 PACKS_DIR = Path(__file__).resolve().parent / "packs"
 OUT_DIR = Path(__file__).resolve().parent / "out"
-
-
-def relevant_roster(characters: list[dict[str, Any]], text: str, must: set[str]) -> list[dict[str, Any]]:
-    out = []
-    for c in characters:
-        names = [c["id"], *c.get("aliases", [])]
-        if c["id"] in must or any(n and n in text for n in names):
-            out.append(c)
-    return out
-
-
-def apply_variations(baseline: dict[str, list[int]], strong: dict[str, Any]) -> dict[str, list[int]]:
-    """Current trait vector of each character active in `strong` (ledger + scene variations, clamped)."""
-    cur = {}
-    for c in strong.get("trait_changes", []):
-        vec = list(baseline.get(c["character_id"], [0] * 6))
-        for ch in c.get("changes") or []:
-            vec[ch["axis"]] += ch["delta"]
-        cur[c["character_id"]] = [max(-1, min(1, v)) for v in vec]
-    return cur
-
-
-def prior_summary(prev_scene: dict[str, Any] | None, prev_entry: dict[str, Any] | None, ledger: dict[str, list[int]]) -> dict[str, Any]:
-    """Prior shown to the annotator. `prev_entry` is the strictly resolved annotation of the previous scene (or None)."""
-    if prev_scene is None:
-        return {"status": "none"}
-    e = prev_entry
-    if e is None:
-        return {"status": "pending", "scene_id_hint": prev_scene["index"],
-                "note": "直前の場面は未注釈。先にその出力ファイルを作成・ingest してから、このパックを再生成すること。"}
-    return {
-        "status": "cached",
-        "prev_scene_index": prev_scene["index"],
-        "location": e.get("location"),
-        "pov_character": e.get("pov_character"),
-        "present": [p["id"] for p in e.get("present", [])],
-        "time": e.get("time"),
-        "recent_facts": [
-            {k: f.get(k) for k in ("subject", "predicate", "object", "target", "category", "text")} for f in e.get("facts", [])[-5:]
-        ],
-        "trait_state": apply_variations(ledger, e),
-    }
 
 
 def prepare_work(
@@ -87,7 +43,10 @@ def prepare_work(
     wdir = packs_dir / work_id
     wdir.mkdir(parents=True, exist_ok=True)
 
-    resolved = resolve_work(work_id, cache, scenes, work["characters"])
+    lpath = Path(local_path) if local_path else LOCAL_DIR / f"{work_id}.utterances.json"
+    local = load_local_utterances(work_id, lpath)
+    resolved = resolve_work(work_id, cache, scenes, work["characters"], local=local)
+    premise = record_premise_changes(cache, work_id, resolved)
     manifest = cache.write_manifest(work_id, scenes, seg.get("splitter", SPLITTER), resolved=[r.entry for r in resolved])
     pend_r = [r for r in resolved if r.entry is None]
     # A blocked scene (predecessor unresolved) is not annotated now when defer_blocked, or when an entry for its text
@@ -106,60 +65,19 @@ def prepare_work(
             old.unlink()
             removed += 1
 
-    lpath = Path(local_path) if local_path else LOCAL_DIR / f"{work_id}.utterances.json"
-    local = read_json(lpath)["scenes"] if lpath.exists() else {}
-    ledger = cache.ledger(work_id)
-    chars = work["characters"]
-    roster_ids = [c["id"] for c in chars]
-    must_base = {work.get("narrator")} - {None} if work.get("narration") == "first" else set()
-    if work.get("pov"):
-        must_base.add(work["pov"])
-
     written = []
-    for s in pending:
-        idx = s["index"]
-        prev = scenes[idx - 1] if idx > 0 else None
+    for s_ in pending:
+        idx = s_["index"]
         rv = by_index[idx]
-        prior = prior_summary(prev, rv.prev_entry if prev is not None else None, ledger)
-        lu = local.get(s["scene_hash"], [])
-        must = set(must_base) | set(prior.get("present", []))
-        for u in lu:
-            must |= {x for x in (u["speaker_id"], u["addressee_id"]) if x}
-        roster = relevant_roster(chars, s["scene_text"], must)
-        rid = {c["id"] for c in roster}
-        h12 = s["scene_hash"][:12]
-        pack = {
-            "schema": PACK_SCHEMA,
-            "instruction_version": INSTRUCTION_VERSION,
-            "instruction_hash": instruction_hash(),
-            "work_id": work_id,
-            "scene_id": f"{work_id}:s{idx}",
-            "scene_index": idx,
-            "scene_count": len(scenes),
-            "scene_hash": s["scene_hash"],
-            "char_len": s["char_len"],
-            "output_path": f"scripts/sensor_runner/out/{work_id}/{h12}.strong.json",
-            "narration": work.get("narration"),
-            "narrator": work.get("narrator"),
-            "work_pov": work.get("pov"),
-            "instructions": INSTRUCTIONS,
-            "output_template": OUTPUT_TEMPLATE,
-            "scene_text": s["scene_text"],
-            "numbered_text": s["numbered_text"],
-            "sentence_count": len(s["sentences"]),
-            "utterance_count": len(s["utterances"]),
-            "roster": roster,
-            "roster_all_ids": roster_ids,
-            "ledger_baseline": {k: v for k, v in ledger.items() if k in rid},
-            "local_utterances": lu,
-            "prior": prior,
-            # strict L2 key parts at pack time; None when the predecessor was unresolved (ingest then rejects the pack)
-            "l2_parts": rv.parts,
-            "l2_key": rv.key,
-        }
+        h12 = s_["scene_hash"][:12]
+        pack = dict(rv.pack)
+        pack["output_path"] = f"scripts/sensor_runner/out/{work_id}/{h12}.strong.json"
+        # strict L2 key parts at pack time; None when the predecessor was unresolved (ingest then rejects the pack)
+        pack["l2_parts"] = rv.parts
+        pack["l2_key"] = rv.key
         p = wdir / f"{h12}.pack.json"
         write_json(p, pack)
-        written.append({"scene_index": idx, "scene_hash": s["scene_hash"], "pack": str(p)})
+        written.append({"scene_index": idx, "scene_hash": s_["scene_hash"], "pack": str(p)})
     return {
         "work_id": work_id,
         "scene_count": len(scenes),
@@ -168,6 +86,8 @@ def prepare_work(
         "packs_written": written,
         "stale_packs_removed": removed,
         "deferred_blocked": deferred,
+        "premise_changed": [{"scene_index": r["scene_index"], "scene_hash": r["scene_hash"]} for r in premise],
+        "forced": sorted(r.index for r in resolved if r.extra.get("forced")),
         "l2": {"hit": sum(r.how == "hit" for r in resolved), "adopted": sum(r.how == "adopted" for r in resolved),
                "miss": sum(r.how == "miss" for r in resolved), "blocked": sum(r.blocked for r in resolved)},
     }
