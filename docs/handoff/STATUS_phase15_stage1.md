@@ -54,3 +54,6 @@ A–E 実測完了。cold 35 call、warm 0 call、編集 1/2 call、location 65.
 
 ## Step 5 開始（2026-11-27）
 (a) 注釈者指示に「台帳に無い人物は毎回 ledger_additions へ」を明示、ep 条件で実LLM再確認（上限10 call）。(b) feat/sensor-runner へ fast-forward 統合。土台 feat/phase15-stage2-step4 (7ce179c)。
+
+## Step 6 開始（2026-11-27）
+計測のみ。実験1: 旧/新指示文の注釈差（000035_000301 + 001798_056779、11場面）。実験2: 先勝ちベクトルの診断への影響（001801_001786、手元データ）。上限20 call。土台 feat/sensor-runner (22b2e26)。
