@@ -1,0 +1,41 @@
+{
+ "work": "001801_001786",
+ "scenes": 3,
+ "epoch1_calls": 3,
+ "rejected_attempts": 0,
+ "reasons": [],
+ "per_scene": [
+  {
+   "scene": 0,
+   "additions_in_entry": [
+    "onna",
+    "shinichi"
+   ],
+   "accepted": true
+  },
+  {
+   "scene": 1,
+   "additions_in_entry": [
+    "onna",
+    "shinichi"
+   ],
+   "accepted": true
+  },
+  {
+   "scene": 2,
+   "additions_in_entry": [
+    "onna",
+    "shinichi"
+   ],
+   "accepted": true
+  }
+ ],
+ "pending_after": [],
+ "commit": {
+  "status": "committed",
+  "applied": [
+   "onna",
+   "shinichi"
+  ]
+ }
+}

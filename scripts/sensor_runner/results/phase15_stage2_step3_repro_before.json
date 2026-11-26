@@ -1,0 +1,36 @@
+{
+ "work": "001801_001786",
+ "scenes": 3,
+ "epoch1_calls": 2,
+ "rejected_attempts": 1,
+ "reasons": [
+  "ledger_additions[onna]: baseline already exists (no overwrite)",
+  "ledger_additions[shinichi]: baseline already exists (no overwrite)"
+ ],
+ "per_scene": [
+  {
+   "scene": 0,
+   "additions_in_entry": [
+    "onna",
+    "shinichi"
+   ],
+   "accepted": true
+  },
+  {
+   "scene": 1,
+   "additions_in_entry": [
+    "onna",
+    "shinichi"
+   ],
+   "accepted": false
+  }
+ ],
+ "pending_after": [],
+ "commit": {
+  "status": "committed",
+  "applied": [
+   "onna",
+   "shinichi"
+  ]
+ }
+}
