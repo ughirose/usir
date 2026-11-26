@@ -1,0 +1,2567 @@
+{
+ "works": {
+  "000035_000301": {
+   "scenes": 7,
+   "rows": [
+    {
+     "scene": 0,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "facts",
+      "trait_changes",
+      "time",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 1,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "location",
+      "facts",
+      "trait_changes",
+      "time",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 2,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "location",
+      "facts",
+      "trait_changes",
+      "time",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 3,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "location",
+      "facts",
+      "time",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 4,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "facts",
+      "trait_changes",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 5,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "facts",
+      "trait_changes",
+      "time",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 6,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "facts",
+      "trait_changes",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    }
+   ]
+  },
+  "001798_056779": {
+   "scenes": 4,
+   "rows": [
+    {
+     "scene": 0,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "facts",
+      "time",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 1,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "facts",
+      "trait_changes",
+      "time",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 2,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "facts",
+      "trait_changes",
+      "time",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    },
+    {
+     "scene": 3,
+     "whole_equal": false,
+     "whole_equal_incl_meta": false,
+     "differs": [
+      "present",
+      "facts",
+      "trait_changes",
+      "event_top3",
+      "mood_top3",
+      "awase"
+     ],
+     "old_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+     "new_annotator": "claude-code-session:sonnet-subagent"
+    }
+   ]
+  }
+ },
+ "totals": {
+  "scenes": 11,
+  "whole_equal": 0,
+  "whole_equal_incl_meta": 0,
+  "field_diff_scenes": {
+   "present": 11,
+   "pov_character": 0,
+   "location": 3,
+   "facts": 11,
+   "trait_changes": 9,
+   "ledger_additions": 0,
+   "time": 8,
+   "event_top3": 11,
+   "mood_top3": 11,
+   "awase": 11
+  }
+ },
+ "examples": [
+  {
+   "work": "000035_000301",
+   "scene": 0,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "yozo"
+    }
+   ],
+   "new": [
+    {
+     "basis": "自分は、下宿のその部屋に、ひとりでじっとしているのが",
+     "id": "yozo"
+    },
+    {
+     "basis": "或いは堀木と一緒に安い酒を飲み廻ったりして",
+     "id": "horiki"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 0,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "マルクス学生の行動隊長の立場",
+     "predicate": "ACQUIRED",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "小さいナイフ",
+     "predicate": "ACQUIRED",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": null,
+     "text": "情死事件で身の上が一変した"
+    },
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": null,
+     "text": "運動から逃げて死ぬ決意をした"
+    }
+   ],
+   "new": [
+    {
+     "basis": "小さいナイフを買い",
+     "evidence": "explicit",
+     "object": "小さいナイフ",
+     "predicate": "ACQUIRED",
+     "subject": "yozo"
+    },
+    {
+     "basis": "自分の身の上は、一変しました",
+     "category": "situation",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": "yozo",
+     "text": "情死事件を起こし、身の上が一変した"
+    },
+    {
+     "basis": "死ぬ事にしました",
+     "category": "emotion",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": "yozo",
+     "text": "運動から逃げた後、死ぬ決意をした"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 0,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [
+      {
+       "axis": 0,
+       "basis": null,
+       "delta": -1
+      },
+      {
+       "axis": 1,
+       "basis": null,
+       "delta": -1
+      }
+     ],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [
+      {
+       "axis": 0,
+       "basis": "死ぬ事にしました",
+       "delta": -1
+      },
+      {
+       "axis": 1,
+       "basis": "逃げました",
+       "delta": -1
+      }
+     ],
+     "character_id": "yozo",
+     "evidence": "explicit"
+    },
+    {
+     "changes": [],
+     "character_id": "horiki",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 0,
+   "field": "time",
+   "old": {
+    "elapsed_hint": null,
+    "evidence": "explicit",
+    "explicit_time": "十一月",
+    "relative_order": "unknown"
+   },
+   "new": {
+    "elapsed_hint": null,
+    "evidence": "explicit",
+    "explicit_time": "二年目の十一月",
+    "relative_order": "continuous"
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 0,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "逃げて、さすがに、いい気持はせず、死ぬ事にしました",
+     "code": "E14"
+    },
+    {
+     "basis": "あちこち飛び廻って",
+     "code": "E09"
+    },
+    {
+     "basis": "自分より年上の有夫の婦人と情死事件などを起し",
+     "code": "E06"
+    }
+   ],
+   "new": [
+    {
+     "basis": "逃げました",
+     "code": "E14"
+    },
+    {
+     "basis": "あちこち飛び廻って",
+     "code": "E02"
+    },
+    {
+     "basis": "安い酒を飲み廻ったり",
+     "code": "E10"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 0,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "次々と息をつくひまも無いくらい、用事の依頼がまいります",
+     "code": "M03"
+    },
+    {
+     "basis": "ひとりでじっとしているのが、おそろしく、いまにも誰かに襲われ、一撃せられるような気がして来て",
+     "code": "M11"
+    },
+    {
+     "basis": "自分の病弱のからだでは、とても勤まりそうも無くなりました",
+     "code": "M08"
+    }
+   ],
+   "new": [
+    {
+     "basis": "息をつくひまも無いくらい",
+     "code": "M03"
+    },
+    {
+     "basis": "ひとりでじっとしているのが、おそろしく",
+     "code": "M11"
+    },
+    {
+     "basis": "さすがに、いい気持はせず",
+     "code": "M08"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 0,
+   "field": "awase",
+   "old": {
+    "F_arousal": 1,
+    "F_basis": "逃げて、さすがに、いい気持はせず、死ぬ事にしました",
+    "F_valence": -2,
+    "f_arousal": 1,
+    "f_basis": "お酒を飲んで、ぐっすり眠りたい、しかし、お金がありません",
+    "f_valence": -1
+   },
+   "new": {
+    "F_arousal": 1,
+    "F_basis": "死ぬ事にしました",
+    "F_valence": -2,
+    "f_arousal": 0,
+    "f_basis": "冗談から駒が出たように",
+    "f_valence": -1
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 1,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "yozo"
+    },
+    {
+     "basis": null,
+     "id": "musume"
+    }
+   ],
+   "new": [
+    {
+     "basis": "腹這いになり、煙草を吸い",
+     "id": "yozo"
+    },
+    {
+     "basis": "いかにもその娘が何か自分に言ってもらいたげの様子",
+     "id": "musume"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 1,
+   "field": "location",
+   "old": "仙遊館",
+   "new": "自分の部屋"
+  },
+  {
+   "work": "000035_000301",
+   "scene": 1,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "evidence": "inferred",
+     "object": "カルモチン",
+     "predicate": "ACQUIRED",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "evidence": "inferred",
+     "object": "薬屋",
+     "predicate": "MOVED_TO",
+     "subject": "musume"
+    }
+   ],
+   "new": [
+    {
+     "basis": "よろこんで立ちます",
+     "category": "emotion",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "musume",
+     "target": "musume",
+     "text": "用事を頼まれて喜び、薬屋へ向かう"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 1,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [
+      {
+       "axis": 3,
+       "basis": null,
+       "delta": 1
+      },
+      {
+       "axis": 4,
+       "basis": null,
+       "delta": -1
+      }
+     ],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "musume",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "musume",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 1,
+   "field": "time",
+   "old": {
+    "elapsed_hint": null,
+    "evidence": "explicit",
+    "explicit_time": "その頃",
+    "relative_order": "parallel"
+   },
+   "new": {
+    "elapsed_hint": "一時間以上",
+    "evidence": "ambiguous",
+    "explicit_time": "その頃",
+    "relative_order": "unknown"
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 1,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "女から来たラヴ・レターで、風呂をわかしてはいった男があるそうですよ",
+     "code": "E03"
+    },
+    {
+     "basis": "自分に特別の好意を寄せている女が、三人いました",
+     "code": "E11"
+    },
+    {
+     "basis": "れいの受け身の奉仕の精神を発揮して",
+     "code": "E08"
+    }
+   ],
+   "new": [
+    {
+     "basis": "ミルクをわかして飲んだ事はあるんです",
+     "code": "E03"
+    },
+    {
+     "basis": "用事でも言いつけてやれ、と思うんです",
+     "code": "E08"
+    },
+    {
+     "basis": "一時間以上も書いているのです",
+     "code": "E16"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 1,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "ミルクをわかして飲んだ事はあるんです",
+     "code": "M05"
+    },
+    {
+     "basis": "くたくたに疲れ切っているからだに、ウムと気合いをかけて腹這いになり、煙草を吸い",
+     "code": "M08"
+    },
+    {
+     "basis": "へへののもへじでも書いているのに違いないんです",
+     "code": "M16"
+    }
+   ],
+   "new": [
+    {
+     "basis": "へへののもへじでも書いているのに違いないんです",
+     "code": "M05"
+    },
+    {
+     "basis": "くたくたに疲れ切っているからだ",
+     "code": "M08"
+    },
+    {
+     "basis": "死んでも見たくない思いで",
+     "code": "M16"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 1,
+   "field": "awase",
+   "old": {
+    "F_arousal": 0,
+    "F_basis": "早くこのひと、帰らねえかなあ、手紙だなんて、見えすいているのに",
+    "F_valence": -1,
+    "f_arousal": 1,
+    "f_basis": "あら、いやよ、あら、いやよ、と言って、そのうれしがる事、ひどくみっともなく、興が覚めるばかりなのです",
+    "f_valence": 0
+   },
+   "new": {
+    "F_arousal": 0,
+    "F_basis": "早くこのひと、帰らねえかなあ",
+    "F_valence": -1,
+    "f_arousal": 0,
+    "f_basis": "ひどくみっともなく、興が覚めるばかりなのです",
+    "f_valence": -1
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 2,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "yozo"
+    },
+    {
+     "basis": null,
+     "id": "doshi"
+    }
+   ],
+   "new": [
+    {
+     "basis": "と、愁えを含んだ微笑の表情を作って答えます",
+     "id": "yozo"
+    },
+    {
+     "basis": "私を本当の姉だと思っていてくれていいわ",
+     "id": "doshi"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 2,
+   "field": "location",
+   "old": "銀座の或る大カフエ",
+   "new": null
+  },
+  {
+   "work": "000035_000301",
+   "scene": 2,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "同志に買ってもらった品々",
+     "predicate": "ACQUIRED",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "doshi",
+     "target": null,
+     "text": "キスされて狂乱の如く興奮した"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "運動用に借りたビルの洋室",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "大カフエの女給から受けた恩",
+     "predicate": "ACQUIRED",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "他人に挨拶できる伎倆",
+     "predicate": "ACQUIRED",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "銀座の大カフエ",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    }
+   ],
+   "new": [
+    {
+     "basis": "ビルの事務所みたいな狭い洋室に連れて行き",
+     "evidence": "explicit",
+     "object": "ビルの狭い洋室",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    },
+    {
+     "basis": "金縛り同様の形になっていました",
+     "category": "situation",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": "yozo",
+     "text": "下宿屋の娘と同志の機嫌取りで身動きが取れない状態"
+    },
+    {
+     "basis": "銀座のその大カフエに、ひとりではいって",
+     "evidence": "explicit",
+     "object": "銀座の大カフエ",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 2,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [
+      {
+       "axis": 4,
+       "basis": null,
+       "delta": -1
+      },
+      {
+       "axis": 5,
+       "basis": null,
+       "delta": -1
+      }
+     ],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "doshi",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "doshi",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 2,
+   "field": "time",
+   "old": {
+    "elapsed_hint": null,
+    "evidence": "explicit",
+    "explicit_time": "或る夏の夜",
+    "relative_order": "parallel"
+   },
+   "new": {
+    "elapsed_hint": "同じ頃",
+    "evidence": "inferred",
+    "explicit_time": "或る夏の夜",
+    "relative_order": "continuous"
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 2,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "とにかく、怒らせては、こわい、何とかして、ごまかさなければならぬ",
+     "code": "E08"
+    },
+    {
+     "basis": "街の暗いところで、そのひとに帰ってもらいたいばかりに、キスをしてやりましたら、あさましく狂乱の如く興奮し",
+     "code": "E11"
+    },
+    {
+     "basis": "十円持って、銀座のその大カフエに、ひとりではいって",
+     "code": "E10"
+    }
+   ],
+   "new": [
+    {
+     "basis": "キスをしてやりましたら",
+     "code": "E11"
+    },
+    {
+     "basis": "何とかして、ごまかさなければならぬ",
+     "code": "E08"
+    },
+    {
+     "basis": "銀座のその大カフエに、ひとりではいって",
+     "code": "E02"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 2,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "うれしそうな顔をして、冗談を言っては笑わせ",
+     "code": "M05"
+    },
+    {
+     "basis": "もはや自分は、金縛り同様の形になっていました",
+     "code": "M03"
+    },
+    {
+     "basis": "自分のこの絶えず追われているような心も落ちつくのではなかろうか",
+     "code": "M11"
+    }
+   ],
+   "new": [
+    {
+     "basis": "うれしそうな顔をして、冗談を言っては笑わせ",
+     "code": "M05"
+    },
+    {
+     "basis": "金縛り同様の形になっていました",
+     "code": "M03"
+    },
+    {
+     "basis": "自分のこの絶えず追われているような心",
+     "code": "M11"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 2,
+   "field": "awase",
+   "old": {
+    "F_arousal": 1,
+    "F_basis": "あさましく狂乱の如く興奮し、自動車を呼んで",
+    "F_valence": -1,
+    "f_arousal": 0,
+    "f_basis": "とんでもない姉だ、と自分はひそかに苦笑しました",
+    "f_valence": -1
+   },
+   "new": {
+    "F_arousal": 1,
+    "F_basis": "金縛り同様の形になっていました",
+    "F_valence": -1,
+    "f_arousal": 0,
+    "f_basis": "とんでもない姉だ、と自分はひそかに苦笑しました",
+    "f_valence": -1
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 3,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "yozo"
+    },
+    {
+     "basis": null,
+     "id": "tsuneko"
+    }
+   ],
+   "new": [
+    {
+     "basis": "自分は、お酒を飲みました。",
+     "id": "yozo"
+    },
+    {
+     "basis": "女は、さまざまの料理を自分の前に並べました。",
+     "id": "tsuneko"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 3,
+   "field": "location",
+   "old": "屋台のお鮨や",
+   "new": "銀座裏の、或る屋台のお鮨や"
+  },
+  {
+   "work": "000035_000301",
+   "scene": 3,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": null,
+     "text": "震えおののく心がしずまった"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "屋台のお鮨や",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    }
+   ],
+   "new": [
+    {
+     "basis": "銀座裏の、或る屋台のお鮨やで",
+     "evidence": "explicit",
+     "object": "銀座裏の屋台のお鮨や",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    },
+    {
+     "basis": "その一言が、奇妙に自分の、震えおののいている心をしずめてくれました",
+     "category": "emotion",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": "yozo",
+     "text": "ツネ子の一言で、震えていた心が静まり安心した"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 3,
+   "field": "time",
+   "old": {
+    "elapsed_hint": null,
+    "evidence": "explicit",
+    "explicit_time": "秋の、寒い夜",
+    "relative_order": "continuous"
+   },
+   "new": {
+    "elapsed_hint": null,
+    "evidence": "inferred",
+    "explicit_time": "秋の、寒い夜",
+    "relative_order": "continuous"
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 3,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "自分は、お酒を飲みました",
+     "code": "E10"
+    },
+    {
+     "basis": "十円しか無いんだからね、そのつもりで",
+     "code": "E03"
+    },
+    {
+     "basis": "そのひとを、待っていました",
+     "code": "E16"
+    }
+   ],
+   "new": [
+    {
+     "basis": "「こんなの、おすきか？」",
+     "code": "E03"
+    },
+    {
+     "basis": "自分は、お酒を飲みました。",
+     "code": "E10"
+    },
+    {
+     "basis": "そのひとを、待っていました。",
+     "code": "E16"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 3,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "そのひとの傍にいる事に心配が要らないような気がしたのです",
+     "code": "M10"
+    },
+    {
+     "basis": "あの鮨やの親爺の顔だけは絵にかけるほど正確に覚えている",
+     "code": "M15"
+    },
+    {
+     "basis": "自分の地金の無口で陰惨なところを隠さず見せて、黙ってお酒を飲みました",
+     "code": "M11"
+    }
+   ],
+   "new": [
+    {
+     "basis": "後年、電車などで、はて見た顔だ、といろいろ考え",
+     "code": "M15"
+    },
+    {
+     "basis": "秋の、寒い夜でした。",
+     "code": "M01"
+    },
+    {
+     "basis": "気が附き苦笑した事も再三あったほどでした",
+     "code": "M05"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 3,
+   "field": "awase",
+   "old": {
+    "F_arousal": -1,
+    "F_basis": "その一言が、奇妙に自分の、震えおののいている心をしずめてくれました",
+    "F_valence": 1,
+    "f_arousal": -1,
+    "f_basis": "秋の、寒い夜でした",
+    "f_valence": -1
+   },
+   "new": {
+    "F_arousal": -1,
+    "F_basis": "そのひとの傍にいる事に心配が要らないような気がしたのです",
+    "F_valence": 1,
+    "f_arousal": -1,
+    "f_basis": "少しもおいしくない鮨を食べながら",
+    "f_valence": -1
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 4,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "yozo"
+    },
+    {
+     "basis": null,
+     "id": "tsuneko"
+    }
+   ],
+   "new": [
+    {
+     "basis": "自分は、その二階で",
+     "id": "yozo"
+    },
+    {
+     "basis": "そのひとが借りていました",
+     "id": "tsuneko"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 4,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "本所の大工さんの二階",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "ツネ子の身の上(年上、広島、夫は詐欺罪で刑務所)",
+     "predicate": "LEARNED",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": null,
+     "text": "恐怖と不安から離れた"
+    },
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "tsuneko",
+     "target": null,
+     "text": "夫への差し入れをやめると決めた"
+    }
+   ],
+   "new": [
+    {
+     "basis": "自分は、その二階で",
+     "evidence": "explicit",
+     "object": "本所の大工さんの二階",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    },
+    {
+     "basis": "自分より二つ年上であること",
+     "evidence": "explicit",
+     "object": "ツネ子は年上で広島出身、夫は詐欺罪で刑務所にいる",
+     "predicate": "LEARNED",
+     "subject": "yozo"
+    },
+    {
+     "basis": "恐怖からも不安からも、離れる事が出来る",
+     "category": "emotion",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": "yozo",
+     "text": "ツネ子の侘びしさの気流に包まれ、恐怖と不安から離れられた"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 4,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [
+      {
+       "axis": 0,
+       "basis": null,
+       "delta": -1
+      }
+     ],
+     "character_id": "tsuneko",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "tsuneko",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 4,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "一緒にやすみながらそのひとは",
+     "code": "E11"
+    },
+    {
+     "basis": "あたしには主人があるのよ、広島で床屋さんをしていたの",
+     "code": "E03"
+    },
+    {
+     "basis": "わが身は、恐怖からも不安からも、離れる事が出来るのでした",
+     "code": "E15"
+    }
+   ],
+   "new": [
+    {
+     "basis": "などと物語るのでしたが",
+     "code": "E03"
+    },
+    {
+     "basis": "そのひとに寄り添うと",
+     "code": "E11"
+    },
+    {
+     "basis": "一緒にやすみながら",
+     "code": "E16"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 4,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "身のまわりに冷たい木枯しが吹いて、落葉だけが舞い狂い、完全に孤立している感じの女でした",
+     "code": "M11"
+    },
+    {
+     "basis": "無言のひどい侘びしさを、からだの外郭に、一寸くらいの幅の気流みたいに持っていて",
+     "code": "M04"
+    },
+    {
+     "basis": "自分の持っている多少トゲトゲした陰鬱の気流と程よく溶け合い",
+     "code": "M10"
+    }
+   ],
+   "new": [
+    {
+     "basis": "完全に孤立している感じの女",
+     "code": "M11"
+    },
+    {
+     "basis": "無言のひどい侘びしさ",
+     "code": "M04"
+    },
+    {
+     "basis": "程よく溶け合い",
+     "code": "M10"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 4,
+   "field": "awase",
+   "old": {
+    "F_arousal": -1,
+    "F_basis": "こちらのからだもその気流に包まれ",
+    "F_valence": 1,
+    "f_arousal": -1,
+    "f_basis": "身のまわりに冷たい木枯しが吹いて、落葉だけが舞い狂い",
+    "f_valence": -1
+   },
+   "new": {
+    "F_arousal": -1,
+    "F_basis": "こちらのからだもその気流に包まれ",
+    "F_valence": 1,
+    "f_arousal": -1,
+    "f_basis": "多少トゲトゲした陰鬱の気流",
+    "f_valence": -1
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 5,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "yozo"
+    },
+    {
+     "basis": null,
+     "id": "tsuneko"
+    }
+   ],
+   "new": [
+    {
+     "basis": "自分はもとの軽薄な、装えるお道化者になっていました",
+     "id": "yozo"
+    },
+    {
+     "basis": "ツネ子を噴き出させた",
+     "id": "tsuneko"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 5,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": null,
+     "text": "解放された夜からもとのお道化者に戻った"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "ツネ子の部屋から引上げた",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "『金の切れめが縁の切れめ』の放言が後でひっかかりを生じる",
+     "predicate": "HOOK_OPENED",
+     "subject": null
+    }
+   ],
+   "new": [
+    {
+     "basis": "自分はもとの軽薄な、装えるお道化者になっていました",
+     "category": "emotion",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": "yozo",
+     "text": "解放感が消え、もとの軽薄なお道化者に戻った"
+    },
+    {
+     "basis": "素早く引上げた",
+     "evidence": "explicit",
+     "object": "ツネ子の元から引上げた",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    },
+    {
+     "basis": "意外のひっかかりを生じたのです",
+     "evidence": "explicit",
+     "object": "出鱈目の放言がのちに意外なひっかかりを生じる",
+     "predicate": "HOOK_OPENED",
+     "subject": "yozo"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 5,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [
+      {
+       "axis": 4,
+       "basis": null,
+       "delta": -1
+      }
+     ],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "tsuneko",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "tsuneko",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 5,
+   "field": "time",
+   "old": {
+    "elapsed_hint": null,
+    "evidence": "explicit",
+    "explicit_time": "朝",
+    "relative_order": "continuous"
+   },
+   "new": {
+    "elapsed_hint": "一夜",
+    "evidence": "explicit",
+    "explicit_time": "朝",
+    "relative_order": "continuous"
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 5,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "れいのお道化の煙幕を張りめぐらすのでした",
+     "code": "E08"
+    },
+    {
+     "basis": "顔も洗わずに素早く引上げたのですが",
+     "code": "E14"
+    },
+    {
+     "basis": "ツネ子を噴き出させたような記憶があります",
+     "code": "E03"
+    }
+   ],
+   "new": [
+    {
+     "basis": "金の切れめが縁の切れめ、ってのはね",
+     "code": "E03"
+    },
+    {
+     "basis": "素早く引上げた",
+     "code": "E02"
+    },
+    {
+     "basis": "れいのお道化の煙幕を張りめぐらすのでした",
+     "code": "E08"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 5,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "れいのお道化の煙幕を張りめぐらすのでした",
+     "code": "M05"
+    },
+    {
+     "basis": "解放せられた夜でした",
+     "code": "M10"
+    },
+    {
+     "basis": "傷つけられないうちに、早く、このまま、わかれたいとあせり",
+     "code": "M03"
+    }
+   ],
+   "new": [
+    {
+     "basis": "れいのお道化の煙幕を張りめぐらすのでした",
+     "code": "M05"
+    },
+    {
+     "basis": "わかれたいとあせり",
+     "code": "M03"
+    },
+    {
+     "basis": "しかし、ただ一夜でした。",
+     "code": "M04"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 5,
+   "field": "awase",
+   "old": {
+    "F_arousal": 1,
+    "F_basis": "弱虫は、幸福をさえおそれるものです",
+    "F_valence": 0,
+    "f_arousal": 1,
+    "f_basis": "金の切れめが縁の切れめ、ってのはね、あれはね、解釈が逆なんだ",
+    "f_valence": 0
+   },
+   "new": {
+    "F_arousal": 0,
+    "F_basis": "解放せられた夜でした",
+    "F_valence": 1,
+    "f_arousal": 0,
+    "f_basis": "弱虫は、幸福をさえおそれるものです。",
+    "f_valence": -1
+   }
+  },
+  {
+   "work": "000035_000301",
+   "scene": 6,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "yozo"
+    },
+    {
+     "basis": null,
+     "id": "horiki"
+    }
+   ],
+   "new": [
+    {
+     "basis": "堀木と神田の屋台で安酒を飲み",
+     "id": "yozo"
+    },
+    {
+     "basis": "堀木と神田の屋台で安酒を飲み",
+     "id": "horiki"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 6,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": null,
+     "text": "ツネ子への恐れと束縛感"
+    },
+    {
+     "basis": null,
+     "evidence": "inferred",
+     "object": "カフエ",
+     "predicate": "MOVED_TO",
+     "subject": "yozo"
+    }
+   ],
+   "new": [
+    {
+     "basis": "よろこびは薄れ",
+     "category": "emotion",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "yozo",
+     "target": "yozo",
+     "text": "ツネ子から受けた恩のよろこびが薄れ、束縛感とおびえに変わった"
+    },
+    {
+     "basis": "夢の国に連れて行く",
+     "evidence": "explicit",
+     "object": "堀木の誘いでカフエへ向かう",
+     "predicate": "HOOK_OPENED",
+     "subject": "yozo"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 6,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [
+      {
+       "axis": 4,
+       "basis": null,
+       "delta": 1
+      }
+     ],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "horiki",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [
+      {
+       "axis": 3,
+       "basis": "自分勝手にひどい束縛を感じて来て",
+       "delta": -1
+      }
+     ],
+     "character_id": "yozo",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "horiki",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 6,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "堀木と神田の屋台で安酒を飲み",
+     "code": "E10"
+    },
+    {
+     "basis": "いよいよ、銀座は敬遠の形でしたが",
+     "code": "E14"
+    },
+    {
+     "basis": "よし、そんなら、夢の国に連れて行く",
+     "code": "E03"
+    }
+   ],
+   "new": [
+    {
+     "basis": "堀木と神田の屋台で安酒を飲み",
+     "code": "E10"
+    },
+    {
+     "basis": "飲もう、飲もうよ、とねばるのです",
+     "code": "E03"
+    },
+    {
+     "basis": "夢の国に連れて行く",
+     "code": "E02"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 6,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "遠く離れていながらも、絶えずツネ子におびえていて",
+     "code": "M03"
+    },
+    {
+     "basis": "飲もう、飲もうよ、とねばるのです",
+     "code": "M12"
+    },
+    {
+     "basis": "もう自分たちにはお金が無いのに",
+     "code": "M08"
+    }
+   ],
+   "new": [
+    {
+     "basis": "逢うのに頗るおっくうがる性質",
+     "code": "M08"
+    },
+    {
+     "basis": "絶えずツネ子におびえていて",
+     "code": "M03"
+    },
+    {
+     "basis": "酒池肉林という",
+     "code": "M05"
+    }
+   ]
+  },
+  {
+   "work": "000035_000301",
+   "scene": 6,
+   "field": "awase",
+   "old": {
+    "F_arousal": 1,
+    "F_basis": "飲もう、飲もうよ、とねばるのです",
+    "F_valence": 0,
+    "f_arousal": 0,
+    "f_basis": "ツネ子もやはり、下宿の娘や、あの女子高等師範と同じく、自分を脅迫するだけの女のように思われ",
+    "f_valence": -1
+   },
+   "new": {
+    "F_arousal": 1,
+    "F_basis": "飲もう、飲もうよ、とねばるのです",
+    "F_valence": 0,
+    "f_arousal": 0,
+    "f_basis": "絶えずツネ子におびえていて",
+    "f_valence": -1
+   }
+  },
+  {
+   "work": "001798_056779",
+   "scene": 0,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "boku"
+    },
+    {
+     "basis": null,
+     "id": "fuwa"
+    }
+   ],
+   "new": [
+    {
+     "basis": "僕は世帯道具や画の道具一式をオート三輪に積みこんで",
+     "id": "boku"
+    },
+    {
+     "basis": "その夜不破とかんたんな契約書を作成し",
+     "id": "fuwa"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 0,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "代田橋",
+     "predicate": "MOVED_TO",
+     "subject": "boku"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "不破宅の間借り(賃貸契約)",
+     "predicate": "ACQUIRED",
+     "subject": "boku"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "四万円",
+     "predicate": "LOST",
+     "subject": "boku"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "不破夫人は亭主を上回る酒豪",
+     "predicate": "LEARNED",
+     "subject": "boku"
+    }
+   ],
+   "new": [
+    {
+     "basis": "代田橋にバタバタバタと引越して来ました",
+     "evidence": "explicit",
+     "object": "代田橋",
+     "predicate": "MOVED_TO",
+     "subject": "boku"
+    },
+    {
+     "basis": "四万円を手交し",
+     "evidence": "explicit",
+     "object": "契約書と四万円の手交",
+     "predicate": "ACQUIRED",
+     "subject": "fuwa"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 0,
+   "field": "time",
+   "old": {
+    "elapsed_hint": null,
+    "evidence": "explicit",
+    "explicit_time": "三日目",
+    "relative_order": "unknown"
+   },
+   "new": {
+    "elapsed_hint": null,
+    "evidence": "explicit",
+    "explicit_time": "不破と知合いになって三日目に",
+    "relative_order": "unknown"
+   }
+  },
+  {
+   "work": "001798_056779",
+   "scene": 0,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "簡略な祝宴を開きました",
+     "code": "E10"
+    },
+    {
+     "basis": "かんたんな契約書を作成し、四万円を手交し",
+     "code": "E13"
+    },
+    {
+     "basis": "はるばる八王子から代田橋にバタバタバタと引越して来ました",
+     "code": "E02"
+    }
+   ],
+   "new": [
+    {
+     "basis": "オート三輪に積みこんで、はるばる八王子から代田橋にバタバタバタと引越して来ました",
+     "code": "E02"
+    },
+    {
+     "basis": "簡略な祝宴を開きました",
+     "code": "E10"
+    },
+    {
+     "basis": "かんたんな契約書を作成し、四万円を手交し",
+     "code": "E13"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 0,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "亭主を上廻る酒豪で",
+     "code": "M05"
+    },
+    {
+     "basis": "二升用意したのが足りなくて、もう一升買い足したほどでした",
+     "code": "M12"
+    },
+    {
+     "basis": "ソバを肴にして簡略な祝宴を開きました",
+     "code": "M10"
+    }
+   ],
+   "new": [
+    {
+     "basis": "典型的なウワバミ夫婦とでも言うべきでしょうねえ。",
+     "code": "M05"
+    },
+    {
+     "basis": "簡略な祝宴を開きました",
+     "code": "M12"
+    },
+    {
+     "basis": "不破夫人もその祝宴に参加して来ました",
+     "code": "M10"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 0,
+   "field": "awase",
+   "old": {
+    "F_arousal": 1,
+    "F_basis": "簡略な祝宴を開きました",
+    "F_valence": 1,
+    "f_arousal": 0,
+    "f_basis": "典型的なウワバミ夫婦とでも言うべきでしょうねえ",
+    "f_valence": 1
+   },
+   "new": {
+    "F_arousal": 1,
+    "F_basis": "簡略な祝宴を開きました",
+    "F_valence": 1,
+    "f_arousal": 1,
+    "f_basis": "典型的なウワバミ夫婦とでも言うべきでしょうねえ。",
+    "f_valence": 1
+   }
+  },
+  {
+   "work": "001798_056779",
+   "scene": 1,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "boku"
+    },
+    {
+     "basis": null,
+     "id": "fuwa"
+    }
+   ],
+   "new": [
+    {
+     "basis": "不破数馬はすこし酔って僕の部屋にやってきて",
+     "id": "boku"
+    },
+    {
+     "basis": "不破数馬はすこし酔って僕の部屋にやってきて",
+     "id": "fuwa"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 1,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "二千円",
+     "predicate": "LOST",
+     "subject": "boku"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "不破夫妻との同居生活",
+     "predicate": "LOST",
+     "subject": "boku"
+    },
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "fuwa",
+     "target": null,
+     "text": "失踪"
+    },
+    {
+     "basis": null,
+     "evidence": "inferred",
+     "object": "赤穂",
+     "predicate": "MOVED_TO",
+     "subject": "fuwa"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "野呂が留守番に来る約束",
+     "predicate": "HOOK_OPENED",
+     "subject": null
+    }
+   ],
+   "new": [
+    {
+     "basis": "千円札二枚渡してやりました",
+     "evidence": "explicit",
+     "object": "千円札二枚",
+     "predicate": "LOST",
+     "subject": "boku"
+    },
+    {
+     "basis": "遠縁の野呂という男をここに寝泊りさせる",
+     "evidence": "explicit",
+     "object": "野呂が留守番に来る",
+     "predicate": "LEARNED",
+     "subject": "boku"
+    },
+    {
+     "basis": "どこかに失踪してしまったのです",
+     "category": "situation",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "fuwa",
+     "target": "fuwa",
+     "text": "夫妻で失踪した"
+    },
+    {
+     "basis": "野呂は明後日頃やって来る筈だ",
+     "evidence": "explicit",
+     "object": "野呂の到着",
+     "predicate": "HOOK_OPENED",
+     "subject": "boku"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 1,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [],
+     "character_id": "boku",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [
+      {
+       "axis": 2,
+       "basis": null,
+       "delta": -1
+      }
+     ],
+     "character_id": "fuwa",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [],
+     "character_id": "boku",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "fuwa",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 1,
+   "field": "time",
+   "old": {
+    "elapsed_hint": "一週間目",
+    "evidence": "explicit",
+    "explicit_time": "失踪の前の晩",
+    "relative_order": "continuous"
+   },
+   "new": {
+    "elapsed_hint": "わずか一週間",
+    "evidence": "explicit",
+    "explicit_time": "失踪の前の晩",
+    "relative_order": "continuous"
+   }
+  },
+  {
+   "work": "001798_056779",
+   "scene": 1,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "夜逃げというか昼逃げというか、どこかに失踪してしまったのです",
+     "code": "E14"
+    },
+    {
+     "basis": "二千円ばかり貸して欲しいと切り出した",
+     "code": "E03"
+    },
+    {
+     "basis": "夫婦で赤穂に行き、先祖の墓参りをして来たいというのです",
+     "code": "E08"
+    }
+   ],
+   "new": [
+    {
+     "basis": "二千円ばかり貸して欲しいと切り出した",
+     "code": "E03"
+    },
+    {
+     "basis": "どこかに失踪してしまったのです",
+     "code": "E08"
+    },
+    {
+     "basis": "夫婦で赤穂に行き",
+     "code": "E02"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 1,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "あやしげな画論をはいたりしていました",
+     "code": "M05"
+    },
+    {
+     "basis": "わずか一週間をもってはかなく終りを告げました",
+     "code": "M04"
+    },
+    {
+     "basis": "なけなしの財布から千円札二枚渡してやりました",
+     "code": "M16"
+    }
+   ],
+   "new": [
+    {
+     "basis": "あやしげな画論をはいたりしていました",
+     "code": "M05"
+    },
+    {
+     "basis": "はかなく終りを告げました",
+     "code": "M04"
+    },
+    {
+     "basis": "僕だって留守番の全責任を持たせられるのは重荷ですから",
+     "code": "M08"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 1,
+   "field": "awase",
+   "old": {
+    "F_arousal": 0,
+    "F_basis": "これはまったく予想外な出来ごとでした",
+    "F_valence": -1,
+    "f_arousal": 0,
+    "f_basis": "わずか一週間をもってはかなく終りを告げました",
+    "f_valence": 0
+   },
+   "new": {
+    "F_arousal": 0,
+    "F_basis": "これはまったく予想外な出来ごとでした",
+    "F_valence": -1,
+    "f_arousal": 0,
+    "f_basis": "憐れむような笑い方で僕を見て",
+    "f_valence": 1
+   }
+  },
+  {
+   "work": "001798_056779",
+   "scene": 2,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "boku"
+    },
+    {
+     "basis": null,
+     "id": "noro"
+    }
+   ],
+   "new": [
+    {
+     "basis": "僕は絵筆を置いてそいつの顔を見ました",
+     "id": "boku"
+    },
+    {
+     "basis": "野呂は訝しげに板の間をのぞき込みました",
+     "id": "noro"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 2,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "不破の家(庭)",
+     "predicate": "MOVED_TO",
+     "subject": "noro"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "野呂は家を買い受けたと主張している",
+     "predicate": "LEARNED",
+     "subject": "boku"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "不破が兵庫に立った",
+     "predicate": "LEARNED",
+     "subject": "noro"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "家の所有権の食い違い",
+     "predicate": "HOOK_OPENED",
+     "subject": null
+    }
+   ],
+   "new": [
+    {
+     "basis": "直ぐその便箋は折り畳んでポケットにしまいました",
+     "evidence": "explicit",
+     "object": "不破の便箋",
+     "predicate": "ACQUIRED",
+     "subject": "boku"
+    },
+    {
+     "basis": "跫音が庭に入って来ました",
+     "evidence": "explicit",
+     "object": "庭",
+     "predicate": "MOVED_TO",
+     "subject": "noro"
+    },
+    {
+     "basis": "この家は僕のものだよ。不破氏から僕が買い受けたんだ",
+     "evidence": "explicit",
+     "object": "家の所有をめぐる対立",
+     "predicate": "HOOK_OPENED",
+     "subject": "noro"
+    },
+    {
+     "basis": "野呂がやって来たのは",
+     "evidence": "explicit",
+     "object": "野呂の到着",
+     "predicate": "HOOK_RESOLVED",
+     "subject": "boku"
+    },
+    {
+     "basis": "君は早々に出て行って呉れ",
+     "category": "situation",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "boku",
+     "target": "boku",
+     "text": "野呂から家の所有を主張され、退去を求められた"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 2,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [],
+     "character_id": "boku",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [
+      {
+       "axis": 3,
+       "basis": null,
+       "delta": -1
+      }
+     ],
+     "character_id": "noro",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [],
+     "character_id": "boku",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "noro",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 2,
+   "field": "time",
+   "old": {
+    "elapsed_hint": "二三日経った正午頃",
+    "evidence": "explicit",
+    "explicit_time": "翌朝",
+    "relative_order": "continuous"
+   },
+   "new": {
+    "elapsed_hint": "二三日経った",
+    "evidence": "explicit",
+    "explicit_time": "正午頃",
+    "relative_order": "continuous"
+   }
+  },
+  {
+   "work": "001798_056779",
+   "scene": 2,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "留守番は君じゃないか。僕はここの居住者だ",
+     "code": "E04"
+    },
+    {
+     "basis": "野呂がやって来たのは、それから二三日経った正午頃でした",
+     "code": "E01"
+    },
+    {
+     "basis": "この家は僕のものだよ。不破氏から僕が買い受けたんだ",
+     "code": "E07"
+    }
+   ],
+   "new": [
+    {
+     "basis": "留守番は君じゃないか。僕はここの居住者だ",
+     "code": "E04"
+    },
+    {
+     "basis": "いかにも僕は野呂ですが",
+     "code": "E03"
+    },
+    {
+     "basis": "庭に入って来た男は僕を見て、少しおどろいたらしく立ちすくんだ",
+     "code": "E01"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 2,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "バカじゃなかろうかというような眼付で",
+     "code": "M05"
+    },
+    {
+     "basis": "急に言葉がぞんざいになりました",
+     "code": "M03"
+    },
+    {
+     "basis": "少々僕もむっとして言い返しました",
+     "code": "M09"
+    }
+   ],
+   "new": [
+    {
+     "basis": "バカじゃなかろうかというような眼付で",
+     "code": "M05"
+    },
+    {
+     "basis": "少々僕もむっとして言い返しました",
+     "code": "M09"
+    },
+    {
+     "basis": "そりゃ困るなあ",
+     "code": "M03"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 2,
+   "field": "awase",
+   "old": {
+    "F_arousal": 1,
+    "F_basis": "少々僕もむっとして言い返しました",
+    "F_valence": -1,
+    "f_arousal": 0,
+    "f_basis": "汗だらけのその顔にはあちこち疣がくっついていて、それがまず印象的でした",
+    "f_valence": 0
+   },
+   "new": {
+    "F_arousal": 1,
+    "F_basis": "この家は僕のものだよ。不破氏から僕が買い受けたんだ。君は早々に出て行って呉れ",
+    "F_valence": -1,
+    "f_arousal": 0,
+    "f_basis": "それがまず印象的でした",
+    "f_valence": 0
+   }
+  },
+  {
+   "work": "001798_056779",
+   "scene": 3,
+   "field": "present",
+   "old": [
+    {
+     "basis": null,
+     "id": "boku"
+    },
+    {
+     "basis": null,
+     "id": "noro"
+    }
+   ],
+   "new": [
+    {
+     "basis": "今度は僕がびっくりして棒立ちになりました",
+     "id": "boku"
+    },
+    {
+     "basis": "野呂はそれを受取って調べ始めた",
+     "id": "noro"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 3,
+   "field": "facts",
+   "old": [
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "野呂も不破氏から家を買い受けた",
+     "predicate": "LEARNED",
+     "subject": "boku"
+    },
+    {
+     "basis": null,
+     "category": "unclassified",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "noro",
+     "target": null,
+     "text": "不安と困惑"
+    },
+    {
+     "basis": null,
+     "evidence": "explicit",
+     "object": "不破数馬との売買をめぐる誤解",
+     "predicate": "HOOK_OPENED",
+     "subject": null
+    }
+   ],
+   "new": [
+    {
+     "basis": "やがて不安と困惑の色が彼の顔いっぱいに拡がって来たようでした",
+     "category": "emotion",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "noro",
+     "target": "noro",
+     "text": "契約書を見て不安と困惑を覚えた"
+    },
+    {
+     "basis": "今度は僕がびっくりして棒立ちになりました",
+     "category": "emotion",
+     "evidence": "explicit",
+     "predicate": "STATE_CHANGED",
+     "subject": "boku",
+     "target": "boku",
+     "text": "買い受けたと聞いて驚き棒立ちになった"
+    },
+    {
+     "basis": "何か誤解がある",
+     "evidence": "explicit",
+     "object": "売買をめぐる誤解",
+     "predicate": "HOOK_OPENED",
+     "subject": "noro"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 3,
+   "field": "trait_changes",
+   "old": [
+    {
+     "changes": [
+      {
+       "axis": 1,
+       "basis": null,
+       "delta": 1
+      }
+     ],
+     "character_id": "boku",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "noro",
+     "evidence": "inferred"
+    }
+   ],
+   "new": [
+    {
+     "changes": [],
+     "character_id": "boku",
+     "evidence": "inferred"
+    },
+    {
+     "changes": [],
+     "character_id": "noro",
+     "evidence": "inferred"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 3,
+   "field": "event_top3",
+   "old": [
+    {
+     "basis": "何か誤解がある。まるでこの世には誤解が充ち満ちているようだ",
+     "code": "E07"
+    },
+    {
+     "basis": "早く荷物をまとめて出て行って呉れ",
+     "code": "E04"
+    },
+    {
+     "basis": "領収証と契約書を急いで取出し",
+     "code": "E13"
+    }
+   ],
+   "new": [
+    {
+     "basis": "そんな無茶な",
+     "code": "E04"
+    },
+    {
+     "basis": "何か誤解がある",
+     "code": "E07"
+    },
+    {
+     "basis": "どんな事情だね",
+     "code": "E03"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 3,
+   "field": "mood_top3",
+   "old": [
+    {
+     "basis": "まるでこの世には誤解が充ち満ちているようだ",
+     "code": "M05"
+    },
+    {
+     "basis": "やがて不安と困惑の色が彼の顔いっぱいに拡がって来た",
+     "code": "M03"
+    },
+    {
+     "basis": "がっくりと板の間に腰をおろし、嘆息するように言いました",
+     "code": "M04"
+    }
+   ],
+   "new": [
+    {
+     "basis": "僕もおろおろと訊ねました",
+     "code": "M03"
+    },
+    {
+     "basis": "エンヤコラ運んで来たんだ",
+     "code": "M05"
+    },
+    {
+     "basis": "まるでこの世には誤解が充ち満ちているようだ",
+     "code": "M13"
+    }
+   ]
+  },
+  {
+   "work": "001798_056779",
+   "scene": 3,
+   "field": "awase",
+   "old": {
+    "F_arousal": 1,
+    "F_basis": "不安と困惑の色が彼の顔いっぱいに拡がって来た",
+    "F_valence": -1,
+    "f_arousal": 0,
+    "f_basis": "まるでこの世には誤解が充ち満ちているようだ",
+    "f_valence": 0
+   },
+   "new": {
+    "F_arousal": 1,
+    "F_basis": "やがて不安と困惑の色が彼の顔いっぱいに拡がって来たようでした",
+    "F_valence": -1,
+    "f_arousal": 1,
+    "f_basis": "エンヤコラ運んで来たんだ",
+    "f_valence": 0
+   }
+  }
+ ]
+}

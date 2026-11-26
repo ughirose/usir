@@ -1,0 +1,323 @@
+{
+ "annotation_diffs": {
+  "0v1": [
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[0]/character_states[0]/values_6d[0]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[0]/character_states[1]/values_6d[0]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[0]/character_states[1]/values_6d[4]"
+   },
+   {
+    "a": "ledger:7c0bd2be716a",
+    "b": "ledger:42ade604ad74",
+    "path": "[0]/contract/ledger_hash"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[1]/character_states[0]/values_6d[0]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[1]/character_states[1]/values_6d[0]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[1]/character_states[1]/values_6d[4]"
+   },
+   {
+    "a": "ledger:7c0bd2be716a",
+    "b": "ledger:42ade604ad74",
+    "path": "[1]/contract/ledger_hash"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[2]/character_states[0]/values_6d[0]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[2]/character_states[1]/values_6d[0]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[2]/character_states[1]/values_6d[4]"
+   },
+   {
+    "a": "ledger:7c0bd2be716a",
+    "b": "ledger:42ade604ad74",
+    "path": "[2]/contract/ledger_hash"
+   }
+  ],
+  "0v2": [
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[0]/character_states[0]/values_6d[0]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[0]/character_states[0]/values_6d[3]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[0]/character_states[1]/values_6d[0]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[0]/character_states[1]/values_6d[3]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[0]/character_states[1]/values_6d[4]"
+   },
+   {
+    "a": "ledger:7c0bd2be716a",
+    "b": "ledger:af6031b96a34",
+    "path": "[0]/contract/ledger_hash"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[1]/character_states[0]/values_6d[0]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[1]/character_states[0]/values_6d[3]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[1]/character_states[1]/values_6d[0]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[1]/character_states[1]/values_6d[3]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[1]/character_states[1]/values_6d[4]"
+   },
+   {
+    "a": "ledger:7c0bd2be716a",
+    "b": "ledger:af6031b96a34",
+    "path": "[1]/contract/ledger_hash"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[2]/character_states[0]/values_6d[0]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[2]/character_states[0]/values_6d[3]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[2]/character_states[1]/values_6d[0]"
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "path": "[2]/character_states[1]/values_6d[3]"
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "path": "[2]/character_states[1]/values_6d[4]"
+   },
+   {
+    "a": "ledger:7c0bd2be716a",
+    "b": "ledger:af6031b96a34",
+    "path": "[2]/contract/ledger_hash"
+   }
+  ]
+ },
+ "byte_equal_annotations": {
+  "0v1": false,
+  "0v2": false
+ },
+ "byte_equal_diagnose": {
+  "0v1": false,
+  "0v2": false
+ },
+ "diagnose_diffs": {
+  "0v1": [
+   {
+    "a": 0.375,
+    "b": 0.166666667,
+    "path": "/lenses[3]/scores/e_inter"
+   },
+   {
+    "a": 0.234375,
+    "b": 0.104166667,
+    "path": "/lenses[3]/scores/total"
+   }
+  ],
+  "0v2": [
+   {
+    "a": 0.375,
+    "b": 0.0,
+    "path": "/lenses[3]/scores/e_inter"
+   },
+   {
+    "a": 0.234375,
+    "b": 0.0,
+    "path": "/lenses[3]/scores/total"
+   }
+  ]
+ },
+ "diagnose_top_keys": [
+  "schema",
+  "input",
+  "scenes",
+  "lenses",
+  "anomaly",
+  "warnings"
+ ],
+ "variants": {
+  "scene0": {
+   "annotations_bytes": 10743,
+   "baseline": {
+    "onna": [
+     -1,
+     0,
+     0,
+     -1,
+     1,
+     0
+    ],
+    "shinichi": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   "diagnose_bytes": 5497
+  },
+  "scene1": {
+   "annotations_bytes": 10740,
+   "baseline": {
+    "onna": [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ],
+    "shinichi": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   "diagnose_bytes": 5506
+  },
+  "scene2": {
+   "annotations_bytes": 10737,
+   "baseline": {
+    "onna": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "shinichi": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "diagnose_bytes": 5490
+  }
+ },
+ "vectors_by_scene": {
+  "onna": [
+   [
+    -1,
+    0,
+    0,
+    -1,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "shinichi": [
+   [
+    1,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ]
+ },
+ "work": "001801_001786"
+}
