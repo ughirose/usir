@@ -42,3 +42,6 @@ roster_all_ids を L2 鍵から外す（pack 内容は不変）。roster_all_dig
 
 ## Step 2 開始（2026-11-26）
 実LLM通し測定（計測のみ）。ブランチ feat/phase15-stage2-step2（土台 feat/sensor-runner 33bf69c）。計測道具 scripts/sensor_runner/step2.py（実装コード無変更）。サンドボックス scripts/sensor_runner/step2_work/<run>/（seed キャッシュは非接触）。上限: 注釈呼び出し 合計150回。状態: 実装前準備完了、cold 実行前。
+
+## Step 2 完了（2026-11-26）
+A–E 実測完了。cold 35 call、warm 0 call、編集 1/2 call、location 65.7%。詳細: `2026-11-26_phase15_stage2_step2_report.md`、データ: `scripts/sensor_runner/results/phase15_stage2_step2_results.json`。
