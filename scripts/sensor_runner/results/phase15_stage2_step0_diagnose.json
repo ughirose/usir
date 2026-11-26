@@ -1,0 +1,6556 @@
+{
+ "000035_000301": {
+  "lenses": {
+   "awase": {
+    "frac_varying": 0.4444,
+    "leaves": 9,
+    "leaves_varying_across_runs": 4,
+    "numeric_rel_range_max": 2.0,
+    "numeric_rel_range_median": 1.1111,
+    "span_count_per_run": [
+     2,
+     4,
+     3,
+     2,
+     4
+    ],
+    "span_set_distance_mean": 0.7933,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "kamae": {
+    "frac_varying": 0.0,
+    "leaves": 8,
+    "leaves_varying_across_runs": 0,
+    "numeric_rel_range_max": 0.0,
+    "numeric_rel_range_median": 0.0,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "kasane": {
+    "frac_varying": 0.0,
+    "leaves": 17,
+    "leaves_varying_across_runs": 0,
+    "numeric_rel_range_max": 0.0,
+    "numeric_rel_range_median": 0.0,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "nagare": {
+    "frac_varying": 0.5,
+    "leaves": 18,
+    "leaves_varying_across_runs": 9,
+    "numeric_rel_range_max": 0.3538,
+    "numeric_rel_range_median": 0.1513,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "sadame": {
+    "frac_varying": 0.4,
+    "leaves": 10,
+    "leaves_varying_across_runs": 4,
+    "numeric_rel_range_max": 1.3514,
+    "numeric_rel_range_median": 0.594,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "sasae": {
+    "frac_varying": 0.25,
+    "leaves": 36,
+    "leaves_varying_across_runs": 9,
+    "numeric_rel_range_max": 3.3333,
+    "numeric_rel_range_median": 1.8333,
+    "span_count_per_run": [
+     8,
+     6,
+     7,
+     6,
+     7
+    ],
+    "span_set_distance_mean": 0.4119,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   }
+  },
+  "raw": {
+   "run1": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.023591409,
+      "ac_max_sis": 0.449131966,
+      "ac_mean_crest_factor": 2.798886299,
+      "ac_mean_velocity": 194.617767334,
+      "dc_cadence": 247.794754028,
+      "dc_confession": 69.910896301,
+      "dc_polyphony": 181.973953247,
+      "dc_showing": 52.433174133,
+      "dc_speculation": 53.409866333,
+      "dc_staccato": 94.928031921,
+      "deadzone_count": 0,
+      "semantic_tension": 18.163124084
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 2 double_location finding(s) not repeated (already reported as place_conflict)",
+      "character registry: 5 characters",
+      "annotations applied to 7 of 7 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 4,
+      "fid_sentence_count": 8,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 2,
+      "s2_location_change_count": 1,
+      "s2_location_change_explained_count": 1,
+      "s2_location_timeline_skipped_count": 11,
+      "s2_move_destination_mismatch_count": 1,
+      "s2_place_conflict_count": 2,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 7,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 7,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 73,
+      "speaker_mismatch_count": 13,
+      "syntactic_ambiguity_count": 0,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 24,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 50
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "horiki",
+        "pov": "yozo"
+       },
+       "end": 772,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 687
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "time_place",
+        "location": "自分の部屋",
+        "overlap": "parallel",
+        "previous_location": "下宿",
+        "previous_scene": "0"
+       },
+       "end": 1740,
+       "rule": "place_conflict",
+       "scene": 1,
+       "score": 1.0,
+       "start": 987
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "time_place",
+        "location": "ビルの事務所みたいな狭い洋室",
+        "overlap": "parallel",
+        "previous_location": "自分の部屋",
+        "previous_scene": "1"
+       },
+       "end": 2948,
+       "rule": "place_conflict",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1741
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "4",
+        "grounding": "narration_alias",
+        "speaker": "doshi",
+        "utterance_index": "1"
+       },
+       "end": 1891,
+       "rule": "presence_unconfirmed",
+       "scene": 2,
+       "score": 0.125,
+       "start": 1872
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2622,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.55,
+       "start": 2517
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2773,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.6,
+       "start": 2622
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "本所の大工さんの二階",
+        "known_scene": "4",
+        "known_sentence": "1",
+        "location": "神田の屋台",
+        "scene_gap": "2"
+       },
+       "end": 5835,
+       "rule": "move_destination_mismatch",
+       "scene": 6,
+       "score": 0.25,
+       "start": 5197
+      },
+      {
+       "basis": {
+        "attributed_to": "tsuneko",
+        "pov": "yozo"
+       },
+       "end": 5748,
+       "rule": "pov_contamination",
+       "scene": 6,
+       "score": 0.8,
+       "start": 5653
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 7; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 7,
+      "e_inter": 0.026785714,
+      "e_intra": 0.013605442,
+      "edges_eff": 9,
+      "intra_characters": 3,
+      "total": 0.023490646
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 7; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 7,
+      "event_accel_max": 0.857899345,
+      "event_accel_mean": 0.708522105,
+      "event_speed_max": 0.531833469,
+      "event_speed_mean": 0.429746123,
+      "event_transitions": 6,
+      "mood_accel_max": 0.906776839,
+      "mood_accel_mean": 0.678350877,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.393618915,
+      "phi_zeami": 0.478061244,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 7 of 7 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.5,
+      "detachment_mean": 0.071428571,
+      "irony_max": 0.25,
+      "irony_mean": 0.035714286,
+      "scenes_scored": 7
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -2.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 986,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.5,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 5196,
+       "rule": "awase_irony",
+       "scene": 5,
+       "score": 0.25,
+       "start": 4550
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run2": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.023591409,
+      "ac_max_sis": 0.449131966,
+      "ac_mean_crest_factor": 2.798886299,
+      "ac_mean_velocity": 194.617767334,
+      "dc_cadence": 247.794754028,
+      "dc_confession": 69.910896301,
+      "dc_polyphony": 181.973953247,
+      "dc_showing": 52.433174133,
+      "dc_speculation": 53.409866333,
+      "dc_staccato": 94.928031921,
+      "deadzone_count": 0,
+      "semantic_tension": 18.163124084
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 7 of 7 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 4,
+      "fid_sentence_count": 8,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 0,
+      "s2_location_change_count": 1,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 11,
+      "s2_move_destination_mismatch_count": 1,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 7,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 7,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 4,
+      "sentence_count": 73,
+      "speaker_mismatch_count": 13,
+      "syntactic_ambiguity_count": 0,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 24,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 50
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "horiki",
+        "pov": "yozo"
+       },
+       "end": 772,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 687
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "4",
+        "grounding": "narration_alias",
+        "speaker": "doshi",
+        "utterance_index": "1"
+       },
+       "end": 1891,
+       "rule": "presence_unconfirmed",
+       "scene": 2,
+       "score": 0.125,
+       "start": 1872
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2622,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.55,
+       "start": 2517
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2773,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.6,
+       "start": 2622
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "銀座の大カフエ",
+        "known_scene": "2",
+        "known_sentence": "13",
+        "location": "本所の大工さんの二階",
+        "scene_gap": "2"
+       },
+       "end": 4549,
+       "rule": "move_destination_mismatch",
+       "scene": 4,
+       "score": 0.5,
+       "start": 3782
+      },
+      {
+       "basis": {
+        "attributed_to": "tsuneko",
+        "pov": "yozo"
+       },
+       "end": 5748,
+       "rule": "pov_contamination",
+       "scene": 6,
+       "score": 0.8,
+       "start": 5653
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 7; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 7,
+      "e_inter": 0.026785714,
+      "e_intra": 0.020408163,
+      "edges_eff": 9,
+      "intra_characters": 2,
+      "total": 0.025191327
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 7; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 7,
+      "event_accel_max": 0.86859565,
+      "event_accel_mean": 0.675948499,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.421269992,
+      "event_transitions": 6,
+      "mood_accel_max": 1.056998373,
+      "mood_accel_mean": 0.842045403,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.473957801,
+      "phi_zeami": 0.52942704,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 7 of 7 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.5,
+      "detachment_mean": 0.107142857,
+      "irony_max": 0.25,
+      "irony_mean": 0.071428571,
+      "scenes_scored": 7
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -2.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 986,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.5,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 2948,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1741
+      },
+      {
+       "basis": {
+        "f_event_arousal": -1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 3781,
+       "rule": "awase_irony",
+       "scene": 3,
+       "score": 0.25,
+       "start": 2949
+      },
+      {
+       "basis": {
+        "f_event_arousal": -1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 5196,
+       "rule": "awase_irony",
+       "scene": 5,
+       "score": 0.25,
+       "start": 4550
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run3": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.023591409,
+      "ac_max_sis": 0.449131966,
+      "ac_mean_crest_factor": 2.798886299,
+      "ac_mean_velocity": 194.617767334,
+      "dc_cadence": 247.794754028,
+      "dc_confession": 69.910896301,
+      "dc_polyphony": 181.973953247,
+      "dc_showing": 52.433174133,
+      "dc_speculation": 53.409866333,
+      "dc_staccato": 94.928031921,
+      "deadzone_count": 0,
+      "semantic_tension": 18.163124084
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 1 double_location finding(s) not repeated (already reported as place_conflict)",
+      "character registry: 5 characters",
+      "annotations applied to 7 of 7 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 4,
+      "fid_sentence_count": 8,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 1,
+      "s2_location_change_count": 1,
+      "s2_location_change_explained_count": 1,
+      "s2_location_timeline_skipped_count": 11,
+      "s2_move_destination_mismatch_count": 1,
+      "s2_place_conflict_count": 1,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 7,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 7,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 4,
+      "sentence_count": 73,
+      "speaker_mismatch_count": 13,
+      "syntactic_ambiguity_count": 0,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 24,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 50
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "horiki",
+        "pov": "yozo"
+       },
+       "end": 772,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 687
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "time_place",
+        "location": "銀座の或る大カフエ",
+        "overlap": "parallel",
+        "previous_location": "自分の部屋",
+        "previous_scene": "1"
+       },
+       "end": 2948,
+       "rule": "place_conflict",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1741
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "4",
+        "grounding": "narration_alias",
+        "speaker": "doshi",
+        "utterance_index": "1"
+       },
+       "end": 1891,
+       "rule": "presence_unconfirmed",
+       "scene": 2,
+       "score": 0.125,
+       "start": 1872
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2622,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.55,
+       "start": 2517
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2773,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.6,
+       "start": 2622
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "ツネ子の家を去る",
+        "known_scene": "5",
+        "known_sentence": "8",
+        "location": "神田の屋台",
+        "scene_gap": "1"
+       },
+       "end": 5835,
+       "rule": "move_destination_mismatch",
+       "scene": 6,
+       "score": 1.0,
+       "start": 5197
+      },
+      {
+       "basis": {
+        "attributed_to": "tsuneko",
+        "pov": "yozo"
+       },
+       "end": 5748,
+       "rule": "pov_contamination",
+       "scene": 6,
+       "score": 0.8,
+       "start": 5653
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 7; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 7,
+      "e_inter": 0.032738095,
+      "e_intra": 0.030612245,
+      "edges_eff": 9,
+      "intra_characters": 2,
+      "total": 0.032206633
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 7; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 7,
+      "event_accel_max": 0.933969868,
+      "event_accel_mean": 0.845452214,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.493713522,
+      "event_transitions": 6,
+      "mood_accel_max": 1.056998373,
+      "mood_accel_mean": 0.966550567,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.536684894,
+      "phi_zeami": 0.520851824,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 7 of 7 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.107142857,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 7
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 986,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 2948,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1741
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 5196,
+       "rule": "awase_detachment",
+       "scene": 5,
+       "score": 0.25,
+       "start": 4550
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run4": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.023591409,
+      "ac_max_sis": 0.449131966,
+      "ac_mean_crest_factor": 2.798886299,
+      "ac_mean_velocity": 194.617767334,
+      "dc_cadence": 247.794754028,
+      "dc_confession": 69.910896301,
+      "dc_polyphony": 181.973953247,
+      "dc_showing": 52.433174133,
+      "dc_speculation": 53.409866333,
+      "dc_staccato": 94.928031921,
+      "deadzone_count": 0,
+      "semantic_tension": 18.163124084
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 7 of 7 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 4,
+      "fid_sentence_count": 8,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 1,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 1,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 12,
+      "s2_move_destination_mismatch_count": 1,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 7,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 7,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 4,
+      "sentence_count": 73,
+      "speaker_mismatch_count": 13,
+      "syntactic_ambiguity_count": 0,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 24,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 50
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "horiki",
+        "pov": "yozo"
+       },
+       "end": 772,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 687
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "4",
+        "grounding": "narration_alias",
+        "speaker": "doshi",
+        "utterance_index": "1"
+       },
+       "end": 1891,
+       "rule": "presence_unconfirmed",
+       "scene": 2,
+       "score": 0.125,
+       "start": 1872
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2622,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.55,
+       "start": 2517
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2773,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.6,
+       "start": 2622
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "ツネ子の家から引上げ",
+        "known_scene": "5",
+        "known_sentence": "8",
+        "location": "神田の屋台",
+        "scene_gap": "1"
+       },
+       "end": 5835,
+       "rule": "move_destination_mismatch",
+       "scene": 6,
+       "score": 1.0,
+       "start": 5197
+      },
+      {
+       "basis": {
+        "attributed_to": "tsuneko",
+        "pov": "yozo"
+       },
+       "end": 5748,
+       "rule": "pov_contamination",
+       "scene": 6,
+       "score": 0.8,
+       "start": 5653
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 7; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 7,
+      "e_inter": 0.026785714,
+      "e_intra": 0.040816327,
+      "edges_eff": 9,
+      "intra_characters": 2,
+      "total": 0.030293367
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 7; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 7,
+      "event_accel_max": 0.815092766,
+      "event_accel_mean": 0.743953082,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.442308663,
+      "event_transitions": 6,
+      "mood_accel_max": 0.950596512,
+      "mood_accel_mean": 0.790140212,
+      "mood_speed_max": 0.531833469,
+      "mood_speed_mean": 0.469405237,
+      "phi_zeami": 0.51486024,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 7 of 7 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.5,
+      "detachment_mean": 0.107142857,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 7
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -2.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 986,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.5,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 5835,
+       "rule": "awase_detachment",
+       "scene": 6,
+       "score": 0.25,
+       "start": 5197
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run5": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.023591409,
+      "ac_max_sis": 0.449131966,
+      "ac_mean_crest_factor": 2.798886299,
+      "ac_mean_velocity": 194.617767334,
+      "dc_cadence": 247.794754028,
+      "dc_confession": 69.910896301,
+      "dc_polyphony": 181.973953247,
+      "dc_showing": 52.433174133,
+      "dc_speculation": 53.409866333,
+      "dc_staccato": 94.928031921,
+      "deadzone_count": 0,
+      "semantic_tension": 18.163124084
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 7 of 7 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 4,
+      "fid_sentence_count": 8,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 1,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 2,
+      "s2_location_change_count": 2,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 10,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 7,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 7,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 5,
+      "sentence_count": 73,
+      "speaker_mismatch_count": 13,
+      "syntactic_ambiguity_count": 0,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 24,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 50
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "horiki",
+        "pov": "yozo"
+       },
+       "end": 772,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 687
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "4",
+        "grounding": "narration_alias",
+        "speaker": "doshi",
+        "utterance_index": "1"
+       },
+       "end": 1891,
+       "rule": "presence_unconfirmed",
+       "scene": 2,
+       "score": 0.125,
+       "start": 1872
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2622,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.55,
+       "start": 2517
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2773,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.6,
+       "start": 2622
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "銀座裏の屋台のお鮨や",
+        "known_scene": "3",
+        "known_sentence": "10",
+        "location": "本所の大工さんの二階",
+        "scene_gap": "1"
+       },
+       "end": 4549,
+       "rule": "move_destination_mismatch",
+       "scene": 4,
+       "score": 1.0,
+       "start": 3782
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "ツネ子の家から引き上げた",
+        "known_scene": "5",
+        "known_sentence": "8",
+        "location": "神田の屋台",
+        "scene_gap": "1"
+       },
+       "end": 5835,
+       "rule": "move_destination_mismatch",
+       "scene": 6,
+       "score": 1.0,
+       "start": 5197
+      },
+      {
+       "basis": {
+        "attributed_to": "tsuneko",
+        "pov": "yozo"
+       },
+       "end": 5748,
+       "rule": "pov_contamination",
+       "scene": 6,
+       "score": 0.8,
+       "start": 5653
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 7; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 7,
+      "e_inter": 0.041666667,
+      "e_intra": 0.057697153,
+      "edges_eff": 9,
+      "intra_characters": 3,
+      "total": 0.045674288
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 7; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 7,
+      "event_accel_max": 0.881718065,
+      "event_accel_mean": 0.79132173,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.458564559,
+      "event_transitions": 6,
+      "mood_accel_max": 0.99227754,
+      "mood_accel_mean": 0.796340872,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.459165017,
+      "phi_zeami": 0.500327143,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 7 of 7 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.5,
+      "detachment_mean": 0.107142857,
+      "irony_max": 0.25,
+      "irony_mean": 0.071428571,
+      "scenes_scored": 7
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -2.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 986,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.5,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 2948,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1741
+      },
+      {
+       "basis": {
+        "f_event_arousal": -1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 3781,
+       "rule": "awase_irony",
+       "scene": 3,
+       "score": 0.25,
+       "start": 2949
+      },
+      {
+       "basis": {
+        "f_event_arousal": -1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 4549,
+       "rule": "awase_irony",
+       "scene": 4,
+       "score": 0.25,
+       "start": 3782
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "seed": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.023591409,
+      "ac_max_sis": 0.449131966,
+      "ac_mean_crest_factor": 2.798886299,
+      "ac_mean_velocity": 194.617767334,
+      "dc_cadence": 247.794754028,
+      "dc_confession": 69.910896301,
+      "dc_polyphony": 181.973953247,
+      "dc_showing": 52.433174133,
+      "dc_speculation": 53.409866333,
+      "dc_staccato": 94.928031921,
+      "deadzone_count": 0,
+      "semantic_tension": 18.163124084
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 2 double_location finding(s) not repeated (already reported as place_conflict)",
+      "character registry: 5 characters",
+      "annotations applied to 7 of 7 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 4,
+      "fid_sentence_count": 8,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 23,
+      "s2_location_change_count": 1,
+      "s2_location_change_explained_count": 2,
+      "s2_location_timeline_skipped_count": 10,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 2,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 7,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 7,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 4,
+      "sentence_count": 73,
+      "speaker_mismatch_count": 13,
+      "syntactic_ambiguity_count": 0,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 24,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 50
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "horiki",
+        "pov": "yozo"
+       },
+       "end": 772,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 687
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "time_place",
+        "location": "仙遊館",
+        "overlap": "parallel",
+        "previous_location": "下宿",
+        "previous_scene": "0"
+       },
+       "end": 1740,
+       "rule": "place_conflict",
+       "scene": 1,
+       "score": 1.0,
+       "start": 987
+      },
+      {
+       "basis": {
+        "character": "yozo",
+        "check": "time_place",
+        "location": "銀座の或る大カフエ",
+        "overlap": "parallel",
+        "previous_location": "仙遊館",
+        "previous_scene": "1"
+       },
+       "end": 2948,
+       "rule": "place_conflict",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1741
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "4",
+        "grounding": "narration_alias",
+        "speaker": "doshi",
+        "utterance_index": "1"
+       },
+       "end": 1891,
+       "rule": "presence_unconfirmed",
+       "scene": 2,
+       "score": 0.125,
+       "start": 1872
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2622,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.55,
+       "start": 2517
+      },
+      {
+       "basis": {
+        "attributed_to": "musume",
+        "pov": "yozo"
+       },
+       "end": 2773,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.6,
+       "start": 2622
+      },
+      {
+       "basis": {
+        "attributed_to": "tsuneko",
+        "pov": "yozo"
+       },
+       "end": 5748,
+       "rule": "pov_contamination",
+       "scene": 6,
+       "score": 0.8,
+       "start": 5653
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 7; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 7,
+      "e_inter": 0.05952381,
+      "e_intra": 0.100151172,
+      "edges_eff": 9,
+      "intra_characters": 2,
+      "total": 0.06968065
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 7; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 7,
+      "event_accel_max": 0.883752619,
+      "event_accel_mean": 0.82560205,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.491385053,
+      "event_transitions": 6,
+      "mood_accel_max": 0.851450542,
+      "mood_accel_mean": 0.82109098,
+      "mood_speed_max": 0.557271347,
+      "mood_speed_mean": 0.488558499,
+      "phi_zeami": 0.498557798,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 7 of 7 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.035714286,
+      "irony_max": 0.25,
+      "irony_mean": 0.071428571,
+      "scenes_scored": 7
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 2948,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1741
+      },
+      {
+       "basis": {
+        "f_event_arousal": -1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 3781,
+       "rule": "awase_irony",
+       "scene": 3,
+       "score": 0.25,
+       "start": 2949
+      },
+      {
+       "basis": {
+        "f_event_arousal": -1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 4549,
+       "rule": "awase_irony",
+       "scene": 4,
+       "score": 0.25,
+       "start": 3782
+      }
+     ],
+     "status": "ok"
+    }
+   ]
+  },
+  "runs_compared": [
+   "run1",
+   "run2",
+   "run3",
+   "run4",
+   "run5"
+  ]
+ },
+ "000081_000456": {
+  "lenses": {
+   "awase": {
+    "frac_varying": 0.3333,
+    "leaves": 9,
+    "leaves_varying_across_runs": 3,
+    "numeric_rel_range_max": 5.0,
+    "numeric_rel_range_median": 5.0,
+    "span_count_per_run": [
+     2,
+     4,
+     3,
+     2,
+     3
+    ],
+    "span_set_distance_mean": 0.4133,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "kamae": {
+    "frac_varying": 0.0,
+    "leaves": 8,
+    "leaves_varying_across_runs": 0,
+    "numeric_rel_range_max": 0.0,
+    "numeric_rel_range_median": 0.0,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "kasane": {
+    "frac_varying": 0.0,
+    "leaves": 17,
+    "leaves_varying_across_runs": 0,
+    "numeric_rel_range_max": 0.0,
+    "numeric_rel_range_median": 0.0,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "nagare": {
+    "frac_varying": 0.5,
+    "leaves": 18,
+    "leaves_varying_across_runs": 9,
+    "numeric_rel_range_max": 0.4333,
+    "numeric_rel_range_median": 0.2018,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "sadame": {
+    "frac_varying": 0.5,
+    "leaves": 10,
+    "leaves_varying_across_runs": 5,
+    "numeric_rel_range_max": 1.521,
+    "numeric_rel_range_median": 1.0181,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "sasae": {
+    "frac_varying": 0.1389,
+    "leaves": 36,
+    "leaves_varying_across_runs": 5,
+    "numeric_rel_range_max": 1.6667,
+    "numeric_rel_range_median": 1.3636,
+    "span_count_per_run": [
+     4,
+     4,
+     2,
+     2,
+     4
+    ],
+    "span_set_distance_mean": 0.5,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   }
+  },
+  "raw": {
+   "run1": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.261667877,
+      "ac_max_sis": 0.256900072,
+      "ac_mean_crest_factor": 2.48726964,
+      "ac_mean_velocity": 134.450164795,
+      "dc_cadence": 121.714660645,
+      "dc_confession": 37.461952209,
+      "dc_polyphony": 146.335754395,
+      "dc_showing": 120.3465271,
+      "dc_speculation": 28.424257278,
+      "dc_staccato": 92.250053406,
+      "deadzone_count": 0,
+      "semantic_tension": 6.321704388
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 6 of 6 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 4,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 4,
+      "s2_location_change_count": 1,
+      "s2_location_change_explained_count": 4,
+      "s2_location_timeline_skipped_count": 7,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 1,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 1,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 5,
+      "sentence_count": 67,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 1,
+      "tense_shift_count": 12,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 38
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 1005,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 943
+      },
+      {
+       "basis": {
+        "character": "campanella",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "プリオシン海岸",
+        "known_scene": "2",
+        "known_sentence": "9",
+        "location": "その白い柔らかな岩の中",
+        "scene_gap": "1"
+       },
+       "end": 3375,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 2585
+      },
+      {
+       "basis": {
+        "character": "giovanni",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "プリオシン海岸",
+        "known_scene": "2",
+        "known_sentence": "9",
+        "location": "その白い柔らかな岩の中",
+        "scene_gap": "1"
+       },
+       "end": 3375,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 2585
+      },
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 4062,
+       "rule": "pov_contamination",
+       "scene": 5,
+       "score": 0.55,
+       "start": 4024
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 6; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 1,
+      "e_inter": 0.02,
+      "e_intra": 0.015432099,
+      "edges_eff": 13,
+      "intra_characters": 3,
+      "total": 0.019143519
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 6; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 6,
+      "event_accel_max": 0.735371262,
+      "event_accel_mean": 0.572138375,
+      "event_speed_max": 0.439636649,
+      "event_speed_mean": 0.341278467,
+      "event_transitions": 5,
+      "mood_accel_max": 0.910740988,
+      "mood_accel_mean": 0.820619245,
+      "mood_speed_max": 0.557271347,
+      "mood_speed_mean": 0.498252292,
+      "phi_zeami": 0.593489025,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 6 of 6 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.083333333,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 6
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1005,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 2584,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1767
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run2": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.261667877,
+      "ac_max_sis": 0.256900072,
+      "ac_mean_crest_factor": 2.48726964,
+      "ac_mean_velocity": 134.450164795,
+      "dc_cadence": 121.714660645,
+      "dc_confession": 37.461952209,
+      "dc_polyphony": 146.335754395,
+      "dc_showing": 120.3465271,
+      "dc_speculation": 28.424257278,
+      "dc_staccato": 92.250053406,
+      "deadzone_count": 0,
+      "semantic_tension": 6.321704388
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 6 of 6 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 4,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 2,
+      "s2_location_change_count": 1,
+      "s2_location_change_explained_count": 3,
+      "s2_location_timeline_skipped_count": 8,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 1,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 1,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 5,
+      "sentence_count": 67,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 1,
+      "tense_shift_count": 12,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 38
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 1005,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 943
+      },
+      {
+       "basis": {
+        "character": "campanella",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "プリオシン海岸",
+        "known_scene": "2",
+        "known_sentence": "9",
+        "location": "白い柔らかな岩",
+        "scene_gap": "1"
+       },
+       "end": 3375,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 2585
+      },
+      {
+       "basis": {
+        "character": "giovanni",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "河原の渚",
+        "known_scene": "2",
+        "known_sentence": "2",
+        "location": "白い柔らかな岩",
+        "scene_gap": "1"
+       },
+       "end": 3375,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 2585
+      },
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 4062,
+       "rule": "pov_contamination",
+       "scene": 5,
+       "score": 0.55,
+       "start": 4024
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 6; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 1,
+      "e_inter": 0.018518519,
+      "e_intra": 0.015625,
+      "edges_eff": 9,
+      "intra_characters": 2,
+      "total": 0.017795139
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 6; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 6,
+      "event_accel_max": 0.685223525,
+      "event_accel_mean": 0.587351814,
+      "event_speed_max": 0.413755441,
+      "event_speed_mean": 0.351591795,
+      "event_transitions": 5,
+      "mood_accel_max": 1.00720824,
+      "mood_accel_mean": 0.735533105,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.456021733,
+      "phi_zeami": 0.56465341,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 6 of 6 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.125,
+      "irony_max": 0.25,
+      "irony_mean": 0.041666667,
+      "scenes_scored": 6
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1005,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1766,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.25,
+       "start": 1006
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 4270,
+       "rule": "awase_detachment",
+       "scene": 5,
+       "score": 0.25,
+       "start": 3706
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 4270,
+       "rule": "awase_irony",
+       "scene": 5,
+       "score": 0.25,
+       "start": 3706
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run3": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.261667877,
+      "ac_max_sis": 0.256900072,
+      "ac_mean_crest_factor": 2.48726964,
+      "ac_mean_velocity": 134.450164795,
+      "dc_cadence": 121.714660645,
+      "dc_confession": 37.461952209,
+      "dc_polyphony": 146.335754395,
+      "dc_showing": 120.3465271,
+      "dc_speculation": 28.424257278,
+      "dc_staccato": 92.250053406,
+      "deadzone_count": 0,
+      "semantic_tension": 6.321704388
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 6 of 6 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 4,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 1,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 2,
+      "s2_location_timeline_skipped_count": 12,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 1,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 1,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 5,
+      "sentence_count": 67,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 1,
+      "tense_shift_count": 12,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 38
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 1005,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 943
+      },
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 4062,
+       "rule": "pov_contamination",
+       "scene": 5,
+       "score": 0.55,
+       "start": 4024
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 6; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 1,
+      "e_inter": 0.006666667,
+      "e_intra": 0.0,
+      "edges_eff": 13,
+      "intra_characters": 3,
+      "total": 0.005416667
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 6; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 6,
+      "event_accel_max": 0.834173412,
+      "event_accel_mean": 0.583635778,
+      "event_speed_max": 0.445919889,
+      "event_speed_mean": 0.326692014,
+      "event_transitions": 5,
+      "mood_accel_max": 1.107715072,
+      "mood_accel_mean": 0.89966866,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.528342855,
+      "phi_zeami": 0.61791966,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 6 of 6 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.125,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 6
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1005,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1766,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.25,
+       "start": 1006
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 2584,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1767
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run4": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.261667877,
+      "ac_max_sis": 0.256900072,
+      "ac_mean_crest_factor": 2.48726964,
+      "ac_mean_velocity": 134.450164795,
+      "dc_cadence": 121.714660645,
+      "dc_confession": 37.461952209,
+      "dc_polyphony": 146.335754395,
+      "dc_showing": 120.3465271,
+      "dc_speculation": 28.424257278,
+      "dc_staccato": 92.250053406,
+      "deadzone_count": 0,
+      "semantic_tension": 6.321704388
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 6 of 6 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 4,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 3,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 2,
+      "s2_location_timeline_skipped_count": 12,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 1,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 1,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 5,
+      "sentence_count": 67,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 1,
+      "tense_shift_count": 12,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 38
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 1005,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 943
+      },
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 4062,
+       "rule": "pov_contamination",
+       "scene": 5,
+       "score": 0.55,
+       "start": 4024
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 6; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 1,
+      "e_inter": 0.023333333,
+      "e_intra": 0.018132716,
+      "edges_eff": 13,
+      "intra_characters": 3,
+      "total": 0.022358218
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 6; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 6,
+      "event_accel_max": 0.973794985,
+      "event_accel_mean": 0.718859497,
+      "event_speed_max": 0.531833469,
+      "event_speed_mean": 0.384180362,
+      "event_transitions": 5,
+      "mood_accel_max": 0.942793834,
+      "mood_accel_mean": 0.859669489,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.49318354,
+      "phi_zeami": 0.562119708,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 6 of 6 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.083333333,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 6
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1005,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 2584,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1767
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run5": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.261667877,
+      "ac_max_sis": 0.256900072,
+      "ac_mean_crest_factor": 2.48726964,
+      "ac_mean_velocity": 134.450164795,
+      "dc_cadence": 121.714660645,
+      "dc_confession": 37.461952209,
+      "dc_polyphony": 146.335754395,
+      "dc_showing": 120.3465271,
+      "dc_speculation": 28.424257278,
+      "dc_staccato": 92.250053406,
+      "deadzone_count": 0,
+      "semantic_tension": 6.321704388
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 6 of 6 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 4,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 1,
+      "s2_location_change_count": 1,
+      "s2_location_change_explained_count": 4,
+      "s2_location_timeline_skipped_count": 7,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 1,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 1,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 5,
+      "sentence_count": 67,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 1,
+      "tense_shift_count": 12,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 38
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 1005,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 943
+      },
+      {
+       "basis": {
+        "character": "campanella",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "プリオシン海岸",
+        "known_scene": "2",
+        "known_sentence": "7",
+        "location": "その白い柔らかな岩",
+        "scene_gap": "1"
+       },
+       "end": 3375,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 2585
+      },
+      {
+       "basis": {
+        "character": "giovanni",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "プリオシン海岸",
+        "known_scene": "2",
+        "known_sentence": "7",
+        "location": "その白い柔らかな岩",
+        "scene_gap": "1"
+       },
+       "end": 3375,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 2585
+      },
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 4062,
+       "rule": "pov_contamination",
+       "scene": 5,
+       "score": 0.55,
+       "start": 4024
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 6; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 1,
+      "e_inter": 0.013333333,
+      "e_intra": 0.010416667,
+      "edges_eff": 13,
+      "intra_characters": 3,
+      "total": 0.012786458
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 6; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 6,
+      "event_accel_max": 0.638673199,
+      "event_accel_mean": 0.533014551,
+      "event_speed_max": 0.399248097,
+      "event_speed_mean": 0.314563382,
+      "event_transitions": 5,
+      "mood_accel_max": 0.942793834,
+      "mood_accel_mean": 0.750319492,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.451637749,
+      "phi_zeami": 0.589450643,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 6 of 6 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.125,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 6
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1005,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1766,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.25,
+       "start": 1006
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 2584,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1767
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "seed": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.261667877,
+      "ac_max_sis": 0.256900072,
+      "ac_mean_crest_factor": 2.48726964,
+      "ac_mean_velocity": 134.450164795,
+      "dc_cadence": 121.714660645,
+      "dc_confession": 37.461952209,
+      "dc_polyphony": 146.335754395,
+      "dc_showing": 120.3465271,
+      "dc_speculation": 28.424257278,
+      "dc_staccato": 92.250053406,
+      "deadzone_count": 0,
+      "semantic_tension": 6.321704388
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 6 of 6 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 4,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 18,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 4,
+      "s2_location_timeline_skipped_count": 10,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 1,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 1,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 27,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 5,
+      "sentence_count": 67,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 1,
+      "tense_shift_count": 12,
+      "utterance_count": 27,
+      "zero_anaphora_resolved_count": 38
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 1005,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.55,
+       "start": 943
+      },
+      {
+       "basis": {
+        "attributed_to": "campanella",
+        "pov": "giovanni"
+       },
+       "end": 4062,
+       "rule": "pov_contamination",
+       "scene": 5,
+       "score": 0.55,
+       "start": 4024
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 6; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 1,
+      "e_inter": 0.028333333,
+      "e_intra": 0.044753086,
+      "edges_eff": 13,
+      "intra_characters": 3,
+      "total": 0.031412037
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 6; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 6,
+      "event_accel_max": 0.855556433,
+      "event_accel_mean": 0.610998437,
+      "event_speed_max": 0.443470602,
+      "event_speed_mean": 0.355189689,
+      "event_transitions": 5,
+      "mood_accel_max": 0.970675459,
+      "mood_accel_mean": 0.778111915,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.465569826,
+      "phi_zeami": 0.567242679,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 6 of 6 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.5,
+      "detachment_mean": 0.208333333,
+      "irony_max": 0.25,
+      "irony_mean": 0.041666667,
+      "scenes_scored": 6
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1005,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1766,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.5,
+       "start": 1006
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 2584,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1767
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 4270,
+       "rule": "awase_detachment",
+       "scene": 5,
+       "score": 0.25,
+       "start": 3706
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": -1.0
+       },
+       "end": 4270,
+       "rule": "awase_irony",
+       "scene": 5,
+       "score": 0.25,
+       "start": 3706
+      }
+     ],
+     "status": "ok"
+    }
+   ]
+  },
+  "runs_compared": [
+   "run1",
+   "run2",
+   "run3",
+   "run4",
+   "run5"
+  ]
+ },
+ "001798_056779": {
+  "lenses": {
+   "awase": {
+    "frac_varying": 0.3333,
+    "leaves": 9,
+    "leaves_varying_across_runs": 3,
+    "numeric_rel_range_max": 5.0,
+    "numeric_rel_range_median": 5.0,
+    "span_count_per_run": [
+     4,
+     1,
+     3,
+     3,
+     2
+    ],
+    "span_set_distance_mean": 0.6233,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "kamae": {
+    "frac_varying": 0.0,
+    "leaves": 8,
+    "leaves_varying_across_runs": 0,
+    "numeric_rel_range_max": 0.0,
+    "numeric_rel_range_median": 0.0,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "kasane": {
+    "frac_varying": 0.0,
+    "leaves": 17,
+    "leaves_varying_across_runs": 0,
+    "numeric_rel_range_max": 0.0,
+    "numeric_rel_range_median": 0.0,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "nagare": {
+    "frac_varying": 0.4444,
+    "leaves": 18,
+    "leaves_varying_across_runs": 8,
+    "numeric_rel_range_max": 0.1766,
+    "numeric_rel_range_median": 0.1231,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "sadame": {
+    "frac_varying": 0.3,
+    "leaves": 10,
+    "leaves_varying_across_runs": 3,
+    "numeric_rel_range_max": 2.5,
+    "numeric_rel_range_median": 2.5,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "sasae": {
+    "frac_varying": 0.1389,
+    "leaves": 36,
+    "leaves_varying_across_runs": 5,
+    "numeric_rel_range_max": 1.25,
+    "numeric_rel_range_median": 0.5556,
+    "span_count_per_run": [
+     5,
+     5,
+     5,
+     4,
+     5
+    ],
+    "span_set_distance_mean": 0.21,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   }
+  },
+  "raw": {
+   "run1": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.195041955,
+      "ac_max_sis": 0.173214138,
+      "ac_mean_crest_factor": 2.20332408,
+      "ac_mean_velocity": 188.701583862,
+      "dc_cadence": 85.432220459,
+      "dc_confession": 48.598129272,
+      "dc_polyphony": 197.663543701,
+      "dc_showing": 145.794387817,
+      "dc_speculation": 119.672889709,
+      "dc_staccato": 248.598129272,
+      "deadzone_count": 0,
+      "semantic_tension": 3.271028042
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 1 presence finding(s) not repeated (already reported by stage 1 as off_stage_speaker)",
+      "character registry: 3 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 2,
+      "off_stage_utterance_count": 1,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 7,
+      "s2_location_change_count": 2,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 3,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 25,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 44,
+      "speaker_mismatch_count": 10,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 1,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 14,
+      "utterance_count": 25,
+      "zero_anaphora_resolved_count": 24
+     },
+     "spans": [
+      {
+       "basis": {
+        "character": "boku",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "代田橋",
+        "known_scene": "0",
+        "known_sentence": "",
+        "location": "僕の部屋",
+        "scene_gap": "1"
+       },
+       "end": 999,
+       "rule": "move_destination_mismatch",
+       "scene": 1,
+       "score": 1.0,
+       "start": 274
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 883,
+       "rule": "pov_contamination",
+       "scene": 1,
+       "score": 0.9,
+       "start": 819
+      },
+      {
+       "basis": {
+        "speaker": "fuwa",
+        "utterance_index": 0
+       },
+       "end": 1131,
+       "rule": "off_stage_speaker",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1099
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 1330,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.9,
+       "start": 1299
+      },
+      {
+       "basis": {
+        "character": "noro",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "庭",
+        "known_scene": "2",
+        "known_sentence": "8",
+        "location": "板の間",
+        "scene_gap": "1"
+       },
+       "end": 2139,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.0,
+      "e_intra": 0.0,
+      "edges_eff": 6,
+      "intra_characters": 3,
+      "total": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.919657047,
+      "event_accel_mean": 0.803305087,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.478221353,
+      "event_transitions": 3,
+      "mood_accel_max": 0.762320634,
+      "mood_accel_mean": 0.703403995,
+      "mood_speed_max": 0.445919889,
+      "mood_speed_mean": 0.423965648,
+      "phi_zeami": 0.469931009,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.25,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 272,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 999,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.25,
+       "start": 274
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 1783,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1000
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 2139,
+       "rule": "awase_detachment",
+       "scene": 3,
+       "score": 0.25,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run2": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.195041955,
+      "ac_max_sis": 0.173214138,
+      "ac_mean_crest_factor": 2.20332408,
+      "ac_mean_velocity": 188.701583862,
+      "dc_cadence": 85.432220459,
+      "dc_confession": 48.598129272,
+      "dc_polyphony": 197.663543701,
+      "dc_showing": 145.794387817,
+      "dc_speculation": 119.672889709,
+      "dc_staccato": 248.598129272,
+      "deadzone_count": 0,
+      "semantic_tension": 3.271028042
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 1 presence finding(s) not repeated (already reported by stage 1 as off_stage_speaker)",
+      "character registry: 3 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 2,
+      "off_stage_utterance_count": 1,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 5,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 5,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 25,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 2,
+      "sentence_count": 44,
+      "speaker_mismatch_count": 10,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 1,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 14,
+      "utterance_count": 25,
+      "zero_anaphora_resolved_count": 24
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 883,
+       "rule": "pov_contamination",
+       "scene": 1,
+       "score": 0.9,
+       "start": 819
+      },
+      {
+       "basis": {
+        "character": "boku",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "代田橋",
+        "known_scene": "0",
+        "known_sentence": "",
+        "location": "板の間",
+        "scene_gap": "2"
+       },
+       "end": 1783,
+       "rule": "move_destination_mismatch",
+       "scene": 2,
+       "score": 0.5,
+       "start": 1000
+      },
+      {
+       "basis": {
+        "speaker": "fuwa",
+        "utterance_index": 0
+       },
+       "end": 1131,
+       "rule": "off_stage_speaker",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1099
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 1330,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.9,
+       "start": 1299
+      },
+      {
+       "basis": {
+        "character": "noro",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "庭",
+        "known_scene": "2",
+        "known_sentence": "8",
+        "location": "板の間",
+        "scene_gap": "1"
+       },
+       "end": 2139,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.0,
+      "e_intra": 0.0,
+      "edges_eff": 6,
+      "intra_characters": 3,
+      "total": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.970675459,
+      "event_accel_mean": 0.908433171,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.493872847,
+      "event_transitions": 3,
+      "mood_accel_max": 0.69935229,
+      "mood_accel_mean": 0.698113831,
+      "mood_speed_max": 0.445919889,
+      "mood_speed_mean": 0.405435381,
+      "phi_zeami": 0.450830281,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.0625,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 272,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run3": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.195041955,
+      "ac_max_sis": 0.173214138,
+      "ac_mean_crest_factor": 2.20332408,
+      "ac_mean_velocity": 188.701583862,
+      "dc_cadence": 85.432220459,
+      "dc_confession": 48.598129272,
+      "dc_polyphony": 197.663543701,
+      "dc_showing": 145.794387817,
+      "dc_speculation": 119.672889709,
+      "dc_staccato": 248.598129272,
+      "deadzone_count": 0,
+      "semantic_tension": 3.271028042
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 1 presence finding(s) not repeated (already reported by stage 1 as off_stage_speaker)",
+      "character registry: 3 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 2,
+      "off_stage_utterance_count": 1,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 8,
+      "s2_location_change_count": 2,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 3,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 25,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 44,
+      "speaker_mismatch_count": 10,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 1,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 14,
+      "utterance_count": 25,
+      "zero_anaphora_resolved_count": 24
+     },
+     "spans": [
+      {
+       "basis": {
+        "character": "boku",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "代田橋",
+        "known_scene": "0",
+        "known_sentence": "",
+        "location": "僕の部屋",
+        "scene_gap": "1"
+       },
+       "end": 999,
+       "rule": "move_destination_mismatch",
+       "scene": 1,
+       "score": 1.0,
+       "start": 274
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 883,
+       "rule": "pov_contamination",
+       "scene": 1,
+       "score": 0.9,
+       "start": 819
+      },
+      {
+       "basis": {
+        "speaker": "fuwa",
+        "utterance_index": 0
+       },
+       "end": 1131,
+       "rule": "off_stage_speaker",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1099
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 1330,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.9,
+       "start": 1299
+      },
+      {
+       "basis": {
+        "character": "noro",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "庭",
+        "known_scene": "2",
+        "known_sentence": "8",
+        "location": "板の間",
+        "scene_gap": "1"
+       },
+       "end": 2139,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.0,
+      "e_intra": 0.0,
+      "edges_eff": 6,
+      "intra_characters": 3,
+      "total": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.919657047,
+      "event_accel_mean": 0.865745674,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.49561197,
+      "event_transitions": 3,
+      "mood_accel_max": 0.739913337,
+      "mood_accel_mean": 0.73176628,
+      "mood_speed_max": 0.510316865,
+      "mood_speed_mean": 0.395123789,
+      "phi_zeami": 0.443592597,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.1875,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 272,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 1783,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1000
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 2139,
+       "rule": "awase_detachment",
+       "scene": 3,
+       "score": 0.25,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run4": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.195041955,
+      "ac_max_sis": 0.173214138,
+      "ac_mean_crest_factor": 2.20332408,
+      "ac_mean_velocity": 188.701583862,
+      "dc_cadence": 85.432220459,
+      "dc_confession": 48.598129272,
+      "dc_polyphony": 197.663543701,
+      "dc_showing": 145.794387817,
+      "dc_speculation": 119.672889709,
+      "dc_staccato": 248.598129272,
+      "deadzone_count": 0,
+      "semantic_tension": 3.271028042
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 1 presence finding(s) not repeated (already reported by stage 1 as off_stage_speaker)",
+      "character registry: 3 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 2,
+      "off_stage_utterance_count": 1,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 7,
+      "s2_location_change_count": 2,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 3,
+      "s2_move_destination_mismatch_count": 1,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 25,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 44,
+      "speaker_mismatch_count": 10,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 1,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 14,
+      "utterance_count": 25,
+      "zero_anaphora_resolved_count": 24
+     },
+     "spans": [
+      {
+       "basis": {
+        "character": "boku",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "代田橋",
+        "known_scene": "0",
+        "known_sentence": "",
+        "location": "僕の部屋",
+        "scene_gap": "1"
+       },
+       "end": 999,
+       "rule": "move_destination_mismatch",
+       "scene": 1,
+       "score": 1.0,
+       "start": 274
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 883,
+       "rule": "pov_contamination",
+       "scene": 1,
+       "score": 0.9,
+       "start": 819
+      },
+      {
+       "basis": {
+        "speaker": "fuwa",
+        "utterance_index": 0
+       },
+       "end": 1131,
+       "rule": "off_stage_speaker",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1099
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 1330,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.9,
+       "start": 1299
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.013888889,
+      "e_intra": 0.013888889,
+      "edges_eff": 6,
+      "intra_characters": 3,
+      "total": 0.013888889
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.919657047,
+      "event_accel_mean": 0.80734541,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.463834719,
+      "event_transitions": 3,
+      "mood_accel_max": 0.739913337,
+      "mood_accel_mean": 0.732076889,
+      "mood_speed_max": 0.510316865,
+      "mood_speed_mean": 0.427665892,
+      "phi_zeami": 0.479714637,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.125,
+      "irony_max": 0.25,
+      "irony_mean": 0.0625,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 272,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 999,
+       "rule": "awase_irony",
+       "scene": 1,
+       "score": 0.25,
+       "start": 274
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": -1.0
+       },
+       "end": 2139,
+       "rule": "awase_detachment",
+       "scene": 3,
+       "score": 0.25,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run5": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.195041955,
+      "ac_max_sis": 0.173214138,
+      "ac_mean_crest_factor": 2.20332408,
+      "ac_mean_velocity": 188.701583862,
+      "dc_cadence": 85.432220459,
+      "dc_confession": 48.598129272,
+      "dc_polyphony": 197.663543701,
+      "dc_showing": 145.794387817,
+      "dc_speculation": 119.672889709,
+      "dc_staccato": 248.598129272,
+      "deadzone_count": 0,
+      "semantic_tension": 3.271028042
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 1 presence finding(s) not repeated (already reported by stage 1 as off_stage_speaker)",
+      "character registry: 3 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 2,
+      "off_stage_utterance_count": 1,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 5,
+      "s2_location_change_count": 2,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 3,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 25,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 44,
+      "speaker_mismatch_count": 10,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 1,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 14,
+      "utterance_count": 25,
+      "zero_anaphora_resolved_count": 24
+     },
+     "spans": [
+      {
+       "basis": {
+        "character": "boku",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "代田橋",
+        "known_scene": "0",
+        "known_sentence": "",
+        "location": "僕の部屋",
+        "scene_gap": "1"
+       },
+       "end": 999,
+       "rule": "move_destination_mismatch",
+       "scene": 1,
+       "score": 1.0,
+       "start": 274
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 883,
+       "rule": "pov_contamination",
+       "scene": 1,
+       "score": 0.9,
+       "start": 819
+      },
+      {
+       "basis": {
+        "speaker": "fuwa",
+        "utterance_index": 0
+       },
+       "end": 1131,
+       "rule": "off_stage_speaker",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1099
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 1330,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.9,
+       "start": 1299
+      },
+      {
+       "basis": {
+        "character": "noro",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "庭",
+        "known_scene": "2",
+        "known_sentence": "8",
+        "location": "板の間",
+        "scene_gap": "1"
+       },
+       "end": 2139,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.013888889,
+      "e_intra": 0.013888889,
+      "edges_eff": 6,
+      "intra_characters": 3,
+      "total": 0.013888889
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.919657047,
+      "event_accel_mean": 0.80734541,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.463834719,
+      "event_transitions": 3,
+      "mood_accel_max": 0.832659994,
+      "mood_accel_mean": 0.786286665,
+      "mood_speed_max": 0.510316865,
+      "mood_speed_mean": 0.460942536,
+      "phi_zeami": 0.498436281,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.125,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 272,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 2139,
+       "rule": "awase_detachment",
+       "scene": 3,
+       "score": 0.25,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "seed": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "LimitCycle"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": -0.195041955,
+      "ac_max_sis": 0.173214138,
+      "ac_mean_crest_factor": 2.20332408,
+      "ac_mean_velocity": 188.701583862,
+      "dc_cadence": 85.432220459,
+      "dc_confession": 48.598129272,
+      "dc_polyphony": 197.663543701,
+      "dc_showing": 145.794387817,
+      "dc_speculation": 119.672889709,
+      "dc_staccato": 248.598129272,
+      "deadzone_count": 0,
+      "semantic_tension": 3.271028042
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "stage 2: 1 presence finding(s) not repeated (already reported by stage 1 as off_stage_speaker)",
+      "character registry: 3 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 2,
+      "off_stage_utterance_count": 1,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 16,
+      "s2_location_change_count": 1,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 4,
+      "s2_move_destination_mismatch_count": 2,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 0,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 25,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 44,
+      "speaker_mismatch_count": 10,
+      "syntactic_ambiguity_count": 1,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 1,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 0,
+      "tense_shift_count": 14,
+      "utterance_count": 25,
+      "zero_anaphora_resolved_count": 24
+     },
+     "spans": [
+      {
+       "basis": {
+        "character": "boku",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "代田橋",
+        "known_scene": "0",
+        "known_sentence": "",
+        "location": "僕の部屋",
+        "scene_gap": "1"
+       },
+       "end": 999,
+       "rule": "move_destination_mismatch",
+       "scene": 1,
+       "score": 1.0,
+       "start": 274
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 883,
+       "rule": "pov_contamination",
+       "scene": 1,
+       "score": 0.9,
+       "start": 819
+      },
+      {
+       "basis": {
+        "speaker": "fuwa",
+        "utterance_index": 0
+       },
+       "end": 1131,
+       "rule": "off_stage_speaker",
+       "scene": 2,
+       "score": 1.0,
+       "start": 1099
+      },
+      {
+       "basis": {
+        "attributed_to": "fuwa",
+        "pov": "boku"
+       },
+       "end": 1330,
+       "rule": "pov_contamination",
+       "scene": 2,
+       "score": 0.9,
+       "start": 1299
+      },
+      {
+       "basis": {
+        "character": "noro",
+        "check": "location_timeline",
+        "known_from": "moved_to",
+        "known_location": "不破の家(庭)",
+        "known_scene": "2",
+        "known_sentence": "",
+        "location": "板の間",
+        "scene_gap": "1"
+       },
+       "end": 2139,
+       "rule": "move_destination_mismatch",
+       "scene": 3,
+       "score": 1.0,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.041666667,
+      "e_intra": 0.038194444,
+      "edges_eff": 6,
+      "intra_characters": 3,
+      "total": 0.040509259
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 1.01013505,
+      "event_accel_mean": 0.879148197,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.505802537,
+      "event_transitions": 3,
+      "mood_accel_max": 0.664880163,
+      "mood_accel_mean": 0.602136256,
+      "mood_speed_max": 0.386340405,
+      "mood_speed_mean": 0.322881006,
+      "phi_zeami": 0.389631251,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.1875,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": 1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 272,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 1783,
+       "rule": "awase_detachment",
+       "scene": 2,
+       "score": 0.25,
+       "start": 1000
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 2139,
+       "rule": "awase_detachment",
+       "scene": 3,
+       "score": 0.25,
+       "start": 1784
+      }
+     ],
+     "status": "ok"
+    }
+   ]
+  },
+  "runs_compared": [
+   "run1",
+   "run2",
+   "run3",
+   "run4",
+   "run5"
+  ]
+ },
+ "001875_059897": {
+  "lenses": {
+   "awase": {
+    "frac_varying": 0.4444,
+    "leaves": 9,
+    "leaves_varying_across_runs": 4,
+    "numeric_rel_range_max": 5.0,
+    "numeric_rel_range_median": 3.2143,
+    "span_count_per_run": [
+     1,
+     2,
+     0,
+     4,
+     2
+    ],
+    "span_set_distance_mean": 0.8,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "kamae": {
+    "frac_varying": 0.0,
+    "leaves": 8,
+    "leaves_varying_across_runs": 0,
+    "numeric_rel_range_max": 0.0,
+    "numeric_rel_range_median": 0.0,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "kasane": {
+    "frac_varying": 0.0,
+    "leaves": 17,
+    "leaves_varying_across_runs": 0,
+    "numeric_rel_range_max": 0.0,
+    "numeric_rel_range_median": 0.0,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "nagare": {
+    "frac_varying": 0.5,
+    "leaves": 18,
+    "leaves_varying_across_runs": 9,
+    "numeric_rel_range_max": 0.7483,
+    "numeric_rel_range_median": 0.4559,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "sadame": {
+    "frac_varying": 0.5,
+    "leaves": 10,
+    "leaves_varying_across_runs": 5,
+    "numeric_rel_range_max": 3.4314,
+    "numeric_rel_range_median": 0.6731,
+    "span_count_per_run": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "span_set_distance_mean": 0.0,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   },
+   "sasae": {
+    "frac_varying": 0.0833,
+    "leaves": 36,
+    "leaves_varying_across_runs": 3,
+    "numeric_rel_range_max": 1.6667,
+    "numeric_rel_range_median": 0.8824,
+    "span_count_per_run": [
+     3,
+     3,
+     3,
+     1,
+     1
+    ],
+    "span_set_distance_mean": 0.4,
+    "status_per_run": [
+     "ok",
+     "ok",
+     "ok",
+     "ok",
+     "ok"
+    ]
+   }
+  },
+  "raw": {
+   "run1": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.329945475,
+      "ac_max_sis": 0.699495912,
+      "ac_mean_crest_factor": 2.593688965,
+      "ac_mean_velocity": 187.565032959,
+      "dc_cadence": 90.323181152,
+      "dc_confession": 54.285713196,
+      "dc_polyphony": 157.5,
+      "dc_showing": 85.0,
+      "dc_speculation": 46.714286804,
+      "dc_staccato": 102.857139587,
+      "deadzone_count": 0,
+      "semantic_tension": 8.571428299
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 5,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 3,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 13,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 28,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 36,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 2,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 2,
+      "tense_shift_count": 7,
+      "utterance_count": 28,
+      "zero_anaphora_resolved_count": 14
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "heiroku",
+        "pov": "yasue"
+       },
+       "end": 492,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.85,
+       "start": 402
+      },
+      {
+       "basis": {
+        "attributed_to": "heiroku",
+        "pov": "yasue"
+       },
+       "end": 513,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.6,
+       "start": 492
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "1",
+        "grounding": "narration_alias",
+        "speaker": "susumu",
+        "utterance_index": "1"
+       },
+       "end": 2709,
+       "rule": "presence_unconfirmed",
+       "scene": 3,
+       "score": 0.125,
+       "start": 2619
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.041666667,
+      "e_intra": 0.0,
+      "edges_eff": 11,
+      "intra_characters": 3,
+      "total": 0.032738095
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.558870329,
+      "event_accel_mean": 0.558870329,
+      "event_speed_max": 0.386340405,
+      "event_speed_mean": 0.353798302,
+      "event_transitions": 3,
+      "mood_accel_max": 0.66021104,
+      "mood_accel_mean": 0.579304047,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.416882413,
+      "phi_zeami": 0.540927527,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.0625,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": 0.0
+       },
+       "end": 2799,
+       "rule": "awase_detachment",
+       "scene": 3,
+       "score": 0.25,
+       "start": 2552
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run2": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.329945475,
+      "ac_max_sis": 0.699495912,
+      "ac_mean_crest_factor": 2.593688965,
+      "ac_mean_velocity": 187.565032959,
+      "dc_cadence": 90.323181152,
+      "dc_confession": 54.285713196,
+      "dc_polyphony": 157.5,
+      "dc_showing": 85.0,
+      "dc_speculation": 46.714286804,
+      "dc_staccato": 102.857139587,
+      "deadzone_count": 0,
+      "semantic_tension": 8.571428299
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 5,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 2,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 13,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 28,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 36,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 2,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 2,
+      "tense_shift_count": 7,
+      "utterance_count": 28,
+      "zero_anaphora_resolved_count": 14
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "heiroku",
+        "pov": "yasue"
+       },
+       "end": 492,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.85,
+       "start": 402
+      },
+      {
+       "basis": {
+        "attributed_to": "heiroku",
+        "pov": "yasue"
+       },
+       "end": 513,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.6,
+       "start": 492
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "1",
+        "grounding": "narration_alias",
+        "speaker": "susumu",
+        "utterance_index": "1"
+       },
+       "end": 2709,
+       "rule": "presence_unconfirmed",
+       "scene": 3,
+       "score": 0.125,
+       "start": 2619
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.041666667,
+      "e_intra": 0.0,
+      "edges_eff": 11,
+      "intra_characters": 3,
+      "total": 0.032738095
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.69935229,
+      "event_accel_mean": 0.682116226,
+      "event_speed_max": 0.445919889,
+      "event_speed_mean": 0.406200233,
+      "event_transitions": 3,
+      "mood_accel_max": 1.03849939,
+      "mood_accel_mean": 0.960108727,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.51623665,
+      "phi_zeami": 0.559644415,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.125,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 1799,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.25,
+       "start": 822
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": 0.0
+       },
+       "end": 2799,
+       "rule": "awase_detachment",
+       "scene": 3,
+       "score": 0.25,
+       "start": 2552
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run3": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.329945475,
+      "ac_max_sis": 0.699495912,
+      "ac_mean_crest_factor": 2.593688965,
+      "ac_mean_velocity": 187.565032959,
+      "dc_cadence": 90.323181152,
+      "dc_confession": 54.285713196,
+      "dc_polyphony": 157.5,
+      "dc_showing": 85.0,
+      "dc_speculation": 46.714286804,
+      "dc_staccato": 102.857139587,
+      "deadzone_count": 0,
+      "semantic_tension": 8.571428299
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 2,
+      "fid_sentence_count": 5,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 5,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 13,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 28,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 36,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 2,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 2,
+      "tense_shift_count": 7,
+      "utterance_count": 28,
+      "zero_anaphora_resolved_count": 14
+     },
+     "spans": [
+      {
+       "basis": {
+        "attributed_to": "heiroku",
+        "pov": "yasue"
+       },
+       "end": 492,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.85,
+       "start": 402
+      },
+      {
+       "basis": {
+        "attributed_to": "heiroku",
+        "pov": "yasue"
+       },
+       "end": 513,
+       "rule": "pov_contamination",
+       "scene": 0,
+       "score": 0.6,
+       "start": 492
+      },
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "1",
+        "grounding": "narration_alias",
+        "speaker": "susumu",
+        "utterance_index": "1"
+       },
+       "end": 2709,
+       "rule": "presence_unconfirmed",
+       "scene": 3,
+       "score": 0.125,
+       "start": 2619
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.041666667,
+      "e_intra": 0.0,
+      "edges_eff": 10,
+      "intra_characters": 4,
+      "total": 0.032051282
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.429787505,
+      "event_accel_mean": 0.429787505,
+      "event_speed_max": 0.386340405,
+      "event_speed_mean": 0.302495705,
+      "event_transitions": 3,
+      "mood_accel_max": 0.756434401,
+      "mood_accel_mean": 0.65903845,
+      "mood_speed_max": 0.510316865,
+      "mood_speed_mean": 0.409706163,
+      "phi_zeami": 0.575266903,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.0,
+      "detachment_mean": 0.0,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [],
+     "status": "ok"
+    }
+   ],
+   "run4": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.329945475,
+      "ac_max_sis": 0.699495912,
+      "ac_mean_crest_factor": 2.593688965,
+      "ac_mean_velocity": 187.565032959,
+      "dc_cadence": 90.323181152,
+      "dc_confession": 54.285713196,
+      "dc_polyphony": 157.5,
+      "dc_showing": 85.0,
+      "dc_speculation": 46.714286804,
+      "dc_staccato": 102.857139587,
+      "deadzone_count": 0,
+      "semantic_tension": 8.571428299
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 0,
+      "fid_sentence_count": 5,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 3,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 13,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 28,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 36,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 2,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 2,
+      "tense_shift_count": 7,
+      "utterance_count": 28,
+      "zero_anaphora_resolved_count": 12
+     },
+     "spans": [
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "1",
+        "grounding": "narration_alias",
+        "speaker": "susumu",
+        "utterance_index": "1"
+       },
+       "end": 2709,
+       "rule": "presence_unconfirmed",
+       "scene": 3,
+       "score": 0.125,
+       "start": 2619
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.074074074,
+      "e_intra": 0.018229167,
+      "edges_eff": 11,
+      "intra_characters": 4,
+      "total": 0.062107308
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.483730249,
+      "event_accel_mean": 0.456758877,
+      "event_speed_max": 0.445919889,
+      "event_speed_mean": 0.322355533,
+      "event_transitions": 3,
+      "mood_accel_max": 0.671378066,
+      "mood_accel_mean": 0.637754954,
+      "mood_speed_max": 0.445919889,
+      "mood_speed_mean": 0.388044764,
+      "phi_zeami": 0.546233955,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.125,
+      "irony_max": 0.25,
+      "irony_mean": 0.125,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 821,
+       "rule": "awase_detachment",
+       "scene": 0,
+       "score": 0.25,
+       "start": 0
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1799,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.25,
+       "start": 822
+      },
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 1799,
+       "rule": "awase_irony",
+       "scene": 1,
+       "score": 0.25,
+       "start": 822
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 2799,
+       "rule": "awase_irony",
+       "scene": 3,
+       "score": 0.25,
+       "start": 2552
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "run5": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.329945475,
+      "ac_max_sis": 0.699495912,
+      "ac_mean_crest_factor": 2.593688965,
+      "ac_mean_velocity": 187.565032959,
+      "dc_cadence": 90.323181152,
+      "dc_confession": 54.285713196,
+      "dc_polyphony": 157.5,
+      "dc_showing": 85.0,
+      "dc_speculation": 46.714286804,
+      "dc_staccato": 102.857139587,
+      "deadzone_count": 0,
+      "semantic_tension": 8.571428299
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 0,
+      "fid_sentence_count": 5,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 4,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 13,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 28,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 36,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 2,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 2,
+      "tense_shift_count": 7,
+      "utterance_count": 28,
+      "zero_anaphora_resolved_count": 12
+     },
+     "spans": [
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "1",
+        "grounding": "narration_alias",
+        "speaker": "susumu",
+        "utterance_index": "1"
+       },
+       "end": 2709,
+       "rule": "presence_unconfirmed",
+       "scene": 3,
+       "score": 0.125,
+       "start": 2619
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.041666667,
+      "e_intra": 0.008333333,
+      "edges_eff": 11,
+      "intra_characters": 5,
+      "total": 0.03452381
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.887678715,
+      "event_accel_mean": 0.686353961,
+      "event_speed_max": 0.592473195,
+      "event_speed_mean": 0.454286483,
+      "event_transitions": 3,
+      "mood_accel_max": 0.819364526,
+      "mood_accel_mean": 0.700381328,
+      "mood_speed_max": 0.592473195,
+      "mood_speed_mean": 0.446792242,
+      "phi_zeami": 0.495841517,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.125,
+      "irony_max": 0.0,
+      "irony_mean": 0.0,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 1799,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.25,
+       "start": 822
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": -1.0,
+        "f_style_valence": 0.0
+       },
+       "end": 2799,
+       "rule": "awase_detachment",
+       "scene": 3,
+       "score": 0.25,
+       "start": 2552
+      }
+     ],
+     "status": "ok"
+    }
+   ],
+   "seed": [
+    {
+     "id": "kasane",
+     "labels": {
+      "attractor_kind": "StrangeAttractor"
+     },
+     "notes": [],
+     "pole": "Kasane",
+     "scores": {
+      "ac_coupling": 0.329945475,
+      "ac_max_sis": 0.699495912,
+      "ac_mean_crest_factor": 2.593688965,
+      "ac_mean_velocity": 187.565032959,
+      "dc_cadence": 90.323181152,
+      "dc_confession": 54.285713196,
+      "dc_polyphony": 157.5,
+      "dc_showing": 85.0,
+      "dc_speculation": 46.714286804,
+      "dc_staccato": 102.857139587,
+      "deadzone_count": 0,
+      "semantic_tension": 8.571428299
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sasae",
+     "labels": {},
+     "notes": [
+      "character registry: 5 characters",
+      "annotations applied to 4 of 4 scenes (matched by scene_hash)",
+      "stage 2 (annotation-based, deterministic, open-world): presence, fact conflict, time/place, register; unknown/ambiguous/missing material is skipped, never a conflict",
+      "stage 2 location timeline (stay_location_conflict, move_destination_mismatch, double_location; plain place changes between continuous scenes are only counted): needs scene location_id, MOVED_TO and STATE_CHANGED facts; place names are compared as free text (containment counts as the same place); missing records are skipped",
+      "stage 2 register check needs the optional characters_json field default_politeness (plain|polite|honorific|rough); without it every utterance is skipped"
+     ],
+     "pole": "Sasae",
+     "scores": {
+      "fid_pov_contamination_count": 0,
+      "fid_sentence_count": 5,
+      "off_stage_utterance_count": 0,
+      "quote_diagnostic_count": 0,
+      "s2_double_location_count": 0,
+      "s2_double_location_skipped_count": 0,
+      "s2_fact_conflict_count": 0,
+      "s2_fact_skipped_count": 17,
+      "s2_location_change_count": 0,
+      "s2_location_change_explained_count": 0,
+      "s2_location_timeline_skipped_count": 13,
+      "s2_move_destination_mismatch_count": 0,
+      "s2_place_conflict_count": 0,
+      "s2_presence_conflict_count": 0,
+      "s2_presence_skipped_count": 0,
+      "s2_presence_unconfirmed_count": 1,
+      "s2_presence_unconfirmed_skipped_count": 0,
+      "s2_register_deviation_count": 0,
+      "s2_register_skipped_count": 28,
+      "s2_stay_conflict_skipped_count": 0,
+      "s2_stay_location_conflict_count": 0,
+      "s2_time_order_break_count": 0,
+      "s2_time_place_skipped_count": 3,
+      "sentence_count": 36,
+      "speaker_mismatch_count": 9,
+      "syntactic_ambiguity_count": 2,
+      "syntactic_ambiguity_modifier_scope_collision_count": 0,
+      "syntactic_ambiguity_unpunctuated_declinable_chain_count": 0,
+      "syntactic_ambiguity_unpunctuated_genitive_chain_count": 2,
+      "tense_shift_count": 7,
+      "utterance_count": 28,
+      "zero_anaphora_resolved_count": 12
+     },
+     "spans": [
+      {
+       "basis": {
+        "check": "presence_unconfirmed",
+        "grounded_count": "1",
+        "grounding": "narration_alias",
+        "speaker": "susumu",
+        "utterance_index": "1"
+       },
+       "end": 2709,
+       "rule": "presence_unconfirmed",
+       "scene": 3,
+       "score": 0.125,
+       "start": 2619
+      }
+     ],
+     "status": "ok"
+    },
+    {
+     "id": "kamae",
+     "labels": {
+      "language": "ja"
+     },
+     "notes": [
+      "Kamae A only (kamae-core, dictionary scan); epistemic calibration and rebuttal coverage need an ArgumentIr and are not computed",
+      "Kamae B (hook survival) unavailable: annotation generation not ported (J4 decision 3)"
+     ],
+     "pole": "Kamae",
+     "scores": {
+      "sycophancy_hit_count": 0,
+      "sycophancy_index": 0.0,
+      "total_sycophancy_penalty": 0.0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "sadame",
+     "labels": {},
+     "notes": [
+      "annotated scenes used: 4; skipped (stale or without annotation): 0",
+      "values_6d scale {-1,0,+1} (INTER_NORM=24); kappa=3.0 (uncalibrated)",
+      "evidence weights explicit=100 inferred=50 ambiguous=0 (initial values, to be replaced by Step 1 measurements)",
+      "E_inter pools edges of all scenes (confidence-weighted); E_intra is the mean of per-character variances over characters observed in >= 2 scenes"
+     ],
+     "pole": "Sadame",
+     "scores": {
+      "ambiguous_excluded_count": 0,
+      "e_inter": 0.048611111,
+      "e_intra": 0.060648148,
+      "edges_eff": 11,
+      "intra_characters": 5,
+      "total": 0.051190476
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "nagare",
+     "labels": {
+      "event_axis_source": "annotated_slot",
+      "mood_axis_source": "annotated_slot"
+     },
+     "notes": [
+      "both axes from scene_meta.nagare (event_top3/mood_top3[/logp]); stagnation thresholds are per-work and uncalibrated on real data",
+      "annotated scenes: 4; without annotation or stale: 0; transitions are between consecutive used scenes"
+     ],
+     "pole": "Nagare",
+     "scores": {
+      "annotated_scenes_used": 4,
+      "event_accel_max": 0.452999414,
+      "event_accel_mean": 0.417249807,
+      "event_speed_max": 0.399248097,
+      "event_speed_mean": 0.290884341,
+      "event_transitions": 3,
+      "mood_accel_max": 0.474517044,
+      "mood_accel_mean": 0.457876062,
+      "mood_speed_max": 0.399248097,
+      "mood_speed_mean": 0.294641467,
+      "phi_zeami": 0.503208335,
+      "still_runs": 0
+     },
+     "spans": [],
+     "status": "ok"
+    },
+    {
+     "id": "awase",
+     "labels": {},
+     "notes": [
+      "scored 4 of 4 annotated scenes (those carrying scene_meta.awase); others are not scored"
+     ],
+     "pole": "Awase",
+     "scores": {
+      "detachment_max": 0.25,
+      "detachment_mean": 0.0625,
+      "irony_max": 0.25,
+      "irony_mean": 0.0625,
+      "scenes_scored": 4
+     },
+     "spans": [
+      {
+       "basis": {
+        "f_event_arousal": 1.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 0.0
+       },
+       "end": 1799,
+       "rule": "awase_detachment",
+       "scene": 1,
+       "score": 0.25,
+       "start": 822
+      },
+      {
+       "basis": {
+        "f_event_arousal": 0.0,
+        "f_event_valence": -1.0,
+        "f_style_arousal": 0.0,
+        "f_style_valence": 1.0
+       },
+       "end": 2799,
+       "rule": "awase_irony",
+       "scene": 3,
+       "score": 0.25,
+       "start": 2552
+      }
+     ],
+     "status": "ok"
+    }
+   ]
+  },
+  "runs_compared": [
+   "run1",
+   "run2",
+   "run3",
+   "run4",
+   "run5"
+  ]
+ }
+}
