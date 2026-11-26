@@ -56,6 +56,11 @@ def list_premise_changed(cache: Cache, work_id: str, scenes: list[dict[str, Any]
     return [r.premise_changed for r in resolve_work(work_id, cache, scenes, characters, local=local) if r.premise_changed]
 
 
+def list_roster_changed(cache: Cache, work_id: str, scenes: list[dict[str, Any]], characters: list[dict[str, Any]],
+                        local: dict[str, list[dict[str, Any]]] | None = None) -> list[dict[str, Any]]:
+    return [r.roster_changed for r in resolve_work(work_id, cache, scenes, characters, local=local) if r.roster_changed]
+
+
 def reannotate(cache: Cache, work_id: str, scene_hashes: list[str]) -> None:
     """Explicitly mark scenes for re-annotation (prepare then emits packs for them). Never called automatically."""
     cache.force_reannotate(work_id, scene_hashes)

@@ -1,0 +1,157 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "あさましく狂乱の如く興奮し、自動車を呼んで",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "とんでもない姉だ、と自分はひそかに苦笑しました",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "とにかく、怒らせては、こわい、何とかして、ごまかさなければならぬ",
+    "code": "E08"
+   },
+   {
+    "basis": "街の暗いところで、そのひとに帰ってもらいたいばかりに、キスをしてやりましたら、あさましく狂乱の如く興奮し",
+    "code": "E11"
+   },
+   {
+    "basis": "十円持って、銀座のその大カフエに、ひとりではいって",
+    "code": "E10"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "同志に買ってもらった品々",
+    "predicate": "ACQUIRED",
+    "subject": "yozo"
+   },
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "doshi",
+    "target": null,
+    "text": "キスされて狂乱の如く興奮した"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "運動用に借りたビルの洋室",
+    "predicate": "MOVED_TO",
+    "subject": "yozo"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "大カフエの女給から受けた恩",
+    "predicate": "ACQUIRED",
+    "subject": "yozo"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "他人に挨拶できる伎倆",
+    "predicate": "ACQUIRED",
+    "subject": "yozo"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "銀座の大カフエ",
+    "predicate": "MOVED_TO",
+    "subject": "yozo"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "銀座の或る大カフエ",
+  "mood_top3": [
+   {
+    "basis": "うれしそうな顔をして、冗談を言っては笑わせ",
+    "code": "M05"
+   },
+   {
+    "basis": "もはや自分は、金縛り同様の形になっていました",
+    "code": "M03"
+   },
+   {
+    "basis": "自分のこの絶えず追われているような心も落ちつくのではなかろうか",
+    "code": "M11"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": null,
+    "id": "yozo"
+   },
+   {
+    "basis": null,
+    "id": "doshi"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "6822e1256e8520671e252c6d3983f503435baa42c42ec8edbfa4eac287657b91",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "或る夏の夜",
+   "relative_order": "parallel"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 4,
+      "basis": null,
+      "delta": -1
+     },
+     {
+      "axis": 5,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "doshi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "87180ca0bd641731f5ed0042431d08d9ff56e4a40755798b7168359cdc3a8230",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "ba8784736511b28fa83b98a893a6b00d809482aed4bccb9fe1cf0a779027083c",
+  "prior_core": {
+   "pov_character": "yozo",
+   "present": [
+    "musume",
+    "yozo"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "772c6808e42093a059e42d5b25aa948e0513955e4e4b9c39b2f2061a588d9d5e",
+  "roster_all_digest": "860d2d10f563333e84efc5e193e711bf85e6c0e1838ee236de5e6f25bbd33187",
+  "sampling": "default",
+  "scene_text_hash": "58643c199641e530f08b7184b84102a26df47522f55e5baa1a0205ebb8e8796d"
+ },
+ "prior_facts": null,
+ "scene_hash": "6822e1256e8520671e252c6d3983f503435baa42c42ec8edbfa4eac287657b91",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v2"
+}

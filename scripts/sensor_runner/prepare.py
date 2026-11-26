@@ -16,7 +16,7 @@ from common import (
     write_json,
 )
 from render import apply_variations, prior_summary, relevant_roster  # noqa: F401  (re-exported for callers/tests)
-from resolve import load_local_utterances, record_premise_changes, resolve_work
+from resolve import load_local_utterances, record_premise_changes, resolve_work, roster_changed_rows
 
 PACKS_DIR = Path(__file__).resolve().parent / "packs"
 OUT_DIR = Path(__file__).resolve().parent / "out"
@@ -87,6 +87,7 @@ def prepare_work(
         "stale_packs_removed": removed,
         "deferred_blocked": deferred,
         "premise_changed": [{"scene_index": r["scene_index"], "scene_hash": r["scene_hash"]} for r in premise],
+        "roster_changed": [{"scene_index": r["scene_index"], "scene_hash": r["scene_hash"]} for r in roster_changed_rows(resolved)],
         "forced": sorted(r.index for r in resolved if r.extra.get("forced")),
         "l2": {"hit": sum(r.how == "hit" for r in resolved), "adopted": sum(r.how == "adopted" for r in resolved),
                "miss": sum(r.how == "miss" for r in resolved), "blocked": sum(r.blocked for r in resolved)},

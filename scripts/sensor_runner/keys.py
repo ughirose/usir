@@ -16,7 +16,8 @@ from common import INSTRUCTION_VERSION, REPO
 STEP1_ALGO_BASE = "step1.local+policyx.v1"
 L1_SCHEMA = "sensor.cache.l1/1"
 L2_SCHEMA_V1 = "sensor.cache.l2/1"  # Stage 1 keyed entries (component-hash key); migrated, not read as hits
-L2_SCHEMA = "sensor.cache.l2/2"  # Step 1: key = H(pack bytes view + annotation settings), see render.py
+L2_SCHEMA_V2 = "sensor.cache.l2/2"  # Step 1 keyed entries (pack_bytes/1, roster_all_ids in the key); migrated when the recomputed key matches
+L2_SCHEMA = "sensor.cache.l2/3"  # Step 1.5: key = H(pack bytes view pack_bytes/2 + annotation settings), see render.py
 TAIL_SENTENCES = 2  # prev_tail window: last 2 sentences of the previous scene (C1/C2 lookback)
 TAIL_FALLBACK_CHARS = 80
 

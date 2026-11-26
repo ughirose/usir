@@ -1,0 +1,190 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "にやっとする文吉に、安江はくってかかる調子で",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "やみ屋なりのはなやかさでうわさにのぼる",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "そういわれるとどうも。しかし、これも同郷のよしみに、かんべんしてくださいよ",
+    "code": "E03"
+   },
+   {
+    "basis": "安江だって斎木少年のへやの権利金のことはいまだに夫にかくしている",
+    "code": "E08"
+   },
+   {
+    "basis": "恨みがましさも忘れて安江はつい許す気になり",
+    "code": "E15"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "二千円(兵六への貸金)",
+    "predicate": "LOST",
+    "subject": "bunkichi"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "二百円(利子名目の返済)",
+    "predicate": "ACQUIRED",
+    "subject": "bunkichi"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "文吉が兵六に二千円を貸した",
+    "predicate": "LEARNED",
+    "subject": "yasue"
+   },
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "heiroku",
+    "target": null,
+    "text": "食糧統制違反で新聞に出た"
+   },
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "heiroku",
+    "target": null,
+    "text": "家に来なくなった"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "進君の部屋の権利金を安江が夫に隠している",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "やみ屋なりのはなやかさでうわさにのぼる",
+    "code": "M05"
+   },
+   {
+    "basis": "兵六さんはせっせとミルクを運んできてくれた",
+    "code": "M10"
+   },
+   {
+    "basis": "安江はくってかかる調子で",
+    "code": "M03"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": null,
+    "id": "yasue"
+   },
+   {
+    "basis": null,
+    "id": "heiroku"
+   },
+   {
+    "basis": null,
+    "id": "otoe"
+   },
+   {
+    "basis": null,
+    "id": "bunkichi"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "08ec58f6ba2228b78deb8873b08d5f4658cea9ebe819e80a3d5e0549da5a2174",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "そのあとしばらく",
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 1,
+      "basis": null,
+      "delta": -1
+     },
+     {
+      "axis": 2,
+      "basis": null,
+      "delta": -1
+     },
+     {
+      "axis": 3,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "heiroku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 3,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "yasue",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "bunkichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "otoe",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "7ec63699b58cb12b43953fe5f92d2e8f4a5b20a019504a0d2a1d5e290544bd07",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "54e2c15f359e3dd9e5dd3f27efcf6ec07946841f6c196edff790b76f7b45d92f",
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "heiroku",
+    "otoe",
+    "susumu",
+    "yasue"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "1d6d52078c0fb691c31555334ddc0ef21fc5135b161d1d0cff73208cc431aab6",
+  "roster_all_digest": "854c618fe4b8b6a59b131bd5b48c79d5983f2fc4f695a41a6113cc22bad1bb64",
+  "sampling": "default",
+  "scene_text_hash": "de0b03bfc3a4bd63f4f4aaf509b51d86a8aa7d161a9f1b80499a694c7b134c14"
+ },
+ "prior_facts": null,
+ "scene_hash": "08ec58f6ba2228b78deb8873b08d5f4658cea9ebe819e80a3d5e0549da5a2174",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v2"
+}

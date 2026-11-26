@@ -1,0 +1,136 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "ひやけなすびのようにしぼんだ、あおい顔の赤ん坊は、たれの目にも末ながくそだつとは思えなかった",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "鳴っていた腕っぷしもなえようというものだ",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "思いがけない兵六さんがきて、待っていた",
+    "code": "E01"
+   },
+   {
+    "basis": "どうもどうも。つい心やすだてにご無礼いたしました。",
+    "code": "E03"
+   },
+   {
+    "basis": "ふたりとも肺病で寝こんでいるのを見かねて、あずかった子供だった",
+    "code": "E15"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "赤ん坊(夏樹)の預かり",
+    "predicate": "ACQUIRED",
+    "subject": "yasue"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "安江の家(帰宅)",
+    "predicate": "MOVED_TO",
+    "subject": "yasue"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "安江の家",
+    "predicate": "MOVED_TO",
+    "subject": "heiroku"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "安江の家",
+  "mood_top3": [
+   {
+    "basis": "兵六さんはいんぎんに両手をつき",
+    "code": "M05"
+   },
+   {
+    "basis": "不幸はくりかえすといわれるが",
+    "code": "M04"
+   },
+   {
+    "basis": "最後のみとりをしてやろうと、口には出さぬが、ひそかな思いはそこにあったのだ",
+    "code": "M10"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": null,
+    "id": "yasue"
+   },
+   {
+    "basis": null,
+    "id": "otoe"
+   },
+   {
+    "basis": null,
+    "id": "heiroku"
+   },
+   {
+    "basis": null,
+    "id": "susumu"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "f6d7af0927c2c4c128304e9f08826aaec7c1399e3ff3754abce2e13cbf18ddfb",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "一か月目ぐらい",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yasue",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "heiroku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "otoe",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "susumu",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "4a91199d9b05bc057a53c98511f9bafdd632bcbc1442bb5be90a7562499025ce",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "e8752b70845332ed38de87114e9e51cceb9a20117648ae27a6759c4525a1ef71",
+  "prior_core": {
+   "status": "none"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "624085046bb8861a7f9d5713cf7f377445aac7fe6ea9508f822fbd05c41426e5",
+  "roster_all_digest": "854c618fe4b8b6a59b131bd5b48c79d5983f2fc4f695a41a6113cc22bad1bb64",
+  "sampling": "default",
+  "scene_text_hash": "4a4c955a389ce359c82a0aa50e786909def68fb836be858a2f2a8c1d5f56b8fc"
+ },
+ "prior_facts": null,
+ "scene_hash": "f6d7af0927c2c4c128304e9f08826aaec7c1399e3ff3754abce2e13cbf18ddfb",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v2"
+}

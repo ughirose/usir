@@ -1,0 +1,125 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "見馴れねえ旅の書生さんじゃ、下ろした荷物に、寝そべりかかって",
+   "F_valence": 0,
+   "f_arousal": -1,
+   "f_basis": "この川は音もなく、霞のように、どんよりと青田の村を這うのである",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "見馴れねえ旅の書生さんじゃ、下ろした荷物に、寝そべりかかって",
+    "code": "E03"
+   },
+   {
+    "basis": "杖を突いて続いた紳士は、村の学校の訓導である",
+    "code": "E02"
+   },
+   {
+    "basis": "撫子の一種です、常夏の花と言うんだ",
+    "code": "E07"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "手毬を拾った場所(猫柳の根際)",
+    "predicate": "MOVED_TO",
+    "subject": "saihachi"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "旅の書生が川で手毬を拾った奇妙な出来事",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "小川べり",
+  "mood_top3": [
+   {
+    "basis": "葉裏から蛍が飛んだ",
+    "code": "M02"
+   },
+   {
+    "basis": "角のある人魂めかして、ぶらりと風呂敷包を提げながら",
+    "code": "M07"
+   },
+   {
+    "basis": "ええ！驚かなくても宜しい。今のは蛙だ。",
+    "code": "M05"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": null,
+    "id": "niemon"
+   },
+   {
+    "basis": null,
+    "id": "saihachi"
+   },
+   {
+    "basis": null,
+    "id": "kundo"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "a916f16cb460d86cd421690fc1a2d194efd17051e0701c821a7a4237ac3e432e",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "秋谷の夜",
+   "relative_order": "parallel"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "niemon",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "saihachi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "kundo",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "231164d7db221154e2db54af40e86470947415e6a9e96085c856c75f4e89ddf6",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "93aac0a2d9181d1d4dad5909117546445c1428d6e0eaad79e397995f3b508c95",
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "tabiso",
+    "uba"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "1dd120595129dd8bbc8f5f105f59180f4d27b6a7d87050bcf3dd9113ca40c0e0",
+  "roster_all_digest": "b7aa0e4f4671a0099281583b00a91e63961cb8b727e7761b9303a9227c30445e",
+  "sampling": "default",
+  "scene_text_hash": "8d58f8e01d7878a122ad995ea29e67989f9731b21fc95438b52ce89c24e10300"
+ },
+ "prior_facts": null,
+ "scene_hash": "a916f16cb460d86cd421690fc1a2d194efd17051e0701c821a7a4237ac3e432e",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v2"
+}

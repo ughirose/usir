@@ -1,0 +1,125 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "簡略な祝宴を開きました",
+   "F_valence": 1,
+   "f_arousal": 0,
+   "f_basis": "典型的なウワバミ夫婦とでも言うべきでしょうねえ",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "簡略な祝宴を開きました",
+    "code": "E10"
+   },
+   {
+    "basis": "かんたんな契約書を作成し、四万円を手交し",
+    "code": "E13"
+   },
+   {
+    "basis": "はるばる八王子から代田橋にバタバタバタと引越して来ました",
+    "code": "E02"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "代田橋",
+    "predicate": "MOVED_TO",
+    "subject": "boku"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "不破宅の間借り(賃貸契約)",
+    "predicate": "ACQUIRED",
+    "subject": "boku"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "四万円",
+    "predicate": "LOST",
+    "subject": "boku"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "不破夫人は亭主を上回る酒豪",
+    "predicate": "LEARNED",
+    "subject": "boku"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "代田橋",
+  "mood_top3": [
+   {
+    "basis": "亭主を上廻る酒豪で",
+    "code": "M05"
+   },
+   {
+    "basis": "二升用意したのが足りなくて、もう一升買い足したほどでした",
+    "code": "M12"
+   },
+   {
+    "basis": "ソバを肴にして簡略な祝宴を開きました",
+    "code": "M10"
+   }
+  ],
+  "pov_character": "boku",
+  "present": [
+   {
+    "basis": null,
+    "id": "boku"
+   },
+   {
+    "basis": null,
+    "id": "fuwa"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "三日目",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "boku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "fuwa",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "4cfca570f0bfc70da1568870f0de40b987ebbf0f1fad8ab2c7e85b7fe8d8beaf",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "a765346eae0c538723066f42896e15e980e5d75bb7de12e1f600d6e3c3983b3a",
+  "prior_core": {
+   "status": "none"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "624085046bb8861a7f9d5713cf7f377445aac7fe6ea9508f822fbd05c41426e5",
+  "roster_all_digest": "49d6cd1f5147de94ae52e2b91578a97e84392b30513758f44a5203f99705937b",
+  "sampling": "default",
+  "scene_text_hash": "ccfd5eff5379dfaddc2d1481360329371227ffa1f3c863c5ad8597ac500ef26e"
+ },
+ "prior_facts": null,
+ "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v2"
+}

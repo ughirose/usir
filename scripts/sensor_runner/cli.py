@@ -21,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cache import Cache  # noqa: E402
 from common import REPO, all_work_ids, find_nishiki, load_work, segment, write_json  # noqa: E402
 from diagnose import all_ok, run_diagnose
-from epoch import MAX_EPOCHS, commit_epoch, epoch_status, list_premise_changed, reannotate, reset_epochs, unresolved_scenes  # noqa: E402
+from epoch import MAX_EPOCHS, commit_epoch, epoch_status, list_premise_changed, list_roster_changed, reannotate, reset_epochs, unresolved_scenes  # noqa: E402
 from ingest import ingest_paths  # noqa: E402
 from merge import merge_work  # noqa: E402
 from prepare import prepare_work  # noqa: E402
@@ -40,7 +40,7 @@ def cmd_prepare(a) -> int:
     for w in _works(a):
         r = prepare_work(w, cache, nishiki, limit=a.limit, defer_blocked=not a.emit_blocked)
         tot_p += len(r["packs_written"])
-        print(f"{w}: scenes={r['scene_count']} cached={r['cached']} pending={r['pending']} packs_written={len(r['packs_written'])} deferred_blocked={len(r['deferred_blocked'])} l2={r['l2']} premise_changed={len(r['premise_changed'])} forced={len(r['forced'])}")
+        print(f"{w}: scenes={r['scene_count']} cached={r['cached']} pending={r['pending']} packs_written={len(r['packs_written'])} deferred_blocked={len(r['deferred_blocked'])} l2={r['l2']} premise_changed={len(r['premise_changed'])} roster_changed={len(r['roster_changed'])} forced={len(r['forced'])}")
         for p in r["packs_written"]:
             print(f"   s{p['scene_index']} {p['scene_hash'][:12]} {p['pack']}")
     print(f"total packs written: {tot_p}")
@@ -123,10 +123,14 @@ def cmd_stale(a) -> int:
     for w in _works(a):
         work = load_work(w)
         seg = segment(nishiki, work["text_abs"])
-        rows = list_premise_changed(cache, w, seg["scenes"], work["characters"])
-        print(f"{w}: premise_changed={len(rows)} forced={len(cache.forced(w))}")
-        for r in rows:
-            print(f"   s{r['scene_index']} {r['scene_hash'][:12]} prior facts differ from those shown at annotation time")
+        prem = list_premise_changed(cache, w, seg["scenes"], work["characters"])
+        ros = list_roster_changed(cache, w, seg["scenes"], work["characters"])
+        print(f"{w}: premise_changed={len(prem)} roster_changed={len(ros)} forced={len(cache.forced(w))}")
+        for r in prem:
+            print(f"   s{r['scene_index']} {r['scene_hash'][:12]} premise_changed: prior facts differ from those shown at annotation time")
+        for r in ros:
+            print(f"   s{r['scene_index']} {r['scene_hash'][:12]} roster_changed: full character id list differs from the one shown at annotation time")
+        rows = {r["scene_hash"]: r for r in [*prem, *ros]}.values()
         if a.reannotate:
             sel = [r for r in rows if not a.scene or r["scene_index"] in a.scene]
             reannotate(cache, w, [r["scene_hash"] for r in sel])

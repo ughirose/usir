@@ -28,7 +28,7 @@ from pathlib import Path
 from typing import Any
 
 from common import CACHE_ROOT, INSTRUCTION_VERSION, MANIFEST_SCHEMA, read_json, write_json
-from keys import L1_SCHEMA, L2_SCHEMA, L2_SCHEMA_V1
+from keys import L1_SCHEMA, L2_SCHEMA, L2_SCHEMA_V1, L2_SCHEMA_V2
 
 
 def _load(path: Path, schema: str | None = None) -> Any | None:
@@ -67,15 +67,7 @@ class Cache:
     def has(self, scene_hash: str) -> bool:
         """True if any entry (keyed or legacy) of the current instruction version exists for the scene text.
         Informational only: validity under the current roster / ledger / prior is decided by resolve_l2()."""
-        e = self.get(scene_hash)
-        if e is not None and e.get("instruction_version") == INSTRUCTION_VERSION:
-            return True
-        d = self._l2_dir(scene_hash)
-        for p in d.glob("*.json") if d.exists() else []:
-            w = _load(p, L2_SCHEMA)
-            if w and w.get("entry", {}).get("instruction_version") == INSTRUCTION_VERSION:
-                return True
-        return False
+        return self.has_candidate(scene_hash)
 
     def delete(self, scene_hash: str) -> bool:
         found = False
@@ -121,6 +113,16 @@ class Cache:
             return None
         return w
 
+    def get_l2_v2(self, scene_hash: str, v2_key: str) -> dict[str, Any] | None:
+        """Wrapper stored by Step 1 under its pack_bytes/1 key (used for migration only)."""
+        w = _load(self._l2_dir(scene_hash) / f"{v2_key}.json", L2_SCHEMA_V2)
+        if not w or w.get("key") != v2_key:
+            return None
+        e = w.get("entry")
+        if not isinstance(e, dict) or e.get("scene_hash") != scene_hash or e.get("instruction_version") != INSTRUCTION_VERSION:
+            return None
+        return w
+
     def get_l2_v1(self, scene_hash: str, v1_key: str) -> dict[str, Any] | None:
         """Entry stored by Stage 1 under its component-hash key (used for migration only)."""
         w = _load(self._l2_dir(scene_hash) / f"{v1_key}.json", L2_SCHEMA_V1)
@@ -131,22 +133,34 @@ class Cache:
             return None
         return e
 
-    def resolve_l2(self, scene_hash: str, key: str, parts: dict[str, Any] | None = None, v1_key: str | None = None) -> tuple[dict[str, Any] | None, str]:
-        """Return (entry, how). how: 'hit' | 'adopted' (legacy unkeyed entry, or a Stage 1 entry whose old key `v1_key`
-        still matches, moved under `key`) | 'miss'."""
+    def resolve_l2(self, scene_hash: str, key: str, parts: dict[str, Any] | None = None, v1_key: str | None = None,
+                   v2_key: str | None = None) -> tuple[dict[str, Any] | None, str]:
+        """Return (entry, how). how: 'hit' | 'adopted' | 'miss'.
+        Adopted (moved under `key`): a legacy unkeyed entry; a Step 1 (l2/2) entry whose recomputed pack_bytes/1 key `v2_key`
+        still matches (its stored prior-facts digest is kept; roster_all_ids were part of that key, so the roster digest is the
+        current one); a Stage 1 (l2/1) entry whose old key `v1_key` still matches (history unknown: both digests None)."""
         e = self.get_l2(scene_hash, key)
         if e is not None:
             return e, "hit"
         if self.legacy_adopt:
+            parts = parts or {}
+            unknown = {**parts, "prior_facts_digest": None, "roster_all_digest": None, "premise_unknown": True}
             leg = self.get(scene_hash)
             if leg is not None and leg.get("instruction_version") == INSTRUCTION_VERSION and leg.get("scene_hash") == scene_hash:
-                self.put_l2(scene_hash, key, leg, parts or {}, source="adopted-legacy")
+                self.put_l2(scene_hash, key, leg, unknown, source="adopted-legacy")
                 self.entry_path(scene_hash).unlink()
                 return leg, "adopted"
+            if v2_key is not None:
+                w = self.get_l2_v2(scene_hash, v2_key)
+                if w is not None:
+                    old_parts = w.get("parts") or {}
+                    self.put_l2(scene_hash, key, w["entry"], {**parts, "prior_facts_digest": old_parts.get("prior_facts_digest")},
+                                source="migrated-v2", prior_facts=w.get("prior_facts"))
+                    return w["entry"], "adopted"
             if v1_key is not None:
                 old = self.get_l2_v1(scene_hash, v1_key)
                 if old is not None:
-                    self.put_l2(scene_hash, key, old, parts or {}, source="migrated-v1")
+                    self.put_l2(scene_hash, key, old, unknown, source="migrated-v1")
                     return old, "adopted"
         return None, "miss"
 
@@ -159,7 +173,7 @@ class Cache:
         d = self._l2_dir(scene_hash)
         for p in d.glob("*.json") if d.exists() else []:
             w = _load(p)
-            if isinstance(w, dict) and w.get("schema") in (L2_SCHEMA, L2_SCHEMA_V1) and w.get("entry", {}).get("instruction_version") == INSTRUCTION_VERSION:
+            if isinstance(w, dict) and w.get("schema") in (L2_SCHEMA, L2_SCHEMA_V2, L2_SCHEMA_V1) and w.get("entry", {}).get("instruction_version") == INSTRUCTION_VERSION:
                 return True
         return False
 
@@ -255,10 +269,11 @@ class Cache:
     def stale_state(self, work_id: str) -> dict[str, Any]:
         p = self.stale_path(work_id)
         j = _load(p) if p.exists() else None
-        return j if isinstance(j, dict) else {"forced": [], "premise_changed": []}
+        j = j if isinstance(j, dict) else {}
+        return {"forced": j.get("forced", []), "premise_changed": j.get("premise_changed", []), "roster_changed": j.get("roster_changed", [])}
 
     def write_stale_state(self, work_id: str, st: dict[str, Any]) -> None:
-        write_json(self.stale_path(work_id), {"schema": "sensor.stale/1", "work_id": work_id, "forced": st["forced"], "premise_changed": st["premise_changed"]})
+        write_json(self.stale_path(work_id), {"schema": "sensor.stale/1", "work_id": work_id, "forced": st["forced"], "premise_changed": st["premise_changed"], "roster_changed": st.get("roster_changed", [])})
 
     def forced(self, work_id: str) -> set[str]:
         return set(self.stale_state(work_id).get("forced", []))

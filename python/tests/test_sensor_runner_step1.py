@@ -76,7 +76,7 @@ def test_roster_alias_and_attribute_changes_visible_vs_hidden(env):
     assert mod(2, lambda c: c["aliases"].append("駅")) != k0  # alias that makes the character visible in this scene
     c = copy.deepcopy(chars)
     c.append({"id": "newcomer", "aliases": ["新人"], "gender": "Male", "honored": False})
-    assert key_of(env, 0, chars=c)[0] != k0  # roster_all_ids is shown to the annotator
+    assert key_of(env, 0, chars=c)[0] == k0  # Step 1.5: a character absent from the scene is not keyed (roster_all_ids is shown, not keyed)
 
 
 def test_global_instruction_model_and_sampling_change_the_key(env, monkeypatch):
@@ -95,7 +95,7 @@ def test_global_instruction_model_and_sampling_change_the_key(env, monkeypatch):
 def test_one_byte_change_of_any_keyed_field_changes_the_key_and_excluded_fields_do_not(env):
     k0, pack = key_of(env, 1, prior=CACHED_PRIOR)
     view = render.pack_view(pack, WID)
-    assert set(view) == set(pack) - set(render.EXCLUDED_FIELDS)
+    assert set(view) == set(pack) - set(render.EXCLUDED_FIELDS) - {"roster_all_ids"}
     for field in sorted(view):
         if field == "prior":
             continue

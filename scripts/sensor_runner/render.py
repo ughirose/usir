@@ -11,8 +11,12 @@ components, so "what the LLM sees" and "what the key covers" cannot drift apart:
     a scene must not invalidate its neighbours);
   * `prior` is replaced by its core: present (sorted), pov_character and, only for works with a hand-curated location list,
     location_id. Free-text location, time, trait_state and recent_facts are shown to the annotator but are NOT keyed;
+  * roster_all_ids (key schema pack_bytes/2) is dropped: it is shown to the annotator but only the characters that appear in
+    the scene are keyed (roster, ledger_baseline, prior present). A change of the full list is recorded at hit time
+    (roster_all_digest -> stale reason "roster_changed") instead of invalidating every scene;
+  * roster is keyed as a set (sorted by id): the order of the character file is not content;
   * everything else is hashed as written: scene text, numbered text, roster (visible characters only, with aliases and
-    every other field), roster_all_ids, ledger_baseline (visible characters only), local_utterances, instructions,
+    every other field), ledger_baseline (visible characters only), local_utterances, instructions,
     output_template, narration settings.
 
 `recent_facts` change detection ("premise changed") is separate: see prior_facts_digest().
@@ -26,8 +30,10 @@ from common import ANNOTATION_MODEL_ID, ANNOTATION_SAMPLING, INSTRUCTION_VERSION
 from keys import canon_hash
 from locations import location_id
 
-KEY_SCHEMA = "pack_bytes/1"
+KEY_SCHEMA = "pack_bytes/2"
+KEY_SCHEMA_V1 = "pack_bytes/1"  # Step 1: roster_all_ids inside the key; kept only to recompute old keys for migration
 EXCLUDED_FIELDS = ("scene_id", "scene_index", "scene_count", "scene_hash", "output_path", "l2_parts", "l2_key")
+EXCLUDED_FIELDS_V1 = EXCLUDED_FIELDS
 
 
 def relevant_roster(characters: list[dict[str, Any]], text: str, must: set[str]) -> list[dict[str, Any]]:
@@ -139,18 +145,28 @@ def prior_facts_digest(prior: dict[str, Any]) -> str | None:
     return canon_hash({"prior_facts_v1": prior.get("recent_facts", [])})
 
 
-def pack_view(pack: dict[str, Any], work_id: str) -> dict[str, Any]:
+def roster_all_digest(pack: dict[str, Any]) -> str:
+    """Digest of the full character id list shown to the annotator (as a set). Stored with the entry, compared at hit time."""
+    return canon_hash({"roster_all_v1": sorted(pack.get("roster_all_ids", []))})
+
+
+def pack_view(pack: dict[str, Any], work_id: str, schema: str = KEY_SCHEMA) -> dict[str, Any]:
     v = {k: val for k, val in pack.items() if k not in EXCLUDED_FIELDS}
     v["prior"] = prior_core(pack["prior"], work_id)
+    if schema == KEY_SCHEMA:
+        v.pop("roster_all_ids", None)
+        v["roster"] = sorted(pack.get("roster", []), key=lambda c: str(c.get("id")) if isinstance(c, dict) else str(c))
+    elif schema != KEY_SCHEMA_V1:
+        raise ValueError(f"unknown key schema {schema}")
     return v
 
 
-def pack_key(pack: dict[str, Any], work_id: str, model_id: str | None = None, sampling: str | None = None) -> str:
+def pack_key(pack: dict[str, Any], work_id: str, model_id: str | None = None, sampling: str | None = None, schema: str = KEY_SCHEMA) -> str:
     return canon_hash({
-        "layer": "L2", "key_schema": KEY_SCHEMA, "instruction_version": pack.get("instruction_version", INSTRUCTION_VERSION),
+        "layer": "L2", "key_schema": schema, "instruction_version": pack.get("instruction_version", INSTRUCTION_VERSION),
         "model_id": model_id if model_id is not None else ANNOTATION_MODEL_ID,
         "sampling": sampling if sampling is not None else ANNOTATION_SAMPLING,
-        "pack": pack_view(pack, work_id),
+        "pack": pack_view(pack, work_id, schema),
     })
 
 
@@ -169,4 +185,5 @@ def key_parts(pack: dict[str, Any], work_id: str) -> dict[str, Any]:
         "prior_core": core,
         "prior_state_hash": prior_state_hash_v2(core),
         "prior_facts_digest": prior_facts_digest(pack["prior"]),
+        "roster_all_digest": roster_all_digest(pack),
     }

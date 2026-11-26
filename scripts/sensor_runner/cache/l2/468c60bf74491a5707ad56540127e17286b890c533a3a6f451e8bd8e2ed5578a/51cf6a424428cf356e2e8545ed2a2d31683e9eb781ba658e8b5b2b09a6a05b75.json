@@ -1,0 +1,128 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "赤ひげの人は、なにかなつかしそうにわらいながら、ジョバンニやカムパネルラのようすを見ていました",
+   "F_valence": 1,
+   "f_arousal": -1,
+   "f_basis": "ジョバンニは、なにか大へんさびしいようなかなしいような気がして",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "赤髯のせなかのかがんだ人でした",
+    "code": "E01"
+   },
+   {
+    "basis": "あなた方は、どちらへいらっしゃるんですか",
+    "code": "E03"
+   },
+   {
+    "basis": "汽車はもう、しずかにうごいていたのです",
+    "code": "E02"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "二人のうしろの席",
+    "predicate": "MOVED_TO",
+    "subject": "toritori"
+   },
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "giovanni",
+    "target": null,
+    "text": "さびしいようなかなしい気持ち"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "車室",
+  "mood_top3": [
+   {
+    "basis": "なにか大へんさびしいようなかなしいような気がして",
+    "code": "M11"
+   },
+   {
+    "basis": "赤ひげの人は、なにかなつかしそうにわらいながら",
+    "code": "M10"
+   },
+   {
+    "basis": "すすきと川と、かわるがわる窓の外から光りました",
+    "code": "M01"
+   }
+  ],
+  "pov_character": "giovanni",
+  "present": [
+   {
+    "basis": null,
+    "id": "giovanni"
+   },
+   {
+    "basis": null,
+    "id": "campanella"
+   },
+   {
+    "basis": null,
+    "id": "toritori"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "468c60bf74491a5707ad56540127e17286b890c533a3a6f451e8bd8e2ed5578a",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "giovanni",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "toritori",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "campanella",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "51cf6a424428cf356e2e8545ed2a2d31683e9eb781ba658e8b5b2b09a6a05b75",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "3e24fe62df5e59a625408fb0a440056142107a75fbb2541e6a64e31506ced36a",
+  "prior_core": {
+   "pov_character": "giovanni",
+   "present": [
+    "campanella",
+    "daigakushi",
+    "giovanni"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "797db8bfb42fd8ad6a4b3c1fbd314dfd4ef8f59cfb48e6d8bc7e8c0f3022f2d5",
+  "roster_all_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b",
+  "sampling": "default",
+  "scene_text_hash": "03ecd72114a2a0780bd730fdb5984c1bbda30d0cedcba63a4fdb2fb32cb51a7b"
+ },
+ "prior_facts": null,
+ "scene_hash": "468c60bf74491a5707ad56540127e17286b890c533a3a6f451e8bd8e2ed5578a",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v2"
+}

@@ -1,0 +1,136 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "激しい狼の剣幕に気後れがして",
+   "F_valence": -1,
+   "f_arousal": 1,
+   "f_basis": "急に私は体の処々方々がむず痒くなって",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "信一は疾風のように私の首ッたまへのしかゝって喉笛を喰い切った",
+    "code": "E05"
+   },
+   {
+    "basis": "急いで樽の上へ跳び上がると、狼に着物の裾を咬えられ",
+    "code": "E14"
+   },
+   {
+    "basis": "二人ともだらしなく大の字なりに土間へ倒れたまゝ、一寸も動けなかった",
+    "code": "E16"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "hagiwara",
+    "target": null,
+    "text": "狼に喰い殺される(ごっこ)"
+   },
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "senkichi",
+    "target": null,
+    "text": "体中泥だらけになる"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "土間",
+  "mood_top3": [
+   {
+    "basis": "私は真っ蒼になって樽へしっかり掴まって見たが",
+    "code": "M03"
+   },
+   {
+    "basis": "むしゃ／＼と仰山に舌を鳴らしながら、頭から顔、胴から腹、両腕から股や脛の方までも喰い散らし",
+    "code": "M06"
+   },
+   {
+    "basis": "此奴の方が太って居て旨そうだから、此奴から先へ喰ってやろう",
+    "code": "M05"
+   }
+  ],
+  "pov_character": "hagiwara",
+  "present": [
+   {
+    "basis": null,
+    "id": "hagiwara"
+   },
+   {
+    "basis": null,
+    "id": "shinichi"
+   },
+   {
+    "basis": null,
+    "id": "senkichi"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "f166adabb8ee0745cc5fdfd5cdc7f9b51315660bc39458529ee919316c6ba017",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 5,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "hagiwara",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "senkichi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "30d07d60744b492613807ae69813c998658efa0b242615ee48cd1dbf4ae50ffb",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "d27cac9d725109de846db8258a4debb2865d2ff84d10e6bfefe2ee9c86cac590",
+  "prior_core": {
+   "pov_character": "hagiwara",
+   "present": [
+    "hagiwara",
+    "senkichi",
+    "shinichi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "1665a74906e33f0d7706bc2dde71c188714c7aff4c329491f3367fa01e9d18f4",
+  "roster_all_digest": "312b1652204d55e664542d279d464197e251b6aea1857ad91c19e1536269baf0",
+  "sampling": "default",
+  "scene_text_hash": "896b8ce1b55c69ee60219f4b21a55c07d7412bc50cdb5c006e21ea73f4ea1219"
+ },
+ "prior_facts": null,
+ "scene_hash": "f166adabb8ee0745cc5fdfd5cdc7f9b51315660bc39458529ee919316c6ba017",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v2"
+}

@@ -32,6 +32,7 @@ class Resolved:
     prev_entry: dict[str, Any] | None = None
     pack: dict[str, Any] | None = None  # the rendered pack (no output_path / l2_*), also for blocked scenes (prior pending)
     premise_changed: dict[str, Any] | None = None
+    roster_changed: dict[str, Any] | None = None
     extra: dict[str, Any] = field(default_factory=dict)
 
     @property
@@ -75,12 +76,19 @@ def resolve_work(work_id: str, cache: Cache, scenes: list[dict[str, Any]], chara
                 r.extra["forced"] = True
             else:
                 v1_key = l2_key(scene_text_hash(s["scene_text"]), roster_h, ledger_h, prior_state_hash(r.prev_entry), INSTRUCTION_VERSION)
-                adopt_parts = {**r.parts, "prior_facts_digest": None, "premise_unknown": True}
-                r.entry, r.how = cache.resolve_l2(s["scene_hash"], r.key, adopt_parts, v1_key)
+                v2_key = render.pack_key(r.pack, work_id, schema=render.KEY_SCHEMA_V1)  # Step 1 key (migration only)
+                r.entry, r.how = cache.resolve_l2(s["scene_hash"], r.key, r.parts, v1_key, v2_key)
                 if r.how == "hit":
                     w = cache.get_l2_wrapper(s["scene_hash"], r.key)
                     stored = ((w or {}).get("parts") or {}).get("prior_facts_digest")
                     now = r.parts["prior_facts_digest"]
+                    stored_roster = ((w or {}).get("parts") or {}).get("roster_all_digest")
+                    if stored_roster is not None and stored_roster != r.parts["roster_all_digest"]:
+                        r.roster_changed = {
+                            "scene_index": s["index"], "scene_hash": s["scene_hash"], "key": r.key, "reason": "roster_changed",
+                            "stored_digest": stored_roster, "current_digest": r.parts["roster_all_digest"],
+                            "current_roster_all_ids": sorted(r.pack.get("roster_all_ids", [])),
+                        }
                     if stored is not None and now is not None and stored != now:
                         r.premise_changed = {
                             "scene_index": s["index"], "scene_hash": s["scene_hash"], "key": r.key,
@@ -95,8 +103,13 @@ def resolve_work(work_id: str, cache: Cache, scenes: list[dict[str, Any]], chara
 def record_premise_changes(cache: Cache, work_id: str, resolved: list[Resolved]) -> list[dict[str, Any]]:
     """Persist the premise-changed list (sensor_runner-side metadata; the diagnose output is untouched). Returns the list."""
     rows = [r.premise_changed for r in resolved if r.premise_changed]
+    rrows = [r.roster_changed for r in resolved if r.roster_changed]
     st = cache.stale_state(work_id)
-    if st.get("premise_changed") != rows:
-        st["premise_changed"] = rows
+    if st.get("premise_changed") != rows or st.get("roster_changed") != rrows:
+        st["premise_changed"], st["roster_changed"] = rows, rrows
         cache.write_stale_state(work_id, st)
     return rows
+
+
+def roster_changed_rows(resolved: list[Resolved]) -> list[dict[str, Any]]:
+    return [r.roster_changed for r in resolved if r.roster_changed]
