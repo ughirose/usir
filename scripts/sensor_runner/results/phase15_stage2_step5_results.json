@@ -1,0 +1,588 @@
+{
+ "schema": "phase15_stage2_step5/1",
+ "annotator_model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+ "condition": "001801_001786, committed ledger empty, 3 scenes, instructions with always-list-in-ledger_additions sentence",
+ "stats": {
+  "per_invocation": {
+   "s5a.001801_001786.s0.r1": {
+    "accepted": true,
+    "attempts": 1,
+    "ledger_additions": [
+     "onna",
+     "shinichi"
+    ],
+    "round": 1,
+    "scene_index": 0,
+    "seconds": 17.13,
+    "work": "001801_001786"
+   },
+   "s5a.001801_001786.s0.r5": {
+    "accepted": true,
+    "attempts": 1,
+    "ledger_additions": [],
+    "round": 5,
+    "scene_index": 0,
+    "seconds": 15.47,
+    "work": "001801_001786"
+   },
+   "s5a.001801_001786.s1.r2": {
+    "accepted": true,
+    "attempts": 1,
+    "ledger_additions": [],
+    "round": 2,
+    "scene_index": 1,
+    "seconds": 15.92,
+    "work": "001801_001786"
+   },
+   "s5a.001801_001786.s1.r6": {
+    "accepted": true,
+    "attempts": 1,
+    "ledger_additions": [],
+    "round": 6,
+    "scene_index": 1,
+    "seconds": 14.34,
+    "work": "001801_001786"
+   },
+   "s5a.001801_001786.s2.r3": {
+    "accepted": true,
+    "attempts": 1,
+    "ledger_additions": [],
+    "round": 3,
+    "scene_index": 2,
+    "seconds": 15.82,
+    "work": "001801_001786"
+   },
+   "s5a.001801_001786.s2.r7": {
+    "accepted": true,
+    "attempts": 1,
+    "ledger_additions": [],
+    "round": 7,
+    "scene_index": 2,
+    "seconds": 13.65,
+    "work": "001801_001786"
+   }
+  },
+  "summary": {
+   "accepted": 6,
+   "attempts_total": 6,
+   "invocations": 6,
+   "invocations_with_timing": 6,
+   "location": {
+    "000035_000301": {
+     "entries": 0,
+     "location_non_null": 0
+    },
+    "000050_003586": {
+     "entries": 0,
+     "location_non_null": 0
+    },
+    "000081_000456": {
+     "entries": 0,
+     "location_non_null": 0
+    },
+    "001383_056643": {
+     "entries": 0,
+     "location_non_null": 0
+    },
+    "001798_056779": {
+     "entries": 0,
+     "location_non_null": 0
+    },
+    "001801_001786": {
+     "entries": 3,
+     "location_non_null": 3
+    },
+    "001875_059897": {
+     "entries": 0,
+     "location_non_null": 0
+    }
+   },
+   "rejected_attempts": 0,
+   "seconds": {
+    "max": 17.13,
+    "mean": 15.39,
+    "median": 15.64,
+    "min": 13.65
+   }
+  }
+ },
+ "flags": {
+  "000035_000301": {
+   "forced": [],
+   "premise_changed": [],
+   "roster_changed": []
+  },
+  "000050_003586": {
+   "forced": [],
+   "premise_changed": [],
+   "roster_changed": []
+  },
+  "000081_000456": {
+   "forced": [],
+   "premise_changed": [],
+   "roster_changed": []
+  },
+  "001383_056643": {
+   "forced": [],
+   "premise_changed": [],
+   "roster_changed": []
+  },
+  "001798_056779": {
+   "forced": [],
+   "premise_changed": [],
+   "roster_changed": []
+  },
+  "001801_001786": {
+   "forced": [],
+   "premise_changed": [],
+   "roster_changed": []
+  },
+  "001875_059897": {
+   "forced": [],
+   "premise_changed": [],
+   "roster_changed": []
+  }
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "t": 1795707548.8170073,
+   "packs": 1,
+   "per_work": {
+    "001801_001786": {
+     "scene_count": 3,
+     "cached": 0,
+     "pending": 3,
+     "l2": {
+      "hit": 0,
+      "adopted": 0,
+      "miss": 1,
+      "blocked": 2
+     },
+     "premise_changed": [],
+     "roster_changed": [],
+     "forced": []
+    }
+   }
+  },
+  {
+   "round": 2,
+   "t": 1795707580.9741395,
+   "packs": 1,
+   "per_work": {
+    "001801_001786": {
+     "scene_count": 3,
+     "cached": 1,
+     "pending": 2,
+     "l2": {
+      "hit": 1,
+      "adopted": 0,
+      "miss": 1,
+      "blocked": 1
+     },
+     "premise_changed": [],
+     "roster_changed": [],
+     "forced": []
+    }
+   }
+  },
+  {
+   "round": 3,
+   "t": 1795707610.695254,
+   "packs": 1,
+   "per_work": {
+    "001801_001786": {
+     "scene_count": 3,
+     "cached": 2,
+     "pending": 1,
+     "l2": {
+      "hit": 2,
+      "adopted": 0,
+      "miss": 1,
+      "blocked": 0
+     },
+     "premise_changed": [],
+     "roster_changed": [],
+     "forced": []
+    }
+   }
+  },
+  {
+   "round": 4,
+   "t": 1795707641.513789,
+   "packs": 0,
+   "per_work": {
+    "001801_001786": {
+     "scene_count": 3,
+     "cached": 3,
+     "pending": 0,
+     "l2": {
+      "hit": 3,
+      "adopted": 0,
+      "miss": 0,
+      "blocked": 0
+     },
+     "premise_changed": [],
+     "roster_changed": [],
+     "forced": []
+    }
+   }
+  },
+  {
+   "round": 5,
+   "t": 1795707643.9336631,
+   "packs": 1,
+   "per_work": {
+    "001801_001786": {
+     "scene_count": 3,
+     "cached": 0,
+     "pending": 3,
+     "l2": {
+      "hit": 0,
+      "adopted": 0,
+      "miss": 1,
+      "blocked": 2
+     },
+     "premise_changed": [],
+     "roster_changed": [],
+     "forced": []
+    }
+   }
+  },
+  {
+   "round": 6,
+   "t": 1795707674.7318747,
+   "packs": 1,
+   "per_work": {
+    "001801_001786": {
+     "scene_count": 3,
+     "cached": 1,
+     "pending": 2,
+     "l2": {
+      "hit": 1,
+      "adopted": 0,
+      "miss": 1,
+      "blocked": 1
+     },
+     "premise_changed": [],
+     "roster_changed": [],
+     "forced": []
+    }
+   }
+  },
+  {
+   "round": 7,
+   "t": 1795707702.8756247,
+   "packs": 1,
+   "per_work": {
+    "001801_001786": {
+     "scene_count": 3,
+     "cached": 2,
+     "pending": 1,
+     "l2": {
+      "hit": 2,
+      "adopted": 0,
+      "miss": 1,
+      "blocked": 0
+     },
+     "premise_changed": [],
+     "roster_changed": [],
+     "forced": []
+    }
+   }
+  },
+  {
+   "round": 8,
+   "t": 1795707732.8988252,
+   "packs": 0,
+   "per_work": {
+    "001801_001786": {
+     "scene_count": 3,
+     "cached": 3,
+     "pending": 0,
+     "l2": {
+      "hit": 3,
+      "adopted": 0,
+      "miss": 0,
+      "blocked": 0
+     },
+     "premise_changed": [],
+     "roster_changed": [],
+     "forced": []
+    }
+   }
+  }
+ ],
+ "timing": [
+  {
+   "pid": "s5a.001801_001786.s0.r1",
+   "event": "start",
+   "t": 1795707558.3916636
+  },
+  {
+   "pid": "s5a.001801_001786.s0.r1",
+   "event": "end",
+   "t": 1795707575.5227838
+  },
+  {
+   "pid": "s5a.001801_001786.s1.r2",
+   "event": "start",
+   "t": 1795707589.0879276
+  },
+  {
+   "pid": "s5a.001801_001786.s1.r2",
+   "event": "end",
+   "t": 1795707605.0042446
+  },
+  {
+   "pid": "s5a.001801_001786.s2.r3",
+   "event": "start",
+   "t": 1795707618.7490404
+  },
+  {
+   "pid": "s5a.001801_001786.s2.r3",
+   "event": "end",
+   "t": 1795707634.573182
+  },
+  {
+   "pid": "s5a.001801_001786.s0.r5",
+   "event": "start",
+   "t": 1795707653.6011853
+  },
+  {
+   "pid": "s5a.001801_001786.s0.r5",
+   "event": "end",
+   "t": 1795707669.0684876
+  },
+  {
+   "pid": "s5a.001801_001786.s1.r6",
+   "event": "start",
+   "t": 1795707683.2874622
+  },
+  {
+   "pid": "s5a.001801_001786.s1.r6",
+   "event": "end",
+   "t": 1795707697.6270573
+  },
+  {
+   "pid": "s5a.001801_001786.s2.r7",
+   "event": "start",
+   "t": 1795707711.0927677
+  },
+  {
+   "pid": "s5a.001801_001786.s2.r7",
+   "event": "end",
+   "t": 1795707724.7464418
+  }
+ ],
+ "attempts": [
+  {
+   "pid": "s5a.001801_001786.s0.r1",
+   "t": 1795707572.8092782,
+   "accepted": true,
+   "reasons": [],
+   "ledger_additions_pending": [
+    "onna",
+    "shinichi"
+   ]
+  },
+  {
+   "pid": "s5a.001801_001786.s1.r2",
+   "t": 1795707602.1306834,
+   "accepted": true,
+   "reasons": [],
+   "ledger_additions_pending": []
+  },
+  {
+   "pid": "s5a.001801_001786.s2.r3",
+   "t": 1795707631.59927,
+   "accepted": true,
+   "reasons": [],
+   "ledger_additions_pending": []
+  },
+  {
+   "pid": "s5a.001801_001786.s0.r5",
+   "t": 1795707665.9854553,
+   "accepted": true,
+   "reasons": [],
+   "ledger_additions_pending": []
+  },
+  {
+   "pid": "s5a.001801_001786.s1.r6",
+   "t": 1795707694.8365052,
+   "accepted": true,
+   "reasons": [],
+   "ledger_additions_pending": []
+  },
+  {
+   "pid": "s5a.001801_001786.s2.r7",
+   "t": 1795707721.9162726,
+   "accepted": true,
+   "reasons": [],
+   "ledger_additions_pending": []
+  }
+ ],
+ "epoch_state": {
+  "000035_000301.epoch.json": {
+   "epoch": 0,
+   "history": [],
+   "schema": "sensor.epoch/1",
+   "work_id": "000035_000301"
+  },
+  "000050_003586.epoch.json": {
+   "epoch": 0,
+   "history": [],
+   "schema": "sensor.epoch/1",
+   "work_id": "000050_003586"
+  },
+  "000081_000456.epoch.json": {
+   "epoch": 0,
+   "history": [],
+   "schema": "sensor.epoch/1",
+   "work_id": "000081_000456"
+  },
+  "001383_056643.epoch.json": {
+   "epoch": 0,
+   "history": [],
+   "schema": "sensor.epoch/1",
+   "work_id": "001383_056643"
+  },
+  "001798_056779.epoch.json": {
+   "epoch": 0,
+   "history": [],
+   "schema": "sensor.epoch/1",
+   "work_id": "001798_056779"
+  },
+  "001801_001786.epoch.json": {
+   "epoch": 0,
+   "history": [
+    {
+     "applied": [
+      "onna",
+      "shinichi"
+     ],
+     "discarded_repeats": [
+      {
+       "character": "shinichi",
+       "kept_scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+       "kept_vector": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+       ],
+       "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+       "vector": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+       ]
+      },
+      {
+       "character": "onna",
+       "kept_scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+       "kept_vector": [
+        -1,
+        0,
+        0,
+        -1,
+        1,
+        0
+       ],
+       "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+       "vector": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0
+       ]
+      },
+      {
+       "character": "shinichi",
+       "kept_scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+       "kept_vector": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+       ],
+       "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+       "vector": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "character": "onna",
+       "kept_scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+       "kept_vector": [
+        -1,
+        0,
+        0,
+        -1,
+        1,
+        0
+       ],
+       "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+       "vector": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     ],
+     "epoch": 1
+    }
+   ],
+   "schema": "sensor.epoch/1",
+   "work_id": "001801_001786"
+  },
+  "001875_059897.epoch.json": {
+   "epoch": 0,
+   "history": [],
+   "schema": "sensor.epoch/1",
+   "work_id": "001875_059897"
+  }
+ },
+ "summaries": {
+  "final": {
+   "001801_001786": {
+    "annotations_bytes": 10743,
+    "annotations_sha256": "ba8a20212e8e54f2bdee51a788ad1d6a7b87f35d255269789ac575a3838f4c7f",
+    "diagnose_bytes": 5497,
+    "diagnose_sha256": "f7df6123c411e7bb31a79aa45fcdf944b1bc89ead7e94b0b9bebd216f8c5854c",
+    "errors": 0,
+    "l1": {
+     "hit": 0,
+     "miss": 3
+    },
+    "l2": {
+     "adopted": 0,
+     "blocked": 0,
+     "hit": 3,
+     "miss": 0
+    },
+    "merged": 3,
+    "premise_changed": 0,
+    "roster_changed": 0,
+    "scenes": 3
+   }
+  }
+ }
+}
