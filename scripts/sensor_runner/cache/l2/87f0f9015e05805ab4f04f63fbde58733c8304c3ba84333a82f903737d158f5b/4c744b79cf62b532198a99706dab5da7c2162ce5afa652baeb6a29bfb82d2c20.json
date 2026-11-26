@@ -1,0 +1,118 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "しんみりと真心から念仏の声が出ました",
+   "F_valence": 1,
+   "f_arousal": -1,
+   "f_basis": "風呂敷包を腰につけて、草履穿きで裾をからげた、杖を突張った、白髪の婆さん",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "聞かしておくれの、お婆さん、お前は善智識",
+    "code": "E03"
+   },
+   {
+    "basis": "どうぞ、その御回向を黒門の別宅で、近々として進ぜて下さりませぬか",
+    "code": "E15"
+   },
+   {
+    "basis": "途中すがらもその若い人たちを的に仏名を唱えましょう",
+    "code": "E13"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "tabiso",
+    "target": null,
+    "text": "しんみりと真心から念仏の声が出た"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "黒門の別荘の若い人たちの話",
+    "predicate": "LEARNED",
+    "subject": "tabiso"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "黒門の別宅での回向の依頼",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "気が沈んで、しんみりと真心から念仏の声が出ました",
+    "code": "M04"
+   },
+   {
+    "basis": "浅からず渇仰して",
+    "code": "M10"
+   },
+   {
+    "basis": "とずっきり云った",
+    "code": "M05"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": null,
+    "id": "tabiso"
+   },
+   {
+    "basis": null,
+    "id": "uba"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 3,
+      "basis": null,
+      "delta": 1
+     }
+    ],
+    "character_id": "tabiso",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "uba",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "4c744b79cf62b532198a99706dab5da7c2162ce5afa652baeb6a29bfb82d2c20",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "ledger_hash": "5acbc19e73ee89b693beff20d483b0895de9913dfce855118cb0e575817a9b49",
+  "prior_state_hash": "c096d542e99b5950684f087da1702f0a49830dd8c8dedf19045f9f1f11fb3625",
+  "roster_hash": "dc5d5524dfd84cee3c647e3049c9a47bb847c2f712856f089f9e71ed81d584b8",
+  "scene_text_hash": "e2bdcd4cd25069cd6ea099570171e12a8b63f13b1966a817d1d34dc9388102c6"
+ },
+ "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+ "schema": "sensor.cache.l2/1",
+ "source": "adopted-legacy"
+}

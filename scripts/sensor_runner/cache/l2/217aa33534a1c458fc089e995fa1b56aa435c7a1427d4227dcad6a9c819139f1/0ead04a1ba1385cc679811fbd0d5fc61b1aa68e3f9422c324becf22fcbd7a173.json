@@ -1,0 +1,143 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "四人は圓くなって、豆炒りを肴に白酒を飲み始めた",
+   "F_valence": 1,
+   "f_arousal": 0,
+   "f_basis": "緋羅紗を掛けた床の雛段には、浅草の観音堂のような紫宸殿の甍が聳え",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "四人は圓くなって、豆炒りを肴に白酒を飲み始めた",
+    "code": "E10"
+   },
+   {
+    "basis": "今ね、仙吉を白酒で酔っ拂わしてやるんだよ",
+    "code": "E08"
+   },
+   {
+    "basis": "今日はお嬢様のお雛様が飾ってございますから、お遊びにいらっしゃいまし",
+    "code": "E03"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "shinichi",
+    "target": null,
+    "text": "学校では意気地なしにいじけている"
+   },
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "senkichi",
+    "target": null,
+    "text": "学校では餓鬼大将に戻っている"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "中二階の十畳の間",
+    "predicate": "MOVED_TO",
+    "subject": "hagiwara"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "仙吉を白酒で酔わせる企み",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "中二階の十畳の間",
+  "mood_top3": [
+   {
+    "basis": "四人は圓くなって、豆炒りを肴に白酒を飲み始めた",
+    "code": "M12"
+   },
+   {
+    "basis": "此れはどうも結構な御酒でございますな",
+    "code": "M05"
+   },
+   {
+    "basis": "緋羅紗を掛けた床の雛段には、浅草の観音堂のような紫宸殿の甍が聳え",
+    "code": "M06"
+   }
+  ],
+  "pov_character": "hagiwara",
+  "present": [
+   {
+    "basis": null,
+    "id": "hagiwara"
+   },
+   {
+    "basis": null,
+    "id": "shinichi"
+   },
+   {
+    "basis": null,
+    "id": "senkichi"
+   },
+   {
+    "basis": null,
+    "id": "jochu"
+   },
+   {
+    "basis": null,
+    "id": "mitsuko"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "217aa33534a1c458fc089e995fa1b56aa435c7a1427d4227dcad6a9c819139f1",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "四五日立った",
+   "evidence": "explicit",
+   "explicit_time": "明くる日",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "senkichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "hagiwara",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "mitsuko",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "0ead04a1ba1385cc679811fbd0d5fc61b1aa68e3f9422c324becf22fcbd7a173",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "ledger_hash": "f4adc598617d4bc7516ef5eab7d7cea1cf82471e09a2aac46fcbf59dbbc66d64",
+  "prior_state_hash": "de187ac356d679b7a286f6c0edc534cb79e33aa8f13d404cfa548bb97781bcf3",
+  "roster_hash": "3a9fa9cb1d5211dba1d8ebf541eef847b1989942d05033d5327c47bfb2e4b201",
+  "scene_text_hash": "35a74093c65e19a95530660c86820a89d155659bd164f23fc83c4d4b64fd5449"
+ },
+ "scene_hash": "217aa33534a1c458fc089e995fa1b56aa435c7a1427d4227dcad6a9c819139f1",
+ "schema": "sensor.cache.l2/1",
+ "source": "adopted-legacy"
+}

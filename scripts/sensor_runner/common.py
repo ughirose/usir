@@ -48,8 +48,19 @@ def dumps(x: Any, indent: int | None = 1) -> str:
 
 
 def write_json(path: Path, obj: Any) -> None:
+    """Atomic write: temp file in the same directory -> flush + fsync -> os.replace (design memo 3.4). Bytes are
+    identical to the previous Path.write_text(dumps(obj), newline="\\n")."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(dumps(obj), encoding="utf-8", newline="\n")
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    try:
+        with open(tmp, "wb") as f:
+            f.write(dumps(obj).encode("utf-8"))
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
 
 
 def read_json(path: Path) -> Any:

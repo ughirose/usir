@@ -17,6 +17,7 @@ from common import (
     segment,
     write_json,
 )
+from resolve import resolve_work
 from strong import INSTRUCTIONS, OUTPUT_TEMPLATE, instruction_hash
 
 PACKS_DIR = Path(__file__).resolve().parent / "packs"
@@ -43,11 +44,12 @@ def apply_variations(baseline: dict[str, list[int]], strong: dict[str, Any]) -> 
     return cur
 
 
-def prior_summary(prev_scene: dict[str, Any] | None, cache: Cache, ledger: dict[str, list[int]]) -> dict[str, Any]:
+def prior_summary(prev_scene: dict[str, Any] | None, prev_entry: dict[str, Any] | None, ledger: dict[str, list[int]]) -> dict[str, Any]:
+    """Prior shown to the annotator. `prev_entry` is the strictly resolved annotation of the previous scene (or None)."""
     if prev_scene is None:
         return {"status": "none"}
-    e = cache.get(prev_scene["scene_hash"])
-    if e is None or e.get("instruction_version") != INSTRUCTION_VERSION:
+    e = prev_entry
+    if e is None:
         return {"status": "pending", "scene_id_hint": prev_scene["index"],
                 "note": "直前の場面は未注釈。先にその出力ファイルを作成・ingest してから、このパックを再生成すること。"}
     return {
@@ -73,7 +75,10 @@ def prepare_work(
     seg: dict[str, Any] | None = None,
     segment_fn: Callable[[str, Path], dict[str, Any]] = segment,
     local_path: Path | None = None,
+    defer_blocked: bool = False,
 ) -> dict[str, Any]:
+    """defer_blocked: do not emit packs for scenes whose predecessor is itself unresolved (their strict key is not
+    computable yet; after the predecessor is ingested they are usually cache hits via the Early Cutoff)."""
     work = load_work(work_id)
     if seg is None:
         seg = segment_fn(nishiki, work["text_abs"])
@@ -82,8 +87,16 @@ def prepare_work(
     wdir = packs_dir / work_id
     wdir.mkdir(parents=True, exist_ok=True)
 
-    manifest = cache.write_manifest(work_id, scenes, seg.get("splitter", SPLITTER))
-    pending = [s for s, row in zip(scenes, manifest["scenes"]) if row["status"] == "pending"]
+    resolved = resolve_work(work_id, cache, scenes, work["characters"])
+    manifest = cache.write_manifest(work_id, scenes, seg.get("splitter", SPLITTER), resolved=[r.entry for r in resolved])
+    pend_r = [r for r in resolved if r.entry is None]
+    # A blocked scene (predecessor unresolved) is not annotated now when defer_blocked, or when an entry for its text
+    # already exists that may still hit once the predecessor is resolved (Early Cutoff).
+    skip = [r for r in pend_r if r.blocked and (defer_blocked or r.extra.get("candidate"))]
+    deferred = [r.index for r in skip]
+    pend_r = [r for r in pend_r if r not in skip]
+    by_index = {r.index: r for r in resolved}
+    pending = [r.scene for r in pend_r]
     if limit is not None:
         pending = pending[:limit]
     keep = {f"{s['scene_hash'][:12]}.pack.json" for s in pending}
@@ -106,7 +119,8 @@ def prepare_work(
     for s in pending:
         idx = s["index"]
         prev = scenes[idx - 1] if idx > 0 else None
-        prior = prior_summary(prev, cache, ledger)
+        rv = by_index[idx]
+        prior = prior_summary(prev, rv.prev_entry if prev is not None else None, ledger)
         lu = local.get(s["scene_hash"], [])
         must = set(must_base) | set(prior.get("present", []))
         for u in lu:
@@ -139,6 +153,9 @@ def prepare_work(
             "ledger_baseline": {k: v for k, v in ledger.items() if k in rid},
             "local_utterances": lu,
             "prior": prior,
+            # strict L2 key parts at pack time; None when the predecessor was unresolved (ingest then rejects the pack)
+            "l2_parts": rv.parts,
+            "l2_key": rv.key,
         }
         p = wdir / f"{h12}.pack.json"
         write_json(p, pack)
@@ -150,4 +167,7 @@ def prepare_work(
         "pending": len(scenes) - manifest["cached_count"],
         "packs_written": written,
         "stale_packs_removed": removed,
+        "deferred_blocked": deferred,
+        "l2": {"hit": sum(r.how == "hit" for r in resolved), "adopted": sum(r.how == "adopted" for r in resolved),
+               "miss": sum(r.how == "miss" for r in resolved), "blocked": sum(r.blocked for r in resolved)},
     }

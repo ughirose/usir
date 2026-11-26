@@ -7,7 +7,8 @@ from pathlib import Path
 from typing import Any
 
 from cache import Cache
-from common import INSTRUCTION_VERSION, read_json, write_json
+from common import INSTRUCTION_VERSION, load_work, read_json, write_json
+from keys import l2_key, ledger_key_hash, roster_hash
 from merge import merge_scene
 from prepare import PACKS_DIR
 from strong import validate_strong
@@ -55,10 +56,24 @@ def ingest_file(path: Path, cache: Cache, packs_dir: Path | None = None, rejects
         res["reasons"] = reasons
         return _reject(res, path, rejects_dir)
 
+    # strict L2 key: the parts the annotator saw (pack) + the ledger this entry was validated against (incl. its additions)
+    parts = pack.get("l2_parts")
+    if not parts:
+        res["reasons"] = ["pack_prior_unresolved: the pack was generated while the previous scene was not annotated; "
+                          "ingest that scene first, then re-run prepare and annotate the regenerated pack"]
+        return _reject(res, path, rejects_dir)
+    cur_roster = roster_hash(load_work(pack["work_id"])["characters"])
+    if cur_roster != parts["roster_hash"]:
+        res["reasons"] = ["pack_stale_roster: characters.json changed since the pack was generated; re-run prepare"]
+        return _reject(res, path, rejects_dir)
+
     adds = entry.get("ledger_additions") or {}
+    new_ledger = {**ledger, **adds}
     if adds:
-        cache.put_ledger(pack["work_id"], {**ledger, **adds}, note="extended by ingest ledger_additions")
-    cache.put(entry)
+        cache.put_ledger(pack["work_id"], new_ledger, note="extended by ingest ledger_additions")
+    parts = {**parts, "ledger_hash": ledger_key_hash(new_ledger)}
+    key = l2_key(parts["scene_text_hash"], parts["roster_hash"], parts["ledger_hash"], parts["prior_state_hash"], parts["instruction_version"])
+    cache.put_l2(pack["scene_hash"], key, entry, parts)
     cache.mark_cached(pack["work_id"], pack["scene_hash"], entry)
     res["accepted"] = True
     return res

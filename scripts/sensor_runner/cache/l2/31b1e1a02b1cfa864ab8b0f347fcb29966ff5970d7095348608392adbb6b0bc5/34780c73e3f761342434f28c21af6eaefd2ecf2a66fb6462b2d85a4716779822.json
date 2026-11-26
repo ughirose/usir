@@ -1,0 +1,118 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "突然ざぶりと、少え人は衣服の裾を掴んだなりで、川の中へ飛込んだっけ",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "夕焼が残ったような尾を曳いて",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "稲妻を掴えそうな慌て方で、ざぶざぶ真中で追かける",
+    "code": "E14"
+   },
+   {
+    "basis": "手毬を拾うと、その下に、猫が一匹居たではねえかね",
+    "code": "E07"
+   },
+   {
+    "basis": "ここだあ仁右衛門、先生様も聞かっせえ",
+    "code": "E03"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "手毬(旅の書生が川の中で取る)",
+    "predicate": "ACQUIRED",
+    "subject": null
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "手毬の下に猫が居た",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "川面",
+  "mood_top3": [
+   {
+    "basis": "手毬を拾うと、その下に、猫が一匹居たではねえかね",
+    "code": "M07"
+   },
+   {
+    "basis": "夕焼が残ったような尾を曳いて",
+    "code": "M02"
+   },
+   {
+    "basis": "気の疾え先生だ。さまで欲しけりゃ算段のうして",
+    "code": "M05"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": null,
+    "id": "saihachi"
+   },
+   {
+    "basis": null,
+    "id": "niemon"
+   },
+   {
+    "basis": null,
+    "id": "kundo"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "31b1e1a02b1cfa864ab8b0f347fcb29966ff5970d7095348608392adbb6b0bc5",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "saihachi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "niemon",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 4,
+      "basis": null,
+      "delta": 1
+     }
+    ],
+    "character_id": "kundo",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "34780c73e3f761342434f28c21af6eaefd2ecf2a66fb6462b2d85a4716779822",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "ledger_hash": "5acbc19e73ee89b693beff20d483b0895de9913dfce855118cb0e575817a9b49",
+  "prior_state_hash": "01b10088bb4f8e4f7d2e88df5cf7149a45cdc268f0df5381fb0fcfff46101ed6",
+  "roster_hash": "dc5d5524dfd84cee3c647e3049c9a47bb847c2f712856f089f9e71ed81d584b8",
+  "scene_text_hash": "489692f5d9831edf1217b31026b2114e01ca8bd2323229d4706bd8fd1f0d3f6a"
+ },
+ "scene_hash": "31b1e1a02b1cfa864ab8b0f347fcb29966ff5970d7095348608392adbb6b0bc5",
+ "schema": "sensor.cache.l2/1",
+ "source": "adopted-legacy"
+}

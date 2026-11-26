@@ -1,0 +1,114 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "早くこのひと、帰らねえかなあ、手紙だなんて、見えすいているのに",
+   "F_valence": -1,
+   "f_arousal": 1,
+   "f_basis": "あら、いやよ、あら、いやよ、と言って、そのうれしがる事、ひどくみっともなく、興が覚めるばかりなのです",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "女から来たラヴ・レターで、風呂をわかしてはいった男があるそうですよ",
+    "code": "E03"
+   },
+   {
+    "basis": "自分に特別の好意を寄せている女が、三人いました",
+    "code": "E11"
+   },
+   {
+    "basis": "れいの受け身の奉仕の精神を発揮して",
+    "code": "E08"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "inferred",
+    "object": "カルモチン",
+    "predicate": "ACQUIRED",
+    "subject": "yozo"
+   },
+   {
+    "basis": null,
+    "evidence": "inferred",
+    "object": "薬屋",
+    "predicate": "MOVED_TO",
+    "subject": "musume"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "仙遊館",
+  "mood_top3": [
+   {
+    "basis": "ミルクをわかして飲んだ事はあるんです",
+    "code": "M05"
+   },
+   {
+    "basis": "くたくたに疲れ切っているからだに、ウムと気合いをかけて腹這いになり、煙草を吸い",
+    "code": "M08"
+   },
+   {
+    "basis": "へへののもへじでも書いているのに違いないんです",
+    "code": "M16"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": null,
+    "id": "yozo"
+   },
+   {
+    "basis": null,
+    "id": "musume"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "834c904d9ee2346e61880fcf1571746af4f8f58909c28206e2340634cf0e9143",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "その頃",
+   "relative_order": "parallel"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 3,
+      "basis": null,
+      "delta": 1
+     },
+     {
+      "axis": 4,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "musume",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "7cb78c6ddc69c2d33ec2f1d7f3ea639922b785f22dbe418630a8b05366577359",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "ledger_hash": "7c0daf895bd08795fa8a76404ffeb76dd479475cf866466aa6d2e8d0c74bbc08",
+  "prior_state_hash": "60b6cfbde94f6e9280d2e9810408c9acaed676276cd122c46b6d77aac2ca59b2",
+  "roster_hash": "b3fe08e4d0f2dcd20e2d3456ac80c96170784d7759b8da7eafcfc6deec21fa88",
+  "scene_text_hash": "05879b1b487ea9d00d60e5aadbfdcc893c9da0a87b39a68e9be2b10e07676dbd"
+ },
+ "scene_hash": "834c904d9ee2346e61880fcf1571746af4f8f58909c28206e2340634cf0e9143",
+ "schema": "sensor.cache.l2/1",
+ "source": "adopted-legacy"
+}

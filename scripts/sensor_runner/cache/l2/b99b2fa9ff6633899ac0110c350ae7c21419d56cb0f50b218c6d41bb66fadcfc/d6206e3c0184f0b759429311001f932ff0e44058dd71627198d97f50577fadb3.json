@@ -1,0 +1,109 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "背骨を打ってもう漁ができなくなって、この沖で銛をからだに結えつけてとびこんじゃったんです",
+   "F_valence": -2,
+   "f_arousal": -1,
+   "f_basis": "真暗な夜の中で、ただ夜光虫だけが彼につづき",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "ぼくの親父も、自殺したんです",
+    "code": "E06"
+   },
+   {
+    "basis": "そのままゆっくりと引きかえした",
+    "code": "E02"
+   },
+   {
+    "basis": "あなたも、ぼくはとめはしません",
+    "code": "E03"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "慎一の父も自殺した",
+    "predicate": "LEARNED",
+    "subject": "onna"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "岸",
+    "predicate": "MOVED_TO",
+    "subject": "shinichi"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "沖",
+  "mood_top3": [
+   {
+    "basis": "背骨を打ってもう漁ができなくなって",
+    "code": "M04"
+   },
+   {
+    "basis": "真暗な夜の中で、ただ夜光虫だけが彼につづき",
+    "code": "M01"
+   },
+   {
+    "basis": "女の顔に夜光虫の緑の燐光が照って、それが呼吸づくように明るくなり、また暗くなった",
+    "code": "M07"
+   }
+  ],
+  "pov_character": "shinichi",
+  "present": [
+   {
+    "basis": null,
+    "id": "shinichi"
+   },
+   {
+    "basis": null,
+    "id": "onna"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 3,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "onna",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "d6206e3c0184f0b759429311001f932ff0e44058dd71627198d97f50577fadb3",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "ledger_hash": "6494943212b7797f2a8cc9fa749b8c924483519773f6c30c81414adf2a091a99",
+  "prior_state_hash": "ee00448241dfdcbc93588e97bb1b9b019715a8c70779cf89d70bb234c1249015",
+  "roster_hash": "495d228e1eb4f03de0b0bfdd16d202779c84217a6653eee999a9ecc1a36ccb3f",
+  "scene_text_hash": "041bac73b440de0dc737853660ccf40bd32b62fac3492d7fbeae2b0cda11a61d"
+ },
+ "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+ "schema": "sensor.cache.l2/1",
+ "source": "adopted-legacy"
+}

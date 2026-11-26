@@ -14,6 +14,8 @@ from pathlib import Path
 from typing import Any
 
 from common import INSTRUCTION_VERSION, SCHEMA_PATH, SPLITTER, content_hash, read_json
+from keys import canon_hash, l1_key, prev_tail_hash, roster_hash, scene_text_hash, step1_version
+from resolve import resolve_work
 from strong import instruction_hash
 
 FIRST_PERSON = ["僕", "ぼく", "わたくし", "私", "わたし", "俺", "おれ", "あたし"]
@@ -64,29 +66,17 @@ def ledger_hash(ledger: dict[str, list[int]]) -> str:
     return "ledger:" + content_hash(ledger)[:12]
 
 
-def merge_scene(
-    work_id: str,
-    scene: dict[str, Any],
-    scene_count: int,
-    strong: dict[str, Any],
-    local_utts: list[dict[str, Any]] | None,
-    ledger: dict[str, list[int]],
-    roster_ids: list[str],
-) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Return (sensor.v2 record, stats). `scene` is one element of `nishiki segment` output."""
-    from scene_annotator_shim import resolve_sentence_index, validate_annotation_schema
-
+def build_utterances(scene: dict[str, Any], local_utts: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
+    """Local Step 1 block of one scene (L1 cache payload): local speaker/addressee/evidence + Policy X register.
+    Pure function of the scene text, the scene's utterance spans and `local_utts`."""
     text = scene["scene_text"]
-    stats = {"missing_local_utterances": 0, "local_ids_absent_from_present": 0, "sentence_index_unresolved": 0}
     local_by_idx = {u["utterance_index"]: u for u in (local_utts or [])}
-
     utts = []
     for u in scene["utterances"]:
         i = u["index"]
         quote = text[u["local"]["start"] - 1 : u["local"]["end"] + 1]
         lu = local_by_idx.get(i)
         if lu is None:
-            stats["missing_local_utterances"] += 1
             lu = {"speaker_id": None, "addressee_id": None, "evidence": "ambiguous"}
         utts.append(
             {
@@ -97,6 +87,28 @@ def merge_scene(
                 "register": {"politeness": policy_x_politeness(quote), "first_person": first_person_surface(quote, lu["speaker_id"])},
             }
         )
+    return utts
+
+
+def merge_scene(
+    work_id: str,
+    scene: dict[str, Any],
+    scene_count: int,
+    strong: dict[str, Any],
+    local_utts: list[dict[str, Any]] | None,
+    ledger: dict[str, list[int]],
+    roster_ids: list[str],
+    utts_cached: list[dict[str, Any]] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Return (sensor.v2 record, stats). `scene` is one element of `nishiki segment` output.
+    `utts_cached`: L1 hit payload (build_utterances output); when given, Step 1 is not recomputed."""
+    from scene_annotator_shim import resolve_sentence_index, validate_annotation_schema
+
+    text = scene["scene_text"]
+    stats = {"missing_local_utterances": 0, "local_ids_absent_from_present": 0, "sentence_index_unresolved": 0}
+    local_by_idx = {u["utterance_index"]: u for u in (local_utts or [])}
+    stats["missing_local_utterances"] = sum(1 for u in scene["utterances"] if u["index"] not in local_by_idx)
+    utts = utts_cached if utts_cached is not None else build_utterances(scene, local_utts)
 
     # Presence is the strong model's field. Local speakers/addressees that it left out are NOT added (that would hide
     # Sasae off_stage_speaker findings); they are counted so the session can review them.
@@ -172,8 +184,11 @@ def merge_scene(
     return rec, {**stats, "errors": errs}
 
 
-def merge_work(work_id, cache, seg, local_path=None, partial=False):
-    """Merge every scene of a work. Returns (records, report). Raises if scenes are uncached and not `partial`."""
+def merge_work(work_id, cache, seg, local_path=None, partial=False, use_l1=True):
+    """Merge every scene of a work. Returns (records, report). Raises if scenes are unresolved and not `partial`.
+
+    L2 entries are resolved with strict keys (resolve.resolve_work); the local Step 1 block of each scene is served from
+    the L1 cache (key: scene text + roster + previous-scene tail + Step 1 algorithm version + local-file entry)."""
     from common import LOCAL_DIR, load_work
 
     work = load_work(work_id)
@@ -181,14 +196,31 @@ def merge_work(work_id, cache, seg, local_path=None, partial=False):
     lp = Path(local_path) if local_path else LOCAL_DIR / f"{work_id}.utterances.json"
     local = load_local(lp) if lp.exists() else {}
     ledger = cache.ledger(work_id)
-    records, report = [], {"work_id": work_id, "scenes": len(seg["scenes"]), "merged": 0, "uncached": [], "errors": [],
-                           "missing_local_utterances": 0, "local_ids_absent_from_present": 0, "sentence_index_unresolved": 0}
-    for s in seg["scenes"]:
-        e = cache.get(s["scene_hash"])
-        if e is None or e.get("instruction_version") != INSTRUCTION_VERSION:
+    scenes = seg["scenes"]
+    resolved = resolve_work(work_id, cache, scenes, work["characters"])
+    roster_h = roster_hash(work["characters"])
+    algo = step1_version() if use_l1 else None
+    records, report = [], {"work_id": work_id, "scenes": len(scenes), "merged": 0, "uncached": [], "errors": [],
+                           "missing_local_utterances": 0, "local_ids_absent_from_present": 0, "sentence_index_unresolved": 0,
+                           "l1": {"hit": 0, "miss": 0}, "l2": {"hit": 0, "adopted": 0, "miss": 0, "blocked": 0}}
+    for s, rv in zip(scenes, resolved):
+        report["l2"][rv.how] += 1
+        e = rv.entry
+        if e is None:
             report["uncached"].append(s["index"])
             continue
-        rec, st = merge_scene(work_id, s, len(seg["scenes"]), e, local.get(s["scene_hash"]), ledger, roster_ids)
+        utts = None
+        if use_l1:
+            k1 = l1_key(scene_text_hash(s["scene_text"]), roster_h, prev_tail_hash(scenes[s["index"] - 1] if s["index"] > 0 else None),
+                        canon_hash({"local_v1": local.get(s["scene_hash"])}), algo)
+            utts = cache.get_l1(k1)
+            if utts is None:
+                report["l1"]["miss"] += 1
+                utts = build_utterances(s, local.get(s["scene_hash"]))
+                cache.put_l1(k1, utts, {"scene_text_hash": scene_text_hash(s["scene_text"]), "roster_hash": roster_h, "step1_algo_version": algo})
+            else:
+                report["l1"]["hit"] += 1
+        rec, st = merge_scene(work_id, s, len(scenes), e, local.get(s["scene_hash"]), ledger, roster_ids, utts_cached=utts)
         for k in ("missing_local_utterances", "local_ids_absent_from_present", "sentence_index_unresolved"):
             report[k] += st[k]
         report["errors"] += [(s["index"], x) for x in st["errors"]]

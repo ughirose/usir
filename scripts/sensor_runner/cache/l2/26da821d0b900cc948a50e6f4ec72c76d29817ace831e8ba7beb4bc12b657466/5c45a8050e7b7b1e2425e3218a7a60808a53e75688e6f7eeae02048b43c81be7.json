@@ -1,0 +1,123 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "少々僕もむっとして言い返しました",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "汗だらけのその顔にはあちこち疣がくっついていて、それがまず印象的でした",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "留守番は君じゃないか。僕はここの居住者だ",
+    "code": "E04"
+   },
+   {
+    "basis": "野呂がやって来たのは、それから二三日経った正午頃でした",
+    "code": "E01"
+   },
+   {
+    "basis": "この家は僕のものだよ。不破氏から僕が買い受けたんだ",
+    "code": "E07"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "不破の家(庭)",
+    "predicate": "MOVED_TO",
+    "subject": "noro"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "野呂は家を買い受けたと主張している",
+    "predicate": "LEARNED",
+    "subject": "boku"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "不破が兵庫に立った",
+    "predicate": "LEARNED",
+    "subject": "noro"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "家の所有権の食い違い",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "板の間",
+  "mood_top3": [
+   {
+    "basis": "バカじゃなかろうかというような眼付で",
+    "code": "M05"
+   },
+   {
+    "basis": "急に言葉がぞんざいになりました",
+    "code": "M03"
+   },
+   {
+    "basis": "少々僕もむっとして言い返しました",
+    "code": "M09"
+   }
+  ],
+  "pov_character": "boku",
+  "present": [
+   {
+    "basis": null,
+    "id": "boku"
+   },
+   {
+    "basis": null,
+    "id": "noro"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "二三日経った正午頃",
+   "evidence": "explicit",
+   "explicit_time": "翌朝",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "boku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 3,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "noro",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "5c45a8050e7b7b1e2425e3218a7a60808a53e75688e6f7eeae02048b43c81be7",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "ledger_hash": "da5893a7b7fc1d87097f6d1625797b72b708c92235369aaab58dfc440894dd08",
+  "prior_state_hash": "43ad5368c5f3b7a7da0a41a00225648000f59c80f6832891aaf6adf8ae7b8906",
+  "roster_hash": "2f8f79205f7103a977b4fd4d90b974a3858bcba41c23ca5f3df3c292f92744b0",
+  "scene_text_hash": "f30ddf76987cf7c18a009bac0a20f1d348291ec35497a4a00e521649cd85f664"
+ },
+ "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+ "schema": "sensor.cache.l2/1",
+ "source": "adopted-legacy"
+}
