@@ -36,3 +36,6 @@ roster_all_ids を L2 鍵から外す（pack 内容は不変）。roster_all_dig
 
 ## Step 1.5 完了（2026-11-26）
 実装コミット 0321953。80 passed（既存72のうち2件は新仕様に合わせ期待値更新 + 新規8）、パリティ4条件一致、人物追加シナリオ 4→0/1/2 call。レポート: docs/handoff/2026-11-26_phase15_stage2_step15_report.md
+
+## 枝の統合（2026-11-26 22:40 +0900）
+統合元 feat/phase15-stage1-cache を統合先 feat/sensor-runner（統合前の先端 b3da0e4）へ fast-forward で進める。事前確認: b3da0e4 は統合元の祖先（git merge-base --is-ancestor 成立）。main には触れない。統合元の枝は削除しない。
