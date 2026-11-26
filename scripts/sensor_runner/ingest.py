@@ -67,7 +67,9 @@ def ingest_file(path: Path, cache: Cache, packs_dir: Path | None = None, rejects
 
     # ledger_additions are NOT applied to the frozen ledger now: they are recorded as pending and applied by `epoch commit`.
     adds = entry.get("ledger_additions") or {}
+    n_disc = len(cache.pending_discarded(pack["work_id"]))
     res["ledger_additions_pending"] = cache.add_pending(pack["work_id"], adds, pack["scene_hash"]) if adds else []
+    res["ledger_additions_discarded"] = cache.pending_discarded(pack["work_id"])[n_disc:]  # diagnostic only
     prior = pack.get("prior") or {}
     prior_facts = prior.get("recent_facts") if prior.get("status") == "cached" else None
     cache.put_l2(pack["scene_hash"], pack["l2_key"], entry, parts, prior_facts=prior_facts)

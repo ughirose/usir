@@ -32,11 +32,15 @@ def commit_epoch(cache: Cache, work_id: str, max_epochs: int = MAX_EPOCHS) -> di
     if n >= max_epochs:
         return {"status": "cutoff", "epoch": n, "applied": [], "unapplied": sorted(pend)}
     committed = cache.ledger_committed(work_id)
+    discarded = cache.pending_discarded(work_id)  # read before put_ledger clears the pending file
     led = {**committed, **{ch: rec["baseline"] for ch, rec in pend.items() if ch not in committed}}
     cache.put_ledger(work_id, led, note=f"epoch {n + 1} commit of ledger_additions")
-    hist = [*st.get("history", []), {"epoch": n + 1, "applied": sorted(pend)}]
+    rec = {"epoch": n + 1, "applied": sorted(pend)}
+    if discarded:
+        rec["discarded_repeats"] = discarded  # diagnostic: later vectors for an already-pending character (first writer won)
+    hist = [*st.get("history", []), rec]
     cache.write_epoch_state(work_id, {"epoch": n + 1, "history": hist})
-    return {"status": "committed", "epoch": n + 1, "applied": sorted(pend), "unapplied": []}
+    return {"status": "committed", "epoch": n + 1, "applied": sorted(pend), "unapplied": [], "discarded_repeats": discarded}
 
 
 def reset_epochs(cache: Cache, work_id: str) -> None:

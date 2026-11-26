@@ -235,24 +235,43 @@ class Cache:
         if left != pend:
             self._write_pending(work_id, left)
 
-    def _write_pending(self, work_id: str, additions: dict[str, dict[str, Any]]) -> None:
+    def pending_discarded(self, work_id: str) -> list[dict[str, Any]]:
+        """Diagnostic record (no effect on behaviour): repeats of a pending ledger_addition whose vector differed from the one
+        that was kept (first writer wins). [{character, scene_hash, vector, kept_vector, kept_scene_hash}]."""
+        p = self.pending_path(work_id)
+        return read_json(p).get("discarded", []) if p.exists() else []
+
+    def _write_pending(self, work_id: str, additions: dict[str, dict[str, Any]], discarded: list[dict[str, Any]] | None = None) -> None:
+        disc = self.pending_discarded(work_id) if discarded is None else discarded
         if additions:
-            write_json(self.pending_path(work_id), {"schema": "sensor.ledger.pending/1", "work_id": work_id, "additions": additions})
+            doc = {"schema": "sensor.ledger.pending/1", "work_id": work_id, "additions": additions}
+            if disc:
+                doc["discarded"] = disc
+            write_json(self.pending_path(work_id), doc)
         elif self.pending_path(work_id).exists():
             self.pending_path(work_id).unlink()
 
     def add_pending(self, work_id: str, additions: dict[str, list[int]], scene_hash: str) -> list[str]:
-        """Record ledger_additions of an accepted entry without touching the committed ledger (first writer wins)."""
+        """Record ledger_additions of an accepted entry without touching the committed ledger (first writer wins).
+        A repeat of a pending character with a different vector is ignored for the ledger but noted in `discarded`."""
         pend = self.pending_additions(work_id)
         committed = self.ledger_committed(work_id)
-        added = []
+        added, disc = [], list(self.pending_discarded(work_id))
         for ch, vec in additions.items():
-            if ch in committed or ch in pend:
+            if ch in committed:
+                continue
+            if ch in pend:
+                kept = pend[ch]
+                if list(vec) != list(kept["baseline"]):
+                    rec = {"character": ch, "scene_hash": scene_hash, "vector": list(vec), "kept_vector": list(kept["baseline"]),
+                           "kept_scene_hash": kept.get("scene_hash")}
+                    if rec not in disc:
+                        disc.append(rec)
                 continue
             pend[ch] = {"baseline": list(vec), "scene_hash": scene_hash, "seq": len(pend) + 1}
             added.append(ch)
-        if added:
-            self._write_pending(work_id, pend)
+        if added or len(disc) != len(self.pending_discarded(work_id)):
+            self._write_pending(work_id, pend, disc)
         return added
 
     def epoch_state(self, work_id: str) -> dict[str, Any]:
