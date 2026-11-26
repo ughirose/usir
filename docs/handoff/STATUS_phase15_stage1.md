@@ -22,3 +22,8 @@ Orion が report §6 の判断点（ledger_hash の範囲、Early Cutoff の健�
 - 状態: 計測完了（受理100件）、レポート作成済み。59 テスト合格、実装変更なし。main 未マージ。
 - 結果要約: 型付き facts 不一致率 T3 1.00 / T0 0.88（鍵に不可）、location 閉じた語彙一致 0.90（楽観的条件）、prior ハッシュ 0.74→0.835（再計算値）。
 - NEXT: Orion が Step 0.5 レポート §3・§4 を読み、Step 1 の方針を決める。
+
+## Stage 2 Step 1（2026-11-26 開始、実装）
+- 指示: Drive inbox の 2026-11-26_phase15_stage2_step1_prompt_v1.md
+- 確定設計: pack バイト列ハッシュ鍵 / facts は鍵に入れず「前提変化あり」を記録 / prior_state 核=present+pov、location は手確定の場所リストがある作品のみ / 台帳エポック固定（最大2） / 台帳の pack 載せ方=大域+表示人物のみ。
+- 状態: 開始（プロンプト全文読み込み中）
