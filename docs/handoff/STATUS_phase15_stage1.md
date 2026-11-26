@@ -27,3 +27,6 @@ Orion が report §6 の判断点（ledger_hash の範囲、Early Cutoff の健�
 - 指示: Drive inbox の 2026-11-26_phase15_stage2_step1_prompt_v1.md
 - 確定設計: pack バイト列ハッシュ鍵 / facts は鍵に入れず「前提変化あり」を記録 / prior_state 核=present+pov、location は手確定の場所リストがある作品のみ / 台帳エポック固定（最大2） / 台帳の pack 載せ方=大域+表示人物のみ。
 - 状態: 開始（プロンプト全文読み込み中）
+
+## Step 1 完了（2026-11-26）
+実装コミット eb031f4。72 passed（既存59+新規13）、parity 4条件一致、epoch 凍結シナリオ 6→4 call。レポート: docs/handoff/2026-11-26_phase15_stage2_step1_report.md
