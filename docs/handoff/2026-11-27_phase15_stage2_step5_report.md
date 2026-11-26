@@ -27,7 +27,10 @@
 3. 確認と push: §3。強制 push なし。
 
 ## 3. 統合先端での確認
-（統合先端のコミットハッシュ・テスト・push 結果・GitHub 上の先端照合は、push 後に追記する。→ 末尾 §6）
+統合先端コミット `c7302c822ae501a1d4dac28bb152bb7706acc79c`（作業ツリー clean）で実施:
+- 全テスト 86 passed（18.1 s）。
+- パリティ 4 条件（same/state_change × tail/mid）: annotations・diagnose・cold(L1 off) すべて一致、未編集再実行 0 call。
+- 差分: `fd9f28e..c7302c8` はレポートとパリティ結果データのみ（コード変更なし）。
 
 ## 4. テスト・パリティ
 - 全テスト: 86 passed（`test_sensor_runner*.py` 6 ファイル、18.1 s）。コミット `fd9f28e389de88ed6858eb680eda3a9cf79f015f`。(a) は指示文のみの変更のため新規テストはなし（指示文の挙動は実 LLM 測定で確認）。
@@ -38,4 +41,13 @@
 2. 先勝ちの採用ベクトルは「その場面での初見の印象」。同一人物に場面ごとに異なるベクトルが付く（上記の実例）。epoch の設計どおりだが、場面 0 の値が常に採用される点が妥当かは未評価。
 3. 測定は各 1 回（n=1）。注釈者の揺れは未測定。
 
-## 6. 統合結果（push 後に追記）
+## 6. 統合結果
+- fast-forward push（強制 push なし、拒否なし）: `git push origin c7302c8…:refs/heads/feat/sensor-runner` → `33bf69c..c7302c8`。
+- GitHub（`gh api repos/ughirose/usir/branches/...`）での照合: `feat/sensor-runner` = `c7302c822ae501a1d4dac28bb152bb7706acc79c`、`feat/phase15-stage2-step5` = `c7302c822ae501a1d4dac28bb152bb7706acc79c`。一致。
+- 統合前: `feat/sensor-runner` 33bf69c0bd08cb1f70026d1bed65494785f9fcfa。統合後: c7302c822ae501a1d4dac28bb152bb7706acc79c。
+- 本節の追記（§3・§6）は統合後のレポート更新コミットで、`feat/sensor-runner` にも fast-forward で反映した。その先端は両ブランチとも同じコミット（下の確認コマンドの結果は返信に記載）。main へのマージ・push なし。
+
+## 7. 変更ファイル
+- 変更: `scripts/sensor_runner/strong.py`、`docs/handoff/STATUS_phase15_stage1.md`
+- 新規: `scripts/sensor_runner/results/phase15_stage2_step5_*.json`（ep 再実行 1 + パリティ 4）、本レポート
+- 無変更: 検証（ingest）、鍵の仕様、エポック設計、L1、L3、物差し、出力スキーマ（nishiki.diagnose/3、sensor.v2）
