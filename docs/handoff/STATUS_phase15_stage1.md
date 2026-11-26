@@ -14,3 +14,9 @@ Orion が report §6 の判断点（ledger_hash の範囲、Early Cutoff の健�
 - 結果: scripts/sensor_runner/results/phase15_stage2_step0_*.json、レポート docs/handoff/2026-11-26_phase15_stage2_step0_report.md
 - 状態: 計測完了（注釈148件、試行151）、レポート作成済み。59 テスト合格、実装変更なし。main 未マージ。
 - NEXT: Orion が Step 0 レポート §4・§5 を読み、Step 1 の方針（location ID 化、facts の型付け、前提変化表示方式）を決める。
+
+## Stage 2 Step 0.5（2026-11-26 開始、計測のみ・キャッシュ実装/本番スキーマ/物差しは変更しない）
+- 指示: Drive inbox の 2026-11-26_phase15_stage2_step05_prompt_v1.md
+- Q-A 型付き facts の一致率・語彙被覆、Q-B location 候補リスト選択の一致率。20場面×5回、注釈上限150回。
+- 結果: scripts/sensor_runner/results/phase15_stage2_step05_*.json、レポート docs/handoff/2026-11-26_phase15_stage2_step05_report.md
+- 状態: 開始（プロンプト全文読み込み中）
