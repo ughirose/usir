@@ -51,10 +51,11 @@ def cache_of(run: str) -> Cache:
     return Cache(rdir(run) / "cache", legacy_adopt=False)
 
 
+from jsonl_append import append_json  # noqa: E402
+
+
 def jl_append(p: Path, obj) -> None:
-    p.parent.mkdir(parents=True, exist_ok=True)
-    with open(p, "a", encoding="utf-8") as f:
-        f.write(json.dumps(obj, ensure_ascii=False) + "\n")
+    append_json(p, obj)
 
 
 def jl_read(p: Path) -> list:

@@ -42,7 +42,10 @@ def ingest_file(path: Path, cache: Cache, packs_dir: Path | None = None, rejects
     pack = read_json(pack_path)
     res["work_id"], res["scene_id"] = pack["work_id"], pack["scene_id"]
 
-    ledger = cache.ledger(pack["work_id"])
+    # Validate against the committed (epoch-frozen) ledger: the same snapshot the pack was rendered from. A character that is
+    # already pending (added by an earlier scene in this epoch) is therefore not 'already existing' here; add_pending keeps
+    # the first baseline (first writer wins) and ignores the repeat.
+    ledger = cache.ledger_committed(pack["work_id"])
     reasons = validate_strong(entry, pack["scene_text"], pack["roster_all_ids"], ledger, pack["scene_hash"])
     if not reasons:
         # dry merge (no local utterances) to confirm the result is a valid sensor.v2 record

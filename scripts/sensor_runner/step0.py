@@ -28,6 +28,7 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+from jsonl_append import append_json  # noqa: E402
 WORK = HERE / "step0_work"
 RESULTS = HERE / "results"
 
@@ -151,8 +152,7 @@ def cmd_build(a) -> int:
 
 
 def cmd_stamp(a) -> int:
-    with open(WORK / "timing.jsonl", "a", encoding="utf-8") as f:
-        f.write(json.dumps({"pid": a.pid, "event": a.event, "t": time.time()}) + "\n")
+    append_json(WORK / "timing.jsonl", {"pid": a.pid, "event": a.event, "t": time.time()})
     return 0
 
 
@@ -179,8 +179,7 @@ def cmd_check(a) -> int:
                      "scene_hash": pack["scene_hash"], "char_len": pack["char_len"]}
             _, st_ = merge_scene(pack["work_id"], scene, pack["scene_count"], entry, None, full, pack["roster_all_ids"])
             reasons = [f"sensor.v2: {e}" for e in st_["errors"]]
-    with open(WORK / "attempts.jsonl", "a", encoding="utf-8") as f:
-        f.write(json.dumps({"pid": a.pid, "t": time.time(), "accepted": not reasons, "reasons": reasons}, ensure_ascii=False) + "\n")
+    append_json(WORK / "attempts.jsonl", {"pid": a.pid, "t": time.time(), "accepted": not reasons, "reasons": reasons})
     if reasons:
         print("REJECT")
         for r in reasons:
