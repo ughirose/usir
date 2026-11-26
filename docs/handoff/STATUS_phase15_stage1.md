@@ -19,4 +19,6 @@ Orion が report §6 の判断点（ledger_hash の範囲、Early Cutoff の健�
 - 指示: Drive inbox の 2026-11-26_phase15_stage2_step05_prompt_v1.md
 - Q-A 型付き facts の一致率・語彙被覆、Q-B location 候補リスト選択の一致率。20場面×5回、注釈上限150回。
 - 結果: scripts/sensor_runner/results/phase15_stage2_step05_*.json、レポート docs/handoff/2026-11-26_phase15_stage2_step05_report.md
-- 状態: 開始（プロンプト全文読み込み中）
+- 状態: 計測完了（受理100件）、レポート作成済み。59 テスト合格、実装変更なし。main 未マージ。
+- 結果要約: 型付き facts 不一致率 T3 1.00 / T0 0.88（鍵に不可）、location 閉じた語彙一致 0.90（楽観的条件）、prior ハッシュ 0.74→0.835（再計算値）。
+- NEXT: Orion が Step 0.5 レポート §3・§4 を読み、Step 1 の方針を決める。
