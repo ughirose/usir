@@ -1,0 +1,3571 @@
+{
+ "schema": "phase15_stage2_step2/1",
+ "annotator_model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+ "runs": {
+  "cold": {
+   "stats": {
+    "per_invocation": {
+     "cold.000035_000301.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 18.78,
+      "work": "000035_000301"
+     },
+     "cold.000035_000301.s1.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 15.34,
+      "work": "000035_000301"
+     },
+     "cold.000035_000301.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 19.68,
+      "work": "000035_000301"
+     },
+     "cold.000035_000301.s3.r4": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 4,
+      "scene_index": 3,
+      "seconds": 16.13,
+      "work": "000035_000301"
+     },
+     "cold.000035_000301.s4.r5": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 5,
+      "scene_index": 4,
+      "seconds": 15.8,
+      "work": "000035_000301"
+     },
+     "cold.000035_000301.s5.r6": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 6,
+      "scene_index": 5,
+      "seconds": 15.21,
+      "work": "000035_000301"
+     },
+     "cold.000035_000301.s6.r7": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 7,
+      "scene_index": 6,
+      "seconds": 14.72,
+      "work": "000035_000301"
+     },
+     "cold.000050_003586.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 18.12,
+      "work": "000050_003586"
+     },
+     "cold.000050_003586.s1.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 17.89,
+      "work": "000050_003586"
+     },
+     "cold.000050_003586.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 15.01,
+      "work": "000050_003586"
+     },
+     "cold.000050_003586.s3.r4": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 4,
+      "scene_index": 3,
+      "seconds": 20.54,
+      "work": "000050_003586"
+     },
+     "cold.000050_003586.s4.r5": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 5,
+      "scene_index": 4,
+      "seconds": 14.21,
+      "work": "000050_003586"
+     },
+     "cold.000081_000456.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 15.78,
+      "work": "000081_000456"
+     },
+     "cold.000081_000456.s1.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 15.85,
+      "work": "000081_000456"
+     },
+     "cold.000081_000456.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 14.49,
+      "work": "000081_000456"
+     },
+     "cold.000081_000456.s3.r4": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 4,
+      "scene_index": 3,
+      "seconds": 14.13,
+      "work": "000081_000456"
+     },
+     "cold.000081_000456.s4.r5": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 5,
+      "scene_index": 4,
+      "seconds": 14.79,
+      "work": "000081_000456"
+     },
+     "cold.000081_000456.s5.r6": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 6,
+      "scene_index": 5,
+      "seconds": 15.58,
+      "work": "000081_000456"
+     },
+     "cold.001383_056643.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 17.65,
+      "work": "001383_056643"
+     },
+     "cold.001383_056643.s1.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 16.55,
+      "work": "001383_056643"
+     },
+     "cold.001383_056643.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 16.55,
+      "work": "001383_056643"
+     },
+     "cold.001383_056643.s3.r4": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 4,
+      "scene_index": 3,
+      "seconds": 16.8,
+      "work": "001383_056643"
+     },
+     "cold.001383_056643.s4.r5": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 5,
+      "scene_index": 4,
+      "seconds": 17.98,
+      "work": "001383_056643"
+     },
+     "cold.001383_056643.s5.r6": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 6,
+      "scene_index": 5,
+      "seconds": 18.88,
+      "work": "001383_056643"
+     },
+     "cold.001798_056779.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 15.53,
+      "work": "001798_056779"
+     },
+     "cold.001798_056779.s1.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 16.64,
+      "work": "001798_056779"
+     },
+     "cold.001798_056779.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": null,
+      "work": "001798_056779"
+     },
+     "cold.001798_056779.s3.r4": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 4,
+      "scene_index": 3,
+      "seconds": null,
+      "work": "001798_056779"
+     },
+     "cold.001801_001786.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 18.18,
+      "work": "001801_001786"
+     },
+     "cold.001801_001786.s1.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 16.25,
+      "work": "001801_001786"
+     },
+     "cold.001801_001786.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 13.62,
+      "work": "001801_001786"
+     },
+     "cold.001875_059897.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 15.81,
+      "work": "001875_059897"
+     },
+     "cold.001875_059897.s1.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 17.83,
+      "work": "001875_059897"
+     },
+     "cold.001875_059897.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 18.62,
+      "work": "001875_059897"
+     },
+     "cold.001875_059897.s3.r4": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 4,
+      "scene_index": 3,
+      "seconds": 14.15,
+      "work": "001875_059897"
+     }
+    },
+    "summary": {
+     "accepted": 35,
+     "attempts_total": 35,
+     "invocations": 35,
+     "invocations_with_timing": 33,
+     "location": {
+      "000035_000301": {
+       "entries": 7,
+       "location_non_null": 6
+      },
+      "000050_003586": {
+       "entries": 5,
+       "location_non_null": 2
+      },
+      "000081_000456": {
+       "entries": 6,
+       "location_non_null": 5
+      },
+      "001383_056643": {
+       "entries": 6,
+       "location_non_null": 4
+      },
+      "001798_056779": {
+       "entries": 4,
+       "location_non_null": 4
+      },
+      "001801_001786": {
+       "entries": 3,
+       "location_non_null": 2
+      },
+      "001875_059897": {
+       "entries": 4,
+       "location_non_null": 0
+      }
+     },
+     "rejected_attempts": 0,
+     "seconds": {
+      "max": 20.54,
+      "mean": 16.46,
+      "median": 16.13,
+      "min": 13.62
+     }
+    }
+   },
+   "flags": {
+    "000035_000301": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000050_003586": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000081_000456": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001383_056643": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001798_056779": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001801_001786": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001875_059897": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    }
+   },
+   "rounds": [
+    {
+     "round": 1,
+     "t": 1795702478.9251137,
+     "packs": 7,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 0,
+       "pending": 7,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 6
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 0,
+       "pending": 5,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 4
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 0,
+       "pending": 6,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 5
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 0,
+       "pending": 6,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 5
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 0,
+       "pending": 4,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 0,
+       "pending": 3,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 0,
+       "pending": 4,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 2,
+     "t": 1795702540.5258532,
+     "packs": 7,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 1,
+       "pending": 6,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 5
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 1,
+       "pending": 4,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 1,
+       "pending": 5,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 4
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 1,
+       "pending": 5,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 4
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 1,
+       "pending": 3,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 1,
+       "pending": 2,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 1,
+       "pending": 3,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 3,
+     "t": 1795702583.6379852,
+     "packs": 7,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 2,
+       "pending": 5,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 4
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 2,
+       "pending": 3,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 2,
+       "pending": 4,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 2,
+       "pending": 4,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 2,
+       "pending": 2,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 2,
+       "pending": 1,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 2,
+       "pending": 2,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 4,
+     "t": 1795702628.9240723,
+     "packs": 6,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 3,
+       "pending": 4,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 3,
+       "pending": 2,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 3,
+       "pending": 3,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 3,
+       "pending": 3,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 3,
+       "pending": 1,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 3,
+       "pending": 1,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 5,
+     "t": 1795702671.7851133,
+     "packs": 4,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 4,
+       "pending": 3,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 4,
+       "pending": 1,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 4,
+       "pending": 2,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 4,
+       "pending": 2,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 6,
+     "t": 1795702713.0069604,
+     "packs": 3,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 5,
+       "pending": 2,
+       "l2": {
+        "hit": 5,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 5,
+       "pending": 0,
+       "l2": {
+        "hit": 5,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 5,
+       "pending": 1,
+       "l2": {
+        "hit": 5,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 5,
+       "pending": 1,
+       "l2": {
+        "hit": 5,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 7,
+     "t": 1795702750.0280285,
+     "packs": 1,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 6,
+       "pending": 1,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 5,
+       "pending": 0,
+       "l2": {
+        "hit": 5,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 6,
+       "pending": 0,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 6,
+       "pending": 0,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 8,
+     "t": 1795702782.6349144,
+     "packs": 0,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 7,
+       "pending": 0,
+       "l2": {
+        "hit": 7,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 5,
+       "pending": 0,
+       "l2": {
+        "hit": 5,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 6,
+       "pending": 0,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 6,
+       "pending": 0,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 9,
+     "t": 1795702794.316273,
+     "packs": 0,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 7,
+       "pending": 0,
+       "l2": {
+        "hit": 7,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000050_003586": {
+       "scene_count": 5,
+       "cached": 5,
+       "pending": 0,
+       "l2": {
+        "hit": 5,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 6,
+       "pending": 0,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001383_056643": {
+       "scene_count": 6,
+       "cached": 6,
+       "pending": 0,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001798_056779": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      },
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    }
+   ],
+   "timing": [
+    {
+     "pid": "cold.000081_000456.s0.r1",
+     "event": "start",
+     "t": 1795702511.731782
+    },
+    {
+     "pid": "cold.000035_000301.s0.r1",
+     "event": "start",
+     "t": 1795702511.8380501
+    },
+    {
+     "pid": "cold.000050_003586.s0.r1",
+     "event": "start",
+     "t": 1795702511.9622734
+    },
+    {
+     "pid": "cold.001798_056779.s0.r1",
+     "event": "start",
+     "t": 1795702511.9625177
+    },
+    {
+     "pid": "cold.001383_056643.s0.r1",
+     "event": "start",
+     "t": 1795702512.0789502
+    },
+    {
+     "pid": "cold.001801_001786.s0.r1",
+     "event": "start",
+     "t": 1795702512.1476738
+    },
+    {
+     "pid": "cold.001875_059897.s0.r1",
+     "event": "start",
+     "t": 1795702512.3608973
+    },
+    {
+     "pid": "cold.001798_056779.s0.r1",
+     "event": "end",
+     "t": 1795702527.492572
+    },
+    {
+     "pid": "cold.000081_000456.s0.r1",
+     "event": "end",
+     "t": 1795702527.5090497
+    },
+    {
+     "pid": "cold.001875_059897.s0.r1",
+     "event": "end",
+     "t": 1795702528.1668427
+    },
+    {
+     "pid": "cold.001383_056643.s0.r1",
+     "event": "end",
+     "t": 1795702529.73029
+    },
+    {
+     "pid": "cold.000050_003586.s0.r1",
+     "event": "end",
+     "t": 1795702530.0858307
+    },
+    {
+     "pid": "cold.001801_001786.s0.r1",
+     "event": "end",
+     "t": 1795702530.3326285
+    },
+    {
+     "pid": "cold.000035_000301.s0.r1",
+     "event": "end",
+     "t": 1795702530.6189952
+    },
+    {
+     "pid": "cold.001798_056779.s1.r2",
+     "event": "start",
+     "t": 1795702557.7429464
+    },
+    {
+     "pid": "cold.000050_003586.s1.r2",
+     "event": "start",
+     "t": 1795702557.9192073
+    },
+    {
+     "pid": "cold.001383_056643.s1.r2",
+     "event": "start",
+     "t": 1795702558.2670894
+    },
+    {
+     "pid": "cold.001801_001786.s1.r2",
+     "event": "start",
+     "t": 1795702558.3608868
+    },
+    {
+     "pid": "cold.000081_000456.s1.r2",
+     "event": "start",
+     "t": 1795702558.3665335
+    },
+    {
+     "pid": "cold.001875_059897.s1.r2",
+     "event": "start",
+     "t": 1795702558.4988863
+    },
+    {
+     "pid": "cold.000035_000301.s1.r2",
+     "event": "start",
+     "t": 1795702558.5319312
+    },
+    {
+     "pid": "cold.000035_000301.s1.r2",
+     "event": "end",
+     "t": 1795702573.8752997
+    },
+    {
+     "pid": "cold.000081_000456.s1.r2",
+     "event": "end",
+     "t": 1795702574.2144897
+    },
+    {
+     "pid": "cold.001798_056779.s1.r2",
+     "event": "end",
+     "t": 1795702574.3839269
+    },
+    {
+     "pid": "cold.001801_001786.s1.r2",
+     "event": "end",
+     "t": 1795702574.6128654
+    },
+    {
+     "pid": "cold.001383_056643.s1.r2",
+     "event": "end",
+     "t": 1795702574.82164
+    },
+    {
+     "pid": "cold.000050_003586.s1.r2",
+     "event": "end",
+     "t": 1795702575.8120105
+    },
+    {
+     "pid": "cold.001875_059897.s1.r2",
+     "event": "end",
+     "t": 1795702576.3299963
+    },
+    {
+     "pid": "cold.001383_056643.s2.r3",
+     "event": "start",
+     "t": 1795702601.0364945
+    },
+    {
+     "pid": "cold.000050_003586.s2.r3",
+     "event": "start",
+     "t": 1795702601.263454
+    },
+    {
+     "pid": "cold.000035_000301.s2.r3",
+     "event": "start",
+     "t": 1795702601.3383255
+    },
+    {
+     "pid": "cold.001801_001786.s2.r3",
+     "event": "start",
+     "t": 1795702602.4909408
+    },
+    {
+     "pid": "cold.001875_059897.s2.r3",
+     "event": "start",
+     "t": 1795702602.4945674
+    },
+    {
+     "pid": "cold.000081_000456.s2.r3",
+     "event": "start",
+     "t": 1795702603.2722907
+    },
+    {
+     "pid": "cold.001801_001786.s2.r3",
+     "event": "end",
+     "t": 1795702616.1151702
+    },
+    {
+     "pid": "cold.000050_003586.s2.r3",
+     "event": "end",
+     "t": 1795702616.2706616
+    },
+    {
+     "pid": "cold.001383_056643.s2.r3",
+     "event": "end",
+     "t": 1795702617.59133
+    },
+    {
+     "pid": "cold.000081_000456.s2.r3",
+     "event": "end",
+     "t": 1795702617.7607393
+    },
+    {
+     "pid": "cold.001798_056779.s2.r3",
+     "event": "end",
+     "t": 1795702618.0289028
+    },
+    {
+     "pid": "cold.000035_000301.s2.r3",
+     "event": "end",
+     "t": 1795702621.0137186
+    },
+    {
+     "pid": "cold.001875_059897.s2.r3",
+     "event": "end",
+     "t": 1795702621.1095796
+    },
+    {
+     "pid": "cold.000081_000456.s3.r4",
+     "event": "start",
+     "t": 1795702644.3830779
+    },
+    {
+     "pid": "cold.001383_056643.s3.r4",
+     "event": "start",
+     "t": 1795702644.385864
+    },
+    {
+     "pid": "cold.000035_000301.s3.r4",
+     "event": "start",
+     "t": 1795702644.6813364
+    },
+    {
+     "pid": "cold.001798_056779.s3.r4",
+     "event": "start",
+     "t": 1795702644.8794637
+    },
+    {
+     "pid": "cold.000050_003586.s3.r4",
+     "event": "start",
+     "t": 1795702645.0799844
+    },
+    {
+     "pid": "cold.001875_059897.s3.r4",
+     "event": "start",
+     "t": 1795702645.0817404
+    },
+    {
+     "pid": "cold.000081_000456.s3.r4",
+     "event": "end",
+     "t": 1795702658.5133405
+    },
+    {
+     "pid": "cold.001875_059897.s3.r4",
+     "event": "end",
+     "t": 1795702659.228852
+    },
+    {
+     "pid": "cold.000035_000301.s3.r4",
+     "event": "end",
+     "t": 1795702660.8130372
+    },
+    {
+     "pid": "cold.001383_056643.s3.r4",
+     "event": "end",
+     "t": 1795702661.1863317
+    },
+    {
+     "pid": "cold.000050_003586.s3.r4",
+     "event": "end",
+     "t": 1795702665.6230547
+    },
+    {
+     "pid": "cold.000050_003586.s4.r5",
+     "event": "start",
+     "t": 1795702684.6118104
+    },
+    {
+     "pid": "cold.000081_000456.s4.r5",
+     "event": "start",
+     "t": 1795702684.6857421
+    },
+    {
+     "pid": "cold.000035_000301.s4.r5",
+     "event": "start",
+     "t": 1795702684.7343783
+    },
+    {
+     "pid": "cold.001383_056643.s4.r5",
+     "event": "start",
+     "t": 1795702685.197598
+    },
+    {
+     "pid": "cold.000050_003586.s4.r5",
+     "event": "end",
+     "t": 1795702698.8171034
+    },
+    {
+     "pid": "cold.000081_000456.s4.r5",
+     "event": "end",
+     "t": 1795702699.4768515
+    },
+    {
+     "pid": "cold.000035_000301.s4.r5",
+     "event": "end",
+     "t": 1795702700.5323737
+    },
+    {
+     "pid": "cold.001383_056643.s4.r5",
+     "event": "end",
+     "t": 1795702703.1763322
+    },
+    {
+     "pid": "cold.000081_000456.s5.r6",
+     "event": "start",
+     "t": 1795702723.883018
+    },
+    {
+     "pid": "cold.000035_000301.s5.r6",
+     "event": "start",
+     "t": 1795702723.9121404
+    },
+    {
+     "pid": "cold.001383_056643.s5.r6",
+     "event": "start",
+     "t": 1795702724.9830923
+    },
+    {
+     "pid": "cold.000035_000301.s5.r6",
+     "event": "end",
+     "t": 1795702739.1240811
+    },
+    {
+     "pid": "cold.000081_000456.s5.r6",
+     "event": "end",
+     "t": 1795702739.46127
+    },
+    {
+     "pid": "cold.001383_056643.s5.r6",
+     "event": "end",
+     "t": 1795702743.8634923
+    },
+    {
+     "pid": "cold.000035_000301.s6.r7",
+     "event": "start",
+     "t": 1795702760.3442235
+    },
+    {
+     "pid": "cold.000035_000301.s6.r7",
+     "event": "end",
+     "t": 1795702775.0647657
+    }
+   ],
+   "attempts": [
+    {
+     "pid": "cold.001798_056779.s0.r1",
+     "t": 1795702523.260982,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000081_000456.s0.r1",
+     "t": 1795702524.6765978,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001875_059897.s0.r1",
+     "t": 1795702525.2789195,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001383_056643.s0.r1",
+     "t": 1795702527.2296681,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000050_003586.s0.r1",
+     "t": 1795702527.3843431,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001801_001786.s0.r1",
+     "t": 1795702527.7550793,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000035_000301.s0.r1",
+     "t": 1795702528.1874588,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000035_000301.s1.r2",
+     "t": 1795702570.8713932,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000081_000456.s1.r2",
+     "t": 1795702571.5905838,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001798_056779.s1.r2",
+     "t": 1795702571.7893631,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001801_001786.s1.r2",
+     "t": 1795702572.1210947,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001383_056643.s1.r2",
+     "t": 1795702572.1624718,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000050_003586.s1.r2",
+     "t": 1795702572.8125386,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001875_059897.s1.r2",
+     "t": 1795702574.1185033,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000050_003586.s2.r3",
+     "t": 1795702613.585814,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001801_001786.s2.r3",
+     "t": 1795702613.6374314,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001383_056643.s2.r3",
+     "t": 1795702614.561855,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000081_000456.s2.r3",
+     "t": 1795702614.9695072,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001798_056779.s2.r3",
+     "t": 1795702615.5824935,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000035_000301.s2.r3",
+     "t": 1795702618.0297585,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001875_059897.s2.r3",
+     "t": 1795702618.248978,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000081_000456.s3.r4",
+     "t": 1795702656.003345,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001798_056779.s3.r4",
+     "t": 1795702656.5038683,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001875_059897.s3.r4",
+     "t": 1795702656.7524247,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000035_000301.s3.r4",
+     "t": 1795702658.2911918,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001383_056643.s3.r4",
+     "t": 1795702658.5236866,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000050_003586.s3.r4",
+     "t": 1795702662.6380506,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000050_003586.s4.r5",
+     "t": 1795702695.8854911,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000081_000456.s4.r5",
+     "t": 1795702696.705474,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000035_000301.s4.r5",
+     "t": 1795702698.1431432,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001383_056643.s4.r5",
+     "t": 1795702700.7126336,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000035_000301.s5.r6",
+     "t": 1795702736.4984987,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000081_000456.s5.r6",
+     "t": 1795702736.921394,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.001383_056643.s5.r6",
+     "t": 1795702741.2654989,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "cold.000035_000301.s6.r7",
+     "t": 1795702772.6432443,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    }
+   ],
+   "pids": {
+    "cold.000035_000301.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\3420dd57e26a.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000035_000301\\3420dd57e26a.pack.json",
+     "round": 1,
+     "scene_hash": "3420dd57e26a637961222eae99844c0924870fca9e803638762a02a51b21383d",
+     "scene_index": 0,
+     "work": "000035_000301"
+    },
+    "cold.000035_000301.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\834c904d9ee2.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000035_000301\\834c904d9ee2.pack.json",
+     "round": 2,
+     "scene_hash": "834c904d9ee2346e61880fcf1571746af4f8f58909c28206e2340634cf0e9143",
+     "scene_index": 1,
+     "work": "000035_000301"
+    },
+    "cold.000035_000301.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\6822e1256e85.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000035_000301\\6822e1256e85.pack.json",
+     "round": 3,
+     "scene_hash": "6822e1256e8520671e252c6d3983f503435baa42c42ec8edbfa4eac287657b91",
+     "scene_index": 2,
+     "work": "000035_000301"
+    },
+    "cold.000035_000301.s3.r4": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\246fc00a5a97.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000035_000301\\246fc00a5a97.pack.json",
+     "round": 4,
+     "scene_hash": "246fc00a5a978076c8c9bb497bdbe0937a2d39e6ddbcfbd32896036571300257",
+     "scene_index": 3,
+     "work": "000035_000301"
+    },
+    "cold.000035_000301.s4.r5": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\26b0f4989d64.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000035_000301\\26b0f4989d64.pack.json",
+     "round": 5,
+     "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+     "scene_index": 4,
+     "work": "000035_000301"
+    },
+    "cold.000035_000301.s5.r6": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\7baa4605c569.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000035_000301\\7baa4605c569.pack.json",
+     "round": 6,
+     "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+     "scene_index": 5,
+     "work": "000035_000301"
+    },
+    "cold.000035_000301.s6.r7": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\c29aa5916337.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000035_000301\\c29aa5916337.pack.json",
+     "round": 7,
+     "scene_hash": "c29aa59163372bd54d3f7f0af925d04810330aadbd386bcb6df72ad3d000a806",
+     "scene_index": 6,
+     "work": "000035_000301"
+    },
+    "cold.000050_003586.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000050_003586\\eedea5340185.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000050_003586\\eedea5340185.pack.json",
+     "round": 1,
+     "scene_hash": "eedea534018521db6c65558ec55160682ae1f2286dbe8a53b8d1e20395ac34f1",
+     "scene_index": 0,
+     "work": "000050_003586"
+    },
+    "cold.000050_003586.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000050_003586\\87f0f9015e05.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000050_003586\\87f0f9015e05.pack.json",
+     "round": 2,
+     "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+     "scene_index": 1,
+     "work": "000050_003586"
+    },
+    "cold.000050_003586.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000050_003586\\a916f16cb460.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000050_003586\\a916f16cb460.pack.json",
+     "round": 3,
+     "scene_hash": "a916f16cb460d86cd421690fc1a2d194efd17051e0701c821a7a4237ac3e432e",
+     "scene_index": 2,
+     "work": "000050_003586"
+    },
+    "cold.000050_003586.s3.r4": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000050_003586\\31b1e1a02b1c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000050_003586\\31b1e1a02b1c.pack.json",
+     "round": 4,
+     "scene_hash": "31b1e1a02b1cfa864ab8b0f347fcb29966ff5970d7095348608392adbb6b0bc5",
+     "scene_index": 3,
+     "work": "000050_003586"
+    },
+    "cold.000050_003586.s4.r5": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000050_003586\\b8af8bf58f45.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000050_003586\\b8af8bf58f45.pack.json",
+     "round": 5,
+     "scene_hash": "b8af8bf58f45da2fcda80a54d0d1cba51a5008dc0841c1cd0b8bfe46ce4cfca9",
+     "scene_index": 4,
+     "work": "000050_003586"
+    },
+    "cold.000081_000456.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000081_000456\\157d8cb87804.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000081_000456\\157d8cb87804.pack.json",
+     "round": 1,
+     "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89",
+     "scene_index": 0,
+     "work": "000081_000456"
+    },
+    "cold.000081_000456.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000081_000456\\eea13fe4ce6f.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000081_000456\\eea13fe4ce6f.pack.json",
+     "round": 2,
+     "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6",
+     "scene_index": 1,
+     "work": "000081_000456"
+    },
+    "cold.000081_000456.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000081_000456\\0919b3401697.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000081_000456\\0919b3401697.pack.json",
+     "round": 3,
+     "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+     "scene_index": 2,
+     "work": "000081_000456"
+    },
+    "cold.000081_000456.s3.r4": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000081_000456\\54ab8765b144.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000081_000456\\54ab8765b144.pack.json",
+     "round": 4,
+     "scene_hash": "54ab8765b144cc2f27cd2855a1f3478a7872e6d5c7657d1a4ab1ba905183871e",
+     "scene_index": 3,
+     "work": "000081_000456"
+    },
+    "cold.000081_000456.s4.r5": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000081_000456\\c36d228bc904.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000081_000456\\c36d228bc904.pack.json",
+     "round": 5,
+     "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+     "scene_index": 4,
+     "work": "000081_000456"
+    },
+    "cold.000081_000456.s5.r6": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000081_000456\\468c60bf7449.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\000081_000456\\468c60bf7449.pack.json",
+     "round": 6,
+     "scene_hash": "468c60bf74491a5707ad56540127e17286b890c533a3a6f451e8bd8e2ed5578a",
+     "scene_index": 5,
+     "work": "000081_000456"
+    },
+    "cold.001383_056643.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001383_056643\\a0bbcc20d32c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001383_056643\\a0bbcc20d32c.pack.json",
+     "round": 1,
+     "scene_hash": "a0bbcc20d32cbbcba949822da1ba3224fa42c4551aaa21acdf5071ca1194621b",
+     "scene_index": 0,
+     "work": "001383_056643"
+    },
+    "cold.001383_056643.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001383_056643\\f2945c3c2df8.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001383_056643\\f2945c3c2df8.pack.json",
+     "round": 2,
+     "scene_hash": "f2945c3c2df8b85ea46a066a8ca2e3dbb01e208a3f703711c87d87746745f977",
+     "scene_index": 1,
+     "work": "001383_056643"
+    },
+    "cold.001383_056643.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001383_056643\\f166adabb8ee.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001383_056643\\f166adabb8ee.pack.json",
+     "round": 3,
+     "scene_hash": "f166adabb8ee0745cc5fdfd5cdc7f9b51315660bc39458529ee919316c6ba017",
+     "scene_index": 2,
+     "work": "001383_056643"
+    },
+    "cold.001383_056643.s3.r4": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001383_056643\\7e92d79f924f.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001383_056643\\7e92d79f924f.pack.json",
+     "round": 4,
+     "scene_hash": "7e92d79f924ff5ca9a5ffb98657dab6ca18a7dd787fe427457f438910eba5b1f",
+     "scene_index": 3,
+     "work": "001383_056643"
+    },
+    "cold.001383_056643.s4.r5": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001383_056643\\4487f4344ae0.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001383_056643\\4487f4344ae0.pack.json",
+     "round": 5,
+     "scene_hash": "4487f4344ae042ff09854ce6645c172d1db7df29be75067d864367eed3a07370",
+     "scene_index": 4,
+     "work": "001383_056643"
+    },
+    "cold.001383_056643.s5.r6": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001383_056643\\217aa33534a1.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001383_056643\\217aa33534a1.pack.json",
+     "round": 6,
+     "scene_hash": "217aa33534a1c458fc089e995fa1b56aa435c7a1427d4227dcad6a9c819139f1",
+     "scene_index": 5,
+     "work": "001383_056643"
+    },
+    "cold.001798_056779.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001798_056779\\7a9a21d274f8.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001798_056779\\7a9a21d274f8.pack.json",
+     "round": 1,
+     "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+     "scene_index": 0,
+     "work": "001798_056779"
+    },
+    "cold.001798_056779.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001798_056779\\fcdf50e4188c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001798_056779\\fcdf50e4188c.pack.json",
+     "round": 2,
+     "scene_hash": "fcdf50e4188c3a30bd0d38145bf6b4feadbadc9d825b296fdbb6264ec1b3310e",
+     "scene_index": 1,
+     "work": "001798_056779"
+    },
+    "cold.001798_056779.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001798_056779\\26da821d0b90.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001798_056779\\26da821d0b90.pack.json",
+     "round": 3,
+     "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+     "scene_index": 2,
+     "work": "001798_056779"
+    },
+    "cold.001798_056779.s3.r4": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001798_056779\\47832cad7d2a.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001798_056779\\47832cad7d2a.pack.json",
+     "round": 4,
+     "scene_hash": "47832cad7d2ad96e5bcee822e7b1eadb98f04519e8ef15c1c64a6ba6f1e3dc10",
+     "scene_index": 3,
+     "work": "001798_056779"
+    },
+    "cold.001801_001786.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\4e3b03f8cf9c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001801_001786\\4e3b03f8cf9c.pack.json",
+     "round": 1,
+     "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+     "scene_index": 0,
+     "work": "001801_001786"
+    },
+    "cold.001801_001786.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\5af4eda55c80.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001801_001786\\5af4eda55c80.pack.json",
+     "round": 2,
+     "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+     "scene_index": 1,
+     "work": "001801_001786"
+    },
+    "cold.001801_001786.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\b99b2fa9ff66.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001801_001786\\b99b2fa9ff66.pack.json",
+     "round": 3,
+     "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+     "scene_index": 2,
+     "work": "001801_001786"
+    },
+    "cold.001875_059897.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001875_059897\\f6d7af0927c2.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001875_059897\\f6d7af0927c2.pack.json",
+     "round": 1,
+     "scene_hash": "f6d7af0927c2c4c128304e9f08826aaec7c1399e3ff3754abce2e13cbf18ddfb",
+     "scene_index": 0,
+     "work": "001875_059897"
+    },
+    "cold.001875_059897.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001875_059897\\08ec58f6ba22.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001875_059897\\08ec58f6ba22.pack.json",
+     "round": 2,
+     "scene_hash": "08ec58f6ba2228b78deb8873b08d5f4658cea9ebe819e80a3d5e0549da5a2174",
+     "scene_index": 1,
+     "work": "001875_059897"
+    },
+    "cold.001875_059897.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001875_059897\\f6bb4a8cd076.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001875_059897\\f6bb4a8cd076.pack.json",
+     "round": 3,
+     "scene_hash": "f6bb4a8cd076d8932f313a5377a7aab0bd3939d5dcf72046e618a060e7107ad6",
+     "scene_index": 2,
+     "work": "001875_059897"
+    },
+    "cold.001875_059897.s3.r4": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001875_059897\\7de1b26ff94b.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\cold\\packs\\001875_059897\\7de1b26ff94b.pack.json",
+     "round": 4,
+     "scene_hash": "7de1b26ff94b2389bbd6a6f211e27625359ea809b587b93a1595e3426c19953f",
+     "scene_index": 3,
+     "work": "001875_059897"
+    }
+   },
+   "summaries": {
+    "step2_work": {
+     "000035_000301": {
+      "annotations_bytes": 20019,
+      "annotations_sha256": "52abee10c0847883eb69a69d2144c1e9f64c1cf8c94521c62ebd17eb1ef90708",
+      "diagnose_bytes": 7209,
+      "diagnose_sha256": "389f717705dcdee4a69739d47269a69e2559bd7ab8f2ec633571d69d59948f53",
+      "errors": 0,
+      "l1": {
+       "hit": 7,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 7,
+       "miss": 0
+      },
+      "merged": 7,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 7
+     },
+     "000050_003586": {
+      "annotations_bytes": 14826,
+      "annotations_sha256": "595660aae9468c5335138a35f69daf55adc8fbb057bf1228d5798d9fd8f2f78e",
+      "diagnose_bytes": 5990,
+      "diagnose_sha256": "909a26e9556f9a495477fe97827d4ce65dfe3171f9b18bf6cdf79ffb93749aa8",
+      "errors": 0,
+      "l1": {
+       "hit": 5,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 5,
+       "miss": 0
+      },
+      "merged": 5,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 5
+     },
+     "000081_000456": {
+      "annotations_bytes": 17914,
+      "annotations_sha256": "9a6283d0e82c65db25a9cea02f27cbe10a7945ea90d84fff26cfc0e4b1358c56",
+      "diagnose_bytes": 5729,
+      "diagnose_sha256": "65c782cda922e0c4f30f9c9a97edbd63aae6f84d9cc888a34bba66e048e1d919",
+      "errors": 0,
+      "l1": {
+       "hit": 6,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 6,
+       "miss": 0
+      },
+      "merged": 6,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 6
+     },
+     "001383_056643": {
+      "annotations_bytes": 19475,
+      "annotations_sha256": "b17758baa715b9287be229d8698be77839118c068582eb15ee872e004830e1c9",
+      "diagnose_bytes": 5826,
+      "diagnose_sha256": "8dee8039acbe491f33aaf655761606d9a49eaf64fe9d6815af30cb9383a176c7",
+      "errors": 0,
+      "l1": {
+       "hit": 6,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 6,
+       "miss": 0
+      },
+      "merged": 6,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 6
+     },
+     "001798_056779": {
+      "annotations_bytes": 13348,
+      "annotations_sha256": "4d7a6ceb149a61f94b485b20a5cd9c24aeb76b22e3f96f3b92111955db9e3b55",
+      "diagnose_bytes": 6007,
+      "diagnose_sha256": "8799ccf8280eb0884142fecee41d406ff8a5498155a1be3262dfdaf5d68b064d",
+      "errors": 0,
+      "l1": {
+       "hit": 4,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 4,
+       "miss": 0
+      },
+      "merged": 4,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 4
+     },
+     "001801_001786": {
+      "annotations_bytes": 11119,
+      "annotations_sha256": "41be9cae887350056615b1b0b0d8702e201123dd455e997d65c6803964626553",
+      "diagnose_bytes": 5776,
+      "diagnose_sha256": "6e5ebda75534d4709592f2932ab2729f53645c2096fc4ba51adb30103cbed242",
+      "errors": 0,
+      "l1": {
+       "hit": 3,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 3,
+       "miss": 0
+      },
+      "merged": 3,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 3
+     },
+     "001875_059897": {
+      "annotations_bytes": 13988,
+      "annotations_sha256": "58b0dea6f1486d29baba0fdf6acba96fcfe8f1573a86be53a2ec14d76df82b65",
+      "diagnose_bytes": 5584,
+      "diagnose_sha256": "790eed7fab4d96b6aef3de781134ebb4aeb16e834f39d77c19050e830a2b2f48",
+      "errors": 0,
+      "l1": {
+       "hit": 4,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 4,
+       "miss": 0
+      },
+      "merged": 4,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 4
+     }
+    }
+   }
+  },
+  "edA": {
+   "stats": {
+    "per_invocation": {
+     "edA.000035_000301.s3.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 3,
+      "seconds": 16.55,
+      "work": "000035_000301"
+     }
+    },
+    "summary": {
+     "accepted": 1,
+     "attempts_total": 1,
+     "invocations": 1,
+     "invocations_with_timing": 1,
+     "location": {
+      "000035_000301": {
+       "entries": 7,
+       "location_non_null": 6
+      },
+      "000050_003586": {
+       "entries": 5,
+       "location_non_null": 2
+      },
+      "000081_000456": {
+       "entries": 6,
+       "location_non_null": 5
+      },
+      "001383_056643": {
+       "entries": 6,
+       "location_non_null": 4
+      },
+      "001798_056779": {
+       "entries": 4,
+       "location_non_null": 4
+      },
+      "001801_001786": {
+       "entries": 3,
+       "location_non_null": 2
+      },
+      "001875_059897": {
+       "entries": 4,
+       "location_non_null": 0
+      }
+     },
+     "rejected_attempts": 0,
+     "seconds": {
+      "max": 16.55,
+      "mean": 16.55,
+      "median": 16.55,
+      "min": 16.55
+     }
+    }
+   },
+   "flags": {
+    "000035_000301": {
+     "forced": [],
+     "premise_changed": [
+      {
+       "current_digest": "2460bd2f4bd891732881b336a552fd74ad53157ad103b3cafea363156f26b49a",
+       "current_prior_facts": [
+        {
+         "category": null,
+         "object": "銀座裏の屋台のお鮨や",
+         "predicate": "MOVED_TO",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": "emotion",
+         "object": null,
+         "predicate": "STATE_CHANGED",
+         "subject": "yozo",
+         "target": "yozo",
+         "text": "ツネ子の一言で震えていた心が静まり、安心した"
+        }
+       ],
+       "key": "f948f8286669111df7564d579c403212c81d034ff2cfb640aedea93cf6739a87",
+       "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+       "scene_index": 4,
+       "stored_digest": "26f29d7a8880ba01743f4de6ba8730dc36a9ad07cb28a8b676f9eb7179e74e29",
+       "stored_prior_facts": [
+        {
+         "category": null,
+         "object": "銀座裏の屋台の鮨や",
+         "predicate": "MOVED_TO",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": "emotion",
+         "object": null,
+         "predicate": "STATE_CHANGED",
+         "subject": "yozo",
+         "target": "yozo",
+         "text": "ツネ子の一言で、震えていた心が静まった"
+        }
+       ]
+      }
+     ],
+     "roster_changed": []
+    },
+    "000050_003586": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000081_000456": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001383_056643": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001798_056779": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001801_001786": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001875_059897": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    }
+   },
+   "rounds": [
+    {
+     "round": 1,
+     "t": 1795702842.8983939,
+     "packs": 1,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 3,
+       "pending": 4,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 2,
+     "t": 1795702875.7489836,
+     "packs": 0,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 7,
+       "pending": 0,
+       "l2": {
+        "hit": 7,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [
+        {
+         "scene_index": 4,
+         "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450"
+        }
+       ],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    }
+   ],
+   "timing": [
+    {
+     "pid": "edA.000035_000301.s3.r1",
+     "event": "start",
+     "t": 1795702853.5425606
+    },
+    {
+     "pid": "edA.000035_000301.s3.r1",
+     "event": "end",
+     "t": 1795702870.09089
+    }
+   ],
+   "attempts": [
+    {
+     "pid": "edA.000035_000301.s3.r1",
+     "t": 1795702867.690961,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    }
+   ],
+   "pids": {
+    "edA.000035_000301.s3.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\27d1376a243b.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\edA\\packs\\000035_000301\\27d1376a243b.pack.json",
+     "round": 1,
+     "scene_hash": "27d1376a243befdaf25c23e7a79a1ccf9b30d7cb26b3346d5154c9751fff3ae1",
+     "scene_index": 3,
+     "work": "000035_000301"
+    }
+   },
+   "stale": {
+    "stale\\000035_000301.json": {
+     "forced": [],
+     "premise_changed": [
+      {
+       "current_digest": "2460bd2f4bd891732881b336a552fd74ad53157ad103b3cafea363156f26b49a",
+       "current_prior_facts": [
+        {
+         "category": null,
+         "object": "銀座裏の屋台のお鮨や",
+         "predicate": "MOVED_TO",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": "emotion",
+         "object": null,
+         "predicate": "STATE_CHANGED",
+         "subject": "yozo",
+         "target": "yozo",
+         "text": "ツネ子の一言で震えていた心が静まり、安心した"
+        }
+       ],
+       "key": "f948f8286669111df7564d579c403212c81d034ff2cfb640aedea93cf6739a87",
+       "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+       "scene_index": 4,
+       "stored_digest": "26f29d7a8880ba01743f4de6ba8730dc36a9ad07cb28a8b676f9eb7179e74e29",
+       "stored_prior_facts": [
+        {
+         "category": null,
+         "object": "銀座裏の屋台の鮨や",
+         "predicate": "MOVED_TO",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": "emotion",
+         "object": null,
+         "predicate": "STATE_CHANGED",
+         "subject": "yozo",
+         "target": "yozo",
+         "text": "ツネ子の一言で、震えていた心が静まった"
+        }
+       ]
+      }
+     ],
+     "roster_changed": [],
+     "schema": "sensor.stale/1",
+     "work_id": "000035_000301"
+    }
+   }
+  },
+  "edB": {
+   "stats": {
+    "per_invocation": {
+     "edB.000035_000301.s3.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 3,
+      "seconds": 21.23,
+      "work": "000035_000301"
+     },
+     "edB.000035_000301.s4.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 4,
+      "seconds": 14.44,
+      "work": "000035_000301"
+     }
+    },
+    "summary": {
+     "accepted": 2,
+     "attempts_total": 2,
+     "invocations": 2,
+     "invocations_with_timing": 2,
+     "location": {
+      "000035_000301": {
+       "entries": 7,
+       "location_non_null": 6
+      },
+      "000050_003586": {
+       "entries": 5,
+       "location_non_null": 2
+      },
+      "000081_000456": {
+       "entries": 6,
+       "location_non_null": 5
+      },
+      "001383_056643": {
+       "entries": 6,
+       "location_non_null": 4
+      },
+      "001798_056779": {
+       "entries": 4,
+       "location_non_null": 4
+      },
+      "001801_001786": {
+       "entries": 3,
+       "location_non_null": 2
+      },
+      "001875_059897": {
+       "entries": 4,
+       "location_non_null": 0
+      }
+     },
+     "rejected_attempts": 0,
+     "seconds": {
+      "max": 21.23,
+      "mean": 17.84,
+      "median": 17.84,
+      "min": 14.44
+     }
+    }
+   },
+   "flags": {
+    "000035_000301": {
+     "forced": [],
+     "premise_changed": [
+      {
+       "current_digest": "d9a62d9b3cb7ec5946bcf9825c72727ccca9e816d200e0bd938880e8fceede3e",
+       "current_prior_facts": [
+        {
+         "category": null,
+         "object": "ツネ子の身の上",
+         "predicate": "LEARNED",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": "emotion",
+         "object": null,
+         "predicate": "STATE_CHANGED",
+         "subject": "yozo",
+         "target": "yozo",
+         "text": "ツネ子に寄り添い、恐怖と不安から離れられた"
+        }
+       ],
+       "key": "80bbe7599fe90663215b5428b87bc0e0ba119ef7fba5ca3590f0bd790d986386",
+       "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+       "scene_index": 5,
+       "stored_digest": "bde5815cd356755f27dc90c01a47733d61b6fea54f4040a889382ebe10768d7c",
+       "stored_prior_facts": [
+        {
+         "category": null,
+         "object": "本所の大工さんの二階",
+         "predicate": "MOVED_TO",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": null,
+         "object": "夫が詐欺罪で刑務所にいる",
+         "predicate": "LEARNED",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": "emotion",
+         "object": null,
+         "predicate": "STATE_CHANGED",
+         "subject": "yozo",
+         "target": "yozo",
+         "text": "ツネ子に寄り添い、恐怖や不安から離れられた"
+        }
+       ]
+      }
+     ],
+     "roster_changed": []
+    },
+    "000050_003586": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000081_000456": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001383_056643": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001798_056779": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001801_001786": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001875_059897": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    }
+   },
+   "rounds": [
+    {
+     "round": 1,
+     "t": 1795702879.574914,
+     "packs": 1,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 3,
+       "pending": 4,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 2,
+     "t": 1795702915.6312244,
+     "packs": 1,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 4,
+       "pending": 3,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 3,
+     "t": 1795702945.0485258,
+     "packs": 0,
+     "per_work": {
+      "000035_000301": {
+       "scene_count": 7,
+       "cached": 7,
+       "pending": 0,
+       "l2": {
+        "hit": 7,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [
+        {
+         "scene_index": 5,
+         "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa"
+        }
+       ],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    }
+   ],
+   "timing": [
+    {
+     "pid": "edB.000035_000301.s3.r1",
+     "event": "start",
+     "t": 1795702888.3882973
+    },
+    {
+     "pid": "edB.000035_000301.s3.r1",
+     "event": "end",
+     "t": 1795702909.61469
+    },
+    {
+     "pid": "edB.000035_000301.s4.r2",
+     "event": "start",
+     "t": 1795702924.7613983
+    },
+    {
+     "pid": "edB.000035_000301.s4.r2",
+     "event": "end",
+     "t": 1795702939.1998951
+    }
+   ],
+   "attempts": [
+    {
+     "pid": "edB.000035_000301.s3.r1",
+     "t": 1795702905.6369822,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "edB.000035_000301.s4.r2",
+     "t": 1795702936.559866,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    }
+   ],
+   "pids": {
+    "edB.000035_000301.s3.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\a442288d2542.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\edB\\packs\\000035_000301\\a442288d2542.pack.json",
+     "round": 1,
+     "scene_hash": "a442288d2542204a80e364b0b60df94fc7c88d34123001c3045c0e22e6863ed3",
+     "scene_index": 3,
+     "work": "000035_000301"
+    },
+    "edB.000035_000301.s4.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000035_000301\\26b0f4989d64.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\edB\\packs\\000035_000301\\26b0f4989d64.pack.json",
+     "round": 2,
+     "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+     "scene_index": 4,
+     "work": "000035_000301"
+    }
+   },
+   "stale": {
+    "stale\\000035_000301.json": {
+     "forced": [],
+     "premise_changed": [
+      {
+       "current_digest": "d9a62d9b3cb7ec5946bcf9825c72727ccca9e816d200e0bd938880e8fceede3e",
+       "current_prior_facts": [
+        {
+         "category": null,
+         "object": "ツネ子の身の上",
+         "predicate": "LEARNED",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": "emotion",
+         "object": null,
+         "predicate": "STATE_CHANGED",
+         "subject": "yozo",
+         "target": "yozo",
+         "text": "ツネ子に寄り添い、恐怖と不安から離れられた"
+        }
+       ],
+       "key": "80bbe7599fe90663215b5428b87bc0e0ba119ef7fba5ca3590f0bd790d986386",
+       "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+       "scene_index": 5,
+       "stored_digest": "bde5815cd356755f27dc90c01a47733d61b6fea54f4040a889382ebe10768d7c",
+       "stored_prior_facts": [
+        {
+         "category": null,
+         "object": "本所の大工さんの二階",
+         "predicate": "MOVED_TO",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": null,
+         "object": "夫が詐欺罪で刑務所にいる",
+         "predicate": "LEARNED",
+         "subject": "yozo",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": "emotion",
+         "object": null,
+         "predicate": "STATE_CHANGED",
+         "subject": "yozo",
+         "target": "yozo",
+         "text": "ツネ子に寄り添い、恐怖や不安から離れられた"
+        }
+       ]
+      }
+     ],
+     "roster_changed": [],
+     "schema": "sensor.stale/1",
+     "work_id": "000035_000301"
+    }
+   }
+  },
+  "ep": {
+   "stats": {
+    "per_invocation": {
+     "ep.001801_001786.s0.r1": {
+      "accepted": true,
+      "attempts": 3,
+      "ledger_additions": [
+       "onna",
+       "shinichi"
+      ],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 24.43,
+      "work": "001801_001786"
+     },
+     "ep.001801_001786.s0.r5": {
+      "accepted": false,
+      "attempts": 0,
+      "ledger_additions": [],
+      "round": 5,
+      "scene_index": 0,
+      "seconds": null,
+      "work": "001801_001786"
+     },
+     "ep.001801_001786.s0.r6": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 6,
+      "scene_index": 0,
+      "seconds": 16.0,
+      "work": "001801_001786"
+     },
+     "ep.001801_001786.s1.r2": {
+      "accepted": true,
+      "attempts": 2,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 21.04,
+      "work": "001801_001786"
+     },
+     "ep.001801_001786.s1.r7": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 7,
+      "scene_index": 1,
+      "seconds": 13.19,
+      "work": "001801_001786"
+     },
+     "ep.001801_001786.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 15.53,
+      "work": "001801_001786"
+     },
+     "ep.001801_001786.s2.r8": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 8,
+      "scene_index": 2,
+      "seconds": 15.75,
+      "work": "001801_001786"
+     }
+    },
+    "summary": {
+     "accepted": 6,
+     "attempts_total": 9,
+     "invocations": 7,
+     "invocations_with_timing": 6,
+     "location": {
+      "000035_000301": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "000050_003586": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "000081_000456": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "001383_056643": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "001798_056779": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "001801_001786": {
+       "entries": 3,
+       "location_non_null": 3
+      },
+      "001875_059897": {
+       "entries": 0,
+       "location_non_null": 0
+      }
+     },
+     "rejected_attempts": 3,
+     "seconds": {
+      "max": 24.43,
+      "mean": 17.66,
+      "median": 15.88,
+      "min": 13.19
+     }
+    }
+   },
+   "flags": {
+    "000035_000301": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000050_003586": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000081_000456": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001383_056643": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001798_056779": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001801_001786": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001875_059897": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    }
+   },
+   "rounds": [
+    {
+     "round": 1,
+     "t": 1795702951.6351032,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 0,
+       "pending": 3,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 2,
+     "t": 1795702994.5216756,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 1,
+       "pending": 2,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 3,
+     "t": 1795703029.7944803,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 2,
+       "pending": 1,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 4,
+     "t": 1795703063.7957425,
+     "packs": 0,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 5,
+     "t": 1795703064.58011,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 0,
+       "pending": 3,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 6,
+     "t": 1795704194.2810287,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 0,
+       "pending": 3,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 7,
+     "t": 1795704225.6903667,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 1,
+       "pending": 2,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 8,
+     "t": 1795704252.347531,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 2,
+       "pending": 1,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 9,
+     "t": 1795704281.6112158,
+     "packs": 0,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    }
+   ],
+   "timing": [
+    {
+     "pid": "ep.001801_001786.s0.r1",
+     "event": "start",
+     "t": 1795702960.652877
+    },
+    {
+     "pid": "ep.001801_001786.s0.r1",
+     "event": "end",
+     "t": 1795702985.0840752
+    },
+    {
+     "pid": "ep.001801_001786.s1.r2",
+     "event": "start",
+     "t": 1795703002.6998153
+    },
+    {
+     "pid": "ep.001801_001786.s1.r2",
+     "event": "end",
+     "t": 1795703023.740718
+    },
+    {
+     "pid": "ep.001801_001786.s2.r3",
+     "event": "start",
+     "t": 1795703041.4661465
+    },
+    {
+     "pid": "ep.001801_001786.s2.r3",
+     "event": "end",
+     "t": 1795703056.997635
+    },
+    {
+     "pid": "ep.001801_001786.s0.r6",
+     "event": "start",
+     "t": 1795704203.6072772
+    },
+    {
+     "pid": "ep.001801_001786.s0.r6",
+     "event": "end",
+     "t": 1795704219.6024585
+    },
+    {
+     "pid": "ep.001801_001786.s1.r7",
+     "event": "start",
+     "t": 1795704233.9752734
+    },
+    {
+     "pid": "ep.001801_001786.s1.r7",
+     "event": "end",
+     "t": 1795704247.1698475
+    },
+    {
+     "pid": "ep.001801_001786.s2.r8",
+     "event": "start",
+     "t": 1795704260.5306292
+    },
+    {
+     "pid": "ep.001801_001786.s2.r8",
+     "event": "end",
+     "t": 1795704276.277119
+    }
+   ],
+   "attempts": [
+    {
+     "pid": "ep.001801_001786.s0.r1",
+     "t": 1795702973.5015872,
+     "accepted": false,
+     "reasons": [
+      "trait_changes[0]: no ledger baseline for 'shinichi' (add via ledger_additions)",
+      "trait_changes[1]: no ledger baseline for 'onna' (add via ledger_additions)"
+     ],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "ep.001801_001786.s0.r1",
+     "t": 1795702977.9020536,
+     "accepted": false,
+     "reasons": [
+      "ledger_additions[shinichi]: need 6 ints in -1..1",
+      "ledger_additions[onna]: need 6 ints in -1..1"
+     ],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "ep.001801_001786.s0.r1",
+     "t": 1795702982.0213199,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": [
+      "shinichi",
+      "onna"
+     ]
+    },
+    {
+     "pid": "ep.001801_001786.s1.r2",
+     "t": 1795703017.0783942,
+     "accepted": false,
+     "reasons": [
+      "ledger_additions[shinichi]: baseline already exists (no overwrite)",
+      "ledger_additions[onna]: baseline already exists (no overwrite)"
+     ],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "ep.001801_001786.s1.r2",
+     "t": 1795703020.3864818,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "ep.001801_001786.s2.r3",
+     "t": 1795703054.3937664,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "ep.001801_001786.s0.r6",
+     "t": 1795704217.047992,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "ep.001801_001786.s1.r7",
+     "t": 1795704244.8545718,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "ep.001801_001786.s2.r8",
+     "t": 1795704273.9887497,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    }
+   ],
+   "pids": {
+    "ep.001801_001786.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\4e3b03f8cf9c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\ep\\packs\\001801_001786\\4e3b03f8cf9c.pack.json",
+     "round": 1,
+     "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+     "scene_index": 0,
+     "work": "001801_001786"
+    },
+    "ep.001801_001786.s0.r5": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\4e3b03f8cf9c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\ep\\packs\\001801_001786\\4e3b03f8cf9c.pack.json",
+     "round": 5,
+     "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+     "scene_index": 0,
+     "work": "001801_001786"
+    },
+    "ep.001801_001786.s0.r6": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\4e3b03f8cf9c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\ep\\packs\\001801_001786\\4e3b03f8cf9c.pack.json",
+     "round": 6,
+     "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+     "scene_index": 0,
+     "work": "001801_001786"
+    },
+    "ep.001801_001786.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\5af4eda55c80.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\ep\\packs\\001801_001786\\5af4eda55c80.pack.json",
+     "round": 2,
+     "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+     "scene_index": 1,
+     "work": "001801_001786"
+    },
+    "ep.001801_001786.s1.r7": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\5af4eda55c80.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\ep\\packs\\001801_001786\\5af4eda55c80.pack.json",
+     "round": 7,
+     "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+     "scene_index": 1,
+     "work": "001801_001786"
+    },
+    "ep.001801_001786.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\b99b2fa9ff66.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\ep\\packs\\001801_001786\\b99b2fa9ff66.pack.json",
+     "round": 3,
+     "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+     "scene_index": 2,
+     "work": "001801_001786"
+    },
+    "ep.001801_001786.s2.r8": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\b99b2fa9ff66.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\ep\\packs\\001801_001786\\b99b2fa9ff66.pack.json",
+     "round": 8,
+     "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+     "scene_index": 2,
+     "work": "001801_001786"
+    }
+   },
+   "summaries": {
+    "step2_work": {
+     "001801_001786": {
+      "annotations_bytes": 10991,
+      "annotations_sha256": "a016de726814f1905ef5fb3e4350bc275f69708bed5f2c91b04dbb174d436b4e",
+      "diagnose_bytes": 5777,
+      "diagnose_sha256": "4345e142d3bf22ae2f69212689f892bee6ff6ce487e588857819fb1beae3debb",
+      "errors": 0,
+      "l1": {
+       "hit": 0,
+       "miss": 3
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 3,
+       "miss": 0
+      },
+      "merged": 3,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 3
+     }
+    }
+   }
+  }
+ },
+ "call_tally": {
+  "cold": 35,
+  "edA": 1,
+  "edB": 2,
+  "ep_epoch1": 3,
+  "ep_epoch2": 3,
+  "failed_429_no_output": 1,
+  "completed": 44,
+  "launched": 45,
+  "cap": 150
+ },
+ "classification_premise_changed": {
+  "edA": "wording jitter (お鮨や/鮨や, 読点の有無); same facts",
+  "edB": "substantive (fact set 3 vs 2; MOVED_TO/LEARNED facts differ; also recent_facts last-5 window)"
+ }
+}
