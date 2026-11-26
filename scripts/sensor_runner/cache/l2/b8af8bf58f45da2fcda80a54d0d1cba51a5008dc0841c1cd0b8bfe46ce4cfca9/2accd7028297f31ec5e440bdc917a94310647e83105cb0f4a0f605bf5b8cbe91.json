@@ -1,0 +1,127 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "げっそり骨の出た死骸でねえかね。",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "何だい、死骸か。",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "お前は悪く変なものに知己のように話をするが",
+    "code": "E03"
+   },
+   {
+    "basis": "可い加減な事を云う、狂気の嘉吉以来だ。",
+    "code": "E04"
+   },
+   {
+    "basis": "げっそり骨の出た死骸でねえかね。",
+    "code": "E07"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "何だい、死骸か。",
+    "evidence": "inferred",
+    "object": "猫が死骸のようだということ",
+    "predicate": "LEARNED",
+    "subject": "kundo"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "狂気の嘉吉以来だ",
+    "code": "M05"
+   },
+   {
+    "basis": "げっそり骨の出た死骸でねえかね。",
+    "code": "M07"
+   },
+   {
+    "basis": "猫化けの怪談",
+    "code": "M13"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": "訓導は苦笑いして、",
+    "id": "kundo"
+   },
+   {
+    "basis": "お前様もね、当前だあこれ",
+    "id": "saihachi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "b8af8bf58f45da2fcda80a54d0d1cba51a5008dc0841c1cd0b8bfe46ce4cfca9",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "kundo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "saihachi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "2accd7028297f31ec5e440bdc917a94310647e83105cb0f4a0f605bf5b8cbe91",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "6095a07e4839c0ca8db4bdb400e323bddea707b9e6df131c4ea7991c6df5908b",
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "kundo",
+    "niemon",
+    "saihachi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "aadf4f0a3a10ddbaee5e6a30b148be797174dcde95acc72fc6d206c220013202",
+  "prior_state_hash": "135af377bef512fb75e045600b5ee0de133682bdd96cf454a53bd1d97e41be04",
+  "roster_all_digest": "b7aa0e4f4671a0099281583b00a91e63961cb8b727e7761b9303a9227c30445e",
+  "sampling": "default",
+  "scene_text_hash": "893093b9a79513159423f69bc47c619ef34dcb090c703f161951c6a5f934a821"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "川の中",
+   "predicate": "MOVED_TO",
+   "subject": null,
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "手毬の下の猫",
+   "predicate": "HOOK_OPENED",
+   "subject": "saihachi",
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "b8af8bf58f45da2fcda80a54d0d1cba51a5008dc0841c1cd0b8bfe46ce4cfca9",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

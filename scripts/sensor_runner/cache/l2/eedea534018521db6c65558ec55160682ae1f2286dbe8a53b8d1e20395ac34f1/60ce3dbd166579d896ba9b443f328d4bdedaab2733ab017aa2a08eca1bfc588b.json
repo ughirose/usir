@@ -1,0 +1,120 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "鎌倉まで行きましょうよ。",
+   "F_valence": 1,
+   "f_arousal": 1,
+   "f_basis": "気散じの旅の面白さ",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "私は尊いお説教を聴問したような心持じゃ",
+    "code": "E03"
+   },
+   {
+    "basis": "藤沢まで今日の内に出ようという考えだったが",
+    "code": "E02"
+   },
+   {
+    "basis": "十八九の色白な娘が一人",
+    "code": "E01"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "鎌倉まで行きましょうよ。",
+    "evidence": "inferred",
+    "object": "鎌倉",
+    "predicate": "MOVED_TO",
+    "subject": "tabiso"
+   },
+   {
+    "basis": "嘉吉とかを聞くにつけても",
+    "evidence": "inferred",
+    "object": "嘉吉",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   },
+   {
+    "basis": "お話中に悚気としたよ",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "tabiso",
+    "target": "tabiso",
+    "text": "姥の話を聞いて悚然とした"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "天狗わらいに冴えて来ました、面目もない不了簡",
+    "code": "M05"
+   },
+   {
+    "basis": "ちらちらと灯が見える",
+    "code": "M02"
+   },
+   {
+    "basis": "私は尊いお説教を聴問したような心持じゃ",
+    "code": "M10"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": "包を引寄せる旅僧",
+    "id": "tabiso"
+   },
+   {
+    "basis": "姥も腰を上げて尋ねると",
+    "id": "uba"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "eedea534018521db6c65558ec55160682ae1f2286dbe8a53b8d1e20395ac34f1",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "今日の内",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "tabiso",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "uba",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "60ce3dbd166579d896ba9b443f328d4bdedaab2733ab017aa2a08eca1bfc588b",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "9072bd8c38c94f2f1d27bd3a27e45ac6d80636a3e13d9143f1db9240e6dea508",
+  "prior_core": {
+   "status": "none"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "624085046bb8861a7f9d5713cf7f377445aac7fe6ea9508f822fbd05c41426e5",
+  "roster_all_digest": "b7aa0e4f4671a0099281583b00a91e63961cb8b727e7761b9303a9227c30445e",
+  "sampling": "default",
+  "scene_text_hash": "6fda5b37328f9c1318950b8ac4a29c6200d6ec1c33fd59479e8e15786790435a"
+ },
+ "prior_facts": null,
+ "scene_hash": "eedea534018521db6c65558ec55160682ae1f2286dbe8a53b8d1e20395ac34f1",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

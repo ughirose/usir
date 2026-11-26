@@ -1,0 +1,173 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "そのお金、もうもどってなんかこないわよ",
+   "F_valence": -1,
+   "f_arousal": 1,
+   "f_basis": "にやっとする文吉に",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "かえしてくれた？",
+    "code": "E03"
+   },
+   {
+    "basis": "斎木少年のへやの権利金のことはいまだに夫にかくしている",
+    "code": "E08"
+   },
+   {
+    "basis": "いやだわ。男のくせにへそくりなんて。",
+    "code": "E04"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "やがてぱったり来なくなってしまった",
+    "category": "relation_status",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "heiroku",
+    "target": "heiroku",
+    "text": "やみ屋として噂になって以来、安江の家に来なくなった"
+   },
+   {
+    "basis": "かしたさ。お前の姉婿だった人だと思ったからさ。",
+    "evidence": "inferred",
+    "object": "貸した二千円",
+    "predicate": "LOST",
+    "subject": "bunkichi"
+   },
+   {
+    "basis": "斎木少年のへやの権利金のことはいまだに夫にかくしている",
+    "evidence": "explicit",
+    "object": "権利金を夫に隠している",
+    "predicate": "HOOK_OPENED",
+    "subject": "yasue"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "たもとの底にあったよ。",
+    "code": "M05"
+   },
+   {
+    "basis": "安江が顔色をかえる。",
+    "code": "M03"
+   },
+   {
+    "basis": "やがてぱったり来なくなってしまった",
+    "code": "M04"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": "安江はつい許す気になり",
+    "id": "yasue"
+   },
+   {
+    "basis": "兵六さんはせっせとミルクを運んできてくれた",
+    "id": "heiroku"
+   },
+   {
+    "basis": "音枝がそういうと",
+    "id": "otoe"
+   },
+   {
+    "basis": "文吉は文吉で",
+    "id": "bunkichi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "08ec58f6ba2228b78deb8873b08d5f4658cea9ebe819e80a3d5e0549da5a2174",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "そのあとしばらく",
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yasue",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "heiroku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "bunkichi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "f24b8a69183d622338f62a012c721fe1ed7d3e611017e9911c6bfa777bcf9dc9",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "b754de7e1e38da483efee2bfc528196a3dca8b85b5f47c221907d6bccd7c8bd7",
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "heiroku",
+    "otoe",
+    "susumu",
+    "yasue"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "96d6a191a1588fa16463616778ad09731de821f8df736eb1ce09492c1fa1a6a3",
+  "prior_state_hash": "1d6d52078c0fb691c31555334ddc0ef21fc5135b161d1d0cff73208cc431aab6",
+  "roster_all_digest": "854c618fe4b8b6a59b131bd5b48c79d5983f2fc4f695a41a6113cc22bad1bb64",
+  "sampling": "default",
+  "scene_text_hash": "de0b03bfc3a4bd63f4f4aaf509b51d86a8aa7d161a9f1b80499a694c7b134c14"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "赤ん坊の夏樹",
+   "predicate": "ACQUIRED",
+   "subject": "yasue",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "安江の家",
+   "predicate": "MOVED_TO",
+   "subject": "heiroku",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "yasue",
+   "target": "yasue",
+   "text": "兵六の来訪に待たされた憤慨が残り、むっとしている"
+  },
+  {
+   "category": "body_health",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "赤ん坊の若い両親",
+   "text": "夫婦そろって肺病で寝こんでいる"
+  }
+ ],
+ "scene_hash": "08ec58f6ba2228b78deb8873b08d5f4658cea9ebe819e80a3d5e0549da5a2174",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

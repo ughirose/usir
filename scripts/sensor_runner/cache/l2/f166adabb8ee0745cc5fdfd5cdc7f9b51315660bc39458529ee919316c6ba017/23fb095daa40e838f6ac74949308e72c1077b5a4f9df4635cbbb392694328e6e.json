@@ -1,0 +1,162 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "さあ今度は私の番だ",
+   "F_valence": 0,
+   "f_arousal": 1,
+   "f_basis": "むしゃ／＼と仰山に舌を鳴らしながら",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "喉笛を喰い切った",
+    "code": "E05"
+   },
+   {
+    "basis": "さも愉快そうな顔をして",
+    "code": "E10"
+   },
+   {
+    "basis": "一寸も動けなかった",
+    "code": "E16"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "土間へ仰向きに転げた",
+    "evidence": "explicit",
+    "object": "土間",
+    "predicate": "MOVED_TO",
+    "subject": "hagiwara"
+   },
+   {
+    "basis": "二人ともだらしなく大の字なりに土間へ倒れたまゝ、一寸も動けなかった",
+    "category": "situation",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "hagiwara",
+    "target": "遊び",
+    "text": "狼に殺された死骸の役となり、土間に倒れて動かない状態になった"
+   },
+   {
+    "basis": "又しても仙吉は体中泥だらけになった",
+    "category": "body_health",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "senkichi",
+    "target": "senkichi",
+    "text": "信一に踏まれ、体中が泥だらけになった"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "土間",
+  "mood_top3": [
+   {
+    "basis": "さも愉快そうな顔をして",
+    "code": "M05"
+   },
+   {
+    "basis": "気が気でなく",
+    "code": "M03"
+   },
+   {
+    "basis": "着物の裾のはだけた処から冷めたい風がすう／＼と股ぐらに吹き込み",
+    "code": "M06"
+   }
+  ],
+  "pov_character": "hagiwara",
+  "present": [
+   {
+    "basis": "さあ今度は私の番だ",
+    "id": "hagiwara"
+   },
+   {
+    "basis": "信一は疾風のように私の首ッたまへのしかゝって喉笛を喰い切った",
+    "id": "shinichi"
+   },
+   {
+    "basis": "一方へ伸ばした右の手の中指の先が微かに仙吉の髪の毛に触れて居る",
+    "id": "senkichi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "f166adabb8ee0745cc5fdfd5cdc7f9b51315660bc39458529ee919316c6ba017",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "hagiwara",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "senkichi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "23fb095daa40e838f6ac74949308e72c1077b5a4f9df4635cbbb392694328e6e",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "b2a2bf671c1345f36db3e5ac3917ae29be0e99c234db1a5422001bb3969b2151",
+  "prior_core": {
+   "pov_character": "hagiwara",
+   "present": [
+    "hagiwara",
+    "senkichi",
+    "shinichi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "b85b53c73ed8d8521c6f1da83bc76f702499e2caf54f5d0f14effed19278495c",
+  "prior_state_hash": "1665a74906e33f0d7706bc2dde71c188714c7aff4c329491f3367fa01e9d18f4",
+  "roster_all_digest": "312b1652204d55e664542d279d464197e251b6aea1857ad91c19e1536269baf0",
+  "sampling": "default",
+  "scene_text_hash": "896b8ce1b55c69ee60219f4b21a55c07d7412bc50cdb5c006e21ea73f4ea1219"
+ },
+ "prior_facts": [
+  {
+   "category": "body_health",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "senkichi",
+   "target": "senkichi",
+   "text": "帯は解かれたが、手頸に縛られた痕が赤く残った"
+  },
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "hagiwara",
+   "target": "hagiwara",
+   "text": "信一の狼役が真に迫り、少し恐くなった"
+  },
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "shinichi",
+   "target": "遊び",
+   "text": "縛る遊びから、信一が狼、二人が旅人の狼ごっこに移った"
+  }
+ ],
+ "scene_hash": "f166adabb8ee0745cc5fdfd5cdc7f9b51315660bc39458529ee919316c6ba017",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

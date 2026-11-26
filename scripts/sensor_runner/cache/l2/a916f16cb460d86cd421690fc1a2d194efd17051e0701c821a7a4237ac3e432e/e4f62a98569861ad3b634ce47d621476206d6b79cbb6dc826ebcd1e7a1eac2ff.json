@@ -1,0 +1,137 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "ええ！驚かなくても宜しい。今のは蛙だ。",
+   "F_valence": 0,
+   "f_arousal": -1,
+   "f_basis": "この川は音もなく、霞のように、どんよりと青田の村を這うのである。",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "なあよ、宰八、",
+    "code": "E03"
+   },
+   {
+    "basis": "ぶらりと風呂敷包を提げながら",
+    "code": "E02"
+   },
+   {
+    "basis": "一人が留まれば皆留まった",
+    "code": "E16"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "一人が留まれば皆留まった",
+    "category": "situation",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "saihachi",
+    "target": "一行",
+    "text": "宰八が立留まり、一行が足を止めた"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "小川べりの草の上",
+  "mood_top3": [
+   {
+    "basis": "秋谷の夜はここよりぞ暗くなる",
+    "code": "M02"
+   },
+   {
+    "basis": "民が塗炭に苦んだ、戦国時代の駆落めく",
+    "code": "M05"
+   },
+   {
+    "basis": "この川は音もなく、霞のように、どんよりと青田の村を這うのである",
+    "code": "M01"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": "鶴谷が下男、苦虫の仁右衛門親仁",
+    "id": "niemon"
+   },
+   {
+    "basis": "と宰八はちょっと立留まる",
+    "id": "saihachi"
+   },
+   {
+    "basis": "杖を突いて続いた紳士は、村の学校の訓導である",
+    "id": "kundo"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "a916f16cb460d86cd421690fc1a2d194efd17051e0701c821a7a4237ac3e432e",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "秋谷の夜",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "niemon",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "saihachi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "kundo",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "e4f62a98569861ad3b634ce47d621476206d6b79cbb6dc826ebcd1e7a1eac2ff",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "db8d923b03a1d4df08ffc7bc12c6e5ed67718edef6baedaa03a06a07ecbdb818",
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "tabiso",
+    "uba"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "dbf2dbdb0e16c0c98ad58ba83a811774a2124e999ce71439f5d556ea7ee476f2",
+  "prior_state_hash": "1dd120595129dd8bbc8f5f105f59180f4d27b6a7d87050bcf3dd9113ca40c0e0",
+  "roster_all_digest": "b7aa0e4f4671a0099281583b00a91e63961cb8b727e7761b9303a9227c30445e",
+  "sampling": "default",
+  "scene_text_hash": "8d58f8e01d7878a122ad995ea29e67989f9731b21fc95438b52ce89c24e10300"
+ },
+ "prior_facts": [
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "tabiso",
+   "target": "tabiso",
+   "text": "話に引入れられて気が沈み、真心から念仏の声が出た"
+  },
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "uba",
+   "target": "uba",
+   "text": "旅僧を深く渇仰した"
+  }
+ ],
+ "scene_hash": "a916f16cb460d86cd421690fc1a2d194efd17051e0701c821a7a4237ac3e432e",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

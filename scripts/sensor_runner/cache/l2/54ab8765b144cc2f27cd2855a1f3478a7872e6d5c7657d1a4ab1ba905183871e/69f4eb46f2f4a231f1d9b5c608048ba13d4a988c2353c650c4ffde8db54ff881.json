@@ -1,0 +1,153 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "大きな大きな青じろい獣の骨が、横に倒れて潰れたという風になって、半分以上掘り出されていました",
+   "F_valence": 1,
+   "f_arousal": 1,
+   "f_basis": "おっと、も少し遠くから掘って。",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "君たちは参観かね。",
+    "code": "E03"
+   },
+   {
+    "basis": "鶴嘴をふりあげたり、スコープをつかったりしている",
+    "code": "E09"
+   },
+   {
+    "basis": "大きな大きな青じろい獣の骨が、横に倒れて潰れたという風になって、半分以上掘り出されていました",
+    "code": "E07"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "三人の助手らしい人たちに夢中でいろいろ指図をしていました",
+    "evidence": "explicit",
+    "object": "五六人の人かげの作業",
+    "predicate": "HOOK_RESOLVED",
+    "subject": null
+   },
+   {
+    "basis": "ざっと百二十万年ぐらい前のくるみだよ",
+    "evidence": "explicit",
+    "object": "くるみは約百二十万年前のもの",
+    "predicate": "LEARNED",
+    "subject": "giovanni"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "おっと、も少し遠くから掘って。",
+    "code": "M05"
+   },
+   {
+    "basis": "百二十万年前、第三紀のあとのころは海岸でね",
+    "code": "M15"
+   },
+   {
+    "basis": "あるいは風か水やがらんとした空かに見えやしないかということなのだ",
+    "code": "M13"
+   }
+  ],
+  "pov_character": "giovanni",
+  "present": [
+   {
+    "basis": "君たちは参観かね。",
+    "id": "giovanni"
+   },
+   {
+    "basis": "君たちは参観かね。",
+    "id": "campanella"
+   },
+   {
+    "basis": "その大学士らしい人が、眼鏡をきらっとさせて",
+    "id": "daigakushi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "54ab8765b144cc2f27cd2855a1f3478a7872e6d5c7657d1a4ab1ba905183871e",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "daigakushi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "giovanni",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "69f4eb46f2f4a231f1d9b5c608048ba13d4a988c2353c650c4ffde8db54ff881",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "adcf051e4b55978cfc7da2ed86aad4f6d57c753c70249fac5603f2576ab39ebe",
+  "prior_core": {
+   "pov_character": "giovanni",
+   "present": [
+    "campanella",
+    "giovanni"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "b5ec4344c17a4c5124ffa31d197aa671dd83e7bb3468b075ed0398bd1b47e286",
+  "prior_state_hash": "efd2ca3f3b10039194368ad6294ad2535b53a2ed644d8667d3bbc555efc011ef",
+  "roster_all_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b",
+  "sampling": "default",
+  "scene_text_hash": "d30d42acaecadb5bba199e02a0b9a245540ac6cf69ee39caa7f836212f8fe2f7"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "渚",
+   "predicate": "MOVED_TO",
+   "subject": "giovanni",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "プリオシン海岸",
+   "predicate": "MOVED_TO",
+   "subject": "campanella",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "くるみの実",
+   "predicate": "ACQUIRED",
+   "subject": "campanella",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "五六人の人かげの作業",
+   "predicate": "HOOK_OPENED",
+   "subject": null,
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "54ab8765b144cc2f27cd2855a1f3478a7872e6d5c7657d1a4ab1ba905183871e",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

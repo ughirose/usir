@@ -1,0 +1,120 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "女の声はひどく疲れ、喘いでいた",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "やはり、海は親しかった",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "まちがいなく若い女がひとり、深夜の海を泳いでいるのだった",
+    "code": "E01"
+   },
+   {
+    "basis": "大丈夫ですか？",
+    "code": "E03"
+   },
+   {
+    "basis": "慎一はその方向に泳ぎ寄った",
+    "code": "E02"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "慎一はその方向に泳ぎ寄った",
+    "evidence": "explicit",
+    "object": "女の近く",
+    "predicate": "MOVED_TO",
+    "subject": "shinichi"
+   },
+   {
+    "basis": "女の声はひどく疲れ、喘いでいた",
+    "category": "body_health",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "onna",
+    "target": "onna",
+    "text": "声が疲れ、喘いでおり、衰弱している"
+   },
+   {
+    "basis": "今日、真赤なスポーツ・カーにひとりで乗ってきた女だった",
+    "evidence": "explicit",
+    "object": "女は今日のスポーツ・カーの女",
+    "predicate": "LEARNED",
+    "subject": "shinichi"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "黒い海",
+  "mood_top3": [
+   {
+    "basis": "月はなかった",
+    "code": "M01"
+   },
+   {
+    "basis": "黒い海にはきらきらと夜光虫が淡い緑いろの光の呼吸をしている",
+    "code": "M02"
+   },
+   {
+    "basis": "知らない人ね、きっと。",
+    "code": "M11"
+   }
+  ],
+  "pov_character": "shinichi",
+  "present": [
+   {
+    "basis": "慎一は、知らぬまにかなり沖にきていた",
+    "id": "shinichi"
+   },
+   {
+    "basis": "まちがいなく若い女がひとり、深夜の海を泳いでいるのだった",
+    "id": "onna"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": "深夜",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "onna",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "a5958240a3c00f731f17a7f030d7493482476810c7ff91d6e2f74bcf7724ef65",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "c8d4fa9e05a63dba4efa1d1ae69798df2615c6ad472511a76e25085b70a67237",
+  "prior_core": {
+   "status": "none"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "624085046bb8861a7f9d5713cf7f377445aac7fe6ea9508f822fbd05c41426e5",
+  "roster_all_digest": "1db4c6d2157b4872027a28fc6819c83401687dfafd82b3b5611f1400b75d0324",
+  "sampling": "default",
+  "scene_text_hash": "1403e553762d90b3f027fb75f29300ec404b75340a8b6092c4eacf1298de9915"
+ },
+ "prior_facts": null,
+ "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

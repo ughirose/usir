@@ -1,0 +1,177 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "月々わたしてもらう約束なのにさ、兵六おじさん、なかなかくれないらしいわ。",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "さっぱりと思いあきらめると、あまり苦にしないのが安江のたちである。",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "進君のうちね、ずい分たくさん兵六おじさんにお金預けたんだってよ。",
+    "code": "E03"
+   },
+   {
+    "basis": "ほんとは三千円を兵六さんに出していたのだった。",
+    "code": "E08"
+   },
+   {
+    "basis": "そんなこと、わたしが聞いてもしようがないじゃないか。",
+    "code": "E04"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "ほんとは三千円を兵六さんに出していたのだった",
+    "evidence": "explicit",
+    "object": "三千円",
+    "predicate": "LOST",
+    "subject": "bunkichi"
+   },
+   {
+    "basis": "進君の何年間かの生活費なんですって",
+    "evidence": "explicit",
+    "object": "進君の家が預けた生活費が兵六から渡されない",
+    "predicate": "HOOK_OPENED",
+    "subject": "susumu"
+   },
+   {
+    "basis": "安江は柔和な顔で五百円をわたしながら",
+    "evidence": "explicit",
+    "object": "五百円",
+    "predicate": "LOST",
+    "subject": "yasue"
+   },
+   {
+    "basis": "当の進君が頭を下げると",
+    "evidence": "inferred",
+    "object": "五百円",
+    "predicate": "ACQUIRED",
+    "subject": "susumu"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "わたしの知ったこっちゃないよ",
+    "code": "M16"
+   },
+   {
+    "basis": "むな算用",
+    "code": "M05"
+   },
+   {
+    "basis": "柔和な顔で五百円をわたしながら",
+    "code": "M10"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": "安江は柔和な顔で五百円をわたしながら",
+    "id": "yasue"
+   },
+   {
+    "basis": "音枝は素直に引きさがるのだが",
+    "id": "otoe"
+   },
+   {
+    "basis": "当の進君が頭を下げると",
+    "id": "susumu"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "f6bb4a8cd076d8932f313a5377a7aab0bd3939d5dcf72046e618a060e7107ad6",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yasue",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "otoe",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "susumu",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 3,
+      "basis": "彼は安江には二千円といったが、ほんとは三千円を兵六さんに出していたのだった",
+      "delta": -1
+     }
+    ],
+    "character_id": "bunkichi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "4d555a8680930bc7507814d81f0bfed3191cd2568c13fd36ed2fc590ee9ea5a2",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "ec7eaae38baa632fd6bb2bcf8aa8dccba204ce9a7e93af15915db6d24d01408a",
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "bunkichi",
+    "heiroku",
+    "otoe",
+    "yasue"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "f71603bf6060b58d1d731cabe7d85720194c035e120405dda995d4059dfe3419",
+  "prior_state_hash": "8c7021d617fed5c9a6cc0b0785dc8238974eb1cf15e78683e351a6fbada4863d",
+  "roster_all_digest": "854c618fe4b8b6a59b131bd5b48c79d5983f2fc4f695a41a6113cc22bad1bb64",
+  "sampling": "default",
+  "scene_text_hash": "523bddbd220d016f74d868aa72ca10dad8156fce61cdac90189d20017d920c63"
+ },
+ "prior_facts": [
+  {
+   "category": "relation_status",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "heiroku",
+   "target": "heiroku",
+   "text": "やみ屋として噂になって以来、安江の家に来なくなった"
+  },
+  {
+   "category": null,
+   "object": "貸した二千円",
+   "predicate": "LOST",
+   "subject": "bunkichi",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "権利金を夫に隠している",
+   "predicate": "HOOK_OPENED",
+   "subject": "yasue",
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "f6bb4a8cd076d8932f313a5377a7aab0bd3939d5dcf72046e618a060e7107ad6",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

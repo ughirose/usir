@@ -1,0 +1,149 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "これはまったく予想外な出来ごとでした",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "夜逃げというか昼逃げというか",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "二千円ばかり貸して欲しいと切り出した",
+    "code": "E03"
+   },
+   {
+    "basis": "どこかに失踪してしまったのです",
+    "code": "E14"
+   },
+   {
+    "basis": "夫婦で赤穂に行き",
+    "code": "E02"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "どこかに失踪してしまったのです",
+    "category": "situation",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "fuwa",
+    "target": "fuwa",
+    "text": "不破夫妻が一週間で失踪した"
+   },
+   {
+    "basis": "夫婦で赤穂に行き、先祖の墓参りをして来たいというのです",
+    "evidence": "explicit",
+    "object": "不破夫婦の赤穂行きの意向",
+    "predicate": "LEARNED",
+    "subject": "boku"
+   },
+   {
+    "basis": "千円札二枚渡してやりました",
+    "evidence": "explicit",
+    "object": "二千円",
+    "predicate": "LOST",
+    "subject": "boku"
+   },
+   {
+    "basis": "野呂は明後日頃やって来る筈だ",
+    "evidence": "explicit",
+    "object": "野呂の留守番来訪",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "僕の部屋",
+  "mood_top3": [
+   {
+    "basis": "あやしげな画論をはいたり",
+    "code": "M05"
+   },
+   {
+    "basis": "はかなく終りを告げました",
+    "code": "M04"
+   },
+   {
+    "basis": "仲良くしてやってくれ",
+    "code": "M10"
+   }
+  ],
+  "pov_character": "boku",
+  "present": [
+   {
+    "basis": "僕の部屋にやってきて",
+    "id": "boku"
+   },
+   {
+    "basis": "不破数馬はすこし酔って",
+    "id": "fuwa"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "fcdf50e4188c3a30bd0d38145bf6b4feadbadc9d825b296fdbb6264ec1b3310e",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "一週間目に",
+   "evidence": "explicit",
+   "explicit_time": "失踪の前の晩",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "boku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "fuwa",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "0b3dd112ea53e23da8cf6241240ada59277fdcb9c620fde771f96070e7575912",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "d912ce1381c821c9ac329fc7440e2e844907473b4dfaeea0f4a574a4e9ff5521",
+  "prior_core": {
+   "pov_character": "boku",
+   "present": [
+    "boku",
+    "fuwa"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "3aa769ce51a124738ab5a7ad57eea6c4ba6aa97d9714d763a0df3ed323cc1c0c",
+  "prior_state_hash": "a1b8ec63446d2a68f0b6f769e12500f37f6d2dcaa6ecbf716aed72d559399f4c",
+  "roster_all_digest": "49d6cd1f5147de94ae52e2b91578a97e84392b30513758f44a5203f99705937b",
+  "sampling": "default",
+  "scene_text_hash": "4ee6d512986e36ac611c86a7fa434c3580743eb01f447f457332eb417e7b44e6"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "代田橋",
+   "predicate": "MOVED_TO",
+   "subject": "boku",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "四万円",
+   "predicate": "LOST",
+   "subject": "boku",
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "fcdf50e4188c3a30bd0d38145bf6b4feadbadc9d825b296fdbb6264ec1b3310e",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

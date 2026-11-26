@@ -1,0 +1,127 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": -1,
+   "F_basis": "恐怖からも不安からも、離れる事が出来るのでした",
+   "F_valence": 1,
+   "f_arousal": -1,
+   "f_basis": "無言のひどい侘びしさ",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "一緒にやすみながら",
+    "code": "E11"
+   },
+   {
+    "basis": "などと物語るのでしたが",
+    "code": "E03"
+   },
+   {
+    "basis": "お茶を飲みました",
+    "code": "E16"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "詐欺罪に問われ、刑務所にいるのよ",
+    "evidence": "explicit",
+    "object": "ツネ子の夫は詐欺罪で刑務所にいる",
+    "predicate": "LEARNED",
+    "subject": "yozo"
+   },
+   {
+    "basis": "わが身は、恐怖からも不安からも、離れる事が出来るのでした",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yozo",
+    "target": "yozo",
+    "text": "ツネ子の侘びしさの気流に包まれ、恐怖と不安から離れることができた"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "本所の大工さんの二階",
+  "mood_top3": [
+   {
+    "basis": "完全に孤立している感じの女でした",
+    "code": "M11"
+   },
+   {
+    "basis": "そのひとに寄り添うと",
+    "code": "M10"
+   },
+   {
+    "basis": "日頃の自分の陰鬱な心",
+    "code": "M08"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": "自分は、その二階で",
+    "id": "yozo"
+   },
+   {
+    "basis": "そのひとが借りていました",
+    "id": "tsuneko"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "tsuneko",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "d285ba47868747b3907921dda39a6a4fb0a33aa47cb45b527d54cd46994b902b",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "0ad8c7dfe9f1c3ad823f88df85cdb793d53c5464510e9ff757c20888929e41fe",
+  "prior_core": {
+   "pov_character": "yozo",
+   "present": [
+    "tsuneko",
+    "yozo"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "82557e61710fa4c3cf1c91790af088782763a730d33d537d4e032927566f2ef4",
+  "prior_state_hash": "a44627d63b0b3c9350bc7925bdf9ddc7061489a418abf4ae988df9403cca19f9",
+  "roster_all_digest": "860d2d10f563333e84efc5e193e711bf85e6c0e1838ee236de5e6f25bbd33187",
+  "sampling": "default",
+  "scene_text_hash": "53420fad36a9e31173c581b8006913b82c5e9bae5a080259458f50a3f50327c6"
+ },
+ "prior_facts": [
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "yozo",
+   "target": "yozo",
+   "text": "ツネ子の一言で、震えおののいていた心が静まり、傍にいることに安心を覚えた"
+  }
+ ],
+ "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

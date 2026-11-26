@@ -1,0 +1,111 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "簡略な祝宴を開きました",
+   "F_valence": 1,
+   "f_arousal": 1,
+   "f_basis": "おどろいたことには夫人はその風貌に似ず",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "はるばる八王子から代田橋にバタバタバタと引越して来ました",
+    "code": "E02"
+   },
+   {
+    "basis": "かんたんな契約書を作成し",
+    "code": "E13"
+   },
+   {
+    "basis": "ソバを肴にして簡略な祝宴を開きました",
+    "code": "E10"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "はるばる八王子から代田橋にバタバタバタと引越して来ました",
+    "evidence": "explicit",
+    "object": "代田橋",
+    "predicate": "MOVED_TO",
+    "subject": "boku"
+   },
+   {
+    "basis": "四万円を手交し",
+    "evidence": "explicit",
+    "object": "四万円",
+    "predicate": "LOST",
+    "subject": "boku"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "代田橋",
+  "mood_top3": [
+   {
+    "basis": "典型的なウワバミ夫婦とでも言うべきでしょうねえ",
+    "code": "M05"
+   },
+   {
+    "basis": "亭主を上廻る酒豪で、二升用意したのが足りなくて、もう一升買い足したほど",
+    "code": "M12"
+   },
+   {
+    "basis": "不破夫人もその祝宴に参加して来ました",
+    "code": "M10"
+   }
+  ],
+  "pov_character": "boku",
+  "present": [
+   {
+    "basis": "僕は世帯道具や画の道具一式をオート三輪に積みこんで",
+    "id": "boku"
+   },
+   {
+    "basis": "その夜不破とかんたんな契約書を作成し",
+    "id": "fuwa"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "知合いになって三日目に",
+   "evidence": "explicit",
+   "explicit_time": "その夜",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "boku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "fuwa",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "45cee8f359d4df4bf5c30cf55cad13fd84baf745b3155cbd58c9a95d7c153351",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "3aca5530be714b718b3eaf79a465748a055553ada4a0454f9ea6573bab250571",
+  "prior_core": {
+   "status": "none"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "624085046bb8861a7f9d5713cf7f377445aac7fe6ea9508f822fbd05c41426e5",
+  "roster_all_digest": "49d6cd1f5147de94ae52e2b91578a97e84392b30513758f44a5203f99705937b",
+  "sampling": "default",
+  "scene_text_hash": "ccfd5eff5379dfaddc2d1481360329371227ffa1f3c863c5ad8597ac500ef26e"
+ },
+ "prior_facts": null,
+ "scene_hash": "7a9a21d274f8f725297c90562608d0b631288e1ea3ce31dcf1fa3ca7e09ce344",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

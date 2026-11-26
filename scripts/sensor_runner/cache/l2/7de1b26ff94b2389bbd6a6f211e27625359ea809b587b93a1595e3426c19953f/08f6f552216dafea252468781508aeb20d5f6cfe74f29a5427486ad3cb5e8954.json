@@ -1,0 +1,145 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "わたしんとこも困るのよ",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "両手をついての切口上を聞くと",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "早く鷲さんに相談して、さがしてくださいね。",
+    "code": "E03"
+   },
+   {
+    "basis": "きょうもこれから出かけるところです",
+    "code": "E02"
+   },
+   {
+    "basis": "毎日のように行ってるんです",
+    "code": "E16"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "安江はつい慰めずにいられなくなり",
+    "category": "emotion",
+    "evidence": "inferred",
+    "predicate": "STATE_CHANGED",
+    "subject": "yasue",
+    "target": "yasue",
+    "text": "進の切口上を聞いて、催促一辺倒から慰める気持ちに傾いた"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "安江はつい慰めずにいられなくなり",
+    "code": "M10"
+   },
+   {
+    "basis": "きょうは泊りこんででもあってくるつもりです",
+    "code": "M14"
+   },
+   {
+    "basis": "お金のことより、部屋のことよ",
+    "code": "M03"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": "安江はつい慰めずにいられなくなり",
+    "id": "yasue"
+   },
+   {
+    "basis": "ぼく、ここのところ、毎日のように行ってるんです",
+    "id": "susumu"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "7de1b26ff94b2389bbd6a6f211e27625359ea809b587b93a1595e3426c19953f",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yasue",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "susumu",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "08f6f552216dafea252468781508aeb20d5f6cfe74f29a5427486ad3cb5e8954",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "a72ecaf393f369df1a8ed4797928a8bfce9fff0583c89e0b93ec47ba6bae7116",
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "otoe",
+    "susumu",
+    "yasue"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "f6e7d8a9afa97fc18964e39816b13a8bc5b94dc6bf86b5ba96d0f3719ae0fd08",
+  "prior_state_hash": "a98d43f4f6a58d521ae46fe02948fe4c81d20b3025eb391b61b5e1b97d5b5610",
+  "roster_all_digest": "854c618fe4b8b6a59b131bd5b48c79d5983f2fc4f695a41a6113cc22bad1bb64",
+  "sampling": "default",
+  "scene_text_hash": "13127b9939049e545e0c471d0c6231f65f65075fca7f0c67c22db17a4d2b6ddc"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "三千円",
+   "predicate": "LOST",
+   "subject": "bunkichi",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "進君の家が預けた生活費が兵六から渡されない",
+   "predicate": "HOOK_OPENED",
+   "subject": "susumu",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "五百円",
+   "predicate": "LOST",
+   "subject": "yasue",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "五百円",
+   "predicate": "ACQUIRED",
+   "subject": "susumu",
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "7de1b26ff94b2389bbd6a6f211e27625359ea809b587b93a1595e3426c19953f",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

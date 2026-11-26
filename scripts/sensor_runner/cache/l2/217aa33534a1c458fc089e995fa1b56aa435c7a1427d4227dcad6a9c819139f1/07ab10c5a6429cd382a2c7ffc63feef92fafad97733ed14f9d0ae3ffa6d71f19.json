@@ -1,0 +1,162 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "これから四人でお酒盛りをしようじゃないか",
+   "F_valence": 1,
+   "f_arousal": 0,
+   "f_basis": "つく／″＼と其れに見惚れて居ると",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "豆炒りを肴に白酒を飲み始めた",
+    "code": "E10"
+   },
+   {
+    "basis": "仙吉を白酒で酔っ拂わしてやるんだよ",
+    "code": "E08"
+   },
+   {
+    "basis": "中二階の十畳の間へ連れて行った",
+    "code": "E02"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "中二階の十畳の間へ連れて行った",
+    "evidence": "explicit",
+    "object": "中二階の十畳の間",
+    "predicate": "MOVED_TO",
+    "subject": "hagiwara"
+   },
+   {
+    "basis": "不機嫌らしく首を振るばかり",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "shinichi",
+    "target": "信一の態度",
+    "text": "遊びの誘いに不機嫌そうに首を振って断る"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "中二階の十畳の間",
+  "mood_top3": [
+   {
+    "basis": "何喰わぬ顔で云い出した",
+    "code": "M05"
+   },
+   {
+    "basis": "これから四人でお酒盛りをしようじゃないか",
+    "code": "M12"
+   },
+   {
+    "basis": "緋羅紗を掛けた床の雛段には",
+    "code": "M15"
+   }
+  ],
+  "pov_character": "hagiwara",
+  "present": [
+   {
+    "basis": "私が雛段の前に立って",
+    "id": "hagiwara"
+   },
+   {
+    "basis": "信一と姉の光子は雛段の前に臥そべりながら",
+    "id": "shinichi"
+   },
+   {
+    "basis": "信一と姉の光子は雛段の前に臥そべりながら",
+    "id": "mitsuko"
+   },
+   {
+    "basis": "直ぐに仙吉が跳んで来て",
+    "id": "senkichi"
+   },
+   {
+    "basis": "信一の女中は又私を呼び止めて",
+    "id": "jochu"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "217aa33534a1c458fc089e995fa1b56aa435c7a1427d4227dcad6a9c819139f1",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "それから四五日立った或る日のこと",
+   "evidence": "explicit",
+   "explicit_time": "明くる日",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "hagiwara",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "senkichi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "07ab10c5a6429cd382a2c7ffc63feef92fafad97733ed14f9d0ae3ffa6d71f19",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "8de079795e61762658a99da7a20f20df12f7d84eb3e564227b95e729f85a71ab",
+  "prior_core": {
+   "pov_character": "hagiwara",
+   "present": [
+    "hagiwara",
+    "jochu",
+    "senkichi",
+    "shinichi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "3f201685f3daf05614f36380b54a2cd652382d93f2f7d1c96cbf9f0b1706a36f",
+  "prior_state_hash": "a1143885eb0607609dcdd59f3d3614e96c253bfebc79ef716127e3dff9fc39da",
+  "roster_all_digest": "312b1652204d55e664542d279d464197e251b6aea1857ad91c19e1536269baf0",
+  "sampling": "default",
+  "scene_text_hash": "35a74093c65e19a95530660c86820a89d155659bd164f23fc83c4d4b64fd5449"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "小屋",
+   "predicate": "MOVED_TO",
+   "subject": "jochu",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "家",
+   "predicate": "MOVED_TO",
+   "subject": "hagiwara",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "hagiwara",
+   "target": "信一への感情",
+   "text": "信一の器量と我が儘な仕打ちに心を奪われた"
+  }
+ ],
+ "scene_hash": "217aa33534a1c458fc089e995fa1b56aa435c7a1427d4227dcad6a9c819139f1",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

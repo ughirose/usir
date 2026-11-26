@@ -1,0 +1,133 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "あなたも、ぼくはとめはしません",
+   "F_valence": -1,
+   "f_arousal": -1,
+   "f_basis": "波間にあざやかに濡れた色の燐光を散らしていた",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "ぼくの親父も、自殺したんです",
+    "code": "E03"
+   },
+   {
+    "basis": "そのままゆっくりと引きかえした",
+    "code": "E02"
+   },
+   {
+    "basis": "銛をからだに結えつけてとびこんじゃったんです",
+    "code": "E06"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "ぼくの親父も、自殺したんです",
+    "evidence": "explicit",
+    "object": "慎一の父も自殺した",
+    "predicate": "LEARNED",
+    "subject": "onna"
+   },
+   {
+    "basis": "そのままゆっくりと引きかえした",
+    "evidence": "explicit",
+    "object": "引きかえす",
+    "predicate": "MOVED_TO",
+    "subject": "shinichi"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "海",
+  "mood_top3": [
+   {
+    "basis": "真暗な夜の中で、ただ夜光虫だけが彼につづき",
+    "code": "M11"
+   },
+   {
+    "basis": "夜光虫の緑の燐光が照って",
+    "code": "M02"
+   },
+   {
+    "basis": "あなたも、ぼくはとめはしません",
+    "code": "M04"
+   }
+  ],
+  "pov_character": "shinichi",
+  "present": [
+   {
+    "basis": "女は怒ったような目つきで、海をみつめていた",
+    "id": "onna"
+   },
+   {
+    "basis": "彼は岸に顔を向けた",
+    "id": "shinichi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "真暗な夜",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "onna",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "ee205163f5096c5b7f73edd22fb1788622efcc277d3c1933ece5776014a9c908",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "17d5054ff2eb60c3da7772cd92b3d7f0c589e2d92b0b0a635dfef71131bb845c",
+  "prior_core": {
+   "pov_character": "shinichi",
+   "present": [
+    "onna",
+    "shinichi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "570f91599191270c0cd811588cfdc7d7004d2a053f0c0a09a3672d79f2a1278d",
+  "prior_state_hash": "2973e6efeba19ecfad1f96587a29d1763882008bab362fdef95800b09d34ed81",
+  "roster_all_digest": "1db4c6d2157b4872027a28fc6819c83401687dfafd82b3b5611f1400b75d0324",
+  "sampling": "default",
+  "scene_text_hash": "041bac73b440de0dc737853660ccf40bd32b62fac3492d7fbeae2b0cda11a61d"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "慎一の父は去年死んだ",
+   "predicate": "LEARNED",
+   "subject": "onna",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "onna",
+   "target": "onna",
+   "text": "反抗的・ヒステリックになり、慎一に苛立ちを向ける"
+  }
+ ],
+ "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

@@ -1,0 +1,144 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": -1,
+   "F_basis": "心をしずめてくれました",
+   "F_valence": 0,
+   "f_arousal": -1,
+   "f_basis": "少しもおいしくない鮨を食べながら",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "「心配要りません」",
+    "code": "E03"
+   },
+   {
+    "basis": "黙ってお酒を飲みました",
+    "code": "E10"
+   },
+   {
+    "basis": "そのひとを、待っていました",
+    "code": "E16"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "奇妙に自分の、震えおののいている心をしずめてくれました",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yozo",
+    "target": "yozo",
+    "text": "ツネ子の一言で、震えおののいていた心が静まり、傍にいることに安心を覚えた"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "銀座裏の、或る屋台のお鮨や",
+  "mood_top3": [
+   {
+    "basis": "秋の、寒い夜でした",
+    "code": "M01"
+   },
+   {
+    "basis": "心をしずめてくれました",
+    "code": "M10"
+   },
+   {
+    "basis": "記憶が薄れ、たしかではありません",
+    "code": "M15"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": "自分は、お酒を飲みました。",
+    "id": "yozo"
+   },
+   {
+    "basis": "そのひとの傍にいる事",
+    "id": "tsuneko"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "246fc00a5a978076c8c9bb497bdbe0937a2d39e6ddbcfbd32896036571300257",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "秋の、寒い夜",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "tsuneko",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "821cd1302adb49d2452e348a8553ac3a4e53fa31af6316813e24637bd240bcf7",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "3545992d58ee0a506760f7695060c120ad41417bc43f491385d1dbe2c0e35ef7",
+  "prior_core": {
+   "pov_character": "yozo",
+   "present": [
+    "doshi",
+    "yozo"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "f3f31c3f5cda0fbe655aca4d0e94a5cf74215f2aedd61cd9b78f6ee8e0f62a80",
+  "prior_state_hash": "de645d7bd2a50eefed0c457b6e5f1f02476ace1508868a91a9d50c76c0976200",
+  "roster_all_digest": "860d2d10f563333e84efc5e193e711bf85e6c0e1838ee236de5e6f25bbd33187",
+  "sampling": "default",
+  "scene_text_hash": "116fd7dabcbfdf68c5abc02e95449a094cfb024086d2aadfbed3794d83a73014"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "趣味の悪い買い物の品",
+   "predicate": "ACQUIRED",
+   "subject": "yozo",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "運動のために借りてあるビルの狭い洋室",
+   "predicate": "MOVED_TO",
+   "subject": "yozo",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "yozo",
+   "target": "yozo",
+   "text": "下宿屋の娘と同志の二人の機嫌取りに追われ、身動きが取れない状態になっている"
+  },
+  {
+   "category": null,
+   "object": "カフエの女給から受けた恩",
+   "predicate": "HOOK_OPENED",
+   "subject": null,
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "246fc00a5a978076c8c9bb497bdbe0937a2d39e6ddbcfbd32896036571300257",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

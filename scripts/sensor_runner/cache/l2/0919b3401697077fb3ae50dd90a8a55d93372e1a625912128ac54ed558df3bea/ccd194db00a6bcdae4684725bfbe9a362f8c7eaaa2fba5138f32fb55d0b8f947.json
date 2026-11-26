@@ -1,0 +1,155 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "「行ってみよう。」二人は、まるで一度に叫んで、そっちの方へ走りました。",
+   "F_valence": 1,
+   "f_arousal": 0,
+   "f_basis": "うつくしい燐光をあげて、ちらちらと燃えるように見えたのでもわかりました。",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "そっちの方へ走りました",
+    "code": "E02"
+   },
+   {
+    "basis": "「おや、変なものがあるよ。」",
+    "code": "E07"
+   },
+   {
+    "basis": "「くるみの実だよ。そら、沢山ある。",
+    "code": "E03"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "走ってその渚に行って",
+    "evidence": "explicit",
+    "object": "渚",
+    "predicate": "MOVED_TO",
+    "subject": "giovanni"
+   },
+   {
+    "basis": "プリオシン海岸という、瀬戸物のつるつるした標札が立って",
+    "evidence": "explicit",
+    "object": "プリオシン海岸",
+    "predicate": "MOVED_TO",
+    "subject": "campanella"
+   },
+   {
+    "basis": "岩から黒い細長いさきの尖ったくるみの実のようなものをひろいました",
+    "evidence": "explicit",
+    "object": "くるみの実",
+    "predicate": "ACQUIRED",
+    "subject": "campanella"
+   },
+   {
+    "basis": "何か掘り出すか埋めるかしているらしく",
+    "evidence": "inferred",
+    "object": "五六人の人かげの作業",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "プリオシン海岸",
+  "mood_top3": [
+   {
+    "basis": "うつくしい燐光をあげて、ちらちらと燃えるように見えた",
+    "code": "M01"
+   },
+   {
+    "basis": "あやしいその銀河の水は、水素よりももっとすきとおっていたのです",
+    "code": "M13"
+   },
+   {
+    "basis": "不思議そうに立ちどまって",
+    "code": "M07"
+   }
+  ],
+  "pov_character": "giovanni",
+  "present": [
+   {
+    "basis": "ジョバンニは、走ってその渚に行って",
+    "id": "giovanni"
+   },
+   {
+    "basis": "カムパネルラが、不思議そうに立ちどまって",
+    "id": "campanella"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "giovanni",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "campanella",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "ccd194db00a6bcdae4684725bfbe9a362f8c7eaaa2fba5138f32fb55d0b8f947",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "8194abd867f3ee732e5e106445f801624a3711b258104142d11738ec96353ffe",
+  "prior_core": {
+   "pov_character": "giovanni",
+   "present": [
+    "campanella",
+    "giovanni"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "487e021ff814915abaf6ceca0dfb154235c72b13dc7e30969fd9e887f452f12b",
+  "prior_state_hash": "efd2ca3f3b10039194368ad6294ad2535b53a2ed644d8667d3bbc555efc011ef",
+  "roster_all_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b",
+  "sampling": "default",
+  "scene_text_hash": "078a8f2629e1fd029a0640b78168085259f2e38ab26f760cfde52f2ccef2851f"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "白鳥停車場",
+   "predicate": "MOVED_TO",
+   "subject": "giovanni",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "河原",
+   "predicate": "MOVED_TO",
+   "subject": "giovanni",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "車室",
+   "text": "乗客が一斉に下り、車室がからになった"
+  }
+ ],
+ "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

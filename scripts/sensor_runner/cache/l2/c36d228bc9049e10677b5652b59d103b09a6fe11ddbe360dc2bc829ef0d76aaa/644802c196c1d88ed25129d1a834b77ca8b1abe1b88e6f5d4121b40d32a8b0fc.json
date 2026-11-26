@@ -1,0 +1,143 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "息も切れず膝もあつくなりませんでした",
+   "F_valence": 1,
+   "f_arousal": 1,
+   "f_basis": "そしてほんとうに、風のように走れたのです",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "一生けん命汽車におくれないように走りました",
+    "code": "E02"
+   },
+   {
+    "basis": "「そうですか。いや、さよなら。」",
+    "code": "E03"
+   },
+   {
+    "basis": "あちこち歩きまわって監督をはじめました",
+    "code": "E09"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "もとの車室の席に座って",
+    "evidence": "explicit",
+    "object": "もとの車室の席",
+    "predicate": "MOVED_TO",
+    "subject": "giovanni"
+   },
+   {
+    "basis": "もとの車室の席に座って",
+    "evidence": "explicit",
+    "object": "もとの車室の席",
+    "predicate": "MOVED_TO",
+    "subject": "campanella"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "その白い岩の上",
+  "mood_top3": [
+   {
+    "basis": "風のように走れたのです",
+    "code": "M12"
+   },
+   {
+    "basis": "一生けん命汽車におくれないように走りました",
+    "code": "M14"
+   },
+   {
+    "basis": "いま行って来た方を、窓から見ていました",
+    "code": "M13"
+   }
+  ],
+  "pov_character": "giovanni",
+  "present": [
+   {
+    "basis": "カムパネルラが地図と腕時計とをくらべながら云いました",
+    "id": "campanella"
+   },
+   {
+    "basis": "ジョバンニは、ていねいに大学士におじぎしました",
+    "id": "giovanni"
+   },
+   {
+    "basis": "大学士は、また忙がしそうに",
+    "id": "daigakushi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "間もなく",
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "giovanni",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "campanella",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "daigakushi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "644802c196c1d88ed25129d1a834b77ca8b1abe1b88e6f5d4121b40d32a8b0fc",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "370e07dd79ad70f9dbc31f9a983a99a05da380f4df2c59126aeb80e7446e7be0",
+  "prior_core": {
+   "pov_character": "giovanni",
+   "present": [
+    "campanella",
+    "daigakushi",
+    "giovanni"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "f703b2d888d3f257a97ab77bfecb869902da14dfe360986f6bf6fa52d95ad659",
+  "prior_state_hash": "797db8bfb42fd8ad6a4b3c1fbd314dfd4ef8f59cfb48e6d8bc7e8c0f3022f2d5",
+  "roster_all_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b",
+  "sampling": "default",
+  "scene_text_hash": "475b470e04565b350370527126852b9d4faf1ae04ea052bcdfdc8b60190c9e1c"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "五六人の人かげの作業",
+   "predicate": "HOOK_RESOLVED",
+   "subject": null,
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "くるみは約百二十万年前のもの",
+   "predicate": "LEARNED",
+   "subject": "giovanni",
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

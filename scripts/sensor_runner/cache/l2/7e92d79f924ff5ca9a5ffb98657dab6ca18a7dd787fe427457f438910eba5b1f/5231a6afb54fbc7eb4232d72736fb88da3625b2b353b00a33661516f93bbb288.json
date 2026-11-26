@@ -1,0 +1,175 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "私は其れをも愉快に感じて",
+   "F_valence": 1,
+   "f_arousal": 1,
+   "f_basis": "奇怪な感覚は恐ろしいと云う念を打ち消して魅するように私の心を征服して行き",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "先ず鼻の頭から喰い始めた",
+    "code": "E11"
+   },
+   {
+    "basis": "激しく蹈み躪られ",
+    "code": "E05"
+   },
+   {
+    "basis": "いつの間にか心も体も全く信一の傀儡となるのを喜ぶようになってしまった",
+    "code": "E12"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "果ては愉快を感ずるようになった",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "hagiwara",
+    "target": "感覚",
+    "text": "恐怖が打ち消され、舐められ踏まれることを愉快に感じるようになった"
+   },
+   {
+    "basis": "信一の傀儡となるのを喜ぶようになってしまった",
+    "category": "relation_status",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "hagiwara",
+    "target": "信一との関係",
+    "text": "信一の傀儡となることを喜ぶ従属的な状態になった"
+   },
+   {
+    "basis": "寒いと見えて粟立った臀の肉が蒟蒻のように顫えていた",
+    "category": "body_health",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "senkichi",
+    "target": "senkichi",
+    "text": "腰から下を裸にされ、寒さで臀の肉が震えている"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "潤おいのある唇や滑かな舌の端が、ぺろ／＼と擽ぐるように舐めて行く奇怪な感覚",
+    "code": "M06"
+   },
+   {
+    "basis": "恐ろしいと云う念を打ち消して魅するように私の心を征服して行き",
+    "code": "M07"
+   },
+   {
+    "basis": "又むしゃ／＼とやって居たが",
+    "code": "M05"
+   }
+  ],
+  "pov_character": "hagiwara",
+  "present": [
+   {
+    "basis": "今に私もあんな態をさせられるのだ",
+    "id": "hagiwara"
+   },
+   {
+    "basis": "信一は私の胸の上へ跨がって",
+    "id": "shinichi"
+   },
+   {
+    "basis": "仙吉は俯向きに臥かされ",
+    "id": "senkichi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "7e92d79f924ff5ca9a5ffb98657dab6ca18a7dd787fe427457f438910eba5b1f",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 4,
+      "basis": "果ては愉快を感ずるようになった",
+      "delta": 1
+     },
+     {
+      "axis": 5,
+      "basis": "信一の傀儡となるのを喜ぶようになってしまった",
+      "delta": -1
+     }
+    ],
+    "character_id": "hagiwara",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "senkichi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "5231a6afb54fbc7eb4232d72736fb88da3625b2b353b00a33661516f93bbb288",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "691e252199c94e1de71b4e02f5a8e40932cca57aff328dfa5623215b82eca4a7",
+  "prior_core": {
+   "pov_character": "hagiwara",
+   "present": [
+    "hagiwara",
+    "senkichi",
+    "shinichi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "3fa40c08277c7ce450b75b77cda2b68d459133811923087f2fe4805c87f4782d",
+  "prior_state_hash": "1665a74906e33f0d7706bc2dde71c188714c7aff4c329491f3367fa01e9d18f4",
+  "roster_all_digest": "312b1652204d55e664542d279d464197e251b6aea1857ad91c19e1536269baf0",
+  "sampling": "default",
+  "scene_text_hash": "64a05c2e7d08c825a919b10fd7cb66c51d36e318a17eaacbef91a022a357726c"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "土間",
+   "predicate": "MOVED_TO",
+   "subject": "hagiwara",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "hagiwara",
+   "target": "遊び",
+   "text": "狼に殺された死骸の役となり、土間に倒れて動かない状態になった"
+  },
+  {
+   "category": "body_health",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "senkichi",
+   "target": "senkichi",
+   "text": "信一に踏まれ、体中が泥だらけになった"
+  }
+ ],
+ "scene_hash": "7e92d79f924ff5ca9a5ffb98657dab6ca18a7dd787fe427457f438910eba5b1f",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

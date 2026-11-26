@@ -1,0 +1,136 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "思わず二人もまっすぐに立ちあがりました",
+   "F_valence": 1,
+   "f_arousal": 0,
+   "f_basis": "しずかに永久に立っているのでした",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "見ると、もうじつに",
+    "code": "E07"
+   },
+   {
+    "basis": "ぼくわからない。けれども、誰だって",
+    "code": "E03"
+   },
+   {
+    "basis": "そして島と十字架とは、だんだんうしろの方へうつって行きました",
+    "code": "E02"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "カムパネルラは、なにかほんとうに決心しているように見えました",
+    "category": "emotion",
+    "evidence": "inferred",
+    "predicate": "STATE_CHANGED",
+    "subject": "campanella",
+    "target": "campanella",
+    "text": "ほんとうにいいことをしたら幸なのだと言い、決心している様子を見せる"
+   },
+   {
+    "basis": "俄かに、車のなかが、ぱっと白く明るくなりました",
+    "category": "situation",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": null,
+    "target": "車内",
+    "text": "車内が白く明るくなり、銀河の中の島と白い十字架が見える"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "車室の中",
+  "mood_top3": [
+   {
+    "basis": "白い十字架がたって",
+    "code": "M07"
+   },
+   {
+    "basis": "しずかに永久に立っているのでした",
+    "code": "M01"
+   },
+   {
+    "basis": "胸いっぱいのかなしみに似た新らしい気持ち",
+    "code": "M04"
+   }
+  ],
+  "pov_character": "giovanni",
+  "present": [
+   {
+    "basis": "ジョバンニはびっくりして叫びました",
+    "id": "giovanni"
+   },
+   {
+    "basis": "カムパネルラは、なにかほんとうに決心しているように見えました",
+    "id": "campanella"
+   },
+   {
+    "basis": "車室の中の旅人たちは",
+    "id": "tabibito"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "giovanni",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 3,
+      "basis": "誰だって、ほんとうにいいことをしたら、いちばん幸なんだねえ",
+      "delta": 1
+     }
+    ],
+    "character_id": "campanella",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 2,
+      "basis": "そっちに祈っているのでした",
+      "delta": 1
+     }
+    ],
+    "character_id": "tabibito",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "48b69f8534640cf17d086a01dd88025837cca8d3a6593873216e604ddcc88bbf",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "04ce1c05767be312da1a27378c4a5d0fc700fa335fef869a4dd921d8c382dbfc",
+  "prior_core": {
+   "status": "none"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "624085046bb8861a7f9d5713cf7f377445aac7fe6ea9508f822fbd05c41426e5",
+  "roster_all_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b",
+  "sampling": "default",
+  "scene_text_hash": "b592c34cca6d439885dd7857acd0d85abfb475f99dbed1bbcd22e4ca9d4d10b3"
+ },
+ "prior_facts": null,
+ "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

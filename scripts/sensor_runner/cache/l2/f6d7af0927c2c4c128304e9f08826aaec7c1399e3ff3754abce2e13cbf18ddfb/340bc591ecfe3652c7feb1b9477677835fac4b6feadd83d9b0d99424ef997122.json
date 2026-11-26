@@ -1,0 +1,137 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "ふたりとも肺病で寝こんでいる",
+   "F_valence": -1,
+   "f_arousal": 1,
+   "f_basis": "彼はまるで、おりを得たような顔つきをして現れたのである",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "つい心やすだてにご無礼いたしました",
+    "code": "E03"
+   },
+   {
+    "basis": "思いがけない兵六さんがきて、待っていた",
+    "code": "E01"
+   },
+   {
+    "basis": "三人になって帰宅すると",
+    "code": "E02"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "あずかった子供だった",
+    "evidence": "explicit",
+    "object": "赤ん坊の夏樹",
+    "predicate": "ACQUIRED",
+    "subject": "yasue"
+   },
+   {
+    "basis": "思いがけない兵六さんがきて、待っていた",
+    "evidence": "explicit",
+    "object": "安江の家",
+    "predicate": "MOVED_TO",
+    "subject": "heiroku"
+   },
+   {
+    "basis": "むっとしている安江に",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yasue",
+    "target": "yasue",
+    "text": "兵六の来訪に待たされた憤慨が残り、むっとしている"
+   },
+   {
+    "basis": "ふたりとも肺病で寝こんでいる",
+    "category": "body_health",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": null,
+    "target": "赤ん坊の若い両親",
+    "text": "夫婦そろって肺病で寝こんでいる"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "安江の家",
+  "mood_top3": [
+   {
+    "basis": "おだてるのね、相変らず。",
+    "code": "M05"
+   },
+   {
+    "basis": "たれの目にも末ながくそだつとは思えなかった",
+    "code": "M04"
+   },
+   {
+    "basis": "最後のみとりをしてやろうと",
+    "code": "M10"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": "むっとしている安江に",
+    "id": "yasue"
+   },
+   {
+    "basis": "兵六さんはいんぎんに両手をつき",
+    "id": "heiroku"
+   },
+   {
+    "basis": "その日音枝とふたりで赤ん坊をつれにいった安江が、三人になって帰宅すると",
+    "id": "otoe"
+   },
+   {
+    "basis": "斎木少年に留守をたのんで",
+    "id": "susumu"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "f6d7af0927c2c4c128304e9f08826aaec7c1399e3ff3754abce2e13cbf18ddfb",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "斎木少年がきて一か月目ぐらいの時",
+   "evidence": "explicit",
+   "explicit_time": "その日",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yasue",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "heiroku",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "340bc591ecfe3652c7feb1b9477677835fac4b6feadd83d9b0d99424ef997122",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "fd59dddba7305182870eeb4e62bc229d8c286d3459014ee17814be5a3cf9db45",
+  "prior_core": {
+   "status": "none"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "624085046bb8861a7f9d5713cf7f377445aac7fe6ea9508f822fbd05c41426e5",
+  "roster_all_digest": "854c618fe4b8b6a59b131bd5b48c79d5983f2fc4f695a41a6113cc22bad1bb64",
+  "sampling": "default",
+  "scene_text_hash": "4a4c955a389ce359c82a0aa50e786909def68fb836be858a2f2a8c1d5f56b8fc"
+ },
+ "prior_facts": null,
+ "scene_hash": "f6d7af0927c2c4c128304e9f08826aaec7c1399e3ff3754abce2e13cbf18ddfb",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

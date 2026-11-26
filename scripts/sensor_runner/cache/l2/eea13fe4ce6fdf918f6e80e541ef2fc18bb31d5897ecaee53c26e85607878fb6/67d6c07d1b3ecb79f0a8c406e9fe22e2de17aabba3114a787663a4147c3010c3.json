@@ -1,0 +1,143 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "二人は一度にはねあがってドアを飛び出して改札口へかけて行きました",
+   "F_valence": 1,
+   "f_arousal": 0,
+   "f_basis": "水晶細工のように見える銀杏の木に囲まれた、小さな広場に出ました",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "二人は一度にはねあがってドアを飛び出して改札口へかけて行きました",
+    "code": "E02"
+   },
+   {
+    "basis": "ぼくたちも降りて見ようか。",
+    "code": "E03"
+   },
+   {
+    "basis": "この砂はみんな水晶だ。",
+    "code": "E07"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "二人は丁度白鳥停車場の、大きな時計の前に来てとまりました",
+    "evidence": "explicit",
+    "object": "白鳥停車場",
+    "predicate": "MOVED_TO",
+    "subject": "giovanni"
+   },
+   {
+    "basis": "あの汽車から見えたきれいな河原に来ました",
+    "evidence": "explicit",
+    "object": "河原",
+    "predicate": "MOVED_TO",
+    "subject": "giovanni"
+   },
+   {
+    "basis": "車室の中はがらんとなってしまいました",
+    "category": "situation",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": null,
+    "target": "車室",
+    "text": "乗客が一斉に下り、車室がからになった"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "白鳥停車場",
+  "mood_top3": [
+   {
+    "basis": "夢のように云っているのでした",
+    "code": "M13"
+   },
+   {
+    "basis": "さわやかな秋の時計の盤面には",
+    "code": "M01"
+   },
+   {
+    "basis": "硫黄のほのおのようなくらいぼんやりした転てつ機の前のあかり",
+    "code": "M02"
+   }
+  ],
+  "pov_character": "giovanni",
+  "present": [
+   {
+    "basis": "ジョバンニが云いました",
+    "id": "giovanni"
+   },
+   {
+    "basis": "カムパネルラは、そのきれいな砂を一つまみ",
+    "id": "campanella"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "二十分停車",
+   "evidence": "explicit",
+   "explicit_time": "十一時",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "giovanni",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "campanella",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "67d6c07d1b3ecb79f0a8c406e9fe22e2de17aabba3114a787663a4147c3010c3",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "56b58c5a4d4f324714b0c13e828b38f4027fdfdcfd036a1bc7d17306a3f03087",
+  "prior_core": {
+   "pov_character": "giovanni",
+   "present": [
+    "campanella",
+    "giovanni",
+    "tabibito"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "3dd593668eec8ad1df78a5dc6178822876adb582da6a75fce96c40b3710f4128",
+  "prior_state_hash": "e2385af5120b1e9cfdc4931e65f397a9ce4eaf4944c5d7a263a38eab43ccfd2f",
+  "roster_all_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b",
+  "sampling": "default",
+  "scene_text_hash": "ef7c871f6c6ebb5cb30e8e7a1c103e7e418fae99b5a51bfbed8bdbc06e54bdde"
+ },
+ "prior_facts": [
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "campanella",
+   "target": "campanella",
+   "text": "ほんとうにいいことをしたら幸なのだと言い、決心している様子を見せる"
+  },
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": null,
+   "target": "車内",
+   "text": "車内が白く明るくなり、銀河の中の島と白い十字架が見える"
+  }
+ ],
+ "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

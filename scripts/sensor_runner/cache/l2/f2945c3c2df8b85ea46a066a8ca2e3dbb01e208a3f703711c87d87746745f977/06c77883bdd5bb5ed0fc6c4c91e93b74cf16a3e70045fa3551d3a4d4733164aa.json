@@ -1,0 +1,164 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "三人は顔を見合わせて笑った",
+   "F_valence": 1,
+   "f_arousal": 1,
+   "f_basis": "にや／＼不安な笑いを浮かべながら",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "逃げ廻る二人の旅人を追い廻す",
+    "code": "E14"
+   },
+   {
+    "basis": "今度は何か外の事をして遊ぼう",
+    "code": "E10"
+   },
+   {
+    "basis": "遂に喉笛を喰い切られて",
+    "code": "E05"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "縛られた痕が赤く残って居る",
+    "category": "body_health",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "senkichi",
+    "target": "senkichi",
+    "text": "帯は解かれたが、手頸に縛られた痕が赤く残った"
+   },
+   {
+    "basis": "私は心から少し恐くなって",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "hagiwara",
+    "target": "hagiwara",
+    "text": "信一の狼役が真に迫り、少し恐くなった"
+   },
+   {
+    "basis": "あたしが狼になるから、二人旅人にならないか",
+    "category": "situation",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "shinichi",
+    "target": "遊び",
+    "text": "縛る遊びから、信一が狼、二人が旅人の狼ごっこに移った"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "此の物置小屋",
+  "mood_top3": [
+   {
+    "basis": "わはゝゝゝ",
+    "code": "M05"
+   },
+   {
+    "basis": "にや／＼不安な笑いを浮かべながら",
+    "code": "M03"
+   },
+   {
+    "basis": "いろ／＼の身振りを巧みに演じて居た",
+    "code": "M12"
+   }
+  ],
+  "pov_character": "hagiwara",
+  "present": [
+   {
+    "basis": "三人は顔を見合わせて笑った",
+    "id": "hagiwara"
+   },
+   {
+    "basis": "三人は顔を見合わせて笑った",
+    "id": "shinichi"
+   },
+   {
+    "basis": "三人は顔を見合わせて笑った",
+    "id": "senkichi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "f2945c3c2df8b85ea46a066a8ca2e3dbb01e208a3f703711c87d87746745f977",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "暫くしてから",
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "hagiwara",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "senkichi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "06c77883bdd5bb5ed0fc6c4c91e93b74cf16a3e70045fa3551d3a4d4733164aa",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "6397cff06413f80129bad3f8efe3316cc4cc2425b3d57a615959015a18d7d4d8",
+  "prior_core": {
+   "pov_character": "hagiwara",
+   "present": [
+    "hagiwara",
+    "senkichi",
+    "shinichi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "51c0640670ee9a2c540f95e958c8f48fa9aef024903334161372965c97dfd65e",
+  "prior_state_hash": "1665a74906e33f0d7706bc2dde71c188714c7aff4c329491f3367fa01e9d18f4",
+  "roster_all_digest": "312b1652204d55e664542d279d464197e251b6aea1857ad91c19e1536269baf0",
+  "sampling": "default",
+  "scene_text_hash": "034647de1f182583cfe4d222657d9925259838fdf3f700aaae4a9135dbfb5077"
+ },
+ "prior_facts": [
+  {
+   "category": "body_health",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "senkichi",
+   "target": "senkichi",
+   "text": "帯で後ろ手に縛られ、両脚の踝も括られて動けなくなった"
+  },
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "hagiwara",
+   "target": "hagiwara",
+   "text": "強い餓鬼大将が弄ばれる様子に不思議な快感を覚えた"
+  },
+  {
+   "category": null,
+   "object": "明日学校での意趣返し",
+   "predicate": "HOOK_OPENED",
+   "subject": "hagiwara",
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "f2945c3c2df8b85ea46a066a8ca2e3dbb01e208a3f703711c87d87746745f977",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

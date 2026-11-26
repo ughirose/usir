@@ -1,0 +1,180 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "さも面白そうにから／＼笑って見て居た",
+   "F_valence": 0,
+   "f_arousal": 1,
+   "f_basis": "いつの間にか街は青い夕靄に罩められて",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "家へ帰って行った",
+    "code": "E02"
+   },
+   {
+    "basis": "独りで帰れるから、送って貰わないでもいゝの",
+    "code": "E03"
+   },
+   {
+    "basis": "仙ちゃん、お前が悪いんだよ、ほんとに",
+    "code": "E04"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "先の女中が小屋の戸口に現れた",
+    "evidence": "explicit",
+    "object": "小屋",
+    "predicate": "MOVED_TO",
+    "subject": "jochu"
+   },
+   {
+    "basis": "家へ帰って行った",
+    "evidence": "explicit",
+    "object": "家",
+    "predicate": "MOVED_TO",
+    "subject": "hagiwara"
+   },
+   {
+    "basis": "すっかり私の心を奪って了った",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "hagiwara",
+    "target": "信一への感情",
+    "text": "信一の器量と我が儘な仕打ちに心を奪われた"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "小屋",
+  "mood_top3": [
+   {
+    "basis": "青い夕靄に罩められて",
+    "code": "M02"
+   },
+   {
+    "basis": "夢のように回想しながら",
+    "code": "M13"
+   },
+   {
+    "basis": "恐ろしい不思議な国から急に人里へ出て来たような気",
+    "code": "M07"
+   }
+  ],
+  "pov_character": "hagiwara",
+  "present": [
+   {
+    "basis": "やがて私も俯向きにされて",
+    "id": "hagiwara"
+   },
+   {
+    "basis": "信一は、二つの死骸が",
+    "id": "shinichi"
+   },
+   {
+    "basis": "私も仙吉も吃驚して起き上った",
+    "id": "senkichi"
+   },
+   {
+    "basis": "先の女中が小屋の戸口に現れた",
+    "id": "jochu"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "4487f4344ae042ff09854ce6645c172d1db7df29be75067d864367eed3a07370",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": "青い夕靄",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 4,
+      "basis": "すっかり私の心を奪って了った",
+      "delta": 1
+     },
+     {
+      "axis": 5,
+      "basis": "信一の気高く美しい器量",
+      "delta": -1
+     }
+    ],
+    "character_id": "hagiwara",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "shinichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "senkichi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "jochu",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "bea6c8899d77f2d3cfe7e4952877e87dda84cb289eaba0b70ea0ba9cba2570ef",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "bf1cdbdf7676a5d69f968717d0c3eeeec36f1394db5ebe6959c25654d7ecbc50",
+  "prior_core": {
+   "pov_character": "hagiwara",
+   "present": [
+    "hagiwara",
+    "senkichi",
+    "shinichi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "b675b725a7494da9269d667cf33431b80a255e5511659daedbb51ec3878e4634",
+  "prior_state_hash": "1665a74906e33f0d7706bc2dde71c188714c7aff4c329491f3367fa01e9d18f4",
+  "roster_all_digest": "312b1652204d55e664542d279d464197e251b6aea1857ad91c19e1536269baf0",
+  "sampling": "default",
+  "scene_text_hash": "07cea5e5677ca5538d1999bfb63d48cec1a81bf458ba4ea229d129e39d0ad7f0"
+ },
+ "prior_facts": [
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "hagiwara",
+   "target": "感覚",
+   "text": "恐怖が打ち消され、舐められ踏まれることを愉快に感じるようになった"
+  },
+  {
+   "category": "relation_status",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "hagiwara",
+   "target": "信一との関係",
+   "text": "信一の傀儡となることを喜ぶ従属的な状態になった"
+  },
+  {
+   "category": "body_health",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "senkichi",
+   "target": "senkichi",
+   "text": "腰から下を裸にされ、寒さで臀の肉が震えている"
+  }
+ ],
+ "scene_hash": "4487f4344ae042ff09854ce6645c172d1db7df29be75067d864367eed3a07370",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

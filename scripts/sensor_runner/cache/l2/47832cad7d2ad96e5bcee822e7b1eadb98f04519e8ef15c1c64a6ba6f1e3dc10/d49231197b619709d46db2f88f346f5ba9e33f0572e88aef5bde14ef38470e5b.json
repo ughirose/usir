@@ -1,0 +1,135 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "そ、そんな無茶な。僕だってちゃんと権利金を払い、きちんと賃貸借の契約をしたんだぞ",
+   "F_valence": -1,
+   "f_arousal": 1,
+   "f_basis": "僕もおろおろと訊ねました",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "早く荷物をまとめて出て行って呉れ",
+    "code": "E04"
+   },
+   {
+    "basis": "どんな事情だね",
+    "code": "E03"
+   },
+   {
+    "basis": "何か誤解がある",
+    "code": "E07"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "やがて不安と困惑の色が彼の顔いっぱいに拡がって来たようでした",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "noro",
+    "target": "野呂の心情",
+    "text": "契約書を見た野呂が不安と困惑を覚えた"
+   },
+   {
+    "basis": "何か誤解がある",
+    "evidence": "inferred",
+    "object": "家の権利をめぐる誤解",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "板の間",
+  "mood_top3": [
+   {
+    "basis": "僕は僕の荷物を大八車でエンヤコラ運んで来たんだ",
+    "code": "M05"
+   },
+   {
+    "basis": "やがて不安と困惑の色が彼の顔いっぱいに拡がって来たようでした",
+    "code": "M03"
+   },
+   {
+    "basis": "まるでこの世には誤解が充ち満ちているようだ",
+    "code": "M13"
+   }
+  ],
+  "pov_character": "boku",
+  "present": [
+   {
+    "basis": "僕は僕の部屋にかけこんで",
+    "id": "boku"
+   },
+   {
+    "basis": "野呂はそれを受取って調べ始めた",
+    "id": "noro"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "47832cad7d2ad96e5bcee822e7b1eadb98f04519e8ef15c1c64a6ba6f1e3dc10",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "boku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "noro",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "d49231197b619709d46db2f88f346f5ba9e33f0572e88aef5bde14ef38470e5b",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "28f9b1792754ced5e7b98ba6f7c5f347988c3d78ff63cccb45d8c5cd60cb81ed",
+  "prior_core": {
+   "pov_character": "boku",
+   "present": [
+    "boku",
+    "noro"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "ce87aeacca7c7eb1bcc165e5d682766863e2e84a3821a42a5e2d5222922775a2",
+  "prior_state_hash": "07d188d291b079334dc26c23ed7e131e9f6fb6d2f6e7885bc41871f3db613b80",
+  "roster_all_digest": "49d6cd1f5147de94ae52e2b91578a97e84392b30513758f44a5203f99705937b",
+  "sampling": "default",
+  "scene_text_hash": "f80a3210dd6b4eb13c02ff5397d7e437b6ce6fc95a6a80cd05388a835e151e25"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "庭",
+   "predicate": "MOVED_TO",
+   "subject": "noro",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "noro",
+   "target": "家の所有",
+   "text": "野呂が家を不破から買い受けたと主張し、僕に退去を求めた"
+  }
+ ],
+ "scene_hash": "47832cad7d2ad96e5bcee822e7b1eadb98f04519e8ef15c1c64a6ba6f1e3dc10",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

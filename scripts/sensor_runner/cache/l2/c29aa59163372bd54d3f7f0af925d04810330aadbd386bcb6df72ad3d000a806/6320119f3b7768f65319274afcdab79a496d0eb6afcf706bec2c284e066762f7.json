@@ -1,0 +1,143 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "行こう！",
+   "F_valence": 0,
+   "f_arousal": 0,
+   "f_basis": "自分勝手にひどい束縛を感じて来て",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "安酒を飲み",
+    "code": "E10"
+   },
+   {
+    "basis": "夢の国に連れて行く",
+    "code": "E02"
+   },
+   {
+    "basis": "カフエか？",
+    "code": "E03"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "絶えずツネ子におびえていて",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yozo",
+    "target": "yozo",
+    "text": "ツネ子への恩を束縛と感じ、脅迫されるようにおびえている"
+   },
+   {
+    "basis": "夢の国に連れて行く",
+    "evidence": "explicit",
+    "object": "カフエ（夢の国）へ堀木を連れて行く",
+    "predicate": "MOVED_TO",
+    "subject": "yozo"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "神田の屋台",
+  "mood_top3": [
+   {
+    "basis": "絶えずツネ子におびえていて",
+    "code": "M03"
+   },
+   {
+    "basis": "逢うのに頗るおっくうがる性質でした",
+    "code": "M08"
+   },
+   {
+    "basis": "おどろくな、酒池肉林という",
+    "code": "M05"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": "堀木と神田の屋台で安酒を飲み",
+    "id": "yozo"
+   },
+   {
+    "basis": "堀木と神田の屋台で安酒を飲み",
+    "id": "horiki"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "c29aa59163372bd54d3f7f0af925d04810330aadbd386bcb6df72ad3d000a806",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "ひとつき",
+   "evidence": "explicit",
+   "explicit_time": "十一月の末",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "horiki",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "6320119f3b7768f65319274afcdab79a496d0eb6afcf706bec2c284e066762f7",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "9757cd8eede97ea48cf649905c27063e1f8927987db3f7d3c339b0181dd33e1f",
+  "prior_core": {
+   "pov_character": "yozo",
+   "present": [
+    "tsuneko",
+    "yozo"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "86c74a2e908a26e506718ba8f562125ba5d100cdcb1fce626b6f283ddf5e1686",
+  "prior_state_hash": "a44627d63b0b3c9350bc7925bdf9ddc7061489a418abf4ae988df9403cca19f9",
+  "roster_all_digest": "860d2d10f563333e84efc5e193e711bf85e6c0e1838ee236de5e6f25bbd33187",
+  "sampling": "default",
+  "scene_text_hash": "d2c26f17afe131ea87a0d53f2de494ae5f99655587d1f25d1b265cccf7e516ab"
+ },
+ "prior_facts": [
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "yozo",
+   "target": "yozo",
+   "text": "一夜の解放感が消え、再び道化の仮面をかぶった状態に戻った"
+  },
+  {
+   "category": null,
+   "object": "ツネ子の元を去る",
+   "predicate": "MOVED_TO",
+   "subject": "yozo",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "金の切れめが縁の切れめという放言が後に引っかかりとなる",
+   "predicate": "HOOK_OPENED",
+   "subject": "yozo",
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "c29aa59163372bd54d3f7f0af925d04810330aadbd386bcb6df72ad3d000a806",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

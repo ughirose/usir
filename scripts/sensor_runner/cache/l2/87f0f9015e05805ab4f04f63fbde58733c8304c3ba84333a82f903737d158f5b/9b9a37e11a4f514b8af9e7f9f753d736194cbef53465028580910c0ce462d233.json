@@ -1,0 +1,145 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "丁寧に会釈する",
+   "F_valence": 1,
+   "f_arousal": 0,
+   "f_basis": "御殊勝にござります、御殊勝にござります",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "聞かしておくれの、お婆さん",
+    "code": "E03"
+   },
+   {
+    "basis": "四五人こっちを覗いては、素通をしたのがあります",
+    "code": "E01"
+   },
+   {
+    "basis": "どうぞ、その御回向を黒門の別宅で、近々として進ぜて下さりませぬか",
+    "code": "E13"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "気が沈んで、しんみりと真心から念仏の声が出ました",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "tabiso",
+    "target": "tabiso",
+    "text": "話に引入れられて気が沈み、真心から念仏の声が出た"
+   },
+   {
+    "basis": "と浅からず渇仰して",
+    "category": "emotion",
+    "evidence": "inferred",
+    "predicate": "STATE_CHANGED",
+    "subject": "uba",
+    "target": "uba",
+    "text": "旅僧を深く渇仰した"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "お店",
+  "mood_top3": [
+   {
+    "basis": "しんみりと真心から念仏の声が出ました",
+    "code": "M10"
+   },
+   {
+    "basis": "気が沈んで",
+    "code": "M04"
+   },
+   {
+    "basis": "私は夜通しでも構わんが",
+    "code": "M14"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": "丁寧に会釈する",
+    "id": "tabiso"
+   },
+   {
+    "basis": "姥はあらためて右瞻左瞻たが",
+    "id": "uba"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "tabiso",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "uba",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "9b9a37e11a4f514b8af9e7f9f753d736194cbef53465028580910c0ce462d233",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "96233e1925685ac11bc7cf20722c98272b3520f660c1632401f6b0c11854d71e",
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "tabiso",
+    "uba"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "6abaa4abf9994ca3f23da09d87eb0dea1f5fd94d9a091f4a8a898fc19108f919",
+  "prior_state_hash": "1dd120595129dd8bbc8f5f105f59180f4d27b6a7d87050bcf3dd9113ca40c0e0",
+  "roster_all_digest": "b7aa0e4f4671a0099281583b00a91e63961cb8b727e7761b9303a9227c30445e",
+  "sampling": "default",
+  "scene_text_hash": "e2bdcd4cd25069cd6ea099570171e12a8b63f13b1966a817d1d34dc9388102c6"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "鎌倉",
+   "predicate": "MOVED_TO",
+   "subject": "tabiso",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "嘉吉",
+   "predicate": "HOOK_OPENED",
+   "subject": null,
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "tabiso",
+   "target": "tabiso",
+   "text": "姥の話を聞いて悚然とした"
+  }
+ ],
+ "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

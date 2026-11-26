@@ -1,0 +1,163 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "君は早々に出て行って呉れ",
+   "F_valence": -1,
+   "f_arousal": 1,
+   "f_basis": "少々僕もむっとして言い返しました",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "君は早々に出て行って呉れ",
+    "code": "E04"
+   },
+   {
+    "basis": "野呂君ですか？",
+    "code": "E03"
+   },
+   {
+    "basis": "庭に入って来た男は僕を見て",
+    "code": "E01"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "跫音が庭に入って来ました",
+    "evidence": "explicit",
+    "object": "庭",
+    "predicate": "MOVED_TO",
+    "subject": "noro"
+   },
+   {
+    "basis": "この家は僕のものだよ",
+    "category": "situation",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "noro",
+    "target": "家の所有",
+    "text": "野呂が家を不破から買い受けたと主張し、僕に退去を求めた"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "板の間",
+  "mood_top3": [
+   {
+    "basis": "少々僕もむっとして言い返しました",
+    "code": "M09"
+   },
+   {
+    "basis": "バカじゃなかろうかというような眼付で",
+    "code": "M05"
+   },
+   {
+    "basis": "そりゃ困るなあ",
+    "code": "M03"
+   }
+  ],
+  "pov_character": "boku",
+  "present": [
+   {
+    "basis": "僕が板の間にイーゼルを立てて庭の写生をしている",
+    "id": "boku"
+   },
+   {
+    "basis": "野呂は訝しげに板の間をのぞき込みました",
+    "id": "noro"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "二三日経った",
+   "evidence": "explicit",
+   "explicit_time": "翌朝",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 4,
+      "basis": "少々僕もむっとして言い返しました",
+      "delta": 1
+     }
+    ],
+    "character_id": "boku",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 1,
+      "basis": "急に言葉がぞんざいになりました",
+      "delta": -1
+     }
+    ],
+    "character_id": "noro",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "87732fa8bab23608b5a800b7084bda9e93cdb8ed0d12d58defb802e0e1329b10",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "fa69b97b3c7d717858b7250fa1aee1e8361c0a3306d05230ac39a960afa56f6c",
+  "prior_core": {
+   "pov_character": "boku",
+   "present": [
+    "boku",
+    "fuwa"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "d826e6c5ede653d35d403408c1ff2746c40a802ac9780308e1751565ebc22a79",
+  "prior_state_hash": "a1b8ec63446d2a68f0b6f769e12500f37f6d2dcaa6ecbf716aed72d559399f4c",
+  "roster_all_digest": "49d6cd1f5147de94ae52e2b91578a97e84392b30513758f44a5203f99705937b",
+  "sampling": "default",
+  "scene_text_hash": "f30ddf76987cf7c18a009bac0a20f1d348291ec35497a4a00e521649cd85f664"
+ },
+ "prior_facts": [
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "fuwa",
+   "target": "fuwa",
+   "text": "不破夫妻が一週間で失踪した"
+  },
+  {
+   "category": null,
+   "object": "不破夫婦の赤穂行きの意向",
+   "predicate": "LEARNED",
+   "subject": "boku",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "二千円",
+   "predicate": "LOST",
+   "subject": "boku",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": null,
+   "object": "野呂の留守番来訪",
+   "predicate": "HOOK_OPENED",
+   "subject": null,
+   "target": null,
+   "text": null
+  }
+ ],
+ "scene_hash": "26da821d0b900cc948a50e6f4ec72c76d29817ace831e8ba7beb4bc12b657466",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

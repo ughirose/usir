@@ -1,0 +1,142 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": -1,
+   "F_basis": "ごめんなさい。下では、妹や弟がうるさくて",
+   "F_valence": 0,
+   "f_arousal": 0,
+   "f_basis": "ひどくみっともなく、興が覚めるばかりなのです",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "ミルクをわかして飲んだ事はあるんです",
+    "code": "E03"
+   },
+   {
+    "basis": "一時間以上も書いているのです",
+    "code": "E16"
+   },
+   {
+    "basis": "用事でも言いつけてやれ",
+    "code": "E08"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "特別の好意を寄せている女が、三人いました",
+    "evidence": "explicit",
+    "object": "好意を寄せる女三人",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   },
+   {
+    "basis": "実に一言も口をききたくない気持",
+    "category": "emotion",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yozo",
+    "target": "yozo",
+    "text": "疲労で口をききたくないが、娘に受け身の奉仕で応じている"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "自分の部屋",
+  "mood_top3": [
+   {
+    "basis": "へへののもへじでも書いているのに違いないんです",
+    "code": "M05"
+   },
+   {
+    "basis": "くたくたに疲れ切っている",
+    "code": "M08"
+   },
+   {
+    "basis": "興が覚めるばかりなのです",
+    "code": "M16"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": "腹這いになり、煙草を吸い",
+    "id": "yozo"
+   },
+   {
+    "basis": "自分の下宿している仙遊館の娘でした",
+    "id": "musume"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "834c904d9ee2346e61880fcf1571746af4f8f58909c28206e2340634cf0e9143",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": "一時間以上",
+   "evidence": "inferred",
+   "explicit_time": "その頃",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "musume",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "c5db18a07c9e7b955705a8e7debe9561008e21b82ad7f4b96e7b8176a9a0bbe5",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "a83eb55d575f759c04f17e1724e0c8a92f3b9e0e671aef8cf375a7fd6d556025",
+  "prior_core": {
+   "pov_character": "yozo",
+   "present": [
+    "yozo"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "82407d6c16491668a16408787a0c29186bda28d47e4d667c3fa23feef13c6be4",
+  "prior_state_hash": "4a5f0d9900358850521d8314bcbb6022053652bc5cef31a44bc31d87f6b5f707",
+  "roster_all_digest": "860d2d10f563333e84efc5e193e711bf85e6c0e1838ee236de5e6f25bbd33187",
+  "sampling": "default",
+  "scene_text_hash": "05879b1b487ea9d00d60e5aadbfdcc893c9da0a87b39a68e9be2b10e07676dbd"
+ },
+ "prior_facts": [
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "yozo",
+   "target": "yozo",
+   "text": "情死事件を起こし、身の上が一変した"
+  },
+  {
+   "category": null,
+   "object": "小さいナイフ",
+   "predicate": "ACQUIRED",
+   "subject": "yozo",
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "situation",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "yozo",
+   "target": "yozo",
+   "text": "運動の仕事から逃げ、死ぬことを決めた"
+  }
+ ],
+ "scene_hash": "834c904d9ee2346e61880fcf1571746af4f8f58909c28206e2340634cf0e9143",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}

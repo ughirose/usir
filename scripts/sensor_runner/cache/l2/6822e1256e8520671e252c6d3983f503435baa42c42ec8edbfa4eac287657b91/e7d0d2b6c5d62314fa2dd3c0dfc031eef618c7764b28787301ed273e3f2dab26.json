@@ -1,0 +1,149 @@
+{
+ "entry": {
+  "annotator": "claude-code-session:sonnet-subagent",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "あさましく狂乱の如く興奮し",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "とんでもない姉だ、と自分はひそかに苦笑しました",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "キスをしてやりましたら",
+    "code": "E11"
+   },
+   {
+    "basis": "何とかして、ごまかさなければならぬ",
+    "code": "E08"
+   },
+   {
+    "basis": "十円持って、銀座のその大カフエに、ひとりではいって",
+    "code": "E02"
+   }
+  ],
+  "facts": [
+   {
+    "basis": "ものを買ってもらっては",
+    "evidence": "explicit",
+    "object": "趣味の悪い買い物の品",
+    "predicate": "ACQUIRED",
+    "subject": "yozo"
+   },
+   {
+    "basis": "狭い洋室に連れて行き",
+    "evidence": "explicit",
+    "object": "運動のために借りてあるビルの狭い洋室",
+    "predicate": "MOVED_TO",
+    "subject": "yozo"
+   },
+   {
+    "basis": "もはや自分は、金縛り同様の形になっていました",
+    "category": "situation",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yozo",
+    "target": "yozo",
+    "text": "下宿屋の娘と同志の二人の機嫌取りに追われ、身動きが取れない状態になっている"
+   },
+   {
+    "basis": "銀座の或る大カフエの女給から、思いがけぬ恩を受け",
+    "evidence": "explicit",
+    "object": "カフエの女給から受けた恩",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "もはや自分は、金縛り同様の形になっていました",
+    "code": "M03"
+   },
+   {
+    "basis": "敗北のお道化の苦しい笑いを伴わずには",
+    "code": "M05"
+   },
+   {
+    "basis": "自分のこの絶えず追われているような心",
+    "code": "M11"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": "そのキザに身震いしながら、自分は、",
+    "id": "yozo"
+   },
+   {
+    "basis": "その女は、いつまでも自分について歩いて",
+    "id": "doshi"
+   }
+  ],
+  "provenance": "session",
+  "scene_hash": "6822e1256e8520671e252c6d3983f503435baa42c42ec8edbfa4eac287657b91",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": "或る夏の夜",
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "doshi",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "e7d0d2b6c5d62314fa2dd3c0dfc031eef618c7764b28787301ed273e3f2dab26",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+  "pack_view_hash": "5f8893b23eee0fb4116416b65f33e7690eb04e48df9d4be7ec28f90ab55b1bc6",
+  "prior_core": {
+   "pov_character": "yozo",
+   "present": [
+    "musume",
+    "yozo"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": "1f340c7ed968e790d6d5a88db6397bf583be9efed455c522c533903f0a56676e",
+  "prior_state_hash": "772c6808e42093a059e42d5b25aa948e0513955e4e4b9c39b2f2061a588d9d5e",
+  "roster_all_digest": "860d2d10f563333e84efc5e193e711bf85e6c0e1838ee236de5e6f25bbd33187",
+  "sampling": "default",
+  "scene_text_hash": "58643c199641e530f08b7184b84102a26df47522f55e5baa1a0205ebb8e8796d"
+ },
+ "prior_facts": [
+  {
+   "category": null,
+   "object": "好意を寄せる女三人",
+   "predicate": "HOOK_OPENED",
+   "subject": null,
+   "target": null,
+   "text": null
+  },
+  {
+   "category": "emotion",
+   "object": null,
+   "predicate": "STATE_CHANGED",
+   "subject": "yozo",
+   "target": "yozo",
+   "text": "疲労で口をききたくないが、娘に受け身の奉仕で応じている"
+  }
+ ],
+ "scene_hash": "6822e1256e8520671e252c6d3983f503435baa42c42ec8edbfa4eac287657b91",
+ "schema": "sensor.cache.l2/3",
+ "source": "ingest"
+}
