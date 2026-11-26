@@ -30,3 +30,6 @@ Orion が report §6 の判断点（ledger_hash の範囲、Early Cutoff の健�
 
 ## Step 1 完了（2026-11-26）
 実装コミット eb031f4。72 passed（既存59+新規13）、parity 4条件一致、epoch 凍結シナリオ 6→4 call。レポート: docs/handoff/2026-11-26_phase15_stage2_step1_report.md
+
+## Step 1.5 開始（2026-11-26）
+roster_all_ids を L2 鍵から外す（pack 内容は不変）。roster_all_digest を L2 メタに保存し roster_changed を stale 記録。鍵スキーマ版上げ（pack_bytes/2, l2/3）。状態: 実装中。
