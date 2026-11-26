@@ -36,6 +36,10 @@ WORK = HERE / "step2_work"
 
 from cache import Cache  # noqa: E402
 from common import REPO, all_work_ids, dumps, find_nishiki, load_work, read_json, segment, write_json  # noqa: E402
+import common as _common  # noqa: E402
+
+if os.environ.get("STEP2_WORKS_DIR"):  # measurement B: work/character files of a sandbox copy (the committed seed files stay untouched)
+    _common.WORKS_DIR = Path(os.environ["STEP2_WORKS_DIR"])
 from epoch import commit_epoch, epoch_status  # noqa: E402
 from ingest import ingest_file  # noqa: E402
 from merge import merge_work  # noqa: E402

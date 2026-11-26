@@ -1,0 +1,1579 @@
+{
+ "schema": "phase15_stage2_step4/1",
+ "annotator_model_id": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+ "runs": {
+  "s4a": {
+   "stats": {
+    "per_invocation": {
+     "s4a.001801_001786.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [
+       "onna",
+       "shinichi"
+      ],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 16.16,
+      "work": "001801_001786"
+     },
+     "s4a.001801_001786.s0.r5": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 5,
+      "scene_index": 0,
+      "seconds": 14.8,
+      "work": "001801_001786"
+     },
+     "s4a.001801_001786.s1.r2": {
+      "accepted": true,
+      "attempts": 2,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 19.44,
+      "work": "001801_001786"
+     },
+     "s4a.001801_001786.s1.r6": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 6,
+      "scene_index": 1,
+      "seconds": 14.33,
+      "work": "001801_001786"
+     },
+     "s4a.001801_001786.s2.r3": {
+      "accepted": true,
+      "attempts": 2,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 17.66,
+      "work": "001801_001786"
+     },
+     "s4a.001801_001786.s2.r7": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 7,
+      "scene_index": 2,
+      "seconds": 12.8,
+      "work": "001801_001786"
+     }
+    },
+    "summary": {
+     "accepted": 6,
+     "attempts_total": 8,
+     "invocations": 6,
+     "invocations_with_timing": 6,
+     "location": {
+      "000035_000301": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "000050_003586": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "000081_000456": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "001383_056643": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "001798_056779": {
+       "entries": 0,
+       "location_non_null": 0
+      },
+      "001801_001786": {
+       "entries": 3,
+       "location_non_null": 3
+      },
+      "001875_059897": {
+       "entries": 0,
+       "location_non_null": 0
+      }
+     },
+     "rejected_attempts": 2,
+     "seconds": {
+      "max": 19.44,
+      "mean": 15.87,
+      "median": 15.48,
+      "min": 12.8
+     }
+    }
+   },
+   "flags": {
+    "000035_000301": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000050_003586": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000081_000456": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001383_056643": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001798_056779": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001801_001786": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001875_059897": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    }
+   },
+   "rounds": [
+    {
+     "round": 1,
+     "t": 1795706463.5091004,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 0,
+       "pending": 3,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 2,
+     "t": 1795706494.9236007,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 1,
+       "pending": 2,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 3,
+     "t": 1795706530.153929,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 2,
+       "pending": 1,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 4,
+     "t": 1795706562.5413175,
+     "packs": 0,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 5,
+     "t": 1795706563.9820921,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 0,
+       "pending": 3,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 6,
+     "t": 1795706594.8359373,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 1,
+       "pending": 2,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 7,
+     "t": 1795706622.2265365,
+     "packs": 1,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 2,
+       "pending": 1,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 8,
+     "t": 1795706653.5315676,
+     "packs": 0,
+     "per_work": {
+      "001801_001786": {
+       "scene_count": 3,
+       "cached": 3,
+       "pending": 0,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    }
+   ],
+   "timing": [
+    {
+     "pid": "s4a.001801_001786.s0.r1",
+     "event": "start",
+     "t": 1795706473.3778374
+    },
+    {
+     "pid": "s4a.001801_001786.s0.r1",
+     "event": "end",
+     "t": 1795706489.542687
+    },
+    {
+     "pid": "s4a.001801_001786.s1.r2",
+     "event": "start",
+     "t": 1795706503.2387345
+    },
+    {
+     "pid": "s4a.001801_001786.s1.r2",
+     "event": "end",
+     "t": 1795706522.6782737
+    },
+    {
+     "pid": "s4a.001801_001786.s2.r3",
+     "event": "start",
+     "t": 1795706538.8860276
+    },
+    {
+     "pid": "s4a.001801_001786.s2.r3",
+     "event": "end",
+     "t": 1795706556.5417933
+    },
+    {
+     "pid": "s4a.001801_001786.s0.r5",
+     "event": "start",
+     "t": 1795706574.9908068
+    },
+    {
+     "pid": "s4a.001801_001786.s0.r5",
+     "event": "end",
+     "t": 1795706589.7931514
+    },
+    {
+     "pid": "s4a.001801_001786.s1.r6",
+     "event": "start",
+     "t": 1795706602.878473
+    },
+    {
+     "pid": "s4a.001801_001786.s1.r6",
+     "event": "end",
+     "t": 1795706617.2127354
+    },
+    {
+     "pid": "s4a.001801_001786.s2.r7",
+     "event": "start",
+     "t": 1795706630.4227462
+    },
+    {
+     "pid": "s4a.001801_001786.s2.r7",
+     "event": "end",
+     "t": 1795706643.220034
+    }
+   ],
+   "attempts": [
+    {
+     "pid": "s4a.001801_001786.s0.r1",
+     "t": 1795706487.045568,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": [
+      "shinichi",
+      "onna"
+     ]
+    },
+    {
+     "pid": "s4a.001801_001786.s1.r2",
+     "t": 1795706515.9358215,
+     "accepted": false,
+     "reasons": [
+      "trait_changes[0]: no ledger baseline for 'shinichi' (add via ledger_additions)",
+      "trait_changes[1]: no ledger baseline for 'onna' (add via ledger_additions)"
+     ],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4a.001801_001786.s1.r2",
+     "t": 1795706519.333932,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4a.001801_001786.s2.r3",
+     "t": 1795706550.6608572,
+     "accepted": false,
+     "reasons": [
+      "trait_changes[0]: no ledger baseline for 'shinichi' (add via ledger_additions)",
+      "trait_changes[1]: no ledger baseline for 'onna' (add via ledger_additions)"
+     ],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4a.001801_001786.s2.r3",
+     "t": 1795706554.108953,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4a.001801_001786.s0.r5",
+     "t": 1795706587.0813508,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4a.001801_001786.s1.r6",
+     "t": 1795706614.53273,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4a.001801_001786.s2.r7",
+     "t": 1795706640.9078708,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    }
+   ],
+   "pids": {
+    "s4a.001801_001786.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\4e3b03f8cf9c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4a\\packs\\001801_001786\\4e3b03f8cf9c.pack.json",
+     "round": 1,
+     "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+     "scene_index": 0,
+     "work": "001801_001786"
+    },
+    "s4a.001801_001786.s0.r5": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\4e3b03f8cf9c.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4a\\packs\\001801_001786\\4e3b03f8cf9c.pack.json",
+     "round": 5,
+     "scene_hash": "4e3b03f8cf9c8f1599fc2487c97f2ad377311efc1f83476cae05f6d4ab7a0a70",
+     "scene_index": 0,
+     "work": "001801_001786"
+    },
+    "s4a.001801_001786.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\5af4eda55c80.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4a\\packs\\001801_001786\\5af4eda55c80.pack.json",
+     "round": 2,
+     "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+     "scene_index": 1,
+     "work": "001801_001786"
+    },
+    "s4a.001801_001786.s1.r6": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\5af4eda55c80.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4a\\packs\\001801_001786\\5af4eda55c80.pack.json",
+     "round": 6,
+     "scene_hash": "5af4eda55c8003271f880252ab7d37bbaf1aa0255e5e951b30ddbe45a3326d23",
+     "scene_index": 1,
+     "work": "001801_001786"
+    },
+    "s4a.001801_001786.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\b99b2fa9ff66.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4a\\packs\\001801_001786\\b99b2fa9ff66.pack.json",
+     "round": 3,
+     "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+     "scene_index": 2,
+     "work": "001801_001786"
+    },
+    "s4a.001801_001786.s2.r7": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001801_001786\\b99b2fa9ff66.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4a\\packs\\001801_001786\\b99b2fa9ff66.pack.json",
+     "round": 7,
+     "scene_hash": "b99b2fa9ff6633899ac0110c350ae7c21419d56cb0f50b218c6d41bb66fadcfc",
+     "scene_index": 2,
+     "work": "001801_001786"
+    }
+   },
+   "summaries": {
+    "final": {
+     "001801_001786": {
+      "annotations_bytes": 10510,
+      "annotations_sha256": "398f9cde1230494bbba03bfe370de331ef3b774b6da90ae333fef1b766876106",
+      "diagnose_bytes": 5146,
+      "diagnose_sha256": "e6ce8eb867595e741090e2bbd1f86b4ed130aeeb4c7ac6ec47507b795fd6e6fe",
+      "errors": 0,
+      "l1": {
+       "hit": 0,
+       "miss": 3
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 3,
+       "miss": 0
+      },
+      "merged": 3,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 3
+     }
+    }
+   },
+   "epoch_state": {
+    "000035_000301.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000035_000301"
+    },
+    "000050_003586.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000050_003586"
+    },
+    "000081_000456.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000081_000456"
+    },
+    "001383_056643.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001383_056643"
+    },
+    "001798_056779.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001798_056779"
+    },
+    "001801_001786.epoch.json": {
+     "epoch": 0,
+     "history": [
+      {
+       "applied": [
+        "onna",
+        "shinichi"
+       ],
+       "epoch": 1
+      }
+     ],
+     "schema": "sensor.epoch/1",
+     "work_id": "001801_001786"
+    },
+    "001875_059897.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001875_059897"
+    }
+   }
+  },
+  "s4b": {
+   "stats": {
+    "per_invocation": {
+     "s4b.000081_000456.s3.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 3,
+      "seconds": 15.57,
+      "work": "000081_000456"
+     }
+    },
+    "summary": {
+     "accepted": 1,
+     "attempts_total": 1,
+     "invocations": 1,
+     "invocations_with_timing": 1,
+     "location": {
+      "000081_000456": {
+       "entries": 6,
+       "location_non_null": 5
+      }
+     },
+     "rejected_attempts": 0,
+     "seconds": {
+      "max": 15.57,
+      "mean": 15.57,
+      "median": 15.57,
+      "min": 15.57
+     }
+    }
+   },
+   "flags": {
+    "000081_000456": {
+     "forced": [],
+     "premise_changed": [
+      {
+       "current_digest": "1bc9b789a582b547667a0ebbf63f1b23d10dddc400e6a7eb21213fd56d26d904",
+       "current_prior_facts": [
+        {
+         "category": null,
+         "object": "岸で何かを掘る人かげ",
+         "predicate": "HOOK_RESOLVED",
+         "subject": null,
+         "target": null,
+         "text": null
+        },
+        {
+         "category": null,
+         "object": "くるみは百二十万年ぐらい前のもの",
+         "predicate": "LEARNED",
+         "subject": "giovanni",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": null,
+         "object": "獣の骨はボスで今の牛の先祖",
+         "predicate": "LEARNED",
+         "subject": "giovanni",
+         "target": null,
+         "text": null
+        }
+       ],
+       "key": "12ccd9696a7c1c281bee098e79ff09e66c8f99b78d1044be4780b74804f2abcf",
+       "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+       "scene_index": 4,
+       "stored_digest": "b052d106f344e2cd49ce05ea7b45a3de130cb3655a3a0cf24e290de279ff67e1",
+       "stored_prior_facts": [
+        {
+         "category": null,
+         "object": "ここは百二十万年前は海岸だった",
+         "predicate": "LEARNED",
+         "subject": "giovanni",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": null,
+         "object": "岸で何かを掘る人かげ",
+         "predicate": "HOOK_RESOLVED",
+         "subject": null,
+         "target": null,
+         "text": null
+        }
+       ]
+      }
+     ],
+     "roster_changed": [
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "92c8d3ba5c04b204b311321d9648c24190e703b0d4787a33e1f60003303db818",
+       "reason": "roster_changed",
+       "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89",
+       "scene_index": 0,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      },
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "49041e8c60b17ad31bc15c1c28741ab46f314973fa588c9703c7cc510b26e896",
+       "reason": "roster_changed",
+       "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6",
+       "scene_index": 1,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      },
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "501e13f19ccbccfe873ff6ce18dce17ebcebb812517d5ebf7f458c697641c64e",
+       "reason": "roster_changed",
+       "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+       "scene_index": 2,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      },
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "12ccd9696a7c1c281bee098e79ff09e66c8f99b78d1044be4780b74804f2abcf",
+       "reason": "roster_changed",
+       "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+       "scene_index": 4,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      },
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "96dce8972bb977aa51c2f14db6b875c4d1224d08a5aa586fe120a98bb3c1cdcd",
+       "reason": "roster_changed",
+       "scene_hash": "468c60bf74491a5707ad56540127e17286b890c533a3a6f451e8bd8e2ed5578a",
+       "scene_index": 5,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      }
+     ]
+    }
+   },
+   "rounds": [
+    {
+     "round": 1,
+     "t": 1795706682.3664136,
+     "packs": 0,
+     "per_work": {
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 6,
+       "pending": 0,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 2,
+     "t": 1795706689.9898436,
+     "packs": 1,
+     "per_work": {
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 3,
+       "pending": 3,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [
+        {
+         "scene_index": 0,
+         "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89"
+        },
+        {
+         "scene_index": 1,
+         "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6"
+        },
+        {
+         "scene_index": 2,
+         "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea"
+        }
+       ],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 3,
+     "t": 1795706721.3277924,
+     "packs": 0,
+     "per_work": {
+      "000081_000456": {
+       "scene_count": 6,
+       "cached": 6,
+       "pending": 0,
+       "l2": {
+        "hit": 6,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [
+        {
+         "scene_index": 4,
+         "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa"
+        }
+       ],
+       "roster_changed": [
+        {
+         "scene_index": 0,
+         "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89"
+        },
+        {
+         "scene_index": 1,
+         "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6"
+        },
+        {
+         "scene_index": 2,
+         "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea"
+        },
+        {
+         "scene_index": 4,
+         "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa"
+        },
+        {
+         "scene_index": 5,
+         "scene_hash": "468c60bf74491a5707ad56540127e17286b890c533a3a6f451e8bd8e2ed5578a"
+        }
+       ],
+       "forced": []
+      }
+     }
+    }
+   ],
+   "timing": [
+    {
+     "pid": "s4b.000081_000456.s3.r2",
+     "event": "start",
+     "t": 1795706699.895846
+    },
+    {
+     "pid": "s4b.000081_000456.s3.r2",
+     "event": "end",
+     "t": 1795706715.467726
+    }
+   ],
+   "attempts": [
+    {
+     "pid": "s4b.000081_000456.s3.r2",
+     "t": 1795706712.9762855,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    }
+   ],
+   "pids": {
+    "s4b.000081_000456.s3.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\000081_000456\\54ab8765b144.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4b\\packs\\000081_000456\\54ab8765b144.pack.json",
+     "round": 2,
+     "scene_hash": "54ab8765b144cc2f27cd2855a1f3478a7872e6d5c7657d1a4ab1ba905183871e",
+     "scene_index": 3,
+     "work": "000081_000456"
+    }
+   },
+   "stale": {
+    "000081_000456.json": {
+     "forced": [],
+     "premise_changed": [
+      {
+       "current_digest": "1bc9b789a582b547667a0ebbf63f1b23d10dddc400e6a7eb21213fd56d26d904",
+       "current_prior_facts": [
+        {
+         "category": null,
+         "object": "岸で何かを掘る人かげ",
+         "predicate": "HOOK_RESOLVED",
+         "subject": null,
+         "target": null,
+         "text": null
+        },
+        {
+         "category": null,
+         "object": "くるみは百二十万年ぐらい前のもの",
+         "predicate": "LEARNED",
+         "subject": "giovanni",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": null,
+         "object": "獣の骨はボスで今の牛の先祖",
+         "predicate": "LEARNED",
+         "subject": "giovanni",
+         "target": null,
+         "text": null
+        }
+       ],
+       "key": "12ccd9696a7c1c281bee098e79ff09e66c8f99b78d1044be4780b74804f2abcf",
+       "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+       "scene_index": 4,
+       "stored_digest": "b052d106f344e2cd49ce05ea7b45a3de130cb3655a3a0cf24e290de279ff67e1",
+       "stored_prior_facts": [
+        {
+         "category": null,
+         "object": "ここは百二十万年前は海岸だった",
+         "predicate": "LEARNED",
+         "subject": "giovanni",
+         "target": null,
+         "text": null
+        },
+        {
+         "category": null,
+         "object": "岸で何かを掘る人かげ",
+         "predicate": "HOOK_RESOLVED",
+         "subject": null,
+         "target": null,
+         "text": null
+        }
+       ]
+      }
+     ],
+     "roster_changed": [
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "92c8d3ba5c04b204b311321d9648c24190e703b0d4787a33e1f60003303db818",
+       "reason": "roster_changed",
+       "scene_hash": "157d8cb878043cdccb94ec3c209ec2d9e6f61b14069f947eafdef3044ca64a89",
+       "scene_index": 0,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      },
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "49041e8c60b17ad31bc15c1c28741ab46f314973fa588c9703c7cc510b26e896",
+       "reason": "roster_changed",
+       "scene_hash": "eea13fe4ce6fdf918f6e80e541ef2fc18bb31d5897ecaee53c26e85607878fb6",
+       "scene_index": 1,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      },
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "501e13f19ccbccfe873ff6ce18dce17ebcebb812517d5ebf7f458c697641c64e",
+       "reason": "roster_changed",
+       "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+       "scene_index": 2,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      },
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "12ccd9696a7c1c281bee098e79ff09e66c8f99b78d1044be4780b74804f2abcf",
+       "reason": "roster_changed",
+       "scene_hash": "c36d228bc9049e10677b5652b59d103b09a6fe11ddbe360dc2bc829ef0d76aaa",
+       "scene_index": 4,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      },
+      {
+       "current_digest": "72e1559ca3e2bc6db01e9063ba657ddabf5438c7b8825e7d1c2924f7ff512de7",
+       "current_roster_all_ids": [
+        "campanella",
+        "daigakushi",
+        "giovanni",
+        "megane",
+        "tabibito",
+        "toritori"
+       ],
+       "key": "96dce8972bb977aa51c2f14db6b875c4d1224d08a5aa586fe120a98bb3c1cdcd",
+       "reason": "roster_changed",
+       "scene_hash": "468c60bf74491a5707ad56540127e17286b890c533a3a6f451e8bd8e2ed5578a",
+       "scene_index": 5,
+       "stored_digest": "5c532e10f511a2da591d5be18d66da4b3614f13d4a24936fa840f45212ab7d5b"
+      }
+     ],
+     "schema": "sensor.stale/1",
+     "work_id": "000081_000456"
+    }
+   },
+   "summaries": {
+    "after": {
+     "000081_000456": {
+      "annotations_bytes": 18210,
+      "annotations_sha256": "38d221b6f4c889472ebdf6582fb89de66ba8089f75dc3c1f4a2d955475489654",
+      "diagnose_bytes": 5727,
+      "diagnose_sha256": "17b7c5b36feff4099d9b34e0a71b1872a154a3dcaf8c1917fc89a05b87f39e97",
+      "errors": 0,
+      "l1": {
+       "hit": 0,
+       "miss": 6
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 6,
+       "miss": 0
+      },
+      "merged": 6,
+      "premise_changed": 1,
+      "roster_changed": 5,
+      "scenes": 6
+     }
+    },
+    "before": {
+     "000081_000456": {
+      "annotations_bytes": 17914,
+      "annotations_sha256": "9a6283d0e82c65db25a9cea02f27cbe10a7945ea90d84fff26cfc0e4b1358c56",
+      "diagnose_bytes": 5729,
+      "diagnose_sha256": "65c782cda922e0c4f30f9c9a97edbd63aae6f84d9cc888a34bba66e048e1d919",
+      "errors": 0,
+      "l1": {
+       "hit": 6,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 6,
+       "miss": 0
+      },
+      "merged": 6,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 6
+     }
+    }
+   },
+   "epoch_state": {
+    "000035_000301.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000035_000301"
+    },
+    "000050_003586.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000050_003586"
+    },
+    "000081_000456.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000081_000456"
+    },
+    "001383_056643.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001383_056643"
+    },
+    "001798_056779.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001798_056779"
+    },
+    "001801_001786.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001801_001786"
+    },
+    "001875_059897.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001875_059897"
+    }
+   }
+  },
+  "s4c": {
+   "stats": {
+    "per_invocation": {
+     "s4c.001875_059897.s0.r1": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 1,
+      "scene_index": 0,
+      "seconds": 17.41,
+      "work": "001875_059897"
+     },
+     "s4c.001875_059897.s1.r2": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 2,
+      "scene_index": 1,
+      "seconds": 13.81,
+      "work": "001875_059897"
+     },
+     "s4c.001875_059897.s2.r3": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 3,
+      "scene_index": 2,
+      "seconds": 18.01,
+      "work": "001875_059897"
+     },
+     "s4c.001875_059897.s3.r4": {
+      "accepted": true,
+      "attempts": 1,
+      "ledger_additions": [],
+      "round": 4,
+      "scene_index": 3,
+      "seconds": 13.53,
+      "work": "001875_059897"
+     }
+    },
+    "summary": {
+     "accepted": 4,
+     "attempts_total": 4,
+     "invocations": 4,
+     "invocations_with_timing": 4,
+     "location": {
+      "000035_000301": {
+       "entries": 7,
+       "location_non_null": 6
+      },
+      "000050_003586": {
+       "entries": 5,
+       "location_non_null": 2
+      },
+      "000081_000456": {
+       "entries": 6,
+       "location_non_null": 5
+      },
+      "001383_056643": {
+       "entries": 6,
+       "location_non_null": 4
+      },
+      "001798_056779": {
+       "entries": 4,
+       "location_non_null": 4
+      },
+      "001801_001786": {
+       "entries": 3,
+       "location_non_null": 2
+      },
+      "001875_059897": {
+       "entries": 4,
+       "location_non_null": 0
+      }
+     },
+     "rejected_attempts": 0,
+     "seconds": {
+      "max": 18.01,
+      "mean": 15.69,
+      "median": 15.61,
+      "min": 13.53
+     }
+    }
+   },
+   "flags": {
+    "000035_000301": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000050_003586": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "000081_000456": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001383_056643": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001798_056779": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001801_001786": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    },
+    "001875_059897": {
+     "forced": [],
+     "premise_changed": [],
+     "roster_changed": []
+    }
+   },
+   "rounds": [
+    {
+     "round": 1,
+     "t": 1795706747.0965157,
+     "packs": 1,
+     "per_work": {
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 0,
+       "pending": 4,
+       "l2": {
+        "hit": 0,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 3
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 2,
+     "t": 1795706778.118319,
+     "packs": 1,
+     "per_work": {
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 1,
+       "pending": 3,
+       "l2": {
+        "hit": 1,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 2
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 3,
+     "t": 1795706805.3180482,
+     "packs": 1,
+     "per_work": {
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 2,
+       "pending": 2,
+       "l2": {
+        "hit": 2,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 1
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 4,
+     "t": 1795706837.0460203,
+     "packs": 1,
+     "per_work": {
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 3,
+       "pending": 1,
+       "l2": {
+        "hit": 3,
+        "adopted": 0,
+        "miss": 1,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    },
+    {
+     "round": 5,
+     "t": 1795706864.7067864,
+     "packs": 0,
+     "per_work": {
+      "001875_059897": {
+       "scene_count": 4,
+       "cached": 4,
+       "pending": 0,
+       "l2": {
+        "hit": 4,
+        "adopted": 0,
+        "miss": 0,
+        "blocked": 0
+       },
+       "premise_changed": [],
+       "roster_changed": [],
+       "forced": []
+      }
+     }
+    }
+   ],
+   "timing": [
+    {
+     "pid": "s4c.001875_059897.s0.r1",
+     "event": "start",
+     "t": 1795706755.41872
+    },
+    {
+     "pid": "s4c.001875_059897.s0.r1",
+     "event": "end",
+     "t": 1795706772.8314488
+    },
+    {
+     "pid": "s4c.001875_059897.s1.r2",
+     "event": "start",
+     "t": 1795706786.1284528
+    },
+    {
+     "pid": "s4c.001875_059897.s1.r2",
+     "event": "end",
+     "t": 1795706799.9412813
+    },
+    {
+     "pid": "s4c.001875_059897.s2.r3",
+     "event": "start",
+     "t": 1795706813.5784733
+    },
+    {
+     "pid": "s4c.001875_059897.s2.r3",
+     "event": "end",
+     "t": 1795706831.5863197
+    },
+    {
+     "pid": "s4c.001875_059897.s3.r4",
+     "event": "start",
+     "t": 1795706844.9743383
+    },
+    {
+     "pid": "s4c.001875_059897.s3.r4",
+     "event": "end",
+     "t": 1795706858.503695
+    }
+   ],
+   "attempts": [
+    {
+     "pid": "s4c.001875_059897.s0.r1",
+     "t": 1795706768.9252074,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4c.001875_059897.s1.r2",
+     "t": 1795706797.5441377,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4c.001875_059897.s2.r3",
+     "t": 1795706829.100465,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    },
+    {
+     "pid": "s4c.001875_059897.s3.r4",
+     "t": 1795706856.0391362,
+     "accepted": true,
+     "reasons": [],
+     "ledger_additions_pending": []
+    }
+   ],
+   "pids": {
+    "s4c.001875_059897.s0.r1": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001875_059897\\f6d7af0927c2.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4c\\packs\\001875_059897\\f6d7af0927c2.pack.json",
+     "round": 1,
+     "scene_hash": "f6d7af0927c2c4c128304e9f08826aaec7c1399e3ff3754abce2e13cbf18ddfb",
+     "scene_index": 0,
+     "work": "001875_059897"
+    },
+    "s4c.001875_059897.s1.r2": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001875_059897\\08ec58f6ba22.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4c\\packs\\001875_059897\\08ec58f6ba22.pack.json",
+     "round": 2,
+     "scene_hash": "08ec58f6ba2228b78deb8873b08d5f4658cea9ebe819e80a3d5e0549da5a2174",
+     "scene_index": 1,
+     "work": "001875_059897"
+    },
+    "s4c.001875_059897.s2.r3": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001875_059897\\f6bb4a8cd076.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4c\\packs\\001875_059897\\f6bb4a8cd076.pack.json",
+     "round": 3,
+     "scene_hash": "f6bb4a8cd076d8932f313a5377a7aab0bd3939d5dcf72046e618a060e7107ad6",
+     "scene_index": 2,
+     "work": "001875_059897"
+    },
+    "s4c.001875_059897.s3.r4": {
+     "output": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\out\\001875_059897\\7de1b26ff94b.strong.json",
+     "pack": "C:\\dev\\usir-phase15\\scripts\\sensor_runner\\step2_work\\s4c\\packs\\001875_059897\\7de1b26ff94b.pack.json",
+     "round": 4,
+     "scene_hash": "7de1b26ff94b2389bbd6a6f211e27625359ea809b587b93a1595e3426c19953f",
+     "scene_index": 3,
+     "work": "001875_059897"
+    }
+   },
+   "summaries": {
+    "after": {
+     "001875_059897": {
+      "annotations_bytes": 13848,
+      "annotations_sha256": "4f58c528335ee6b405c6128f603f9da79190edc035a163a92dba26c37e851577",
+      "diagnose_bytes": 5769,
+      "diagnose_sha256": "981798de1d94969a31f4ce5d012912c50bb8a9db0de7817a6a9383515ab4e637",
+      "errors": 0,
+      "l1": {
+       "hit": 4,
+       "miss": 0
+      },
+      "l2": {
+       "adopted": 0,
+       "blocked": 0,
+       "hit": 4,
+       "miss": 0
+      },
+      "merged": 4,
+      "premise_changed": 0,
+      "roster_changed": 0,
+      "scenes": 4
+     }
+    }
+   },
+   "epoch_state": {
+    "000035_000301.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000035_000301"
+    },
+    "000050_003586.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000050_003586"
+    },
+    "000081_000456.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "000081_000456"
+    },
+    "001383_056643.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001383_056643"
+    },
+    "001798_056779.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001798_056779"
+    },
+    "001801_001786.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001801_001786"
+    },
+    "001875_059897.epoch.json": {
+     "epoch": 0,
+     "history": [],
+     "schema": "sensor.epoch/1",
+     "work_id": "001875_059897"
+    }
+   }
+  }
+ },
+ "measurement_B": {
+  "work": "000081_000456",
+  "added_character": {
+   "id": "megane",
+   "aliases": [
+    "眼鏡"
+   ],
+   "only_scene": 3
+  },
+  "before": {
+   "calls": 0,
+   "hit": 6
+  },
+  "after": {
+   "reannotated_scenes": [
+    3
+   ],
+   "calls": 1,
+   "not_reannotated": 5,
+   "roster_changed_scenes": [
+    0,
+    1,
+    2,
+    4,
+    5
+   ],
+   "premise_changed_scenes": [
+    4
+   ],
+   "annotations_changed_scenes": [
+    3
+   ]
+  }
+ },
+ "measurement_C": {
+  "work": "001875_059897",
+  "calls": 4,
+  "location_before": [
+   null,
+   null,
+   null,
+   null
+  ],
+  "location_after": [
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "call_tally": {
+  "A": 6,
+  "B": 1,
+  "C": 4,
+  "total": 11,
+  "cap": 30
+ }
+}
