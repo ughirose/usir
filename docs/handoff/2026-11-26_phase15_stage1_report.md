@@ -116,4 +116,4 @@
 ## 8. テスト結果
 
 - sensor_runner: `test_sensor_runner.py`（既存 36）+ `test_sensor_runner_phase15.py`（23）= 59 件すべて合格。既存テストは無修正。
-- リポジトリ全体 `python scripts/harness.py test`: 752 passed, 7 failed, 18 skipped（205 秒）。失敗 7 件は変更前のコミット b3da0e4（`C:\dev\usir-sensor-runner`）でも同じ 7 件が失敗する（データファイル不足の FileNotFoundError 等）。今回の変更とは無関係。TS 側は `node_modules` 未導入のためスキップ。
+- リポジトリ全体 `python scripts/harness.py test`: 752 passed, 7 failed, 18 skipped（205 秒）。失敗 7 件は変更前のコミット b3da0e4（`C:\dev\usir-sensor-runner`）でも同じ 7 件が失敗する（確認したのは1件の FileNotFoundError のみで、7件すべての原因は未調査）。今回の変更とは無関係。TS 側は `node_modules` 未導入のためスキップ。
