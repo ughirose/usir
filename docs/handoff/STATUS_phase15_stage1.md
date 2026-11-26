@@ -54,3 +54,6 @@ A–E 実測完了。cold 35 call、warm 0 call、編集 1/2 call、location 65.
 
 ## Step 5 開始（2026-11-27）
 (a) 注釈者指示に「台帳に無い人物は毎回 ledger_additions へ」を明示、ep 条件で実LLM再確認（上限10 call）。(b) feat/sensor-runner へ fast-forward 統合。土台 feat/phase15-stage2-step4 (7ce179c)。
+
+## Step 8 開始（2026-11-27）
+seed 7作品・全35場面を現行指示文・現行手順で cold 再注釈し、全場面そろってから seed を差し替える。上限50 call。差し替え後に warm 0回・パリティ4条件・86テスト、feat/sensor-runner へ fast-forward 統合。土台 feat/sensor-runner（22b2e26）。
