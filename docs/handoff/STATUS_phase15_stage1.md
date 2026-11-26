@@ -48,3 +48,6 @@ A–E 実測完了。cold 35 call、warm 0 call、編集 1/2 call、location 65.
 
 ## Step 3 開始（2026-11-27）
 不具合A（ingest 検証基準を凍結スナップショットへ）・B（timing 並列書込）修正、001875 location 調査。土台は feat/phase15-stage2-step2（33bf69c を含み、step2.py を持つ）。
+
+## Step 4 開始（2026-11-27）
+(a) 先勝ちで捨てた2回目ベクトルの診断記録、(b) ep条件の実LLM確認、(c) roster_changed 実測、(d) 001875 location 再注釈。上限30 call。土台 feat/phase15-stage2-step3 (caa65c5)。
