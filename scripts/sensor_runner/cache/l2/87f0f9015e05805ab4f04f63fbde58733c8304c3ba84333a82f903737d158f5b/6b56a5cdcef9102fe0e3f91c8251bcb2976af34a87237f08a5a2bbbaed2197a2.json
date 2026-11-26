@@ -1,0 +1,132 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 0,
+   "F_basis": "しんみりと真心から念仏の声が出ました",
+   "F_valence": 1,
+   "f_arousal": -1,
+   "f_basis": "風呂敷包を腰につけて、草履穿きで裾をからげた、杖を突張った、白髪の婆さん",
+   "f_valence": 0
+  },
+  "event_top3": [
+   {
+    "basis": "聞かしておくれの、お婆さん、お前は善智識",
+    "code": "E03"
+   },
+   {
+    "basis": "どうぞ、その御回向を黒門の別宅で、近々として進ぜて下さりませぬか",
+    "code": "E15"
+   },
+   {
+    "basis": "途中すがらもその若い人たちを的に仏名を唱えましょう",
+    "code": "E13"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "tabiso",
+    "target": null,
+    "text": "しんみりと真心から念仏の声が出た"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "黒門の別荘の若い人たちの話",
+    "predicate": "LEARNED",
+    "subject": "tabiso"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "黒門の別宅での回向の依頼",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": null,
+  "mood_top3": [
+   {
+    "basis": "気が沈んで、しんみりと真心から念仏の声が出ました",
+    "code": "M04"
+   },
+   {
+    "basis": "浅からず渇仰して",
+    "code": "M10"
+   },
+   {
+    "basis": "とずっきり云った",
+    "code": "M05"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": null,
+    "id": "tabiso"
+   },
+   {
+    "basis": null,
+    "id": "uba"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 3,
+      "basis": null,
+      "delta": 1
+     }
+    ],
+    "character_id": "tabiso",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "uba",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "6b56a5cdcef9102fe0e3f91c8251bcb2976af34a87237f08a5a2bbbaed2197a2",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "96233e1925685ac11bc7cf20722c98272b3520f660c1632401f6b0c11854d71e",
+  "premise_unknown": true,
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "tabiso",
+    "uba"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "1dd120595129dd8bbc8f5f105f59180f4d27b6a7d87050bcf3dd9113ca40c0e0",
+  "roster_all_digest": null,
+  "sampling": "default",
+  "scene_text_hash": "e2bdcd4cd25069cd6ea099570171e12a8b63f13b1966a817d1d34dc9388102c6"
+ },
+ "prior_facts": null,
+ "scene_hash": "87f0f9015e05805ab4f04f63fbde58733c8304c3ba84333a82f903737d158f5b",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v1"
+}

@@ -1,0 +1,131 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "ジョバンニは、走ってその渚に行って、水に手をひたしました",
+   "F_valence": 1,
+   "f_arousal": 0,
+   "f_basis": "左手の渚には、波がやさしい稲妻のように燃えて寄せ",
+   "f_valence": 1
+  },
+  "event_top3": [
+   {
+    "basis": "河原の礫は、みんなすきとおって、たしかに水晶や黄玉や",
+    "code": "E07"
+   },
+   {
+    "basis": "そっちの方へ走りました",
+    "code": "E02"
+   },
+   {
+    "basis": "おや、変なものがあるよ",
+    "code": "E03"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "プリオシン海岸",
+    "predicate": "MOVED_TO",
+    "subject": "giovanni"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "プリオシン海岸",
+    "predicate": "MOVED_TO",
+    "subject": "campanella"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "くるみの実",
+    "predicate": "ACQUIRED",
+    "subject": "campanella"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "くるみの実",
+    "predicate": "ACQUIRED",
+    "subject": "giovanni"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "プリオシン海岸",
+  "mood_top3": [
+   {
+    "basis": "あやしいその銀河の水は、水素よりももっとすきとおっていたのです",
+    "code": "M01"
+   },
+   {
+    "basis": "うつくしい燐光をあげて、ちらちらと燃えるように見えた",
+    "code": "M07"
+   },
+   {
+    "basis": "どこでぼくは、そんなこと習ったろうと思いながら、ジョバンニもぼんやり答えていました",
+    "code": "M13"
+   }
+  ],
+  "pov_character": "giovanni",
+  "present": [
+   {
+    "basis": null,
+    "id": "giovanni"
+   },
+   {
+    "basis": null,
+    "id": "campanella"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "giovanni",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "campanella",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "d4c50c988dc13ad8f08105406d433ce9569c3c9dfe4b740cabf971e08c35d66b",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "8194abd867f3ee732e5e106445f801624a3711b258104142d11738ec96353ffe",
+  "premise_unknown": true,
+  "prior_core": {
+   "pov_character": "giovanni",
+   "present": [
+    "campanella",
+    "giovanni"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "efd2ca3f3b10039194368ad6294ad2535b53a2ed644d8667d3bbc555efc011ef",
+  "roster_all_digest": null,
+  "sampling": "default",
+  "scene_text_hash": "078a8f2629e1fd029a0640b78168085259f2e38ab26f760cfde52f2ccef2851f"
+ },
+ "prior_facts": null,
+ "scene_hash": "0919b3401697077fb3ae50dd90a8a55d93372e1a625912128ac54ed558df3bea",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v1"
+}

@@ -35,6 +35,7 @@ INSTRUCTIONS = (
     "5. trait_changes: 能動的な人物ごとに、台帳（baseline）の6軸値に対する変動のみを書く。changes=[{axis(0-5), delta(-2..2, 0以外), basis}]。変動が無い人物は changes=[] で記録（台帳どおりの値になる）。\n"
     "   軸: [0]生死観(-1=死・虚無／+1=生) [1]秩序・規範(-1=逸脱／+1=秩序) [2]世俗・神秘(-1=世俗／+1=神秘) [3]利己・献身(-1=利己／+1=献身) [4]理性・情念(-1=理性／+1=情念) [5]宿命・自由意志(-1=宿命／+1=自由意志)。\n"
     "   適用後の値は [-1,+1] に丸められる。台帳に無い人物は ledger_additions に baseline（6整数、各 -1..1）を添える（既存の baseline は上書き不可）。\n"
+    "   pack の台帳（ledger_baseline）に無い人物は、他の場面で既に追加済みかもしれない場合でも、毎回 ledger_additions に入れること。重複は先勝ちで吸収される。\n"
     f"6. facts: 事実の更新。predicate は {_PR}。subject は名簿 id か null、evidence、basis（本文の逐語の語句、必須）。\n"
     f"   STATE_CHANGED のみ半構造化: target（対象。人物 id または物・事柄の短い語）、category（{_CA}）、text（自由記述）。他の predicate は object（短い語句）。\n"
     "7. event_top3 / mood_top3: 出来事コード・風情コードを強い順に重複なく3つ。各 basis は本文の逐語。\n"

@@ -1,0 +1,132 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "逃げて、さすがに、いい気持はせず、死ぬ事にしました",
+   "F_valence": -2,
+   "f_arousal": 1,
+   "f_basis": "お酒を飲んで、ぐっすり眠りたい、しかし、お金がありません",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "逃げて、さすがに、いい気持はせず、死ぬ事にしました",
+    "code": "E14"
+   },
+   {
+    "basis": "あちこち飛び廻って",
+    "code": "E09"
+   },
+   {
+    "basis": "自分より年上の有夫の婦人と情死事件などを起し",
+    "code": "E06"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "マルクス学生の行動隊長の立場",
+    "predicate": "ACQUIRED",
+    "subject": "yozo"
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "小さいナイフ",
+    "predicate": "ACQUIRED",
+    "subject": "yozo"
+   },
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yozo",
+    "target": null,
+    "text": "情死事件で身の上が一変した"
+   },
+   {
+    "basis": null,
+    "category": "unclassified",
+    "evidence": "explicit",
+    "predicate": "STATE_CHANGED",
+    "subject": "yozo",
+    "target": null,
+    "text": "運動から逃げて死ぬ決意をした"
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "下宿",
+  "mood_top3": [
+   {
+    "basis": "次々と息をつくひまも無いくらい、用事の依頼がまいります",
+    "code": "M03"
+   },
+   {
+    "basis": "ひとりでじっとしているのが、おそろしく、いまにも誰かに襲われ、一撃せられるような気がして来て",
+    "code": "M11"
+   },
+   {
+    "basis": "自分の病弱のからだでは、とても勤まりそうも無くなりました",
+    "code": "M08"
+   }
+  ],
+  "pov_character": "yozo",
+  "present": [
+   {
+    "basis": null,
+    "id": "yozo"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "3420dd57e26a637961222eae99844c0924870fca9e803638762a02a51b21383d",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "explicit",
+   "explicit_time": "十一月",
+   "relative_order": "unknown"
+  },
+  "trait_changes": [
+   {
+    "changes": [
+     {
+      "axis": 0,
+      "basis": null,
+      "delta": -1
+     },
+     {
+      "axis": 1,
+      "basis": null,
+      "delta": -1
+     }
+    ],
+    "character_id": "yozo",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "507429e86120c8701f3eedbe49cdcd54646edf74c583bcc3b022c7a4195640fe",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "78598ffd881f9876d0f460c860141a5c0b0a4eb097e49d3103e9a4b2ba76dd98",
+  "premise_unknown": true,
+  "prior_core": {
+   "status": "none"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "624085046bb8861a7f9d5713cf7f377445aac7fe6ea9508f822fbd05c41426e5",
+  "roster_all_digest": null,
+  "sampling": "default",
+  "scene_text_hash": "26881dec12ac823de03da70766e6034eb34e8c70784453498aa7f61b4f0999c8"
+ },
+ "prior_facts": null,
+ "scene_hash": "3420dd57e26a637961222eae99844c0924870fca9e803638762a02a51b21383d",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v1"
+}

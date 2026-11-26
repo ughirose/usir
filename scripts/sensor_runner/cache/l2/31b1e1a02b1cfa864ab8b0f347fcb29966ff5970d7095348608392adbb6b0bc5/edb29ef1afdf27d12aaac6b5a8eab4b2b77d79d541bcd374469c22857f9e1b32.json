@@ -1,0 +1,133 @@
+{
+ "entry": {
+  "annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+  "awase": {
+   "F_arousal": 1,
+   "F_basis": "突然ざぶりと、少え人は衣服の裾を掴んだなりで、川の中へ飛込んだっけ",
+   "F_valence": -1,
+   "f_arousal": 0,
+   "f_basis": "夕焼が残ったような尾を曳いて",
+   "f_valence": -1
+  },
+  "event_top3": [
+   {
+    "basis": "稲妻を掴えそうな慌て方で、ざぶざぶ真中で追かける",
+    "code": "E14"
+   },
+   {
+    "basis": "手毬を拾うと、その下に、猫が一匹居たではねえかね",
+    "code": "E07"
+   },
+   {
+    "basis": "ここだあ仁右衛門、先生様も聞かっせえ",
+    "code": "E03"
+   }
+  ],
+  "facts": [
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "手毬(旅の書生が川の中で取る)",
+    "predicate": "ACQUIRED",
+    "subject": null
+   },
+   {
+    "basis": null,
+    "evidence": "explicit",
+    "object": "手毬の下に猫が居た",
+    "predicate": "HOOK_OPENED",
+    "subject": null
+   }
+  ],
+  "instruction_version": "strong.v1",
+  "ledger_additions": {},
+  "location": "川面",
+  "mood_top3": [
+   {
+    "basis": "手毬を拾うと、その下に、猫が一匹居たではねえかね",
+    "code": "M07"
+   },
+   {
+    "basis": "夕焼が残ったような尾を曳いて",
+    "code": "M02"
+   },
+   {
+    "basis": "気の疾え先生だ。さまで欲しけりゃ算段のうして",
+    "code": "M05"
+   }
+  ],
+  "pov_character": null,
+  "present": [
+   {
+    "basis": null,
+    "id": "saihachi"
+   },
+   {
+    "basis": null,
+    "id": "niemon"
+   },
+   {
+    "basis": null,
+    "id": "kundo"
+   }
+  ],
+  "provenance": "seed:hybrid-full-run@6043212",
+  "scene_hash": "31b1e1a02b1cfa864ab8b0f347fcb29966ff5970d7095348608392adbb6b0bc5",
+  "schema": "sensor.strong/1",
+  "time": {
+   "elapsed_hint": null,
+   "evidence": "inferred",
+   "explicit_time": null,
+   "relative_order": "continuous"
+  },
+  "trait_changes": [
+   {
+    "changes": [],
+    "character_id": "saihachi",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [],
+    "character_id": "niemon",
+    "evidence": "inferred"
+   },
+   {
+    "changes": [
+     {
+      "axis": 4,
+      "basis": null,
+      "delta": 1
+     }
+    ],
+    "character_id": "kundo",
+    "evidence": "inferred"
+   }
+  ]
+ },
+ "key": "edb29ef1afdf27d12aaac6b5a8eab4b2b77d79d541bcd374469c22857f9e1b32",
+ "parts": {
+  "instruction_version": "strong.v1",
+  "key_schema": "pack_bytes/2",
+  "model_id": "unspecified",
+  "pack_view_hash": "8d276b726639e9afd6baa3c315bd819b6feb9ff543857b5519300e8eb02c5c14",
+  "premise_unknown": true,
+  "prior_core": {
+   "pov_character": null,
+   "present": [
+    "kundo",
+    "niemon",
+    "saihachi"
+   ],
+   "status": "cached"
+  },
+  "prior_facts_digest": null,
+  "prior_state_hash": "135af377bef512fb75e045600b5ee0de133682bdd96cf454a53bd1d97e41be04",
+  "roster_all_digest": null,
+  "sampling": "default",
+  "scene_text_hash": "489692f5d9831edf1217b31026b2114e01ca8bd2323229d4706bd8fd1f0d3f6a"
+ },
+ "prior_facts": null,
+ "scene_hash": "31b1e1a02b1cfa864ab8b0f347fcb29966ff5970d7095348608392adbb6b0bc5",
+ "schema": "sensor.cache.l2/3",
+ "source": "migrated-v1"
+}
