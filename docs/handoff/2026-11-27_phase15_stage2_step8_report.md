@@ -34,7 +34,11 @@ seed 7作品・全35場面を、現行の指示文（Step 5 で1行追加した�
 - 読み取り: Step 6・7 の結果と整合する（旧 seed は形式が異なり、同じ方式の注釈同士でも揺れるため、差異の原因を指示文・方式・揺れに分けることはこの比較ではできない）。
 
 ## 6. 統合
-次節に追記（統合実施後）。
+- 事前確認: `origin/feat/sensor-runner`（22b2e26）は作業ブランチの祖先で、分岐なし。
+- 統合先端 `673cf19`（cd02ac0・3fc4e79 の後にレポートと STATUS のみ追加、コード・seed の差分なし）で、`SENSOR_ANNOTATOR_MODEL_ID` 設定下に既存 86 件 passed を再確認。パリティ 4 条件は 3fc4e79 で取得済みで、673cf19 との差分は docs のみ。
+- `git push origin 673cf19:refs/heads/feat/sensor-runner`（強制なし）が `22b2e26..673cf19` の fast-forward として受理された。
+- GitHub API で照合: `feat/sensor-runner` = `feat/phase15-stage2-step8` = `673cf19bd84b9afaf15c36cd74a8b21d45aa4de4`（一致）。
+- 注意: 統合後の `feat/sensor-runner` も、環境変数未設定ではテスト 6 件が失敗する（§4、§8-1）。
 
 ## 7. 変更ファイル
 - `scripts/sensor_runner/cache/l2/**`（旧 140 ファイル削除、新 35 ファイル）、`cache/manifests/*.json`（7 ファイル更新）
