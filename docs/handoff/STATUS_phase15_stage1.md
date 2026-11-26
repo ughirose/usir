@@ -57,3 +57,6 @@ A–E 実測完了。cold 35 call、warm 0 call、編集 1/2 call、location 65.
 
 ## Step 8 開始（2026-11-27）
 seed 7作品・全35場面を現行指示文・現行手順で cold 再注釈し、全場面そろってから seed を差し替える。上限50 call。差し替え後に warm 0回・パリティ4条件・86テスト、feat/sensor-runner へ fast-forward 統合。土台 feat/sensor-runner（22b2e26）。
+
+## Step 8 完了（2026-11-27）
+全35場面を現行指示文・現行手順で再注釈（35 call、全件初回 ACCEPT）し、seed を差し替え（cd02ac0、旧 seed は 22b2e26 に残存）。warm 0 call・バイト一致、パリティ4条件合格、テスト86件合格（3fc4e79、SENSOR_ANNOTATOR_MODEL_ID 設定時）。未設定だと 6 件失敗（seed の鍵に model_id が入るため）。詳細: docs/handoff/2026-11-27_phase15_stage2_step8_report.md
