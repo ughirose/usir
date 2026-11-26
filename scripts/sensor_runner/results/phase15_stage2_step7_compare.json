@@ -1,0 +1,597 @@
+{
+ "A_instruction_line_effect (s7a old-instr vs s6a new-instr)": {
+  "totals": {
+   "scenes": 11,
+   "whole_equal": 0,
+   "field_diff_scenes": {
+    "present": 8,
+    "pov_character": 0,
+    "location": 3,
+    "facts": 11,
+    "trait_changes": 3,
+    "ledger_additions": 0,
+    "time": 7,
+    "event_top3": 11,
+    "mood_top3": 9,
+    "awase": 9
+   },
+   "sem_diff_scenes": {
+    "present_ids": 0,
+    "pov": 0,
+    "location": 3,
+    "event_codes": 5,
+    "event_top1": 0,
+    "mood_codes": 3,
+    "mood_top1": 3,
+    "trait_set": 2,
+    "facts_count": 4,
+    "awase4": 7,
+    "relative_order": 2
+   },
+   "sem_all_equal": 1
+  },
+  "rows": [
+   {
+    "work": "000035_000301",
+    "scene": 0,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "location",
+     "facts",
+     "trait_changes",
+     "time",
+     "event_top3",
+     "mood_top3"
+    ],
+    "sem_diffs": [
+     "location",
+     "event_codes",
+     "relative_order"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 1,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "location",
+     "facts",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "location",
+     "mood_top1",
+     "awase4"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 2,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "location",
+     "facts",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "location",
+     "event_codes",
+     "facts_count",
+     "relative_order"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 3,
+    "whole_equal": false,
+    "field_diffs": [
+     "facts",
+     "time",
+     "event_top3",
+     "mood_top3"
+    ],
+    "sem_diffs": [
+     "mood_codes",
+     "mood_top1",
+     "facts_count"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 4,
+    "whole_equal": false,
+    "field_diffs": [
+     "facts",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "mood_codes",
+     "facts_count",
+     "awase4"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 5,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "trait_set",
+     "awase4"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 6,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "mood_codes",
+     "mood_top1",
+     "trait_set",
+     "facts_count",
+     "awase4"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "001798_056779",
+    "scene": 0,
+    "whole_equal": false,
+    "field_diffs": [
+     "facts",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "001798_056779",
+    "scene": 1,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "time",
+     "event_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "awase4"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "001798_056779",
+    "scene": 2,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "event_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "awase4"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "001798_056779",
+    "scene": 3,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "awase4"
+    ],
+    "ref_annotator": "claude-code-session:sonnet-subagent",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   }
+  ],
+  "examples": [
+   {
+    "work": "000035_000301",
+    "scene": 0,
+    "item": "location",
+    "ref": "下宿",
+    "new": "下宿のその部屋"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 0,
+    "item": "event_codes",
+    "ref": [
+     "E02",
+     "E10",
+     "E14"
+    ],
+    "new": [
+     "E08",
+     "E09",
+     "E14"
+    ]
+   },
+   {
+    "work": "000035_000301",
+    "scene": 0,
+    "item": "relative_order",
+    "ref": "continuous",
+    "new": "unknown"
+   }
+  ]
+ },
+ "B_method_effect (s7a old-instr vs seed old-instr/old-method)": {
+  "totals": {
+   "scenes": 11,
+   "whole_equal": 0,
+   "field_diff_scenes": {
+    "present": 11,
+    "pov_character": 0,
+    "location": 3,
+    "facts": 11,
+    "trait_changes": 9,
+    "ledger_additions": 0,
+    "time": 8,
+    "event_top3": 11,
+    "mood_top3": 11,
+    "awase": 11
+   },
+   "sem_diff_scenes": {
+    "present_ids": 1,
+    "pov": 0,
+    "location": 3,
+    "event_codes": 9,
+    "event_top1": 7,
+    "mood_codes": 6,
+    "mood_top1": 2,
+    "trait_set": 8,
+    "facts_count": 9,
+    "awase4": 8,
+    "relative_order": 1
+   },
+   "sem_all_equal": 0
+  },
+  "rows": [
+   {
+    "work": "000035_000301",
+    "scene": 0,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "location",
+     "facts",
+     "trait_changes",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "present_ids",
+     "location",
+     "event_codes",
+     "facts_count",
+     "awase4"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 1,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "mood_top1",
+     "trait_set",
+     "facts_count",
+     "awase4",
+     "relative_order"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 2,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "location",
+     "facts",
+     "trait_changes",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "location",
+     "event_codes",
+     "event_top1",
+     "trait_set",
+     "facts_count"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 3,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "location",
+     "facts",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "location",
+     "event_top1",
+     "mood_codes",
+     "facts_count"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 4,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "event_top1",
+     "mood_codes",
+     "trait_set",
+     "facts_count",
+     "awase4"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 5,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "event_top1",
+     "mood_codes",
+     "trait_set",
+     "awase4"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 6,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "mood_codes",
+     "trait_set",
+     "facts_count",
+     "awase4"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "001798_056779",
+    "scene": 0,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_top1",
+     "facts_count",
+     "awase4"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "001798_056779",
+    "scene": 1,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "event_top1",
+     "mood_codes",
+     "trait_set",
+     "facts_count",
+     "awase4"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "001798_056779",
+    "scene": 2,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "time",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "trait_set",
+     "facts_count",
+     "awase4"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   },
+   {
+    "work": "001798_056779",
+    "scene": 3,
+    "whole_equal": false,
+    "field_diffs": [
+     "present",
+     "facts",
+     "trait_changes",
+     "event_top3",
+     "mood_top3",
+     "awase"
+    ],
+    "sem_diffs": [
+     "event_codes",
+     "event_top1",
+     "mood_codes",
+     "mood_top1",
+     "trait_set"
+    ],
+    "ref_annotator": "claude-sonnet-5-5 (session model, manual annotation)",
+    "new_annotator": "claude-code-session:sonnet-subagent"
+   }
+  ],
+  "examples": [
+   {
+    "work": "000035_000301",
+    "scene": 0,
+    "item": "present_ids",
+    "ref": [
+     "yozo"
+    ],
+    "new": [
+     "horiki",
+     "yozo"
+    ]
+   },
+   {
+    "work": "000035_000301",
+    "scene": 0,
+    "item": "location",
+    "ref": "下宿",
+    "new": "下宿のその部屋"
+   },
+   {
+    "work": "000035_000301",
+    "scene": 0,
+    "item": "event_codes",
+    "ref": [
+     "E06",
+     "E09",
+     "E14"
+    ],
+    "new": [
+     "E08",
+     "E09",
+     "E14"
+    ]
+   }
+  ]
+ }
+}

@@ -211,6 +211,23 @@ def cmd_stats(a) -> int:
     return 0
 
 
+def _apply_instruction_override(a) -> None:
+    """Measurement only (Step 7): if the run directory holds `instructions_commit.txt`, the annotator instructions of that git revision
+    (strong.py as committed there) replace strong.INSTRUCTIONS in this process, for prepare / ingest / merge alike. strong.py itself is untouched."""
+    f = rdir(a.run) / "instructions_commit.txt" if getattr(a, "run", None) else None
+    if not f or not f.exists():
+        return
+    import types
+
+    import strong as _strong
+
+    rev = f.read_text(encoding="utf-8").strip()
+    src = subprocess.run(["git", "show", f"{rev}:scripts/sensor_runner/strong.py"], cwd=REPO, capture_output=True, check=True).stdout.decode("utf-8")
+    mod = types.ModuleType("strong_old")
+    exec(compile(src, f"strong.py@{rev}", "exec"), mod.__dict__)  # noqa: S102 - our own repository history
+    _strong.INSTRUCTIONS = mod.INSTRUCTIONS
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     sp = ap.add_subparsers(dest="cmd", required=True)
@@ -223,6 +240,7 @@ def main() -> int:
     p = sp.add_parser("flags"); p.add_argument("--run", required=True); p.add_argument("--work", nargs="*"); p.set_defaults(f=cmd_flags)
     p = sp.add_parser("stats"); p.add_argument("--run", required=True); p.add_argument("--work", nargs="*"); p.set_defaults(f=cmd_stats)
     a = ap.parse_args()
+    _apply_instruction_override(a)
     return a.f(a)
 
 
