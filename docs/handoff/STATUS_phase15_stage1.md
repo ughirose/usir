@@ -7,3 +7,9 @@
 
 ## NEXT
 Orion が report §6 の判断点（ledger_hash の範囲、Early Cutoff の健全性、40場面作品での L3 要否測定）を決める。
+
+## Stage 2 Step 0（2026-11-26 開始、計測のみ・キャッシュ実装は変更しない）
+- 指示: Drive inbox の 2026-11-26_phase15_stage2_step0_prompt_v1.md / consult_synthesis_v1.md
+- 計測A（繰り返し注釈の揺れ）、計測B（prior 感度）。注釈呼び出し上限 合計300回。
+- 結果: scripts/sensor_runner/results/phase15_stage2_step0_*.json、レポート docs/handoff/2026-11-26_phase15_stage2_step0_report.md
+- 状態: 開始（資料読み込み中）
