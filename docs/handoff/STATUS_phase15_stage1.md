@@ -51,3 +51,6 @@ A–E 実測完了。cold 35 call、warm 0 call、編集 1/2 call、location 65.
 
 ## Step 4 開始（2026-11-27）
 (a) 先勝ちで捨てた2回目ベクトルの診断記録、(b) ep条件の実LLM確認、(c) roster_changed 実測、(d) 001875 location 再注釈。上限30 call。土台 feat/phase15-stage2-step3 (caa65c5)。
+
+## Step 5 開始（2026-11-27）
+(a) 注釈者指示に「台帳に無い人物は毎回 ledger_additions へ」を明示、ep 条件で実LLM再確認（上限10 call）。(b) feat/sensor-runner へ fast-forward 統合。土台 feat/phase15-stage2-step4 (7ce179c)。
