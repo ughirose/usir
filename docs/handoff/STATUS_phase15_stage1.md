@@ -33,3 +33,6 @@ Orion が report §6 の判断点（ledger_hash の範囲、Early Cutoff の健�
 
 ## Step 1.5 開始（2026-11-26）
 roster_all_ids を L2 鍵から外す（pack 内容は不変）。roster_all_digest を L2 メタに保存し roster_changed を stale 記録。鍵スキーマ版上げ（pack_bytes/2, l2/3）。状態: 実装中。
+
+## Step 1.5 完了（2026-11-26）
+実装コミット 0321953。80 passed（既存72のうち2件は新仕様に合わせ期待値更新 + 新規8）、パリティ4条件一致、人物追加シナリオ 4→0/1/2 call。レポート: docs/handoff/2026-11-26_phase15_stage2_step15_report.md
