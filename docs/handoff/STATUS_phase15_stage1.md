@@ -39,3 +39,6 @@ roster_all_ids を L2 鍵から外す（pack 内容は不変）。roster_all_dig
 
 ## 枝の統合（2026-11-26 22:40 +0900）
 統合元 feat/phase15-stage1-cache を統合先 feat/sensor-runner（統合前の先端 b3da0e4）へ fast-forward で進める。事前確認: b3da0e4 は統合元の祖先（git merge-base --is-ancestor 成立）。main には触れない。統合元の枝は削除しない。
+
+## Step 2 開始（2026-11-26）
+実LLM通し測定（計測のみ）。ブランチ feat/phase15-stage2-step2（土台 feat/sensor-runner 33bf69c）。計測道具 scripts/sensor_runner/step2.py（実装コード無変更）。サンドボックス scripts/sensor_runner/step2_work/<run>/（seed キャッシュは非接触）。上限: 注釈呼び出し 合計150回。状態: 実装前準備完了、cold 実行前。
