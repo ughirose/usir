@@ -60,3 +60,6 @@ A–E 実測完了。cold 35 call、warm 0 call、編集 1/2 call、location 65.
 
 ## Step 7 開始（2026-11-27）
 計測のみ。旧指示文（c4d367f の親）で Step 6 と同じ11場面を再注釈し、①Step 6 新指示注釈、②seed 旧注釈と突合。上限15 call。土台 feat/phase15-stage2-step6 (92c34d9)。
+
+## Step 7 完了（2026-11-27）
+旧指示文（ac3d1a65）で11場面を再注釈（11 call、全件初回 ACCEPT）。①対 s6a: バイト一致 0/11、全意味項目一致 1/11。②対 seed: 0/11、0/11。意味項目の差は ② の方が多い。s7a の ledger_additions は全場面空で、指示文1行の効果は検出できていない。テスト 86 passed（068828a）。詳細: docs/handoff/2026-11-27_phase15_stage2_step7_report.md
