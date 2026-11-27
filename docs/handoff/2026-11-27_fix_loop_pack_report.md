@@ -52,7 +52,7 @@
 
 ## H5: 統合と後片付け
 - `feat/quota-burn-pack` のテスト 90 件: 全件合格（`bab30b5`）。
-- 統合: `origin/main`（`318a6d4`）から fast-forward 可能であることを確認し、`origin/main` へ push（競合なし、force なし）。**main の先端: `bab30b5`**。統合後に main の先端（別ワークツリーで検出）でテスト 90 件 全件合格。
+- 統合: `origin/main`（`318a6d4`）から fast-forward 可能であることを確認し、`origin/main` へ push（競合なし、force なし）。**統合時の main の先端: `bab30b5`**。この先端を別ワークツリーで開いてテスト 90 件 全件合格。その後、本レポートの追加（docs のみ）で先端が進んでいる（最新の先端は `git log origin/main` を参照）。
 - ローカルの `main` ブランチ参照（`1a30ec2`）は `origin/main` より古いまま（別系統の履歴の位置で、今回は触っていない）。
 - 一時ワークツリー `C:/dev/_um`: 削除できた。前回の Permission denied は、シェルの作業ディレクトリがその中にあったことが原因と考えられる（推測。他のプロセスが掴んでいた形跡は見ていない）。ワークツリー登録も prune 済み。今回の検証用の `C:/dev/_um2`、`C:/dev/_pt*` も削除済み。
 
