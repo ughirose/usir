@@ -78,3 +78,6 @@ feat/sensor-runner（a2fc742）を main（f2454de）へ統合する。main は s
 
 ## Step 11 完了（2026-11-27）
 main を f2454de から a2fc742（feat/sensor-runner 先端）へ fast-forward 統合（競合なし、109 コミット先行）。a2fc742 で環境変数未設定のテスト90件・パリティ4条件合格を確認、GitHub で main = feat/sensor-runner = a2fc742 を照合。注釈呼び出し 0 回。詳細: docs/handoff/2026-11-27_phase15_stage2_step11_report.md
+
+## Step 12 完了（2026-11-27）
+Step 11 のレポートと STATUS 追記（2923045）を main へ fast-forward で置いた（a2fc742..2923045、コード・seed・テストの変更なし）。2923045 で環境変数未設定のテスト90件合格。注釈呼び出し 0 回。詳細: docs/handoff/2026-11-27_phase15_stage2_step12_report.md
