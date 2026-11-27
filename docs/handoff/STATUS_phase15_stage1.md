@@ -69,3 +69,6 @@ common.py の model_id 既定値を新 seed の宣言値に変更（鍵の仕様
 
 ## Step 10 開始（2026-11-27）
 (a) feat/phase15-stage2-step9（8708b5d）を feat/sensor-runner へ fast-forward 統合（環境変数未設定で90件・パリティ4条件を統合先端で確認）。(b) SENSOR_ANNOTATOR_MODEL_ID の運用ルールを SESSION.md に明記。seed の再注釈なし。土台 feat/sensor-runner（76d1e45）。
+
+## Step 10 完了（2026-11-27）
+8708b5d を feat/sensor-runner へ fast-forward 統合（環境変数未設定で90件・パリティ4条件を統合先端で確認）。SESSION.md に SENSOR_ANNOTATOR_MODEL_ID の運用ルールを明記。注釈呼び出し 0 回。詳細: docs/handoff/2026-11-27_phase15_stage2_step10_report.md

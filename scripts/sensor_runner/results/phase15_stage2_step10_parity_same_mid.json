@@ -1,0 +1,68 @@
+{
+ "annotations_bytes": 20165,
+ "cold": {
+  "l1": {
+   "hit": 0,
+   "miss": 7
+  },
+  "l2": {
+   "adopted": 0,
+   "blocked": 0,
+   "hit": 7,
+   "miss": 0
+  },
+  "l2_recomputed_scenes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "llm_calls": 7,
+  "rounds": 7,
+  "seconds": {
+   "diagnose": 0.0959,
+   "merge": 0.0311,
+   "prepare_annotate_ingest": 0.1605,
+   "segment": 0.0255,
+   "total": 0.313
+  }
+ },
+ "diagnose_bytes": 6753,
+ "edited_scene": 3,
+ "parity_annotations_bytes_equal": true,
+ "parity_cold_l1off_equal": true,
+ "parity_diagnose_bytes_equal": true,
+ "scene_count": 7,
+ "unchanged_rerun_equal_warmup": true,
+ "unchanged_rerun_llm_calls": 0,
+ "variant": "same",
+ "warm": {
+  "l1": {
+   "hit": 6,
+   "miss": 1
+  },
+  "l2": {
+   "adopted": 0,
+   "blocked": 0,
+   "hit": 7,
+   "miss": 0
+  },
+  "l2_recomputed_scenes": [
+   3
+  ],
+  "llm_calls": 1,
+  "rounds": 1,
+  "seconds": {
+   "diagnose": 0.0966,
+   "merge": 0.0202,
+   "prepare_annotate_ingest": 0.0297,
+   "segment": 0.025,
+   "total": 0.1715
+  }
+ },
+ "where": "mid",
+ "work_id": "000035_000301"
+}
