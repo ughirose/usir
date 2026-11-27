@@ -1,0 +1,4604 @@
+[
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     0,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 788,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "ffc6fe4fed5a0788f8e0d5b49d7f77a21d8887daa4acbd5813e2a9f3ff6448d7",
+   "scene_id": "000119_001738:s0",
+   "scene_index": 0,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "孔丘の家",
+    "predicate": "MOVED_TO",
+    "sentence_index": 2,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 反抗から謹聴へ",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 20,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 0,
+    "f_style_arousal": 0,
+    "f_style_valence": 1
+   },
+   "location_id": "孔丘が家",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E04",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M05",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "ambiguous",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 3
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     0,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 392,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "817834871393f7b0d5f52076dd6f39e31089992d7606718c4be27b70030855d8",
+   "scene_id": "000119_001738:s1",
+   "scene_index": 1,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 反論の気力から降参へ",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 4,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[relation_status] shiro: 孔子の門人となる",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 8,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": 1,
+    "f_style_arousal": 0,
+    "f_style_valence": 1
+   },
+   "location_id": "室",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E13",
+      "rank_weight": 2
+     },
+     {
+      "code": "E07",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M05",
+      "rank_weight": 2
+     },
+     {
+      "code": "M10",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "即日",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 901,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "ca6947038d1a60acac482092c9337b0c0a4a90b8307c2bd4ae7b935bb9d0b6e4",
+   "scene_id": "000119_001738:s2",
+   "scene_index": 2,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子に心酔する",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 22,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[relation_status] shiro: 孔子から離れられない弟子となる",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 27,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 2,
+    "f_style_arousal": 0,
+    "f_style_valence": 1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E07",
+      "rank_weight": 3
+     },
+     {
+      "code": "E01",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M10",
+      "rank_weight": 3
+     },
+     {
+      "code": "M05",
+      "rank_weight": 2
+     },
+     {
+      "code": "M07",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "elapsed_hint": "門に入っていまだ一月ならずして",
+    "evidence": "explicit",
+    "explicit_time": "後年",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 836,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "27a677c756092c58396520714b5629b1e9d5b6e9448715d7eca3158742475679",
+   "scene_id": "000119_001738:s3",
+   "scene_index": 3,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] koshi: 子路の馴らし難さに驚く",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 2,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": -1,
+    "f_event_valence": 0,
+    "f_style_arousal": -1,
+    "f_style_valence": 1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E07",
+      "rank_weight": 2
+     },
+     {
+      "code": "E04",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M10",
+      "rank_weight": 3
+     },
+     {
+      "code": "M05",
+      "rank_weight": 2
+     },
+     {
+      "code": "M08",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "explicit_time": "その時",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     0,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 363,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "ae0bc2cf0ff25bbab5c43cd12962e9321a9ad18de28ddcdfa80d7a321aaa8a39",
+   "scene_id": "000119_001738:s4",
+   "scene_index": 4,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 親孝行が偽りだと感じ、褒められて居心地の悪さを覚える",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 3,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": 0
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E07",
+      "rank_weight": 3
+     },
+     {
+      "code": "E09",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M05",
+      "rank_weight": 3
+     },
+     {
+      "code": "M04",
+      "rank_weight": 2
+     },
+     {
+      "code": "M15",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "ずっと後年になって",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 461,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "bc170b71d32adab881105354b26bd8bbb4d35c4f77e5740e748d8bcd682f85b6",
+   "scene_id": "000119_001738:s5",
+   "scene_index": 5,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔丘を侮辱され、怒りで顔色を変える",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 11,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[body_health] 子路の旧友の一人: 殴られて倒れ、仲間に助け起こされる",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 13,
+    "subject": null
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 2,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": 0
+   },
+   "location_id": "街を歩いて行く",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E05",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E01",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M09",
+      "rank_weight": 3
+     },
+     {
+      "code": "M14",
+      "rank_weight": 2
+     },
+     {
+      "code": "M05",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "ある日",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 212,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "64e6a76f1cfdb7121acf1d6f8490d058c87879aece22773b4115af6de3b14cdd",
+   "scene_id": "000119_001738:s6",
+   "scene_index": 6,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "inferred",
+    "object": "子路の喧嘩の件",
+    "predicate": "LEARNED",
+    "sentence_index": 0,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": -1,
+    "f_event_valence": -1,
+    "f_style_arousal": -1,
+    "f_style_valence": 0
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M01",
+      "rank_weight": 2
+     },
+     {
+      "code": "M08",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "explicit_time": "いつか",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 536,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "b76a85895dbc05cc6f573fd4c2613ec356bf0d17c534f140f24346e5da294610",
+   "scene_id": "000119_001738:s7",
+   "scene_index": 7,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "孔子が陽虎の招きを避けているという噂",
+    "predicate": "LEARNED",
+    "sentence_index": 9,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "inferred",
+    "object": "[emotion] shiro: 師への悪口を聞いて激しく怒っている",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 15,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] 弁じていた老人: 子路の形相に怯えて顔色を失った",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 14,
+    "subject": null
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 0,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": "往来の木蔭",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E04",
+      "rank_weight": 3
+     },
+     {
+      "code": "E03",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M09",
+      "rank_weight": 3
+     },
+     {
+      "code": "M14",
+      "rank_weight": 2
+     },
+     {
+      "code": "M05",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "数日後",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 227,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "30ae5a741efe4799cd3b47f4a8c935642d42d09f455bcb911519a4c814e52856",
+   "scene_id": "000119_001738:s8",
+   "scene_index": 8,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[situation] 人々: 子路を恐れて孔子の悪口を言わなくなった",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 1,
+    "subject": null
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 師に叱られても怒りを抑えられず、自分の強い忿怒を正当と考えている",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 2,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E16",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E12",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M09",
+      "rank_weight": 3
+     },
+     {
+      "code": "M03",
+      "rank_weight": 2
+     },
+     {
+      "code": "M11",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "その後しばらく",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     0,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 731,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "e4e5c2c4a1dfe0d67f998fb380d6f6bd34d537da6bd5528c6faf0c1154d057ff",
+   "scene_id": "000119_001738:s9",
+   "scene_index": 9,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "拙さは精神の持ち方に由来すること",
+    "predicate": "LEARNED",
+    "sentence_index": 16,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[body_health] shiro: 断食して思索し、痩せ細った",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 19,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "子路の音は依然殺伐であること",
+    "predicate": "LEARNED",
+    "sentence_index": 27,
+    "subject": "shikou"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 0,
+    "f_style_arousal": 0,
+    "f_style_valence": 0
+   },
+   "location_id": "一室",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E07",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M03",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi",
+    "zenyu",
+    "shikou"
+   ],
+   "time": {
+    "elapsed_hint": "数日の後",
+    "evidence": "explicit",
+    "explicit_time": "一年ほど経ってから",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 477,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "eaed1cbecc91569c036139d9a6dc629cd3898e42b9071942f24b1a732c7f4982",
+   "scene_id": "000119_001738:s10",
+   "scene_index": 10,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 0,
+    "f_style_arousal": 0,
+    "f_style_valence": 1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M05",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "ambiguous",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 809,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "522afd636ee9629d1a6eed67fc19c4d1f3e711c3a306f94f89800b1a85b582ea",
+   "scene_id": "000119_001738:s11",
+   "scene_index": 11,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": 1,
+    "f_style_arousal": 0,
+    "f_style_valence": 1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E07",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M05",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "ambiguous",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   },
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 883,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "43ba92419998ddbc95e2aea84c42553758240483b17518addce483cf18961630",
+   "scene_id": "000119_001738:s12",
+   "scene_index": 12,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[situation] koshi: 中都の宰に登用され、のち司空・大司寇に昇り宰相の事を兼ねる",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 13,
+    "subject": "koshi"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] yoko: 失脚した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 12,
+    "subject": "yoko"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] shiro: 孔子の推挙で季氏の宰となる",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 22,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "三氏の私城の破壊",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 27,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 1,
+    "f_style_arousal": 0,
+    "f_style_valence": 0
+   },
+   "location_id": "魯の国",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E09",
+      "rank_weight": 2
+     },
+     {
+      "code": "E05",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M16",
+      "rank_weight": 3
+     },
+     {
+      "code": "M14",
+      "rank_weight": 2
+     },
+     {
+      "code": "M04",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "koshi",
+    "shiro"
+   ],
+   "time": {
+    "evidence": "ambiguous",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 563,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "90eff501b644e2dff715e78d7679ec6fb546d7677ba3fff31c007f8d45fe249c",
+   "scene_id": "000119_001738:s13",
+   "scene_index": 13,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "孔子の実際家的手腕",
+    "predicate": "LEARNED",
+    "sentence_index": 6,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "inferred",
+    "object": "[emotion] shiro: 経書より現実の実務・戦闘が自分の性に合うと実感する",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 10,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 1,
+    "f_style_arousal": 1,
+    "f_style_valence": 1
+   },
+   "location_id": "魯の都",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E09",
+      "rank_weight": 3
+     },
+     {
+      "code": "E05",
+      "rank_weight": 2
+     },
+     {
+      "code": "E07",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M12",
+      "rank_weight": 2
+     },
+     {
+      "code": "M03",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 680,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "d8c2f1d9f86c0d2079c191e8e720ddc86801c884e7a5e819deb63da23085748c",
+   "scene_id": "000119_001738:s14",
+   "scene_index": 14,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "魯の国を去る",
+    "predicate": "MOVED_TO",
+    "sentence_index": 15,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "魯の都から遠ざかる",
+    "predicate": "MOVED_TO",
+    "sentence_index": 16,
+    "subject": "koshi"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子が魯を諦める決断をしたことで安堵する",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 14,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] shiro: 魯の官職を辞する",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 10,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "孔子の遍歴",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 19,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": 0
+   },
+   "location_id": "魯の国",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E02",
+      "rank_weight": 3
+     },
+     {
+      "code": "E08",
+      "rank_weight": 2
+     },
+     {
+      "code": "E04",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M04",
+      "rank_weight": 3
+     },
+     {
+      "code": "M05",
+      "rank_weight": 2
+     },
+     {
+      "code": "M09",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 958,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "b44564f3d17f3cc98921f61c6bb5c5aa60377ea558ed3b3d89cde0c7dc4100f7",
+   "scene_id": "000119_001738:s15",
+   "scene_index": 15,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子の独言を聞いて孔子の不遇を思い、涙があふれる",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 28,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M09",
+      "rank_weight": 3
+     },
+     {
+      "code": "M04",
+      "rank_weight": 2
+     },
+     {
+      "code": "M03",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "一夜",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 523,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "8bf3a28eec191d7256075e4e7121da9e3531985c3b3f92ddc5f28d9495f5388b",
+   "scene_id": "000119_001738:s16",
+   "scene_index": 16,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "天下周遊の旅",
+    "predicate": "MOVED_TO",
+    "sentence_index": 8,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 1,
+    "f_style_arousal": 1,
+    "f_style_valence": 1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E13",
+      "rank_weight": 3
+     },
+     {
+      "code": "E03",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M05",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi",
+    "shikou"
+   ],
+   "time": {
+    "evidence": "ambiguous",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "shikou",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     -1,
+     -1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 1310,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "0e5d56553be4d4bb3cfecde59cc211d0ec68b2f9bb26183258b7672cc50621e0",
+   "scene_id": "000119_001738:s17",
+   "scene_index": 17,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": 0,
+    "f_style_arousal": 1,
+    "f_style_valence": 0
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E04",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M05",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "koshi",
+    "shiro",
+    "zenyu",
+    "shiko",
+    "shikou"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "explicit_time": "ある時",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "shikou",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     -1,
+     -1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 687,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "f0a67ea0ad4ecf5c9d8c5f0129e78760ed8ea9b1552753c9bcb9c05cefd01ada",
+   "scene_id": "000119_001738:s18",
+   "scene_index": 18,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子の答に感心した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 12,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shikou: 孔子の答に肩透しを喰ったと感じた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 13,
+    "subject": "shikou"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": 1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E07",
+      "rank_weight": 2
+     },
+     {
+      "code": "E04",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M05",
+      "rank_weight": 3
+     },
+     {
+      "code": "M16",
+      "rank_weight": 2
+     },
+     {
+      "code": "M13",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "shikou",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "explicit_time": "ある時",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     0,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   },
+   {
+    "character_id": "nanshi",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 717,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "ff9bde5e0c28439ff7b629b0545a53bf04d2fbbc5015bb8379aeeed12eae5987",
+   "scene_id": "000119_001738:s19",
+   "scene_index": 19,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "公宮から帰還",
+    "predicate": "MOVED_TO",
+    "sentence_index": 16,
+    "subject": "koshi"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子が南子に挨拶したことが不愉快だった",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 16,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] koshi: 子路の幼さを可笑しくも困ったとも感じた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 21,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": 0
+   },
+   "location_id": "衛",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E01",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E11",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M05",
+      "rank_weight": 3
+     },
+     {
+      "code": "M06",
+      "rank_weight": 2
+     },
+     {
+      "code": "M09",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "koshi",
+    "nanshi",
+    "shiro"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   },
+   {
+    "character_id": "nanshi",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     -1,
+     0,
+     -1,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "reiko",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 615,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "6b717c07c3ff98b451d4a3f9cd964d6f8e58a38e8d4239b57eda4c82b86a4925",
+   "scene_id": "000119_001738:s20",
+   "scene_index": 20,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "車で衛の都を巡る",
+    "predicate": "MOVED_TO",
+    "sentence_index": 11,
+    "subject": "koshi"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] koshi: 南子が同車していたため不愉快になった",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 8,
+    "subject": "koshi"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 怒りで飛び出そうとしたが、引留められて拳を下した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 23,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -2,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": "衛の都",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E02",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E03",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M09",
+      "rank_weight": 3
+     },
+     {
+      "code": "M04",
+      "rank_weight": 2
+     },
+     {
+      "code": "M03",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "koshi",
+    "nanshi",
+    "reiko",
+    "shiro"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "一日",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   },
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 952,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "155a6d6bc244d1cc98bafab7ac9c3b1ed1210a46731d1db1da7fbf39c634d23c",
+   "scene_id": "000119_001738:s21",
+   "scene_index": 21,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "衛を去る",
+    "predicate": "MOVED_TO",
+    "sentence_index": 0,
+    "subject": "koshi"
+   },
+   {
+    "evidence": "explicit",
+    "object": "孔子の側",
+    "predicate": "MOVED_TO",
+    "sentence_index": 28,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] 一行: 陳・蔡の暴徒に囲まれ糧道を絶たれ、七日火食できず困窮した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 25,
+    "subject": null
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": 0
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E02",
+      "rank_weight": 3
+     },
+     {
+      "code": "E12",
+      "rank_weight": 2
+     },
+     {
+      "code": "E05",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M03",
+      "rank_weight": 2
+     },
+     {
+      "code": "M05",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "koshi",
+    "shiro"
+   ],
+   "time": {
+    "elapsed_hint": "七日",
+    "evidence": "explicit",
+    "explicit_time": "翌日",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 210,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "f2f6562be74c7c97a340c6b718f0edfaa081b08f07a87052fc35c1a58ce11175",
+   "scene_id": "000119_001738:s22",
+   "scene_index": 22,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子の言の意を悟り、嬉しくなって舞い出した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 2,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] 一行: しばらく飢えと疲れを忘れて舞に興じた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 4,
+    "subject": null
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 1,
+    "f_style_arousal": 1,
+    "f_style_valence": 1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E10",
+      "rank_weight": 3
+     },
+     {
+      "code": "E03",
+      "rank_weight": 2
+     },
+     {
+      "code": "E07",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M12",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     -1,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 353,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "1b480ae05f4901538143254bd9c15ff181f71a7ee9b6314add5e7eebbb215c53",
+   "scene_id": "000119_001738:s23",
+   "scene_index": 23,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子の答えに己の内なる小人を指摘され、恥じて顔を赧らめた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 7,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: かつての自分の誇であった勇を惨めでちっぽけなものと感じた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 10,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": "陳蔡の厄",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E07",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M04",
+      "rank_weight": 2
+     },
+     {
+      "code": "M03",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "explicit_time": "同じ陳蔡の厄の時",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 396,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "da180c788436a4776e71a6e3afbad17267154b6ab375026ad5dbeaaa546385bf",
+   "scene_id": "000119_001738:s24",
+   "scene_index": 24,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "inferred",
+    "object": "老人は隠者",
+    "predicate": "LEARNED",
+    "sentence_index": 5,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "老人の家",
+    "predicate": "MOVED_TO",
+    "sentence_index": 6,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": -1,
+    "f_event_valence": 0,
+    "f_style_arousal": -1,
+    "f_style_valence": 1
+   },
+   "location_id": "畑中の路",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E10",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M02",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M05",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     0,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 723,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "7134c5f213d1938020c566a2a5fd4e805c4d433e5c15f19e694104cc328114c3",
+   "scene_id": "000119_001738:s25",
+   "scene_index": 25,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 老人の生き方に幾分の羨望を覚える",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 19,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": 1,
+    "f_style_arousal": 0,
+    "f_style_valence": 1
+   },
+   "location_id": "家中",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E10",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M10",
+      "rank_weight": 3
+     },
+     {
+      "code": "M01",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 240,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "62d34249f6422e3848647a95dedad915e72ccdf5b9602403a67ba9d5bd52929f",
+   "scene_id": "000119_001738:s26",
+   "scene_index": 26,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 老人に対して憎悪を覚え始める",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 4,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子の姿を認めて胸が締め付けられる苦しさを覚える",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 6,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": "真青な麦畠の中の道",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E02",
+      "rank_weight": 3
+     },
+     {
+      "code": "E01",
+      "rank_weight": 2
+     },
+     {
+      "code": "E07",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M03",
+      "rank_weight": 3
+     },
+     {
+      "code": "M09",
+      "rank_weight": 2
+     },
+     {
+      "code": "M01",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "翌朝",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "shikou",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     -1,
+     -1,
+     1
+    ]
+   },
+   {
+    "character_id": "zenyu",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     -1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 615,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "aca48722ce27e64cab76d4ff7e0c7e44b08f63f33ed31e3f319ddddd3e57cc90",
+   "scene_id": "000119_001738:s27",
+   "scene_index": 27,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 子貢と宰予の議論を聞き、口先ばかりだと苦々しく思う",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 10,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": "宋から陳に出る渡船の上",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M05",
+      "rank_weight": 3
+     },
+     {
+      "code": "M09",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "shikou",
+    "zenyu"
+   ],
+   "time": {
+    "evidence": "ambiguous",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 941,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "5e49b0e6baef2d6595cebc349533628dc5f33a49e4315e531a42fb615540e66d",
+   "scene_id": "000119_001738:s28",
+   "scene_index": 28,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 師の判断に納得できず、不満と反駁の念を抱く",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 0,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E13",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M16",
+      "rank_weight": 2
+     },
+     {
+      "code": "M04",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "ambiguous",
+    "relative_order": "flashback"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 429,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "4457b70b0a2e080f2d1bb2718688186b24a558feae0ef46d5fcf686d494da333",
+   "scene_id": "000119_001738:s29",
+   "scene_index": 29,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 師の説明を聞いても釈然とせず、明哲保身の傾向が気になっている",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 0,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "子路の非業の死の予感",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 9,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M04",
+      "rank_weight": 3
+     },
+     {
+      "code": "M11",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 477,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "4f67ea5bd0447d549e7cf7972820e9ec9ee4e605159ae71936f306104081dd35",
+   "scene_id": "000119_001738:s30",
+   "scene_index": 30,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 孔子が商陽の話を称えたことに腹を立て、怫然として抗議する",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 6,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "商陽の話",
+    "predicate": "LEARNED",
+    "sentence_index": 4,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": 0
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E04",
+      "rank_weight": 3
+     },
+     {
+      "code": "E03",
+      "rank_weight": 2
+     },
+     {
+      "code": "E05",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M09",
+      "rank_weight": 3
+     },
+     {
+      "code": "M14",
+      "rank_weight": 2
+     },
+     {
+      "code": "M10",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 6
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     0,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 693,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "a7919b855953f28176f0fcf96ec4ff578afa9a0e9909952306ebc1d79c660f2e",
+   "scene_id": "000119_001738:s31",
+   "scene_index": 31,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "inferred",
+    "object": "孔子一行の運命の意味",
+    "predicate": "LEARNED",
+    "sentence_index": 3,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] shiro: 憤懣焦躁を繰返した後、いらだたなくなり、運命を積極的な使命として受け止め始める",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 2,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": 1,
+    "f_style_arousal": 0,
+    "f_style_valence": 1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E02",
+      "rank_weight": 3
+     },
+     {
+      "code": "E07",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M01",
+      "rank_weight": 3
+     },
+     {
+      "code": "M14",
+      "rank_weight": 2
+     },
+     {
+      "code": "M15",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "koshi"
+   ],
+   "time": {
+    "elapsed_hint": "放浪の年を重ねている中に",
+    "evidence": "explicit",
+    "explicit_time": "もはや五十歳であった",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 928,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "e1172bfae8519a9799b96e07b0f5a9d56b465ab6542401b40c9f5b95d510b853",
+   "scene_id": "000119_001738:s32",
+   "scene_index": 32,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "蒲",
+    "predicate": "MOVED_TO",
+    "sentence_index": 20,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] shiro: 孔家の宰として蒲の地を治める任に就く",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 13,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 1,
+    "f_style_arousal": 0,
+    "f_style_valence": 1
+   },
+   "location_id": "蒲の地",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E09",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M03",
+      "rank_weight": 2
+     },
+     {
+      "code": "M12",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "koshi",
+    "shiro"
+   ],
+   "time": {
+    "elapsed_hint": "十年来",
+    "evidence": "ambiguous",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 3
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   },
+   {
+    "character_id": "shikou",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     -1,
+     -1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 379,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "981d7466b6f4c0cdc23e3057bae864b03cef2d205e07846cfd236d97f778f5da",
+   "scene_id": "000119_001738:s33",
+   "scene_index": 33,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "蒲",
+    "predicate": "MOVED_TO",
+    "sentence_index": 0,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": 1,
+    "f_style_arousal": -1,
+    "f_style_valence": 1
+   },
+   "location_id": "蒲",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E07",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M01",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M14",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "koshi",
+   "present_character_ids": [
+    "koshi",
+    "shikou"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "三年後",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     0,
+     -1,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 525,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "d5c6894a3b7ab07221a551409dc47860f817213526c651b848f2e07b42efc739",
+   "scene_id": "000119_001738:s34",
+   "scene_index": 34,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "魯",
+    "predicate": "MOVED_TO",
+    "sentence_index": 1,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] 射の保証の依頼: 子路が射の盟の保証を断った",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 6,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 1,
+    "f_style_arousal": 1,
+    "f_style_valence": 1
+   },
+   "location_id": "魯",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E13",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M05",
+      "rank_weight": 2
+     },
+     {
+      "code": "M10",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "麒麟を獲た頃",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     -1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 335,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "26da79a76bd836d97e3d6410ef6680d2d7bdfa4610c00a4a7d1416ef466f446e",
+   "scene_id": "000119_001738:s35",
+   "scene_index": 35,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "inferred",
+    "object": "[emotion] shiro: 孔子の請願が形だけのものだと感じ、失望した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 10,
+    "subject": "shiro"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 0,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": "哀公の前",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E07",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M04",
+      "rank_weight": 3
+     },
+     {
+      "code": "M08",
+      "rank_weight": 2
+     },
+     {
+      "code": "M11",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "koshi",
+    "shiro"
+   ],
+   "time": {
+    "elapsed_hint": "斎戒すること三日の後",
+    "evidence": "explicit",
+    "explicit_time": "同じ年",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   }
+  ]
+ },
+ {
+  "character_states": [],
+  "contract": {
+   "char_len": 231,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "c967b58ebcba21709dcd47ce353cd75f72edc5ef7910664b0824cfe98d69cf92",
+   "scene_id": "000119_001738:s36",
+   "scene_index": 36,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[body_health] 孔叔圉: 孔叔圉が死亡した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 1,
+    "subject": null
+   },
+   {
+    "evidence": "explicit",
+    "object": "伯姫による現衛侯逐出しの企み",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 5,
+    "subject": null
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": "衛",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E08",
+      "rank_weight": 3
+     },
+     {
+      "code": "E06",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M02",
+      "rank_weight": 3
+     },
+     {
+      "code": "M04",
+      "rank_weight": 2
+     },
+     {
+      "code": "M16",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": null,
+   "present_character_ids": [],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "子路が魯に来ている間に",
+    "relative_order": "parallel"
+   }
+  },
+  "utterances": []
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "inferred",
+    "values_6d": [
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "shiko",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     1,
+     0,
+     0,
+     -1,
+     -1
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 838,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "4e6f34d7dd5b725ca6ba8bc2c9c4045f182d0689618eb06bef6071df610fd92f",
+   "scene_id": "000119_001738:s37",
+   "scene_index": 37,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "公宮",
+    "predicate": "MOVED_TO",
+    "sentence_index": 7,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "前太子が都に潜入し孔氏の宅に入ったこと",
+    "predicate": "LEARNED",
+    "sentence_index": 4,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] 孔: 孔が伯姫・渾良夫・前太子に捕えられ脅され、新衛侯擁立を強いられている",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 6,
+    "subject": null
+   },
+   {
+    "evidence": "explicit",
+    "object": "前太子を衛侯に擁立する政変",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 33,
+    "subject": null
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 2,
+    "f_event_valence": -1,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": "公宮",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E02",
+      "rank_weight": 3
+     },
+     {
+      "code": "E04",
+      "rank_weight": 2
+     },
+     {
+      "code": "E08",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M03",
+      "rank_weight": 3
+     },
+     {
+      "code": "M14",
+      "rank_weight": 2
+     },
+     {
+      "code": "M09",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro",
+    "shiko"
+   ],
+   "time": {
+    "elapsed_hint": "夕方近くになって",
+    "evidence": "explicit",
+    "explicit_time": "周の昭王の四十年閏十二月某日",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "shiro",
+    "evidence": "explicit",
+    "values_6d": [
+     0,
+     0,
+     -1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "character_id": "koshi",
+    "evidence": "explicit",
+    "values_6d": [
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 811,
+   "ledger_hash": "ledger:4094ded5b4e1",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 39,
+   "scene_hash": "71f212ac41d8e8397406f8811a05f48109467ee0d6cd56bb8c6002a0d22b0855",
+   "scene_id": "000119_001738:s38",
+   "scene_index": 38,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000119_001738"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[body_health] shiro: 子路が斬られて死亡した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 24,
+    "subject": "shiro"
+   },
+   {
+    "evidence": "explicit",
+    "object": "衛の政変",
+    "predicate": "LEARNED",
+    "sentence_index": 25,
+    "subject": "koshi"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] koshi: 子路の死を知り涙を流した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 26,
+    "subject": "koshi"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 2,
+    "f_event_valence": -2,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": "広庭",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E05",
+      "rank_weight": 3
+     },
+     {
+      "code": "E06",
+      "rank_weight": 2
+     },
+     {
+      "code": "E03",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M14",
+      "rank_weight": 3
+     },
+     {
+      "code": "M04",
+      "rank_weight": 2
+     },
+     {
+      "code": "M09",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "shiro",
+   "present_character_ids": [
+    "shiro"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "薄暮",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": null,
+    "utterance_index": 3
+   }
+  ]
+ }
+]

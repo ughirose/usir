@@ -53,13 +53,15 @@ def marked(text, s, e, before, after):
     return text[a:s] + "【" + text[s:e] + "】" + text[e:z]
 
 
-def build():
+def build(work_filter=None, n_presence=N_PRESENCE_SAMPLE, n_control=N_CONTROL):
     rnd = random.Random(SEED)
     items, flagged = [], {}
     pres_pool = []
     loaded = {}
     for wd in sorted(DATA.iterdir()):
         w = wd.name
+        if work_filter and w not in work_filter:
+            continue
         j = json.loads((wd / "diagnose.json").read_text(encoding="utf-8"))
         text = (wd / "text.txt").read_text(encoding="utf-8")
         nm = names(json.loads((wd / "characters.json").read_text(encoding="utf-8")))
@@ -123,9 +125,9 @@ def build():
                                   "context": [{"label": f"場面{si}", "text": trunc_head(scene_text(text, sc, si), 1600)}]})
                 fl.add(si)
     presence_total = len(pres_pool)
-    items += rnd.sample(pres_pool, min(N_PRESENCE_SAMPLE, presence_total))
+    items += rnd.sample(pres_pool, min(n_presence, presence_total))
     pool = [(w, i) for w, (j, _t) in sorted(loaded.items()) for i in range(len(j["scenes"])) if i not in flagged[w]]
-    for n, (w, i) in enumerate(rnd.sample(pool, N_CONTROL)):
+    for n, (w, i) in enumerate(rnd.sample(pool, min(n_control, len(pool)))):
         j, text = loaded[w]
         items.append({"work": w, "stratum": "C", "lens": "-", "rule": "control", "scene": i, "ref": f"control#{n}", "score": None,
                       "claim": "この場面には、読み手が違和感を覚える箇所（場所・登場人物・視点・語り口のつながりの食い違い）がある可能性がある。",
@@ -146,6 +148,19 @@ if __name__ == "__main__":
         old = {i["id"]: i for i in json.loads((OUT / "items.json").read_text(encoding="utf-8"))["items"]}
         assert all(old[i["id"]]["rule"] == "quote_bracket" and old[i["id"]]["ref"] == i["ref"] for i in q), "item ids drifted"
         print("rejudge items", [i["id"] for i in q])
+        sys.exit(0)
+    if "--only-work" in sys.argv:  # job E: one extra work, S1 all + S2 all + 20 presence + 8 controls, written to measure_E/ (v1 artifacts untouched)
+        wk = sys.argv[sys.argv.index("--only-work") + 1]
+        DATA = HERE / "data_E"  # job E data kept apart from the v1 data dir
+        items_e, pt, pl = build({wk}, 20, 8)
+        eo = HERE / "measure_E"
+        (eo / "batches").mkdir(parents=True, exist_ok=True)
+        (eo / "items.json").write_text(json.dumps({"seed": SEED, "work": wk, "presence_total": pt, "control_pool": pl, "items": items_e}, ensure_ascii=False, indent=1), encoding="utf-8")
+        order_e = list(items_e)
+        random.Random(SEED + 3).shuffle(order_e)
+        for bi in range(0, len(order_e), BATCH):
+            (eo / "batches" / f"batch_E{bi // BATCH:02d}.json").write_text(json.dumps({"items": [{"id": it["id"], "claim": it["claim"], "context": it["context"]} for it in order_e[bi:bi + BATCH]]}, ensure_ascii=False, indent=1), encoding="utf-8")
+        print("E items", len(items_e), dict(Counter(i["stratum"] for i in items_e)), "presence_total", pt, "control_pool", pl)
         sys.exit(0)
     (OUT / "batches").mkdir(parents=True, exist_ok=True)
     (OUT / "items.json").write_text(json.dumps({"seed": SEED, "presence_total": presence_total, "control_pool": pool, "items": items}, ensure_ascii=False, indent=1), encoding="utf-8")
