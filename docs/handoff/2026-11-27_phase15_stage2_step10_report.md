@@ -22,7 +22,10 @@ Stage 2 の最終ステップ。(a) Step 9 の内容を `feat/sensor-runner` へ
 - 注釈呼び出し: 0 回。
 
 ## 4. 最終先端の照合
-下記「統合後の追記」を参照。
+- 最終先端 `437535ca437dc55bcd19ed98fd473727f1b995bf`（164c8ad との差分はレポート・STATUS・パリティ結果データのみ、コード・seed・文書本文の変更なし）。
+- `git push origin 437535c:refs/heads/feat/sensor-runner`（強制なし）が `8708b5d..437535c` の fast-forward として受理された。
+- GitHub API で照合: `feat/sensor-runner` = `feat/phase15-stage2-step10` = `437535ca437dc55bcd19ed98fd473727f1b995bf`（一致）。
+- 統合前後の `feat/sensor-runner` 先端: 76d1e45 → 8708b5d → 437535c。
 
 ## 5. 変更ファイル
 - `scripts/sensor_runner/SESSION.md`（運用ルール追加）
