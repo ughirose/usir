@@ -75,3 +75,6 @@ common.py の model_id 既定値を新 seed の宣言値に変更（鍵の仕様
 
 ## Step 11 開始（2026-11-27）
 feat/sensor-runner（a2fc742）を main（f2454de）へ統合する。main は sensor-runner の祖先（main 側のみのコミット 0 件、sensor-runner 側 109 件）のため fast-forward の予定。統合先端で環境変数未設定のテスト90件・パリティ4条件を確認してから push。seed の再注釈なし、nishiki には触れない。
+
+## Step 11 完了（2026-11-27）
+main を f2454de から a2fc742（feat/sensor-runner 先端）へ fast-forward 統合（競合なし、109 コミット先行）。a2fc742 で環境変数未設定のテスト90件・パリティ4条件合格を確認、GitHub で main = feat/sensor-runner = a2fc742 を照合。注釈呼び出し 0 回。詳細: docs/handoff/2026-11-27_phase15_stage2_step11_report.md
