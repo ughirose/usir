@@ -77,14 +77,52 @@ def build(work: str) -> str:
         ledger.append(f'<details class="char"><summary><b>{E(nm.get(cid, cid))}</b><span class="meta">呼称：{E(alias)}／登録 {len(facts)} 件</span></summary><ul>{li or "<li>登録なし</li>"}</ul></details>')
     ledger_html = "".join(ledger)
 
-    # --- 診断の指摘（既定で非表示）
+    # --- 診断の指摘（既定で非表示）。表示の区分けのみ（判定ロジック・items.json は変更しない）
     items, _pt, _cp = build_items.build()
     flags = [it for it in items if it["work"] == work and it["stratum"] == "S1"]
-    cards = []
-    for n, it in enumerate(flags, 1):
+    spans = {f"{l['id']}#{k}": s for l in diag["lenses"] for k, s in enumerate(l["spans"])}
+
+    def card(n, it, tag, extra=""):
         ctx = "".join(f'<div class="ctxl">{E(c["label"])}</div><div class="quote">{para(c["text"]).replace("【", "<mark>").replace("】", "</mark>")}</div>' for c in it["context"])
-        cards.append(f'<article class="flag"><div class="fh"><span class="no">#{n}</span><span class="tag">{E(RULE_LABEL.get(it["rule"], it["rule"]))}</span><span class="meta">場面{it["scene"] + 1}</span></div><p class="claim">{E(it["claim"])}</p>{ctx}</article>')
-    flags_html = (f'<p class="note">自動診断が付けた確認事項です。機械の読み違いを含むため、既定では隠しています。（{len(flags)}件）</p>' + "".join(cards)) if flags else '<p class="note">この作品では確定した指摘はありません。</p>'
+        return f'<article class="flag"><div class="fh"><span class="no">#{n}</span><span class="tag">{E(tag)}</span><span class="meta">場面{it["scene"] + 1}</span></div><p class="claim">{E(it["claim"])}</p>{extra}{ctx}</article>'
+
+    # place_conflict: the same cause reported once per character -> one card
+    confirmed, povs, observ, seen = [], [], [], {}
+    for it in flags:
+        r = it["rule"]
+        if r == "pov_contamination":
+            povs.append(it)
+        elif r.startswith("awase_"):
+            observ.append(it)
+        elif r == "place_conflict":
+            b = spans[it["ref"]]["basis"]
+            key = (it["scene"], b.get("previous_scene"), b.get("location"), b.get("previous_location"))
+            if key in seen:
+                seen[key]["_who"].append(nm.get(b["character"], b["character"]))
+                continue
+            it = dict(it, _who=[nm.get(b["character"], b["character"])])
+            seen[key] = it
+            confirmed.append(it)
+        else:
+            confirmed.append(it)
+    cards = []
+    for n, it in enumerate(confirmed, 1):
+        extra = ""
+        if it["rule"] in ("move_destination_mismatch", "place_conflict"):
+            extra = '<p class="note">場所の記録は、機械が本文から読み取った注釈に由来します（本文に根拠の文が無い場合があります）。</p>'
+        if it["rule"] == "place_conflict" and len(it["_who"]) > 1:
+            extra += f'<p class="note">同じ原因が人物ごとに重複して出ていたため 1 件にまとめました（対象：{E("、".join(it["_who"]))}）。</p>'
+        cards.append(card(n, it, RULE_LABEL.get(it["rule"], it["rule"]), extra))
+    cand = [card(f"候補{n}", it, "視点の混ざり（候補）") for n, it in enumerate(povs, 1)]
+    obs = [card(f"観察{n}", it, "語りの温度差の観察") for n, it in enumerate(observ, 1)]
+    n_flags = len(confirmed)
+    parts = []
+    parts.append(f'<p class="note">自動診断が付けた確認事項です。機械の読み違いを含むため、既定では隠しています。（確認事項 {len(confirmed)}件）</p>' + ("".join(cards) if cards else '<p class="note">確定した指摘はありません。</p>'))
+    if cand:
+        parts.append(f'<details class="grp"><summary><b>視点の混ざり（候補）{len(cand)}件</b><span class="meta">確定指摘としては扱いません</span></summary><p class="note">一人称の語りや語り手の推測を、別の人物の内面と読んだ可能性が高い種類です。参考情報として畳んでいます。</p>{"".join(cand)}</details>')
+    if obs:
+        parts.append(f'<details class="grp"><summary><b>語りの温度差の観察 {len(obs)}件</b><span class="meta">違和感の指摘ではありません</span></summary><p class="note">出来事の感情と語り口の温度に差がある場面の観察です。意図的な文体であることが多く、直すべき点とは限りません。</p>{"".join(obs)}</details>')
+    flags_html = "".join(parts)
 
     css = """
 body{margin:0;background:#f6f4ef;color:#2b2620;font:15px/1.8 "Hiragino Kaku Gothic ProN","Yu Gothic UI",Meiryo,sans-serif}
@@ -106,7 +144,6 @@ function tab(id,b){document.querySelectorAll('section').forEach(s=>s.classList.t
 var _o=[];window.addEventListener('beforeprint',function(){_o=[];document.querySelectorAll('details').forEach(function(d){_o.push(d.open);d.open=true;});});window.addEventListener('afterprint',function(){document.querySelectorAll('details').forEach(function(d,i){d.open=_o[i];});});
 function sw(c){document.getElementById('flagsbox').style.display=c.checked?'block':'none';document.getElementById('flagsmuted').style.display=c.checked?'none':'block';}
 """
-    n_flags = len(flags)
     return f"""<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>読み返しビューア — {E(title)}</title><style>{css}</style></head><body><div class="wrap">
 <h1>{E(title)}</h1><p class="sub">対象：公開テキスト（青空文庫）／全{len(scenes)}場面／診断 {E(diag['schema'])}</p>
@@ -114,7 +151,7 @@ function sw(c){document.getElementById('flagsbox').style.display=c.checked?'bloc
 <label class="sw"><input type="checkbox" onchange="sw(this)"> 自動診断の指摘を表示する（既定は非表示）</label></nav>
 <section id="s1" class="on">{structure}</section>
 <section id="s2">{ledger_html}</section>
-<section id="s3"><div id="flagsmuted" class="muted">自動診断の指摘（{n_flags}件）は非表示にしています。右上のスイッチで表示できます。</div><div id="flagsbox" style="display:none">{flags_html}</div></section>
+<section id="s3"><div id="flagsmuted" class="muted">自動診断の確認事項（{n_flags}件）と参考情報（視点の候補・語りの温度差）は非表示にしています。右上のスイッチで表示できます。</div><div id="flagsbox" style="display:none">{flags_html}</div></section>
 <footer>1枚で完結するHTMLです（外部ファイル・通信なし）。生成元：nishiki diagnose の出力と場面注釈。</footer></div><script>{js}</script></body></html>"""
 
 
