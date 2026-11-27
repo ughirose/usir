@@ -22,6 +22,14 @@ export NISHIKI_BIN=C:/dev/nishiki-hybrid/target/debug/nishiki.exe   # segment / 
 ```
 以降 `R="uv run python ../scripts/sensor_runner/cli.py"`。
 
+### 注釈者のモデル ID（`SENSOR_ANNOTATOR_MODEL_ID`）— 必ず守る
+- L2 鍵には `model_id` が入る。既定値は、コミット済み seed の注釈者として宣言した値（`common.DEFAULT_ANNOTATOR_MODEL_ID` = `claude-code-subagent:alias=sonnet(exact-model-id-unverified)`）。環境変数が未設定でも seed には当たる（呼び出し 0 回）。
+- **seed と別のモデルで新しく注釈する場合は、注釈を始める前に `SENSOR_ANNOTATOR_MODEL_ID` に実際のモデル ID を必ず設定する**（例: `export SENSOR_ANNOTATOR_MODEL_ID=<実際のモデル ID>`）。設定を忘れると、別モデルの注釈が seed と同じ `model_id` で記録され、鍵の上で区別できない。
+- `prepare` / `ingest` / `merge` はすべて同じ値で実行する（値が違うと鍵が変わり、キャッシュに当たらない）。
+- `model_id` を `unspecified` などの偽の値にしてはならない。実モデル ID が取得できない場合は、その旨を値に含める（seed の宣言値の `exact-model-id-unverified` が例）。
+- seed の再注釈・差し替えは、このルールの対象外の別作業（Step 8 の手順）として扱う。
+
+
 ## 1回の処理単位
 **1作品につき最大 5 場面（`--limit 5`）を1バッチ**とする。理由: 直前場面の状態サマリ（prior）を次のパックに反映させるには、前の場面を ingest してからパックを再生成する必要があるため、バッチを短く保つ。場面は index 昇順で処理する。
 
