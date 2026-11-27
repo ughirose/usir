@@ -1,0 +1,1037 @@
+[
+ {
+  "character_states": [
+   {
+    "character_id": "yozo",
+    "evidence": "inferred",
+    "values_6d": [
+     -1,
+     -1,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 986,
+   "ledger_hash": "ledger:aa1b15914017",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 7,
+   "scene_hash": "3420dd57e26a637961222eae99844c0924870fca9e803638762a02a51b21383d",
+   "scene_id": "000035_000301:s0",
+   "scene_index": 0,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000035_000301"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[situation] yozo: 情死事件を起こし、身の上が一変した",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 1,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "小さいナイフ",
+    "predicate": "ACQUIRED",
+    "sentence_index": 5,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] yozo: 運動の仕事から逃げ、死ぬことを決めた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 10,
+    "subject": "yozo"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -2,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": "下宿のその部屋",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E14",
+      "rank_weight": 3
+     },
+     {
+      "code": "E09",
+      "rank_weight": 2
+     },
+     {
+      "code": "E06",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M03",
+      "rank_weight": 3
+     },
+     {
+      "code": "M11",
+      "rank_weight": 2
+     },
+     {
+      "code": "M08",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "yozo",
+   "present_character_ids": [
+    "yozo"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "二年目の十一月",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "yozo",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "musume",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 753,
+   "ledger_hash": "ledger:aa1b15914017",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 7,
+   "scene_hash": "834c904d9ee2346e61880fcf1571746af4f8f58909c28206e2340634cf0e9143",
+   "scene_id": "000035_000301:s1",
+   "scene_index": 1,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000035_000301"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "好意を寄せる女三人",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 0,
+    "subject": null
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] yozo: 疲労で口をききたくないが、娘に受け身の奉仕で応じている",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 4,
+    "subject": "yozo"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": -1,
+    "f_event_valence": 0,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": "自分の部屋",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E16",
+      "rank_weight": 2
+     },
+     {
+      "code": "E08",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M05",
+      "rank_weight": 3
+     },
+     {
+      "code": "M08",
+      "rank_weight": 2
+     },
+     {
+      "code": "M16",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "yozo",
+   "present_character_ids": [
+    "yozo",
+    "musume"
+   ],
+   "time": {
+    "elapsed_hint": "一時間以上",
+    "evidence": "inferred",
+    "explicit_time": "その頃",
+    "relative_order": "unknown"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "musume",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "musume",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "musume",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "musume",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "musume",
+    "utterance_index": 4
+   },
+   {
+    "addressee_id": "musume",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 5
+   },
+   {
+    "addressee_id": "musume",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 6
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "musume",
+    "utterance_index": 7
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "yozo",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "doshi",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 1207,
+   "ledger_hash": "ledger:aa1b15914017",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 7,
+   "scene_hash": "6822e1256e8520671e252c6d3983f503435baa42c42ec8edbfa4eac287657b91",
+   "scene_id": "000035_000301:s2",
+   "scene_index": 2,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000035_000301"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "趣味の悪い買い物の品",
+    "predicate": "ACQUIRED",
+    "sentence_index": 5,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "運動のために借りてあるビルの狭い洋室",
+    "predicate": "MOVED_TO",
+    "sentence_index": 5,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[situation] yozo: 下宿屋の娘と同志の二人の機嫌取りに追われ、身動きが取れない状態になっている",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 6,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "カフエの女給から受けた恩",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 7,
+    "subject": null
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": -1,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E11",
+      "rank_weight": 3
+     },
+     {
+      "code": "E08",
+      "rank_weight": 2
+     },
+     {
+      "code": "E02",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M03",
+      "rank_weight": 3
+     },
+     {
+      "code": "M05",
+      "rank_weight": 2
+     },
+     {
+      "code": "M11",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "yozo",
+   "present_character_ids": [
+    "yozo",
+    "doshi"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "explicit_time": "或る夏の夜",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": "私",
+     "politeness": "plain"
+    },
+    "speaker_id": "doshi",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "doshi",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 3
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 4
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "yozo",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "tsuneko",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 832,
+   "ledger_hash": "ledger:aa1b15914017",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 7,
+   "scene_hash": "246fc00a5a978076c8c9bb497bdbe0937a2d39e6ddbcfbd32896036571300257",
+   "scene_id": "000035_000301:s3",
+   "scene_index": 3,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000035_000301"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] yozo: ツネ子の一言で、震えおののいていた心が静まり、傍にいることに安心を覚えた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 2,
+    "subject": "yozo"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": -1,
+    "f_event_valence": 0,
+    "f_style_arousal": -1,
+    "f_style_valence": -1
+   },
+   "location_id": "銀座裏の、或る屋台のお鮨や",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E10",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M01",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M15",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "yozo",
+   "present_character_ids": [
+    "yozo",
+    "tsuneko"
+   ],
+   "time": {
+    "evidence": "explicit",
+    "explicit_time": "秋の、寒い夜",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "tsuneko",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "polite"
+    },
+    "speaker_id": "tsuneko",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "tsuneko",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "tsuneko",
+    "utterance_index": 3
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "yozo",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "tsuneko",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 767,
+   "ledger_hash": "ledger:aa1b15914017",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 7,
+   "scene_hash": "26b0f4989d6437dc3208a4ea20894daadbeb83ba1d06bdb2ff83c6aa35109450",
+   "scene_id": "000035_000301:s4",
+   "scene_index": 4,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000035_000301"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "ツネ子の夫は詐欺罪で刑務所にいる",
+    "predicate": "LEARNED",
+    "sentence_index": 4,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "[emotion] yozo: ツネ子の侘びしさの気流に包まれ、恐怖と不安から離れることができた",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 7,
+    "subject": "yozo"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": -1,
+    "f_event_valence": 1,
+    "f_style_arousal": -1,
+    "f_style_valence": -1
+   },
+   "location_id": "本所の大工さんの二階",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E11",
+      "rank_weight": 3
+     },
+     {
+      "code": "E03",
+      "rank_weight": 2
+     },
+     {
+      "code": "E16",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M11",
+      "rank_weight": 3
+     },
+     {
+      "code": "M10",
+      "rank_weight": 2
+     },
+     {
+      "code": "M08",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "yozo",
+   "present_character_ids": [
+    "yozo",
+    "tsuneko"
+   ],
+   "time": {
+    "evidence": "inferred",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": null,
+    "evidence": "ambiguous",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": null,
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "yozo",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "tsuneko",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 646,
+   "ledger_hash": "ledger:aa1b15914017",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 7,
+   "scene_hash": "7baa4605c5692fd8ca8892234ae270968a7a232ad90192362cee260bf16b18aa",
+   "scene_id": "000035_000301:s5",
+   "scene_index": 5,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000035_000301"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] yozo: 一夜の解放感が消え、再び道化の仮面をかぶった状態に戻った",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 2,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "ツネ子の元を去る",
+    "predicate": "MOVED_TO",
+    "sentence_index": 8,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "金の切れめが縁の切れめという放言が後に引っかかりとなる",
+    "predicate": "HOOK_OPENED",
+    "sentence_index": 8,
+    "subject": "yozo"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 1,
+    "f_style_arousal": 1,
+    "f_style_valence": -1
+   },
+   "location_id": null,
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E03",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E08",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M03",
+      "rank_weight": 3
+     },
+     {
+      "code": "M05",
+      "rank_weight": 2
+     },
+     {
+      "code": "M10",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "yozo",
+   "present_character_ids": [
+    "yozo",
+    "tsuneko"
+   ],
+   "time": {
+    "elapsed_hint": "ただ一夜でした",
+    "evidence": "explicit",
+    "explicit_time": "朝、眼が覚めて",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "tsuneko",
+    "evidence": "explicit",
+    "register": {
+     "first_person": "僕",
+     "politeness": "unknown"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "tsuneko",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 1
+   }
+  ]
+ },
+ {
+  "character_states": [
+   {
+    "character_id": "yozo",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "character_id": "horiki",
+    "evidence": "inferred",
+    "values_6d": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   }
+  ],
+  "contract": {
+   "char_len": 638,
+   "ledger_hash": "ledger:aa1b15914017",
+   "model_id": "claude-code-session:sonnet-subagent",
+   "prompt_hash": "strong:strong.v1:5744cc9cddfb7bca",
+   "scene_count": 7,
+   "scene_hash": "c29aa59163372bd54d3f7f0af925d04810330aadbd386bcb6df72ad3d000a806",
+   "scene_id": "000035_000301:s6",
+   "scene_index": 6,
+   "schema_version": "sensor.v2",
+   "splitter_version": "usir_v5_splitter@1",
+   "work_id": "000035_000301"
+  },
+  "fact_updates": [
+   {
+    "evidence": "explicit",
+    "object": "[emotion] yozo: ツネ子への恩を束縛と感じ、脅迫されるようにおびえている",
+    "predicate": "STATE_CHANGED",
+    "sentence_index": 1,
+    "subject": "yozo"
+   },
+   {
+    "evidence": "explicit",
+    "object": "カフエ（夢の国）へ堀木を連れて行く",
+    "predicate": "MOVED_TO",
+    "subject": "yozo"
+   }
+  ],
+  "scene_meta": {
+   "awase": {
+    "f_event_arousal": 1,
+    "f_event_valence": 0,
+    "f_style_arousal": 0,
+    "f_style_valence": -1
+   },
+   "location_id": "神田の屋台",
+   "nagare": {
+    "event_top3": [
+     {
+      "code": "E10",
+      "rank_weight": 3
+     },
+     {
+      "code": "E02",
+      "rank_weight": 2
+     },
+     {
+      "code": "E03",
+      "rank_weight": 1
+     }
+    ],
+    "mood_top3": [
+     {
+      "code": "M03",
+      "rank_weight": 3
+     },
+     {
+      "code": "M08",
+      "rank_weight": 2
+     },
+     {
+      "code": "M05",
+      "rank_weight": 1
+     }
+    ]
+   },
+   "pov_character": "yozo",
+   "present_character_ids": [
+    "yozo",
+    "horiki"
+   ],
+   "time": {
+    "elapsed_hint": "ひとつき",
+    "evidence": "explicit",
+    "explicit_time": "十一月の末",
+    "relative_order": "continuous"
+   }
+  },
+  "utterances": [
+   {
+    "addressee_id": "horiki",
+    "evidence": "explicit",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 0
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "horiki",
+    "utterance_index": 1
+   },
+   {
+    "addressee_id": "horiki",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "unknown"
+    },
+    "speaker_id": "yozo",
+    "utterance_index": 2
+   },
+   {
+    "addressee_id": "yozo",
+    "evidence": "inferred",
+    "register": {
+     "first_person": null,
+     "politeness": "plain"
+    },
+    "speaker_id": "horiki",
+    "utterance_index": 3
+   }
+  ]
+ }
+]

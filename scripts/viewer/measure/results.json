@@ -1,0 +1,161 @@
+{
+ "missing": [],
+ "overall": {
+  "S1": {
+   "n": 35,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 35,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "S2": {
+   "n": 24,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 24,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "S3": {
+   "n": 30,
+   "real": 0,
+   "unclear": 1,
+   "not_real": 29,
+   "strict": 0.0,
+   "lenient": 0.03333333333333333
+  },
+  "C": {
+   "n": 14,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 14,
+   "strict": 0.0,
+   "lenient": 0.0
+  }
+ },
+ "by_work_S1": {
+  "000035_000301": {
+   "n": 6,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 6,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "000050_003586": {
+   "n": 5,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 5,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "000081_000456": {
+   "n": 2,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 2,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "000129_000689": {
+   "n": 4,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 4,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "000148_000751": {
+   "n": 9,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 9,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "001383_056643": {
+   "n": 4,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 4,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "001798_056779": {
+   "n": 4,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 4,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "001801_001786": {
+   "n": 1,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 1,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "001875_059897": {
+   "n": 0,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 0,
+   "strict": null,
+   "lenient": null
+  }
+ },
+ "by_rule_S1": {
+  "awase_detachment": {
+   "n": 4,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 4,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "move_destination_mismatch": {
+   "n": 11,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 11,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "off_stage_speaker": {
+   "n": 1,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 1,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "place_conflict": {
+   "n": 3,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 3,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "pov_contamination": {
+   "n": 12,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 12,
+   "strict": 0.0,
+   "lenient": 0.0
+  },
+  "quote_bracket": {
+   "n": 4,
+   "real": 0,
+   "unclear": 0,
+   "not_real": 4,
+   "strict": 0.0,
+   "lenient": 0.0
+  }
+ }
+}
