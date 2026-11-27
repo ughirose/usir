@@ -1,0 +1,230 @@
+{
+ "seed": 20261128,
+ "quota": {
+  "pov_contamination": 7,
+  "move_destination_mismatch": 5,
+  "awase_detachment": 3,
+  "quote_bracket": 2,
+  "place_conflict": 2,
+  "off_stage_speaker": 1
+ },
+ "n_control": 5,
+ "items": [
+  {
+   "sheet_id": "H01",
+   "item_id": "I012",
+   "source": "measure",
+   "work": "000050_003586",
+   "stratum": "S1",
+   "rule": "quote_bracket",
+   "scene": 2
+  },
+  {
+   "sheet_id": "H02",
+   "item_id": "I014",
+   "source": "measure_E",
+   "work": "000119_001738",
+   "stratum": "S1",
+   "rule": "pov_contamination",
+   "scene": 30
+  },
+  {
+   "sheet_id": "H03",
+   "item_id": "I009",
+   "source": "measure_E",
+   "work": "000119_001738",
+   "stratum": "S1",
+   "rule": "move_destination_mismatch",
+   "scene": 23
+  },
+  {
+   "sheet_id": "H04",
+   "item_id": "I000",
+   "source": "measure",
+   "work": "000035_000301",
+   "stratum": "S1",
+   "rule": "pov_contamination",
+   "scene": 0
+  },
+  {
+   "sheet_id": "H05",
+   "item_id": "I016",
+   "source": "measure_E",
+   "work": "000119_001738",
+   "stratum": "S1",
+   "rule": "pov_contamination",
+   "scene": 38
+  },
+  {
+   "sheet_id": "H06",
+   "item_id": "I096",
+   "source": "measure",
+   "work": "000148_000751",
+   "stratum": "C",
+   "rule": "control",
+   "scene": 35
+  },
+  {
+   "sheet_id": "H07",
+   "item_id": "I023",
+   "source": "measure",
+   "work": "000129_000689",
+   "stratum": "S1",
+   "rule": "awase_detachment",
+   "scene": 6
+  },
+  {
+   "sheet_id": "H08",
+   "item_id": "I091",
+   "source": "measure",
+   "work": "000081_000456",
+   "stratum": "C",
+   "rule": "control",
+   "scene": 1
+  },
+  {
+   "sheet_id": "H09",
+   "item_id": "I054",
+   "source": "measure",
+   "work": "001801_001786",
+   "stratum": "S1",
+   "rule": "move_destination_mismatch",
+   "scene": 1
+  },
+  {
+   "sheet_id": "H10",
+   "item_id": "I053",
+   "source": "measure",
+   "work": "001798_056779",
+   "stratum": "S1",
+   "rule": "move_destination_mismatch",
+   "scene": 3
+  },
+  {
+   "sheet_id": "H11",
+   "item_id": "I052",
+   "source": "measure",
+   "work": "001798_056779",
+   "stratum": "S1",
+   "rule": "pov_contamination",
+   "scene": 2
+  },
+  {
+   "sheet_id": "H12",
+   "item_id": "I031",
+   "source": "measure",
+   "work": "000148_000751",
+   "stratum": "S1",
+   "rule": "move_destination_mismatch",
+   "scene": 23
+  },
+  {
+   "sheet_id": "H13",
+   "item_id": "I002",
+   "source": "measure_E",
+   "work": "000119_001738",
+   "stratum": "S1",
+   "rule": "pov_contamination",
+   "scene": 9
+  },
+  {
+   "sheet_id": "H14",
+   "item_id": "I035",
+   "source": "measure_E",
+   "work": "000119_001738",
+   "stratum": "C",
+   "rule": "control",
+   "scene": 7
+  },
+  {
+   "sheet_id": "H15",
+   "item_id": "I011",
+   "source": "measure_E",
+   "work": "000119_001738",
+   "stratum": "S1",
+   "rule": "pov_contamination",
+   "scene": 28
+  },
+  {
+   "sheet_id": "H16",
+   "item_id": "I030",
+   "source": "measure",
+   "work": "000148_000751",
+   "stratum": "S1",
+   "rule": "move_destination_mismatch",
+   "scene": 18
+  },
+  {
+   "sheet_id": "H17",
+   "item_id": "I004",
+   "source": "measure",
+   "work": "000035_000301",
+   "stratum": "S1",
+   "rule": "pov_contamination",
+   "scene": 6
+  },
+  {
+   "sheet_id": "H18",
+   "item_id": "I011",
+   "source": "measure",
+   "work": "000050_003586",
+   "stratum": "S1",
+   "rule": "quote_bracket",
+   "scene": 1
+  },
+  {
+   "sheet_id": "H19",
+   "item_id": "I034",
+   "source": "measure_E",
+   "work": "000119_001738",
+   "stratum": "C",
+   "rule": "control",
+   "scene": 6
+  },
+  {
+   "sheet_id": "H20",
+   "item_id": "I095",
+   "source": "measure",
+   "work": "001383_056643",
+   "stratum": "C",
+   "rule": "control",
+   "scene": 0
+  },
+  {
+   "sheet_id": "H21",
+   "item_id": "I019",
+   "source": "measure_E",
+   "work": "000119_001738",
+   "stratum": "S1",
+   "rule": "awase_detachment",
+   "scene": 38
+  },
+  {
+   "sheet_id": "H22",
+   "item_id": "I051",
+   "source": "measure",
+   "work": "001798_056779",
+   "stratum": "S1",
+   "rule": "off_stage_speaker",
+   "scene": 2
+  },
+  {
+   "sheet_id": "H23",
+   "item_id": "I035",
+   "source": "measure",
+   "work": "000148_000751",
+   "stratum": "S1",
+   "rule": "place_conflict",
+   "scene": 38
+  },
+  {
+   "sheet_id": "H24",
+   "item_id": "I021",
+   "source": "measure",
+   "work": "000129_000689",
+   "stratum": "S1",
+   "rule": "awase_detachment",
+   "scene": 0
+  }
+ ]
+}
