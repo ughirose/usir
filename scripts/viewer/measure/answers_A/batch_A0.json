@@ -1,0 +1,6 @@
+{"batch": "batch_A0", "answers": [
+{"id": "I013", "verdict": "not_real", "confidence": 2, "reason": "この」は直前の「その蛙…で始まる発話を閉じており、対応する開き括弧が本文中にある。", "evidence": "（爺様、あれあれ、）」"},
+{"id": "I012", "verdict": "not_real", "confidence": 2, "reason": "「その蛙…の発話は（爺様、あれあれ、）」で閉じており、閉じ忘れではない。", "evidence": "（爺様、あれあれ、）」"},
+{"id": "I011", "verdict": "not_real", "confidence": 3, "reason": "この」は「いや、どういたして…で始まる長い発話を閉じており、開き括弧が存在する。", "evidence": "大層お店の邪魔をしました、実に済まぬ。」"},
+{"id": "I009", "verdict": "not_real", "confidence": 3, "reason": "「いや、どういたして…の発話は「実に済まぬ。」」で閉じており、閉じ忘れではない。", "evidence": "実に済まぬ。」"}
+]}

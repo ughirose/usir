@@ -87,9 +87,19 @@ def build():
                     claim = f"この語りの視点人物は『{nm.get(b['pov'], b['pov'])}』だが、【】の箇所は『{nm.get(b['attributed_to'], b['attributed_to'])}』の内面や知覚として読める。視点が混ざっている可能性がある。"
                     it["context"] = [{"label": f"場面{si}の該当箇所（【】が指摘範囲）", "text": marked(text, s["start"], s["end"], 300, 300)}]
                 elif rule == "quote_bracket":
-                    claim = "かぎ括弧が閉じられないまま、本文（作品全体）が終わっている可能性がある。【】が閉じていない括弧の位置。"
-                    tail = "（本文末）" if s["end"] + 500 >= len(text) else ""
-                    it["context"] = [{"label": "括弧の位置から本文末まで（【】が括弧）", "text": marked(text, s["start"], s["end"], 200, 500) + tail}]
+                    # nishiki: Diagnostic::UnclosedAtEof = opener never matched by end of the WHOLE document (pos = the opener);
+                    # StrayCloser = closer with no matching opener in the machine's pairing. Wording fixed 2026-11-27 (quote-burn job A).
+                    kind = b["kind"]
+                    cnt = f"（作品全体の「は{text.count('「')}個、」は{text.count('」')}個）"
+                    if kind == "unclosed_at_eof":
+                        claim = f"【】の開き括弧に対応する閉じ括弧が、機械の対応付けでは作品の最後まで見つからなかった。括弧が閉じ忘れられている可能性がある。{cnt}"
+                        it["context"] = [{"label": "開き括弧の位置から先（【】が開き括弧）", "text": marked(text, s["start"], s["end"], 200, 1200)}]
+                    elif kind == "stray_closer":
+                        claim = f"【】の閉じ括弧に対応する開き括弧が、機械の対応付けでは見つからなかった。括弧が余っている、または開き括弧が抜けている可能性がある。{cnt}"
+                        it["context"] = [{"label": "閉じ括弧の位置の前後（【】が閉じ括弧）", "text": marked(text, s["start"], s["end"], 1200, 200)}]
+                    else:
+                        claim = f"かぎ括弧の対応に不整合（{kind}）がある可能性がある。{cnt}"
+                        it["context"] = [{"label": "括弧の位置の前後（【】が括弧）", "text": marked(text, s["start"], s["end"], 600, 600)}]
                 elif rule == "off_stage_speaker":
                     claim = f"【】の台詞の話者は『{nm.get(b['speaker'], b['speaker'])}』と機械は読んだが、その人物はこの場面に居ない（登場していない）可能性がある。"
                     it["context"] = [{"label": f"場面{si}の該当箇所（【】が指摘範囲）", "text": marked(text, s["start"], s["end"], 500, 300)}]
@@ -126,7 +136,17 @@ def build():
 
 
 if __name__ == "__main__":
+    import sys
     items, presence_total, pool = build()
+    if "--rejudge-quote" in sys.argv:  # job A: only the quote_bracket items, v1 artifacts (items.json, batches/) stay untouched
+        q = [i for i in items if i["rule"] == "quote_bracket"]
+        (OUT / "batches_A").mkdir(parents=True, exist_ok=True)
+        random.Random(SEED + 2).shuffle(q)
+        (OUT / "batches_A" / "batch_A0.json").write_text(json.dumps({"items": [{"id": i["id"], "claim": i["claim"], "context": i["context"]} for i in q]}, ensure_ascii=False, indent=1), encoding="utf-8")
+        old = {i["id"]: i for i in json.loads((OUT / "items.json").read_text(encoding="utf-8"))["items"]}
+        assert all(old[i["id"]]["rule"] == "quote_bracket" and old[i["id"]]["ref"] == i["ref"] for i in q), "item ids drifted"
+        print("rejudge items", [i["id"] for i in q])
+        sys.exit(0)
     (OUT / "batches").mkdir(parents=True, exist_ok=True)
     (OUT / "items.json").write_text(json.dumps({"seed": SEED, "presence_total": presence_total, "control_pool": pool, "items": items}, ensure_ascii=False, indent=1), encoding="utf-8")
     order = list(items)

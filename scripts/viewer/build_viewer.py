@@ -17,7 +17,12 @@ sys.path.insert(0, str(HERE))
 import build_items  # noqa: E402
 
 E = html.escape
-TITLES = {"000148_000751": "夏目漱石『二百十日』", "000129_000689": "森鴎外『山椒大夫』", "000035_000301": "太宰治『人間失格』（抜粋）"}
+TITLES = {
+    "000148_000751": "夏目漱石『二百十日』", "000129_000689": "森鴎外『山椒大夫』（抜粋）", "000035_000301": "太宰治『人間失格』（抜粋）",
+    "000050_003586": "泉鏡花『草迷宮』（抜粋）", "000081_000456": "宮沢賢治『銀河鉄道の夜』（抜粋）", "001383_056643": "谷崎潤一郎『少年』（抜粋）",
+    "001798_056779": "梅崎春生『ボロ家の春秋』（抜粋）", "001801_001786": "山川方夫『他人の夏』（抜粋）", "001875_059897": "壺井栄『雑居家族』（抜粋）",
+    "000119_001738": "中島敦『弟子』",
+}
 RULE_LABEL = {
     "move_destination_mismatch": "場所のつながり（移動先）", "place_conflict": "場所のつながり（同時刻）", "pov_contamination": "視点の混ざり",
     "quote_bracket": "かぎ括弧", "off_stage_speaker": "話者の居場所", "awase_detachment": "語りの温度差", "awase_irony": "語りの温度差",
@@ -94,10 +99,11 @@ details{background:#fffdf8;border:1px solid #dfd8cb;border-radius:8px;margin:8px
 .tag{background:#f1ede4;border-radius:6px;padding:1px 9px;font-size:.8rem}.claim{margin:8px 0;font-size:.92rem}.ctxl{font-size:.78rem;color:#6c6358;margin-top:8px}
 .quote{background:#fcfaf4;border:1px solid #e6dfd1;border-radius:6px;padding:8px 12px;font-size:.92rem}mark{background:#ffe58f}
 .muted{border:1px dashed #c8bfb0;border-radius:8px;padding:14px;color:#6c6358;font-size:.9rem;background:#fbf9f3}footer{margin-top:28px;color:#8a7e6e;font-size:.78rem}
-@media print{nav,.sw{display:none}section{display:block!important}#flagsbox{display:block!important}}
+@media print{nav,.sw{display:none}section{display:block!important}body{background:#fff}.flag,details{break-inside:avoid}}
 """
     js = """
 function tab(id,b){document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));}
+var _o=[];window.addEventListener('beforeprint',function(){_o=[];document.querySelectorAll('details').forEach(function(d){_o.push(d.open);d.open=true;});});window.addEventListener('afterprint',function(){document.querySelectorAll('details').forEach(function(d,i){d.open=_o[i];});});
 function sw(c){document.getElementById('flagsbox').style.display=c.checked?'block':'none';document.getElementById('flagsmuted').style.display=c.checked?'none':'block';}
 """
     n_flags = len(flags)
