@@ -1,0 +1,113 @@
+{
+ "model_id_used": "claude-code-subagent:alias=sonnet(exact-model-id-unverified)",
+ "env_unset": true,
+ "works": {
+  "000035_000301": {
+   "packs_written": 0,
+   "pending": 0,
+   "l2": {
+    "hit": 7,
+    "adopted": 0,
+    "miss": 0,
+    "blocked": 0
+   },
+   "errors": 0,
+   "annotations_sha256": "f0fa4577a5d9c8b9d2172eb31791784f8566370a9b694137e89a0621bb8c44ef",
+   "diagnose_sha256": "4ceb42f49b35c7f8d91b2b32b1947f1830b698398dd4193571ff43350710666b",
+   "annotations_equal_ref": true,
+   "diagnose_equal_ref": true
+  },
+  "000050_003586": {
+   "packs_written": 0,
+   "pending": 0,
+   "l2": {
+    "hit": 5,
+    "adopted": 0,
+    "miss": 0,
+    "blocked": 0
+   },
+   "errors": 0,
+   "annotations_sha256": "6d41750b62ae081ade8ca767bdbaf931049893d656d06e02765a88adb2254747",
+   "diagnose_sha256": "7da6f8d5beb876d8c28e9c3e8ebf56b3e91543bf7de7dd8a7f211fe031dcfef4",
+   "annotations_equal_ref": true,
+   "diagnose_equal_ref": true
+  },
+  "000081_000456": {
+   "packs_written": 0,
+   "pending": 0,
+   "l2": {
+    "hit": 6,
+    "adopted": 0,
+    "miss": 0,
+    "blocked": 0
+   },
+   "errors": 0,
+   "annotations_sha256": "70308ce45306bcef418f9033c9e928d207c8370b7228ee4497de2436efb2ccee",
+   "diagnose_sha256": "87fab852dfa79edc24643555060af02a9aecfb39180f22b52867cf4d01b5d1e5",
+   "annotations_equal_ref": true,
+   "diagnose_equal_ref": true
+  },
+  "001383_056643": {
+   "packs_written": 0,
+   "pending": 0,
+   "l2": {
+    "hit": 6,
+    "adopted": 0,
+    "miss": 0,
+    "blocked": 0
+   },
+   "errors": 0,
+   "annotations_sha256": "0c8b92ef417ea0cca0db55606a533afc743c8b35a60a747e2217a2e210f766c4",
+   "diagnose_sha256": "a86ad8fd81f9052a6729bf1af6ff6d06f8ececb653340c2c3a70b4fff5108369",
+   "annotations_equal_ref": true,
+   "diagnose_equal_ref": true
+  },
+  "001798_056779": {
+   "packs_written": 0,
+   "pending": 0,
+   "l2": {
+    "hit": 4,
+    "adopted": 0,
+    "miss": 0,
+    "blocked": 0
+   },
+   "errors": 0,
+   "annotations_sha256": "ceea1949176d2073d98fc6c190710e9dce4b60bf2faeedaf93c66b599986c5e4",
+   "diagnose_sha256": "eaff416fe53d71787e9fa0993df28f58c5626b2201442d9fe89cabcd6db18c11",
+   "annotations_equal_ref": true,
+   "diagnose_equal_ref": true
+  },
+  "001801_001786": {
+   "packs_written": 0,
+   "pending": 0,
+   "l2": {
+    "hit": 3,
+    "adopted": 0,
+    "miss": 0,
+    "blocked": 0
+   },
+   "errors": 0,
+   "annotations_sha256": "aaae26bd963943fce46cbc064aaca404047534517bdce15cadf8d7dd2976f3e9",
+   "diagnose_sha256": "f46b4b6ad1e2610ddd08e1b34f6c0347d08e593bf27923f2b078c760b756d58f",
+   "annotations_equal_ref": true,
+   "diagnose_equal_ref": true
+  },
+  "001875_059897": {
+   "packs_written": 0,
+   "pending": 0,
+   "l2": {
+    "hit": 4,
+    "adopted": 0,
+    "miss": 0,
+    "blocked": 0
+   },
+   "errors": 0,
+   "annotations_sha256": "a6ff08c093cdeebceafc31eba04f33109ab4eaf22beb5dc818b049314f09d40f",
+   "diagnose_sha256": "9173b3d223d82d0f3af01934feacd3c2cea18f1221ff8435c97c35c090f7b2e2",
+   "annotations_equal_ref": true,
+   "diagnose_equal_ref": true
+  }
+ },
+ "annotation_calls": 0,
+ "all_equal": true
+}

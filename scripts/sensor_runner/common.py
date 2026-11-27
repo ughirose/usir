@@ -29,7 +29,9 @@ INSTRUCTION_VERSION = "strong.v1"
 SPLITTER = "usir_v5_splitter@1"
 # Annotation settings that are part of every L2 key (changing the annotator model or sampling invalidates the cache).
 # The strong annotation runs in external sessions, so the model id is declared here (env SENSOR_ANNOTATOR_MODEL_ID).
-ANNOTATION_MODEL_ID = os.environ.get("SENSOR_ANNOTATOR_MODEL_ID", "unspecified")
+# Declared annotator of the committed seed cache (Step 8). The seed L2 keys contain this model_id, so it is the default; an explicit env value still overrides it.
+DEFAULT_ANNOTATOR_MODEL_ID = "claude-code-subagent:alias=sonnet(exact-model-id-unverified)"
+ANNOTATION_MODEL_ID = os.environ.get("SENSOR_ANNOTATOR_MODEL_ID", DEFAULT_ANNOTATOR_MODEL_ID)
 ANNOTATION_SAMPLING = os.environ.get("SENSOR_ANNOTATOR_SAMPLING", "default")
 
 NISHIKI_DEFAULTS = [

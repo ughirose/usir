@@ -61,5 +61,11 @@ seed 7作品・全35場面を現行指示文・現行手順で cold 再注釈し
 ## Step 8 完了（2026-11-27）
 全35場面を現行指示文・現行手順で再注釈（35 call、全件初回 ACCEPT）し、seed を差し替え（cd02ac0、旧 seed は 22b2e26 に残存）。warm 0 call・バイト一致、パリティ4条件合格、テスト86件合格（3fc4e79、SENSOR_ANNOTATOR_MODEL_ID 設定時）。未設定だと 6 件失敗（seed の鍵に model_id が入るため）。詳細: docs/handoff/2026-11-27_phase15_stage2_step8_report.md
 
+## Step 9 開始（2026-11-27）
+新 seed の L2 鍵に入る model_id を、環境変数未設定でも一致させる（案 a: CLI 既定値とテスト側で固定）。鍵の仕様・unspecified への偽装は行わない。seed の再注釈なし。土台 feat/sensor-runner（76d1e45）。
+
+## Step 9 完了（2026-11-27）
+common.py の model_id 既定値を新 seed の宣言値に変更（鍵の仕様は不変、env 明示指定は優先）。環境変数なしで、テスト 86 件合格、warm 0 call・バイト一致、パリティ 4 条件合格、回帰テスト 4 件追加（90 件）。実行コミット b8afa9e。詳細: docs/handoff/2026-11-27_phase15_stage2_step9_report.md
+
 ## Step 10 開始（2026-11-27）
 (a) feat/phase15-stage2-step9（8708b5d）を feat/sensor-runner へ fast-forward 統合（環境変数未設定で90件・パリティ4条件を統合先端で確認）。(b) SENSOR_ANNOTATOR_MODEL_ID の運用ルールを SESSION.md に明記。seed の再注釈なし。土台 feat/sensor-runner（76d1e45）。
