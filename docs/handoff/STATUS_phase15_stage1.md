@@ -63,3 +63,6 @@ seed 7作品・全35場面を現行指示文・現行手順で cold 再注釈し
 
 ## Step 9 開始（2026-11-27）
 新 seed の L2 鍵に入る model_id を、環境変数未設定でも一致させる（案 a: CLI 既定値とテスト側で固定）。鍵の仕様・unspecified への偽装は行わない。seed の再注釈なし。土台 feat/sensor-runner（76d1e45）。
+
+## Step 9 完了（2026-11-27）
+common.py の model_id 既定値を新 seed の宣言値に変更（鍵の仕様は不変、env 明示指定は優先）。環境変数なしで、テスト 86 件合格、warm 0 call・バイト一致、パリティ 4 条件合格、回帰テスト 4 件追加（90 件）。実行コミット b8afa9e。詳細: docs/handoff/2026-11-27_phase15_stage2_step9_report.md
