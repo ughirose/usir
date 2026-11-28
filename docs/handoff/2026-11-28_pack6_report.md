@@ -39,7 +39,7 @@
 - main でのテスト（`94a1aa7` の別チェックアウト、`PYTHONPATH` で main の `usir_py` を使用）:
   - `tests/test_sensor_runner*.py` ＋ `tests/test_viewer_rejoin.py`: 93 passed（既存 90＋新規 3）。
   - リポジトリ全体: 785 passed、8 failed、18 skipped。落ちた 8 件は `test_phase_d_usir_forge` 2 件、`test_realtime_decoder` 1 件、`tests/v5` の 5 件（b11・b12・b13・b14・gate3a）。**統合前の `991b868` でも同じ 8 件が落ちる**ことを確認した。失敗の出力から、forge は node の dist 未ビルド、gate3a は `data/aozora_cache` の未配置、b14 は `docs/handoff/v10` の凍結アーティファクト参照の欠落と読めた（環境起因）。他の 4 件の原因は未調査。今回の変更とは無関係（どのテストも `scripts/viewer` を参照しない）。
-- main の先端: 本レポートのコミットを含む先端は、このコミットを push した後の `origin/main`（下記「統合後の状態」）。ローカルの `main` ブランチは古いまま（`1a30ec2`）で、origin/main を正とした。
+- main の先端: コード変更の統合は `94a1aa7`、本レポート初版を含む push 後の先端は `02b4a73`（docs のみの追加）。その後の本レポートの文言修正も docs のみで、main は branch と同一コミットへ fast-forward している。ローカルの `main` ブランチは古いまま（`1a30ec2`）で、origin/main を正とした。
 
 ## 残った問題・判断を仰ぎたい点
 1. **打ち消し合い**: 隣り合う場面で「閉じ忘れ」と「余分な閉じ括弧」が 1 件ずつあると、互いに対応して両方消える（K2 の Q2・Q3）。場面の切り分けで切られた括弧と、本文だけでは区別できない。このまま（見落とし側に寄せる）か、別の基準（例: 場面をまたぐ組の長さで分ける）にするかの判断が必要。
