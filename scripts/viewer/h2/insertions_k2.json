@@ -1,0 +1,56 @@
+[
+ {
+  "rule": "place_conflict",
+  "kind": "P1 scene 3 head: 三日目の夕暮れ。(新参小屋)",
+  "old": "荷は軽うして取らせる」\n三郎が言った。",
+  "new": "荷は軽うして取らせる」\n\n三日目の夕暮れ。\n三郎が言った。"
+ },
+ {
+  "rule": "place_conflict+move_destination_mismatch",
+  "kind": "P1 scene 4 head: 三日目の夕暮れ。 / M1 scene 3 end: 厨子王 由良の港へ向かう",
+  "old": "ひとり涙をこぼしていた。\n日がよほど昇ってから、柴を背負って",
+  "new": "ひとり涙をこぼしていた。厨子王は、その夕べ、ひとり由良の港へ向かって歩き出した。\n\n三日目の夕暮れ。\n柴を背負って"
+ },
+ {
+  "rule": "pov_contamination",
+  "kind": "V1 scene 4 (pov 厨子王): FID attributed to 樵",
+  "old": "樵は我が荷をおろして置いて、すぐに一荷苅ってくれた。",
+  "new": "厨子王は、ただ樵のすることを見ていた。厨子王は、寒さに震えながら、姉のことを思っていた。樵は我が荷をおろして置いて、すぐに一荷苅ってくれた。樵は厨子王の青ざめた顔をじっと見た。ああ、何という哀れな童であろう。"
+ },
+ {
+  "rule": "place_conflict",
+  "kind": "P2 scene 5 head: 十日目の夕暮れ。(三の木戸; a divider line precedes it in the base text)",
+  "old": "姉は潮を汲み、弟は柴を苅って",
+  "new": "十日目の夕暮れ。\n姉は潮を汲み、弟は柴を苅って"
+ },
+ {
+  "rule": "place_conflict+move_destination_mismatch",
+  "kind": "P2 scene 6 head: 十日目の夕暮れ。(小屋) / M2 scene 5 end: 安寿 山の寺へ向かう",
+  "old": "姉と弟とを一しょに置いた。\nある日の暮れに二人の子供は、",
+  "new": "姉と弟とを一しょに置いた。安寿は、その夕べ、ひとり山の寺へ向かって歩き出した。\n\n十日目の夕暮れ。\n二人の子供は、"
+ },
+ {
+  "rule": "pov_contamination",
+  "kind": "V2 scene 6 (pov 安寿): FID attributed to 二郎",
+  "old": "こう言って出て行った。\n",
+  "new": "こう言って出て行った。安寿は弟の手を握って、じっと二郎の顔を見上げていた。安寿は、二郎の足音が遠ざかるのを聞いていた。二郎は戸口に立って、二人の後ろ姿をじっと見た。ああ、何という不憫な子供らであろう。\n"
+ },
+ {
+  "rule": "quote_bracket",
+  "kind": "Q1 scene 4: 余分な閉じ括弧",
+  "old": "安寿は汐を汲み覚えた。",
+  "new": "安寿は汐を汲み覚えた。」"
+ },
+ {
+  "rule": "quote_bracket",
+  "kind": "Q2 scene 5: 閉じ忘れ",
+  "old": "どうにでも勝手にしておけ」大夫",
+  "new": "どうにでも勝手にしておけ大夫"
+ },
+ {
+  "rule": "quote_bracket",
+  "kind": "Q3 scene 6: 余分な閉じ括弧",
+  "old": "それを二郎が通りかかって聞いた。二郎は邸を見廻って",
+  "new": "それを二郎が通りかかって聞いた。」二郎は邸を見廻って"
+ }
+]
