@@ -1,10 +1,11 @@
 """Viewer production version: one self-contained HTML page per work (no external files, no network).
 
 Tabs: 物語構造 (scene list + scene text) / 設定台帳 (per-character facts registered by the annotations) / 自動診断の指摘.
-Automatic-diagnosis flags are HIDDEN by default (tab present but muted; an explicit switch shows them).
-Display only: reads nishiki diagnose JSON and merged annotations as they are; no judging logic here.
+Step 3 staged unfreeze (2026-11-28): quote_bracket flags that stay unmatched after re-joining adjacent scenes are shown by default as 確定;
+move_destination_mismatch / place_conflict / off_stage_speaker / pov_contamination are 候補 and awase_* are 観察 (both behind the switch).
+Display only: reads nishiki diagnose JSON and merged annotations as they are; no judging logic here (the re-join check only decides what is displayed).
 
-usage: python build_viewer.py <work_id> <out.html>   (inputs under scripts/viewer/data/<work_id>/)
+usage: python build_viewer.py <work_id> <out.html> [--data-root DIR]   (inputs under <data-root or scripts/viewer/data>/<work_id>/)
 """
 import html
 import json
@@ -33,8 +34,57 @@ def para(t):
     return "".join(f"<p>{E(x)}</p>" for x in t.split("\n") if x.strip())
 
 
-def build(work: str) -> str:
-    d = HERE / "data" / work
+OPEN = {"「": "S", "『": "D"}
+CLOSE = {"」": "S", "』": "D"}
+
+
+def pair_brackets(text):
+    """Plain stack pairing over the whole work text (no line-start recovery, unlike diagnose). Returns (opener->closer, closer->opener).
+    A closer matches the innermost open bracket of its kind; brackets opened above it are implicitly closed by it (as in diagnose)."""
+    stack, o2c, c2o = [], {}, {}
+    for i, ch in enumerate(text):
+        if ch in OPEN:
+            stack.append((OPEN[ch], i))
+        elif ch in CLOSE:
+            k = CLOSE[ch]
+            idx = next((j for j in range(len(stack) - 1, -1, -1) if stack[j][0] == k), None)
+            if idx is None:
+                continue
+            while len(stack) > idx:
+                _, o = stack.pop()
+                o2c[o] = i
+                c2o[i] = o
+    return o2c, c2o
+
+
+def scene_of(scenes, pos):
+    for i, sc in enumerate(scenes):
+        if sc["span"]["start"] <= pos < sc["span"]["end"] + 1:
+            return i
+    return None
+
+
+def rejoin_closed(text, scenes, o2c, c2o, span):
+    """True when the quote_bracket span is only an artefact of the scene cut: its partner bracket lies in the NEXT (unclosed) / PREVIOUS (stray closer)
+    scene when the whole scene sequence is paired. Otherwise False (kept as a finding)."""
+    pos, kind = span["start"], span["basis"]["kind"]
+    ch = text[pos] if pos < len(text) else ""
+    if kind.startswith("unclosed") and ch in OPEN and pos in o2c:
+        a, b = scene_of(scenes, pos), scene_of(scenes, o2c[pos])
+    elif kind == "stray_closer" and ch in CLOSE and pos in c2o:
+        a, b = scene_of(scenes, c2o[pos]), scene_of(scenes, pos)
+    else:
+        return False
+    return a is not None and b is not None and b - a == 1
+
+
+STATS = {}
+
+
+def build(work: str, data_root=None) -> str:
+    if data_root is not None:
+        build_items.DATA = Path(data_root)
+    d = (Path(data_root) if data_root is not None else HERE / "data") / work
     text = (d / "text.txt").read_text(encoding="utf-8")
     diag = json.loads((d / "diagnose.json").read_text(encoding="utf-8"))
     ann = json.loads((d / "annotations.json").read_text(encoding="utf-8"))
@@ -86,15 +136,19 @@ def build(work: str) -> str:
         ctx = "".join(f'<div class="ctxl">{E(c["label"])}</div><div class="quote">{para(c["text"]).replace("【", "<mark>").replace("】", "</mark>")}</div>' for c in it["context"])
         return f'<article class="flag"><div class="fh"><span class="no">#{n}</span><span class="tag">{E(tag)}</span><span class="meta">場面{it["scene"] + 1}</span></div><p class="claim">{E(it["claim"])}</p>{extra}{ctx}</article>'
 
-    # place_conflict: the same cause reported once per character -> one card
-    confirmed, povs, observ, seen = [], [], [], {}
+    # Step 3 sorting. 確定 = quote_bracket not closed by re-joining adjacent scenes; 候補 = move/place/off_stage/pov; 観察 = awase_*.
+    o2c, c2o = pair_brackets(text)
+    confirmed, cands, observ, seen, rejoined = [], [], [], {}, []
     for it in flags:
         r = it["rule"]
-        if r == "pov_contamination":
-            povs.append(it)
-        elif r.startswith("awase_"):
+        if r.startswith("awase_"):
             observ.append(it)
-        elif r == "place_conflict":
+        elif r == "quote_bracket":
+            if rejoin_closed(text, scenes, o2c, c2o, spans[it["ref"]]):
+                rejoined.append(it)
+            else:
+                confirmed.append(it)
+        elif r == "place_conflict":  # the same cause reported once per character -> one card
             b = spans[it["ref"]]["basis"]
             key = (it["scene"], b.get("previous_scene"), b.get("location"), b.get("previous_location"))
             if key in seen:
@@ -102,27 +156,42 @@ def build(work: str) -> str:
                 continue
             it = dict(it, _who=[nm.get(b["character"], b["character"])])
             seen[key] = it
-            confirmed.append(it)
-        else:
-            confirmed.append(it)
-    cards = []
-    for n, it in enumerate(confirmed, 1):
-        extra = ""
-        if it["rule"] in ("move_destination_mismatch", "place_conflict"):
-            extra = '<p class="note">場所の記録は、機械が本文から読み取った注釈に由来します（本文に根拠の文が無い場合があります）。</p>'
-        if it["rule"] == "place_conflict" and len(it["_who"]) > 1:
-            extra += f'<p class="note">同じ原因が人物ごとに重複して出ていたため 1 件にまとめました（対象：{E("、".join(it["_who"]))}）。</p>'
-        cards.append(card(n, it, RULE_LABEL.get(it["rule"], it["rule"]), extra))
-    cand = [card(f"候補{n}", it, "視点の混ざり（候補）") for n, it in enumerate(povs, 1)]
+            cands.append(it)
+        else:  # move_destination_mismatch, off_stage_speaker, pov_contamination
+            cands.append(it)
+    cards = [card(f"確定{n}", it, "かぎ括弧", '<p class="note">前後の場面を再結合して確認しました（隣り合う場面にまたがる対応は見つからず、括弧は閉じていません）。</p>') for n, it in enumerate(confirmed, 1)]
+    GROUPS = [
+        ("move_destination_mismatch", "場所のつながり（移動先）の候補", "場所の記録は機械が本文から読み取った注釈に由来し、移動の読み違いを含みます。確定指摘としては扱いません。"),
+        ("place_conflict", "場所のつながり（同時刻）の候補", "場所の記録は機械が本文から読み取った注釈に由来し、時間表現や場所名の読み違いを含みます。確定指摘としては扱いません。"),
+        ("off_stage_speaker", "話者の居場所の候補", "話者や登場の読み取りは機械の推定です。確定指摘としては扱いません。"),
+        ("pov_contamination", "視点の混ざり（候補）", "一人称の語りや語り手の推測を、別の人物の内面と読んだ可能性が高い種類です。参考情報として畳んでいます。"),
+    ]
+    cand_parts, n_cand = [], 0
+    for rule, label, note in GROUPS:
+        grp = [it for it in cands if it["rule"] == rule]
+        if not grp:
+            continue
+        n_cand += len(grp)
+        cs = []
+        for n, it in enumerate(grp, 1):
+            extra = ""
+            if rule in ("move_destination_mismatch", "place_conflict"):
+                extra = '<p class="note">場所の記録は、機械が本文から読み取った注釈に由来します（本文に根拠の文が無い場合があります）。</p>'
+            if rule == "place_conflict" and len(it["_who"]) > 1:
+                extra += f'<p class="note">同じ原因が人物ごとに重複して出ていたため 1 件にまとめました（対象：{E("、".join(it["_who"]))}）。</p>'
+            cs.append(card(f"候補{n}", it, label, extra))
+        cand_parts.append(f'<details class="grp"><summary><b>{E(label)} {len(grp)}件</b><span class="meta">確定指摘としては扱いません</span></summary><p class="note">{E(note)}</p>{"".join(cs)}</details>')
     obs = [card(f"観察{n}", it, "語りの温度差の観察") for n, it in enumerate(observ, 1)]
-    n_flags = len(confirmed)
-    parts = []
-    parts.append(f'<p class="note">自動診断が付けた確認事項です。機械の読み違いを含むため、既定では隠しています。（確認事項 {len(confirmed)}件）</p>' + ("".join(cards) if cards else '<p class="note">確定した指摘はありません。</p>'))
-    if cand:
-        parts.append(f'<details class="grp"><summary><b>視点の混ざり（候補）{len(cand)}件</b><span class="meta">確定指摘としては扱いません</span></summary><p class="note">一人称の語りや語り手の推測を、別の人物の内面と読んだ可能性が高い種類です。参考情報として畳んでいます。</p>{"".join(cand)}</details>')
+    obs_part = ""
     if obs:
-        parts.append(f'<details class="grp"><summary><b>語りの温度差の観察 {len(obs)}件</b><span class="meta">違和感の指摘ではありません</span></summary><p class="note">出来事の感情と語り口の温度に差がある場面の観察です。意図的な文体であることが多く、直すべき点とは限りません。</p>{"".join(obs)}</details>')
-    flags_html = "".join(parts)
+        obs_part = f'<details class="grp"><summary><b>語りの温度差の観察 {len(obs)}件</b><span class="meta">違和感の指摘ではありません</span></summary><p class="note">出来事の感情と語り口の温度に差がある場面の観察です。意図的な文体であることが多く、直すべき点とは限りません。</p>{"".join(obs)}</details>'
+    n_flags = len(confirmed)
+    n_hidden = n_cand + len(obs)
+    rj = f"前後の場面を再結合すると括弧が閉じていたため、表示していない指摘が {len(rejoined)} 件あります。" if rejoined else ""
+    confirmed_html = f'<p class="note">かぎ括弧の対応の不整合のうち、前後の場面を再結合しても閉じないものだけを確定として表示しています。（確定 {n_flags}件）{E(rj)}</p>' + ("".join(cards) if cards else '<p class="note">確定した指摘はありません。</p>')
+    cand_html = "".join(cand_parts) + obs_part
+    STATS[work] = {"confirmed": n_flags, "rejoin_hidden": len(rejoined), "candidates": {r: len([i for i in cands if i["rule"] == r]) for r, _l, _n in GROUPS},
+                   "candidate_cards": n_cand, "observation": len(obs)}
 
     css = """
 body{margin:0;background:#f6f4ef;color:#2b2620;font:15px/1.8 "Hiragino Kaku Gothic ProN","Yu Gothic UI",Meiryo,sans-serif}
@@ -148,15 +217,17 @@ function sw(c){document.getElementById('flagsbox').style.display=c.checked?'bloc
 <title>読み返しビューア — {E(title)}</title><style>{css}</style></head><body><div class="wrap">
 <h1>{E(title)}</h1><p class="sub">対象：公開テキスト（青空文庫）／全{len(scenes)}場面／診断 {E(diag['schema'])}</p>
 <nav><button class="on" onclick="tab('s1',this)">物語構造</button><button onclick="tab('s2',this)">設定台帳</button><button onclick="tab('s3',this)">自動診断の指摘</button>
-<label class="sw"><input type="checkbox" onchange="sw(this)"> 自動診断の指摘を表示する（既定は非表示）</label></nav>
+<label class="sw"><input type="checkbox" onchange="sw(this)"> 候補・観察も表示する（既定は非表示）</label></nav>
 <section id="s1" class="on">{structure}</section>
 <section id="s2">{ledger_html}</section>
-<section id="s3"><div id="flagsmuted" class="muted">自動診断の確認事項（{n_flags}件）と参考情報（視点の候補・語りの温度差）は非表示にしています。右上のスイッチで表示できます。</div><div id="flagsbox" style="display:none">{flags_html}</div></section>
+<section id="s3">{confirmed_html}<div id="flagsmuted" class="muted">候補・観察（{n_hidden}件）は非表示にしています。右上のスイッチで表示できます。</div><div id="flagsbox" style="display:none">{cand_html}</div></section>
 <footer>1枚で完結するHTMLです（外部ファイル・通信なし）。生成元：nishiki diagnose の出力と場面注釈。</footer></div><script>{js}</script></body></html>"""
 
 
 if __name__ == "__main__":
     out = Path(sys.argv[2])
+    root = sys.argv[sys.argv.index("--data-root") + 1] if "--data-root" in sys.argv else None
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(build(sys.argv[1]), encoding="utf-8")
+    out.write_text(build(sys.argv[1], root), encoding="utf-8")
+    print(json.dumps(STATS[sys.argv[1]], ensure_ascii=False))
     print("wrote", out, out.stat().st_size, "bytes")
